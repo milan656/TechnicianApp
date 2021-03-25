@@ -25,7 +25,7 @@ class NormalRadioButton : RadioButton {
     }
 
     internal fun init(context: Context) {
-        val font = Typeface.createFromAsset(getContext().assets, "fonts/helvetica_normal.ttf")
+        val font = Typeface.createFromAsset(getContext().assets, "fonts/Lato-Medium.ttf")
         typeface = font
     }
 

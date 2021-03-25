@@ -1,5 +1,6 @@
 package com.walkins.technician.service
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.os.PowerManager
 import android.os.SystemClock
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import com.example.technician.common.PrefManager
 import com.example.technician.common.RetrofitCommonClass
 import com.walkins.technician.DB.DBClass
@@ -17,8 +19,6 @@ import com.walkins.technician.DB.EntityClass
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.networkApi.WarrantyApi
-import com.google.gson.Gson
-import com.jkadvantage.model.vehicleTypeModel.VehicleTypeModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -74,10 +74,43 @@ class EndlessService : Service() {
         mDb = DBClass.getInstance(applicationContext)
         Log.e("ENDLESS-SERVICE", "The service has been created".toUpperCase())
         val notification = createNotification()
-        val notif: Notification = Notification()
-        startForeground(1, notif)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startMyOwnForeground()
+        } else {
+            val notif: Notification = Notification()
+            startForeground(1, notif)
+        }
 
 
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun startMyOwnForeground() {
+        val NOTIFICATION_CHANNEL_ID = "channal"
+        val channelName = "My Background Service"
+        val chan = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                channelName,
+                NotificationManager.IMPORTANCE_NONE
+            )
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+        chan.lightColor = Color.BLUE
+        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        val manager = (getSystemService(NOTIFICATION_SERVICE) as NotificationManager)
+        manager.createNotificationChannel(chan)
+        val notificationBuilder: Notification.Builder =
+            Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
+        val notification: Notification = notificationBuilder.setOngoing(true)
+            .setSmallIcon(R.drawable.ic_add_icon)
+            .setContentTitle("App is running in background")
+            .setPriority(NotificationManager.IMPORTANCE_MIN)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .build()
+        startForeground(2, notification)
     }
 
     override fun onDestroy() {
@@ -123,7 +156,7 @@ class EndlessService : Service() {
                 launch(Dispatchers.IO) {
                     fetchVehicleData()
                 }
-                delay(/*1 * 60 **/ 1000)
+                delay(1 * 60 * 1000)
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
@@ -162,13 +195,13 @@ class EndlessService : Service() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     try {
-                        val gson = Gson()
-                        var vehicleTypeModel: VehicleTypeModel = gson.fromJson(
-                            response.body().toString(),
-                            VehicleTypeModel::class.java
-                        )
+//                        val gson = Gson()
+//                        var vehicleTypeModel: VehicleTypeModel = gson.fromJson(
+//                            response.body().toString(),
+//                            VehicleTypeModel::class.java
+//                        )
 //                        checkDateTime
-                        saveVehicleTypeData(vehicleTypeModel)
+                        saveVehicleTypeData()
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
@@ -180,21 +213,36 @@ class EndlessService : Service() {
 
     }
 
-    private fun saveVehicleTypeData(vehicleTypeModel: VehicleTypeModel) {
-        if (mDb.daoClass().getAllRecord().size > 0) {
-            mDb.daoClass().deleteAll()
-        }
-        for (i in vehicleTypeModel?.data?.indices!!) {
+    private fun saveVehicleTypeData() {
+
+        var thread: Thread = Thread {
+            if (mDb.daoClass().getAllVehicleType().size > 0) {
+                mDb.daoClass().deleteAll()
+            }
             var entity = EntityClass()
             entity.vehicle_type_id =
-                    vehicleTypeModel.data?.get(i)?.vehicle_type_id!!
-            entity.name = vehicleTypeModel.data?.get(i)?.name!!
-            entity.image_url = vehicleTypeModel.data?.get(i)?.image_url!!
-            entity.type = vehicleTypeModel.data?.get(i)?.type!!
+                "hgkfdjkgfjkdgljfldk"
+            entity.name = "entityname"
+            entity.image_url = "image"
+            entity.type = "car"
 
-            mDb.daoClass().saveRecord(entity)
+            mDb.daoClass().saveVehicleType(entity)
+            Log.e("response+++", "++++" + mDb.daoClass().getAllVehicleType().size)
         }
-        Log.e("response+++", "++++" + mDb.daoClass().getAllRecord().size)
+
+        thread.start()
+
+//        for (i in vehicleTypeModel?.data?.indices!!) {
+//            var entity = EntityClass()
+//            entity.vehicle_type_id =
+//                    vehicleTypeModel.data?.get(i)?.vehicleTypeId!!
+//            entity.name = vehicleTypeModel.data?.get(i)?.name!!
+//            entity.image_url = vehicleTypeModel.data?.get(i)?.imageUrl!!
+//            entity.type = vehicleTypeModel.data?.get(i)?.type!!
+//
+//            mDb.daoClass().saveRecord(entity)
+//        }
+
     }
 
     private fun createNotification(): Notification {

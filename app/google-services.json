@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "958370112480",
+    "firebase_url": "https://jkadvantage2.firebaseio.com",
+    "project_id": "jkadvantage2",
+    "storage_bucket": "jkadvantage2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958370112480:android:8c2d6cd7cd7d5ff9aa0185",
+        "android_client_info": {
+          "package_name": "com.jkadvantage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958370112480-3bd5u6ptvpqgrf0cgd72tknnh07qlf7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jkadvantage",
+            "certificate_hash": "ac413c4085fc44fb95c289f4f4ee0dbc05187fff"
+          }
+        },
+        {
+          "client_id": "958370112480-7ah0j67mjo4st9svdkb95d3l4cj784b8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE4W7u2wftmArBOkWWTbq1btLVQ4GQn2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958370112480-7ah0j67mjo4st9svdkb95d3l4cj784b8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

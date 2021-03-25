@@ -29,7 +29,7 @@
                 android:layout_marginLeft="@dimen/ten_dp"
                 android:layout_marginTop="@dimen/sixteen_dp"
                 android:text="@string/str_welcome"
-                android:textColor="@color/light_gray_text_color"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/twenty_four_sp" />
 
             <com.walkins.technician.custom.NormalTextView
@@ -143,7 +143,8 @@
                     android:background="@drawable/round_corner_button_yellow"
                     android:text="@string/login_dashboard"
                     android:textAllCaps="false"
-                    android:textColor="@color/dark_gray_text_color" />
+                    android:textSize="@dimen/fourteen_sp"
+                    android:textColor="@color/white" />
 
 
                 <com.walkins.technician.custom.BoldButton
@@ -154,10 +155,11 @@
                     android:layout_marginLeft="@dimen/twenty_four_dp"
                     android:layout_marginTop="@dimen/twenty_four_dp"
                     android:layout_marginRight="@dimen/twenty_four_dp"
-                    android:background="@drawable/round_corner_button_gray"
+                    android:background="@drawable/round_corner_button_white"
                     android:text="@string/recover_password"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white" />
+                    android:textSize="@dimen/fourteen_sp"
+                    android:textColor="@color/header_title" />
 
             </LinearLayout>
         </LinearLayout>

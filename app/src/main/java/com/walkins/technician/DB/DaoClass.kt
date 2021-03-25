@@ -6,10 +6,10 @@ import androidx.room.*
 interface DaoClass {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveRecord(book: EntityClass)
+    fun saveVehicleType(book: EntityClass)
 
     @Query(value = "Select * from EntityClass")
-    fun getAllRecord(): List<EntityClass>
+    fun getAllVehicleType(): List<EntityClass>
 
     @Query("delete from EntityClass")
     fun deleteAll()

@@ -19,7 +19,7 @@ class NormalNoDataTextView : TextView {
     }
 
     internal fun init(context: Context) {
-        val font = Typeface.createFromAsset(getContext().assets, "fonts/helvetica_oblique.ttf")
+        val font = Typeface.createFromAsset(getContext().assets, "fonts/Lato-Italic.ttf")
         typeface = font
     }
 

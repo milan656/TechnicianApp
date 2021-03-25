@@ -24,7 +24,7 @@ class NormalCheckbox : CheckBox {
 
     internal fun init(context: Context) {
         val font = Typeface.createFromAsset(getContext().assets, "fonts" +
-                "/helvetica_normal.ttf")
+                "/Lato-Medium.ttf")
         typeface = font
     }
 

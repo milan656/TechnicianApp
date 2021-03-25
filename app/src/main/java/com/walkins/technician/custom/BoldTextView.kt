@@ -19,7 +19,7 @@ class BoldTextView : TextView {
     }
 
     internal fun init(context: Context) {
-        val font = Typeface.createFromAsset(getContext().assets, "fonts/helvetica_bold.ttf")
+        val font = Typeface.createFromAsset(getContext().assets, "fonts/Lato-Bold.ttf")
         typeface = font
     }
 
