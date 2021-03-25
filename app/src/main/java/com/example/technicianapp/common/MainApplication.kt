@@ -1,9 +1,8 @@
-package com.example.walkinslatestapp.common
+package com.example.technician.common
 
 import android.content.Context
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-//import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class MainApplication : MultiDexApplication() {
 

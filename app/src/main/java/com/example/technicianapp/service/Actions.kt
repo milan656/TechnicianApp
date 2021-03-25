@@ -1,4 +1,4 @@
-package com.example.walkinslatestapp.service
+package com.example.technicianapp.service
 
 enum class Actions {
     START,

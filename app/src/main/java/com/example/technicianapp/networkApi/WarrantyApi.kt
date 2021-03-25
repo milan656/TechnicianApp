@@ -1,4 +1,4 @@
-package com.example.walkinslatestapp.networkApi
+package com.example.technicianapp.networkApi
 
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody

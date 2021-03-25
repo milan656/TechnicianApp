@@ -1,4 +1,4 @@
-package com.example.walkinslatestapp.common
+package com.example.technician.common
 
 import android.os.Build
 import android.text.TextUtils

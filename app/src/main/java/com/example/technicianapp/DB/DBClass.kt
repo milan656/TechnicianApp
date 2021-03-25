@@ -1,4 +1,4 @@
-package com.example.walkinslatestapp.DB
+package com.example.technicianapp.DB
 
 import android.content.Context
 import androidx.room.Database

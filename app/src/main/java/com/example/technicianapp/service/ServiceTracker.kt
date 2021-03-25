@@ -1,4 +1,4 @@
-package com.example.walkinslatestapp.service
+package com.example.technicianapp.service
 
 import android.content.Context
 import android.content.SharedPreferences

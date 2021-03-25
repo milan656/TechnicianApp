@@ -1,5 +1,10 @@
-package com.example.walkinslatestapp.common
+package com.example.technician.common
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.jkadvantagandbadsha.model.login.UserModel
+import com.jkadvantage.model.vehicleTypeModel.VehicleTypeModel
+import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -7,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 class Common {
 
-    companion object{
+    companion object {
         var url: String? = "https://staging-backend.jkadvantage.co.in/api/"
 
         var urlStaging: String? = "http://qa-picture.jktyrecrm.in/#/sM1I8A"
@@ -102,9 +107,33 @@ class Common {
             }
             return time
         }
+        fun getErrorModel(jsonObject: JSONObject, modelName: String?): Any? {
+            val gson: Gson
+            val gsonBuilder = GsonBuilder()
+            gson = gsonBuilder.create()
+
+            try {
+                when (modelName) {
+
+                    "UserModel" -> {
+                        val userModel =
+                            gson.fromJson(jsonObject.toString(), UserModel::class.java)
+                        return userModel
+                    }
+                    else -> {
+                        return null
+                    }
+
+                }
+            } catch (e: java.lang.Exception) {
+
+                e.printStackTrace()
+                return null
+            }
+        }
+
 
     }
-
 
 
 }

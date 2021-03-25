@@ -1,4 +1,4 @@
-package com.example.walkinslatestapp.service
+package com.example.technicianapp.service
 
 import android.app.*
 import android.content.Context
@@ -10,13 +10,12 @@ import android.os.PowerManager
 import android.os.SystemClock
 import android.util.Log
 import android.widget.Toast
-import com.example.walkinslatestapp.DB.DBClass
-import com.example.walkinslatestapp.DB.EntityClass
-import com.example.walkinslatestapp.MainActivity
-import com.example.walkinslatestapp.R
+import com.example.technicianapp.DB.DBClass
+import com.example.technicianapp.DB.EntityClass
+import com.example.technicianapp.R
+import com.example.technicianapp.networkApi.WarrantyApi
 import com.example.walkinslatestapp.common.PrefManager
 import com.example.walkinslatestapp.common.RetrofitCommonClass
-import com.example.walkinslatestapp.networkApi.WarrantyApi
 import com.google.gson.Gson
 import com.jkadvantage.model.vehicleTypeModel.VehicleTypeModel
 import kotlinx.coroutines.Dispatchers

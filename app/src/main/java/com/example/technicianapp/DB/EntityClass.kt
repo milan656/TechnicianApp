@@ -1,4 +1,4 @@
-package com.example.walkinslatestapp.DB
+package com.example.technicianapp.DB
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
