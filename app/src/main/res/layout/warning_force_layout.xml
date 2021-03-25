@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/sixteen_dp"
+    app:cardCornerRadius="@dimen/ten_dp"
+    app:cardElevation="@dimen/two_dp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/ten_dp"
+        android:orientation="vertical">
+
+
+        <com.jkadvantage.custom.BoldTextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:text="@string/str_new_version"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/fourteen_sp" />
+
+
+        <com.jkadvantage.custom.NormalTextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:layout_marginRight="@dimen/sixteen_dp"
+            android:fontFamily="@font/helvetica_normal"
+            android:padding="@dimen/five_dp"
+            android:text="@string/cus_mob_no"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/twelve_sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/twenty_four_dp"
+            android:layout_marginRight="@dimen/sixteen_dp"
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+            <com.jkadvantage.custom.BoldButton
+                android:id="@+id/btn_cancel"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/four_dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_corner_button_light_gray"
+                android:text="@string/str_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/text_color" />
+
+            <com.jkadvantage.custom.BoldButton
+                android:id="@+id/btn_update"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/four_dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_corner_button_yellow"
+                android:text="Update"
+                android:textAllCaps="false"
+                android:textColor="@color/text_color" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
