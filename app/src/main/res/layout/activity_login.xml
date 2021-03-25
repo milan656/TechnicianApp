@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/ten_dp"
+                android:layout_marginTop="@dimen/sixteen_dp"
+                android:visibility="gone" />
+
+
+            <com.jkadvantage.custom.NormalTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/ten_dp"
+                android:layout_marginTop="@dimen/sixteen_dp"
+                android:text="@string/str_welcome"
+                android:textColor="@color/light_gray_text_color"
+                android:textSize="@dimen/twenty_four_sp" />
+
+            <com.jkadvantage.custom.NormalTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/ten_dp"
+                android:layout_marginTop="@dimen/eight_dp"
+
+                android:text="@string/login_text"
+                android:textColor="@color/dark_gray_text_color"
+                android:textSize="@dimen/sixteen_sp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="@dimen/sixteen_dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/light_view_gray" />
+
+
+            <com.jkadvantage.custom.NormalTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/twenty_four_dp"
+                android:layout_marginTop="@dimen/twenty_four_dp"
+                android:text="@string/user_id"
+                android:textColor="@color/dark_gray_text_color"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <EditText
+                android:id="@+id/edtLoginEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/twenty_four_dp"
+                android:layout_marginTop="@dimen/eight_dp"
+                android:layout_marginRight="@dimen/twenty_four_dp"
+                android:background="@drawable/layout_bg_onfocus"
+                android:padding="8dip"
+                android:singleLine="true" />
+
+            <com.jkadvantage.custom.NormalTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/twenty_four_dp"
+                android:layout_marginTop="@dimen/fifteen_dp"
+                android:text="@string/password_text"
+
+
+                android:textColor="@color/dark_gray_text_color"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <EditText
+                android:id="@+id/edtLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/twenty_four_dp"
+                android:layout_marginTop="@dimen/eight_dp"
+                android:layout_marginRight="@dimen/twenty_four_dp"
+                android:background="@drawable/layout_bg_onfocus"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:padding="8dip" />
+
+
+            <CheckBox
+
+                android:id="@+id/chk_keeped_me_logged_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/eighteen_dp"
+                android:layout_marginTop="@dimen/eleven_dp"
+                android:text="@string/str_keep_me_log_in"
+                android:textColor="@color/dark_gray_text_color"
+                android:textSize="@dimen/fourteen_sp"
+                android:visibility="gone"
+
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="@dimen/twenty_four_dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/light_view_gray" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/five_dp"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:layout_marginRight="@dimen/five_dp"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <com.jkadvantage.custom.BoldButton
+                    android:id="@+id/btnLoginToDashBoard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/twenty_four_dp"
+                    android:layout_marginTop="@dimen/twenty_four_dp"
+                    android:layout_marginRight="@dimen/twenty_four_dp"
+                    android:background="@drawable/round_corner_button_yellow"
+                    android:text="@string/login_dashboard"
+                    android:textAllCaps="false"
+                    android:textColor="@color/dark_gray_text_color" />
+
+
+                <com.jkadvantage.custom.BoldButton
+                    android:id="@+id/btnRecoverPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/twenty_four_dp"
+                    android:layout_marginTop="@dimen/twenty_four_dp"
+                    android:layout_marginRight="@dimen/twenty_four_dp"
+                    android:background="@drawable/round_corner_button_gray"
+                    android:text="@string/recover_password"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

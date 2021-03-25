@@ -1,15 +1,20 @@
 package com.example.technician.common
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.example.technicianapp.R
+import com.example.technicianapp.activity.LoginActivity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jkadvantagandbadsha.model.login.UserModel
@@ -19,6 +24,7 @@ import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
+import java.lang.IllegalArgumentException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,6 +39,7 @@ class Common {
         var urlRelease: String? = "https://picture.jktyrecrm.in/#/sM1I8A"
 
         var isCalling: Boolean? = false
+        private var dialogue: Dialog? = null
 
         fun timeStampaTimeago(time1: String): String? {
             var time: String = time1
@@ -311,6 +318,103 @@ class Common {
 
         }
 
+        fun showShortToast(str: String?, context: Context) {
+            Toast.makeText(context, "" + str, Toast.LENGTH_SHORT).show()
+        }
+
+        fun showLongToast(str: String, context: Context) {
+            Toast.makeText(context, "" + str, Toast.LENGTH_LONG).show()
+        }
+
+
+        fun showLoader(activity: Context) {
+            // loadingDialog = LoadingDialog.get(activity).show()
+
+
+            try {
+                if (dialogue != null) {
+                    if (dialogue?.isShowing!!) {
+                        dialogue?.dismiss()
+                    }
+
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
+            try {
+                dialogue = Dialog(activity)
+                //  dialogue?.setCancelable(false)
+                dialogue?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialogue?.setContentView(R.layout.common_loader)
+
+
+                dialogue?.show()
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        fun hideLoader() {
+            try {
+                if (dialogue != null && dialogue?.isShowing!!) {
+                    dialogue?.dismiss()
+
+                }
+
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        fun showDialogue(activity: Activity, message: String) {
+            val builder = AlertDialog.Builder(activity).create()
+            builder.setCancelable(false)
+            val width = LinearLayout.LayoutParams.MATCH_PARENT
+            val height = LinearLayout.LayoutParams.WRAP_CONTENT
+            builder?.window?.setLayout(width, height)
+            builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            val root = LayoutInflater.from(activity).inflate(R.layout.common_dialogue_layout, null)
+
+            val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
+            val tv_message = root.findViewById<TextView>(R.id.tv_message)
+            val tv_dialogTitle = root.findViewById<TextView>(R.id.tv_dialogTitle)
+
+            tv_message.text = message
+            btnYes.setOnClickListener { builder.dismiss() }
+            builder.setView(root)
+
+            builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+            builder.show()
+        }
+
+        fun showDialogueWithTitle(activity: Activity, message: String, title: String) {
+            val builder = AlertDialog.Builder(activity).create()
+            builder.setCancelable(false)
+            val width = LinearLayout.LayoutParams.MATCH_PARENT
+            val height = LinearLayout.LayoutParams.WRAP_CONTENT
+            builder.window?.setLayout(width, height)
+            builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            val root = LayoutInflater.from(activity).inflate(R.layout.common_dialogue_layout, null)
+
+            val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
+            val tv_message = root.findViewById<TextView>(R.id.tv_message)
+            val tv_dialogTitle = root.findViewById<TextView>(R.id.tv_dialogTitle)
+
+            tv_dialogTitle.visibility = View.VISIBLE
+
+            tv_message.text = message
+            tv_dialogTitle.text = title
+            btnYes.setOnClickListener { builder.dismiss() }
+            builder.setView(root)
+
+            builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+            builder.show()
+        }
     }
 
 

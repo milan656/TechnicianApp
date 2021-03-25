@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/sixteen_dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/ten_dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_background"
+            android:orientation="vertical">
+
+            <com.jkadvantage.custom.BoldTextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_four_dp"
+                android:gravity="center"
+                android:padding="@dimen/five_dp"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/sixteen_sp"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/relativeTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/sixteen_dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen_dp"
+                    android:layout_marginEnd="@dimen/fifteen_dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/five_dp"
+                    android:paddingLeft="@dimen/five_dp"
+                    android:paddingEnd="@dimen/fifteen_dp"
+
+                    android:paddingRight="@dimen/fifteen_dp">
+
+                    <com.jkadvantage.custom.BoldTextView
+                        android:id="@+id/tv_dialogTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Success"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:textStyle="bold"
+                        tools:ignore="RelativeOverlap" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/relativeTop"
+                android:layout_marginTop="@dimen/eighteen_dp"
+                android:layout_marginBottom="@dimen/ten_dp"
+                android:background="#1A000000" />
+
+
+            <com.jkadvantage.custom.NormalTextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/seven_dp"
+                android:gravity="center"
+                android:padding="@dimen/ten_dp"
+                android:text="Are you sure you want to quit the process?"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/fifteen_sp" />
+
+            <com.jkadvantage.custom.BoldButton
+                android:id="@+id/btnOk"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/twenty_four_dp"
+                android:layout_marginTop="@dimen/fifteen_dp"
+                android:layout_marginRight="@dimen/twenty_four_dp"
+                android:layout_marginBottom="@dimen/fifteen_dp"
+                android:background="@drawable/round_corner_button_yellow"
+                android:text="@string/str_ok"
+                android:textAllCaps="false"
+                android:textColor="@color/text_color" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
