@@ -154,7 +154,7 @@ class LoginRepository {
                 } else {
                     try {
                         val responce = response.errorBody()?.string()
-                        val jsonObjectError = JSONObject(responce)
+                        val jsonObjectError = JSONObject(responce!!)
 
                         val userModel: UserModel =
                             Common.getErrorModel(jsonObjectError, "UserModel") as UserModel

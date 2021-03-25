@@ -1,4 +1,4 @@
-package com.jkadvantage.custom
+package com.example.technicianapp.custom
 
 import android.content.Context
 import android.graphics.Typeface

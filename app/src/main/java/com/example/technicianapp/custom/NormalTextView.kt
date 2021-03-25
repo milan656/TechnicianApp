@@ -1,5 +1,6 @@
-package com.jkadvantage.custom
+package com.example.technicianapp.custom
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet

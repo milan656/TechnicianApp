@@ -1,6 +1,7 @@
-package com.jkadvantage.custom
+package com.example.technicianapp.custom
 
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.*
@@ -11,7 +12,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
-import com.jkadvantage.R
+import com.example.technicianapp.R
 
 /**
  * Created by jkadvantage Team on 5/08/19.
@@ -22,7 +23,9 @@ import com.jkadvantage.R
  * Custom ImageView for circular images in Android while maintaining the
  * best draw performance and supporting custom borders & selectors.
  */
-class CircularImageView @JvmOverloads constructor(
+
+class
+CircularImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = R.styleable.CircularImageViewStyle_circularImageViewDefault

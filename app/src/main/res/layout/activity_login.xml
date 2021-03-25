@@ -22,7 +22,7 @@
                 android:visibility="gone" />
 
 
-            <com.jkadvantage.custom.NormalTextView
+            <com.example.technicianapp.custom.NormalTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -32,7 +32,7 @@
                 android:textColor="@color/light_gray_text_color"
                 android:textSize="@dimen/twenty_four_sp" />
 
-            <com.jkadvantage.custom.NormalTextView
+            <com.example.technicianapp.custom.NormalTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -54,7 +54,7 @@
                 android:background="@color/light_view_gray" />
 
 
-            <com.jkadvantage.custom.NormalTextView
+            <com.example.technicianapp.custom.NormalTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/twenty_four_dp"
@@ -74,7 +74,7 @@
                 android:padding="8dip"
                 android:singleLine="true" />
 
-            <com.jkadvantage.custom.NormalTextView
+            <com.example.technicianapp.custom.NormalTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/twenty_four_dp"
@@ -129,9 +129,10 @@
                 android:layout_marginTop="@dimen/ten_dp"
                 android:layout_marginRight="@dimen/five_dp"
                 android:orientation="vertical"
-                android:weightSum="2">
+                android:weightSum="2"
+                >
 
-                <com.jkadvantage.custom.BoldButton
+                <com.example.technicianapp.custom.BoldButton
                     android:id="@+id/btnLoginToDashBoard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -145,7 +146,7 @@
                     android:textColor="@color/dark_gray_text_color" />
 
 
-                <com.jkadvantage.custom.BoldButton
+                <com.example.technicianapp.custom.BoldButton
                     android:id="@+id/btnRecoverPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
