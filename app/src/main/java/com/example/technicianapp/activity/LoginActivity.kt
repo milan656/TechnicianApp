@@ -93,7 +93,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun init() {
         // val retrofit = RetrofitCommonClass.getClient(this)
-        firebaseAnalytics = Firebase.analytics
+//        firebaseAnalytics = Firebase.analytics
 
         prefManager = PrefManager(this@LoginActivity)
 
