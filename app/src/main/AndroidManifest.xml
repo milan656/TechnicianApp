@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.technicianapp">
+    package="com.walkins.technician">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.example.technician.common.MainApplication"
@@ -12,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnicianApp">
+        <activity android:name=".activity.HomeSubDealerActivity"/>
+        <activity android:name=".activity.HomeEmployeeActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SplashActivity">
@@ -21,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.EndlessService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

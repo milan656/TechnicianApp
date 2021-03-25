@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.example.technicianapp"
+        applicationId "com.walkins.technician"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -148,6 +148,9 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
     implementation "com.karumi:dexter:5.0.0"
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
 
 
 }
