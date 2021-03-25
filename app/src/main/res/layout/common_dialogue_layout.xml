@@ -21,7 +21,7 @@
             android:background="@drawable/dialog_background"
             android:orientation="vertical">
 
-            <com.example.technicianapp.custom.BoldTextView
+            <com.walkins.technician.custom.BoldTextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
 
                     android:paddingRight="@dimen/fifteen_dp">
 
-                    <com.example.technicianapp.custom.BoldTextView
+                    <com.walkins.technician.custom.BoldTextView
                         android:id="@+id/tv_dialogTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                 android:background="#1A000000" />
 
 
-            <com.example.technicianapp.custom.NormalTextView
+            <com.walkins.technician.custom.NormalTextView
                 android:id="@+id/tv_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/fifteen_sp" />
 
-            <com.example.technicianapp.custom.BoldButton
+            <com.walkins.technician.custom.BoldButton
                 android:id="@+id/btnOk"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"

@@ -21,7 +21,7 @@
             android:layout_gravity="center_horizontal"
             android:indeterminateDrawable="@drawable/progress_icon" />
 
-        <com.example.technicianapp.custom.BoldTextView
+        <com.walkins.technician.custom.BoldTextView
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/five_dp"
             android:layout_height="wrap_content"

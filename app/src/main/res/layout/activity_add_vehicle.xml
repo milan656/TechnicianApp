@@ -48,7 +48,7 @@
                         android:orientation="vertical">
 
 
-                        <com.example.technicianapp.custom.NormalTextView
+                        <com.walkins.technician.custom.NormalTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/five_dp"
@@ -99,7 +99,7 @@
                                 android:src="@drawable/ic_delete" />
                         </LinearLayout>
 
-                        <com.example.technicianapp.custom.NormalTextView
+                        <com.walkins.technician.custom.NormalTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/five_dp"
@@ -140,7 +140,7 @@
                         </LinearLayout>
 
 
-                        <com.example.technicianapp.custom.NormalTextView
+                        <com.walkins.technician.custom.NormalTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/five_dp"
@@ -183,7 +183,7 @@
                                 android:layout_weight="0" />
                         </LinearLayout>
 
-                        <com.example.technicianapp.custom.NormalTextView
+                        <com.walkins.technician.custom.NormalTextView
                             android:id="@+id/tvtVehicleModel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -229,14 +229,14 @@
                                 android:src="@drawable/ic_delete" />
                         </LinearLayout>
 
-                        <com.example.technicianapp.custom.NormalTextView
+                        <com.walkins.technician.custom.NormalTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/five_dp"
                             android:layout_marginTop="@dimen/sixteen_dp"
                             android:text="@string/str_reg_number"
                             android:textColor="@color/dark_gray_text_color"
-                            android:textSize="@dimen/fourteen_sp"></com.example.technicianapp.custom.NormalTextView>
+                            android:textSize="@dimen/fourteen_sp"></com.walkins.technician.custom.NormalTextView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -444,7 +444,7 @@
 
                         </LinearLayout>
 
-                        <com.example.technicianapp.custom.NormalTextView
+                        <com.walkins.technician.custom.NormalTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/six_dp"
@@ -461,7 +461,7 @@
                             android:orientation="vertical">
 
 
-                            <com.example.technicianapp.custom.NormalTextView
+                            <com.walkins.technician.custom.NormalTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/ten_dp"
@@ -470,7 +470,7 @@
                                 android:textColor="@color/light_gray_text_color"
                                 android:textSize="@dimen/fourteen_sp" />
 
-                            <com.example.technicianapp.custom.NormalEditText
+                            <com.walkins.technician.custom.NormalEditText
                                 android:id="@+id/edtVehicleMeterReading"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -485,7 +485,7 @@
                                 android:textColor="@color/dark_gray_text_color"
                                 android:textSize="@dimen/sixteen_sp" />
 
-                            <com.example.technicianapp.custom.NormalTextView
+                            <com.walkins.technician.custom.NormalTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/ten_dp"
@@ -494,7 +494,7 @@
                                 android:textColor="@color/light_gray_text_color"
                                 android:textSize="@dimen/fourteen_sp" />
 
-                            <com.example.technicianapp.custom.NormalEditText
+                            <com.walkins.technician.custom.NormalEditText
                                 android:id="@+id/edtAverageMonthUsage"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -517,7 +517,7 @@
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <com.example.technicianapp.custom.BoldButton
+    <com.walkins.technician.custom.BoldButton
         android:id="@+id/btnSubmit"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"

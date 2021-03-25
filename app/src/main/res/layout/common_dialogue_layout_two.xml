@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five_dp">
 
-                <com.example.technicianapp.custom.BoldTextView
+                <com.walkins.technician.custom.BoldTextView
                     android:id="@+id/tv_dialogTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

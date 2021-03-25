@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/back" />
 
-        <com.example.technicianapp.custom.BoldTextView
+        <com.walkins.technician.custom.BoldTextView
             android:id="@+id/tv_toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:visibility="gone" />
 
 
-        <com.example.technicianapp.custom.BoldTextView
+        <com.walkins.technician.custom.BoldTextView
             android:id="@+id/tvResetToDefaultService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
-        <com.example.technicianapp.custom.BoldTextView
+        <com.walkins.technician.custom.BoldTextView
             android:id="@+id/tvDownloadReport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
