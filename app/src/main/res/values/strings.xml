@@ -1,3 +1,1038 @@
 <resources>
     <string name="app_name">TechnicianApp</string>
+
+    <string name="str_welcome">Welcome</string>
+    <string name="login_text">Please sign in to your account.</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+    <string name="str_keep_me_log_in">Keep me logged in</string>
+    <string name="recover_password">Recover Password</string>
+    <string name="login_dashboard">Login</string>
+    <string name="no_account">No account ?</string>
+    <string name="sign_up">
+        <u>Sign up now</u>
+    </string>
+    <string name="test_text">Test User</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_save">Save</string>
+    <string name="str_profile_completion">Profile Completion Progress:</string>
+    <string name="str_details">Details</string>
+    <string name="str_member_code">Member Code</string>
+    <string name="str_company_address">Company Address</string>
+    <string name="action_settings">Settings</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="str_recover_password">Recover your Password</string>
+    <string name="str_recover_password_desc">Please enter your User ID and a reset link will be sent to your registered
+        email address.
+    </string>
+    <string name="str_sap_code">SAP Code</string>
+    <string name="str_send_recovery_code">Send Recovery Link</string>
+    <string name="str_recover_password_forgot">Please create a new password to login to dashboard</string>
+    <string name="str_old_password">New Password</string>
+    <string name="str_new_password">Confirm New Password</string>
+    <string name="str_set_password">Set Password</string>
+    <string name="str_dashboard">Home</string>
+    <string name="str_report">Report</string>
+    <string name="str_customer_visit">Customer Visit</string>
+    <string name="str_about_programme">About the Programme</string>
+    <string name="str_about_programme_detail">The Advantage program is a centralized Dealer Relationship Program that
+        simplifies the...
+    </string>
+
+    <string name="filled_bullet">\u25CF</string>
+
+
+    <string name="str_tab_about_point_primary">Primary Pts/Offtake</string>
+    <string name="str_tab_about_point_secondary">Secondary Pts/Offtake</string>
+    <string name="str_pcr">PCR</string>
+    <string name="str_point_range_type">Points Range / Tyre</string>
+    <string name="str_point_range_type_car">80 to 60</string>
+
+    <string name="str_type_offtake_qurt">Tyre Offtake Quarterly</string>
+    <string name="str_tweleve_thirteen">12” - 13”</string>
+    <string name="str_fourteen_sixteen">14” - 16”</string>
+    <string name="str_etc"><![CDATA[(Ranger, UX1, Touring & all 17 inches)]]></string>
+    <string name="str_total_point">Total Points</string>
+    <string name="str_quater">Earned Points in 2019 - 20</string>
+    <string name="str_provisional">*These Points are provisional. They will get added to your total earned points at the
+        end of Q3 if you are eligible.
+    </string>
+    <string name="str_quater_provisional">Provisional Earned Points in Q2 \n(Jul - Sep)</string>
+    <string name="str_offtek">Offtake</string>
+    <string name="str_points">Points</string>
+    <string name="str_truck">Truck</string>
+    <string name="str_two_wheeler">2 / 3 WHEELER</string>
+    <string name="str_point_till_date">Points Month Till Date</string>
+    <string name="str_date_demo">Jul’19</string>
+    <string name="quater_four">Q4</string>
+    <string name="quater_three">Q3</string>
+    <string name="quater_two">Q2</string>
+    <string name="quater_one">Q1</string>
+    <string name="str_month">Month</string>
+    <string name="str_total_offrek">Total Offtake</string>
+    <string name="str_premioum">Premium</string>
+    <string name="str_consitency">Consistency</string>
+    <string name="str_slab_jump">Slab Jump</string>
+    <string name="str_schemes">Schemes</string>
+    <string name="str_approve">Approvals</string>
+    <string name="warranty_registration">Warranty Registration</string>
+    <string name="customer_details">CUSTOMER DETAILS</string>
+    <string name="first_name">First Name <font color='#ffdf42'>*</font></string>
+    <string name="last_name">Last Name <font color='#ffdf42'>*</font></string>
+    <string name="first_name_not">First Name</string>
+    <string name="last_name_not">Last Name</string>
+    <string name="vehicle_type">Type</string>
+    <string name="state">State <font color='#ffdf42'>*</font></string>
+    <string name="city">City <font color='#ffdf42'>*</font></string>
+    <string name="reg_no">Registration Number</string>
+    <string name="reg_year">Registration Year</string>
+    <string name="veh__meter_reading">Vehicle Meter Reading</string>
+    <string name="veh_cat">Vehicle Category</string>
+    <string name="avg_mon_running_km">Average Monthly Usage</string>
+    <string name="veh_details">VEHICLE DETAILS</string>
+    <string name="pro_det">PRODUCT DETAILS</string>grant
+    <string name="type_description">Tyre Description</string>
+    <string name="no_of_tyre_purchase">No. of Tyres Purchased</string>
+    <string name="next">Next</string>
+    <string name="vech_type">Select your customer’s vehicle type</string>
+    <string name="sel_from_exis">Select from existing vehicle</string>
+    <string name="search_hint">Search State</string>
+    <string name="cus_state">Select customer’s vehicle registration state <font color='#ffdf42'>*</font></string>
+    <string name="cus_city">Select customer’s vehicle registration City <font color='#ffdf42'>*</font></string>
+    <string name="sel_model">Select the model of your customer’s vehicle <font color='#ffdf42'>*</font></string>
+    <string name="sel_var">Select the variant of your customer’s vehicle </string>
+    <string name="cus_met_read">Enter your customer’s vehicle meter reading <font color='#ffdf42'>*</font>
+    </string>
+    <string name="cus_mon_km">Enter your customer’s average monthly usage.</string>
+
+
+    <string name="sel_tyre">Select the tyres customer is buying <font color='#ffdf42'>*</font></string>
+
+
+    <string name="str_warranty_title">WARRANTY REGISTRATION</string>
+    <string name="cus_mob_no">Please Provide your customer’s mobile number and we’ll send a verification code to your
+        customer.
+    </string>
+    <string name="otp_num">Enter the OTP sent to +91 9923487689.</string>
+    <string name="str_send_again">
+        <u>Send Again</u>
+    </string>
+    <string name="warranty_register">Register</string>
+    <string name="str_welcome_new">Welcome to the brand new</string>
+    <string name="str_about_jkadvantage">ABOUT JK Advantage</string>
+    <string name="str_lorep_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+        Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley
+        of type and scrambled it to make a type specimen book.
+    </string>
+    <string name="str_next">Next</string>
+    <string name="str_profile_missing_text">Looks like some of your details are missing. Please fill them to enjoy the
+        benefits!
+    </string>
+    <string name="str_business_name">Business Name</string>
+    <string name="str_business_name_exm"><![CDATA[Standard Tyres & Batteries]]></string>
+    <string name="str_business_address">Business Address</string>
+    <string name="str_request_edit">REQUEST TO EDIT</string>
+    <string name="str_email_address">Email Address <font color='#ffdf42'>*</font></string>
+    <string name="str__address">Address <font color='#ffdf42'>*</font></string>
+    <string name="str_email_only">Email <font color='#ffdf42'>*</font></string>
+    <string name="str_select_product_man">Select Product <font color='#ffdf42'>*</font>
+    </string>
+    <string name="str_select_quantity_man">Select Quantity <font color='#ffdf42'>*</font>
+    </string>
+    <string name="str_select_payment_mode">Select Payment Mode <font color='#ffdf42'>*</font>
+    </string>
+    <string name="str_email_address_hint">Email Address
+
+    </string>
+    <string name="str_business_name_star">Business Name <font color='#ffdf42'>*</font>
+    </string>
+    <string name="str_owner_phone_number">Owner’s Phone Number <font color='#ffdf42'>*</font>
+    </string>
+    <string name="str_owner_name">Owner’s Name <font color='#ffdf42'>*</font>
+    </string>
+    <string name="str_gst_number_man">GST Number <font color='#ffdf42'>*</font></string>
+    <string name="str_pan_number_man">PAN Number <font color='#ffdf42'>*</font></string>
+
+    <string name="str_owner_phone_number_not_mandatory">Owner’s Phone Number</string>
+    <string name="str_gst_number">GST Number</string>
+    <string name="str_pan_number">PAN Number</string>
+    <string name="str_primary_contact_detail">Primary Contact Details</string>
+    <string name="str_other_business_detail">Other Business Details</string>
+    <string name="str_alternative_contact_person">Alternate Contact Person</string>
+    <string name="str_designation">Designation</string>
+    <string name="str_alternative_contact_number">Alternate Contact Number</string>
+    <string name="str_whatsapp_number">Whatsapp Number <font color='#ffdf42'>*</font>
+    </string>
+    <string name="str_whatsapp_number_not_mandatory">Whatsapp Number</string>
+    <string name="str_social_detail">Social Details</string>
+    <string name="str_birthdate">Birth Date <font color='#ffdf42'>*</font>
+    </string>
+    <string name="str_birthdate_not_mandatory">Birthdate</string>
+    <string name="str_anniversary_date">Anniversary Date</string>
+    <string name="str_Facebook_page">Facebook Page</string>
+    <string name="str_instagram_page">Instagram Page</string>
+    <string name="str_website">Website</string>
+    <string name="str_done">Done</string>
+    <string name="str_email_address_not_mandatory">Email Address</string>
+    <string name="str_request_detail">Request Details</string>
+    <string name="str_request_detail_for_enter">
+        Tell us what you want to edit with reason. We will verify details and update database soon. We expect this to
+        complete in a few days however we will try it as soon as possible.
+    </string>
+    <string name="str_request_to_edit">REQUEST TO EDIT DETAILS</string>
+    <string name="str_send">Send</string>
+    <string name="str_two_three_wheeler">2 and 3 WHEELER</string>
+    <string name="str_point_range_type_two_wheeler">20 to 100</string>
+    <string name="str_lcv_scv">SCV / LCV</string>
+    <string name="str_point_range_type_scv_lcv">20 to 400</string>
+    <string name="str_truck_bus">TRUCKS / BUS</string>
+    <string name="str_farm">FARM</string>
+    <string name="str_point_range_type_farm">85 to 250</string>
+    <string name="str_point_range_type_bus_truck">60 to 120</string>
+    <string name="str_point_range_tyre">Points Range / Tyre</string>
+    <string name="str_points_pcr">80 to 260</string>
+    <string name="user_id">User ID</string>
+    <string name="str_ytd">YTD</string>
+    <string name="str_qtd">QTD</string>
+    <string name="str_mtd">MTD</string>
+    <string name="str_april_to_july">Apr - Jul’19</string>
+    <string name="str_ytr_value">4,14,100</string>
+    <string name="str_reward_demo">Your opportunity to Redeem Points just opened up.</string>
+
+    <string name="str_reward_demo_one">Your opportunity to Redeem Points just opened up.\n You
+        have <!--<b>15 Days remaining</b> -->
+    </string>
+
+    <string name="str_reward_demo_two">Your opportunity to Redeem Points just opened up.\n You
+        have <!--<b>15 Days remaining</b> -->
+    </string>
+    <string name="str_year_offtrek">
+        <u>View yearly offtake</u>
+    </string>
+    <string name="str_welcome_brand_new">Welcome to the brand new</string>
+    <string name="str_about_us">The Advantage program is a centralized Dealer Relationship Program that simplifies the
+        communication exchange between the channel partners and JK Tyre. It rewards dealers who are high performer and
+        acknowledge their effort. It aims in building long term partnership relationship by enhancing the low potential
+        dealers and enabling them to grow. JK Advantage is the only loyalty program which is offered to the dealers
+        across the industry, and today is considered as one of the biggest program.
+    </string>
+    <string name="str_how_it_works_detail">
+        <ul>
+            <li>Dealer has to do minimum turnover of INR 3 Lacs in a quarter with JK to get eligible for enrollment in
+                the program
+            </li>
+            <li>Dealer has to maintain 3 Lacs turnover every quarter with JK to get the points benefit.</li>
+            <li>Basis dealer quarter offtake &amp; program structure dealer will earn benefits of the points as per
+                respective slab.
+            </li>
+            <li>Dealer cannot redeem his points in case enrollment form is not filled available online.</li>
+        </ul>
+    </string>
+    <string name="str_how_it_works">What\'s New</string>
+    <string name="str_knw_your_platform">Know your platform</string>
+    <string name="vech_no">GJ 01 KM 2900</string>
+    <string name="str_edit">Edit</string>
+    <string name="str_car">Car</string>
+    <string name="str_car_point">50</string>
+    <string name="str_point_registration">Points / Registration</string>
+    <string name="str_two_whleer_point">25</string>
+    <string name="str_enroll_programmer">Enrollment to the Program</string>
+    <string name="str_seconary_points_string">Dealer cannot register more than 5 tyres for a
+        single vehicle in a day.
+    </string>
+    <string name="str_seconary_points_string_second">Dealer cannot register more than 10 tyres for a single vehicle in 6
+        months.
+    </string>
+    <string name="str_about_one">A six times larger loyalty program wherein channel partners will earn points across categories like PCR, Truck/Bus, SCV/LCV, 2 Wheeler, 3 Wheeler,Farm and Retread.
+    </string>
+    <string name="str_about_two">A cloud enabled scalable technology, available on Web and Mobile.
+    </string>
+    <string name="str_about_three">
+        Now register all your customer car and 2 wheeler with JK tyre warranty online and earn additional points for each registered entry.</string>
+    <string name="str_about_four">A dynamic report page, which updates based on daily offtakes for improved transparency.
+    </string>
+    <string name="str_term_and_condition"><![CDATA[I have read and agreed to the Terms & Conditions]]></string>
+    <string name="str_do_you_get_link">Didn’t get the link?</string>
+    <string name="str_resend">
+        <u>Resend</u>
+    </string>
+    <string name="str_back_to_login">Back to Login</string>
+    <string name="str_view_profile">View Profile</string>
+    <string name="str_get_started"><![CDATA[Save & Get Started]]></string>
+    <string name="str_car_point_structure">Point Structure for Car</string>
+    <string name="str_seconary_points_string_three">Dealer cannot register more than 3 tyres for a single vehicle in a
+        day.
+    </string>
+    <string name="str_seconary_points_string_four">Dealer cannot register more than 5 tyres for a single vehicle in 6
+        months.
+    </string>
+    <string name="str_two_wheeler_point_structure">Point Structure for 2 Wheeler</string>
+    <string name="str_same_as_owner">Same as owner</string>
+    <string name="str_video_text">Advantage 2.0 Highlights</string>
+    <string name="recover_your_password">Recover your password</string>
+    <string name="str_hint">Type Here</string>
+
+    <string name="str_whatsapp_number_hint">Enter primary WhatsApp number</string>
+    <string name="str_select">Select</string>
+    <string name="str_request_detail_first_time">Your request to change details has been recieved. We will review
+        shortly.
+    </string>
+    <string name="vec_reg_no">Select your customer’s vehicle registration no.</string>
+    <string name="vec_reg_year">Enter your customer’s vehicle registration number <font color='#ffdf42'>*</font></string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="add_new">Add New Vehicle</string>
+    <string name="enter_no">Enter Number</string>
+    <string name="str_dashboard_total_customer">Total Customers registered with warranty</string>
+    <string name="str_how_to_earn_secondary_points">Know how to earn points on warranty</string>
+    <string name="cus_tyre">Select the tyre description of your customer’s vehicle</string>
+    <string name="cus_reg_year">Select your customer’s vehicle registration year</string>
+    <string name="cus_model">Select the model of your customer’s vehicle <font color='#ffdf42'>*</font></string>
+    <string name="cus_var">Select the variant of your customer’s vehicle</string>
+    <string name="str_reward_ready">YOUR REWARDS ARE READY!!</string>
+    <string name="str_opening_balance">OPENING BALANCE</string>
+    <string name="str_report_point">Point Earn Report</string>
+    <string name="str_download_full_report">Download Full Report</string>
+    <string name="search_note">Note - If you can not find the state, please use the search bar to search for it.
+    </string>
+    <string name="mesage">You Have Purchese Maximum Number Of Tyre</string>
+    <string name="desc">Please note that you’ll lose all the progress if you close this tab</string>
+    <string name="str_no_secondary_points">Start registering your customer for warranty and earn points on each
+        registartion.
+    </string>
+    <string name="str_total_offtake_points">Total Offtake Points</string>
+    <string name="str_logout">Logout</string>
+    <string name="str_lcv">LCV</string>
+    <string name="str_scv">SCV</string>
+    <string name="str_12_13">12” - 13”</string>
+    <string name="str_14_16">14” - 16”</string>
+    <string name="str_home">Offtake Dashboard</string>
+    <string name="str_copy_right">
+        <![CDATA[Powered by JK Tyre Tyre & Industries Ltd. © 2019, All Rights Reserved.]]></string>
+    <string name="str_copy_right_lomoso"><![CDATA[Design & Developed by LOMOSO Solutions Pvt Limited]]></string>
+    <string name="str_q1">QUARTER 1 (Apr - Jun)</string>
+    <string name="str_special_scheme">SPECIAL SCHEME (ID #123456)</string>
+    <string name="enter_strencil">Enter Strencil Number</string>
+    <string name="strencil_title">Enter Stencil number for the front left tyre</string>
+    <string name="frnt_left">Front Left</string>
+    <string name="front_right">Front Right</string>
+    <string name="rear_left">Rear Left</string>
+    <string name="rear_right">Rear Right</string>
+    <string name="spare">Spare</string>
+    <string name="front">Front</string>
+    <string name="rear">Rear</string>
+    <string name="stencil_number">Stencil Number</string>
+    <string name="str_no">H3012344419</string>
+    <string name="str_no_lable">No</string>
+    <string name="str_change_password">Change Password</string>
+    <string name="str_current_password">Current Password</string>
+    <string name="str_consitency_bonus_point">Consistency Bonus Points</string>
+    <string name="str_slab_jump_point">Slab Jump Points</string>
+    <string name="str_skim_point">Scheme Points</string>
+    <string name="str_approval_point">Approval Points</string>
+    <string name="str_premium_1213_point">Premium 12\" - 13\"</string>
+    <string name="str_bias">Bias</string>
+    <string name="str_radial">Radial</string>
+    <string name="str_bias_points">Bias Points</string>
+    <string name="str_radial_points">Radial Points</string>
+    <string name="str_shresth">Shresth</string>
+    <string name="str_sona">Sona 1</string>
+    <string name="str_prithvi">Prithvi</string>
+    <string name="str_shresth_points">Shresth Points</string>
+    <string name="str_sona_points">Sona Points</string>
+    <string name="str_prithvin_points">Prithvi Points</string>
+    <string name="str_motorcycle">Motorcycle</string>
+    <string name="str_scooter">Scooter</string>
+    <string name="str_threewheelers">3 Wheelers</string>
+    <string name="str_motorcyclepoints">MotorCycle Points</string>
+    <string name="str_scooter_points">Scooter Points</string>
+    <string name="str_threewheelerspoints">ThreeWheelers Points</string>
+    <string name="str_scheme">Scheme</string>
+    <string name="str_approval">Approval</string>
+    <string name="str_total">TOTAL</string>
+    <string name="str_ok">OK</string>
+    <string name="str_logout_from_all_device">Do you want to Logout?</string>
+    <string name="str_logout_from_device">Logout from all device</string>
+    <string name="are_you_sure_you_want_to_quit_the_registration_process">Are you sure you want to quit the registration process?</string>
+    <string name="please_note_that_you_ll_lose_all_the_progress_if_you_quit_the_process_now">Please note that you’ll lose all the progress if you quit the process now.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="note_if_you_can_not_find_the_city_please_use_the_search_bar_to_search_for_it">Note - If you can not find the city, please use the search bar to search for it.</string>
+    <string name="search">Search...</string>
+    <string name="note_if_you_can_not_find_the_year_please_use_the_search_bar_to_search_for_it">Note - If you can not find the Year, please use the search bar to search for it.</string>
+    <string name="note_if_you_can_not_find_the_company_of_your_customer_s_vehicle_please_use_the_search_bar_to_search_for_it">Note - If you can not find the company of your customer’s vehicle, please use the search bar to search for it.</string>
+    <string name="note_if_you_can_not_find_the_model_of_your_customer_s_vehicle_please_use_the_search_bar_to_search_for_it">Note - If you can not find the model of your customer’s vehicle, please use the search bar to search for it.</string>
+    <string name="note_if_you_can_not_find_the_variant_of_your_customer_s_vehicle_please_use_the_search_bar_to_search_for_it">Note - If you can not find the variant of your customer’s vehicle, please use the search bar to search for it.</string>
+    <string name="select_the_company_of_your_customer_s_vehicle">Select the company of your customer’s vehicle <font color='#ffdf42'>*</font></string>
+    <string name="search_1">Search...</string>
+    <string name="str_skulist_string">Select Tyre Description for the front tyre <font color='#ffdf42'>*</font></string>
+    <string name="str_skulist_string_rear">Select Tyre Description for the rear tyre <font color='#ffdf42'>*</font></string>
+    <string name="str_skulist_string_spare">Select Tyre Description for the spare tyre <font color='#ffdf42'>*</font></string>
+    <string name="str_tyre_pos_string">Select Tyre Position <font color='#ffdf42'>*</font></string>
+    <string name="str_qtd_mtd">* These Points are provisional. They will get added to your total earned points at the end of Q2 if you are eligible.</string>
+    <string name="str_contact_us">Contact Us</string>
+    <string name="str_rakesh_kumar">Mr. Rakesh Kumar</string>
+    <string name="str_warranty">Warranty</string>
+    <string name="str_reportbelow">Please click here to know about last year (up to March\'19) Advantage Program Points.</string>
+    <string name="str_skip">Skip</string>
+    <string name="str_vehicle_type">Select your vehicle type</string>
+    <string name="str_vehicle_type_man">Select vehicle type <font color='#ffdf42'>*</font></string>
+    <string name="str_vehicle_own">Please select your customer’s type of ownership of the vehicle</string>
+    <string name="str_taxi">Taxi</string>
+    <string name="str_personal">Personal</string>
+    <string name="str_tbb">TBB</string>
+    <string name="str_tbr">TBR</string>
+    <string name="str_total_offrek_eligible">Total Eligible Offtake</string>
+    <string name="str_eligible_offtake">Eligible Offtake</string>
+    <string name="str_jrm">JRM</string>
+    <string name="str_jxm">JXM</string>
+    <string name="str_jrx">JRX</string>
+    <string name="str_jxl">JXL</string>
+    <string name="str_xlm">XLM</string>
+    <string name="str_uh5">JUH5</string>
+    <string name="str_dep">JDE++</string>
+    <string name="str_jdy">JDY</string>
+    <string name="total_tyre">Select the number of tyres your customer is buying <font color='#ffdf42'>*</font></string>
+    <string name="nooftyre">Select the number of tyres your customer is buying</string>
+    <string name="back">Back</string>
+    <string name="enter_sten">Enter stencil number for each tyre <font color='#ffdf42'>*</font></string>
+    <string name="str_two__three_wheeler">2 / 3 Wheeler</string>
+    <string name="str_warranty_reg_number">Warranty Registration Number</string>
+    <string name="str_warranty_reg_date">Registration Date</string>
+    <string name="str_warranty_stencil_number">Stencil Number</string>
+    <string name="str_proceed">Proceed</string>
+    <string name="str_warranty_tyre_description">Enter Tyre Description</string>
+    <string name="str_warranty_stencil_number_enter">Enter Stencil Number</string>
+    <string name="str_warranty_tyre_one">For tyre 1</string>
+    <string name="str_warranty_tyre_two">For tyre 2</string>
+    <string name="str_skulist_car_string">Select Tyre Description of the tyre <font color='#ffdf42'>*</font></string>
+    <string name="page_title">There are no details associated with this number. Please register the product first to check eligibility for warranty.</string>
+    <string name="tyr_desc">Tyre Description</string>
+    <string name="str_tyre_desc1">Select Tyre Description 1 <font color='#ffdf42'>*</font></string>
+    <string name="str_tyre_desc2">Select Tyre Description 2 <font color='#ffdf42'>*</font></string>
+    <string name="str_tyre_desc3">Select Tyre Description 3 <font color='#ffdf42'>*</font></string>
+    <string name="enter_strencil1">Enter Stencil Number of Each Tyre <font color='#ffdf42'>*</font></string>
+    <string name="str_warrranty_scorecard">Warranty Scorecard</string>
+    <string name="str_total_offrek_with_dash">Total Offtake -</string>
+    <string name="str_total_point_with_dash">Total Points -</string>
+    <string name="str_offtake_scorecard">Warranty Report of Dealers</string>
+    <string name="str_report_hint">Search using dealer name or SAP code</string>
+    <string name="str_total_customer">Total Cust. Reg. -</string>
+    <string name="str_total_customer_reg">Total Cust. Reg.</string>
+    <string name="str_reg_date">Registration Date</string>
+    <string name="str_customer_name_number"><![CDATA[Customer Name & Phone Number]]></string>
+    <string name="str_vehicle_info">Vehicle Info.</string>
+    <string name="str_warranty_reg">Warranty Details</string>
+    <string name="str_points_earned">Warranty Pts. Earned</string>
+    <string name="str_report_hint_dealer">Search by name,number,warranty no,sensor no.</string>
+    <string name="str_download_report">Download Report</string>
+    <string name="str_download_full_scorecard">Download Full Scorecard</string>
+    <string name="str_vehicle_type_2">Vehicle Type</string>
+    <string name="str_offtake_scorecard_for_report">Offtake Scorecard Of Dealer</string>
+    <string name="str_new_version">New Version Available</string>
+    <string name="str_offtake_scorecard_report">Offtake Scorecard</string>
+    <string name="str_offtek_card">Offtake Report</string>
+    <string name="total_coins">Total Coins</string>
+    <string name="_20_000">20,000</string>
+    <string name="reedemd_coins">Reedemd Coins</string>
+    <string name="_0">0</string>
+    <string name="_20_0000">20,0000</string>
+    <string name="delivery_date">Delivery Date</string>
+    <string name="car_charger">Car Charger</string>
+    <string name="out_of_stock">Out of Stock</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_id">Product ID</string>
+    <string name="cc87321">CC87321</string>
+    <string name="product_qty">Product Qty.</string>
+    <string name="order_date">Order Date</string>
+    <string name="_200">200</string>
+    <string name="_11_04_2019">11/04/2019</string>
+    <string name="shipping_address">Shipping address</string>
+    <string name="_11_05_2019">11/05/2019</string>
+    <string name="todo">TODO</string>
+    <string name="gujrat_380054">370 Vandervort Track Suite 029,Bodakdev, Gujarat, 380054</string>
+    <string name="balance_coin">Balance Coins</string>
+    <string name="coins_on_cart">Coins on Cart</string>
+    <string name="delete">Are you sure want to delete cart item ?</string>
+    <string name="desc_del">Please Note If You Click On Yes This Data Will Be Deleted From Cart</string>
+    <string name="addre">Address <font color='#ffdf42'>*</font></string>
+    <string name="picode">Pincode <font color='#ffdf42'>*</font> </string>
+    <string name="stat">State <font color='#ffdf42'>*</font></string>
+    <string name="cit">City <font color='#ffdf42'>*</font></string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="str_street_address">Street Address <font color='#ffdf42'>*</font></string>
+    <string name="str_enter_your_detail">Enter your details</string>
+    <string name="str_mobile_number">Mobile Number</string>
+    <string name="str_mobile_number_mandatory">Mobile Number <font color='#ffdf42'>*</font></string>
+    <string name="str_warranty_report">Warranty Report</string>
+    <string name="str_customer_name">Customer Name</string>
+    <string name="str_vehicle_number">Vehicle Number</string>
+    <string name="str_warranty_number">Warranty Number</string>
+    <string name="str_warranty_points_earned">Warranty Points earned</string>
+    <string name="str_vehicle_type_string">Vehicle Type</string>
+    <string name="str_vehicle_type_string_man">Vehicle Type <font color='#ffdf42'>*</font></string>
+    <string name="str_no_of_tyre_purchased">No. of tyres purchased</string>
+    <string name="str_no_sub_dealer">You have not invited any sub dealer or branches for warranty registration. \nplease add them for warranty registration</string>
+    <string name="invite">Invite</string>
+    <string name="str_add_member">Add Member</string>
+    <string name="str_send_invitation">Send Invitation Via SMS</string>
+    <string name="str_sub_dealer">Sub Dealer</string>
+    <string name="str_branch">Branch</string>
+    <string name="str_nick_name">Nick Name <font color='#ffdf42'>*</font></string>
+    <string name="str_nick_name_m">Nick Name</string>
+    <string name="str_type">Type</string>
+    <string name="str_invite_subdealer_or_branch">Invite Sub-dealers or Branch</string>
+    <string name="name">Name</string>
+    <string name="str_contact_person">Contact Person Name <font color='#ffdf42'>*</font></string>
+    <string name="str_add_new_member">Add new Members</string>
+    <string name="str_help_title">How to register your customer tyre purchase with warranty?</string>
+    <string name="str_step_one">Step 1: Enter the customer\'s 10 digit mobile number for WARRANTY REGISTRATION.</string>
+    <string name="str_step_two">Step 2: Verify OTP code received on customer\'s mobile number.</string>
+    <string name="str_step_three">Step 3: Enter the customer details like First Name, Last Name and Email</string>
+    <string name="str_step_four">Step 4: Select the type of vehicle i.e. car or two wheeler and if existing vehicle owner then select the vehicle number</string>
+    <string name="str_step_five">Step 5: Complete the remaining details of vehicles as directed.</string>
+    <string name="str_step_six">Step 6: Enter the Product details based on tyre description. For example search the product like blaze, touring and you will find the matching product list. Select the correct product description</string>
+    <string name="str_step_seven">Step 7: Select the number of tyres, customer has purchased and complete the registration.</string>
+    <string name="str_close">Close</string>
+    <string name="pincode">Pincode</string>
+    <string name="list_of_cus">List Of Customer</string>
+    <string name="man_group">Manage Group</string>
+    <string name="source">Source Name</string>
+    <string name="dnd">DND Status</string>
+    <string name="created">Created On</string>
+    <string name="search_cus">Search by name, mobile no, vehicle type</string>
+    <string name="search_cus_group">Search by name, mobile no</string>
+    <string name="str_first_name">First Name</string>
+    <string name="str_first_name_man">First Name <font color='#ffdf42'>*</font></string>
+    <string name="str_last_name">Last Name</string>
+    <string name="str_last_name_man">Last Name <font color='#ffdf42'>*</font></string>
+    <string name="str_select_group">Select Group</string>
+    <string name="str_select_group_man">Select Group <font color='#ffdf42'>*</font></string>
+    <string name="str_enter_number_man">Enter number <font color='#ffdf42'>*</font></string>
+    <string name="str_remarks">Remarks</string>
+    <string name="str_add">Add</string>
+    <string name="str_vehicle_make_man">Vehicle Make <font color='#ffdf42'>*</font></string>
+    <string name="str_vehicle_model_man">Vehicle Model <font color='#ffdf42'>*</font></string>
+    <string name="str_reg_number">Registration Number</string>
+    <string name="str_average_month">Average Monthly Usage (KMs)</string>
+    <string name="str_add_new_vehicle">Add New Vehicle</string>
+    <string name="str_add_vehicle_msg">Do you want to add new vehicle ?</string>
+    <string name="str_add_vehicle">Add Vehicle</string>
+    <string name="str_car_and_make_model"><![CDATA[Car Make & Model]]></string>
+    <string name="str_group_name">Group Name <font color='#ffdf42'>*</font></string>
+    <string name="str_group_name_not_man">Group Name</string>
+    <string name="str_member">Members</string>
+    <string name="str_created_at">Created At</string>
+    <string name="str_rename_group">Rename Group</string>
+    <string name="str_edit_group">Edit Group</string>
+    <string name="str_add_customer_in_group">Add Member</string>
+    <string name="str_delete_member">Delete Member</string>
+    <string name="str_add_or_create_group">Add in Group</string>
+    <string name="str_create_group">Create Group</string>
+    <string name="str_sub_dealer_branch_name">Branch or Sub Dealer / Staff Name <font color='#ffdf42'>*</font></string>
+    <string name="str_total_offtake">Total Offtake</string>
+    <string name="vehicle_make_model"><![CDATA[Vehicle Make & Model]]></string>
+    <string name="str_create_campign">Create New Campaign</string>
+    <string name="str_schedule_campign">Scheduled New Campaign</string>
+    <string name="str_no_schedule_campaign">Scheduled campaigns help set up customer engagement campaign for future dates. They will be executed automatically on the schedule date. Currently you have not scheduled any campaigns.</string>
+    <string name="str_select_purpose">Select Purpose</string>
+    <string name="str_select_purpose_man">Select Purpose <font color='#ffdf42'>*</font></string>
+    <string name="str_select_picture_sms">Select Message Type </string>
+    <string name="str_select_picture_sms_man">Select Message Type <font color='#ffdf42'>*</font></string>
+    <string name="str_select_picture_communication_type">Select Communication Type <font color='#ffdf42'>*</font></string>
+    <string name="str_change_picture">Change Picture</string>
+    <string name="str_select_language">Select Language</string>
+    <string name="str_select_language_man">Select Language <font color='#ffdf42'>*</font></string>
+    <string name="str_want_to_schedule_campaign">Want to schedule this campaign?</string>
+    <string name="str_run_now">Run Now</string>
+    <string name="str_msg_preview">Message Preview</string>
+    <string name="str_msg_one"><![CDATA[Hello Sandeep Bhai! Here’s an offer for you!! Avail BUY 2 GET ANY 1 FREE at Soa and Salon. Hurry and take benefit of this offer. Offer valid till 21-11-2019. T&C applied.]]></string>
+    <string name="str_msg_two">Note - This message is a preview of the message that the customer will receive. The message characters and credits will vary as per the customer name and offer. Make sure you keep that in mind before sending the message to all customers.</string>
+    <string name="str_msg_detail">Message Details</string>
+    <string name="str_msg_detail_one">A message with upto 160 characters (including space and special characters) uses 1 SMS credit(balance).</string>
+    <string name="str_msg_detail_two">If the message is more than 160 characters, 2 SMS credits are used for that message. Meaning the account balance is debited by 2 SMS.</string>
+    <string name="str_msg_detail_three">Maximum eligible limit per message is 459 characters.</string>
+    <string name="str_msg_detail_four">Only English language messages are eligible as of now. JkTyre does not support unicode messages (Indian language messages).</string>
+    <string name="str_other_language">Other Language</string>
+    <string name="str_other_language_one">One uni-code character (other language character) is equivalent to four English characters for text message sent in other language. So please check the SMS count before sending the SMS.</string>
+    <string name="str_other_language_two">The ability to read text messages in other languages depends on the receiver’s handset model (compatibility) and the mobile operators.You can type up to 469 characters, if your text message is in another language.</string>
+    <string name="str_based_on_group">Based on Group</string>
+    <string name="str_based_on_date_of_creation">Based on date of creation</string>
+    <string name="str_starting_from">From</string>
+    <string name="str_starting_from_man">From <font color='#ffdf42'>*</font></string>
+    <string name="str_to">To</string>
+    <string name="str_select_vehicle_make">Select Vehicle Make</string>
+    <string name="str_select_vehicle_make_man">Select Vehicle Make <font color='#ffdf42'>*</font></string>
+    <string name="str_select_vehicle_model">Select Vehicle Model</string>
+    <string name="str_select_vehicle_model_man">Select Vehicle Model <font color='#ffdf42'>*</font></string>
+    <string name="str_based_vehicle">Based on vehicle details</string>
+    <string name="str_select_source">Select source</string>
+    <string name="str_select_source_man">Select source <font color='#ffdf42'>*</font></string>
+    <string name="str_based_on_source_customer">Based on source of customer</string>
+    <string name="str_select_occasion">Select Occasion</string>
+    <string name="str_select_occasion_mane">Select Occasion <font color='#ffdf42'>*</font></string>
+    <string name="str_add_data_manually">Add data manually</string>
+    <string name="str_copy_number_hint">You can directly copy and paste the phone numbers of your customers here.</string>
+    <string name="str_reset_filter">Reset Filters</string>
+    <string name="str_apply">Apply</string>
+    <string name="str_based_on_occasion">Based on occasion</string>
+    <string name="str_view_group">View Group</string>
+    <string name="str_group">Groups</string>
+    <string name="str_group_new">Group</string>
+    <string name="str_customer_group_error">Currently, there is no any Group to display</string>
+    <string name="str_total_accounts">Total Accounts</string>
+    <string name="jktyre_permission">"JK Tyre" would like to use your Phone Call.</string>
+    <string name="str_delete">Delete</string>
+    <string name="str_duplicate">Duplicate</string>
+    <string name="str_campaign_name">Campaign Name <font color='#ffdf42'>*</font></string>
+    <string name="str_customer_target_group">Customer Target Group <font color='#ffdf42'>*</font></string>
+    <string name="str_enter_text_msg">Enter Message Text <font color='#ffdf42'>*</font></string>
+    <string name="str_date">Date <font color='#ffdf42'>*</font></string>
+    <string name="str_time">Time <font color='#ffdf42'>*</font></string>
+    <string name="search_by_campaign_name">Search By Campaign Name</string>
+    <string name="str_status">Status</string>
+    <string name="str_sms_credit">SMS Credit</string>
+    <string name="str_language">Language</string>
+    <string name="str_sms">SMS</string>
+    <string name="str_select_month">Month</string>
+    <string name="str_take_your_action">My Action</string>
+    <string name="text_2">Select group name of your choice and add customers by clicking on ‘Select Customers’.</string>
+    <string name="text_1">To add New Group from mobile app, select ‘create new group’.</string>
+    <string name="text_3">Select ‘Add To Group’ to add those customers to the group.</string>
+    <string name="str_no_schedule_campaign_with_filter">We can not find any records matching your search criteria. Please change search criteria and try again.</string>
+    <string name="block_without_filter">Currently, there is no any Member to display.</string>
+    <string name="str_no_customer_available">Currently there are no customers registered with your store. Bulk Upload features to add customers to your account..</string>
+    <string name="str_no_customer_available_filter">We can not find any records matching your search criteria. Please change search criteria and try again.</string>
+    <string name="str_ho_trade_scheme_report">All India Trade Scheme Report \n(Q4 2019 2020)</string>
+    <string name="str_achievement_percentage">% Achievement</string>
+    <string name="str_no_of_active_dealer">No. of Active Dealers</string>
+    <string name="str_above_100">Above 100%</string>
+    <string name="str_90_to_99">90 to 99%</string>
+    <string name="str_80_to_89">80 to 89%</string>
+    <string name="str_70_to_79">70 to 79%</string>
+    <string name="str_60_to_69">60 to 69%</string>
+    <string name="str_50_to_59">50 to 59%</string>
+    <string name="str_40_to_49">40 to 49%</string>
+    <string name="str_30_to_39">30 to 39%</string>
+    <string name="str_20_to_29">20 to 29%</string>
+    <string name="str_10_to_19">10 to 19%</string>
+    <string name="str_0_to_9">0 to 9%</string>
+    <string name="str_totol_number_of_dealer">TOTAL NUMBER OF DEALER</string>
+    <string name="str_list_of_dealers">List of Dealers</string>
+    <string name="str_quarterly_target">Quarterly Target</string>
+    <string name="str_quarterly_achievement">Quarterly Achivement</string>
+    <string name="str_month_target">Monthly Target</string>
+    <string name="jan">Jan</string>
+    <string name="feb">Feb</string>
+    <string name="mar">Mar</string>
+    <string name="str_year">Year</string>
+    <string name="str_type_of_ownership">Type of ownership of vehicle</string>
+    <string name="str_no_vehicle_available">Currently there are no vehicles added for this customers.</string>
+    <string name="str_and_make_model"><![CDATA[Make & Model]]></string>
+    <string name="text_parag">Currently there are no groups created.You can create new group by following the instructions given below.</string>
+    <string name="text_ques">How to create a group?</string>
+
+    <!--    Customer Intraction-->
+    <string name="str_cip_objectives">CIP Objective <font color='#ffdf42'>*</font></string>
+    <string name="str_cip_objective_adapter">CIP Objective</string>
+    <string name="str_select_region">Select Region <font color='#FFDF42'>*</font></string>
+    <string name="str_select_region_not">Select Region</string>
+    <string name="str_select_area">Select Area <font color='#FFDF42'>*</font></string>
+    <string name="str_select_area_not">Select Area</string>
+    <string name="str_no_of_customer_invited">No Of Customer Invited <font color='#ffdf42'>*</font></string>
+
+    <string name="str_enroll_next_attendee">ENROLL NEXT ATTENDEE</string>
+    <string name="str_or">OR</string>
+    <string name="str_end_cip_registration">END CIP REGISTRATION</string>
+    <string name="str_invited_adapter">Invited</string>
+    <string name="str_totalAttendee_adapter">Attendee</string>
+    <string name="str_expense_adapter">Expenses</string>
+
+    <string name="str_no_of_customer_invited_hint">Enter No Of Customer Invited</string>
+    <string name="str_dealer_name">Dealer Name <font color='#FFDF42'>*</font></string>
+    <string name="str_dealer_name_adapter">Dealer Name</string>
+    <string name="str_location">CIP Venue <font color='#ffdf42'>*</font></string>
+    <string name="str_location_hint">CIP Venue</string>
+    <string name="str_location_enter">Enter Location</string>
+    <string name="str_start_cip_registration">START CIP REGISTRATION</string>
+    <string name="search_dealer">Search using Dealer Name OR SAP Code</string>
+    <string name="search_dealer_cip">Search by dealer name , SAP Id</string>
+    <string name="str_customer_intraction_program">Customer Interaction Program</string>
+    <string name="str_cip_date">Select Date <font color='#FFDF42'>*</font></string>
+    <string name="str_cip_date_">CIP Date</string>
+    <string name="str_add_customer_nteraction">Add Customer Interaction</string>
+    <string name="str_send_summery_bill_settlement">Send Summary For Bill Settlement</string>
+    <string name="str_resend_summery_bill_settlement">Resend Summary For Bill Settlement</string>
+    <string name="str_expense_incured">Expenses Incurred</string>
+
+    <string name="str_success_bill_settlement">Successfully send bill settlement request</string>
+
+    <!--    CIP BUSSINESS DETAIL-->
+    <string name="str_company_name">Company Name <font color='#ffdf42'>*</font></string>
+    <string name="str_company_name_hint">Company Name</string>
+    <string name="str_attendee_name">Attendee Name <font color='#ffdf42'>*</font></string>
+    <string name="str_attendee_name_hint">Attendee Name</string>
+    <string name="str_whatsapp_no">whatsapp Number</string>
+    <string name="str_same_as_mobile">Same as Mobile Number</string>
+    <string name="str_email_addr">Email Address</string>
+    <string name="str_state">State <font color='#ffdf42'>*</font></string>
+    <string name="str_city">City <font color='#ffdf42'>*</font></string>
+    <string name="str_pincode">Pincode <font color='#ffdf42'>*</font></string>
+    <string name="str_distict">District</string>
+    <string name="str_pincode_hint">Pincode</string>
+    <string name="str_address">Address</string>
+    <string name="str_address_man">Address <font color='#ffdf42'>*</font></string>
+    <string name="str_no_cip_found">Currently there is no any records to display here.</string>
+    <string name="str_no_cip_participant">There are no CIP Participants yet. Click on "Add Participant" button</string>
+
+    <string name="there_are_no_cip_summary">There are no CIP created yet. To create a new CIP, click on + button</string>
+    <string name="no_found_dip_list">No any cip record available</string>
+    <string name="str_totalAttendee">Total Attendee</string>
+    <string name="str_submit_bussiness_detail">SUBMIT</string>
+    <string name="str_business_detail">BUSINESS DETAIL</string>
+    <string name="str_vehical_detail">VEHICLE DETAIILS</string>
+    <string name="str_cip_summery">CIP SUMMARY</string>
+    <string name="str_bus">Bus</string>
+    <string name="str_please_fill_all_field">Please fill all fields</string>
+    <string name="str_download_summery">Download Summary</string>
+    <string name="str_cip_objective_hint">Enter CIP Objective</string>
+
+    <string name="str_enter_expense_amount">Enter Expenses Incurred Amount</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="str_edit_business_detail">Do you Want to Edit this Business Detail?</string>
+    <string name="str_add_business_detail">Do you Want to Add this Business Detail?</string>
+
+    <!--    VEHICAL ADD DETAIL-->
+
+    <!--    TRUCK DETAIL-->
+    <string name="str_truck_vehical_detail">Truck Vehicle Detail</string>
+    <string name="str_average_monthly_usage">Average Monthly Usage</string>
+    <string name="str_load_type">Load Type</string>
+    <string name="str_count">Count</string>
+    <string name="str_application">Application</string>
+    <string name="str_payload_tons">Payload(Tons)</string>
+    <string name="str_truck_vehicles">Truck Vehicles</string>
+    <string name="str_vehicles_details">Vehicle Details</string>
+
+    <!--    BUS DETAIL-->
+    <string name="str_bus_vehicle_detail">Bus Vehicle Detail</string>
+    <string name="str_multi_axles">Multi axles</string>
+    <string name="str_two_axles">Two axles</string>
+
+    <!--    LCV DETAIL-->
+    <string name="str_lcv_vehicle_detail">LCV Vehicle Detail</string>
+    <string name="str_four_wheeler">4 wheeler</string>
+
+    <!--    SCV DETAIL-->
+    <string name="str_scv_vehicle_detail">SCV Vehicle Detail</string>
+
+
+    <!--    TRUCK DETAIL ADD-->
+    <string name="str_tyre_position">Tyre Position</string>
+    <string name="str_tyre_size">Tyre Size</string>
+    <string name="str_pattern">Pattern</string>
+    <string name="str_brand">Brand</string>
+    <string name="str_construction">Construction</string>
+    <string name="str_tyres_annum">Tyres/Annum</string>
+
+    <string name="str_no_data_general_msg">Currently there is no any records to display here.</string>
+
+
+    <!--    CONFIGURATION URL-->
+
+    <string name="base_url_local">http://192.168.4.115:5000/api/</string>
+    <string name="base_url_staging">https://staging-backend.jkadvantage.co.in/api/</string>
+    <string name="base_url_live">https://backend.jktyrecrm.in/api/</string>
+    <string name="str_enter_redemption_catalogue">Welcome to JK Tyre Advantage Rewards</string>
+    <string name="str_redemption_catelogue_intro">Advantage Redemption Catalogue 2019-20</string>
+    <string name="str_dashboard_second">Offtake Dashboard</string>
+    <string name="str_promt_user_and_service"><![CDATA[Promotional & Events Users]]></string>
+    <string name="str_notification">Notification</string>
+    <string name="str_manual_data">Manual Data</string>
+    <string name="str_select_target">Select Target</string>
+    <string name="str_select_employee">Select Employee</string>
+    <string name="str_select_zone">Select Zone</string>
+    <string name="str_select_dealer">Select Dealer</string>
+    <string name="str_select_payment_category">Select Vehicle Category</string>
+    <string name="str_all">All</string>
+    <string name="str_select_vehicle_type">Select Vehicle Type</string>
+    <string name="str_select_year_month">Select Year and Month</string>
+    <string name="str_reset">Reset</string>
+    <string name="str_select_state">Select State</string>
+    <string name="str_select_city">Select City</string>
+    <string name="str_notification_title">Notification Title <font color='#ffdf42'>*</font></string>
+    <string name="str_note_push">*Note : We will send push notification to only users who have given push notification permission.</string>
+    <string name="str_select_all">Select All</string>
+    <string name="str_select_year">Select Year</string>
+    <string name="str_sel_month">Select Month</string>
+    <string name="search_by">Search by product, category or name</string>
+    <string name="str_select_year_2">Year</string>
+    <string name="str_showing_for">Financial Year</string>
+    <string name="str_no_offtake_summary">The offtake points summary is displayed for the completed quarter of the financial year</string>
+    <string name="str_service">Service</string>
+    <string name="str_inquiry">Inquiry</string>
+    <string name="str_tyre_purchase">Tyre Purchase</string>
+    <string name="str_owner_vehicle_number">Vehicle Owner’s Mobile Number <font color='#ffdf42'>*</font></string>
+    <string name="str_type_of_inquiry">Type of Inquiry <font color='#ffdf42'>*</font></string>
+    <string name="str_type_of_service">Select type of service/s <font color='#ffdf42'>*</font></string>
+    <string name="str_setting_screen">Go to settings to modify the service list.</string>
+    <string name="str_jk_tyre"><![CDATA[JK PCR & 2 Wheeler’s tyre]]></string>
+    <string name="str_other_tyre_purchase">Other Tyre Purchase</string>
+    <string name="str_please_provide_detail">Please provide owner details.</string>
+    <string name="str_add_remarks">Add Remarks</string>
+    <string name="str_add_personal_detail">Add Personal Details</string>
+    <string name="str_usage_type">Usage Type <font color='#ffdf42'>*</font></string>
+    <string name="str_commercial">Commercial</string>
+    <string name="str_vehicle_make">Vehicle Make</string>
+    <string name="str_vehicle_model">Vehicle Model</string>
+    <string name="str_visit_history">Visit History</string>
+    <string name="str_avg_month">Avg. Monthly Usage (Kms)</string>
+    <string name="str_service_lable">Service</string>
+    <string name="str_remark">Remark</string>
+    <string name="str_add_balance_remark">Add Balancing Remark</string>
+    <string name="str_next_due_date">Next Due Date</string>
+    <string name="str_success">Success!</string>
+    <string name="str_exp">How would you like to rate\n overall experience?</string>
+    <string name="str_hint_comment">Type customer comments</string>
+    <string name="str_ask_for_reference">Ask for Reference</string>
+    <string name="str_submit">Submit</string>
+    <string name="str_brand_man">Brand <font color='#ffdf42'>*</font></string>
+    <string name="str_quantity">Quantity <font color='#ffdf42'>*</font></string>
+    <string name="str_quantity_not_man">Quantity</string>
+    <string name="pincode_man">Pincode <font color='#ffdf42'>*</font></string>
+    <string name="str_service_reminder">Set Service Reminder</string>
+    <string name="str_vehicle_type_lable">Vehicle Type</string>
+    <string name="str_vehicle_detail_lable">Vehicle Detail</string>
+    <string name="str_usage_type_lable">Usage Type</string>
+    <string name="str_last_visit_date">Last Visit Date</string>
+    <string name="str_purpose_lable">Purpose</string>
+    <string name="str_upcoming_appointment_lable">Upcoming Appointment</string>
+    <string name="str_vehicle_meter_reading">Vehicle Meter\nReading</string>
+    <string name="str_average_monthly_usage_kms">Avg. Monthly Usage\n(Kms)</string>
+    <string name="str_visit_date">Visit Date</string>
+    <string name="str_remove_vehicle">Remove Vehicle</string>
+    <string name="str_are_you_sure">Are you sure, you want to remove vehicle?</string>
+    <string name="str_total_customer_lable">Total Customers</string>
+    <string name="str_total_lable">Total</string>
+    <string name="str_today_lable">Today</string>
+    <string name="str_month_lable">Month</string>
+    <string name="str_referrel_customer_lable">Referral Customers</string>
+    <string name="str_purchase_due_lable">Purchase Due</string>
+    <string name="str_registration_from_lable">Registered From</string>
+    <string name="str_source_lable">Source</string>
+    <string name="str_email_id">Email ID</string>
+    <string name="str_vehicals_lable">Vehicles</string>
+    <string name="str_services_lable">Service</string>
+    <string name="str_reference_count">Ref Count</string>
+    <string name="str_ask_for_reference_more">Add more Reference</string>
+    <string name="str_yes">Yes</string>
+    <string name="str_type_of_inquiry_not_man">Type Of Inquiry</string>
+    <string name="str_service_due">Service Due</string>
+    <string name="str_tyre_purchase_due">Tyre Purchase Due</string>
+    <string name="str_clear_selection">Clear Selection</string>
+    <string name="str_name">Name</string>
+    <string name="str_name_man">Name <font color='#ffdf42'>*</font></string>
+    <string name="str_mobile">Mobile</string>
+    <string name="str_mobile_man">Mobile <font color='#ffdf42'>*</font></string>
+    <string name="str_reference_date">Reference Date</string>
+    <string name="str_set_reminder">Set Reminder</string>
+
+    <string name="str_advantage_point">Advantage Points</string>
+    <string name="str_warrant_registration">Warranty Registration</string>
+    <string name="str_warranty_points">Warranty Points</string>
+    <string name="str_eligibility">Check eligibility for trade Scheme</string>
+    <string name="str_point_calculator">Point calculator</string>
+    <string name="str_grow_your_business">Grow Your Business (Run a campaign)</string>
+    <string name="str_engage_your_customer">Engage Your Customers (Run a campaign)</string>
+    <string name="str_send_reminder">Send Reminder</string>
+    <string name="str_services_lable_two">Services</string>
+    <string name="str_block">Block</string>
+    <string name="str_remove_vehicle_non">Remove Vehicle</string>
+    <string name="str_no_visit_history">Currently, there is no any visit history to display</string>
+    <string name="str_no_visit_trade_history">Currently, there is no any trade to display</string>
+    <string name="str_upcoming_appointment_not_available">Currently, there is no any upcoming appointment to display</string>
+    <string name="jktyre_text_for_subbranch">Invite for JK Warranty (PCR,\n2/3 Wheelers)</string>
+    <string name="str_invite_store_meeting">Invite to add customers for store visit\n(Inquiry/Service/Purchase)</string>
+    <string name="str_text_online">(Credit Card, Debit Card, Net Banking)</string>
+    <string name="str_taxable_invoice">Please provide GST Details if you want tax invoice</string>
+    <string name="str_gst">GSTIN <font color='#ffdf42'>*</font></string>
+    <string name="str_gst_holder">GST Holder Name <font color='#ffdf42'>*</font></string>
+    <string name="str_legal_name">Legal Name <font color='#ffdf42'>*</font></string>
+    <string name="str_buy">Buy</string>
+    <string name="str_balance_sms_credit">Balance SMS Credits : </string>
+    <string name="str_buy_sms">Buy SMS</string>
+    <string name="str_gst_detail">GST Details</string>
+    <string name="str_billing_details">Billing Details</string>
+    <string name="str_amount">Amount</string>
+    <string name="str_points_redeemed">Points Redeemed</string>
+    <string name="str_payment_mode">Payment Mode</string>
+    <string name="str_invoice_number">Invoice Number</string>
+    <string name="str_order_date">Order Date</string>
+    <string name="str_order_id">Order Id</string>
+    <string name="str_payment_date">Payment Date :-</string>
+    <string name="str_online">Online</string>
+    <string name="str_points_redeemption">Point Redemption</string>
+    <string name="str_payment_status">Payment Status</string>
+    <string name="str_profile_update">Do you want to update address, name,\nmobile, in profile as well?</string>
+    <string name="str_kindly_share_your_exp">Kindly share feedback based on\ncustomer experience</string>
+    <string name="str_search_make">Search Make</string>
+    <string name="str_search_model">Search Model</string>
+    <string name="str_rating">Rating</string>
+
+    <string name="warranty_re">Redeem Marketing Coupon</string>
+    <string name="this_offer_">This offer is valid for 2 PCR tyre purchase for Hundai Creta customers</string>
+    <string name="this_coupon">This coupon is valid from 1st May 20 to 30th June 20.</string>
+
+    <string name="coupon_xxyy">Coupon XXYYXXYYXX is successfully redeemed. Please pass the offer discount of Rs. 600 to Jay Shah. You will receive the CN from JK Tyre after the month end.</string>
+    <string name="congratulat">Congratulations! This Coupon is valid for redemption at your outlet.</string>
+
+    <string name="the_coupon_">The coupon you entered is invalid. Please enter a valid coupon. If problem persist, contact JK Advantage help line number 8282884545</string>
+    <string name="str_vehical_note">Note: Please select vehicle types for which you offering Alignment service. Selected vehicle types will be displayed while adding new customer.</string>
+    <string name="str_based_on_gst_certificate">Based on GST Certificate</string>
+    <string name="str_overdue_service">Overdue Service/ Tyre purchase</string>
+    <string name="str_service_name">Service Name</string>
+    <string name="str_overdue_text">"Overdue Date : "</string>
+    <string name="str_select_sender_id">Select Sender ID</string>
+    <string name="str_email_preference_txt">"Service / Tyre Purchase Due Reminder "</string>
+    <string name="str_email_preference_desc">"When this switch is on then you will daily receive customer visit tyre purchase or services due list over email. "</string>
+    <string name="str_sender_id">Sender ID</string>
+    <string name="str_offtake_card">Offtake Points</string>
+    <string name="total_points">Total Points</string>
+    <string name="str_total_customer_lab">Total Customer</string>
+    <string name="str_pcr_tyre">PCR Tyre</string>
+    <string name="str_two_wheeler_lab">2 Wheeler</string>
+    <string name="str_two_wheeler_tyre">2 Wheeler Tyre</string>
+    <string name="str_total_point_earned">Earned Points</string>
+    <string name="str_redemption_point">Redeemed Points</string>
+    <string name="str_earned_points">Earned Points</string>
+    <string name="str_service_taken_note">The list of services taken by customers during a few last visits.</string>
+    <string name="str_service_overdue_note">"The list of services/tyre purchase due and for which customer needed to visit your store in the past however they did not visit. "</string>
+    <string name="str_upcoming_dues_note">Find the customers who has visited you in the past and now whose visit is due in the future. Find based on date range for the upcoming appoints due in that period.</string>
+    <string name="str_note_order">Note: You can check redeemed point history from order history screen Click here</string>
+    <string name="str_question">\?</string>
+    <string name="str_tyre_purchase_lable">Prospect For Tyre Replacement</string>
+    <string name="str_no_of_customer">No. of Customers</string>
+    <string name="str_due_customer_range">Due Period Range</string>
+    <string name="str_service_due_lable">Prospect For Service Due</string>
+    <string name="str_request_to_take_note">Take References and Add More Customers</string>
+    <string name="str_rating_msg">Would you like to send message to the customer for Rating and Feedback?</string>
+    <string name="str_refer_msg">Would you like to provide any discount/offer to the customer for giving references?</string>
+    <string name="str_click_here_to_change_msg">Click here to change offer</string>
+    <string name="str_add_reference">Add Reference</string>
+    <string name="text_desc">Rewarding customers on sharing references is the opportunity to incentivised customers for sharing their positive experience with others.\n\n83% of satisfied customers are willing to make a referral
+92% of consumers trust recommendations from people they know\n\nA referral is not only a lead, but a qualified lead for any business.From a business aspect, acquiring new customers and growing sales is easy when leveraging the voice of established customers. So give the best offers to referrers and referees.</string>
+    <string name="str_give_this_offer_to">Give this Offer to the Referrer. <font color='#ffdf42'>*</font></string>
+    <string name="str_give_this_offer_to_note">(Your customer, who gives references)</string>
+    <string name="str_note">"Note : \"Please provide the SMS content with offer to be sent to referrer\" "</string>
+    <string name="str_give_this_offer_to_refree">Give this Offer to the Referee <font color='#ffdf42'>*</font></string>
+    <string name="str_give_this_offer_to_note_refree">Give this Offer(Your prospect for a new sale)</string>
+    <string name="str_note_refree">"Note : \"Please provide the SMS content with offer to be sent to referee\" "</string>
+    <string name="str_same_as_offer">Same as existing Customer offer</string>
+    <string name="str_store_my_google_link">Store Google My Business Link</string>
+    <string name="str_store_my_google_rating_link">Store Google My Business Rating Link</string>
+    <string name="str_total_earn_points">Warranty Points</string>
+    <string name="str_dashboard_next">To enable the “Add Customer Visit” Feature, Please set your preferences.</string>
+    <string name="str_click_note_preference">Click Here to Setup your preferences</string>
+    <string name="str_vehical_note_two">Please select vehicle types for which you are offering Alignment service. Selected vehicle types will be displayed while adding new customer.</string>
+    <string name="str_date_and_time">Date and Time</string>
+    <string name="str_msg_type">Message Type</string>
+    <string name="str_msg">Message</string>
+    <string name="str_total_sms">Total Number</string>
+    <string name="str_delivered_msg">Delivered SMS</string>
+    <string name="str_sms_credit_used">SMS Credit Used</string>
+    <string name="no_sms_credit">You do not have sufficient sms balance.</string>
+    <string name="str_click_here_to_buy">Click here to buy SMS</string>
+
+    <string name="facebook_app_id">1123801671354456</string>
+    <string name="facebook_app_id_prod">1123801671354456</string>
+    <string name="facebook_app_id_test">716261112440198</string>
+    <string name="fb_login_protocol_scheme">fb266260921485072</string>
+    <string name="help_guide_offtake_one">Total points earned as per JK Advantage Policy for current financial year, acroll products.</string>
+    <string name="help_guide_offtake_two">Offtake figures are available for entire year, current quarter and current month for current financial year</string>
+    <string name="help_guide_warranty_one">Total points earned on registering PCR and 2W Warranty Registrations through JK Advantage App from April\'19</string>
+    <string name="help_guide_warranty_two">Number of customer registered warranty on tyre purchase</string>
+    <string name="help_guide_warranty_three">Total PCR tyre registered with warranty till date</string>
+    <string name="help_guide_warranty_four">Total 2 wheeler tyre registered with warranty till date</string>
+    <string name="help_guide_campaign_management_one">Once the customer data is captured, it\'s important to communicate with them and keep them updated and engaged with your store. Click on appropriate icon to run the SMS campaign for that purpose</string>
+    <string name="help_guide_total_customer_one">Displays count of total customer, today\'s visitors and visitors for this month</string>
+    <string name="help_guide_total_customer_two">Total references received by the customers, references for the day and for the month Higher the reference count means more happy customers</string>
+    <string name="help_guide_tyre_purchase_one">Displays total tyre purchase customers, today\'s customer and this month customers</string>
+    <string name="help_guide_tyre_purchase_two">These are the leads or prospects for tyre purchase based on referrals, tyre replacement due etc. Due Period Range, suggests that tyre purchase is due for the span of two months (+/- 30 days). One can select different range as well through a filter</string>
+    <string name="help_guide_purpose_one">Example Festive Wishes, Tyre Service Due etc.</string>
+    <string name="help_guide_purpose_two">This will help in identifying the particular SMS template and appropriate SMS texts will be displayed in the \"Enter Message Text\" box below.</string>
+    <string name="help_guide_campaign_name_one">Provide the unique campaign name to identify the campaign</string>
+    <string name="help_guide_campaign_name_two">Example:Elanzo Touring Promotion for PCR service customer or Diwali wishes</string>
+    <string name="help_guide_campaign_name_three">This will also help in rerun the campaign.</string>
+    <string name="help_guide_customer_target_one">Every campaign may have the different target audience</string>
+    <string name="help_guide_customer_target_two">Example:Diwali Wishes are for all customers but promotion of alignment service, might be for PCR customers only.</string>
+    <string name="help_guide_customer_target_three">So select proper target audience. Select custom to filter the precise target audience for the campaign</string>
+    <string name="help_guide_sms_type_one">There are two type of SMS.</string>
+    <string name="help_guide_sms_type_two">It is our regular text SMS</string>
+    <string name="help_guide_sms_type_three">If you want to share the picture along with text, please select picture SMS. Upload the image. A tiny link will be added at the end of the SMS as the picture link</string>
+    <string name="help_guide_sms_language_one">"SMS can be shared in English as well as multiple regional languages like Hindi, Gujarati, Marathi, Tamil, Telugu, Kannada, Bangali etc "</string>
+    <string name="help_guide_sms_language_two">"If you are sharing SMS in English then it will work as regular SMS and 160 characters is considered as 1 SMS. Click on the (i icon) for more details. "</string>
+    <string name="help_guide_sms_language_three">"If you are sharing SMS in Regional language then it will work as unicode SMS and 70 characters is considered as 1 SMS. Click on the (i icon) for more details. "</string>
+    <string name="help_guide_sms_language_four">"For regional language, just copy the message from respective regional language text editor and paste in the Enter Message Text box below "</string>
+    <string name="help_guide_msg_one">Please type in your message here.</string>
+    <string name="help_guide_msg_two">Based on the \"Campaign Purpose\" automated SMS text (template) displays here. Still you can edit here</string>
+    <string name="help_guide_msg_three">"At the bottom, you will find few variables, available for the campaign\nExample #CustomerName, meaning in SMS text, where this keyword is used, a respective customer name from database will be taken. Means all customers will receive personalized SMS. Like Dear Gaurav, Dear Taral etc. "</string>
+    <string name="help_guide_msg_schedule_one">When you are creating the campaign in your free time and want to run the campaign later, you need to select \"Schedule this campaign\"</string>
+    <string name="help_guide_msg_schedule_two">Select Date and Time of campaign and it will run automatically.</string>
+    <string name="help_guide_msg_schedule_three">Example:coming Sunday is a Diwali and you want to schedule festive wishes SMS prior to a week, you can use this feature</string>
+    <string name="help_guide_verify_preview_one">Here you can see the actual preview of your SMS, like how will it look in customer\'s mobile.</string>
+    <string name="help_guide_verify_preview_two">We recommend to review it once, before running the campaign</string>
+    <string name="help_guide_run_now_one">Click on \"Run Now\" to start the SMS campaign</string>
+    <string name="help_guide_run_now_schedule_one">Click on \"Schedule Campaign\" to start the SMS campaign</string>
+    <string name="str_text">You can re-run this help tour by clicking on i icon next to Dashboard on top left corner</string>
+    <string name="help_guide_warranty_report_one">Now you can find tha total tyres registered under warranty (Category wise) along with number of customers and warranty points earn</string>
+    <string name="msg_filer_reset">If you change the purpose the target consumers filter will be reset.\n\n Do you want to continue and change the purpose?</string>
+
+    <string name="str_total_customer_register">Customers Registered\nwith Warranty</string>
+    <string name="str_dealer_started_warranty">Dealers started warranty</string>
+    <string name="str_total_customer_new">Customers Registered\nwith Warranty</string>
+    <string name="str_tyre_register_with_warranty">Tyres Registered with Warrranty</string>
+
+
+    <string name="help_guide_warranty_employee_report_one">Shows the Warranty Active dealers out of total dealers</string>
+    <string name="help_guide_warranty_employee_report_two">Number of tyres sold under warranty for each category (Secondary Sales).</string>
+    <string name="help_guide_warranty_employee_report_three">Number of Sensors sold and registered under warranty.</string>
+    <string name="help_guide_warranty_employee_report_pcr_one">Along with the warranty registered customers, now we are displaying number of tyres registered (Category wise)</string>
+    <string name="help_guide_warranty_employee_report_filter_one">Now warranty reports can be filtered from Year to Month and that is also category wise including sensor data.</string>
+    <string name="help_guide_warranty_employee_report_filter_two">Also category can be further filtered based on minimum to maximum tyre count per warranty registration.</string>
+    <string name="str_Facebook_note">"Please add your facebook page url as https://www.facebook.com/JKTyre/ "</string>
+    <string name="str_instagram_note">"Please add your Instagram page url as https://www.instagram.com/jktyrecorporate "</string>
+
+    <string name="during_cip_">During CIP, We request you to click couple of photographs and at the end of the CIP, we request you to upload 2/3 photographs.
+</string>
+    <string name="there_are_n">There are no co-attendee added yet, If any person from the same organization is attending the CIP then kindly click on plus icon add the co-attendent information</string>
+
+    <string name="brand">Brand</string>
+    <string name="type">Type</string>
+    <string name="pattern">Pattern</string>
+    <string name="tyre_size">Tyre Size</string>
+    <string name="no_of_tyres_per_year">No of Tyres Per Year</string>
+    <string name="construction">Construction</string>
+    <string name="error_vehicle_type"><![CDATA[If you want to select JK Tyre brand for PCR, LCV, SCV & 2 Wheeler\'s Tyre, please select \'JK PCR, LCV, SCV & 2 Wheeler\'s Tyre\' in the Tyre purchase option.]]></string>
+    <string name="str_current_qtr">Current QTR</string>
+    <string name="str_category">Categories</string>
+    <string name="str_new">New</string>
+    <string name="str_download">Download</string>
+    <string name="str_share">Share</string>
+    <string name="str_no_data_available_category">Currently no posters are available for this category. When new poster will be available, we will update you by sending in app notification</string>
+    <string name="str_preview">Preview</string>
+    <string name="str_check_contact_detail">Please verify the contact details!! If you want to download the poster with different contact details please edit here and click on Download button</string>
+    <string name="str_contact_detail">Contact Details</string>
+    <string name="str_contact_person_new">Contact Person</string>
+    <string name="str_contact_number">Contact Number</string>
+    <string name="str_last_tyre_replacement_date">Next Replacement Date <font color='#ffdf42'>*</font></string>
+    <string name="str_service_notes">Please provide your last tyre replacement details. Customer will be reminded for tyre replacement.</string>
+    <string name="str_service_notes_two">Based of Tyre\'s wear and tear, Please enter the upcoming replacement details for the existing tyres of the vehicle. Accordingly customer will be reminded for the tyre replacement</string>
+    <string name="str_service_notes_two_new">Based of Tyre\'s wear and tear, Please enter the tentative upcoming replacement details for the existing tyres of the vehicle. Accordingly customer will be reminded for the tyre replacement</string>
+    <string name="select_tyre_description_for_the_spare_tyre">Select Tyre Description for the spare tyre <font color='#ffdf42'>*</font></string>
+    <string name="select_tyre_description_for_the_rear_tyre">Select Tyre Description for the rear tyre <font color='#ffdf42'>*</font></string>
+    <string name="redem_point">Redeemed Point</string>
+    <string name="tyres_registered_with_warranty_sensors"><![CDATA[Tyres Registered with Warranty & Sensors]]></string>
+
 </resources>

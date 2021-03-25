@@ -13,6 +13,7 @@ import com.example.technicianapp.R
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jkadvantagandbadsha.model.login.UserModel
+import com.jkadvantage.custom.BoldButton
 import com.jkadvantage.model.vehicleTypeModel.VehicleTypeModel
 import okhttp3.ResponseBody
 import org.json.JSONArray
