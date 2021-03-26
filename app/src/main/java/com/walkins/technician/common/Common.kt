@@ -38,6 +38,9 @@ class Common {
         var urlStaging: String? = "http://qa-picture.jktyrecrm.in/#/sM1I8A"
         var urlRelease: String? = "https://picture.jktyrecrm.in/#/sM1I8A"
 
+        var btn_1 = "btn_primary"
+        var btn_0 = "btn_secondary"
+
         var isCalling: Boolean? = false
         private var dialogue: Dialog? = null
 
@@ -130,6 +133,7 @@ class Common {
             }
             return time
         }
+
         fun getErrorModel(jsonObject: JSONObject, modelName: String?): Any? {
             val gson: Gson
             val gsonBuilder = GsonBuilder()

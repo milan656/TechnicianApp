@@ -13,6 +13,8 @@
 
     <color name="header_title">#CC2200</color>
 
+    <color name="bg_color">#F2F5FA</color>
+
     <color name="yellow">#fdbb1f</color>
     <color name="strockwidth">#FDBB1F</color>
     <color name="adapter_background">#f6e9cb</color>
