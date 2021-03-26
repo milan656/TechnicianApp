@@ -171,11 +171,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             // Common.showShortToast("Please enter password", this@LoginActivity)
             return
         }
-        /*val intent = Intent(this, IntroductionActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish()*/
+        finish()
 
 
+/*
         Common.showLoader(this@LoginActivity)
 
 
@@ -258,7 +259,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         }
 
 
-                        /* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
+                        */
+/* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
                                  .equals("na", ignoreCase = true)
                          ) {
                              val intent = Intent(this, HomeSubDealerActivity::class.java)
@@ -266,7 +268,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                              startActivity(intent)
                              finish()
                              return@Observer
-                         }*/
+                         }*//*
+
                     }
                     when {
                         chkKeepMeLoggedIn.isChecked -> {
@@ -274,7 +277,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         }
 
 
-                        /* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
+                        */
+/* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
                                  .equals("na", ignoreCase = true)
                          ) {
                              val intent = Intent(this, HomeSubDealerActivity::class.java)
@@ -282,11 +286,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                              startActivity(intent)
                              finish()
                              return@Observer
-                         }*/
+                         }*//*
+
                     }
 
 
-                    /* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
+                    */
+/* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
                              .equals("na", ignoreCase = true)
                      ) {
                          val intent = Intent(this, HomeSubDealerActivity::class.java)
@@ -294,7 +300,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                          startActivity(intent)
                          finish()
                          return@Observer
-                     }*/
+                     }*//*
+
 
                     Log.e("getType", "" + it.userDetailModel!!.type)
 
@@ -302,7 +309,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(intent)
                     finish()
 
-                    /*when {
+                    */
+/*when {
                         prefManager?.getValue("customerClass") != null && prefManager.getValue(
                             "customerClass"
                         )
@@ -428,7 +436,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 e.printStackTrace()
                             }
                         }
-                    }*/
+                    }*//*
+
 
 
                 } else {
@@ -440,9 +449,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         })
-        /* val intent = Intent(this, WelcomeJKTyreActivity::class.java)
-         startActivity(intent)
-         finish()*/
+*/
     }
 
 
