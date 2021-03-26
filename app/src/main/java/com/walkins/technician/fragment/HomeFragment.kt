@@ -35,6 +35,7 @@ class HomeFragment : Fragment(), onClickAdapter {
     private var param2: String? = null
 
     private var arrayList = arrayListOf("Gallery", "Camera")
+    private var vehicleMakeList= arrayListOf("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,13 @@ class HomeFragment : Fragment(), onClickAdapter {
         var view = inflater.inflate(R.layout.fragment_home, container, false)
 
         showBottomSheetdialog(arrayList, "Choose From", context, Common.btn_0)
+
+        loadList()
         return view
+
+    }
+
+    private fun loadList() {
 
     }
 

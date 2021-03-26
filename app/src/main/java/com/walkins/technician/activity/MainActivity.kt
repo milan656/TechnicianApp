@@ -100,12 +100,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             }
             R.id.ivProfile -> {
-                replaceFragmenty(
-                    fragment = ProfileFragment.newInstance("", ""),
-                    allowStateLoss = true,
-                    containerViewId = R.id.mainContent
+                /* replaceFragmenty(
+                     fragment = ProfileFragment.newInstance("", ""),
+                     allowStateLoss = true,
+                     containerViewId = R.id.mainContent
 
-                )
+                 )*/
+
+                var intent = Intent(this, VehicleMakeActivity::class.java)
+                startActivity(intent)
 
             }
         }

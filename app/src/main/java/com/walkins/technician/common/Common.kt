@@ -18,6 +18,7 @@ import com.walkins.technician.activity.LoginActivity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jkadvantagandbadsha.model.login.UserModel
+import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.custom.BoldButton
 import com.jkadvantage.model.vehicleTypeModel.VehicleTypeModel
 import okhttp3.ResponseBody
@@ -147,6 +148,12 @@ class Common {
                             gson.fromJson(jsonObject.toString(), UserModel::class.java)
                         return userModel
                     }
+                    "VehicleBrandModel" -> {
+                        val VehicleBrandModel =
+                            gson.fromJson(jsonObject.toString(), VehicleBrandModel::class.java)
+                        return VehicleBrandModel
+                    }
+
                     else -> {
                         return null
                     }
@@ -199,6 +206,14 @@ class Common {
                                 val userModel =
                                     gson.fromJson(jsonObject.toString(), UserModel::class.java)
                                 return userModel
+                            }
+                            "VehicleBrandModel" -> {
+                                val VehicleBrandModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        VehicleBrandModel::class.java
+                                    )
+                                return VehicleBrandModel
                             }
 
 
