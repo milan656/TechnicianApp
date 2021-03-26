@@ -15,14 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start|center"
-            android:padding="@dimen/sixteen_dp"
+            android:paddingTop="@dimen/sixteen_dp"
+            android:paddingBottom="@dimen/sixteen_dp"
             android:text="Gallery"
             android:textColor="@color/text_color"
             android:textSize="@dimen/fourteen_sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/light_gray_1" />
+
     </LinearLayout>
 </LinearLayout>

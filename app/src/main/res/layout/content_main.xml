@@ -8,15 +8,78 @@
     android:layout_height="match_parent"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.MainActivity"
-    tools:showIn="@layout/app_bar_default">
+    tools:context=".activity.MainActivity">
 
+    <LinearLayout
+        android:id="@+id/llheader"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/eighteen_dp"
+        android:layout_marginEnd="@dimen/eighteen_dp"
+        android:orientation="horizontal">
+
+        <com.walkins.technician.custom.BoldTextView
+            android:id="@+id/tvUsername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:text="Hello"
+            android:textColor="@color/header_title"
+            android:textSize="@dimen/sixteen_sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:src="@drawable/ic_header_new" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/llfooter" />
+        android:layout_above="@+id/llfooter"
+        android:layout_below="@+id/llheader">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/eighteen_dp"
+            android:layout_marginTop="@dimen/sixty_dp"
+            android:layout_marginEnd="@dimen/eighteen_dp"
+            android:layout_marginBottom="@dimen/sixty_dp"
+            android:background="@drawable/ic_empty_circle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_empty_icon" />
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:alpha="0.5"
+                    android:gravity="center"
+                    android:text="Currently you do not have any services"
+                    android:textColor="#424242"
+                    android:textSize="@dimen/fourteen_sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/llfooter"
@@ -27,37 +90,77 @@
         android:layout_marginEnd="@dimen/ten_dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/ivHome"
+        <LinearLayout
+            android:id="@+id/llhome"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:padding="@dimen/sixteen_dp"
-            android:src="@mipmap/delete_icon" />
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/ivHome1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/sixteen_dp"
-            android:src="@mipmap/delete_icon" />
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_home" />
 
-        <ImageView
-            android:id="@+id/ivNotification"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/sixteen_dp"
-            android:src="@mipmap/delete_icon" />
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivProfile"
+
+        <LinearLayout
+            android:id="@+id/llhome1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:padding="@dimen/sixteen_dp"
-            android:src="@mipmap/delete_icon" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivHome1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_home_1" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llhome2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivNotification"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_notification" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llhome3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_profile" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </RelativeLayout>

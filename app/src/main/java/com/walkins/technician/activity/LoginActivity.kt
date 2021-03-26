@@ -171,12 +171,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             // Common.showShortToast("Please enter password", this@LoginActivity)
             return
         }
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        /* val intent = Intent(this, MainActivity::class.java)
+         startActivity(intent)
+         finish()*/
 
 
-/*
         Common.showLoader(this@LoginActivity)
 
 
@@ -244,63 +243,53 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                     var arrayList: ArrayList<String>? = ArrayList()
 
-                    when {
-                        it.userDetailModel?.arrayListPermission != null -> {
+                    if (it.userDetailModel?.arrayListPermission != null) {
 
-                            for (i in it.userDetailModel?.arrayListPermission?.indices!!) {
-                                arrayList?.add(it.userDetailModel?.arrayListPermission?.get(i)!!)
+                        for (i in it.userDetailModel?.arrayListPermission?.indices!!) {
+                            arrayList?.add(it.userDetailModel?.arrayListPermission?.get(i)!!)
 
-                            }
-                            when {
-                                arrayList != null -> {
-                                    prefManager.setPermissionList(arrayList)
-                                }
+                        }
+                        when {
+                            arrayList != null -> {
+                                prefManager.setPermissionList(arrayList)
                             }
                         }
-
-
-                        */
-/* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
-                                 .equals("na", ignoreCase = true)
-                         ) {
-                             val intent = Intent(this, HomeSubDealerActivity::class.java)
-                             intent.putExtra("videoUrl", it.videoURL)
-                             startActivity(intent)
-                             finish()
-                             return@Observer
-                         }*//*
-
+                    } else if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
+                            "customerClass"
+                        )
+                            .equals("na", ignoreCase = true)
+                    ) {
+                        val intent = Intent(this, HomeSubDealerActivity::class.java)
+                        intent.putExtra("videoUrl", it.videoURL)
+                        startActivity(intent)
+                        finish()
+                        return@Observer
                     }
-                    when {
-                        chkKeepMeLoggedIn.isChecked -> {
-                            prefManager.isLogin(true)
-                        }
-
-
-                        */
-/* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
-                                 .equals("na", ignoreCase = true)
-                         ) {
-                             val intent = Intent(this, HomeSubDealerActivity::class.java)
-                             intent.putExtra("videoUrl", it.videoURL)
-                             startActivity(intent)
-                             finish()
-                             return@Observer
-                         }*//*
-
+                    if (chkKeepMeLoggedIn.isChecked) {
+                        prefManager.isLogin(true)
+                    } else if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
+                            "customerClass"
+                        )
+                            .equals("na", ignoreCase = true)
+                    ) {
+                        val intent = Intent(this, HomeSubDealerActivity::class.java)
+                        intent.putExtra("videoUrl", it.videoURL)
+                        startActivity(intent)
+                        finish()
+                        return@Observer
                     }
 
 
-                    */
-/* if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
-                             .equals("na", ignoreCase = true)
-                     ) {
-                         val intent = Intent(this, HomeSubDealerActivity::class.java)
-                         intent.putExtra("videoUrl", it.videoURL)
-                         startActivity(intent)
-                         finish()
-                         return@Observer
-                     }*//*
+
+                    if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
+                            .equals("na", ignoreCase = true)
+                    ) {
+                        val intent = Intent(this, HomeSubDealerActivity::class.java)
+                        intent.putExtra("videoUrl", it.videoURL)
+                        startActivity(intent)
+                        finish()
+                        return@Observer
+                    }
 
 
                     Log.e("getType", "" + it.userDetailModel!!.type)
@@ -309,8 +298,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(intent)
                     finish()
 
-                    */
-/*when {
+                    /*when {
                         prefManager?.getValue("customerClass") != null && prefManager.getValue(
                             "customerClass"
                         )
@@ -381,54 +369,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             finish()
 
                         }
-                        it.userDetailModel?.type.equals("sub_dealer") -> {
-
-                            if (it.userDetailModel!!.is_login_first_time) {
-                                val intent = Intent(this, ProfileSubDealerActivity::class.java)
-                                intent.putExtra("videoUrl", it.videoURL)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                val intent = Intent(this, HomeSubDealerActivity::class.java)
-                                intent.putExtra("videoUrl", it.videoURL)
-                                startActivity(intent)
-                                finish()
-                            }
 
 
-                        }
-                        it.userDetailModel?.type.equals("branch") -> {
-                            if (it.userDetailModel!!.is_login_first_time) {
-                                val intent = Intent(this, ProfileBranchActivity::class.java)
-                                intent.putExtra("videoUrl", it.videoURL)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                val intent = Intent(this, HomeSubDealerActivity::class.java)
-                                intent.putExtra("videoUrl", it.videoURL)
-                                startActivity(intent)
-                                finish()
-                            }
-                        }
-                        it.userDetailModel?.type.equals("dealer") -> {
-//                            val intent = Intent(this, FourWheelerSkuDetails::class.java)
-//                            intent.putExtra("videoUrl", it.videoURL)
-//                            startActivity(intent)
-//                            finish()
-                            if (it.userDetailModel!!.is_login_first_time) {
-                                val intent = Intent(this, WelcomeJKTyreActivity::class.java)
-                                intent.putExtra("videoUrl", it.videoURL)
-                                startActivity(intent)
-                                finish()
-                            } else {
 
-                                Log.e("calltype", "calltype")
-                                val intent = Intent(this, MainActivity::class.java)
-                                intent.putExtra("videoUrl", it.videoURL)
-                                startActivity(intent)
-                                finish()
-                            }
-                        }
                         else -> {
                             try {
                                 prefManager.clearAll()
@@ -436,8 +379,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 e.printStackTrace()
                             }
                         }
-                    }*//*
-
+                    }*/
 
 
                 } else {
@@ -449,7 +391,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         })
-*/
     }
 
 

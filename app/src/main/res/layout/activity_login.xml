@@ -22,15 +22,16 @@
                 android:visibility="gone" />
 
 
-            <com.walkins.technician.custom.NormalTextView
+            <com.walkins.technician.custom.BoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/ten_dp"
                 android:layout_marginTop="@dimen/sixteen_dp"
-                android:text="@string/str_welcome"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/twenty_four_sp" />
+                android:text="Welcome!"
+                android:textStyle="bold"
+                android:textColor="@color/header_title"
+                android:textSize="@dimen/thirty_sp" />
 
             <com.walkins.technician.custom.NormalTextView
                 android:layout_width="wrap_content"
@@ -38,9 +39,8 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/ten_dp"
                 android:layout_marginTop="@dimen/eight_dp"
-
                 android:text="@string/login_text"
-                android:textColor="@color/dark_gray_text_color"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/sixteen_sp" />
 
 

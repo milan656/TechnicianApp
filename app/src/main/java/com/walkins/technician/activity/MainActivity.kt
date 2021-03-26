@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.example.technician.common.PrefManager
 import com.walkins.technician.R
 import com.walkins.technician.common.replaceFragmenty
 import com.walkins.technician.fragment.HomeFragment
@@ -23,11 +26,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var ivNotification: ImageView? = null
     private var ivHome1: ImageView? = null
     private var ivProfile: ImageView? = null
+    private var llhome: LinearLayout? = null
+    private var tvUsername: TextView? = null
+
+    private var prefManager: PrefManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        prefManager = PrefManager(this)
         init()
 //        actionOnService(Actions.START)
 
@@ -38,12 +45,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         ivHome1 = findViewById(R.id.ivHome1)
         ivProfile = findViewById(R.id.ivProfile)
         ivNotification = findViewById(R.id.ivNotification)
+        llhome = findViewById(R.id.llhome)
+        tvUsername = findViewById(R.id.tvUsername)
 
         ivHome?.setOnClickListener(this)
         ivProfile?.setOnClickListener(this)
         ivHome1?.setOnClickListener(this)
         ivNotification?.setOnClickListener(this)
 
+        tvUsername?.text = "Hello, " + prefManager?.getOwnerName()
 
     }
 
@@ -91,12 +101,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             }
             R.id.ivNotification -> {
-                replaceFragmenty(
-                    fragment = NotificationFragment.newInstance("", ""),
-                    allowStateLoss = true,
-                    containerViewId = R.id.mainContent
-
-                )
+//                replaceFragmenty(
+//                    fragment = NotificationFragment.newInstance("", ""),
+//                    allowStateLoss = true,
+//                    containerViewId = R.id.mainContent
+//
+//                )
+                var intent = Intent(this, VehicleModelActivity::class.java)
+                startActivity(intent)
 
             }
             R.id.ivProfile -> {

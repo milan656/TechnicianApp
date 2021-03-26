@@ -3,7 +3,6 @@ package com.walkins.technician.fragment
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +10,17 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
+import com.walkins.technician.common.RangeSeekBar
 import com.walkins.technician.common.onClickAdapter
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +38,7 @@ class HomeFragment : Fragment(), onClickAdapter {
     private var param2: String? = null
 
     private var arrayList = arrayListOf("Gallery", "Camera")
-    private var vehicleMakeList= arrayListOf("")
+    private var vehicleMakeList = arrayListOf("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +52,23 @@ class HomeFragment : Fragment(), onClickAdapter {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val rangeSeekBar = view.findViewById(R.id.rangeBar) as RangeSeekBar<Int>
+        rangeSeekBar.isNotifyWhileDragging = true
+        rangeSeekBar.setRangeValues(0, 100);
+        rangeSeekBar.selectedMinValue = 0
+        rangeSeekBar.setSelectedMaxValue(100);
+        rangeSeekBar.setOnRangeSeekBarChangeListener(object :
+            RangeSeekBar.OnRangeSeekBarChangeListener<Int> {
+            override fun onRangeSeekBarValuesChanged(
+                bar: RangeSeekBar<*>?,
+                minValue: Int,
+                maxValue: Int
+            ) {
+                Log.e("getvalue2", "" + rangeSeekBar.selectedMinValue)
+            }
+
+        })
 
         showBottomSheetdialog(arrayList, "Choose From", context, Common.btn_0)
 
@@ -72,7 +90,10 @@ class HomeFragment : Fragment(), onClickAdapter {
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
-        val dialog = context?.let { BottomSheetDialog(it, R.style.DialogStyle) }
+        val dialog =
+            getContext()?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+
+        dialog?.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         dialog?.window?.setLayout(width, height)
@@ -90,6 +111,12 @@ class HomeFragment : Fragment(), onClickAdapter {
             context,
             RecyclerView.VERTICAL,
             false
+        )
+        dialogueRecycView.addItemDecoration(
+            DividerItemDecoration(
+                getContext(),
+                DividerItemDecoration.VERTICAL
+            )
         )
         dialogueRecycView.adapter = arrayAdapter
         arrayAdapter?.onclick = this

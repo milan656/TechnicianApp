@@ -13,21 +13,23 @@ import com.jkadvantage.model.vehicleBrandModel.Data
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
+import com.walkins.technician.adapter.VehicleModelAdapter
 import com.walkins.technician.common.SpacesItemDecoration
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
-class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
+class VehicleModelActivity : AppCompatActivity(), onClickAdapter {
+
     private lateinit var prefManager: PrefManager
     private var vehicleBrandModel: VehicleBrandModel? = null
     private lateinit var warrantyViewModel: WarrantyViewModel
-    private var adapter: VehicleMakeAdapterNew? = null
-    private var gridviewRecycMake_: RecyclerView? = null
+    private var adapter: VehicleModelAdapter? = null
+    private var gridviewRecycModel: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vehicle_make)
+        setContentView(R.layout.activity_vehicle_model)
         prefManager = PrefManager(this)
         warrantyViewModel = ViewModelProviders.of(this).get(WarrantyViewModel::class.java)
 
@@ -35,7 +37,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
     }
 
     private fun init() {
-        gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
+        gridviewRecycModel = findViewById(R.id.gridviewRecycModel)
+
+
         getVehicleMake()
     }
 
@@ -43,13 +47,13 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
         prefManager.getAccessToken()?.let {
             warrantyViewModel.getVehicleBrandModel(
                 "6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
-                it, this@VehicleMakeActivity
+                it, this@VehicleModelActivity
 
             )
         }
 
         warrantyViewModel.getVehicleBrand()
-            ?.observe(this@VehicleMakeActivity, androidx.lifecycle.Observer {
+            ?.observe(this@VehicleModelActivity, androidx.lifecycle.Observer {
                 if (it != null) {
                     if (it.success) {
                         vehicleBrandModel = it
@@ -63,16 +67,16 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
                             }
                         }
 
-                        gridviewRecycMake_?.layoutManager =
+                        gridviewRecycModel?.layoutManager =
                             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-                        gridviewRecycMake_?.addItemDecoration(
+                        gridviewRecycModel?.addItemDecoration(
                             SpacesItemDecoration(
                                 20
                             )
                         )
 
-                        adapter = VehicleMakeAdapterNew(this, arrList, this)
-                        gridviewRecycMake_?.adapter = adapter
+                        adapter = VehicleModelAdapter(this, arrList, this)
+                        gridviewRecycModel?.adapter = adapter
 
 
                     } else {
@@ -84,7 +88,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
                                     startActivity(intent)
                                     finish()
                                 } else {
-                                    this@VehicleMakeActivity.let { it1 ->
+                                    this@VehicleModelActivity.let { it1 ->
                                         Common.showShortToast(
                                             it.error.get(0).message,
                                             it1
@@ -93,7 +97,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
                                 }
 
                             } else {
-                                this@VehicleMakeActivity.let { it1 ->
+                                this@VehicleModelActivity.let { it1 ->
                                     Common.showShortToast(
                                         it.error.get(0).message,
                                         it1
@@ -103,7 +107,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
                         }
                     }
                 } else {
-                    showLongToast("Something Went Wrong", this@VehicleMakeActivity)
+                    showLongToast("Something Went Wrong", this@VehicleModelActivity)
                 }
             })
     }

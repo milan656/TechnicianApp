@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_item_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/unselected"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_margin="@dimen/ten_dp">
+
+    <com.walkins.technician.custom.NormalTextView
+        android:id="@+id/ivVehicleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/text_color"
+        android:text="185/65 R15"/>
+
+</LinearLayout>

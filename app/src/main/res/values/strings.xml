@@ -1035,4 +1035,11 @@
     <string name="redem_point">Redeemed Point</string>
     <string name="tyres_registered_with_warranty_sensors"><![CDATA[Tyres Registered with Warranty & Sensors]]></string>
 
+    <array name="initial_slider_values">
+        <item>2000</item>
+        <item>3500</item>
+    </array>
+
+    <string name="demo_min_label">Min</string>
+    <string name="demo_max_label">Max</string>
 </resources>
