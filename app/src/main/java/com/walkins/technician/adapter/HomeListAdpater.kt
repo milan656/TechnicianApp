@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
@@ -20,7 +21,7 @@ class HomeListAdpater(
 
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-//        var tvContent: TextView = itemView.findViewById(R.id.tvContent)
+        var ivInfo: ImageView = itemView.findViewById(R.id.ivInfo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeListAdpater.Viewholder {
@@ -37,6 +38,12 @@ class HomeListAdpater(
 
             if (onclick != null) {
                 onclick?.onPositionClick(position, 0)
+            }
+        }
+
+        holder.ivInfo?.setOnClickListener {
+            if (onclick != null) {
+                onclick?.onPositionClick(position, 1)
             }
         }
     }

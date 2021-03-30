@@ -130,6 +130,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/ivInfo"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/fourteen_dp"

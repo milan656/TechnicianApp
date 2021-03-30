@@ -104,6 +104,7 @@ class HomeFragment : Fragment(), onClickAdapter {
         )
         adapter = context?.let { HomeListAdpater(arrayList, it, this) }
         homeRecycView?.adapter = adapter
+        adapter?.onclick = this
 
 // Java
 
@@ -155,7 +156,7 @@ class HomeFragment : Fragment(), onClickAdapter {
         ivClose?.setOnClickListener {
             dialog?.dismiss()
         }
-        if (btnBg.equals(Common.btn_1, ignoreCase = true)) {
+        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
             btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
             btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
             btnSend?.text = "Submit"
@@ -180,7 +181,8 @@ class HomeFragment : Fragment(), onClickAdapter {
         array: ArrayList<String>,
         titleStr: String,
         context: Context?,
-        btnBg: String
+        btnBg: String,
+        isBtnVisible: Boolean
 
     ) {
         val view = LayoutInflater.from(context)
@@ -195,31 +197,21 @@ class HomeFragment : Fragment(), onClickAdapter {
         dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
         dialog?.setContentView(view)
 
-        val btnSend = view.findViewById<Button>(R.id.btn_send)
+        val btnSend = view.findViewById<Button>(R.id.btnOk)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
-        val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        var arrayAdapter = context?.let { DialogueAdpater(array, it, this) }
-        dialogueRecycView?.layoutManager = LinearLayoutManager(
-            context,
-            RecyclerView.VERTICAL,
-            false
-        )
-        dialogueRecycView.addItemDecoration(
-            DividerItemDecoration(
-                getContext(),
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        dialogueRecycView.adapter = arrayAdapter
-        arrayAdapter?.onclick = this
 
         ivClose?.setOnClickListener {
             dialog?.dismiss()
         }
-        if (btnBg.equals(Common.btn_1, ignoreCase = true)) {
+        if (isBtnVisible) {
+            btnSend.visibility = View.VISIBLE
+        } else {
+            btnSend.visibility = View.GONE
+        }
+        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
             btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
             btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
             btnSend?.text = "Submit"
@@ -229,15 +221,10 @@ class HomeFragment : Fragment(), onClickAdapter {
             btnSend?.text = "Cancel"
         }
 
-
         btnSend.setOnClickListener {
-
             dialog?.dismiss()
-
         }
-
         dialog?.show()
-
     }
 
     companion object {
@@ -254,6 +241,17 @@ class HomeFragment : Fragment(), onClickAdapter {
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+        if (check == 1) {
+
+            showBottomSheetdialogNormal(
+                arrayList,
+                "Address Details",
+                context,
+                Common.btn_filled,
+                false
+            )
+
+        }
         Log.e("getclickpos", arrayList.get(variable))
     }
 }
