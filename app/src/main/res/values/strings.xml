@@ -7,7 +7,8 @@
     <string name="password_text">Password</string>
     <string name="str_keep_me_log_in">Keep me logged in</string>
     <string name="recover_password">Recover Password</string>
-    <string name="login_dashboard">Login</string>
+    <string name="login_dashboard">Continue</string>
+    <string name="login_verify">Verify</string>
     <string name="no_account">No account ?</string>
     <string name="sign_up">
         <u>Sign up now</u>
@@ -193,6 +194,8 @@
     <string name="str_point_range_tyre">Points Range / Tyre</string>
     <string name="str_points_pcr">80 to 260</string>
     <string name="user_id">User ID</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="otp_code">OTP code</string>
     <string name="str_ytd">YTD</string>
     <string name="str_qtd">QTD</string>
     <string name="str_mtd">MTD</string>

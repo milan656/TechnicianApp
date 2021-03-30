@@ -25,5 +25,11 @@
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
+    <style name="OtpWidget"/>
 
+    <style name="OtpWidget.OtpView" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@null</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:maxLines">1</item>
+    </style>
 </resources>

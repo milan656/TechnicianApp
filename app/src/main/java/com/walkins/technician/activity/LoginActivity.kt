@@ -35,11 +35,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private var lastLocation: Location? = null
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
     private lateinit var edtLoginEmail: EditText
-    private lateinit var edtLoginPassword: EditText
 
-    private lateinit var chkKeepMeLoggedIn: CheckBox
-
-    private lateinit var btnRecoverPassword: BoldButton
     private lateinit var btnLoginToDashBoard: BoldButton
     var firebaseAnalytics: FirebaseAnalytics? = null;
 
@@ -99,22 +95,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         prefManager = PrefManager(this@LoginActivity)
 
         edtLoginEmail = findViewById<EditText>(R.id.edtLoginEmail)
-        edtLoginPassword = findViewById<EditText>(R.id.edtLoginPassword)
-
-        btnRecoverPassword = findViewById<BoldButton>(R.id.btnRecoverPassword)
-        btnRecoverPassword.setOnClickListener(this)
 
         btnLoginToDashBoard = findViewById<BoldButton>(R.id.btnLoginToDashBoard)
         btnLoginToDashBoard.setOnClickListener(this)
 
-        chkKeepMeLoggedIn = findViewById<CheckBox>(R.id.chk_keeped_me_logged_id)
     }
 
     override fun onClick(v: View?) {
 
         when (v?.id) {
             R.id.btnLoginToDashBoard -> userLogin()
-            R.id.btnRecoverPassword -> userRecoverPassword()
         }
     }
 
@@ -166,11 +156,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
              Common.showShortToast("Please enter valid email address", this@LoginActivity)
              return
          }*/
-        if (edtLoginPassword.text?.trim()?.length == 0) {
-            edtLoginPassword.error = "Password should not be empty"
-            // Common.showShortToast("Please enter password", this@LoginActivity)
-            return
-        }
         /* val intent = Intent(this, MainActivity::class.java)
          startActivity(intent)
          finish()*/
@@ -200,8 +185,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         loginViewModel.init(
-            edtLoginEmail.text.toString().toLowerCase().trim({ it <= ' ' }),
-            edtLoginPassword.text.toString().trim({ it <= ' ' }),
+            "222111".toLowerCase().trim({ it <= ' ' }),
+            "12345".trim({ it <= ' ' }),
             "password",
             "Basic amt0eXJlOjEyMw==", versionCode, deviceName, androidOS, null
         )
@@ -243,7 +228,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                     var arrayList: ArrayList<String>? = ArrayList()
 
-                    if (it.userDetailModel?.arrayListPermission != null) {
+                   /* if (it.userDetailModel?.arrayListPermission != null) {
 
                         for (i in it.userDetailModel?.arrayListPermission?.indices!!) {
                             arrayList?.add(it.userDetailModel?.arrayListPermission?.get(i)!!)
@@ -265,9 +250,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         finish()
                         return@Observer
                     }
-                    if (chkKeepMeLoggedIn.isChecked) {
-                        prefManager.isLogin(true)
-                    } else if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
+                    if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
                             "customerClass"
                         )
                             .equals("na", ignoreCase = true)
@@ -279,8 +262,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         return@Observer
                     }
 
-
-
                     if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
                             .equals("na", ignoreCase = true)
                     ) {
@@ -289,12 +270,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         startActivity(intent)
                         finish()
                         return@Observer
-                    }
+                    }*/
 
 
                     Log.e("getType", "" + it.userDetailModel!!.type)
 
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, VerifyOtpActivity::class.java)
                     startActivity(intent)
                     finish()
 

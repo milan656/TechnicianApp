@@ -53,15 +53,15 @@ class SplashActivity : AppCompatActivity() {
     private fun navigateScreen() {
 
         try {
-            if (prefManager?.getIsLogin()!!) {
+            /*if (prefManager?.getIsLogin()!!) {
                 var intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
-                var intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+            }*/
+            var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
 
         } catch (e: Exception) {
             e.printStackTrace()

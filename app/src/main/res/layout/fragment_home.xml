@@ -4,14 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bg_color"
     tools:context=".fragment.HomeFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homeRecycView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginEnd="@dimen/twenty_dp" />
 
     <LinearLayout
         android:id="@+id/linearSlider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <com.ramotion.fluidslider.FluidSlider
             android:id="@+id/multiSlider1"

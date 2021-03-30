@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -52,35 +53,105 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/twenty_four_dp"
-                    android:layout_marginRight="@dimen/twenty_four_dp"
+
                     android:orientation="vertical">
 
                     <com.walkins.technician.custom.NormalTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/mobile_number"
+                        android:layout_marginStart="@dimen/twenty_four_dp"
+                        android:layout_marginEnd="@dimen/twenty_four_dp"
+                        android:text="@string/otp_code"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/sixteen_sp" />
 
-                    <com.walkins.technician.custom.NormalEditText
-                        android:id="@+id/edtLoginEmail"
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/sixteen_dp"
+                        android:layout_marginEnd="@dimen/sixteen_dp"
                         android:layout_marginTop="@dimen/eight_dp"
-                        android:background="@drawable/layout_bg_latest"
-                        android:padding="8dip"
-                        android:inputType="number"
-                        android:maxLength="10"
-                        android:singleLine="true" />
+                        android:orientation="horizontal">
+
+                        <com.walkins.technician.custom.NormalEditText
+                            android:id="@+id/edtOtp1"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/eight_dp"
+                            android:layout_marginEnd="@dimen/eight_dp"
+                            android:layout_marginRight="@dimen/eight_dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/layout_bg_latest"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:padding="8dip"
+                            android:singleLine="true"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/sixteen_sp" />
+
+                        <com.walkins.technician.custom.NormalEditText
+                            android:id="@+id/edtOtp2"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="@dimen/eight_dp"
+                            android:layout_marginEnd="@dimen/eight_dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/layout_bg_latest"
+                            android:inputType="number"
+                            android:padding="8dip"
+                            android:singleLine="true"
+                            android:maxLength="1"
+                            android:gravity="center"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/sixteen_sp" />
+
+                        <com.walkins.technician.custom.NormalEditText
+                            android:id="@+id/edtOtp3"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="@dimen/eight_dp"
+                            android:layout_marginEnd="@dimen/eight_dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/layout_bg_latest"
+                            android:inputType="number"
+                            android:padding="8dip"
+                            android:singleLine="true"
+                            android:maxLength="1"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/sixteen_sp" />
+
+                        <com.walkins.technician.custom.NormalEditText
+                            android:id="@+id/edtOtp4"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="@dimen/eight_dp"
+                            android:layout_marginEnd="@dimen/eight_dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/layout_bg_latest"
+                            android:inputType="number"
+                            android:padding="8dip"
+                            android:maxLength="1"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/sixteen_sp" />
+
+                    </LinearLayout>
+
 
                     <com.walkins.technician.custom.NormalTextView
+                        android:id="@+id/tvResend"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/eight_dp"
                         android:gravity="center"
-                        android:text="You will receive a 4 digit OTP code to log in"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fourteen_sp" />
 
@@ -98,7 +169,7 @@
                     android:weightSum="2">
 
                     <com.walkins.technician.custom.BoldButton
-                        android:id="@+id/btnLoginToDashBoard"
+                        android:id="@+id/btnVerify"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_gravity="center"
@@ -107,10 +178,11 @@
                         android:layout_marginRight="@dimen/twenty_four_dp"
                         android:layout_marginBottom="@dimen/twenty_four_dp"
                         android:background="@drawable/round_corner_button_yellow"
-                        android:lineHeight="21.6px"
 
-                        android:text="@string/login_dashboard"
+                        android:lineHeight="21.6px"
+                        android:text="@string/login_verify"
                         android:textAllCaps="false"
+
                         android:textColor="@color/white"
                         android:textSize="@dimen/eighteen_sp" />
 

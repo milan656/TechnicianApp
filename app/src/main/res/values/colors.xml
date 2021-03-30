@@ -10,6 +10,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="rounded_corner">#00CDB9</color>
+    <color name="text_color2">#00CDB9</color>
 
     <color name="header_title">#CC2200</color>
 
@@ -49,6 +50,7 @@
     <color name="dashboard_top">#491b9f</color>
     <color name="fragment_background">#cdf1f4f6</color>
     <color name="text_color">#495057</color>
+    <color name="text_color1">#424242</color>
     <color name="text_blue">#545CD8</color>
     <color name="text_dropdown">#6E777F</color>
     <color name="text_hint_color">#495057</color>

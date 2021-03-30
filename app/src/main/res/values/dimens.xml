@@ -14,6 +14,7 @@
     <dimen name="twenty_two_dp">22dp</dimen>
     <dimen name="twenty_four_dp">24dp</dimen>
     <dimen name="fourty_dp">40dp</dimen>
+    <dimen name="fourty_sp">40sp</dimen>
     <dimen name="nav_header_height">150dp</dimen>
 
 
@@ -53,6 +54,7 @@
     <dimen name="two_dp">2dp</dimen>
     <dimen name="thirteen_dp">13dp</dimen>
     <dimen name="thirteen_sp">13sp</dimen>
+    <dimen name="thirty_six">36dp</dimen>
     <dimen name="fourteeen_dp">14dp</dimen>
     <dimen name="thirtFive_dp">35dp</dimen>
     <dimen name="one_fourty_seven_dp">147dp</dimen>
@@ -79,5 +81,10 @@
     <dimen name="fifty_dp">50dp</dimen>
     <dimen name="seventy_five_dp">75dp</dimen>
 
+    <dimen name="otp_view_item_size">48dp</dimen>
+    <dimen name="otp_view_item_radius">5dp</dimen>
+    <dimen name="otp_view_item_spacing">5dp</dimen>
+    <dimen name="otp_view_item_line_width">2dp</dimen>
+    <dimen name="otp_view_cursor_width">2dp</dimen>
 
 </resources>

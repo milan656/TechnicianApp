@@ -15,6 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnicianApp">
+        <activity android:name=".activity.VerifyOtpActivity"></activity>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id_prod" />
@@ -23,10 +25,8 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
-
-        <activity android:name=".activity.VehicleMakeActivity"/>
-        <activity android:name=".activity.VehicleModelActivity"/>
+        <activity android:name=".activity.VehicleMakeActivity" />
+        <activity android:name=".activity.VehicleModelActivity" />
         <activity android:name=".activity.HomeSubDealerActivity" />
         <activity android:name=".activity.HomeEmployeeActivity" />
         <activity android:name=".activity.LoginActivity" />

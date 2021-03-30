@@ -67,19 +67,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/ten_dp"
-                android:background="#BDBDBD"
-                android:alpha="0.5"/>
+                android:alpha="0.5"
+                android:background="#BDBDBD" />
 
-            <com.walkins.technician.custom.NormalTextView
-                android:id="@+id/tv_message"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/seven_dp"
-                android:gravity="center"
-                android:padding="@dimen/ten_dp"
-                android:text="Are you sure you want to quit the process?"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/fifteen_sp" />
+                android:layout_marginStart="@dimen/sixteen_dp"
+                android:layout_marginTop="@dimen/sixteen_dp"
+                android:layout_marginEnd="@dimen/sixteen_dp"
+                android:layout_marginBottom="@dimen/sixteen_dp"
+                android:orientation="vertical">
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:id="@+id/tv_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:text="Are you sure you want to quit the process?"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp" />
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:id="@+id/tv_message1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:text="Are you sure you want to quit the process?"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:visibility="gone" />
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:id="@+id/tv_message2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:text="Are you sure you want to quit the process?"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:visibility="gone" />
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:id="@+id/tv_message3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:text="Are you sure you want to quit the process?"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
             <com.walkins.technician.custom.BoldButton
                 android:id="@+id/btnOk"
@@ -93,9 +132,9 @@
                 android:background="@drawable/round_corner_button_yellow"
                 android:text="@string/str_ok"
                 android:textAllCaps="false"
-                android:textSize="@dimen/fourteen_sp"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/fourteen_sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </LinearLayout>
