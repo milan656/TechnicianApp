@@ -17,13 +17,13 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
 
         /*  try {
               Fabric.with(this, Crashlytics())
           }catch (e : Exception){
               e.printStackTrace()
           }*/
-        setContentView(R.layout.activity_splash)
         startWorking()
 
 
@@ -52,9 +52,20 @@ class SplashActivity : AppCompatActivity() {
     // Please click here to know about last year (up to March'19) Advantage Program Points.
     private fun navigateScreen() {
 
-        var intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
+        try {
+            if (prefManager?.getIsLogin()!!) {
+                var intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                var intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 }

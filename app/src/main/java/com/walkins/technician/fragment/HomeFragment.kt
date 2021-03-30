@@ -16,29 +16,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.ramotion.fluidslider.FluidSlider
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
-import com.walkins.technician.common.RangeSeekBar
 import com.walkins.technician.common.onClickAdapter
+import io.apptik.widget.MultiSlider
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment(), onClickAdapter {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     private var arrayList = arrayListOf("Gallery", "Camera")
     private var vehicleMakeList = arrayListOf("")
+    private var dummyvaluestart: String? = "0"
+    private var dummyvalueend: String? = "100"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,22 +47,54 @@ class HomeFragment : Fragment(), onClickAdapter {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val rangeSeekBar = view.findViewById(R.id.rangeBar) as RangeSeekBar<Int>
-        rangeSeekBar.isNotifyWhileDragging = true
-        rangeSeekBar.setRangeValues(0, 100);
-        rangeSeekBar.selectedMinValue = 0
-        rangeSeekBar.setSelectedMaxValue(100);
-        rangeSeekBar.setOnRangeSeekBarChangeListener(object :
-            RangeSeekBar.OnRangeSeekBarChangeListener<Int> {
-            override fun onRangeSeekBarValuesChanged(
-                bar: RangeSeekBar<*>?,
-                minValue: Int,
-                maxValue: Int
-            ) {
-                Log.e("getvalue2", "" + rangeSeekBar.selectedMinValue)
-            }
+//        val multiSlider1 = view.findViewById<MultiSlider>(R.id.multiSlider1)
+//        val starting_point = view.findViewById<TextView>(R.id.starting_point)
+//        val last_end = view.findViewById<TextView>(R.id.last_end)
+//        multiSlider1?.min = dummyvaluestart?.toInt()!!
+//        multiSlider1?.max = dummyvalueend?.toInt()!!
+//
+//        multiSlider1.setNumberOfThumbs(2)
+//        multiSlider1.setOnThumbValueChangeListener(object : MultiSlider.SimpleChangeListener() {
+//            override fun onValueChanged(
+//                multiSlider: MultiSlider,
+//                thumb: MultiSlider.Thumb,
+//                thumbIndex: Int,
+//                value: Int
+//            ) {
+//                if (thumbIndex == 0) {
+//                    starting_point!!.text = value.toString()
+//                    dummyvaluestart = "" + value
+//                } else {
+//
+//                    dummyvalueend = "" + value
+//
+//                    if (value == 100) {
+//                        last_end!!.text = "100"
+//                    } else {
+//                        last_end!!.text = value.toString()
+//                    }
+//                }
+//            }
+//        })
+//
+        // Kotlin
+        val max = 45
+        val min = 10
+        val total = max - min
 
-        })
+        val slider = view.findViewById<FluidSlider>(R.id.multiSlider1)
+        slider.positionListener = { pos ->
+            slider.bubbleText = "${min + (total * pos).toInt()}"
+            Log.e("getvaluess", "" + pos)
+        }
+        slider.position = 0.3f
+        slider.startText = "$min"
+        slider.endText = "$max"
+        slider.animation?.cancel()
+
+
+// Java
+
 
         showBottomSheetdialog(arrayList, "Choose From", context, Common.btn_0)
 

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/sixteen_dp"
+    android:layout_margin="@dimen/ten_dp"
     android:background="@color/white"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/ten_dp">
@@ -25,28 +26,43 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.walkins.technician.custom.BoldTextView
-                    android:id="@+id/tv_dialogTitle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/sixteen_dp"
                     android:layout_marginTop="@dimen/sixteen_dp"
-                    android:gravity="center"
-                    android:textColor="@color/text_color"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:visibility="visible"
-                    />
+                    android:layout_marginEnd="@dimen/sixteen_dp"
+                    android:orientation="horizontal">
+
+                    <com.walkins.technician.custom.BoldTextView
+                        android:id="@+id/tvTitleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+
+                        android:layout_weight="1"
+                        android:text="@string/str_request_to_edit"
+                        android:textColor="@color/header_title"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivClose"
+                        android:layout_width="21dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:src="@drawable/close"
+                        app:tint="@color/text_color" />
+
+                </LinearLayout>
 
                 <View
-                    android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/twelve_dp"
-                    android:layout_marginBottom="@dimen/twelve_dp"
-                    android:alpha="0.5"
-                    android:background="@color/light_gray_btn_color"
-                    android:visibility="gone" />
-
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:background="#BDBDBD"
+                    android:alpha="0.5"/>
                 <com.walkins.technician.custom.NormalTextView
                     android:id="@+id/tvAnotherMsg"
                     android:layout_width="match_parent"
@@ -140,10 +156,11 @@
                         android:layout_marginEnd="@dimen/twelve_dp"
                         android:layout_marginRight="@dimen/eight_dp"
                         android:layout_weight="1"
-                        android:background="@drawable/round_corner_button_light_gray"
+                        android:background="@drawable/round_corner_button_white"
                         android:text="@string/str_cancel"
                         android:textAllCaps="false"
-                        android:textColor="@color/text_color"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/fourteen_sp" />
 
                     <com.walkins.technician.custom.BoldButton
@@ -156,7 +173,8 @@
                         android:background="@drawable/round_corner_button_yellow"
                         android:text="@string/str_ok"
                         android:textAllCaps="false"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:textSize="@dimen/fourteen_sp" />
 
                 </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/sixteen_dp"
+    android:layout_margin="@dimen/ten_dp"
     android:background="@color/white"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/ten_dp">
@@ -32,54 +32,43 @@
                 android:textSize="@dimen/sixteen_sp"
                 android:visibility="gone" />
 
-            <RelativeLayout
-                android:id="@+id/relativeTop"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/sixteen_dp"
                 android:layout_marginTop="@dimen/sixteen_dp"
-                android:gravity="center">
+                android:layout_marginEnd="@dimen/sixteen_dp"
+                android:orientation="horizontal">
 
-                <LinearLayout
+                <com.walkins.technician.custom.BoldTextView
+                    android:id="@+id/tvTitleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen_dp"
-                    android:layout_marginEnd="@dimen/fifteen_dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/five_dp"
-                    android:paddingLeft="@dimen/five_dp"
-                    android:paddingEnd="@dimen/fifteen_dp"
+                    android:layout_centerVertical="true"
 
-                    android:paddingRight="@dimen/fifteen_dp">
+                    android:layout_weight="1"
+                    android:text="@string/str_request_to_edit"
+                    android:textColor="@color/header_title"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:textStyle="bold" />
 
-                    <com.walkins.technician.custom.BoldTextView
-                        android:id="@+id/tv_dialogTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Success"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/sixteen_sp"
-                        android:textStyle="bold"
-                        tools:ignore="RelativeOverlap" />
+                <ImageView
+                    android:id="@+id/ivClose"
+                    android:layout_width="21dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    android:src="@drawable/close"
+                    app:tint="@color/text_color" />
 
-
-                </LinearLayout>
-
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
-                android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/relativeTop"
-                android:layout_marginTop="@dimen/eighteen_dp"
-                android:layout_marginBottom="@dimen/ten_dp"
-                android:background="#1A000000" />
-
+                android:layout_marginTop="@dimen/ten_dp"
+                android:background="#BDBDBD"
+                android:alpha="0.5"/>
 
             <com.walkins.technician.custom.NormalTextView
                 android:id="@+id/tv_message"
@@ -104,7 +93,9 @@
                 android:background="@drawable/round_corner_button_yellow"
                 android:text="@string/str_ok"
                 android:textAllCaps="false"
-                android:textColor="@color/text_color" />
+                android:textSize="@dimen/fourteen_sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </LinearLayout>
