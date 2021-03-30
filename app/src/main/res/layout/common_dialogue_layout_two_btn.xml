@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/ten_dp"
@@ -61,8 +60,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/ten_dp"
-                    android:background="#BDBDBD"
-                    android:alpha="0.5"/>
+                    android:alpha="0.5"
+                    android:background="#BDBDBD" />
+
                 <com.walkins.technician.custom.NormalTextView
                     android:id="@+id/tvAnotherMsg"
                     android:layout_width="match_parent"
@@ -89,13 +89,13 @@
                     android:id="@+id/tv_messageTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/six_dp"
                     android:layout_marginTop="@dimen/five_dp"
+                    android:layout_marginEnd="@dimen/six_dp"
                     android:gravity="center"
                     android:lineSpacingExtra="@dimen/five_dp"
                     android:padding="@dimen/five_dp"
                     android:text="As per the system your current address is"
-                    android:layout_marginStart="@dimen/six_dp"
-                    android:layout_marginEnd="@dimen/six_dp"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/sixteen_sp"
                     android:visibility="visible" />
@@ -104,12 +104,12 @@
                     android:id="@+id/tv_messageCip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/six_dp"
                     android:layout_marginTop="@dimen/ten_dp"
+                    android:layout_marginEnd="@dimen/six_dp"
                     android:gravity="center"
                     android:lineSpacingExtra="@dimen/two_dp"
                     android:text="No-5 jodhpur road\ngujarat india"
-                    android:layout_marginStart="@dimen/six_dp"
-                    android:layout_marginEnd="@dimen/six_dp"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/sixteen_sp" />
 
@@ -117,13 +117,13 @@
                     android:id="@+id/tv_messagesecond"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginTop="@dimen/ten_dp"
+                    android:gravity="center"
                     android:paddingStart="@dimen/twenty_dp"
                     android:paddingEnd="@dimen/twenty_dp"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/sixteen_sp"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <com.walkins.technician.custom.NormalTextView
                     android:id="@+id/tv_messagethird"
@@ -134,10 +134,9 @@
                     android:lineSpacingExtra="@dimen/five_dp"
                     android:paddingStart="@dimen/thirty_dp"
                     android:paddingEnd="@dimen/thirty_dp"
-                    android:visibility="gone"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/sixteen_sp"
-                    />
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -159,9 +158,9 @@
                         android:background="@drawable/round_corner_button_white"
                         android:text="@string/str_cancel"
                         android:textAllCaps="false"
-                        android:textStyle="bold"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/fourteen_sp" />
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
 
                     <com.walkins.technician.custom.BoldButton
                         android:id="@+id/btn_ok"
@@ -174,8 +173,8 @@
                         android:text="@string/str_ok"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/fourteen_sp" />
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </LinearLayout>
