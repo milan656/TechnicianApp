@@ -841,10 +841,12 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/llTechnicalSuggestionExpanded"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/twenty_dp"
-                            android:orientation="vertical">
+                            android:layout_marginTop="@dimen/fourteen_dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/suggestionsRecycView"

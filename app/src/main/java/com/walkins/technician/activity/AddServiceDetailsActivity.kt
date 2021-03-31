@@ -29,8 +29,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var ivBack: ImageView? = null
     private var llServiceExpanded: LinearLayout? = null
     private var llTyreConfigExpanded: LinearLayout? = null
+    private var llTechnicalSuggestionExpanded: LinearLayout? = null
 
     private var serviceExpanded = false
+    private var techicalSuggestionExpanded = false
     private var tyreConfigExpanded = false
     private var tyreConfig = false
     private var technicalSuggestion = false
@@ -71,6 +73,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivAddTyreConfig = findViewById(R.id.ivAddTyreConfig)
         llServiceExpanded = findViewById(R.id.llServiceExpanded)
         llTyreConfigExpanded = findViewById(R.id.llTyreConfigExpanded)
+        llTechnicalSuggestionExpanded = findViewById(R.id.llTechnicalSuggestionExpanded)
         llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
         suggestionsRecycView = findViewById(R.id.suggestionsRecycView)
 
@@ -110,6 +113,24 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     ivAddServices?.setImageResource(R.drawable.ic_add_icon)
                     Common.collapse(llServiceExpanded!!)
                     serviceExpanded = false
+
+                }
+
+                return false
+            }
+
+        })
+        ivAddTechnicalSuggestion?.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if (!serviceExpanded) {
+                    ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_minus_icon)
+                    Common.expand(llTechnicalSuggestionExpanded!!)
+                    techicalSuggestionExpanded = true
+
+                } else {
+                    ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_add_icon)
+                    Common.collapse(llTechnicalSuggestionExpanded!!)
+                    techicalSuggestionExpanded = false
 
                 }
 
@@ -191,16 +212,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         val id = v?.id
         when (id) {
-            R.id.ivAddTyreConfig -> {
-                ivAddTyreConfig?.setImageResource(R.drawable.ic_minus_icon)
-            }
-            R.id.ivAddTechnicalSuggestion -> {
-                ivAddTyreConfig?.setImageResource(R.drawable.ic_minus_icon)
-            }
-            R.id.ivAddServices -> {
 
-
-            }
             R.id.ivInfoAddService -> {
 
             }
