@@ -28,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:text="Titanium City center,Anandnagar"
                 android:textColor="@color/text_color1"
-                android:textSize="@dimen/sixteen_sp" />
+                android:textSize="@dimen/sixteen_sp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

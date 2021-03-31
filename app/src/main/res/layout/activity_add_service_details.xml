@@ -75,7 +75,7 @@
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
-                                    <com.walkins.technician.custom.NormalTextView
+                                    <com.walkins.technician.custom.BoldTextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center"
@@ -83,7 +83,9 @@
                                         android:gravity="start|center|bottom"
                                         android:text="GJ01RY3771"
                                         android:textColor="@color/text_color1"
-                                        android:textSize="@dimen/eighteen_sp" />
+                                        android:textSize="@dimen/sixteen_sp"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"/>
 
                                     <ImageView
                                         android:layout_width="wrap_content"
@@ -107,7 +109,7 @@
                                         android:layout_gravity="center"
                                         android:layout_weight="1"
                                         android:gravity="start|center"
-                                        android:text="Toyota Innova"
+                                        android:text="Maruti Suzuki Swift Desire"
                                         android:textColor="@color/text_color1"
 
                                         android:textSize="@dimen/twelve_sp" />
@@ -116,7 +118,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:layout_weight="1.5"
+                                        android:layout_weight="3"
                                         android:gravity="center"
                                         android:text="Red"
                                         android:textColor="@color/text_color1"
@@ -163,16 +165,18 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/eighteen_dp"
+                            android:layout_margin="@dimen/sixteen_dp"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.technician.custom.BoldTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Services"
+                                android:textAllCaps="true"
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/eighteen_sp" />
+                                android:textSize="@dimen/sixteen_sp"
+                                android:textStyle="bold"/>
 
                             <ImageView
                                 android:id="@+id/ivAddServices"
@@ -673,7 +677,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/eighteen_dp"
+                        android:layout_margin="@dimen/sixteen_dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -681,13 +685,15 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.technician.custom.BoldTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Tyre Configuration"
+                                android:textAllCaps="true"
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/eighteen_sp" />
+                                android:textSize="@dimen/sixteen_sp"
+                                android:textStyle="bold"/>
 
                             <ImageView
                                 android:id="@+id/ivAddTyreConfig"
@@ -814,7 +820,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/eighteen_dp"
+                        android:layout_margin="@dimen/sixteen_dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -822,13 +828,15 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.technician.custom.BoldTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textAllCaps="true"
                                 android:text="Technical Suggestions"
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/eighteen_sp" />
+                                android:textSize="@dimen/sixteen_sp"
+                                android:textStyle="bold"/>
 
                             <ImageView
                                 android:id="@+id/ivAddTechnicalSuggestion"

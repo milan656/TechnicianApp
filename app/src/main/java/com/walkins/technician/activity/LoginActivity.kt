@@ -104,8 +104,26 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            R.id.btnLoginToDashBoard -> userLogin()
+            R.id.btnLoginToDashBoard -> login()
         }
+    }
+
+    private fun login() {
+        if (edtLoginEmail.text?.trim()?.length == 0) {
+            edtLoginEmail.error = "Please enter phone number"
+            //Common.showShortToast("Please enter userid", this@LoginActivity)
+            return
+        }
+        if (edtLoginEmail.text?.trim()?.length != 10) {
+            edtLoginEmail.error = "Please enter valid phone number"
+            //Common.showShortToast("Please enter userid", this@LoginActivity)
+            return
+        }
+        prefManager.isLogin(true)
+        val intent = Intent(this, VerifyOtpActivity::class.java)
+        startActivity(intent)
+        finish()
+
     }
 
     private fun userRecoverPassword() {
@@ -148,7 +166,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     * */
     private fun userLogin() {
         if (edtLoginEmail.text?.trim()?.length == 0) {
-            edtLoginEmail.error = "Please enter    phone number"
+            edtLoginEmail.error = "Please enter phone number"
             //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
@@ -157,6 +175,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
+
+
         /* if (!isValidEmail(edtLoginEmail?.text.toString().trim())) {
              Common.showShortToast("Please enter valid email address", this@LoginActivity)
              return

@@ -116,6 +116,7 @@
                 android:layout_weight="1"
                 android:text="Titanium City Center, Anand Nagar"
                 android:textColor="@color/text_color1"
+                android:textStyle="bold"
                 android:textSize="@dimen/eighteen_sp" />
 
             <ImageView
@@ -141,6 +142,7 @@
         android:layout_marginTop="@dimen/twenty_dp"
         android:layout_marginEnd="@dimen/sixteen_dp"
         android:text="Today"
+        android:textStyle="bold"
         android:textColor="@color/text_color1"
         android:textSize="@dimen/fourteen_sp" />
 
