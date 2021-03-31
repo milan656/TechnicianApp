@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/eight_dp"
+    app:cardCornerRadius="@dimen/eight_dp"
+    app:cardElevation="@dimen/three_dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.walkins.technician.custom.NormalTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You have 34 Upcoming Services on 23 march"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <com.walkins.technician.custom.NormalTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twelve_dp"
+                android:text="Palm Spring, Vastrapur"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/eighteen_sp" />
+
+
+        </LinearLayout>
+
+        <com.walkins.technician.custom.NormalTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="3"
+            android:gravity="bottom|right"
+            android:text="2 min"
+            android:alpha="0.5"
+            android:textColor="@color/text_color1"
+            android:textSize="@dimen/twelve_sp"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

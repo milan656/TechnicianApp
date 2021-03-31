@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,10 +18,13 @@ import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.common.onClickAdapter
 
-class ProfileActivity : AppCompatActivity(), onClickAdapter {
+class ProfileActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private var arrayList = arrayListOf("Gallery", "Camera")
     private var ivCamera: ImageView? = null
+    private var ivBack: ImageView? = null
+    private var tvTitle: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +35,15 @@ class ProfileActivity : AppCompatActivity(), onClickAdapter {
 
     private fun init() {
         ivCamera = findViewById(R.id.ivCamera)!!
+        tvTitle = findViewById(R.id.tvTitle)
+        ivBack = findViewById(R.id.ivBack)
         ivCamera?.setOnClickListener {
 
             showBottomSheetdialog(arrayList, "Choose From", this, Common.btn_filled)
         }
+        ivBack?.setOnClickListener(this)
+        tvTitle?.text = "Your Profile"
+
     }
 
     private fun showBottomSheetdialog(
@@ -103,5 +112,14 @@ class ProfileActivity : AppCompatActivity(), onClickAdapter {
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+    }
+
+    override fun onClick(v: View?) {
+        val id = v?.id
+        when (id) {
+            R.id.ivBack -> {
+                onBackPressed()
+            }
+        }
     }
 }
