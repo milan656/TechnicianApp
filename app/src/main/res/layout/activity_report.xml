@@ -26,6 +26,7 @@
             android:background="@drawable/layout_bg_white"
             android:hint="Search for vehicle reg. number"
             android:paddingStart="@dimen/ten_dp"
+            android:textColor="@color/text_color1"
             android:paddingEnd="@dimen/ten_dp"
             android:textSize="@dimen/fourteen_sp" />
 
@@ -117,4 +118,12 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reportRecycView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:layout_marginTop="@dimen/thirty_dp"/>
 </LinearLayout>

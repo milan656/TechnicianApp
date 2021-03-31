@@ -104,7 +104,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         ivAddServices?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if (!serviceExpanded) {
+                /*if (!serviceExpanded) {
                     ivAddServices?.setImageResource(R.drawable.ic_minus_icon)
                     Common.expand(llServiceExpanded!!)
 
@@ -120,7 +120,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Common.collapse(llServiceExpanded!!)
                     serviceExpanded = false
 
-                }
+                }*/
 
                 return false
             }
@@ -129,7 +129,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivAddTechnicalSuggestion?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
 
-                if (techicalSuggestionExpanded) {
+               /* if (techicalSuggestionExpanded) {
                     ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_add_icon)
                     llTechnicalSuggestionExpanded?.visibility = View.GONE
                     techicalSuggestionExpanded = false
@@ -139,7 +139,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     llTechnicalSuggestionExpanded?.visibility = View.VISIBLE
                     techicalSuggestionExpanded = true
 
-                }
+                }*/
 
                 return false
             }
@@ -147,7 +147,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         })
         ivAddTyreConfig?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if (tyreConfigExpanded) {
+                /*if (tyreConfigExpanded) {
                     ivAddTyreConfig?.setImageResource(R.drawable.ic_add_icon)
                     llTyreConfigExpanded?.visibility = View.GONE
                     tyreConfigExpanded = false
@@ -157,7 +157,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     llTyreConfigExpanded?.visibility = View.VISIBLE
                     tyreConfigExpanded = true
 
-                }
+                }*/
 
                 return false
             }

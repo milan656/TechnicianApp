@@ -38,7 +38,7 @@
 
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="1dp"
                         android:layout_marginRight="1dp"
@@ -58,7 +58,7 @@
                                 android:background="@color/red" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/sixteen_dp"
                                 android:layout_marginLeft="@dimen/sixteen_dp"
@@ -189,7 +189,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -706,7 +706,7 @@
                             android:layout_marginTop="@dimen/twelve_dp"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <com.walkins.technician.custom.NormalTextView
                                 android:layout_width="match_parent"
@@ -846,7 +846,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/fourteen_dp"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/suggestionsRecycView"
@@ -888,7 +888,6 @@
                                 android:inputType="textMultiLine"
                                 android:paddingStart="@dimen/ten_dp"
                                 android:paddingEnd="@dimen/ten_dp"
-                                android:text="hello"
                                 android:textSize="@dimen/fourteen_sp" />
 
                             <RelativeLayout
