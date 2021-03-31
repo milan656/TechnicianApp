@@ -34,6 +34,7 @@ class HomeFragment : Fragment(), onClickAdapter {
     private var dummyvaluestart: String? = "0"
     private var dummyvalueend: String? = "100"
 
+
     private var homeRecycView: RecyclerView? = null
     private var adapter: HomeListAdpater? = null
     private var relNoDataView: RelativeLayout? = null
