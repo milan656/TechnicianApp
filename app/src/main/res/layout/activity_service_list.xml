@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context=".activity.ServiceListActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/llUpcoming"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/six_dp"
+            android:layout_marginRight="@dimen/six_dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_red_layout"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.walkins.technician.custom.NormalTextView
+                android:id="@+id/tvUpcoming"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Upcoming - 4"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCompleted"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/six_dp"
+            android:layout_marginEnd="@dimen/six_dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_white_layout"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.walkins.technician.custom.NormalTextView
+                android:id="@+id/tvCompleted"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Completed - 3"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSkipped"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/six_dp"
+            android:layout_marginLeft="@dimen/six_dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_white_layout"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.walkins.technician.custom.NormalTextView
+                android:id="@+id/tvSkipped"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Skipped - 3"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fourteen_dp"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:layout_marginEnd="@dimen/fourteen_dp"
+        app:cardCornerRadius="@dimen/five_dp"
+        app:cardElevation="@dimen/two_dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.walkins.technician.custom.NormalTextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/sixteen_dp"
+                android:layout_marginTop="@dimen/twelve_dp"
+                android:layout_marginEnd="@dimen/sixteen_dp"
+                android:layout_marginBottom="@dimen/sixteen_dp"
+                android:layout_weight="1"
+                android:text="Titanium City Center, Anand Nagar"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/eighteen_sp" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/twelve_dp"
+                android:layout_marginEnd="@dimen/six_dp"
+                android:layout_marginRight="@dimen/six_dp"
+                android:layout_weight="0"
+                android:paddingStart="@dimen/six_dp"
+                android:paddingEnd="@dimen/six_dp"
+                android:paddingBottom="@dimen/six_dp"
+                android:src="@drawable/info_help" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.walkins.technician.custom.NormalTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:text="Today"
+        android:textColor="@color/text_color1"
+        android:textSize="@dimen/fourteen_sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/serviceRecycView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fourteen_dp"
+        android:layout_marginTop="@dimen/ten_dp"
+        android:layout_marginEnd="@dimen/fourteen_dp" />
+</LinearLayout>

@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnicianApp">
-        <activity android:name=".activity.VerifyOtpActivity"></activity>
+        <activity android:name=".activity.AddServiceDetailsActivity"></activity>
+        <activity android:name=".activity.ServiceListActivity" />
+        <activity android:name=".activity.VerifyOtpActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

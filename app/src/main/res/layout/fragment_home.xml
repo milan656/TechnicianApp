@@ -11,9 +11,43 @@
         android:id="@+id/homeRecycView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty_dp"
-        android:layout_marginEnd="@dimen/twenty_dp" />
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginEnd="@dimen/sixteen_dp" />
 
+    <RelativeLayout
+        android:id="@+id/relNoDataView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/eighteen_dp"
+        android:layout_marginTop="@dimen/sixty_dp"
+        android:layout_marginEnd="@dimen/eighteen_dp"
+        android:layout_marginBottom="@dimen/sixty_dp"
+        android:background="@drawable/ic_empty_circle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_empty_icon" />
+
+            <com.walkins.technician.custom.NormalTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/fourteen_dp"
+                android:alpha="0.5"
+                android:gravity="center"
+                android:text="Currently you do not have any services"
+                android:textColor="#424242"
+                android:textSize="@dimen/fourteen_sp" />
+        </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/linearSlider"
         android:layout_width="match_parent"

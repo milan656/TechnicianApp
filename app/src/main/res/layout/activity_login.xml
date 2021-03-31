@@ -68,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginTop="@dimen/eight_dp"
-                        android:background="@drawable/layout_bg_latest"
+                        android:background="@drawable/common_layout_bg"
                         android:padding="8dip"
                         android:inputType="number"
                         android:maxLength="10"

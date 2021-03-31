@@ -1,15 +1,13 @@
 package com.walkins.technician.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +16,7 @@ import com.example.technician.common.Common
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ramotion.fluidslider.FluidSlider
 import com.walkins.technician.R
+import com.walkins.technician.activity.ServiceListActivity
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.HomeListAdpater
 import com.walkins.technician.common.onClickAdapter
@@ -37,6 +36,7 @@ class HomeFragment : Fragment(), onClickAdapter {
 
     private var homeRecycView: RecyclerView? = null
     private var adapter: HomeListAdpater? = null
+    private var relNoDataView: RelativeLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +97,9 @@ class HomeFragment : Fragment(), onClickAdapter {
         slider.animation?.cancel()
 
         homeRecycView = view.findViewById(R.id.homeRecycView)
+        relNoDataView = view.findViewById(R.id.relNoDataView)
+        relNoDataView?.visibility = View.GONE
+
         homeRecycView?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
@@ -182,8 +185,11 @@ class HomeFragment : Fragment(), onClickAdapter {
         titleStr: String,
         context: Context?,
         btnBg: String,
-        isBtnVisible: Boolean
-
+        isBtnVisible: Boolean,
+        msg: String,
+        msg1: String,
+        msg2: String,
+        msg3: String,
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
@@ -199,9 +205,31 @@ class HomeFragment : Fragment(), onClickAdapter {
 
         val btnSend = view.findViewById<Button>(R.id.btnOk)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
+        val tv_message = view.findViewById<TextView>(R.id.tv_message)
+        val tv_message1 = view.findViewById<TextView>(R.id.tv_message1)
+        val tv_message2 = view.findViewById<TextView>(R.id.tv_message2)
+        val tv_message3 = view.findViewById<TextView>(R.id.tv_message3)
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
+
+        tv_message?.text = msg
+        tv_message1?.text = msg1
+        tv_message2?.text = msg2
+        tv_message3?.text = msg3
+
+        if (msg.isNotEmpty()) {
+            tv_message.visibility = View.VISIBLE
+        }
+        if (msg1.isNotEmpty()) {
+            tv_message1.visibility = View.VISIBLE
+        }
+        if (msg2.isNotEmpty()) {
+            tv_message2.visibility = View.VISIBLE
+        }
+        if (msg3.isNotEmpty()) {
+            tv_message3.visibility = View.VISIBLE
+        }
 
         ivClose?.setOnClickListener {
             dialog?.dismiss()
@@ -248,9 +276,13 @@ class HomeFragment : Fragment(), onClickAdapter {
                 "Address Details",
                 context,
                 Common.btn_filled,
-                false
+                false, "Palm Spring,", "Vastrapur Road,", "Opposite Siddhivinayak mandir,",
+                "Ahmedabad - 123456"
             )
 
+        } else if (check == 0) {
+            var intent = Intent(context, ServiceListActivity::class.java)
+            startActivity(intent)
         }
         Log.e("getclickpos", arrayList.get(variable))
     }

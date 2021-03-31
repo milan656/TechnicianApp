@@ -148,7 +148,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     * */
     private fun userLogin() {
         if (edtLoginEmail.text?.trim()?.length == 0) {
-            edtLoginEmail.error = "User ID should not be empty"
+            edtLoginEmail.error = "Please enter    phone number"
+            //Common.showShortToast("Please enter userid", this@LoginActivity)
+            return
+        }
+        if (edtLoginEmail.text?.trim()?.length != 10) {
+            edtLoginEmail.error = "Please enter valid phone number"
             //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
@@ -205,6 +210,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     prefManager.setUuid(it.userDetailModel!!.uuid)
                     prefManager.setSapId(it.userDetailModel!!.sap_id)
 
+
 //                    firebaseAnalytics?.setUserId(it.userDetailModel?.sap_id!!);
 
                     prefManager.setVideoUrl(it.videoURL)
@@ -228,53 +234,53 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                     var arrayList: ArrayList<String>? = ArrayList()
 
-                   /* if (it.userDetailModel?.arrayListPermission != null) {
+                    /* if (it.userDetailModel?.arrayListPermission != null) {
 
-                        for (i in it.userDetailModel?.arrayListPermission?.indices!!) {
-                            arrayList?.add(it.userDetailModel?.arrayListPermission?.get(i)!!)
+                         for (i in it.userDetailModel?.arrayListPermission?.indices!!) {
+                             arrayList?.add(it.userDetailModel?.arrayListPermission?.get(i)!!)
 
-                        }
-                        when {
-                            arrayList != null -> {
-                                prefManager.setPermissionList(arrayList)
-                            }
-                        }
-                    } else if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
-                            "customerClass"
-                        )
-                            .equals("na", ignoreCase = true)
-                    ) {
-                        val intent = Intent(this, HomeSubDealerActivity::class.java)
-                        intent.putExtra("videoUrl", it.videoURL)
-                        startActivity(intent)
-                        finish()
-                        return@Observer
-                    }
-                    if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
-                            "customerClass"
-                        )
-                            .equals("na", ignoreCase = true)
-                    ) {
-                        val intent = Intent(this, HomeSubDealerActivity::class.java)
-                        intent.putExtra("videoUrl", it.videoURL)
-                        startActivity(intent)
-                        finish()
-                        return@Observer
-                    }
+                         }
+                         when {
+                             arrayList != null -> {
+                                 prefManager.setPermissionList(arrayList)
+                             }
+                         }
+                     } else if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
+                             "customerClass"
+                         )
+                             .equals("na", ignoreCase = true)
+                     ) {
+                         val intent = Intent(this, HomeSubDealerActivity::class.java)
+                         intent.putExtra("videoUrl", it.videoURL)
+                         startActivity(intent)
+                         finish()
+                         return@Observer
+                     }
+                     if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
+                             "customerClass"
+                         )
+                             .equals("na", ignoreCase = true)
+                     ) {
+                         val intent = Intent(this, HomeSubDealerActivity::class.java)
+                         intent.putExtra("videoUrl", it.videoURL)
+                         startActivity(intent)
+                         finish()
+                         return@Observer
+                     }
 
-                    if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
-                            .equals("na", ignoreCase = true)
-                    ) {
-                        val intent = Intent(this, HomeSubDealerActivity::class.java)
-                        intent.putExtra("videoUrl", it.videoURL)
-                        startActivity(intent)
-                        finish()
-                        return@Observer
-                    }*/
+                     if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
+                             .equals("na", ignoreCase = true)
+                     ) {
+                         val intent = Intent(this, HomeSubDealerActivity::class.java)
+                         intent.putExtra("videoUrl", it.videoURL)
+                         startActivity(intent)
+                         finish()
+                         return@Observer
+                     }*/
 
 
                     Log.e("getType", "" + it.userDetailModel!!.type)
-
+                    prefManager.isLogin(true)
                     val intent = Intent(this, VerifyOtpActivity::class.java)
                     startActivity(intent)
                     finish()

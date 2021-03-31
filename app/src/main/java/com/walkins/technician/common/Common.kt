@@ -10,9 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.Transformation
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
 import com.google.gson.Gson
@@ -491,6 +494,59 @@ class Common {
             builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
             builder.show()
         }
+
+        fun expand(v: View) {
+            v.measure(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
+            val targtetHeight = v.measuredHeight
+            v.layoutParams.height = 0
+            v.visibility = View.VISIBLE
+            val a: Animation = object : Animation() {
+                override fun applyTransformation(
+                    interpolatedTime: Float,
+                    t: Transformation?
+                ) {
+                    v.layoutParams.height =
+                        if (interpolatedTime == 1f) RecyclerView.LayoutParams.WRAP_CONTENT else (targtetHeight * interpolatedTime).toInt()
+                    v.requestLayout()
+                }
+
+                override fun willChangeBounds(): Boolean {
+                    return true
+                }
+            }
+//        a.setDuration((targtetHeight / v.context.resources.displayMetrics.density).toInt().toLong())
+            a.setDuration(300)
+            v.startAnimation(a)
+        }
+
+        fun collapse(v: View) {
+            val initialHeight = v.measuredHeight
+            val a: Animation = object : Animation() {
+                protected override fun applyTransformation(
+                    interpolatedTime: Float,
+                    t: Transformation?
+                ) {
+                    if (interpolatedTime == 1f) {
+                        v.visibility = View.GONE
+
+
+
+                    } else {
+                        v.layoutParams.height =
+                            initialHeight - (initialHeight * interpolatedTime).toInt()
+                        v.requestLayout()
+                    }
+                }
+
+                override fun willChangeBounds(): Boolean {
+                    return true
+                }
+            }
+//        a.setDuration((initialHeight / v.context.resources.displayMetrics.density).toInt().toLong())
+            a.setDuration(300)
+            v.startAnimation(a)
+        }
+
     }
 
 
