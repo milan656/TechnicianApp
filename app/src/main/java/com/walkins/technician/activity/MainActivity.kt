@@ -98,22 +98,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         val i = v?.id
         when (i) {
             R.id.ivHome -> {
-                ivReport?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivHome?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.header_title),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivProfile?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivNotification?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
 
                 replaceFragmenty(
                     fragment = HomeFragment.newInstance("", ""),
@@ -133,66 +117,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
                 )
 */
-                ivReport?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.header_title),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivHome?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivProfile?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivNotification?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
+
                 selectedMenu = "report"
                 val intent = Intent(this, ReportActivity::class.java)
                 startActivity(intent)
 
             }
             R.id.ivNotification -> {
-                ivReport?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivHome?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivProfile?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivNotification?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.header_title),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
+
                 selectedMenu = "notification"
                 val intent = Intent(this, NotificationActivity::class.java)
                 startActivity(intent)
 
             }
             R.id.ivProfile -> {
-                ivReport?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivHome?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivProfile?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.header_title),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivNotification?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
+
                 selectedMenu = "profile"
                 val intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
@@ -247,6 +186,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     override fun onResume() {
         super.onResume()
-        Log.e("selectedMenu", ""+selectedMenu)
+        Log.e("selectedMenu", "" + selectedMenu)
+
+
     }
 }
