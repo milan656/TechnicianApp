@@ -2,6 +2,7 @@ package com.walkins.technician.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -42,9 +43,27 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
         tvTitle?.text = "Add Service Details"
         ivInfoAddService?.setOnClickListener(this)
-        ivAddServices?.setOnClickListener(this)
         ivAddTechnicalSuggestion?.setOnClickListener(this)
         ivAddTyreConfig?.setOnClickListener(this)
+
+        ivAddServices?.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if (!serviceExpanded) {
+                    ivAddServices?.setImageResource(R.drawable.ic_minus_icon)
+                    Common.expand(llServiceExpanded!!)
+                    serviceExpanded = true
+
+                } else {
+                    ivAddServices?.setImageResource(R.drawable.ic_add_icon)
+                    Common.collapse(llServiceExpanded!!)
+                    serviceExpanded = false
+
+                }
+
+                return false
+            }
+
+        })
 
         ivBack?.setOnClickListener(this)
         llServiceExpanded?.setOnClickListener(this)
@@ -62,17 +81,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.ivAddServices -> {
 
-                if (!serviceExpanded) {
-                    ivAddServices?.setImageResource(R.drawable.ic_minus_icon)
-                    Common.expand(llServiceExpanded!!)
-                    serviceExpanded = true
-
-                } else {
-                    ivAddServices?.setImageResource(R.drawable.ic_add_icon)
-                    Common.collapse(llServiceExpanded!!)
-                    serviceExpanded = false
-
-                }
 
             }
             R.id.ivInfoAddService -> {
