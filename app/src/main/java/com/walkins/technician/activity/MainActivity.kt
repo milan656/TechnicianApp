@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bruce.pickerview.popwindow.DatePickerPopWin
 import com.example.technician.common.PrefManager
 import com.walkins.technician.R
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private var ivHome: ImageView? = null
     private var ivNotification: ImageView? = null
-    private var ivHome1: ImageView? = null
+    private var ivReport: ImageView? = null
     private var ivProfile: ImageView? = null
     private var llhome: LinearLayout? = null
     private var tvUsername: TextView? = null
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var ivFilter: ImageView? = null
     private var ivDot: ImageView? = null
     private var selectedDate: String? = null
+
+    private var selectedMenu: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         ivDot = findViewById(R.id.ivDot)
         ivDot?.visibility = View.GONE
         ivHome = findViewById(R.id.ivHome)
-        ivHome1 = findViewById(R.id.ivHome1)
+        ivReport = findViewById(R.id.ivReport)
         ivProfile = findViewById(R.id.ivProfile)
         ivNotification = findViewById(R.id.ivNotification)
         llhome = findViewById(R.id.llhome)
@@ -59,11 +62,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         ivHome?.setOnClickListener(this)
         ivProfile?.setOnClickListener(this)
-        ivHome1?.setOnClickListener(this)
+        ivReport?.setOnClickListener(this)
         ivNotification?.setOnClickListener(this)
         ivFilter?.setOnClickListener(this)
 
         tvUsername?.text = "Hello, " + prefManager?.getOwnerName()
+
+        ivHome?.performClick()
 
     }
 
@@ -93,6 +98,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         val i = v?.id
         when (i) {
             R.id.ivHome -> {
+                ivReport?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivHome?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.header_title),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivProfile?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivNotification?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
 
                 replaceFragmenty(
                     fragment = HomeFragment.newInstance("", ""),
@@ -100,36 +121,80 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     containerViewId = R.id.mainContent
 
                 )
+
+                selectedMenu = "home"
             }
-            R.id.ivHome1 -> {
+            R.id.ivReport -> {
+/*
                 replaceFragmenty(
                     fragment = HomeFragment.newInstance("", ""),
                     allowStateLoss = true,
                     containerViewId = R.id.mainContent
 
                 )
+*/
+                ivReport?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.header_title),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivHome?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivProfile?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivNotification?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                selectedMenu = "report"
+                val intent = Intent(this, ReportActivity::class.java)
+                startActivity(intent)
 
             }
             R.id.ivNotification -> {
-//                replaceFragmenty(
-//                    fragment = NotificationFragment.newInstance("", ""),
-//                    allowStateLoss = true,
-//                    containerViewId = R.id.mainContent
-//
-//                )
-                var intent = Intent(this, NotificationActivity::class.java)
+                ivReport?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivHome?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivProfile?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivNotification?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.header_title),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                selectedMenu = "notification"
+                val intent = Intent(this, NotificationActivity::class.java)
                 startActivity(intent)
 
             }
             R.id.ivProfile -> {
-                /* replaceFragmenty(
-                     fragment = ProfileFragment.newInstance("", ""),
-                     allowStateLoss = true,
-                     containerViewId = R.id.mainContent
-
-                 )*/
-
-                var intent = Intent(this, ProfileActivity::class.java)
+                ivReport?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivHome?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivProfile?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.header_title),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivNotification?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                selectedMenu = "profile"
+                val intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
 
             }
@@ -178,5 +243,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("selectedMenu", ""+selectedMenu)
     }
 }

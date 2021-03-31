@@ -10,8 +10,8 @@
         android:id="@+id/llheader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginEnd="@dimen/sixteen_dp"
+        android:layout_marginStart="@dimen/eighteen_dp"
+        android:layout_marginEnd="@dimen/eighteen_dp"
         android:orientation="horizontal">
 
         <ImageView

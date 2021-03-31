@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context=".activity.ReportActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/eighteen_dp"
+        android:layout_marginEnd="@dimen/eighteen_dp"
+        android:orientation="horizontal">
+
+        <com.walkins.technician.custom.NormalEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/six_dp"
+            android:layout_marginRight="@dimen/six_dp"
+            android:layout_weight="1"
+            android:background="@drawable/layout_bg_white"
+            android:hint="Search for vehicle reg. number"
+            android:paddingStart="@dimen/ten_dp"
+            android:paddingEnd="@dimen/ten_dp"
+            android:textSize="@dimen/fourteen_sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:padding="@dimen/twelve_dp"
+            android:src="@drawable/ic_home_1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/eighteen_dp"
+        android:layout_marginTop="@dimen/twenty_four_dp"
+        android:layout_marginEnd="@dimen/eighteen_dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/llUpcoming"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/six_dp"
+            android:layout_marginRight="@dimen/six_dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_red_layout"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.walkins.technician.custom.NormalTextView
+                android:id="@+id/tvUpcoming"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Completed - 4"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/six_dp"
+            android:layout_marginEnd="@dimen/six_dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_white_layout"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.walkins.technician.custom.NormalTextView
+                android:id="@+id/tvCompleted"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Skipped - 3"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/six_dp"
+            android:layout_marginEnd="@dimen/six_dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_white_layout"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <com.walkins.technician.custom.NormalTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Completed - 3"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
