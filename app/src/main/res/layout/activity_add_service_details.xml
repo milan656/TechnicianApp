@@ -1,39 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:orientation="vertical"
     tools:context=".activity.AddServiceDetailsActivity">
 
-    <include layout="@layout/common_toolbar" />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llfooter"
+        android:background="@color/bg_color"
+        android:orientation="vertical"
+        tools:context=".activity.AddServiceDetailsActivity">
 
-        <LinearLayout
+        <include layout="@layout/common_toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fourteen_dp"
-                android:layout_marginEnd="@dimen/fourteen_dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fourteen_dp"
+                    android:layout_marginEnd="@dimen/fourteen_dp"
+                    android:orientation="horizontal">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="@dimen/five_dp"
+                        app:cardElevation="@dimen/two_dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/red" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/sixteen_dp"
+                                android:layout_marginLeft="@dimen/sixteen_dp"
+                                android:layout_marginTop="@dimen/fourteen_dp"
+                                android:layout_marginBottom="@dimen/fourteen_dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="start|center|bottom"
+                                        android:text="GJ01RY3771"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/eighteen_sp" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|bottom"
+                                        android:src="@drawable/ic_car_image" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/four_dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="start|center"
+                                        android:text="Toyota Innova"
+                                        android:textColor="@color/text_color1"
+
+                                        android:textSize="@dimen/twelve_sp" />
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1.5"
+                                        android:gravity="center"
+                                        android:text="Red"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/twelve_sp" />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ivInfoAddService"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="top"
+                                android:layout_margin="@dimen/twelve_dp"
+                                android:padding="@dimen/five_dp"
+                                android:src="@drawable/info_help" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
 
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="1dp"
-                    android:layout_marginRight="1dp"
-                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/fourteen_dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:layout_marginEnd="@dimen/fourteen_dp"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/five_dp"
                     app:cardElevation="@dimen/two_dp"
                     app:cardUseCompatPadding="true">
@@ -41,823 +158,836 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="5dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/red" />
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/sixteen_dp"
-                            android:layout_marginLeft="@dimen/sixteen_dp"
-                            android:layout_marginTop="@dimen/fourteen_dp"
-                            android:layout_marginBottom="@dimen/fourteen_dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_margin="@dimen/eighteen_dp"
+                            android:orientation="horizontal">
 
-                            <LinearLayout
+                            <com.walkins.technician.custom.NormalTextView
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal">
+                                android:text="Services"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/eighteen_sp" />
 
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="start|center|bottom"
-                                    android:text="GJ01RY3771"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/eighteen_sp" />
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center|bottom"
-                                    android:src="@drawable/ic_car_image" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <ImageView
+                                android:id="@+id/ivAddServices"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/four_dp"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="start|center"
-                                    android:text="Toyota Innova"
-                                    android:textColor="@color/text_color1"
-
-                                    android:textSize="@dimen/twelve_sp" />
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1.5"
-                                    android:gravity="center"
-                                    android:text="Red"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/twelve_sp" />
-
-
-                            </LinearLayout>
-
+                                android:layout_weight="0"
+                                android:padding="@dimen/three_dp"
+                                android:src="@drawable/ic_add_icon" />
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/ivInfoAddService"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="top"
-                            android:layout_margin="@dimen/twelve_dp"
-                            android:padding="@dimen/five_dp"
-                            android:src="@drawable/info_help" />
+                        <LinearLayout
+                            android:id="@+id/llServiceExpanded"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="125dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/ten_dp"
+                                android:layout_marginEnd="@dimen/ten_dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="96dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/service_layout_bg"
+                                        android:orientation="vertical">
+
+                                        <CheckBox
+                                            android:id="@+id/chkNitrogenTopup"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:buttonTint="@color/text_color2" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="@dimen/eighteen_dp"
+                                            android:layout_marginEnd="@dimen/eighteen_dp"
+                                            android:layout_marginBottom="@dimen/fourteen_dp"
+                                            android:orientation="vertical">
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
+                                                android:src="@drawable/ic_nitrogen_topup" />
+
+                                            <com.walkins.technician.custom.NormalTextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_marginTop="@dimen/four_dp"
+                                                android:gravity="center"
+                                                android:text="Nitrogen Top Up"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="96dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/service_layout_bg"
+                                        android:orientation="vertical">
+
+                                        <CheckBox
+                                            android:id="@+id/chkNitrogenRefill"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:buttonTint="@color/text_color2" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="@dimen/eighteen_dp"
+                                            android:layout_marginEnd="@dimen/eighteen_dp"
+                                            android:layout_marginBottom="@dimen/fourteen_dp"
+                                            android:orientation="vertical">
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
+                                                android:src="@drawable/ic_nitrogen_refil" />
+
+                                            <com.walkins.technician.custom.NormalTextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_marginTop="@dimen/four_dp"
+                                                android:gravity="center"
+                                                android:text="Nitrogen Refill"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="122dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/ten_dp"
+                                android:layout_marginTop="@dimen/twenty_dp"
+                                android:layout_marginEnd="@dimen/ten_dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="96dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/service_layout_bg"
+                                        android:orientation="vertical">
+
+                                        <CheckBox
+                                            android:id="@+id/chkWheelBalacing"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:buttonTint="@color/text_color2" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="@dimen/eighteen_dp"
+                                            android:layout_marginEnd="@dimen/eighteen_dp"
+                                            android:layout_marginBottom="@dimen/fourteen_dp"
+                                            android:orientation="vertical">
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
+                                                android:src="@drawable/ic_nitrogen_topup" />
+
+                                            <com.walkins.technician.custom.NormalTextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_marginTop="@dimen/four_dp"
+                                                android:gravity="center"
+                                                android:text="Wheel Balancing"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="96dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/service_layout_bg"
+                                        android:orientation="vertical">
+
+                                        <CheckBox
+                                            android:id="@+id/chkTyreRotation"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:buttonTint="@color/text_color2" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="@dimen/eighteen_dp"
+                                            android:layout_marginEnd="@dimen/eighteen_dp"
+                                            android:layout_marginBottom="@dimen/fourteen_dp"
+                                            android:orientation="vertical">
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
+                                                android:src="@drawable/ic_tyre_rotation" />
+
+                                            <com.walkins.technician.custom.NormalTextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_marginTop="@dimen/four_dp"
+                                                android:gravity="center"
+                                                android:text="Tyre Rotation"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llUpdatedPlacement"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/sixteen_dp"
+                            android:layout_marginTop="@dimen/twenty_dp"
+                            android:layout_marginEnd="@dimen/sixteen_dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <com.walkins.technician.custom.BoldTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="updated placement"
+                                android:textAllCaps="true"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/sixteen_dp"
+                                android:background="@drawable/layout_bg_secondary"
+                                android:orientation="horizontal"
+                                android:paddingStart="@dimen/five_dp"
+                                android:paddingEnd="@dimen/five_dp">
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.7"
+                                    android:gravity="center"
+                                    android:text="LF"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.7"
+                                    android:gravity="center"
+                                    android:text="="
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="LR"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="RR"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/sixteen_dp"
+                                android:background="@drawable/layout_bg_secondary"
+                                android:orientation="horizontal"
+                                android:paddingStart="@dimen/five_dp"
+                                android:paddingEnd="@dimen/five_dp">
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.7"
+                                    android:gravity="center"
+                                    android:text="RF"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.7"
+                                    android:gravity="center"
+                                    android:text="="
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="LR"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="RR"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/sixteen_dp"
+                                android:background="@drawable/layout_bg_secondary"
+                                android:orientation="horizontal"
+                                android:paddingStart="@dimen/five_dp"
+                                android:paddingEnd="@dimen/five_dp">
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.7"
+                                    android:gravity="center"
+                                    android:text="LR"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.7"
+                                    android:gravity="center"
+                                    android:text="="
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="LF"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="RF"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/sixteen_dp"
+                                android:layout_marginBottom="@dimen/fourteen_dp"
+                                android:background="@drawable/layout_bg_secondary"
+                                android:orientation="horizontal"
+                                android:paddingStart="@dimen/five_dp"
+                                android:paddingEnd="@dimen/five_dp">
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.7"
+                                    android:gravity="center"
+                                    android:text="RR"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.7"
+                                    android:gravity="center"
+                                    android:text="="
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="LF"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="RF"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
 
-
-            </LinearLayout>
-
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fourteen_dp"
-                android:layout_marginTop="@dimen/fourteen_dp"
-                android:layout_marginEnd="@dimen/fourteen_dp"
-                android:visibility="visible"
-                app:cardCornerRadius="@dimen/five_dp"
-                app:cardElevation="@dimen/two_dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginStart="@dimen/fourteen_dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:layout_marginEnd="@dimen/fourteen_dp"
+                    app:cardCornerRadius="@dimen/five_dp"
+                    app:cardElevation="@dimen/two_dp"
+                    app:cardUseCompatPadding="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/eighteen_dp"
-                        android:orientation="horizontal">
-
-                        <com.walkins.technician.custom.NormalTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Services"
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/eighteen_sp" />
-
-                        <ImageView
-                            android:id="@+id/ivAddServices"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0"
-                            android:padding="@dimen/three_dp"
-                            android:src="@drawable/ic_add_icon" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llServiceExpanded"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="125dp"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/ten_dp"
-                            android:layout_marginEnd="@dimen/ten_dp"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="96dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/service_layout_bg"
-                                    android:orientation="vertical">
-
-                                    <CheckBox
-                                        android:id="@+id/chkNitrogenTopup"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:buttonTint="@color/text_color2" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="@dimen/eighteen_dp"
-                                        android:layout_marginEnd="@dimen/eighteen_dp"
-                                        android:layout_marginBottom="@dimen/fourteen_dp"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="center"
-                                            android:src="@drawable/ic_nitrogen_topup" />
-
-                                        <com.walkins.technician.custom.NormalTextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="@dimen/four_dp"
-                                            android:gravity="center"
-                                            android:text="Nitrogen Top Up"
-                                            android:textColor="@color/text_color1"
-                                            android:textSize="@dimen/fourteen_sp" />
-
-                                    </LinearLayout>
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="96dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/service_layout_bg"
-                                    android:orientation="vertical">
-
-                                    <CheckBox
-                                        android:id="@+id/chkNitrogenRefill"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:buttonTint="@color/text_color2" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="@dimen/eighteen_dp"
-                                        android:layout_marginEnd="@dimen/eighteen_dp"
-                                        android:layout_marginBottom="@dimen/fourteen_dp"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="center"
-                                            android:src="@drawable/ic_nitrogen_refil" />
-
-                                        <com.walkins.technician.custom.NormalTextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="@dimen/four_dp"
-                                            android:gravity="center"
-                                            android:text="Nitrogen Refill"
-                                            android:textColor="@color/text_color1"
-                                            android:textSize="@dimen/fourteen_sp" />
-                                    </LinearLayout>
-
-                                </LinearLayout>
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="122dp"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/ten_dp"
-                            android:layout_marginTop="@dimen/twenty_dp"
-                            android:layout_marginEnd="@dimen/ten_dp"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="96dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/service_layout_bg"
-                                    android:orientation="vertical">
-
-                                    <CheckBox
-                                        android:id="@+id/chkWheelBalacing"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:buttonTint="@color/text_color2" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="@dimen/eighteen_dp"
-                                        android:layout_marginEnd="@dimen/eighteen_dp"
-                                        android:layout_marginBottom="@dimen/fourteen_dp"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="center"
-                                            android:src="@drawable/ic_nitrogen_topup" />
-
-                                        <com.walkins.technician.custom.NormalTextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="@dimen/four_dp"
-                                            android:gravity="center"
-                                            android:text="Wheel Balancing"
-                                            android:textColor="@color/text_color1"
-                                            android:textSize="@dimen/fourteen_sp" />
-
-                                    </LinearLayout>
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="96dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/service_layout_bg"
-                                    android:orientation="vertical">
-
-                                    <CheckBox
-                                        android:id="@+id/chkTyreRotation"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:buttonTint="@color/text_color2" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="@dimen/eighteen_dp"
-                                        android:layout_marginEnd="@dimen/eighteen_dp"
-                                        android:layout_marginBottom="@dimen/fourteen_dp"
-                                        android:orientation="vertical">
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:gravity="center"
-                                            android:src="@drawable/ic_tyre_rotation" />
-
-                                        <com.walkins.technician.custom.NormalTextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="@dimen/four_dp"
-                                            android:gravity="center"
-                                            android:text="Tyre Rotation"
-                                            android:textColor="@color/text_color1"
-                                            android:textSize="@dimen/fourteen_sp" />
-                                    </LinearLayout>
-
-                                </LinearLayout>
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/llUpdatedPlacement"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/sixteen_dp"
-                        android:layout_marginTop="@dimen/twenty_dp"
-                        android:layout_marginEnd="@dimen/sixteen_dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <com.walkins.technician.custom.BoldTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="updated placement"
-                            android:textAllCaps="true"
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/fourteen_sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/sixteen_dp"
-                            android:background="@drawable/layout_bg_secondary"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/five_dp"
-                            android:paddingEnd="@dimen/five_dp">
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.7"
-                                android:gravity="center"
-                                android:text="LF"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.7"
-                                android:gravity="center"
-                                android:text="="
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <RadioButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="LR"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <RadioButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="RR"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/sixteen_dp"
-                            android:background="@drawable/layout_bg_secondary"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/five_dp"
-                            android:paddingEnd="@dimen/five_dp">
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.7"
-                                android:gravity="center"
-                                android:text="RF"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.7"
-                                android:gravity="center"
-                                android:text="="
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <RadioButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="LR"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <RadioButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="RR"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/sixteen_dp"
-                            android:background="@drawable/layout_bg_secondary"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/five_dp"
-                            android:paddingEnd="@dimen/five_dp">
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.7"
-                                android:gravity="center"
-                                android:text="LR"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.7"
-                                android:gravity="center"
-                                android:text="="
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <RadioButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="LF"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <RadioButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="RF"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/sixteen_dp"
-                            android:layout_marginBottom="@dimen/fourteen_dp"
-                            android:background="@drawable/layout_bg_secondary"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/five_dp"
-                            android:paddingEnd="@dimen/five_dp">
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.7"
-                                android:gravity="center"
-                                android:text="RR"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="0.7"
-                                android:gravity="center"
-                                android:text="="
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <RadioButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="LF"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <RadioButton
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="RF"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fourteen_dp"
-                android:layout_marginTop="@dimen/fourteen_dp"
-                android:layout_marginEnd="@dimen/fourteen_dp"
-                app:cardCornerRadius="@dimen/five_dp"
-                app:cardElevation="@dimen/two_dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/eighteen_dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.walkins.technician.custom.NormalTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Tyre Configuration"
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/eighteen_sp" />
-
-                        <ImageView
-                            android:id="@+id/ivAddTyreConfig"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0"
-                            android:padding="@dimen/three_dp"
-                            android:src="@drawable/ic_add_icon" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llTyreConfigExpanded"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/twelve_dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <com.walkins.technician.custom.NormalTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:background="@drawable/tyre_config"
-                            android:gravity="center"
-                            android:text="Click on any tyre to start adding info "
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/fourteen_sp" />
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/twenty_five_dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_tyre_config_car" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_tyre_config_icon" />
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="36dp" />
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_tyre_config_icon" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="60dp"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical" />
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_tyre_config_icon" />
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="36dp" />
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_tyre_config_icon" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
-
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fourteen_dp"
-                android:layout_marginTop="@dimen/fourteen_dp"
-                android:layout_marginEnd="@dimen/fourteen_dp"
-                android:layout_marginBottom="@dimen/fourteen_dp"
-                app:cardCornerRadius="@dimen/five_dp"
-                app:cardElevation="@dimen/two_dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/eighteen_dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.walkins.technician.custom.NormalTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Technical Suggestions"
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/eighteen_sp" />
-
-                        <ImageView
-                            android:id="@+id/ivAddTechnicalSuggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0"
-                            android:padding="@dimen/three_dp"
-                            android:src="@drawable/ic_add_icon" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/twenty_dp"
                         android:orientation="vertical">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/suggestionsRecycView"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            />
+                            android:orientation="horizontal">
 
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Tyre Configuration"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/eighteen_sp" />
 
-                        <CheckBox
+                            <ImageView
+                                android:id="@+id/ivAddTyreConfig"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0"
+                                android:padding="@dimen/three_dp"
+                                android:src="@drawable/ic_add_icon" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llTyreConfigExpanded"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_layout_blue"
-                            android:buttonTint="@color/colorPrimary"
-                            android:paddingStart="@dimen/five_dp"
-                            android:paddingEnd="@dimen/five_dp"
-                            android:visibility="gone"/>
+                            android:layout_marginTop="@dimen/twelve_dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/tyre_config"
+                                android:gravity="center"
+                                android:text="Click on any tyre to start adding info "
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/fourteen_sp" />
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/twenty_five_dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/ic_tyre_config_car" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_tyre_config_icon" />
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="36dp" />
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_tyre_config_icon" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="60dp"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_tyre_config_icon" />
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="36dp" />
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_tyre_config_icon" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </RelativeLayout>
+                        </LinearLayout>
+
+
                     </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-    </ScrollView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fourteen_dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:layout_marginEnd="@dimen/fourteen_dp"
+                    android:layout_marginBottom="@dimen/fourteen_dp"
+                    app:cardCornerRadius="@dimen/five_dp"
+                    app:cardElevation="@dimen/two_dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/eighteen_dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Technical Suggestions"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/eighteen_sp" />
+
+                            <ImageView
+                                android:id="@+id/ivAddTechnicalSuggestion"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0"
+                                android:padding="@dimen/three_dp"
+                                android:src="@drawable/ic_add_icon" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/twenty_dp"
+                            android:orientation="vertical">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/suggestionsRecycView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
 
-</LinearLayout>
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/twenty_dp"
+                                android:text="More Suggestions (optional)"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/twelve_sp" />
+
+                            <com.walkins.technician.custom.NormalEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/five_dp"
+                                android:background="@drawable/layout_bg_latest"
+                                android:inputType="textMultiLine"
+                                android:minLines="5" />
+
+
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/twenty_dp"
+                                android:text="Next Service Due"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/twelve_sp" />
+
+                            <com.walkins.technician.custom.NormalEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/five_dp"
+                                android:background="@drawable/layout_bg_latest"
+                                android:drawableRight="@drawable/ic_header_new"
+                                android:inputType="textMultiLine"
+                                android:paddingStart="@dimen/ten_dp"
+                                android:paddingEnd="@dimen/ten_dp"
+                                android:text="hello"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <RelativeLayout
+                                android:id="@+id/relCarPhotoAdd1"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginTop="@dimen/twenty_dp"
+                                android:background="@color/bg_color"
+                                android:orientation="vertical">
+
+
+                                <com.walkins.technician.custom.BoldTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/ten_dp"
+                                    android:alpha="0.5"
+                                    android:gravity="center"
+                                    android:text="Car Photo 1"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <com.walkins.technician.custom.BoldTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Add Car Photo"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="@dimen/fourteen_sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/relCarPhotoAdd2"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginTop="@dimen/twenty_dp"
+                                android:background="@color/bg_color"
+                                android:orientation="vertical">
+
+
+                                <com.walkins.technician.custom.BoldTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/ten_dp"
+                                    android:alpha="0.5"
+                                    android:gravity="center"
+                                    android:text="Car Photo 2"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <com.walkins.technician.custom.BoldTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Add Car Photo"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="@dimen/fourteen_sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llfooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <com.walkins.technician.custom.NormalTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="@dimen/eight_dp"
+            android:text="Skip Service"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/eighteen_sp" />
+
+        <com.walkins.technician.custom.BoldTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five_dp"
+            android:layout_marginEnd="@dimen/five_dp"
+            android:layout_marginBottom="@dimen/twelve_dp"
+            android:background="@drawable/rounded_blue"
+            android:gravity="center"
+            android:padding="@dimen/ten_dp"
+            android:text="Submit and Complete"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/eighteen_sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>

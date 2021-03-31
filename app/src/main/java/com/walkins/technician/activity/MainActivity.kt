@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bruce.pickerview.popwindow.DatePickerPopWin
 import com.example.technician.common.PrefManager
 import com.walkins.technician.R
+import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.replaceFragmenty
 import com.walkins.technician.fragment.HomeFragment
 import com.walkins.technician.service.Actions
@@ -22,7 +23,7 @@ import com.walkins.technician.service.ServiceState
 import com.walkins.technician.service.getServiceState
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private var ivHome: ImageView? = null
     private var ivNotification: ImageView? = null
@@ -173,5 +174,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         pickerPopWin?.showPopWin(this)
+    }
+
+    override fun onPositionClick(variable: Int, check: Int) {
+
     }
 }

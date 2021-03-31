@@ -1,15 +1,25 @@
 package com.walkins.technician.activity
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
+import com.walkins.technician.adapter.DialogueAdpater
+import com.walkins.technician.adapter.TyreSuggestionAdpater
+import com.walkins.technician.common.onClickAdapter
 
-class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener {
+class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
+    private var arrayList = arrayListOf("Gallery", "Camera")
+
     private var ivInfoAddService: ImageView? = null
     private var ivAddServices: ImageView? = null
     private var ivAddTyreConfig: ImageView? = null
@@ -31,7 +41,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener {
     private var chkWheelBalacing: CheckBox? = null
     private var chkTyreRotation: CheckBox? = null
 
-    private var suggestionsRecycView:RecyclerView?=null
+    private var suggestionsRecycView: RecyclerView? = null
+    private var suggestionArr = arrayListOf(
+        "Improve this for the tyre in alignment",
+        "Improve this for the tyre in alignment",
+        "Improve this for the tyre in alignment",
+        "Improve this for the tyre in alignment",
+        "Improve this for the tyre in alignment"
+    )
+    private var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
+
+    private var relCarPhotoAdd2: RelativeLayout? = null
+    private var relCarPhotoAdd1: RelativeLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,16 +72,32 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener {
         llServiceExpanded = findViewById(R.id.llServiceExpanded)
         llTyreConfigExpanded = findViewById(R.id.llTyreConfigExpanded)
         llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
+        suggestionsRecycView = findViewById(R.id.suggestionsRecycView)
 
         chkNitrogenRefill = findViewById(R.id.chkNitrogenRefill)
         chkNitrogenTopup = findViewById(R.id.chkNitrogenTopup)
         chkTyreRotation = findViewById(R.id.chkTyreRotation)
         chkWheelBalacing = findViewById(R.id.chkWheelBalacing)
 
+        relCarPhotoAdd2 = findViewById(R.id.relCarPhotoAdd2)
+        relCarPhotoAdd1 = findViewById(R.id.relCarPhotoAdd1)
+
         tvTitle?.text = "Add Service Details"
         ivInfoAddService?.setOnClickListener(this)
         ivAddTechnicalSuggestion?.setOnClickListener(this)
         ivAddTyreConfig?.setOnClickListener(this)
+        relCarPhotoAdd1?.setOnClickListener(this)
+        relCarPhotoAdd2?.setOnClickListener(this)
+
+        tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this)
+        tyreSuggestionAdapter?.onclick = this
+        suggestionsRecycView?.layoutManager = LinearLayoutManager(
+            this,
+            RecyclerView.VERTICAL,
+            false
+        )
+        suggestionsRecycView?.adapter = tyreSuggestionAdapter
+
 
         ivAddServices?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -170,7 +207,82 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener {
             R.id.ivBack -> {
                 onBackPressed()
             }
+            R.id.relCarPhotoAdd1 -> {
+
+                showBottomSheetdialog(arrayList, "Choose From", this, Common.btn_filled)
+            }
+            R.id.relCarPhotoAdd2 -> {
+                showBottomSheetdialog(arrayList, "Choose From", this, Common.btn_filled)
+            }
 
         }
+    }
+
+    override fun onPositionClick(variable: Int, check: Int) {
+
+    }
+
+    private fun showBottomSheetdialog(
+        array: ArrayList<String>,
+        titleStr: String,
+        context: Context?,
+        btnBg: String
+
+    ) {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.dialogue_profile_edit_req, null)
+        val dialog =
+            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+
+        dialog?.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        dialog?.window?.setLayout(width, height)
+        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.setContentView(view)
+
+        val btnSend = view.findViewById<Button>(R.id.btn_send)
+        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
+        val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
+        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
+
+        tvTitleText?.text = titleStr
+        var arrayAdapter = context?.let { DialogueAdpater(array, it, this) }
+        dialogueRecycView?.layoutManager = LinearLayoutManager(
+            context,
+            RecyclerView.VERTICAL,
+            false
+        )
+        dialogueRecycView.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        dialogueRecycView.adapter = arrayAdapter
+        arrayAdapter?.onclick = this
+
+        ivClose?.setOnClickListener {
+            dialog?.dismiss()
+        }
+        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
+            btnSend?.text = "Submit"
+        } else {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_white))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.header_title)!!)
+            btnSend?.text = "Cancel"
+        }
+
+
+        btnSend.setOnClickListener {
+
+            dialog?.dismiss()
+
+        }
+
+        dialog?.show()
+
     }
 }

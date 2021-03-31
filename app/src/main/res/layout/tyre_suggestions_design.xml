@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/chkTyreSuggestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_layout_blue"
+        android:buttonTint="@color/colorPrimary"
+        android:paddingStart="@dimen/five_dp"
+        android:paddingEnd="@dimen/five_dp" />
+</LinearLayout>
