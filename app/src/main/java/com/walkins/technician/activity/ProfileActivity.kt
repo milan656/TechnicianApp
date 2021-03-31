@@ -1,11 +1,9 @@
-package com.walkins.technician.fragment
+package com.walkins.technician.activity
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -19,68 +17,24 @@ import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.common.onClickAdapter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ProfileActivity : AppCompatActivity(), onClickAdapter {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProfileFragment : Fragment(), onClickAdapter {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var arrayList = arrayListOf("Gallery", "Camera")
+    private var ivCamera: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        setContentView(R.layout.activity_profile)
+
+        init()
+    }
+
+    private fun init() {
+        ivCamera = findViewById(R.id.ivCamera)!!
+        ivCamera?.setOnClickListener {
+
+            showBottomSheetdialog(arrayList, "Choose From", this, Common.btn_filled)
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        init(view)
-        return view
-    }
-
-    private fun init(view: View?) {
-        var ivCamera: ImageView = view?.findViewById(R.id.ivCamera)!!
-
-        ivCamera.setOnClickListener {
-
-            showBottomSheetdialog(arrayList, "Choose From", context, Common.btn_filled)
-        }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 
     private fun showBottomSheetdialog(
@@ -93,21 +47,21 @@ class ProfileFragment : Fragment(), onClickAdapter {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
         val dialog =
-            getContext()?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
-        dialog?.setCancelable(false)
+        dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog?.window?.setLayout(width, height)
-        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog?.setContentView(view)
+        dialog.window?.setLayout(width, height)
+        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btn_send)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
         val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
-        tvTitleText?.text = titleStr
+        tvTitleText.text = titleStr
         var arrayAdapter = context?.let { DialogueAdpater(array, it, this) }
         dialogueRecycView?.layoutManager = LinearLayoutManager(
             context,
@@ -116,7 +70,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
         )
         dialogueRecycView.addItemDecoration(
             DividerItemDecoration(
-                getContext(),
+                this,
                 DividerItemDecoration.VERTICAL
             )
         )
@@ -150,5 +104,4 @@ class ProfileFragment : Fragment(), onClickAdapter {
     override fun onPositionClick(variable: Int, check: Int) {
 
     }
-
 }

@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 //                    containerViewId = R.id.mainContent
 //
 //                )
-                var intent = Intent(this, VehicleModelActivity::class.java)
+                var intent = Intent(this, NotificationActivity::class.java)
                 startActivity(intent)
 
             }
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
                  )*/
 
-                var intent = Intent(this, VehicleMakeActivity::class.java)
+                var intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
 
             }

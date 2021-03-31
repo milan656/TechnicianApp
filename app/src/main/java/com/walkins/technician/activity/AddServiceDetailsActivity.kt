@@ -107,6 +107,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (!serviceExpanded) {
                     ivAddServices?.setImageResource(R.drawable.ic_minus_icon)
                     Common.expand(llServiceExpanded!!)
+
+                    Common.collapse(llTyreConfigExpanded!!)
+                    Common.collapse(llTechnicalSuggestionExpanded!!)
+
+                    techicalSuggestionExpanded = false
+                    tyreConfigExpanded = false
                     serviceExpanded = true
 
                 } else {
@@ -122,15 +128,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         })
         ivAddTechnicalSuggestion?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if (!serviceExpanded) {
-                    ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_minus_icon)
-                    Common.expand(llTechnicalSuggestionExpanded!!)
-                    techicalSuggestionExpanded = true
+
+                if (techicalSuggestionExpanded) {
+                    ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_add_icon)
+                    llTechnicalSuggestionExpanded?.visibility = View.GONE
+                    techicalSuggestionExpanded = false
 
                 } else {
-                    ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_add_icon)
-                    Common.collapse(llTechnicalSuggestionExpanded!!)
-                    techicalSuggestionExpanded = false
+                    ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_minus_icon)
+                    llTechnicalSuggestionExpanded?.visibility = View.VISIBLE
+                    techicalSuggestionExpanded = true
 
                 }
 
@@ -140,15 +147,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         })
         ivAddTyreConfig?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if (!tyreConfigExpanded) {
-                    ivAddTyreConfig?.setImageResource(R.drawable.ic_minus_icon)
-                    Common.expand(llTyreConfigExpanded!!)
-                    tyreConfigExpanded = true
+                if (tyreConfigExpanded) {
+                    ivAddTyreConfig?.setImageResource(R.drawable.ic_add_icon)
+                    llTyreConfigExpanded?.visibility = View.GONE
+                    tyreConfigExpanded = false
 
                 } else {
-                    ivAddTyreConfig?.setImageResource(R.drawable.ic_add_icon)
-                    Common.collapse(llTyreConfigExpanded!!)
-                    tyreConfigExpanded = false
+                    ivAddTyreConfig?.setImageResource(R.drawable.ic_minus_icon)
+                    llTyreConfigExpanded?.visibility = View.VISIBLE
+                    tyreConfigExpanded = true
 
                 }
 
@@ -158,7 +165,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         })
 
         ivBack?.setOnClickListener(this)
-        llServiceExpanded?.setOnClickListener(this)
 
         checkChangeListener()
     }
