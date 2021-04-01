@@ -175,7 +175,7 @@
                                 android:text="Services"
                                 android:textAllCaps="true"
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/sixteen_sp"
+                                android:textSize="@dimen/fourteen_sp"
                                 android:textStyle="bold"/>
 
                             <ImageView
@@ -692,7 +692,7 @@
                                 android:text="Tyre Configuration"
                                 android:textAllCaps="true"
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/sixteen_sp"
+                                android:textSize="@dimen/fourteen_sp"
                                 android:textStyle="bold"/>
 
                             <ImageView
@@ -839,7 +839,7 @@
                                 android:textAllCaps="true"
                                 android:text="Technical Suggestions"
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/sixteen_sp"
+                                android:textSize="@dimen/fourteen_sp"
                                 android:textStyle="bold"/>
 
                             <ImageView
@@ -927,7 +927,7 @@
                                     android:gravity="center"
                                     android:text="Add Car Photo"
                                     android:textColor="@color/colorPrimary"
-                                    android:textSize="@dimen/fourteen_sp"
+                                    android:textSize="@dimen/eighteen_sp"
                                     android:textStyle="bold" />
                             </RelativeLayout>
 
@@ -956,7 +956,7 @@
                                     android:gravity="center"
                                     android:text="Add Car Photo"
                                     android:textColor="@color/colorPrimary"
-                                    android:textSize="@dimen/fourteen_sp"
+                                    android:textSize="@dimen/eighteen_sp"
                                     android:textStyle="bold" />
                             </RelativeLayout>
 
