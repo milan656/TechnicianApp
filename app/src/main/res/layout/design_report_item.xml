@@ -1,121 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/eight_dp"
-    android:orientation="horizontal">
+    app:cardCornerRadius="@dimen/eight_dp"
+    app:cardElevation="@dimen/three_dp"
+    app:cardUseCompatPadding="true">
 
-
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_weight="1"
-        app:cardCornerRadius="@dimen/five_dp"
-        app:cardElevation="@dimen/two_dp"
-        app:cardUseCompatPadding="true">
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/eighteen_dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.walkins.technician.custom.BoldHeavyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start|center"
+                android:text="GJ01RY3771"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/eighteen_sp"
+                android:textStyle="bold" />
+
+            <com.walkins.technician.custom.NormalTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start|center"
+                android:text="Toyota Innova"
+                android:layout_marginTop="@dimen/four_dp"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/twelve_sp" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/sixteen_dp"
-                android:layout_marginLeft="@dimen/sixteen_dp"
-                android:layout_marginTop="@dimen/fourteen_dp"
-                android:layout_marginBottom="@dimen/fourteen_dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/twelve_dp"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="@dimen/five_dp"
+                    android:layout_marginRight="@dimen/five_dp"
+                    android:src="@drawable/ic_nitrogen_topup" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="@dimen/five_dp"
+                    android:layout_marginEnd="@dimen/five_dp"
+                    android:layout_marginRight="@dimen/five_dp"
+                    android:src="@drawable/ic_nitrogen_refil" />
 
-                        <com.walkins.technician.custom.BoldHeavyTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="@dimen/five_dp"
+                    android:layout_marginEnd="@dimen/five_dp"
+                    android:layout_marginRight="@dimen/five_dp"
+                    android:src="@drawable/ic_nitrogen_topup" />
 
-                            android:gravity="start|center|bottom"
-                            android:text="GJ01RY3771"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/eighteen_sp"
-                            tools:ignore="NestedWeights" />
-
-                        <com.walkins.technician.custom.NormalTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/four_dp"
-                            android:gravity="start|center"
-                            android:text="Toyota Innova"
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/twelve_sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|bottom"
-                        android:src="@drawable/ic_car_image" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/four_dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-
-
-                    <com.walkins.technician.custom.NormalTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="Red"
-                        android:textColor="@color/text_color1"
-                        android:textSize="@dimen/twelve_sp" />
-
-
-                </LinearLayout>
-
-
-
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="@dimen/five_dp"
+                    android:layout_marginEnd="@dimen/five_dp"
+                    android:layout_marginRight="@dimen/five_dp"
+                    android:src="@drawable/ic_tyre_rotation" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/ivInfoAddService"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="top"
-                android:layout_margin="@dimen/twelve_dp"
-                android:padding="@dimen/five_dp"
-                android:src="@drawable/info_help" />
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_car_image"/>
+
+            <com.walkins.technician.custom.NormalTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/twelve_sp"
+                android:textColor="@color/text_color1"
+                android:text="White"
+                android:layout_weight="2"
+                android:layout_gravity="bottom"
+                android:gravity="bottom|center"/>
+
+        </LinearLayout>
 
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/info_in_profile"
+            app:tint="@color/header_title"/>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

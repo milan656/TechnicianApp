@@ -132,12 +132,12 @@
 
                             <ImageView
                                 android:id="@+id/ivInfoAddService"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:layout_gravity="top"
                                 android:layout_margin="@dimen/twelve_dp"
-                                android:padding="@dimen/five_dp"
-                                android:src="@drawable/info_help" />
+                                android:src="@drawable/info_in_profile"
+                                app:tint="@color/header_title"/>
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -711,7 +711,6 @@
                     android:layout_marginStart="@dimen/fourteen_dp"
                     android:layout_marginTop="@dimen/fourteen_dp"
                     android:layout_marginEnd="@dimen/fourteen_dp"
-                    android:visibility="gone"
                     app:cardCornerRadius="@dimen/five_dp"
                     app:cardElevation="@dimen/two_dp"
                     app:cardUseCompatPadding="true">

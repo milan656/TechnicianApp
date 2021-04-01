@@ -1,18 +1,19 @@
 package com.walkins.technician.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.walkins.technician.R
-import com.walkins.technician.adapter.NotificationAdpater
+import com.walkins.technician.activity.CompletedServiceDetailActivity
+import com.walkins.technician.adapter.ReportAdpater
 import com.walkins.technician.common.onClickAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,13 +23,17 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [NotificationFragment.newInstance] factory method to
+ * Use the [ReportFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
+class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var ivBack: ImageView? = null
+    private var tvTitle: TextView? = null
+
+    private var reportRecycView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,42 +43,39 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
     }
 
-    private var notiRecycView: RecyclerView? = null
-    private var notificationRecycView: RecyclerView? = null
-    private var ivBack: ImageView? = null
-    private var tvTitle: TextView? = null
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_notification, container, false)
+        var view = inflater.inflate(R.layout.fragment_report, container, false)
 
         init(view)
         return view
     }
 
     private fun init(view: View?) {
-        notificationRecycView = view?.findViewById(R.id.notificationRecycView)
+        reportRecycView = view?.findViewById(R.id.reportRecycView)
         tvTitle = view?.findViewById(R.id.tvTitle)
         ivBack = view?.findViewById(R.id.ivBack)
+        ivBack?.setOnClickListener(this)
+        tvTitle?.text = "Your Report"
+
         ivBack?.visibility = View.GONE
-        notificationRecycView = view?.findViewById(R.id.notificationRecycView)
-        var arrayAdapter =
-            context?.let { NotificationAdpater(Common.commonPhotoChooseArr, it, this) }
-        notificationRecycView?.layoutManager = LinearLayoutManager(
+        var arrayAdapter = context?.let { ReportAdpater(Common.commonPhotoChooseArr, it, this) }
+        reportRecycView?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
             false
         )
-
-        notificationRecycView?.adapter = arrayAdapter
+        /* reportRecycView?.addItemDecoration(
+             DividerItemDecoration(
+                 this,
+                 DividerItemDecoration.VERTICAL
+             )
+         )*/
+        reportRecycView?.adapter = arrayAdapter
         arrayAdapter?.onclick = this
-
-        ivBack?.setOnClickListener(this)
-        tvTitle?.text = "Notification"
     }
 
     companion object {
@@ -83,12 +85,12 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment NotificationFragment.
+         * @return A new instance of fragment ReportFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            NotificationFragment().apply {
+            ReportFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -98,15 +100,16 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+        var intent = Intent(context, CompletedServiceDetailActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
             R.id.ivBack -> {
-
+//                onBackPressed()
             }
         }
     }
-
 }

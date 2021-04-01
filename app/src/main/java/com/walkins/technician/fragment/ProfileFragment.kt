@@ -34,6 +34,10 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private var param1: String? = null
     private var param2: String? = null
     private var arrayList = arrayListOf("Gallery", "Camera")
+    private var ivCamera: ImageView? = null
+    private var ivBack: ImageView? = null
+    private var tvTitle: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,12 +59,20 @@ class ProfileFragment : Fragment(), onClickAdapter {
     }
 
     private fun init(view: View?) {
-        var ivCamera: ImageView = view?.findViewById(R.id.ivCamera)!!
+        ivCamera = view?.findViewById(R.id.ivCamera)!!
+        tvTitle = view.findViewById(R.id.tvTitle)
+        ivBack = view.findViewById(R.id.ivBack)
+        ivCamera?.setOnClickListener {
 
-        ivCamera.setOnClickListener {
-
-            showBottomSheetdialog(arrayList, "Choose From", context, Common.btn_filled)
+            showBottomSheetdialog(
+                Common.commonPhotoChooseArr,
+                "Choose From",
+                context,
+                Common.btn_filled
+            )
         }
+        ivBack?.visibility = View.GONE
+        tvTitle?.text = "Your Profile"
     }
 
     companion object {

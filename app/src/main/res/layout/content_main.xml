@@ -10,52 +10,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/llheader"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginEnd="@dimen/sixteen_dp"
-        android:orientation="horizontal">
 
-        <com.walkins.technician.custom.NormalTextView
-            android:id="@+id/tvUsername"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="start|center"
-            android:text="Hello"
-            android:textColor="@color/header_title"
-            android:textSize="@dimen/twenty_sp"
-             />
-
-        <RelativeLayout
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0"
-            android:orientation="vertical">
-
-
-            <ImageView
-                android:id="@+id/ivFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/four_dp"
-                android:src="@drawable/ic_header_new" />
-
-            <ImageView
-                android:id="@+id/ivDot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/dot" />
-        </RelativeLayout>
-
-
-    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/mainContent"

@@ -18,6 +18,9 @@ import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.replaceFragmenty
 import com.walkins.technician.fragment.HomeFragment
+import com.walkins.technician.fragment.NotificationFragment
+import com.walkins.technician.fragment.ProfileFragment
+import com.walkins.technician.fragment.ReportFragment
 import com.walkins.technician.service.Actions
 import com.walkins.technician.service.EndlessService
 import com.walkins.technician.service.ServiceState
@@ -109,33 +112,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 selectedMenu = "home"
             }
             R.id.ivReport -> {
-/*
                 replaceFragmenty(
-                    fragment = HomeFragment.newInstance("", ""),
+                    fragment = ReportFragment.newInstance("", ""),
                     allowStateLoss = true,
                     containerViewId = R.id.mainContent
 
                 )
-*/
 
                 selectedMenu = "report"
-                val intent = Intent(this, ReportActivity::class.java)
-                startActivity(intent)
 
             }
             R.id.ivNotification -> {
 
                 selectedMenu = "notification"
-                val intent = Intent(this, NotificationActivity::class.java)
-                startActivity(intent)
+                replaceFragmenty(
+                    fragment = NotificationFragment.newInstance("", ""),
+                    allowStateLoss = true,
+                    containerViewId = R.id.mainContent
+
+                )
 
             }
             R.id.ivProfile -> {
 
                 selectedMenu = "profile"
-                val intent = Intent(this, ProfileActivity::class.java)
-                startActivity(intent)
+                replaceFragmenty(
+                    fragment = ProfileFragment.newInstance("", ""),
+                    allowStateLoss = true,
+                    containerViewId = R.id.mainContent
 
+                )
             }
             R.id.ivFilter -> {
                 openDateSelection()
