@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.View
+import android.widget.*
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +18,7 @@ import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
 import com.walkins.technician.common.onClickAdapter
 
-class VisualDetailsActivity : AppCompatActivity(), onClickAdapter {
+class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private var sliderIn: FluidSlider? = null
     private var multiSliderPsiOut: FluidSlider? = null
@@ -28,6 +26,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter {
     var max = 50
     var min = 0
     var total = max - min
+
+    private var ivBack: ImageView? = null
+    private var tvTitle: TextView? = null
+
 
     private var issueResolvedRecycView: RecyclerView? = null
     private var issueResolveArr = arrayListOf(
@@ -38,6 +40,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter {
         "Improve this for the tyre in alignment"
     )
     private var issueResolveAdapter: TyreSuggestionAdpater? = null
+    private var relTyrePhotoAdd: RelativeLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter {
     }
 
     private fun init() {
+        tvTitle = findViewById(R.id.tvTitle)
+        ivBack = findViewById(R.id.ivBack)
+
+        relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
         issueResolveAdapter = TyreSuggestionAdpater(issueResolveArr, this, this)
         issueResolveAdapter?.onclick = this
@@ -61,7 +68,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter {
         psiOutSlider()
         weightSlider()
 
-        showBottomSheetdialog(Common.commonPhotoChooseArr, "Choose From", this, Common.btn_filled)
+        relTyrePhotoAdd?.setOnClickListener(this)
+        ivBack?.setOnClickListener(this)
+        tvTitle?.text = "Visual Detail"
+
+
     }
 
     fun psiInSlider() {
@@ -116,12 +127,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter {
         val dialog =
             this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
-        dialog?.setCancelable(false)
+        dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog?.window?.setLayout(width, height)
-        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog?.setContentView(view)
+        dialog.window?.setLayout(width, height)
+        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btn_send)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
@@ -166,6 +177,23 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter {
 
         dialog?.show()
 
+    }
+
+    override fun onClick(v: View?) {
+        val id = v?.id
+        when (id) {
+            R.id.relTyrePhotoAdd -> {
+                showBottomSheetdialog(
+                    Common.commonPhotoChooseArr,
+                    "Choose From",
+                    this,
+                    Common.btn_not_filled
+                )
+            }
+            R.id.ivBack -> {
+                onBackPressed()
+            }
+        }
     }
 
 }

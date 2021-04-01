@@ -762,7 +762,7 @@
                         android:layout_marginTop="@dimen/fourteen_dp" />
 
                     <RelativeLayout
-                        android:id="@+id/relCarPhotoAdd1"
+                        android:id="@+id/relTyrePhotoAdd"
                         android:layout_width="match_parent"
                         android:layout_height="220dp"
                         android:layout_marginTop="@dimen/twenty_four_dp"

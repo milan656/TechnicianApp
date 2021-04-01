@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.walkins.technician.custom.NormalTextView
+            <com.walkins.technician.custom.BoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Titanium City center,Anandnagar"
@@ -43,14 +43,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <com.walkins.technician.custom.NormalTextView
+                    <com.walkins.technician.custom.BoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="34"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/fourteen_sp" />
 
-                    <com.walkins.technician.custom.NormalTextView
+                    <com.walkins.technician.custom.BoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Upcoming"
