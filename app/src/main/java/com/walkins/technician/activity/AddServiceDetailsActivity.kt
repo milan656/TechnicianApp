@@ -1,25 +1,47 @@
 package com.walkins.technician.activity
 
+import android.Manifest
+import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
 import com.walkins.technician.common.onClickAdapter
+import java.io.File
 
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
+
+    val REQUEST_IMAGE_CAPTURE = 1
+    val PICK_IMAGE_REQUEST = 100
+    private lateinit var mCurrentPhotoPath: String
+
+    var image_uri: Uri? = null
+    private val IMAGE_CAPTURE_RESULT = 1001
+    private val PERMISSION_CODE = 1000;
 
     private var ivInfoAddService: ImageView? = null
     private var ivAddServices: ImageView? = null
@@ -118,67 +140,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         suggestionsRecycView?.adapter = tyreSuggestionAdapter
 
 
-        ivAddServices?.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                /*if (!serviceExpanded) {
-                    ivAddServices?.setImageResource(R.drawable.ic_minus_icon)
-                    Common.expand(llServiceExpanded!!)
 
-                    Common.collapse(llTyreConfigExpanded!!)
-                    Common.collapse(llTechnicalSuggestionExpanded!!)
-
-                    techicalSuggestionExpanded = false
-                    tyreConfigExpanded = false
-                    serviceExpanded = true
-
-                } else {
-                    ivAddServices?.setImageResource(R.drawable.ic_add_icon)
-                    Common.collapse(llServiceExpanded!!)
-                    serviceExpanded = false
-
-                }*/
-
-                return false
-            }
-
-        })
-        ivAddTechnicalSuggestion?.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-
-                /* if (techicalSuggestionExpanded) {
-                     ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_add_icon)
-                     llTechnicalSuggestionExpanded?.visibility = View.GONE
-                     techicalSuggestionExpanded = false
-
-                 } else {
-                     ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_minus_icon)
-                     llTechnicalSuggestionExpanded?.visibility = View.VISIBLE
-                     techicalSuggestionExpanded = true
-
-                 }*/
-
-                return false
-            }
-
-        })
-        ivAddTyreConfig?.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                /*if (tyreConfigExpanded) {
-                    ivAddTyreConfig?.setImageResource(R.drawable.ic_add_icon)
-                    llTyreConfigExpanded?.visibility = View.GONE
-                    tyreConfigExpanded = false
-
-                } else {
-                    ivAddTyreConfig?.setImageResource(R.drawable.ic_minus_icon)
-                    llTyreConfigExpanded?.visibility = View.VISIBLE
-                    tyreConfigExpanded = true
-
-                }*/
-
-                return false
-            }
-
-        })
 
         ivBack?.setOnClickListener(this)
 
@@ -243,13 +205,65 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.relCarPhotoAdd1, R.id.relCarPhotoAdd2 -> {
 
-                showBottomSheetdialog(Common.commonPhotoChooseArr, "Choose From", this, Common.btn_filled)
+                showBottomSheetdialog(
+                    Common.commonPhotoChooseArr,
+                    "Choose From",
+                    this,
+                    Common.btn_filled
+                )
             }
         }
     }
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+        if (Common.commonPhotoChooseArr?.get(variable).equals("Gallery")) {
+            val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                checkPermissions((this))
+            } else {
+                try {
+                    val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                    intent.type = "image/*"
+                    startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            if (result == true) {
+                try {
+
+                    val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                    intent.type = "image/*"
+                    startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                } catch (e: Exception) {
+
+                    e.printStackTrace()
+                }
+
+            }
+        } else if (Common.commonPhotoChooseArr?.get(variable).equals("Camera")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_DENIED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED
+                ) {
+                    //permission was not enabled
+                    val permission = arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                    //show popup to request permission
+                    requestPermissions(permission, PERMISSION_CODE)
+                } else {
+                    //permission already granted
+                    openCamera()
+                }
+            } else {
+                //system os is < marshmallow
+                openCamera()
+            }
+        }
     }
 
     private fun showBottomSheetdialog(
@@ -327,5 +341,210 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
         return false
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun checkPermissions(context: FragmentActivity?): Boolean {
+        val currentAPIVersion = Build.VERSION.SDK_INT
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
+            if (context?.let {
+                    ContextCompat.checkSelfPermission(
+                        it,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                } !== PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.CAMERA
+                ) !== PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        Manifest.permission.CAMERA
+                    )
+                ) {
+                    val alertBuilder = android.app.AlertDialog.Builder(context)
+                    alertBuilder.setCancelable(true)
+                    alertBuilder.setTitle("Permission necessary")
+                    alertBuilder.setMessage("External storage permission is necessary")
+                    alertBuilder.setPositiveButton(
+                        android.R.string.yes
+                    ) { dialog, which ->
+                        requestPermissions(
+                            arrayOf<String>(
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA
+                            ),
+                            123
+                        )
+                    }
+                    val alert = alertBuilder.create()
+                    alert.show()
+                } else {
+
+                    requestPermissions(
+                        arrayOf<String>(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.CAMERA
+                        ), 123
+                    );
+
+                }
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return true
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+
+            IMAGE_CAPTURE_RESULT -> {
+//                image_view.setImageURI(image_uri)
+                CropImage.activity(image_uri)
+                    .start(this)
+            }
+            105 -> {
+                if (resultCode == 105) {
+
+                }
+            }
+
+            REQUEST_IMAGE_CAPTURE -> {
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //To get the File for further usage
+                    val auxFile = File(mCurrentPhotoPath)
+
+                    CropImage.activity(Uri.fromFile(auxFile))
+                        .start(this)
+
+                    /* uploadProfileImage(auxFile)
+                     Glide.with(this)
+                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
+                         .into(imgProfile)*/
+                }
+            }
+
+            PICK_IMAGE_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //To get the File for further usage
+                    val selectedImage = data?.data
+
+                    /* val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                         getFile(this@ProfileActivity , selectedImage)
+                     } else {
+                         TODO("VERSION.SDK_INT < KITKAT")
+                     }
+
+                     Log.i("imagePath","++++"+imagePath)*/
+
+                    CropImage.activity(selectedImage)
+                        .start(this)
+                }
+            }
+
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //To get the File for further usage
+                    val selectedImage = result.uri
+
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        Common.getFile(this@AddServiceDetailsActivity, selectedImage)
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
+//                    imagePath?.let { uploadCIPImage(it) }
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+                    //permission from popup was granted
+                    openCamera()
+                } else {
+                    //permission from popup was denied
+                    Common.hideLoader()
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+            123 -> {
+                if (grantResults.get(1) != -1) {
+                    if (grantResults.size > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        val file: File = Common.createFile(this)
+
+                        mCurrentPhotoPath = file.absolutePath
+
+                        val uri: Uri = FileProvider.getUriForFile(
+                            this,
+                            "com.jkadvantage.android.fileprovider",
+                            file
+                        )
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+
+                    }
+                } else {
+
+                }
+            }
+
+            124 -> {
+                if (grantResults?.get(1) != -1) {
+                    if (grantResults.size > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        try {
+                            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                            intent.type = "image/*"
+                            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+
+                        } catch (e: Exception) {
+
+                            e.printStackTrace()
+                        }
+                    }
+                } else {
+
+                }
+            }
+        }
+    }
+
+    private fun openCamera() {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "New Picture")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
+        image_uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        //camera intent
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_RESULT)
     }
 }

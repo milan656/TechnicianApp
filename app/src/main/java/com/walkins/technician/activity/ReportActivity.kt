@@ -1,5 +1,6 @@
 package com.walkins.technician.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -49,11 +50,13 @@ class ReportActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener
              )
          )*/
         reportRecycView?.adapter = arrayAdapter
-        arrayAdapter?.onclick = this
+        arrayAdapter.onclick = this
     }
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+        var intent = Intent(this, CompletedServiceDetailActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onClick(v: View?) {
