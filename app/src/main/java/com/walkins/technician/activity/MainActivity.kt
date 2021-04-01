@@ -37,9 +37,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var tvUsername: TextView? = null
 
     private var prefManager: PrefManager? = null
-    private var ivFilter: ImageView? = null
-    private var ivDot: ImageView? = null
-    private var selectedDate: String? = null
 
     private var selectedMenu: String? = null
 
@@ -53,9 +50,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     }
 
     private fun init() {
-        ivFilter = findViewById(R.id.ivFilter)
-        ivDot = findViewById(R.id.ivDot)
-        ivDot?.visibility = View.GONE
         ivHome = findViewById(R.id.ivHome)
         ivReport = findViewById(R.id.ivReport)
         ivProfile = findViewById(R.id.ivProfile)
@@ -67,7 +61,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         ivProfile?.setOnClickListener(this)
         ivReport?.setOnClickListener(this)
         ivNotification?.setOnClickListener(this)
-        ivFilter?.setOnClickListener(this)
 
         tvUsername?.text = "Hello, " + "Owner Name"
 
@@ -110,6 +103,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
 
                 selectedMenu = "home"
+                ivHome?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.header_title),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivReport?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivNotification?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivProfile?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
             }
             R.id.ivReport -> {
                 replaceFragmenty(
@@ -120,6 +129,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
 
                 selectedMenu = "report"
+                ivHome?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivReport?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.header_title),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivNotification?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivProfile?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
 
             }
             R.id.ivNotification -> {
@@ -131,6 +156,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     containerViewId = R.id.mainContent
 
                 )
+                ivHome?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivReport?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivNotification?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.header_title),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivProfile?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
 
             }
             R.id.ivProfile -> {
@@ -142,49 +183,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     containerViewId = R.id.mainContent
 
                 )
-            }
-            R.id.ivFilter -> {
-                openDateSelection()
+                ivHome?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivReport?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivNotification?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.text_color1),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+                ivProfile?.setColorFilter(
+                    ContextCompat.getColor(this, R.color.header_title),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                );
+
             }
         }
     }
 
-    private fun openDateSelection() {
-        val pickerPopWin = DatePickerPopWin.Builder(
-            this@MainActivity
-        ) { year, month, day, dateDesc ->
-            Toast.makeText(this@MainActivity, dateDesc, Toast.LENGTH_SHORT).show()
-            Log.e("getdatee", "" + dateDesc + " " + year + " " + month + " " + day)
 
-            selectedDate = dateDesc
-        }.textConfirm("CONFIRM") //text of confirm button
-            .textCancel("CANCEL") //text of cancel button
-            .btnTextSize(16) // button text size
-            .viewTextSize(25) // pick view text size
-            .colorCancel(Color.parseColor("#999999")) //color of cancel button
-            .colorConfirm(Color.parseColor("#009900")) //color of confirm button
-            .minYear(1990) //min year in loop
-            .maxYear(2550) // max year in loop
-            .showDayMonthYear(true) // shows like dd mm yyyy (default is false)
-            .dateChose("2013-11-11") // date chose when init popwindow
-            .build()
-
-        pickerPopWin?.cancelBtn?.setOnClickListener {
-            pickerPopWin.dismissPopWin()
-            if (!selectedDate.equals("")) {
-                ivDot?.visibility = View.VISIBLE
-            } else {
-                ivDot?.visibility = View.GONE
-            }
-        }
-        pickerPopWin?.confirmBtn?.setOnClickListener {
-
-            pickerPopWin.dismissPopWin()
-            ivDot?.visibility = View.VISIBLE
-        }
-
-        pickerPopWin?.showPopWin(this)
-    }
 
     override fun onPositionClick(variable: Int, check: Int) {
 
