@@ -28,14 +28,14 @@
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
-            <com.walkins.technician.custom.BoldHeavyTextView
+            <com.walkins.technician.custom.BoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/twelve_dp"
                 android:text="Palm Spring, Vastrapur"
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/eighteen_sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
 
         </LinearLayout>
@@ -45,9 +45,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_weight="3"
-            android:gravity="bottom|right"
-            android:text="2 min"
             android:alpha="0.5"
+            android:gravity="bottom|right"
+            android:text="2 mins"
             android:textColor="@color/text_color1"
             android:textSize="@dimen/twelve_sp"
             tools:ignore="RtlHardcoded" />

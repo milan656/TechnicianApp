@@ -23,13 +23,13 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.walkins.technician.custom.BoldTextView
+            <com.walkins.technician.custom.BoldHeavyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Titanium City center,Anandnagar"
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,13 +134,14 @@
             android:id="@+id/ivInfo"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:paddingStart="@dimen/five_dp"
-            android:paddingEnd="@dimen/five_dp"
-            android:paddingBottom="@dimen/five_dp"
             android:layout_marginTop="@dimen/ten_dp"
             android:layout_marginEnd="@dimen/ten_dp"
             android:layout_marginRight="@dimen/ten_dp"
-            android:src="@drawable/info_help" />
+            android:paddingStart="@dimen/five_dp"
+            android:paddingEnd="@dimen/five_dp"
+            android:paddingBottom="@dimen/five_dp"
+            android:src="@drawable/info_in_profile"
+            app:tint="@color/colorPrimary" />
 
 
     </LinearLayout>

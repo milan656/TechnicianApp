@@ -84,7 +84,7 @@
                                         android:text="GJ01RY3771"
                                         android:textAllCaps="true"
                                         android:textColor="@color/text_color1"
-                                        android:textSize="@dimen/sixteen_sp"
+                                        android:textSize="@dimen/eighteen_sp"
                                         android:textStyle="bold" />
 
                                     <ImageView
@@ -931,7 +931,7 @@
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/fourteen_sp" />
 
-                                <com.walkins.technician.custom.BoldTextView
+                                <com.walkins.technician.custom.BoldHeavyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
@@ -960,7 +960,7 @@
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/fourteen_sp" />
 
-                                <com.walkins.technician.custom.BoldTextView
+                                <com.walkins.technician.custom.BoldHeavyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"

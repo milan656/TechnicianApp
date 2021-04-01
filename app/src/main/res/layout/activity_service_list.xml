@@ -135,7 +135,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <com.walkins.technician.custom.BoldTextView
+    <com.walkins.technician.custom.BoldHeavyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sixteen_dp"
