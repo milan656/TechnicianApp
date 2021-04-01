@@ -759,6 +759,7 @@
                                         android:orientation="vertical">
 
                                         <ImageView
+                                            android:id="@+id/ivTyre1"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_tyre_config_icon" />
@@ -768,6 +769,7 @@
                                             android:layout_height="36dp" />
 
                                         <ImageView
+                                            android:id="@+id/ivTyre2"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_tyre_config_icon" />
@@ -784,6 +786,7 @@
                                         android:orientation="vertical">
 
                                         <ImageView
+                                            android:id="@+id/ivTyre3"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_tyre_config_icon" />
@@ -793,6 +796,7 @@
                                             android:layout_height="36dp" />
 
                                         <ImageView
+                                            android:id="@+id/ivTyre4"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_tyre_config_icon" />

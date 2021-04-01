@@ -42,12 +42,12 @@ class ReportActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener
             RecyclerView.VERTICAL,
             false
         )
-        reportRecycView?.addItemDecoration(
+       /* reportRecycView?.addItemDecoration(
             DividerItemDecoration(
                 this,
                 DividerItemDecoration.VERTICAL
             )
-        )
+        )*/
         reportRecycView?.adapter = arrayAdapter
         arrayAdapter?.onclick = this
     }

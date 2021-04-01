@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,12 +21,15 @@ import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
-class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
+class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
     private lateinit var prefManager: PrefManager
     private var vehicleBrandModel: VehicleBrandModel? = null
     private lateinit var warrantyViewModel: WarrantyViewModel
     private var adapter: VehicleMakeAdapterNew? = null
     private var gridviewRecycMake_: RecyclerView? = null
+    private var ivBack: ImageView? = null
+    private var tvTitle: TextView? = null
+    var arrList: ArrayList<Data>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +41,15 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
     }
 
     private fun init() {
+        tvTitle = findViewById(R.id.tvTitle)
+        ivBack = findViewById(R.id.ivBack)
+
         gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
         getVehicleMake()
+
+        ivBack?.setOnClickListener(this)
+        tvTitle?.text = "Select Tyre Make"
+
     }
 
     fun getVehicleMake() {
@@ -55,7 +68,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
                         vehicleBrandModel = it
                         Log.e("getmodel00::", "" + vehicleBrandModel)
 
-                        var arrList: ArrayList<Data>? = ArrayList()
+
 
                         for (i in it.data?.indices!!) {
                             if (!it.data.get(i).name.equals("Other", ignoreCase = true)) {
@@ -110,5 +123,18 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter {
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+        Log.e("getmake", "" + arrList?.get(variable)?.name)
+        val intent = Intent(this, VehicleModelActivity::class.java)
+        startActivity(intent)
+
+    }
+
+    override fun onClick(v: View?) {
+        val id = v?.id
+        when (id) {
+            R.id.ivBack -> {
+                onBackPressed()
+            }
+        }
     }
 }

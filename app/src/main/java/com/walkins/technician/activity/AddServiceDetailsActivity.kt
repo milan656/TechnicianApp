@@ -1,6 +1,7 @@
 package com.walkins.technician.activity
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +18,8 @@ import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
 import com.walkins.technician.common.onClickAdapter
 
-class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
+class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
+    View.OnTouchListener {
     private var arrayList = arrayListOf("Gallery", "Camera")
 
     private var ivInfoAddService: ImageView? = null
@@ -56,6 +58,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var relCarPhotoAdd2: RelativeLayout? = null
     private var relCarPhotoAdd1: RelativeLayout? = null
 
+    private var ivTyre1: ImageView? = null
+    private var ivTyre2: ImageView? = null
+    private var ivTyre3: ImageView? = null
+    private var ivTyre4: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_service_details)
@@ -77,6 +84,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
         suggestionsRecycView = findViewById(R.id.suggestionsRecycView)
 
+        ivTyre1 = findViewById(R.id.ivTyre1)
+        ivTyre2 = findViewById(R.id.ivTyre2)
+        ivTyre3 = findViewById(R.id.ivTyre3)
+        ivTyre4 = findViewById(R.id.ivTyre4)
+
         chkNitrogenRefill = findViewById(R.id.chkNitrogenRefill)
         chkNitrogenTopup = findViewById(R.id.chkNitrogenTopup)
         chkTyreRotation = findViewById(R.id.chkTyreRotation)
@@ -91,6 +103,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivAddTyreConfig?.setOnClickListener(this)
         relCarPhotoAdd1?.setOnClickListener(this)
         relCarPhotoAdd2?.setOnClickListener(this)
+
+        ivTyre1?.setOnTouchListener(this)
+        ivTyre2?.setOnTouchListener(this)
+        ivTyre3?.setOnTouchListener(this)
+        ivTyre4?.setOnTouchListener(this)
 
         tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this)
         tyreSuggestionAdapter?.onclick = this
@@ -129,17 +146,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivAddTechnicalSuggestion?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
 
-               /* if (techicalSuggestionExpanded) {
-                    ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_add_icon)
-                    llTechnicalSuggestionExpanded?.visibility = View.GONE
-                    techicalSuggestionExpanded = false
+                /* if (techicalSuggestionExpanded) {
+                     ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_add_icon)
+                     llTechnicalSuggestionExpanded?.visibility = View.GONE
+                     techicalSuggestionExpanded = false
 
-                } else {
-                    ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_minus_icon)
-                    llTechnicalSuggestionExpanded?.visibility = View.VISIBLE
-                    techicalSuggestionExpanded = true
+                 } else {
+                     ivAddTechnicalSuggestion?.setImageResource(R.drawable.ic_minus_icon)
+                     llTechnicalSuggestionExpanded?.visibility = View.VISIBLE
+                     techicalSuggestionExpanded = true
 
-                }*/
+                 }*/
 
                 return false
             }
@@ -225,14 +242,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivBack -> {
                 onBackPressed()
             }
-            R.id.relCarPhotoAdd1 -> {
+            R.id.relCarPhotoAdd1, R.id.relCarPhotoAdd2 -> {
 
                 showBottomSheetdialog(arrayList, "Choose From", this, Common.btn_filled)
             }
-            R.id.relCarPhotoAdd2 -> {
-                showBottomSheetdialog(arrayList, "Choose From", this, Common.btn_filled)
-            }
-
         }
     }
 
@@ -302,5 +315,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         dialog?.show()
 
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        val id = v?.id
+        val intent = Intent(this, VehicleMakeActivity::class.java)
+        when (id) {
+
+            R.id.ivTyre1, R.id.ivTyre2, R.id.ivTyre3, R.id.ivTyre4 -> {
+
+                startActivity(intent)
+            }
+        }
+        return false
     }
 }

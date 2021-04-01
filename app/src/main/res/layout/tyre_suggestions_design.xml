@@ -11,5 +11,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/rounded_layout_blue"
         android:buttonTint="@color/colorPrimary"
-        android:text="hdgkhsdhds" />
+        android:paddingStart="@dimen/four_dp"
+        android:paddingLeft="@dimen/four_dp" />
 </LinearLayout>

@@ -38,12 +38,7 @@ class NotificationActivity : AppCompatActivity(), onClickAdapter, View.OnClickLi
             RecyclerView.VERTICAL,
             false
         )
-        notificationRecycView?.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                DividerItemDecoration.VERTICAL
-            )
-        )
+
         notificationRecycView?.adapter = arrayAdapter
         arrayAdapter?.onclick = this
 

@@ -7,13 +7,14 @@
     android:orientation="vertical"
     tools:context=".activity.VehicleMakeActivity">
 
+    <include layout="@layout/common_toolbar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gridviewRecycModel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/fourteeen_dp"
-        android:layout_marginTop="@dimen/twenty_dp"
-        android:layout_marginRight="@dimen/fourteeen_dp"
-        />
+        android:layout_marginTop="@dimen/fourteen_dp"
+        android:layout_marginRight="@dimen/fourteeen_dp" />
 
 </LinearLayout>

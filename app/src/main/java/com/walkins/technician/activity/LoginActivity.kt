@@ -104,7 +104,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            R.id.btnLoginToDashBoard -> login()
+            R.id.btnLoginToDashBoard -> userLogin()
         }
     }
 
@@ -165,6 +165,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     * User Login Function with validation
     * */
     private fun userLogin() {
+        edtLoginEmail.requestFocus()
         if (edtLoginEmail.text?.trim()?.length == 0) {
             edtLoginEmail.error = "Please enter phone number"
             //Common.showShortToast("Please enter userid", this@LoginActivity)
@@ -187,7 +188,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
 
         Common.showLoader(this@LoginActivity)
-
 
         val context = applicationContext
         val manager = context.packageManager
