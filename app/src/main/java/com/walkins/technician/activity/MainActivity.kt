@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bruce.pickerview.popwindow.DatePickerPopWin
+import com.example.technician.common.Common.Companion.setTint
 import com.example.technician.common.PrefManager
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
@@ -103,22 +104,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
 
                 selectedMenu = "home"
-                ivHome?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.header_title),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivReport?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivNotification?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivProfile?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
+                ivHome?.setTint(this, R.color.header_title)
+                ivReport?.setTint(this, R.color.text_color1)
+                ivNotification?.setTint(this, R.color.text_color1)
+                ivProfile?.setTint(this, R.color.text_color1)
             }
             R.id.ivReport -> {
                 replaceFragmenty(
@@ -129,22 +118,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
 
                 selectedMenu = "report"
-                ivHome?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivReport?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.header_title),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivNotification?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivProfile?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
+                ivHome?.setTint(this, R.color.text_color1)
+                ivReport?.setTint(this, R.color.header_title)
+                ivNotification?.setTint(this, R.color.text_color1)
+                ivProfile?.setTint(this, R.color.text_color1)
+
 
             }
             R.id.ivNotification -> {
@@ -156,22 +134,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     containerViewId = R.id.mainContent
 
                 )
-                ivHome?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivReport?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivNotification?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.header_title),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivProfile?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
+                ivHome?.setTint(this, R.color.text_color1)
+                ivReport?.setTint(this, R.color.text_color1)
+                ivNotification?.setTint(this, R.color.header_title)
+                ivProfile?.setTint(this, R.color.text_color1)
+
 
             }
             R.id.ivProfile -> {
@@ -181,29 +148,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     fragment = ProfileFragment.newInstance("", ""),
                     allowStateLoss = true,
                     containerViewId = R.id.mainContent
-
                 )
-                ivHome?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivReport?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivNotification?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.text_color1),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
-                ivProfile?.setColorFilter(
-                    ContextCompat.getColor(this, R.color.header_title),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                );
+                ivHome?.setTint(this, R.color.text_color1)
+                ivReport?.setTint(this, R.color.text_color1)
+                ivNotification?.setTint(this, R.color.text_color1)
+                ivProfile?.setTint(this, R.color.header_title)
+
 
             }
         }
     }
-
 
 
     override fun onPositionClick(variable: Int, check: Int) {

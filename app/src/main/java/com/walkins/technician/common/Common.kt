@@ -7,6 +7,7 @@ import android.app.Dialog
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -20,10 +21,14 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
@@ -150,6 +155,12 @@ class Common {
                 time = "$days days"
             }
             return time
+        }
+
+        fun ImageView.setTint(context: Context, @ColorRes colorId: Int) {
+            val color = ContextCompat.getColor(context, colorId)
+            val colorStateList = ColorStateList.valueOf(color)
+            ImageViewCompat.setImageTintList(this, colorStateList)
         }
 
         fun getErrorModel(jsonObject: JSONObject, modelName: String?): Any? {
