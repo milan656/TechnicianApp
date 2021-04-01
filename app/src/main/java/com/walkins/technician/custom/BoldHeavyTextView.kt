@@ -1,16 +1,11 @@
 package com.walkins.technician.custom
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
-import android.widget.Button
+import android.widget.TextView
 
-/**
- * Created by jkadvantage Team on 5/08/19.
- */
-
-class BoldButton : Button {
+class BoldHeavyTextView : TextView {
     constructor(context: Context) : super(context) {
         init(context)
     }
@@ -27,6 +22,5 @@ class BoldButton : Button {
         val font = Typeface.createFromAsset(getContext().assets, "fonts/lato_heavy.ttf")
         typeface = font
     }
-
 
 }

@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
@@ -41,6 +42,8 @@ import java.io.IOException
 import java.lang.IllegalArgumentException
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -442,6 +445,23 @@ class Common {
             return displayDate
         }
 
+        fun getCurrentDateTime(): String {
+            var answer: String = ""
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val current = LocalDateTime.now()
+                val formatter = DateTimeFormatter.ofPattern("HH:mm a, dd MMMM yyyy")
+                answer = current.format(formatter)
+                Log.d("answer", answer)
+            } else {
+                var date = Date()
+                val formatter = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
+                answer = formatter.format(date)
+                Log.d("answer", answer)
+            }
+            return answer
+
+        }
+
         fun dateTo(date: String): String {
             var displayDate = ""
             try {
@@ -507,7 +527,10 @@ class Common {
         }
 
         fun expand(v: View) {
-            v.measure(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
+            v.measure(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT
+            )
             val targtetHeight = v.measuredHeight
             v.layoutParams.height = 0
             v.visibility = View.VISIBLE
@@ -539,7 +562,6 @@ class Common {
                 ) {
                     if (interpolatedTime == 1f) {
                         v.visibility = View.GONE
-
 
 
                     } else {

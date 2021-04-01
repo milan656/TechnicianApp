@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:layout_margin="@dimen/eight_dp"
-    android:layout_marginTop="@dimen/twelve_dp"
+    android:layout_marginTop="@dimen/three_dp"
     android:orientation="horizontal">
 
     <ImageView
@@ -13,11 +12,11 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/six_dp"
         android:layout_marginRight="@dimen/six_dp"
+        android:rotation="-180"
         android:src="@drawable/info_help"
-        app:tint="@color/header_title"
-        android:rotation="-180"/>
+        app:tint="@color/header_title" />
 
-    <com.walkins.technician.custom.NormalTextView
+    <com.walkins.technician.custom.BoldTextView
         android:id="@+id/chkTyreSuggestion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -12,6 +12,7 @@
     <dimen name="twenty_dp">20dp</dimen>
     <dimen name="twenty_one_dp">21dp</dimen>
     <dimen name="twenty_two_dp">22dp</dimen>
+    <dimen name="twenty_two_sp">22sp</dimen>
     <dimen name="twenty_four_dp">24dp</dimen>
     <dimen name="fourty_dp">40dp</dimen>
     <dimen name="fourty_sp">40sp</dimen>

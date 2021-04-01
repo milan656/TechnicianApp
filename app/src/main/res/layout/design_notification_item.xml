@@ -28,13 +28,14 @@
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
-            <com.walkins.technician.custom.NormalTextView
+            <com.walkins.technician.custom.BoldHeavyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/twelve_dp"
                 android:text="Palm Spring, Vastrapur"
                 android:textColor="@color/text_color1"
-                android:textSize="@dimen/eighteen_sp" />
+                android:textSize="@dimen/eighteen_sp"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>

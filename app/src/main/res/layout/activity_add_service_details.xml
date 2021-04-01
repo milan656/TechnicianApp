@@ -75,7 +75,7 @@
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
-                                    <com.walkins.technician.custom.BoldTextView
+                                    <com.walkins.technician.custom.BoldHeavyTextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center"
@@ -167,7 +167,7 @@
                             android:layout_margin="@dimen/sixteen_dp"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.technician.custom.BoldHeavyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -429,7 +429,7 @@
                             android:orientation="vertical"
                             android:visibility="gone">
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.technician.custom.BoldHeavyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
@@ -695,7 +695,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.technician.custom.BoldHeavyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -842,7 +842,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.technician.custom.BoldHeavyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -998,7 +998,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/eighteen_sp" />
 
-        <com.walkins.technician.custom.BoldTextView
+        <com.walkins.technician.custom.BoldHeavyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five_dp"

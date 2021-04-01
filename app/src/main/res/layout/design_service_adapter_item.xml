@@ -41,7 +41,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.walkins.technician.custom.BoldTextView
+                <com.walkins.technician.custom.BoldHeavyTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

@@ -75,7 +75,7 @@
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
-                                    <com.walkins.technician.custom.BoldTextView
+                                    <com.walkins.technician.custom.BoldHeavyTextView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center"
@@ -198,7 +198,7 @@
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/twelve_sp" />
 
-                                    <com.walkins.technician.custom.NormalTextView
+                                    <com.walkins.technician.custom.BoldTextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -248,7 +248,7 @@
                             android:layout_margin="@dimen/sixteen_dp"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.technician.custom.BoldHeavyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -727,7 +727,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.technician.custom.BoldHeavyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -874,7 +874,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.technician.custom.BoldHeavyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -898,14 +898,14 @@
                             android:id="@+id/llTechnicalSuggestionExpanded"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/fourteen_dp"
+                            android:layout_marginTop="@dimen/eight_dp"
                             android:orientation="vertical"
                             android:visibility="visible">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/pendingSuggestionsRecycView"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="match_parent" />
 
 
                             <com.walkins.technician.custom.NormalTextView
@@ -916,7 +916,7 @@
                                 android:textColor="@color/text_color1"
                                 android:textSize="@dimen/twelve_sp" />
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.technician.custom.BoldTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/five_dp"
@@ -929,17 +929,17 @@
                                 android:id="@+id/relCarPhotoAdd1"
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
-                                android:padding="@dimen/two_dp"
                                 android:layout_marginTop="@dimen/twenty_dp"
                                 android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:padding="@dimen/two_dp">
 
 
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:src="@mipmap/car"/>
+                                    android:src="@mipmap/car" />
                             </RelativeLayout>
 
 
@@ -947,20 +947,18 @@
                                 android:id="@+id/relCarPhotoAdd2"
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
-                                android:padding="@dimen/two_dp"
                                 android:layout_marginTop="@dimen/twenty_dp"
                                 android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:padding="@dimen/two_dp">
 
 
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:src="@mipmap/car"/>
+                                    android:src="@mipmap/car" />
                             </RelativeLayout>
-
-
 
 
                         </LinearLayout>
@@ -978,6 +976,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/eighteen_dp"
+        android:layout_marginTop="@dimen/twelve_dp"
+        android:layout_marginEnd="@dimen/eighteen_dp"
+        android:layout_marginBottom="@dimen/eighteen_dp"
         android:orientation="vertical">
 
         <com.walkins.technician.custom.NormalTextView
@@ -985,23 +987,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="@dimen/eight_dp"
-            android:text="Skip Service"
-            android:textColor="@color/colorPrimary"
+            android:text="Service Completed on"
+            android:textColor="#1DAD9F"
             android:textSize="@dimen/eighteen_sp" />
 
         <com.walkins.technician.custom.BoldTextView
+            android:id="@+id/tvCurrentDateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five_dp"
+            android:layout_marginTop="@dimen/four_dp"
             android:layout_marginEnd="@dimen/five_dp"
-            android:layout_marginBottom="@dimen/twelve_dp"
-            android:background="@drawable/rounded_blue"
+            android:layout_marginBottom="@dimen/eighteen_dp"
             android:gravity="center"
-            android:padding="@dimen/ten_dp"
-            android:text="Submit and Complete"
+            android:text="5:30 pm, 23 March 2021"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="#1DAD9F"
             android:textSize="@dimen/eighteen_sp"
             android:textStyle="bold" />
     </LinearLayout>

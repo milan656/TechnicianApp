@@ -50,7 +50,7 @@
 
             </RelativeLayout>
 
-            <com.walkins.technician.custom.BoldTextView
+            <com.walkins.technician.custom.BoldHeavyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -58,7 +58,8 @@
                 android:gravity="center"
                 android:text="Milan parmar"
                 android:textColor="@color/header_title"
-                android:textSize="@dimen/twenty_four_sp" />
+                android:textSize="@dimen/twenty_two_sp"
+                android:textStyle="bold"/>
 
             <com.walkins.technician.custom.BoldTextView
                 android:layout_width="match_parent"

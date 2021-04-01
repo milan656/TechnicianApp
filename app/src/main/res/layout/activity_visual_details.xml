@@ -66,7 +66,7 @@
                     android:layout_marginEnd="@dimen/eighteen_dp"
                     android:orientation="vertical">
 
-                    <com.walkins.technician.custom.BoldTextView
+                    <com.walkins.technician.custom.BoldHeavyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="lf tyre service"
@@ -747,7 +747,7 @@
                     android:layout_marginBottom="@dimen/eighteen_dp"
                     android:orientation="vertical">
 
-                    <com.walkins.technician.custom.BoldTextView
+                    <com.walkins.technician.custom.BoldHeavyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="issue to be resolved"
@@ -779,7 +779,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/fourteen_sp" />
 
-                        <com.walkins.technician.custom.BoldTextView
+                        <com.walkins.technician.custom.BoldHeavyTextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
