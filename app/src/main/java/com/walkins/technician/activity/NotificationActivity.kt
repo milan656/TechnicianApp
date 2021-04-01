@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.technician.common.Common
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.NotificationAdpater
@@ -16,7 +17,6 @@ import com.walkins.technician.common.onClickAdapter
 class NotificationActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private var notificationRecycView: RecyclerView? = null
-    private var arrayList = arrayListOf("Gallery", "Camera")
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
 
@@ -32,7 +32,7 @@ class NotificationActivity : AppCompatActivity(), onClickAdapter, View.OnClickLi
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
         notificationRecycView = findViewById(R.id.notificationRecycView)
-        var arrayAdapter = this?.let { NotificationAdpater(arrayList, it, this) }
+        var arrayAdapter = this?.let { NotificationAdpater(Common.commonPhotoChooseArr, it, this) }
         notificationRecycView?.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,

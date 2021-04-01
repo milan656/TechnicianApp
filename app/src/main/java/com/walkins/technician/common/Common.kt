@@ -47,6 +47,7 @@ class Common {
 
         var isCalling: Boolean? = false
         private var dialogue: Dialog? = null
+        var commonPhotoChooseArr = arrayListOf("Gallery", "Camera")
 
         fun timeStampaTimeago(time1: String): String? {
             var time: String = time1

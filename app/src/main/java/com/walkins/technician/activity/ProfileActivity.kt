@@ -20,7 +20,6 @@ import com.walkins.technician.common.onClickAdapter
 
 class ProfileActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
-    private var arrayList = arrayListOf("Gallery", "Camera")
     private var ivCamera: ImageView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
@@ -39,7 +38,7 @@ class ProfileActivity : AppCompatActivity(), onClickAdapter, View.OnClickListene
         ivBack = findViewById(R.id.ivBack)
         ivCamera?.setOnClickListener {
 
-            showBottomSheetdialog(arrayList, "Choose From", this, Common.btn_filled)
+            showBottomSheetdialog(Common.commonPhotoChooseArr, "Choose From", this, Common.btn_filled)
         }
         ivBack?.setOnClickListener(this)
         tvTitle?.text = "Your Profile"

@@ -20,7 +20,6 @@ import com.walkins.technician.common.onClickAdapter
 
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
-    private var arrayList = arrayListOf("Gallery", "Camera")
 
     private var ivInfoAddService: ImageView? = null
     private var ivAddServices: ImageView? = null
@@ -244,7 +243,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.relCarPhotoAdd1, R.id.relCarPhotoAdd2 -> {
 
-                showBottomSheetdialog(arrayList, "Choose From", this, Common.btn_filled)
+                showBottomSheetdialog(Common.commonPhotoChooseArr, "Choose From", this, Common.btn_filled)
             }
         }
     }
