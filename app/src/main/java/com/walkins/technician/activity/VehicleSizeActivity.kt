@@ -47,7 +47,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         ivBack = findViewById(R.id.ivBack)
 
         ivBack?.setOnClickListener(this)
-        tvTitle?.text = "Select Tyre Pattern - LF"
+        tvTitle?.text = "Select Tyre Size - LF"
 
         getVehicleMake()
     }
