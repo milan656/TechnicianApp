@@ -9,7 +9,7 @@
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/ten_dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -132,7 +132,8 @@
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
                 android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp" />
+                android:paddingEnd="@dimen/ten_dp"
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -159,7 +160,8 @@
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
                 android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp" />
+                android:paddingEnd="@dimen/ten_dp"
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -187,20 +189,21 @@
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
                 android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp" />
+                android:paddingEnd="@dimen/ten_dp"
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_margin="@dimen/eighteen_dp"
             android:orientation="horizontal">
 
             <com.walkins.technician.custom.BoldButton
                 android:id="@+id/btnCancel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/eight_dp"
                 android:layout_marginRight="@dimen/eight_dp"
                 android:layout_weight="1"
@@ -214,7 +217,7 @@
             <com.walkins.technician.custom.BoldButton
                 android:id="@+id/btnConfirm"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/eight_dp"
                 android:layout_marginEnd="@dimen/eight_dp"
                 android:layout_marginRight="@dimen/eight_dp"

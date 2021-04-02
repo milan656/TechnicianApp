@@ -15,14 +15,13 @@ import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.Data
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
-import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.adapter.VehicleModelAdapter
 import com.walkins.technician.common.SpacesItemDecoration
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
-class VehicleModelActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
+class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private lateinit var prefManager: PrefManager
     private var vehicleBrandModel: VehicleBrandModel? = null
@@ -48,7 +47,7 @@ class VehicleModelActivity : AppCompatActivity(), onClickAdapter, View.OnClickLi
         ivBack = findViewById(R.id.ivBack)
 
         ivBack?.setOnClickListener(this)
-        tvTitle?.text = "Select Tyre Pattern"
+        tvTitle?.text = "Select Tyre Pattern - LF"
 
         getVehicleMake()
     }
@@ -57,13 +56,13 @@ class VehicleModelActivity : AppCompatActivity(), onClickAdapter, View.OnClickLi
         prefManager.getAccessToken()?.let {
             warrantyViewModel.getVehicleBrandModel(
                 "6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
-                it, this@VehicleModelActivity
+                it, this@VehicleSizeActivity
 
             )
         }
 
         warrantyViewModel.getVehicleBrand()
-            ?.observe(this@VehicleModelActivity, androidx.lifecycle.Observer {
+            ?.observe(this@VehicleSizeActivity, androidx.lifecycle.Observer {
                 if (it != null) {
                     if (it.success) {
                         vehicleBrandModel = it
@@ -98,7 +97,7 @@ class VehicleModelActivity : AppCompatActivity(), onClickAdapter, View.OnClickLi
                                     startActivity(intent)
                                     finish()
                                 } else {
-                                    this@VehicleModelActivity.let { it1 ->
+                                    this@VehicleSizeActivity.let { it1 ->
                                         Common.showShortToast(
                                             it.error.get(0).message,
                                             it1
@@ -107,7 +106,7 @@ class VehicleModelActivity : AppCompatActivity(), onClickAdapter, View.OnClickLi
                                 }
 
                             } else {
-                                this@VehicleModelActivity.let { it1 ->
+                                this@VehicleSizeActivity.let { it1 ->
                                     Common.showShortToast(
                                         it.error.get(0).message,
                                         it1
@@ -117,7 +116,7 @@ class VehicleModelActivity : AppCompatActivity(), onClickAdapter, View.OnClickLi
                         }
                     }
                 } else {
-                    showLongToast("Something Went Wrong", this@VehicleModelActivity)
+                    showLongToast("Something Went Wrong", this@VehicleSizeActivity)
                 }
             })
     }
@@ -125,7 +124,8 @@ class VehicleModelActivity : AppCompatActivity(), onClickAdapter, View.OnClickLi
     override fun onPositionClick(variable: Int, check: Int) {
 
         Log.e("getmake", "" + arrList?.get(variable)?.name)
-        val intent = Intent(this, VisualDetailsActivity::class.java)
+        val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
+        intent.putExtra("which", "vehiclesize")
         startActivity(intent)
 
     }

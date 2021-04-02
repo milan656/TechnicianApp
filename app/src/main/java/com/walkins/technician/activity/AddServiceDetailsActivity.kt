@@ -98,6 +98,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var ivTyre4: ImageView? = null
 
     private var tvSkipService: TextView? = null
+    private var tvTyreAddInfo: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,6 +121,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
         suggestionsRecycView = findViewById(R.id.suggestionsRecycView)
         tvSkipService = findViewById(R.id.tvSkipService)
+        tvTyreAddInfo = findViewById(R.id.tvTyreAddInfo)
 
         ivTyre1 = findViewById(R.id.ivTyre1)
         ivTyre2 = findViewById(R.id.ivTyre2)
@@ -146,6 +148,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivTyre2?.setOnTouchListener(this)
         ivTyre3?.setOnTouchListener(this)
         ivTyre4?.setOnTouchListener(this)
+        tvTyreAddInfo?.setOnTouchListener(this)
 
         tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this, false)
         tyreSuggestionAdapter?.onclick = this
@@ -407,7 +410,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val intent = Intent(this, VehicleMakeActivity::class.java)
         when (id) {
 
-            R.id.ivTyre1, R.id.ivTyre2, R.id.ivTyre3, R.id.ivTyre4 -> {
+            R.id.tvTyreAddInfo -> {
 
                 startActivity(intent)
             }

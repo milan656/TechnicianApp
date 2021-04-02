@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnicianApp">
-        <activity android:name=".activity.ServiceDetailActivity"></activity>
+        <activity android:name=".activity.VehicleMakeApplyTyreActivty"/>
+        <activity android:name=".activity.VehicleSizeActivity"/>
+        <activity android:name=".activity.ServiceDetailActivity" />
         <activity android:name=".activity.CompletedServiceDetailActivity" />
         <activity android:name=".activity.VisualDetailsActivity" />
         <activity android:name=".activity.ReportActivity" />
@@ -37,11 +39,11 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity android:name=".activity.VehicleMakeActivity" />
-        <activity android:name=".activity.VehicleModelActivity" />
         <activity android:name=".activity.HomeSubDealerActivity" />
         <activity android:name=".activity.HomeEmployeeActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.VehiclePatternActivity"/>
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,6 +64,32 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.jkadvantage.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/app_icon_logo" />
+        <!--
+Set color used with incoming notification messages. This is used when no color is set for the incoming
+            notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/yellow" /> <!-- [END fcm_default_icon] -->
+        <!-- [START fcm_default_channel] -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
     </application>
 
 </manifest>

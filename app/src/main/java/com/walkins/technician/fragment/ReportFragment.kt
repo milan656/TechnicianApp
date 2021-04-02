@@ -6,33 +6,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
 import com.walkins.technician.adapter.ReportAdpater
 import com.walkins.technician.common.onClickAdapter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ReportFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
-
+    private var ivFilterImg: ImageView? = null
     private var reportRecycView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +42,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_report, container, false)
+        val view = inflater.inflate(R.layout.fragment_report, container, false)
 
         init(view)
         return view
@@ -58,11 +52,14 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         reportRecycView = view?.findViewById(R.id.reportRecycView)
         tvTitle = view?.findViewById(R.id.tvTitle)
         ivBack = view?.findViewById(R.id.ivBack)
+        ivFilterImg = view?.findViewById(R.id.ivFilterImg)
+        ivFilterImg?.setOnClickListener(this)
+
         ivBack?.setOnClickListener(this)
         tvTitle?.text = "Your Report"
 
         ivBack?.visibility = View.GONE
-        var arrayAdapter = context?.let { ReportAdpater(Common.commonPhotoChooseArr, it, this) }
+        val arrayAdapter = context?.let { ReportAdpater(Common.commonPhotoChooseArr, it, this) }
         reportRecycView?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
@@ -79,15 +76,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ReportFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ReportFragment().apply {
@@ -110,6 +99,50 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             R.id.ivBack -> {
 //                onBackPressed()
             }
+            R.id.ivFilterImg -> {
+                openReportFilterDialogue("Choose Filter")
+            }
         }
+    }
+
+    private fun openReportFilterDialogue(titleStr: String) {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.dialogue_report_filter, null)
+        val dialog =
+            context.let {
+                it?.let { it1 ->
+                    BottomSheetDialog(
+                        it1,
+                        R.style.CustomBottomSheetDialogTheme
+                    )
+                }
+            }
+
+        dialog?.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        dialog?.window?.setLayout(width, height)
+//        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.setContentView(view)
+
+        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
+        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
+        val btnConfirm = view.findViewById<Button>(R.id.btnConfirm)
+        val btnCancel = view.findViewById<Button>(R.id.btnCancel)
+
+        tvTitleText?.text = titleStr
+
+        ivClose?.setOnClickListener {
+            dialog?.dismiss()
+        }
+
+        btnConfirm.setOnClickListener {
+            dialog?.dismiss()
+        }
+        btnCancel.setOnClickListener {
+            dialog?.dismiss()
+        }
+
+        dialog?.show()
     }
 }

@@ -15,25 +15,26 @@ import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.Data
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
-import com.walkins.technician.adapter.VehicleMakeAdapterNew
+import com.walkins.technician.adapter.VehicleModelAdapter
 import com.walkins.technician.common.SpacesItemDecoration
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
-class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
+class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
+
     private lateinit var prefManager: PrefManager
     private var vehicleBrandModel: VehicleBrandModel? = null
     private lateinit var warrantyViewModel: WarrantyViewModel
-    private var adapter: VehicleMakeAdapterNew? = null
-    private var gridviewRecycMake_: RecyclerView? = null
+    private var adapter: VehicleModelAdapter? = null
+    private var gridviewRecycModel: RecyclerView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
     var arrList: ArrayList<Data>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vehicle_make)
+        setContentView(R.layout.activity_vehicle_model)
         prefManager = PrefManager(this)
         warrantyViewModel = ViewModelProviders.of(this).get(WarrantyViewModel::class.java)
 
@@ -41,28 +42,27 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     }
 
     private fun init() {
+        gridviewRecycModel = findViewById(R.id.gridviewRecycModel)
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
 
-        gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
-        getVehicleMake()
-
         ivBack?.setOnClickListener(this)
-        tvTitle?.text = "Select Tyre Make - LF"
+        tvTitle?.text = "Select Tyre Pattern - LF"
 
+        getVehicleMake()
     }
 
     fun getVehicleMake() {
         prefManager.getAccessToken()?.let {
             warrantyViewModel.getVehicleBrandModel(
                 "6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
-                it, this@VehicleMakeActivity
+                it, this@VehiclePatternActivity
 
             )
         }
 
         warrantyViewModel.getVehicleBrand()
-            ?.observe(this@VehicleMakeActivity, androidx.lifecycle.Observer {
+            ?.observe(this@VehiclePatternActivity, androidx.lifecycle.Observer {
                 if (it != null) {
                     if (it.success) {
                         vehicleBrandModel = it
@@ -76,16 +76,16 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                             }
                         }
 
-                        gridviewRecycMake_?.layoutManager =
+                        gridviewRecycModel?.layoutManager =
                             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-                        gridviewRecycMake_?.addItemDecoration(
+                        gridviewRecycModel?.addItemDecoration(
                             SpacesItemDecoration(
                                 20
                             )
                         )
 
-                        adapter = VehicleMakeAdapterNew(this, arrList, this)
-                        gridviewRecycMake_?.adapter = adapter
+                        adapter = VehicleModelAdapter(this, arrList, this)
+                        gridviewRecycModel?.adapter = adapter
 
 
                     } else {
@@ -97,7 +97,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                                     startActivity(intent)
                                     finish()
                                 } else {
-                                    this@VehicleMakeActivity.let { it1 ->
+                                    this@VehiclePatternActivity.let { it1 ->
                                         Common.showShortToast(
                                             it.error.get(0).message,
                                             it1
@@ -106,7 +106,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                                 }
 
                             } else {
-                                this@VehicleMakeActivity.let { it1 ->
+                                this@VehiclePatternActivity.let { it1 ->
                                     Common.showShortToast(
                                         it.error.get(0).message,
                                         it1
@@ -116,7 +116,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         }
                     }
                 } else {
-                    showLongToast("Something Went Wrong", this@VehicleMakeActivity)
+                    showLongToast("Something Went Wrong", this@VehiclePatternActivity)
                 }
             })
     }
@@ -125,7 +125,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         Log.e("getmake", "" + arrList?.get(variable)?.name)
         val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
-        intent.putExtra("which", "vehiclemake")
+        intent.putExtra("which","vehiclepattern")
         startActivity(intent)
 
     }
