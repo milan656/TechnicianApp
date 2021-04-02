@@ -26,6 +26,7 @@
             android:background="@drawable/layout_bg_white"
             android:hint="Search for vehicle reg. number"
             android:paddingStart="@dimen/ten_dp"
+            android:textColorHint="@color/light_gray_text_color"
             android:textColor="@color/text_color1"
             android:paddingEnd="@dimen/ten_dp"
             android:textSize="@dimen/fourteen_sp" />
@@ -48,7 +49,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/llUpcoming"
+            android:id="@+id/llCompletedReport"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -60,7 +61,7 @@
             android:orientation="vertical">
 
             <com.walkins.technician.custom.NormalTextView
-                android:id="@+id/tvUpcoming"
+                android:id="@+id/tvCompleted"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -72,7 +73,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llCompleted"
+            android:id="@+id/llSkippedReport"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -84,7 +85,7 @@
             android:orientation="vertical">
 
             <com.walkins.technician.custom.NormalTextView
-                android:id="@+id/tvCompleted"
+                android:id="@+id/tvSkipped"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

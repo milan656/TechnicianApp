@@ -756,6 +756,7 @@
                             android:visibility="visible">
 
                             <com.walkins.technician.custom.NormalTextView
+                                android:id="@+id/tvtyreServiceInfo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"

@@ -1,6 +1,5 @@
 package com.walkins.technician.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,14 +7,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.technician.common.Common
 import com.walkins.technician.R
 import com.walkins.technician.adapter.PendingTyreSuggestionAdpater
 import com.walkins.technician.common.onClickAdapter
 
-class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
+class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
-    private var pendingSuggestionsRecycView: RecyclerView? = null
+    private var issueResolvedRecycView: RecyclerView? = null
     private var suggestionArr = arrayListOf(
         "Improve this for the tyre in alignment",
         "Improve this for the tyre in alignment",
@@ -25,37 +23,32 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var tyreSuggestionAdapter: PendingTyreSuggestionAdpater? = null
     private var tvTitle: TextView? = null
     private var ivBack: ImageView? = null
-    private var tvCurrentDateTime: TextView? = null
-    private var tvtyreServiceInfo: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed_service_detail)
+        setContentView(R.layout.activity_completed_visual_detail)
 
         init()
     }
 
     private fun init() {
-        tvtyreServiceInfo = findViewById(R.id.tvtyreServiceInfo)
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
 
-        tvCurrentDateTime = findViewById(R.id.tvCurrentDateTime)
-        pendingSuggestionsRecycView = findViewById(R.id.pendingSuggestionsRecycView)
+        issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
         tyreSuggestionAdapter = PendingTyreSuggestionAdpater(suggestionArr, this, this)
         tyreSuggestionAdapter?.onclick = this
-        pendingSuggestionsRecycView?.layoutManager = LinearLayoutManager(
+        issueResolvedRecycView?.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,
             false
         )
-        pendingSuggestionsRecycView?.adapter = tyreSuggestionAdapter
+        issueResolvedRecycView?.adapter = tyreSuggestionAdapter
 
-        tvTitle?.text = "Add Service Details"
+        tvTitle?.text = "Details - LF"
         ivBack?.setOnClickListener(this)
-        tvtyreServiceInfo?.setOnClickListener(this)
 
-        tvCurrentDateTime?.text = Common.getCurrentDateTime()
     }
 
     override fun onPositionClick(variable: Int, check: Int) {
@@ -65,15 +58,12 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
+
+
             R.id.ivBack -> {
                 onBackPressed()
             }
-            R.id.tvtyreServiceInfo -> {
-                var intent = Intent(this, CompletedVisualDetailActivity::class.java)
-                startActivity(intent)
-            }
         }
     }
-
 
 }

@@ -44,6 +44,7 @@
     <color name="bar_dot_color">#4a63d4</color>
     <color name="light_text_color">#92969a</color>
     <color name="hintColor">#6E777F</color>
+    <color name="light_hint">#ededed</color>
     <color name="point_date_color_blue">#545cd8</color>
     <color name="light_gray_for_button">#e0e2e4</color>
     <color name="dashboard_end">#8b1e57f8</color>
@@ -71,6 +72,7 @@
     <color name="header_title_color">#4a5157</color>
     <color name="stencil_color">#545cd8</color>
     <color name="red">#e02020</color>
+
     <color name="background_bottom">#ebebeb</color>
     <color name="light_yellow1">#f7e5b7</color>
     <color name="coloricon">#b5babe</color>

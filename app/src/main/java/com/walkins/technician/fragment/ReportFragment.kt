@@ -30,6 +30,11 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var ivFilterImg: ImageView? = null
     private var reportRecycView: RecyclerView? = null
 
+    private var llCompleted: LinearLayout? = null
+    private var tvSkipped: TextView? = null
+    private var tvCompleted: TextView? = null
+    private var llSkipped: LinearLayout? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -49,6 +54,11 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun init(view: View?) {
+        llSkipped = view?.findViewById(R.id.llSkippedReport)
+        llCompleted = view?.findViewById(R.id.llCompletedReport)
+        tvSkipped = view?.findViewById(R.id.tvSkipped)
+        tvCompleted = view?.findViewById(R.id.tvCompleted)
+
         reportRecycView = view?.findViewById(R.id.reportRecycView)
         tvTitle = view?.findViewById(R.id.tvTitle)
         ivBack = view?.findViewById(R.id.ivBack)
@@ -56,6 +66,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         ivFilterImg?.setOnClickListener(this)
 
         ivBack?.setOnClickListener(this)
+        llCompleted?.setOnClickListener(this)
+        llSkipped?.setOnClickListener(this)
+
         tvTitle?.text = "Your Report"
 
         ivBack?.visibility = View.GONE
@@ -102,6 +115,22 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             R.id.ivFilterImg -> {
                 openReportFilterDialogue("Choose Filter")
             }
+            R.id.llCompletedReport -> {
+                llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_red_layout))
+                llSkipped?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
+
+                tvCompleted?.setTextColor(this.resources.getColor(R.color.white))
+                tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
+            }
+            R.id.llSkippedReport -> {
+                llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
+                llSkipped?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_red_layout))
+
+                tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
+                tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
+
+            }
+
         }
     }
 

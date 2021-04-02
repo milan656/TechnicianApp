@@ -18,8 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnicianApp">
-        <activity android:name=".activity.VehicleMakeApplyTyreActivty"/>
-        <activity android:name=".activity.VehicleSizeActivity"/>
+        <activity android:name=".activity.CompletedVisualDetailActivity"></activity>
+        <activity android:name=".activity.VehicleMakeApplyTyreActivty" />
+        <activity android:name=".activity.VehicleSizeActivity" />
         <activity android:name=".activity.ServiceDetailActivity" />
         <activity android:name=".activity.CompletedServiceDetailActivity" />
         <activity android:name=".activity.VisualDetailsActivity" />
@@ -43,7 +44,7 @@
         <activity android:name=".activity.HomeEmployeeActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.VehiclePatternActivity"/>
+        <activity android:name=".activity.VehiclePatternActivity" />
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -89,7 +90,6 @@ Set color used with incoming notification messages. This is used when no color i
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
-
     </application>
 
 </manifest>
