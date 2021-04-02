@@ -25,8 +25,12 @@ class ReportActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener
     private var ivBack: ImageView? = null
 
     private var tvTitle: TextView? = null
+    private var tvSkipped: TextView? = null
+    private var tvCompleted: TextView? = null
 
     private var reportRecycView: RecyclerView? = null
+    private var llCompleted: LinearLayout? = null
+    private var llSkipped: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +41,21 @@ class ReportActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener
 
     private fun init() {
 
+        llSkipped = findViewById(R.id.llSkipped)
+        llCompleted = findViewById(R.id.llCompleted)
         reportRecycView = findViewById(R.id.reportRecycView)
         tvTitle = findViewById(R.id.tvTitle)
+        tvSkipped = findViewById(R.id.tvSkipped)
+        tvCompleted = findViewById(R.id.tvCompleted)
         ivBack = findViewById(R.id.ivBack)
+
         ivBack?.setOnClickListener(this)
+        llCompleted?.setOnClickListener(this)
+        llSkipped?.setOnClickListener(this)
+
         tvTitle?.text = "Your Report"
 
-        var arrayAdapter = this?.let { ReportAdpater(Common.commonPhotoChooseArr, it, this) }
+        var arrayAdapter = this.let { ReportAdpater(Common.commonPhotoChooseArr, it, this) }
         reportRecycView?.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,
@@ -71,11 +83,24 @@ class ReportActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener
             R.id.ivBack -> {
                 onBackPressed()
             }
+            R.id.llCompleted -> {
+                llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_red_layout))
+                llSkipped?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
+
+                tvCompleted?.setTextColor(this.resources.getColor(R.color.white))
+                tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
+            }
+            R.id.llSkipped -> {
+                llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
+                llSkipped?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_red_layout))
+
+                tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
+                tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
+
+            }
 
         }
     }
-
-
 
 
 }

@@ -48,7 +48,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/llUpcoming"
+            android:id="@+id/llCompleted"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -60,7 +60,7 @@
             android:orientation="vertical">
 
             <com.walkins.technician.custom.NormalTextView
-                android:id="@+id/tvUpcoming"
+                android:id="@+id/tvCompleted"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -72,7 +72,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llCompleted"
+            android:id="@+id/llSkipped"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -84,7 +84,7 @@
             android:orientation="vertical">
 
             <com.walkins.technician.custom.NormalTextView
-                android:id="@+id/tvCompleted"
+                android:id="@+id/tvSkipped"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
