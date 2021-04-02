@@ -55,7 +55,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
         relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
-        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArr, this, this)
+        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArr, this, this,false)
         issueResolveAdapter?.onclick = this
         issueResolvedRecycView?.layoutManager = LinearLayoutManager(
             this,

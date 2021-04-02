@@ -13,7 +13,8 @@ import com.walkins.technician.common.onClickAdapter
 class TyreSuggestionAdpater(
     var array: ArrayList<String>,
     var context: Context,
-    onPositionClick: onClickAdapter
+    onPositionClick: onClickAdapter,
+    var isFromDialog: Boolean
 ) :
     RecyclerView.Adapter<TyreSuggestionAdpater.Viewholder>() {
 
@@ -24,7 +25,10 @@ class TyreSuggestionAdpater(
         var chkTyreSuggestion: CheckBox = itemView.findViewById(R.id.chkTyreSuggestion)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TyreSuggestionAdpater.Viewholder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): TyreSuggestionAdpater.Viewholder {
         var view =
             LayoutInflater.from(context).inflate(R.layout.tyre_suggestions_design, parent, false)
         return Viewholder(view)
@@ -36,8 +40,14 @@ class TyreSuggestionAdpater(
 
         holder.itemView.setOnClickListener {
 
-            if (onclick != null) {
-                onclick?.onPositionClick(position, 0)
+            if (!isFromDialog) {
+                if (onclick != null) {
+                    onclick?.onPositionClick(position, 0)
+                }
+            } else {
+                if (onclick != null) {
+                    onclick?.onPositionClick(position, 1)
+                }
             }
         }
     }

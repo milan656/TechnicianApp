@@ -2,18 +2,23 @@ package com.walkins.technician.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -30,6 +35,7 @@ import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.custom.BoldButton
 import java.io.File
 
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
@@ -74,6 +80,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         "Improve this for the tyre in alignment",
         "Improve this for the tyre in alignment"
     )
+    var reasonArray = arrayListOf(
+        "The car was unavailable",
+        "Need more time to resolve",
+        "The customer request a delay",
+        "Need more time to resolve",
+        "The customer request a delay"
+    )
     private var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
 
     private var relCarPhotoAdd2: RelativeLayout? = null
@@ -83,6 +96,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var ivTyre2: ImageView? = null
     private var ivTyre3: ImageView? = null
     private var ivTyre4: ImageView? = null
+
+    private var tvSkipService: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +119,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         llTechnicalSuggestionExpanded = findViewById(R.id.llTechnicalSuggestionExpanded)
         llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
         suggestionsRecycView = findViewById(R.id.suggestionsRecycView)
+        tvSkipService = findViewById(R.id.tvSkipService)
 
         ivTyre1 = findViewById(R.id.ivTyre1)
         ivTyre2 = findViewById(R.id.ivTyre2)
@@ -124,13 +140,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivAddTyreConfig?.setOnClickListener(this)
         relCarPhotoAdd1?.setOnClickListener(this)
         relCarPhotoAdd2?.setOnClickListener(this)
+        tvSkipService?.setOnClickListener(this)
 
         ivTyre1?.setOnTouchListener(this)
         ivTyre2?.setOnTouchListener(this)
         ivTyre3?.setOnTouchListener(this)
         ivTyre4?.setOnTouchListener(this)
 
-        tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this)
+        tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this, false)
         tyreSuggestionAdapter?.onclick = this
         suggestionsRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -212,58 +229,113 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Common.btn_filled
                 )
             }
+            R.id.tvSkipService -> {
+                openSkipServiceDialogue()
+            }
         }
+    }
+
+    private fun openSkipServiceDialogue() {
+        val builder = AlertDialog.Builder(this).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        builder.window?.setLayout(width, height)
+        builder?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val root =
+            LayoutInflater.from(this).inflate(R.layout.dialogue_service_skip, null)
+
+        val btnConfirm = root.findViewById<BoldButton>(R.id.btnConfirm)
+        val ivClose = root.findViewById<ImageView>(R.id.ivClose)
+        val pendingReasonRecycView = root.findViewById<RecyclerView>(R.id.pendingReasonRecycView)
+
+
+        var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
+        tyreSuggestionAdapter = TyreSuggestionAdpater(reasonArray, this, this, true)
+        tyreSuggestionAdapter?.onclick = this
+        pendingReasonRecycView?.layoutManager = LinearLayoutManager(
+            this,
+            RecyclerView.VERTICAL,
+            false
+        )
+        pendingReasonRecycView?.adapter = tyreSuggestionAdapter
+
+        val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
+
+        tvTitleText?.text = "Provide Pending Reason"
+        ivClose?.setOnClickListener {
+            builder.dismiss()
+        }
+        btnConfirm.setOnClickListener {
+            builder.dismiss()
+            var intent = Intent(this, ServiceDetailActivity::class.java)
+            startActivityForResult(intent, 106)
+        }
+        builder.setView(root)
+
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
     }
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-        if (Common.commonPhotoChooseArr?.get(variable).equals("Gallery")) {
-            val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                checkPermissions((this))
-            } else {
-                try {
-                    val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.type = "image/*"
-                    startActivityForResult(intent, PICK_IMAGE_REQUEST)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-            if (result == true) {
-                try {
+        if (check == 0) {
 
-                    val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.type = "image/*"
-                    startActivityForResult(intent, PICK_IMAGE_REQUEST)
-                } catch (e: Exception) {
-
-                    e.printStackTrace()
-                }
-
-            }
-        } else if (Common.commonPhotoChooseArr?.get(variable).equals("Camera")) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_DENIED ||
-                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_DENIED
-                ) {
-                    //permission was not enabled
-                    val permission = arrayOf(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                    //show popup to request permission
-                    requestPermissions(permission, PERMISSION_CODE)
+            Log.e("getposition0", "" + suggestionArr?.get(variable))
+        } else if (check == 1) {
+            Log.e("getposition1", "" + reasonArray?.get(variable))
+        } else {
+            if (Common.commonPhotoChooseArr?.get(variable).equals("Gallery")) {
+                val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    checkPermissions((this))
                 } else {
-                    //permission already granted
+                    try {
+                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                if (result == true) {
+                    try {
+
+                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                    } catch (e: Exception) {
+
+                        e.printStackTrace()
+                    }
+
+                }
+            } else if (Common.commonPhotoChooseArr?.get(variable).equals("Camera")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED ||
+                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED
+                    ) {
+                        //permission was not enabled
+                        val permission = arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                        //show popup to request permission
+                        requestPermissions(permission, PERMISSION_CODE)
+                    } else {
+                        //permission already granted
+                        openCamera()
+                    }
+                } else {
+                    //system os is < marshmallow
                     openCamera()
                 }
-            } else {
-                //system os is < marshmallow
-                openCamera()
             }
         }
+
+
     }
 
     private fun showBottomSheetdialog(
@@ -413,9 +485,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     .start(this)
             }
             105 -> {
-                if (resultCode == 105) {
+            }
+            106 -> {
 
-                }
+                openSkipServiceDialogue()
+
             }
 
             REQUEST_IMAGE_CAPTURE -> {

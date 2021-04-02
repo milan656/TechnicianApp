@@ -137,7 +137,8 @@
                                 android:layout_gravity="top"
                                 android:layout_margin="@dimen/twelve_dp"
                                 android:padding="@dimen/five_dp"
-                                android:src="@drawable/info_help" />
+                                android:src="@drawable/info_in_profile"
+                                app:tint="@color/colorPrimary"/>
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -989,6 +990,7 @@
         android:orientation="vertical">
 
         <com.walkins.technician.custom.NormalTextView
+            android:id="@+id/tvSkipService"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
