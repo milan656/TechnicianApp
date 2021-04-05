@@ -106,7 +106,7 @@ class VehicleMakeApplyTyreActivty : AppCompatActivity(), View.OnClickListener {
                 setResult(1003)
                 finish()
             }
-            1006 ->{
+            1006 -> {
                 Log.e("getresult2", "" + resultCode)
                 setResult(1003)
                 finish()
