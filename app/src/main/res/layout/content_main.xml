@@ -77,7 +77,7 @@
                 android:id="@+id/ivHome"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@mipmap/ic_home_icon" />
+                android:src="@mipmap/ic_home_normal" />
 
         </LinearLayout>
 

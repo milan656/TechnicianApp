@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -59,6 +60,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var llServiceExpanded: LinearLayout? = null
     private var llTyreConfigExpanded: LinearLayout? = null
     private var llTechnicalSuggestionExpanded: LinearLayout? = null
+
+    private var tvTechnicalSuggetion: TextView? = null
+    private var tvTyreConfig: TextView? = null
+    private var tvServices: TextView? = null
 
     private var serviceExpanded = false
     private var techicalSuggestionExpanded = false
@@ -122,6 +127,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         suggestionsRecycView = findViewById(R.id.suggestionsRecycView)
         tvSkipService = findViewById(R.id.tvSkipService)
         tvTyreAddInfo = findViewById(R.id.tvTyreAddInfo)
+        tvTechnicalSuggetion = findViewById(R.id.tvTechnicalSuggetion)
+        tvServices = findViewById(R.id.tvServices)
+        tvTyreConfig = findViewById(R.id.tvTyreConfig)
 
         ivTyre1 = findViewById(R.id.ivTyre1)
         ivTyre2 = findViewById(R.id.ivTyre2)
@@ -420,7 +428,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivAddServices -> {
                 if (llServiceExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llServiceExpanded!!)
+                    tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvServices?.isAllCaps = false
                 } else {
+                    tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvServices?.isAllCaps = true
                     Common.expand(llServiceExpanded!!)
 
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
@@ -434,7 +446,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivAddTyreConfig -> {
                 if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llTyreConfigExpanded!!)
+                    tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTyreConfig?.isAllCaps = false
                 } else {
+                    tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTyreConfig?.isAllCaps = true
                     Common.expand(llTyreConfigExpanded!!)
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
@@ -447,7 +463,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivAddTechnicalSuggestion -> {
                 if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llTechnicalSuggestionExpanded!!)
+                    tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTechnicalSuggetion?.isAllCaps = false
+
                 } else {
+                    tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTechnicalSuggetion?.isAllCaps = true
+
                     Common.expand(llTechnicalSuggestionExpanded!!)
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTyreConfigExpanded!!)

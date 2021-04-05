@@ -104,10 +104,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
 
                 selectedMenu = "home"
-                ivHome?.setTint(this, R.color.header_title)
-                ivReport?.setTint(this, R.color.text_color1)
-                ivNotification?.setTint(this, R.color.text_color1)
-                ivProfile?.setTint(this, R.color.text_color1)
+                ivHome?.setImageResource(R.mipmap.ic_home_icon)
+                ivReport?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_report))
+                ivNotification?.setImageResource(R.mipmap.ic_notification_icon)
+                ivProfile?.setImageResource(R.mipmap.ic_profile_icon)
             }
             R.id.ivReport -> {
                 replaceFragmenty(
@@ -118,10 +118,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
 
                 selectedMenu = "report"
-                ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.header_title)
-                ivNotification?.setTint(this, R.color.text_color1)
-                ivProfile?.setTint(this, R.color.text_color1)
+                ivHome?.setImageResource(R.mipmap.ic_home_normal)
+                ivNotification?.setImageResource(R.mipmap.ic_notification_icon)
+                ivProfile?.setImageResource(R.mipmap.ic_profile_icon)
 
 
             }
@@ -134,10 +134,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     containerViewId = R.id.mainContent
 
                 )
-                ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.text_color1)
-                ivNotification?.setTint(this, R.color.header_title)
-                ivProfile?.setTint(this, R.color.text_color1)
+                ivHome?.setImageResource(R.mipmap.ic_home_normal)
+                ivNotification?.setImageResource(R.mipmap.ic_notification_selected)
+                ivProfile?.setImageResource(R.mipmap.ic_profile_icon)
 
 
             }
@@ -149,10 +149,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     allowStateLoss = true,
                     containerViewId = R.id.mainContent
                 )
-                ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.text_color1)
-                ivNotification?.setTint(this, R.color.text_color1)
-                ivProfile?.setTint(this, R.color.header_title)
+                ivHome?.setImageResource(R.mipmap.ic_home_normal)
+                ivNotification?.setImageResource(R.mipmap.ic_notification_selected)
+                ivProfile?.setImageResource(R.mipmap.ic_profile_selected)
 
 
             }
