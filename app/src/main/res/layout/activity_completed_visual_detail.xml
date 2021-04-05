@@ -9,79 +9,544 @@
 
     <include layout="@layout/common_toolbar" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sixteen_dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_margin="@dimen/sixteen_dp"
+            android:orientation="vertical">
 
-            <com.walkins.technician.custom.BoldHeavyTextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Issue to be resolved"
-                android:textAllCaps="true"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/six_dp"
+                    android:layout_marginRight="@dimen/six_dp"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:orientation="vertical">
 
-        </LinearLayout>
+                    <com.walkins.technician.custom.NormalTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tyre Make"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/twelve_sp" />
 
-        <LinearLayout
-            android:id="@+id/llTechnicalSuggestionExpanded"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight_dp"
-            android:orientation="vertical"
-            android:visibility="visible">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:background="@drawable/selected">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/issueResolvedRecycView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/two_dp"
+                            android:layout_marginBottom="@dimen/two_dp"
+                            android:src="@mipmap/car" />
 
+                    </RelativeLayout>
+                </LinearLayout>
 
-            <com.walkins.technician.custom.NormalTextView
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/six_dp"
+                    android:layout_marginEnd="@dimen/six_dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.walkins.technician.custom.NormalTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tyre Pattern"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/twelve_sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:background="@drawable/selected">
+
+                        <com.walkins.technician.custom.NormalTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="ZVTV A2"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/fourteen_sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/six_dp"
+                    android:layout_marginLeft="@dimen/six_dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.walkins.technician.custom.NormalTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tyre Size"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/twelve_sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:background="@drawable/selected">
+
+                        <com.walkins.technician.custom.NormalTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="175/65 R14"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/fourteen_sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/twenty_dp"
-                android:text="More Suggestions (optional)"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/twelve_sp" />
+                android:layout_marginTop="@dimen/twenty_four_dp"
+                android:orientation="vertical">
 
-            <com.walkins.technician.custom.BoldTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five_dp"
-                android:text="You need to take your car for servicing more offen. Your car is very old."
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp" />
-
-
-            <RelativeLayout
-                android:id="@+id/relCarPhotoAdd2"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="@dimen/twenty_dp"
-                android:background="@drawable/layout_bg_secondary_"
-                android:orientation="vertical"
-                android:padding="@dimen/two_dp">
-
-
-                <ImageView
+                <com.walkins.technician.custom.NormalTextView
+                    android:id="@+id/store_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:src="@mipmap/car" />
-            </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:text="@string/manufacturing_date"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp" />
+
+                <com.walkins.technician.custom.NormalEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:background="@drawable/layout_bg_secondary_"
+                    android:gravity="start|center"
+                    android:padding="@dimen/ten_dp"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp" />
 
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_four_dp"
+                android:orientation="vertical">
+
+                <com.walkins.technician.custom.BoldHeavyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="LF Tyre service"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.walkins.technician.custom.NormalTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="PSI In"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/twelve_sp" />
+
+                        <com.walkins.technician.custom.BoldTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/five_dp"
+                            android:text="28"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/fourteen_sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.walkins.technician.custom.NormalTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="PSI Out"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/twelve_sp" />
+
+                        <com.walkins.technician.custom.BoldTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/five_dp"
+                            android:text="32"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/fourteen_sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.walkins.technician.custom.NormalTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Weight"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/twelve_sp" />
+
+                        <com.walkins.technician.custom.BoldTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/five_dp"
+                            android:text="3"
+                            android:textColor="@color/text_color1"
+                            android:textSize="@dimen/fourteen_sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_four_dp"
+                android:orientation="vertical">
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Side Well"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/twelve_sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_profile_icon" />
+
+                    <com.walkins.technician.custom.BoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/five_dp"
+                        android:gravity="start|center"
+                        android:text="OK - Condition is acceptable"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:orientation="vertical">
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Shoulder"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/twelve_sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_profile_icon" />
+
+                    <com.walkins.technician.custom.BoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/five_dp"
+                        android:gravity="start|center"
+                        android:text="SUG - Possible performance degredation"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:orientation="vertical">
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tread Depth"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/twelve_sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_profile_icon" />
+
+                    <com.walkins.technician.custom.BoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/five_dp"
+                        android:gravity="start|center"
+                        android:text="SUG - Possible performance degredation"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:orientation="vertical">
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tread Wear"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/twelve_sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_profile_icon" />
+
+                    <com.walkins.technician.custom.BoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/five_dp"
+                        android:gravity="start|center"
+                        android:text="SUG - Possible performance degredation"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:orientation="vertical">
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rim Damage"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/twelve_sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_profile_icon" />
+
+                    <com.walkins.technician.custom.BoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/five_dp"
+                        android:gravity="start|center"
+                        android:text="SUG - Possible performance degredation"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:orientation="vertical">
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bulge/Bubble"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/twelve_sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_profile_icon" />
+
+                    <com.walkins.technician.custom.BoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/five_dp"
+                        android:gravity="start|center"
+                        android:text="REQ - Needs immediate attention"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty_four_dp"
+                android:orientation="horizontal">
+
+                <com.walkins.technician.custom.BoldHeavyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Issue to be resolved"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTechnicalSuggestionExpanded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight_dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/issueResolvedRecycView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:text="More Suggestions (optional)"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/twelve_sp" />
+
+                <com.walkins.technician.custom.BoldTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:text="You need to take your car for servicing more offen. Your car is very old."
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/relCarPhotoAdd2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:layout_marginBottom="@dimen/thirty_dp"
+                    android:background="@drawable/layout_bg_secondary_"
+                    android:orientation="vertical"
+                    android:padding="@dimen/two_dp">
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:src="@mipmap/car" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

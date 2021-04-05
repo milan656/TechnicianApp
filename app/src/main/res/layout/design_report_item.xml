@@ -52,7 +52,7 @@
                     android:layout_height="20dp"
                     android:layout_marginEnd="@dimen/five_dp"
                     android:layout_marginRight="@dimen/five_dp"
-                    android:src="@drawable/ic_nitrogen_topup" />
+                    android:src="@mipmap/ic_nitrogen_topup" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -60,7 +60,7 @@
                     android:layout_marginStart="@dimen/five_dp"
                     android:layout_marginEnd="@dimen/five_dp"
                     android:layout_marginRight="@dimen/five_dp"
-                    android:src="@drawable/ic_nitrogen_refil" />
+                    android:src="@mipmap/ic_nitrogen_refil" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -68,7 +68,7 @@
                     android:layout_marginStart="@dimen/five_dp"
                     android:layout_marginEnd="@dimen/five_dp"
                     android:layout_marginRight="@dimen/five_dp"
-                    android:src="@drawable/ic_nitrogen_topup" />
+                    android:src="@mipmap/ic_nitrogen_topup" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -76,7 +76,7 @@
                     android:layout_marginStart="@dimen/five_dp"
                     android:layout_marginEnd="@dimen/five_dp"
                     android:layout_marginRight="@dimen/five_dp"
-                    android:src="@drawable/ic_tyre_rotation" />
+                    android:src="@mipmap/ic_tyre_rotation" />
             </LinearLayout>
 
 

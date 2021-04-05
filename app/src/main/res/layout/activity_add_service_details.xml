@@ -180,11 +180,11 @@
 
                             <ImageView
                                 android:id="@+id/ivAddServices"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 android:layout_weight="0"
                                 android:padding="@dimen/three_dp"
-                                android:src="@drawable/ic_add_icon" />
+                                android:src="@mipmap/ic_add_icon" />
 
                         </LinearLayout>
 
@@ -193,7 +193,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -708,11 +708,11 @@
 
                             <ImageView
                                 android:id="@+id/ivAddTyreConfig"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 android:layout_weight="0"
                                 android:padding="@dimen/three_dp"
-                                android:src="@drawable/ic_add_icon" />
+                                android:src="@mipmap/ic_add_icon" />
 
                         </LinearLayout>
 
@@ -723,7 +723,7 @@
                             android:layout_marginTop="@dimen/twelve_dp"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <com.walkins.technician.custom.NormalTextView
                                 android:id="@+id/tvTyreAddInfo"
@@ -856,11 +856,11 @@
 
                             <ImageView
                                 android:id="@+id/ivAddTechnicalSuggestion"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 android:layout_weight="0"
                                 android:padding="@dimen/three_dp"
-                                android:src="@drawable/ic_add_icon" />
+                                android:src="@mipmap/ic_add_icon" />
 
                         </LinearLayout>
 
@@ -870,7 +870,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/fourteen_dp"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/suggestionsRecycView"

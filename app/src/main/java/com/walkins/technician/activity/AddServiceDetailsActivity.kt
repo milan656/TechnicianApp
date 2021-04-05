@@ -138,8 +138,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         tvTitle?.text = "Add Service Details"
         ivInfoAddService?.setOnClickListener(this)
-        ivAddTechnicalSuggestion?.setOnClickListener(this)
-        ivAddTyreConfig?.setOnClickListener(this)
+
         relCarPhotoAdd1?.setOnClickListener(this)
         relCarPhotoAdd2?.setOnClickListener(this)
         tvSkipService?.setOnClickListener(this)
@@ -149,6 +148,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivTyre3?.setOnTouchListener(this)
         ivTyre4?.setOnTouchListener(this)
         tvTyreAddInfo?.setOnTouchListener(this)
+        ivAddServices?.setOnTouchListener(this)
+        ivAddTyreConfig?.setOnTouchListener(this)
+        llTyreConfigExpanded?.setOnTouchListener(this)
+        ivAddTechnicalSuggestion?.setOnTouchListener(this)
 
         tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this, false)
         tyreSuggestionAdapter?.onclick = this
@@ -353,12 +356,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val dialog =
             this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
-        dialog?.setCancelable(false)
+        dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog?.window?.setLayout(width, height)
-        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog?.setContentView(view)
+        dialog.window?.setLayout(width, height)
+        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btn_send)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
@@ -382,7 +385,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         arrayAdapter?.onclick = this
 
         ivClose?.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
         }
         if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
             btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
@@ -397,11 +400,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         btnSend.setOnClickListener {
 
-            dialog?.dismiss()
+            dialog.dismiss()
 
         }
 
-        dialog?.show()
+        dialog.show()
 
     }
 
@@ -413,6 +416,46 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.tvTyreAddInfo -> {
 
                 startActivity(intent)
+            }
+            R.id.ivAddServices -> {
+                if (llServiceExpanded?.visibility == View.VISIBLE) {
+                    Common.collapse(llServiceExpanded!!)
+                } else {
+                    Common.expand(llServiceExpanded!!)
+
+                    if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llTyreConfigExpanded!!)
+                    }
+                    if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llTechnicalSuggestionExpanded!!)
+                    }
+                }
+            }
+            R.id.ivAddTyreConfig -> {
+                if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
+                    Common.collapse(llTyreConfigExpanded!!)
+                } else {
+                    Common.expand(llTyreConfigExpanded!!)
+                    if (llServiceExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llServiceExpanded!!)
+                    }
+                    if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llTechnicalSuggestionExpanded!!)
+                    }
+                }
+            }
+            R.id.ivAddTechnicalSuggestion -> {
+                if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
+                    Common.collapse(llTechnicalSuggestionExpanded!!)
+                } else {
+                    Common.expand(llTechnicalSuggestionExpanded!!)
+                    if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llTyreConfigExpanded!!)
+                    }
+                    if (llServiceExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llServiceExpanded!!)
+                    }
+                }
             }
         }
         return false

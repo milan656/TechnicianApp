@@ -34,6 +34,7 @@ class ServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
         val id = v?.id
         when (id) {
             R.id.ivBack -> {
+                setResult(0)
                 onBackPressed()
             }
             R.id.tvChange -> {

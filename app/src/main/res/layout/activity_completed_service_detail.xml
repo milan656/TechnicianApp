@@ -300,7 +300,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
                                             android:gravity="center"
-                                            android:src="@drawable/ic_nitrogen_topup" />
+                                            android:src="@mipmap/ic_nitrogen_topup" />
 
                                         <com.walkins.technician.custom.NormalTextView
                                             android:layout_width="match_parent"
@@ -338,7 +338,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
                                             android:gravity="center"
-                                            android:src="@drawable/ic_nitrogen_refil" />
+                                            android:src="@mipmap/ic_nitrogen_refil" />
 
                                         <com.walkins.technician.custom.NormalTextView
                                             android:layout_width="match_parent"
@@ -390,7 +390,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
                                             android:gravity="center"
-                                            android:src="@drawable/ic_nitrogen_topup" />
+                                            android:src="@mipmap/ic_nitrogen_topup" />
 
                                         <com.walkins.technician.custom.NormalTextView
                                             android:layout_width="match_parent"
@@ -428,7 +428,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
                                             android:gravity="center"
-                                            android:src="@drawable/ic_tyre_rotation" />
+                                            android:src="@mipmap/ic_tyre_rotation" />
 
                                         <com.walkins.technician.custom.NormalTextView
                                             android:layout_width="match_parent"
@@ -742,7 +742,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="0"
                                 android:padding="@dimen/three_dp"
-                                android:src="@drawable/ic_add_icon" />
+                                android:src="@mipmap/ic_add_icon" />
 
                         </LinearLayout>
 
@@ -804,17 +804,17 @@
                                             android:id="@+id/ivTyre1"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:src="@drawable/ic_tyre_config_icon" />
+                                            android:src="@mipmap/ic_tyre_config" />
 
                                         <ImageView
                                             android:layout_width="wrap_content"
-                                            android:layout_height="36dp" />
+                                            android:layout_height="50dp" />
 
                                         <ImageView
                                             android:id="@+id/ivTyre2"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:src="@drawable/ic_tyre_config_icon" />
+                                            android:src="@mipmap/ic_tyre_config" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -831,17 +831,17 @@
                                             android:id="@+id/ivTyre3"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:src="@drawable/ic_tyre_config_icon" />
+                                            android:src="@mipmap/ic_tyre_config" />
 
                                         <ImageView
                                             android:layout_width="wrap_content"
-                                            android:layout_height="36dp" />
+                                            android:layout_height="50dp" />
 
                                         <ImageView
                                             android:id="@+id/ivTyre4"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:src="@drawable/ic_tyre_config_icon" />
+                                            android:src="@mipmap/ic_tyre_config" />
                                     </LinearLayout>
                                 </LinearLayout>
 

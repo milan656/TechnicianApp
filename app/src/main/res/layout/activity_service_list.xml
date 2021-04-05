@@ -130,7 +130,8 @@
                 android:paddingStart="@dimen/six_dp"
                 android:paddingEnd="@dimen/six_dp"
                 android:paddingBottom="@dimen/six_dp"
-                android:src="@drawable/info_help" />
+                android:src="@drawable/info_in_profile"
+                app:tint="@color/colorPrimary" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
