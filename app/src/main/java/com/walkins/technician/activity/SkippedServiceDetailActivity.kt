@@ -22,10 +22,8 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
-        tvChange = findViewById(R.id.tvChange)
 
         ivBack?.setOnClickListener(this)
-        tvChange?.setOnClickListener(this)
         tvTitle?.text = "Service Details"
     }
 
@@ -36,11 +34,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
                 setResult(0)
                 onBackPressed()
             }
-            R.id.tvChange -> {
-                setResult(106)
-                finish()
 
-            }
         }
     }
 }

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llfooter">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,8 +71,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/sixteen_dp"
-                        android:layout_marginEnd="@dimen/sixteen_dp"
                         android:layout_marginTop="@dimen/eight_dp"
+                        android:layout_marginEnd="@dimen/sixteen_dp"
                         android:orientation="horizontal">
 
                         <com.walkins.technician.custom.NormalEditText
@@ -100,11 +101,11 @@
                             android:layout_marginEnd="@dimen/eight_dp"
                             android:layout_weight="1"
                             android:background="@drawable/layout_bg_corner"
+                            android:gravity="center"
                             android:inputType="number"
+                            android:maxLength="1"
                             android:padding="8dip"
                             android:singleLine="true"
-                            android:maxLength="1"
-                            android:gravity="center"
                             android:textColor="@color/text_color1"
                             android:textSize="@dimen/sixteen_sp" />
 
@@ -112,16 +113,16 @@
                             android:id="@+id/edtOtp3"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
+                            android:layout_gravity="center"
                             android:layout_marginStart="@dimen/eight_dp"
                             android:layout_marginEnd="@dimen/eight_dp"
                             android:layout_weight="1"
                             android:background="@drawable/layout_bg_corner"
+                            android:gravity="center"
                             android:inputType="number"
+                            android:maxLength="1"
                             android:padding="8dip"
                             android:singleLine="true"
-                            android:maxLength="1"
-                            android:layout_gravity="center"
-                            android:gravity="center"
                             android:textColor="@color/text_color1"
                             android:textSize="@dimen/sixteen_sp" />
 
@@ -129,15 +130,15 @@
                             android:id="@+id/edtOtp4"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
+                            android:layout_gravity="center"
                             android:layout_marginStart="@dimen/eight_dp"
                             android:layout_marginEnd="@dimen/eight_dp"
                             android:layout_weight="1"
                             android:background="@drawable/layout_bg_corner"
-                            android:inputType="number"
-                            android:padding="8dip"
-                            android:maxLength="1"
-                            android:layout_gravity="center"
                             android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:padding="8dip"
                             android:singleLine="true"
                             android:textColor="@color/text_color1"
                             android:textSize="@dimen/sixteen_sp" />
@@ -191,28 +192,29 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/twenty_dp"
-                android:orientation="vertical">
-
-                <com.walkins.technician.custom.NormalTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Powered by" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/sixteen_dp"
-                    android:src="@drawable/ic_walkins_logo_icon" />
-
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <LinearLayout
+        android:id="@+id/llfooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/twenty_dp"
+        android:orientation="vertical">
+
+        <com.walkins.technician.custom.NormalTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Powered by" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:src="@drawable/ic_walkins_logo_icon" />
+
+    </LinearLayout>
 </RelativeLayout>

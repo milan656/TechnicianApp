@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.walkins.technician.R
 import java.lang.StringBuilder
 
@@ -136,8 +137,12 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
+                } else {
+                    Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show()
                 }
 
+            } else {
+                Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show()
             }
 
         }
