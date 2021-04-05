@@ -127,11 +127,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
-                android:background="@drawable/layout_bg_latest"
+                android:background="@drawable/layout_bg_corner"
                 android:drawableRight="@drawable/search"
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
                 android:paddingStart="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingBottom="@dimen/ten_dp"
                 android:paddingEnd="@dimen/ten_dp"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
@@ -155,12 +157,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
-                android:background="@drawable/layout_bg_latest"
+                android:background="@drawable/layout_bg_corner"
                 android:drawableRight="@drawable/search"
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
+                android:padding="@dimen/ten_dp"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
@@ -184,12 +185,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
-                android:background="@drawable/layout_bg_latest"
+                android:background="@drawable/layout_bg_corner"
                 android:drawableRight="@drawable/search"
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
+                android:padding="@dimen/ten_dp"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 

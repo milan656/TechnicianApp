@@ -61,7 +61,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/four_dp"
                 android:layout_weight="1"
-                android:background="@drawable/layout_bg_secondary"
+                android:background="@drawable/layout_bg_secondary_"
                 android:text="@string/str_cancel"
                 android:textAllCaps="false"
                 android:textColor="@color/text_color" />

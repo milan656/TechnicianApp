@@ -9,8 +9,8 @@
         android:id="@+id/chkTyreSuggestion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rounded_layout_blue"
-        android:buttonTint="@color/colorPrimary"
+        android:background="@drawable/layout_bg_red_corner"
+        android:buttonTint="@color/header_title"
         android:paddingStart="@dimen/four_dp"
         android:paddingLeft="@dimen/four_dp" />
 </LinearLayout>

@@ -23,7 +23,7 @@
             android:layout_marginEnd="@dimen/six_dp"
             android:layout_marginRight="@dimen/six_dp"
             android:layout_weight="1"
-            android:background="@drawable/layout_bg_white"
+            android:background="@drawable/layout_bg_corner"
             android:hint="Search for vehicle reg. number"
             android:paddingStart="@dimen/ten_dp"
             android:textColorHint="@color/light_gray_text_color"

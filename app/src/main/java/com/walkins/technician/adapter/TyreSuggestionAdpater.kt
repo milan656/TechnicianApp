@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources.getColorStateList
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
@@ -50,6 +52,36 @@ class TyreSuggestionAdpater(
                 }
             }
         }
+
+        holder.chkTyreSuggestion.setOnCheckedChangeListener(object :
+            CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+
+                if (isChecked) {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        holder.chkTyreSuggestion.setButtonTintList(
+                            getColorStateList(
+                                context,
+                                R.color.colorPrimary
+                            )
+                        )
+                    }
+                    holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
+                } else {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        holder.chkTyreSuggestion.setButtonTintList(
+                            getColorStateList(
+                                context,
+                                R.color.header_title
+                            )
+                        )
+                    }
+                    holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_red_corner))
+
+                }
+            }
+
+        })
     }
 
     override fun getItemCount(): Int {

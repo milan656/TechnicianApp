@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#FFFFFF"/>
-    <stroke android:width="1dip" android:color="#B1BCBE"/>
-    <corners android:radius="3dip"/>
-    <padding android:left="@dimen/five_dp" android:top="@dimen/five_dp" android:right="@dimen/five_dp" android:bottom="@dimen/five_dp"/>
+    <solid android:color="#FFFFFF" />
+    <stroke
+        android:width="0.9dip"
+        android:color="#424242"
+        />
+    <corners android:radius="6dip" />
+
+    <padding
+        android:bottom="@dimen/five_dp"
+        android:left="@dimen/five_dp"
+        android:right="@dimen/five_dp"
+        android:top="@dimen/five_dp" />
 </shape>

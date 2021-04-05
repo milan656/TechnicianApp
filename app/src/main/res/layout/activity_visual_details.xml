@@ -48,10 +48,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/five_dp"
-                        android:background="@drawable/layout_bg_latest"
+                        android:background="@drawable/layout_bg_corner"
                         android:gravity="start|center"
-                        android:paddingStart="@dimen/ten_dp"
-                        android:paddingEnd="@dimen/ten_dp"
+                        android:padding="@dimen/ten_dp"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/fourteen_sp" />
 

@@ -526,7 +526,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary"
+                                android:background="@drawable/layout_bg_secondary_"
                                 android:orientation="horizontal"
                                 android:paddingStart="@dimen/five_dp"
                                 android:paddingEnd="@dimen/five_dp">
@@ -583,7 +583,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary"
+                                android:background="@drawable/layout_bg_secondary_"
                                 android:orientation="horizontal"
                                 android:paddingStart="@dimen/five_dp"
                                 android:paddingEnd="@dimen/five_dp">
@@ -640,7 +640,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary"
+                                android:background="@drawable/layout_bg_secondary_"
                                 android:orientation="horizontal"
                                 android:paddingStart="@dimen/five_dp"
                                 android:paddingEnd="@dimen/five_dp">
@@ -698,7 +698,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/sixteen_dp"
                                 android:layout_marginBottom="@dimen/fourteen_dp"
-                                android:background="@drawable/layout_bg_secondary"
+                                android:background="@drawable/layout_bg_secondary_"
                                 android:orientation="horizontal"
                                 android:paddingStart="@dimen/five_dp"
                                 android:paddingEnd="@dimen/five_dp">
@@ -954,7 +954,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/fourteen_dp"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/suggestionsRecycView"
@@ -974,7 +974,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/five_dp"
-                                android:background="@drawable/layout_bg_latest"
+                                android:background="@drawable/layout_bg_corner"
                                 android:inputType="textMultiLine"
                                 android:minLines="5" />
 
@@ -991,7 +991,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/five_dp"
-                                android:background="@drawable/layout_bg_latest"
+                                android:background="@drawable/layout_bg_corner"
                                 android:orientation="horizontal"
                                 >
 

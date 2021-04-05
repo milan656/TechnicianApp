@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
                 ivReport?.setTint(this, R.color.text_color1)
                 ivHome?.setImageResource(R.mipmap.ic_home_normal)
-                ivNotification?.setImageResource(R.mipmap.ic_notification_selected)
+                ivNotification?.setImageResource(R.mipmap.ic_notification_icon)
                 ivProfile?.setImageResource(R.mipmap.ic_profile_selected)
 
 
