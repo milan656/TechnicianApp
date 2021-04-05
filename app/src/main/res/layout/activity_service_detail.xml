@@ -258,9 +258,8 @@
             android:layout_marginTop="@dimen/eighteen_dp"
             android:background="@drawable/rounded_layout_blue">
 
-
             <com.walkins.technician.custom.NormalTextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:textSize="@dimen/fourteen_sp"
                 android:textColor="@color/text_color1"
