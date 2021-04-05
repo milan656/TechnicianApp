@@ -137,7 +137,7 @@
                                 android:layout_gravity="top"
                                 android:layout_margin="@dimen/twelve_dp"
                                 android:src="@drawable/info_in_profile"
-                                app:tint="@color/header_title"/>
+                                app:tint="@color/header_title" />
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -736,13 +736,6 @@
                                 android:textSize="@dimen/fourteen_sp"
                                 android:textStyle="bold" />
 
-                            <ImageView
-                                android:id="@+id/ivAddTyreConfig"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0"
-                                android:padding="@dimen/three_dp"
-                                android:src="@mipmap/ic_add_icon" />
 
                         </LinearLayout>
 
@@ -770,17 +763,20 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/twenty_five_dp">
+                                android:layout_marginTop="@dimen/twenty_four_dp"
+                                android:layout_marginBottom="@dimen/twenty_four_dp">
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
                                     android:orientation="vertical">
 
                                     <ImageView
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
                                         android:src="@drawable/ic_tyre_config_car" />
 
 
@@ -790,58 +786,172 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-
+                                    android:layout_marginStart="@dimen/ten_dp"
+                                    android:layout_marginEnd="@dimen/ten_dp"
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
 
                                     <LinearLayout
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
                                         android:orientation="vertical">
 
-                                        <ImageView
-                                            android:id="@+id/ivTyre1"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:src="@mipmap/ic_tyre_config" />
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerHorizontal="true"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="@dimen/ten_dp"
+                                                    android:background="@drawable/layout_bg_corner"
+                                                    android:gravity="center"
+                                                    android:paddingStart="@dimen/five_dp"
+                                                    android:paddingEnd="@dimen/five_dp"
+                                                    android:src="@drawable/ic_mrf" />
+
+                                                <ImageView
+                                                    android:id="@+id/ivTyre1"
+                                                    android:layout_width="62dp"
+                                                    android:layout_height="62dp"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:src="@mipmap/ic_tyre_config" />
+
+
+                                            </LinearLayout>
+                                        </RelativeLayout>
 
                                         <ImageView
                                             android:layout_width="wrap_content"
-                                            android:layout_height="50dp" />
+                                            android:layout_height="30dp" />
 
-                                        <ImageView
-                                            android:id="@+id/ivTyre2"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:src="@mipmap/ic_tyre_config" />
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerHorizontal="true"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+
+                                                <ImageView
+                                                    android:id="@+id/ivTyre2"
+                                                    android:layout_width="62dp"
+                                                    android:layout_height="62dp"
+                                                    android:src="@mipmap/ic_tyre_config" />
+
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:background="@drawable/layout_bg_corner"
+                                                    android:gravity="center"
+                                                    android:paddingStart="@dimen/five_dp"
+                                                    android:paddingEnd="@dimen/five_dp"
+                                                    android:src="@drawable/ic_mrf" />
+                                            </LinearLayout>
+                                        </RelativeLayout>
                                     </LinearLayout>
 
                                     <LinearLayout
-                                        android:layout_width="60dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:layout_weight="2"
                                         android:orientation="vertical" />
 
                                     <LinearLayout
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
                                         android:orientation="vertical">
 
-                                        <ImageView
-                                            android:id="@+id/ivTyre3"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:src="@mipmap/ic_tyre_config" />
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerHorizontal="true"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:background="@drawable/layout_bg_corner"
+                                                    android:gravity="center"
+                                                    android:paddingStart="@dimen/five_dp"
+                                                    android:paddingEnd="@dimen/five_dp"
+                                                    android:src="@drawable/ic_mrf" />
+
+                                                <ImageView
+                                                    android:id="@+id/ivTyre3"
+                                                    android:layout_width="62dp"
+                                                    android:layout_height="62dp"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:src="@mipmap/ic_tyre_config" />
+
+
+                                            </LinearLayout>
+                                        </RelativeLayout>
 
                                         <ImageView
                                             android:layout_width="wrap_content"
-                                            android:layout_height="50dp" />
+                                            android:layout_height="30dp" />
 
-                                        <ImageView
-                                            android:id="@+id/ivTyre4"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:src="@mipmap/ic_tyre_config" />
+
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerHorizontal="true"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+
+
+                                                <ImageView
+                                                    android:id="@+id/ivTyre4"
+                                                    android:layout_width="62dp"
+                                                    android:layout_height="62dp"
+                                                    android:src="@mipmap/ic_tyre_config" />
+
+
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:background="@drawable/layout_bg_corner"
+                                                    android:gravity="center"
+                                                    android:paddingStart="@dimen/five_dp"
+                                                    android:paddingEnd="@dimen/five_dp"
+                                                    android:src="@drawable/ic_mrf" />
+
+                                            </LinearLayout>
+
+                                        </RelativeLayout>
+
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -884,13 +994,6 @@
                                 android:textSize="@dimen/fourteen_sp"
                                 android:textStyle="bold" />
 
-                            <ImageView
-                                android:id="@+id/ivAddTechnicalSuggestion"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0"
-                                android:padding="@dimen/three_dp"
-                                android:src="@drawable/ic_add_icon" />
 
                         </LinearLayout>
 

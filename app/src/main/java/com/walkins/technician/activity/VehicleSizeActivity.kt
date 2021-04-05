@@ -126,7 +126,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getmake", "" + arrList?.get(variable)?.name)
         val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
         intent.putExtra("which", "vehiclesize")
-        startActivity(intent)
+        startActivityForResult(intent,1005)
 
     }
 
@@ -135,6 +135,28 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         when (id) {
             R.id.ivBack -> {
                 onBackPressed()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("getresult22",""+resultCode)
+        when (resultCode) {
+
+            1001 -> {
+                setResult(1002)
+                finish()
+            }
+            1004 -> {
+                finish()
+            }
+            1003 -> {
+                finish()
+            }
+            1005 -> {
+                setResult(1003)
+                finish()
             }
         }
     }

@@ -126,7 +126,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getmake", "" + arrList?.get(variable)?.name)
         val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
         intent.putExtra("which", "vehiclemake")
-        startActivity(intent)
+        startActivityForResult(intent,1001)
 
     }
 
@@ -136,6 +136,18 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             R.id.ivBack -> {
                 onBackPressed()
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (resultCode) {
+            1001 -> {
+                setResult(1000)
+                finish()
+            }
+
         }
     }
 }

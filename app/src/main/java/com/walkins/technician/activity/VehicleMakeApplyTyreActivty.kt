@@ -3,6 +3,7 @@ package com.walkins.technician.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -67,16 +68,49 @@ class VehicleMakeApplyTyreActivty : AppCompatActivity(), View.OnClickListener {
             R.id.btnNext -> {
                 if (isFromVehicleMake) {
                     var intent = Intent(this, VehiclePatternActivity::class.java)
-                    startActivity(intent)
+                    startActivityForResult(intent, 1002)
                 } else if (isFromVehiclePattern) {
                     var intent = Intent(this, VehicleSizeActivity::class.java)
-                    startActivity(intent)
+                    startActivityForResult(intent, 1003)
                 } else if (isFromVehicleSize) {
                     var intent = Intent(this, VisualDetailsActivity::class.java)
-                    startActivity(intent)
+                    startActivityForResult(intent, 1004)
                 }
             }
 
+        }
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("getresult00", "" + resultCode)
+        when (resultCode) {
+            1002 -> {
+                Log.e("getresult", "" + resultCode)
+                setResult(1001)
+                finish()
+            }
+            1003 -> {
+                Log.e("getresult0", "" + resultCode)
+                setResult(1001)
+                finish()
+            }
+            1004 -> {
+                Log.e("getresult1", "" + resultCode)
+                setResult(1001)
+                finish()
+            }
+            1005 -> {
+                Log.e("getresult1", "" + resultCode)
+                setResult(1003)
+                finish()
+            }
+            1006 ->{
+                Log.e("getresult2", "" + resultCode)
+                setResult(1003)
+                finish()
+            }
         }
     }
 }

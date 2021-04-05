@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/six_dp"
         android:layout_marginRight="@dimen/six_dp"
-        android:rotation="-180"
+
         android:src="@mipmap/ic_info_icon"
          />
 

@@ -27,7 +27,7 @@
 
         <RelativeLayout
             android:layout_width="25dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="0"
             android:orientation="vertical">
@@ -40,15 +40,7 @@
                 android:layout_gravity="center"
                 android:src="@mipmap/ic_calender_icon" />
 
-            <ImageView
-                android:id="@+id/ivDot"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="@dimen/five_dp"
-                android:src="@mipmap/ic_small_dot"
-                android:layout_marginLeft="@dimen/five_dp" />
+
         </RelativeLayout>
 
 

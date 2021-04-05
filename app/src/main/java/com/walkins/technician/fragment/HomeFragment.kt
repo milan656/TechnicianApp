@@ -28,13 +28,12 @@ import io.apptik.widget.MultiSlider
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class HomeFragment : Fragment(), onClickAdapter,View.OnClickListener {
+class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
 
     private var prefManager: PrefManager? = null
     private var ivFilter: ImageView? = null
-    private var ivDot: ImageView? = null
     private var selectedDate: String? = null
 
 
@@ -107,8 +106,6 @@ class HomeFragment : Fragment(), onClickAdapter,View.OnClickListener {
         slider.animation?.cancel()
 
         ivFilter = view?.findViewById(R.id.ivFilter)
-        ivDot = view?.findViewById(R.id.ivDot)
-        ivDot?.visibility = View.GONE
 
         tvUsername = view?.findViewById(R.id.tvUsername)
         tvUsername?.text = "Hello, " + "Owner Name"
@@ -336,15 +333,15 @@ class HomeFragment : Fragment(), onClickAdapter,View.OnClickListener {
         pickerPopWin?.cancelBtn?.setOnClickListener {
             pickerPopWin.dismissPopWin()
             if (!selectedDate.equals("")) {
-                ivDot?.visibility = View.VISIBLE
+                ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
             } else {
-                ivDot?.visibility = View.GONE
+                ivFilter?.setImageResource(R.mipmap.ic_calender_icon)
             }
         }
         pickerPopWin?.confirmBtn?.setOnClickListener {
 
             pickerPopWin.dismissPopWin()
-            ivDot?.visibility = View.VISIBLE
+            ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
         }
 
         pickerPopWin?.showPopWin(activity)

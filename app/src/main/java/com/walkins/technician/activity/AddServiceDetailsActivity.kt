@@ -423,7 +423,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             R.id.tvTyreAddInfo -> {
 
-                startActivity(intent)
+                startActivityForResult(intent, 1000)
             }
             R.id.ivAddServices -> {
                 if (llServiceExpanded?.visibility == View.VISIBLE) {

@@ -41,6 +41,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     )
     private var issueResolveAdapter: TyreSuggestionAdpater? = null
     private var relTyrePhotoAdd: RelativeLayout? = null
+    private var btnDone: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +52,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
+        btnDone = findViewById(R.id.btnDone)
         ivBack = findViewById(R.id.ivBack)
 
         relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
-        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArr, this, this,false)
+        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArr, this, this, false)
         issueResolveAdapter?.onclick = this
         issueResolvedRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -72,6 +74,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         ivBack?.setOnClickListener(this)
         tvTitle?.text = "Visual Detail"
 
+        btnDone?.setOnClickListener(this)
 
     }
 
@@ -192,6 +195,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
             R.id.ivBack -> {
                 onBackPressed()
+            }
+            R.id.btnDone -> {
+                setResult(1004)
+                finish()
             }
         }
     }
