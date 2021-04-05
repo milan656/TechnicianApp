@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    tools:context=".activity.ServiceDetailActivity">
+    tools:context=".activity.SkippedServiceDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:background="@color/bg_color"
         android:layout_above="@+id/llfooter"
         android:orientation="vertical"
-        tools:context=".activity.ServiceDetailActivity">
+        tools:context=".activity.SkippedServiceDetailActivity">
 
         <include layout="@layout/common_toolbar" />
 

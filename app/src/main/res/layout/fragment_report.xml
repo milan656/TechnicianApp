@@ -38,8 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:padding="@dimen/eight_dp"
-            android:src="@drawable/ic_home_1" />
+            android:src="@mipmap/ic_report_filter" />
     </LinearLayout>
 
     <LinearLayout

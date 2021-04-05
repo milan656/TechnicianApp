@@ -283,7 +283,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
         btnConfirm.setOnClickListener {
             builder.dismiss()
-            var intent = Intent(this, ServiceDetailActivity::class.java)
+            var intent = Intent(this, SkippedServiceDetailActivity::class.java)
             startActivityForResult(intent, 106)
         }
         builder.setView(root)

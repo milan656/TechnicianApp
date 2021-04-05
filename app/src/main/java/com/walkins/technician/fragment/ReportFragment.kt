@@ -16,6 +16,7 @@ import com.example.technician.common.Common
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
+import com.walkins.technician.activity.SkippedServiceDetailActivity
 import com.walkins.technician.adapter.ReportAdpater
 import com.walkins.technician.common.onClickAdapter
 
@@ -34,6 +35,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var tvSkipped: TextView? = null
     private var tvCompleted: TextView? = null
     private var llSkipped: LinearLayout? = null
+    private var skipSelected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,8 +104,15 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-        var intent = Intent(context, CompletedServiceDetailActivity::class.java)
-        startActivity(intent)
+        if (skipSelected) {
+            var intent = Intent(context, SkippedServiceDetailActivity::class.java)
+            startActivity(intent)
+
+        } else {
+            var intent = Intent(context, CompletedServiceDetailActivity::class.java)
+            startActivity(intent)
+
+        }
     }
 
     override fun onClick(v: View?) {
@@ -121,6 +130,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.white))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
+                skipSelected = false
             }
             R.id.llSkippedReport -> {
                 llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
@@ -128,6 +138,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
+                skipSelected = true
 
             }
 

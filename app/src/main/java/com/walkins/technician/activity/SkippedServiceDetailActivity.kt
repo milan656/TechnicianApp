@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.walkins.technician.R
 
-class ServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
+class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private var tvChange: TextView? = null
     private var ivBack: ImageView? = null
