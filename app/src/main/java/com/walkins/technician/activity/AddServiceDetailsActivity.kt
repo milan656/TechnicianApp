@@ -441,6 +441,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTechnicalSuggestionExpanded!!)
                     }
+
+                    tvTyreConfig?.isAllCaps = false
+                    tvTechnicalSuggetion?.isAllCaps = false
                 }
             }
             R.id.ivAddTyreConfig -> {
@@ -458,6 +461,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTechnicalSuggestionExpanded!!)
                     }
+
+                    tvServices?.isAllCaps = false
+                    tvTechnicalSuggetion?.isAllCaps = false
                 }
             }
             R.id.ivAddTechnicalSuggestion -> {
@@ -477,6 +483,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
                     }
+                    tvServices?.isAllCaps = false
+                    tvTyreAddInfo?.isAllCaps = false
                 }
             }
         }

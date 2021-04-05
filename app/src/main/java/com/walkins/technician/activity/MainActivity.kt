@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 selectedMenu = "home"
                 ivHome?.setImageResource(R.mipmap.ic_home_icon)
                 ivReport?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_report))
+                ivReport?.setTint(this, R.color.text_color1)
                 ivNotification?.setImageResource(R.mipmap.ic_notification_icon)
                 ivProfile?.setImageResource(R.mipmap.ic_profile_icon)
             }

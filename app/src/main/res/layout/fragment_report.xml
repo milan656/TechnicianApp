@@ -26,6 +26,8 @@
             android:background="@drawable/layout_bg_corner"
             android:hint="Search for vehicle reg. number"
             android:paddingStart="@dimen/ten_dp"
+            android:paddingTop="@dimen/ten_dp"
+            android:paddingBottom="@dimen/ten_dp"
             android:textColorHint="@color/light_gray_text_color"
             android:textColor="@color/text_color1"
             android:paddingEnd="@dimen/ten_dp"
@@ -36,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:padding="@dimen/four_dp"
+            android:padding="@dimen/eight_dp"
             android:src="@drawable/ic_home_1" />
     </LinearLayout>
 
