@@ -236,6 +236,7 @@
                 android:background="@drawable/round_corner_button_yellow"
                 android:gravity="center"
                 android:text="Confirm"
+                android:letterSpacing="0.06"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp"

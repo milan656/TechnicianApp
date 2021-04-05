@@ -39,12 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/sixteen_dp"
-                android:layout_marginTop="@dimen/sixteen_dp"
                 android:layout_marginEnd="@dimen/sixteen_dp"
-                android:layout_marginBottom="@dimen/sixteen_dp"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:layout_marginBottom="@dimen/twenty_dp"
                 android:orientation="vertical">
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.technician.custom.BoldTextView
                     android:id="@+id/tv_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                     android:textColor="@color/text_color1"
                     android:textSize="@dimen/fourteen_sp" />
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.technician.custom.BoldTextView
                     android:id="@+id/tv_message1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                     android:textSize="@dimen/fourteen_sp"
                     android:visibility="gone" />
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.technician.custom.BoldTextView
                     android:id="@+id/tv_message2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                     android:textSize="@dimen/fourteen_sp"
                     android:visibility="gone" />
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.technician.custom.BoldTextView
                     android:id="@+id/tv_message3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,6 +97,7 @@
                 android:background="@drawable/round_corner_button_yellow"
                 android:text="@string/str_ok"
                 android:textAllCaps="false"
+                android:letterSpacing="0.06"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fourteen_sp"
                 android:textStyle="bold" />

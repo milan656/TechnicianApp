@@ -49,6 +49,7 @@
                 android:text="@string/str_send"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
+                android:letterSpacing="0.06"
                 android:textSize="@dimen/fourteen_sp" />
 
         </LinearLayout>

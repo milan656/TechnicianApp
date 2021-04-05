@@ -188,6 +188,7 @@
         android:layout_marginBottom="@dimen/fourteen_dp"
         android:background="@drawable/round_corner_button_yellow"
         android:text="Next"
+        android:letterSpacing="0.06"
         android:textColor="@color/white"
         android:textSize="@dimen/sixteen_sp"
         android:textStyle="bold" />

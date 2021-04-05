@@ -179,7 +179,7 @@
                         android:layout_marginRight="@dimen/twenty_four_dp"
                         android:layout_marginBottom="@dimen/twenty_four_dp"
                         android:background="@drawable/round_corner_button_yellow"
-
+                        android:letterSpacing="0.06"
                         android:lineHeight="21.6px"
                         android:text="@string/login_verify"
                         android:textAllCaps="false"

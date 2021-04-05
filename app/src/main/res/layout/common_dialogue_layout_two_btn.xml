@@ -116,7 +116,7 @@
                         android:id="@+id/btn_cancel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
+                        android:letterSpacing="0.06"
                         android:layout_marginEnd="@dimen/twelve_dp"
                         android:layout_marginRight="@dimen/eight_dp"
                         android:layout_weight="1"
@@ -139,7 +139,8 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fourteen_sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:letterSpacing="0.06"/>
 
                 </LinearLayout>
             </LinearLayout>
