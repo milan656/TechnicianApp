@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:orientation="vertical"
-    tools:context=".activity.ProfileActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/common_toolbar" />
 
@@ -42,10 +41,10 @@
                     android:id="@+id/ivCamera"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:src="@mipmap/ic_upload_photo_icon"
-                    android:layout_alignParentEnd="true" />
+                    android:src="@mipmap/ic_upload_photo_icon" />
 
 
             </RelativeLayout>
@@ -59,7 +58,7 @@
                 android:text="Milan parmar"
                 android:textColor="@color/header_title"
                 android:textSize="@dimen/twenty_two_sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <com.walkins.technician.custom.BoldTextView
                 android:layout_width="match_parent"

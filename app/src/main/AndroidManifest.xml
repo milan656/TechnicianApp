@@ -24,9 +24,6 @@
         <activity android:name=".activity.SkippedServiceDetailActivity" />
         <activity android:name=".activity.CompletedServiceDetailActivity" />
         <activity android:name=".activity.VisualDetailsActivity" />
-        <activity android:name=".activity.ReportActivity" />
-        <activity android:name=".activity.NotificationActivity" />
-        <activity android:name=".activity.ProfileActivity" />
         <activity android:name=".activity.AddServiceDetailsActivity" />
         <activity android:name=".activity.ServiceListActivity" />
         <activity android:name=".activity.VerifyOtpActivity" />
