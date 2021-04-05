@@ -13,8 +13,8 @@
         android:layout_marginEnd="@dimen/six_dp"
         android:layout_marginRight="@dimen/six_dp"
         android:rotation="-180"
-        android:src="@drawable/info_help"
-        app:tint="@color/header_title" />
+        android:src="@mipmap/ic_info_icon"
+         />
 
     <com.walkins.technician.custom.BoldTextView
         android:id="@+id/chkTyreSuggestion"

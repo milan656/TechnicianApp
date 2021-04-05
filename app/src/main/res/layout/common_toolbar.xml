@@ -16,12 +16,13 @@
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/six_dp"
             android:layout_marginRight="@dimen/six_dp"
-            android:src="@drawable/ic_back_arrow" />
+            android:background="@color/bg_color"
+            android:src="@mipmap/ic_back_arrow" />
 
         <com.walkins.technician.custom.NormalTextView
             android:id="@+id/tvTitle"
