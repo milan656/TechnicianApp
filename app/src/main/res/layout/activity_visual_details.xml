@@ -194,7 +194,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -218,7 +218,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -242,7 +242,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -289,7 +289,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -313,7 +313,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -337,7 +337,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -384,7 +384,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -408,7 +408,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -432,7 +432,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -479,7 +479,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -503,7 +503,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -527,7 +527,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -574,7 +574,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -598,7 +598,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -622,7 +622,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -669,7 +669,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -693,7 +693,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -717,7 +717,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_home_1" />
+                                    android:src="@drawable/ic_add_icon" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"

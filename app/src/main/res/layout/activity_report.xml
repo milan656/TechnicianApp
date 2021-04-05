@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:padding="@dimen/twelve_dp"
-            android:src="@drawable/ic_home_1" />
+             />
     </LinearLayout>
 
     <LinearLayout
