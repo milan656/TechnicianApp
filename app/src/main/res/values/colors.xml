@@ -55,6 +55,7 @@
     <color name="text_blue">#545CD8</color>
     <color name="text_dropdown">#6E777F</color>
     <color name="text_hint_color">#495057</color>
+    <color name="text_date">#959595</color>
 
     <color name="bar_1">#949AF6</color>
     <color name="bar_2">#FDC321</color>

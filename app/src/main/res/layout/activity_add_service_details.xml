@@ -998,7 +998,8 @@
                                 android:layout_marginTop="@dimen/five_dp"
                                 android:background="@drawable/layout_bg_corner"
                                 android:inputType="textMultiLine"
-                                android:minLines="5" />
+                                android:minLines="5"
+                                android:gravity="start|top"/>
 
 
                             <com.walkins.technician.custom.NormalTextView
@@ -1032,7 +1033,10 @@
                                     android:layout_height="25dp"
                                     android:layout_gravity="center"
                                     android:layout_marginEnd="@dimen/eight_dp"
-                                    android:src="@mipmap/ic_calender_icon" />
+                                    android:paddingTop="@dimen/two_dp"
+                                    android:paddingBottom="@dimen/two_dp"
+                                    android:src="@mipmap/ic_calender_icon"
+                                    android:layout_marginRight="@dimen/eight_dp" />
                             </LinearLayout>
 
 

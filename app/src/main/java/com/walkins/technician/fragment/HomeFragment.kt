@@ -33,7 +33,7 @@ private const val ARG_PARAM2 = "param2"
 class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
-
+    var calendar = Calendar.getInstance()
     private var prefManager: PrefManager? = null
     private var ivFilter: ImageView? = null
     private var selectedDate: String? = null
@@ -148,6 +148,10 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var homeRecycView: RecyclerView? = null
     private var adapter: HomeListAdpater? = null
     private var relNoDataView: RelativeLayout? = null
+    var currentYear: Int = 0
+    var currentMonth: Int = 0
+    var currentMonth_: String = ""
+    var currentDate: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -162,6 +166,14 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        currentYear = calendar.get(Calendar.YEAR)
+        currentMonth = calendar.get(Calendar.MONTH)
+        currentDate = calendar.get(Calendar.DATE)
+
+        Log.e("getvalues", "" + currentYear + " " + currentMonth + " " + currentDate)
+
+
 //        val multiSlider1 = view.findViewById<MultiSlider>(R.id.multiSlider1)
 //        val starting_point = view.findViewById<TextView>(R.id.starting_point)
 //        val last_end = view.findViewById<TextView>(R.id.last_end)
@@ -479,15 +491,23 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             var model = DateModel()
             model.name = array?.get(i)
             model.isSelected = false
-            arrayDate?.add(model)
+
+            if (model.name?.toInt() <= currentDate) {
+                arrayDate?.add(model)
+            }
         }
 
-        for (i in arrayMonth?.indices) {
+
+        for (i in arrayMonth.indices) {
 
             var model = DateModel()
-            model.name = arrayMonth?.get(i)
+            model.name = arrayMonth.get(i)
+            model.id = i + 1
             model.isSelected = false
-            arrayDateMonth?.add(model)
+
+            if (model.id <= currentMonth) {
+                arrayDateMonth?.add(model)
+            }
         }
 
         for (i in arrayYear?.indices) {
@@ -495,7 +515,9 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             var model = DateModel()
             model.name = arrayYear?.get(i)
             model.isSelected = false
-            arrayDateYear?.add(model)
+            if (model.name.toInt() <= currentYear) {
+                arrayDateYear?.add(model)
+            }
         }
 
         var arrayAdapter = context?.let { DialogueDateAdpater(arrayDate!!, it, this) }

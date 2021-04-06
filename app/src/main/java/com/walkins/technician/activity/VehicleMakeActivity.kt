@@ -53,6 +53,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     }
 
     fun getVehicleMake() {
+        Common.showLoader(this)
         prefManager.getAccessToken()?.let {
             warrantyViewModel.getVehicleBrandModel(
                 "6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
@@ -63,12 +64,11 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         warrantyViewModel.getVehicleBrand()
             ?.observe(this@VehicleMakeActivity, androidx.lifecycle.Observer {
+                Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
                         vehicleBrandModel = it
                         Log.e("getmodel00::", "" + vehicleBrandModel)
-
-
 
                         for (i in it.data?.indices!!) {
                             if (!it.data.get(i).name.equals("Other", ignoreCase = true)) {

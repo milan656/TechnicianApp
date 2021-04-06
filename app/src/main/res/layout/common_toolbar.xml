@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="28dp"
+            android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/six_dp"
