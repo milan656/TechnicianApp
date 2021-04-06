@@ -108,7 +108,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         ivFilter = view?.findViewById(R.id.ivFilter)
 
         tvUsername = view?.findViewById(R.id.tvUsername)
-        tvUsername?.text = "Hello, " + "Owner Name"
+        tvUsername?.text = "Hello, " + "Arun"
         homeRecycView = view.findViewById(R.id.homeRecycView)
         relNoDataView = view.findViewById(R.id.relNoDataView)
         relNoDataView?.visibility = View.GONE

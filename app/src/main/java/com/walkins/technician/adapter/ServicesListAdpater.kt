@@ -23,6 +23,7 @@ class ServicesListAdpater(
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var cardAddService: CardView = itemView.findViewById(R.id.cardAddService)
+        var ivCarimg: ImageView = itemView.findViewById(R.id.ivCarimg)
     }
 
     override fun onCreateViewHolder(
@@ -50,6 +51,14 @@ class ServicesListAdpater(
             if (onclick != null) {
                 onclick?.onPositionClick(position, 1)
             }
+        }
+
+        if (position == 0) {
+            holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_car_image))
+        } else if (position == 1) {
+            holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_car_image1))
+        } else if (position == 2) {
+            holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_no_car_image))
         }
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -49,11 +50,12 @@
                     android:text="GJ01RY3771"
                     android:textColor="@color/text_color1"
                     android:textStyle="bold"
-                    android:textSize="@dimen/sixteen_sp" />
+                    android:textSize="@dimen/eighteen_sp" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/ivCarimg"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center|bottom"
                     android:src="@drawable/ic_car_image"
                     />
@@ -98,7 +100,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardAddService"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -114,8 +116,8 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:src="@drawable/progress_icon"
-            app:tint="@color/colorPrimary" />
+            android:src="@mipmap/ic_service_icon"
+             />
 
     </androidx.cardview.widget.CardView>
 

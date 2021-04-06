@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         ivReport?.setOnClickListener(this)
         ivNotification?.setOnClickListener(this)
 
-        tvUsername?.text = "Hello, " + "Owner Name"
+        tvUsername?.text = "Hello, " + "Arun"
 
         ivHome?.performClick()
 

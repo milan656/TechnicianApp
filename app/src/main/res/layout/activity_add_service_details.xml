@@ -88,8 +88,8 @@
                                         android:textStyle="bold" />
 
                                     <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="100dp"
+                                        android:layout_height="30dp"
                                         android:layout_gravity="center|bottom"
                                         android:src="@drawable/ic_car_image" />
                                 </LinearLayout>
@@ -118,7 +118,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:layout_weight="3"
+                                        android:layout_weight="2"
                                         android:gravity="center"
                                         android:text="Red"
                                         android:textColor="@color/text_color1"
@@ -257,8 +257,7 @@
                                 android:text="Services"
 
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp"
-                                 />
+                                android:textSize="@dimen/fourteen_sp" />
 
                             <ImageView
                                 android:id="@+id/ivAddServices"
@@ -279,7 +278,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="125dp"
+                                android:layout_height="130dp"
                                 android:layout_gravity="center"
                                 android:layout_marginStart="@dimen/ten_dp"
                                 android:layout_marginEnd="@dimen/ten_dp"
@@ -295,7 +294,7 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
-                                        android:layout_width="96dp"
+                                        android:layout_width="105dp"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/service_layout_bg"
                                         android:orientation="vertical">
@@ -312,6 +311,7 @@
                                             android:layout_marginStart="@dimen/eighteen_dp"
                                             android:layout_marginEnd="@dimen/eighteen_dp"
                                             android:layout_marginBottom="@dimen/fourteen_dp"
+
                                             android:orientation="vertical">
 
                                             <ImageView
@@ -323,9 +323,9 @@
 
                                             <com.walkins.technician.custom.NormalTextView
                                                 android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
+                                                android:layout_height="match_parent"
                                                 android:layout_gravity="center"
-                                                android:layout_marginTop="@dimen/four_dp"
+                                                android:layout_marginTop="@dimen/three_dp"
                                                 android:gravity="center"
                                                 android:text="Nitrogen Top Up"
                                                 android:textColor="@color/text_color1"
@@ -344,7 +344,7 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
-                                        android:layout_width="96dp"
+                                        android:layout_width="106dp"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/service_layout_bg"
                                         android:orientation="vertical">
@@ -372,9 +372,9 @@
 
                                             <com.walkins.technician.custom.NormalTextView
                                                 android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
+                                                android:layout_height="match_parent"
                                                 android:layout_gravity="center"
-                                                android:layout_marginTop="@dimen/four_dp"
+                                                android:layout_marginTop="@dimen/three_dp"
                                                 android:gravity="center"
                                                 android:text="Nitrogen Refill"
                                                 android:textColor="@color/text_color1"
@@ -389,12 +389,12 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="122dp"
+                                android:layout_height="130dp"
                                 android:layout_gravity="center"
                                 android:layout_marginStart="@dimen/ten_dp"
-                                android:layout_marginTop="@dimen/twenty_dp"
+                                android:layout_marginTop="32dp"
                                 android:layout_marginEnd="@dimen/ten_dp"
-                                android:layout_marginBottom="@dimen/twenty_dp"
+                                android:layout_marginBottom="32dp"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -407,7 +407,7 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
-                                        android:layout_width="96dp"
+                                        android:layout_width="106dp"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/service_layout_bg"
                                         android:orientation="vertical">
@@ -431,13 +431,13 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
                                                 android:gravity="center"
-                                                android:src="@mipmap/ic_nitrogen_topup" />
+                                                android:src="@mipmap/ic_wheel_balacing" />
 
                                             <com.walkins.technician.custom.NormalTextView
                                                 android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
+                                                android:layout_height="match_parent"
                                                 android:layout_gravity="center"
-                                                android:layout_marginTop="@dimen/four_dp"
+                                                android:layout_marginTop="@dimen/three_dp"
                                                 android:gravity="center"
                                                 android:text="Wheel Balancing"
                                                 android:textColor="@color/text_color1"
@@ -456,7 +456,7 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
-                                        android:layout_width="96dp"
+                                        android:layout_width="106dp"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/service_layout_bg"
                                         android:orientation="vertical">
@@ -484,9 +484,9 @@
 
                                             <com.walkins.technician.custom.NormalTextView
                                                 android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
+                                                android:layout_height="match_parent"
                                                 android:layout_gravity="center"
-                                                android:layout_marginTop="@dimen/four_dp"
+                                                android:layout_marginTop="@dimen/three_dp"
                                                 android:gravity="center"
                                                 android:text="Tyre Rotation"
                                                 android:textColor="@color/text_color1"
@@ -507,7 +507,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/sixteen_dp"
-                            android:layout_marginTop="@dimen/five_dp"
                             android:layout_marginEnd="@dimen/sixteen_dp"
                             android:orientation="vertical"
                             android:visibility="gone">
@@ -553,29 +552,37 @@
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/fourteen_sp" />
 
-                                <RadioButton
-                                    android:layout_width="0dp"
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/text_color2"
-                                    android:gravity="center"
-                                    android:text="LR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    android:orientation="horizontal">
 
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/header_title"
-                                    android:gravity="center"
-                                    android:text="RR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    <RadioButton
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/text_color2"
+                                        android:gravity="center"
+                                        android:text="LR"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <RadioButton
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/header_title"
+                                        android:gravity="center"
+                                        android:text="RR"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                </RadioGroup>
 
                             </LinearLayout>
 
@@ -610,30 +617,36 @@
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/fourteen_sp" />
 
-                                <RadioButton
-                                    android:layout_width="0dp"
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/header_title"
-                                    android:gravity="center"
-                                    android:text="LR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    android:orientation="horizontal">
 
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/text_color2"
-                                    android:gravity="center"
-                                    android:text="RR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    <RadioButton
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/header_title"
+                                        android:gravity="center"
+                                        android:text="LR"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
 
+                                    <RadioButton
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/text_color2"
+                                        android:gravity="center"
+                                        android:text="RR"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+                                </RadioGroup>
                             </LinearLayout>
 
                             <LinearLayout
@@ -667,30 +680,36 @@
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/fourteen_sp" />
 
-                                <RadioButton
-                                    android:layout_width="0dp"
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/text_color2"
-                                    android:gravity="center"
-                                    android:text="LF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    android:orientation="horizontal">
 
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/header_title"
-                                    android:gravity="center"
-                                    android:text="RF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    <RadioButton
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/text_color2"
+                                        android:gravity="center"
+                                        android:text="LF"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
 
+                                    <RadioButton
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/header_title"
+                                        android:gravity="center"
+                                        android:text="RF"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+                                </RadioGroup>
                             </LinearLayout>
 
                             <LinearLayout
@@ -725,30 +744,36 @@
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/fourteen_sp" />
 
-                                <RadioButton
-                                    android:layout_width="0dp"
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/header_title"
-                                    android:gravity="center"
-                                    android:text="LF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    android:orientation="horizontal">
 
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/text_color2"
-                                    android:gravity="center"
-                                    android:text="RF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    <RadioButton
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/header_title"
+                                        android:gravity="center"
+                                        android:text="LF"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
 
+                                    <RadioButton
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/text_color2"
+                                        android:gravity="center"
+                                        android:text="RF"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+                                </RadioGroup>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -786,8 +811,7 @@
                                 android:text="Tyre Configuration"
 
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp"
-                                 />
+                                android:textSize="@dimen/fourteen_sp" />
 
                             <ImageView
                                 android:id="@+id/ivAddTyreConfig"
@@ -935,8 +959,7 @@
                                 android:text="Technical Suggestions"
 
                                 android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp"
-                                />
+                                android:textSize="@dimen/fourteen_sp" />
 
                             <ImageView
                                 android:id="@+id/ivAddTechnicalSuggestion"
@@ -954,13 +977,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/fourteen_dp"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/suggestionsRecycView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
-
 
                             <com.walkins.technician.custom.NormalTextView
                                 android:layout_width="match_parent"
@@ -992,15 +1014,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/five_dp"
                                 android:background="@drawable/layout_bg_corner"
-                                android:orientation="horizontal"
-                                >
+                                android:orientation="horizontal">
 
                                 <com.walkins.technician.custom.NormalEditText
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
 
-                                    android:background="@null"
                                     android:layout_weight="1"
+                                    android:background="@null"
                                     android:inputType="textMultiLine"
                                     android:paddingStart="@dimen/ten_dp"
                                     android:paddingEnd="@dimen/ten_dp"
@@ -1009,9 +1030,9 @@
                                 <ImageView
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
-                                    android:src="@mipmap/ic_calender_icon"
                                     android:layout_gravity="center"
-                                    android:layout_marginEnd="@dimen/eight_dp"/>
+                                    android:layout_marginEnd="@dimen/eight_dp"
+                                    android:src="@mipmap/ic_calender_icon" />
                             </LinearLayout>
 
 

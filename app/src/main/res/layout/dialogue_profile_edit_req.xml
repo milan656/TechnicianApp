@@ -22,9 +22,9 @@
             android:id="@+id/dialogueRecycView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_marginStart="@dimen/thirtytwo_dp"
             android:layout_marginTop="@dimen/five_dp"
-            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:layout_marginEnd="@dimen/thirtytwo_dp"
             android:layout_marginBottom="@dimen/five_dp" />
 
 
