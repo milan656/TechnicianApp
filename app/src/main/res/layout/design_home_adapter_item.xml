@@ -106,7 +106,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fourteen_dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="-12dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="-12dp">
 
 
                 <ImageView

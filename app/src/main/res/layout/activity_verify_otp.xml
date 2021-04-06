@@ -39,7 +39,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/ten_dp"
                     android:layout_marginTop="@dimen/eight_dp"
-                    android:text="@string/login_text"
+                    android:text="@string/otp_text"
                     android:textColor="@color/text_color1"
                     android:textSize="@dimen/fourteen_sp" />
 
@@ -152,8 +152,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/eight_dp"
-                        android:gravity="center"
+                        android:gravity="start|center"
                         android:textColor="@color/black"
+                        android:layout_marginStart="@dimen/twenty_four_dp"
+                        android:layout_marginEnd="@dimen/twenty_four_dp"
                         android:textSize="@dimen/fourteen_sp" />
 
 

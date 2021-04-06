@@ -33,10 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/twenty_dp"
+                android:layout_marginTop="@dimen/twenty_four_dp"
                 android:gravity="center"
                 android:orientation="horizontal">
-
 
                 <LinearLayout
                     android:layout_width="90dp"
@@ -68,6 +67,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/twenty_four_dp"
+                android:layout_marginStart="@dimen/sixteen_dp"
+                android:layout_marginEnd="@dimen/sixteen_dp"
                 android:background="#BDBDBD" />
 
             <com.walkins.technician.custom.NormalTextView
@@ -111,11 +112,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="-5dp"
-
+                            android:paddingStart="@dimen/three_dp"
                             android:layout_marginLeft="-5dp"
                             android:buttonTint="@color/text_color2"
                             android:text="RF"
-                            android:textSize="@dimen/fourteen_sp" />
+                            android:textSize="@dimen/fourteen_sp"
+                            android:paddingLeft="@dimen/three_dp" />
 
                     </LinearLayout>
 
@@ -137,11 +139,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="-5dp"
+                            android:paddingStart="@dimen/three_dp"
 
                             android:layout_marginLeft="-5dp"
                             android:buttonTint="@color/text_color2"
                             android:text="LR"
-                            android:textSize="@dimen/fourteen_sp" />
+                            android:textSize="@dimen/fourteen_sp"
+                            android:paddingLeft="@dimen/three_dp" />
 
                     </LinearLayout>
 
@@ -166,7 +170,9 @@
                             android:layout_marginLeft="-5dp"
                             android:buttonTint="@color/text_color2"
                             android:text="RR"
-                            android:textSize="@dimen/fourteen_sp" />
+                            android:paddingStart="@dimen/three_dp"
+                            android:textSize="@dimen/fourteen_sp"
+                            android:paddingLeft="@dimen/three_dp" />
 
                     </LinearLayout>
 

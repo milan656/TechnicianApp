@@ -2,7 +2,8 @@
     <string name="app_name">TechnicianApp</string>
 
     <string name="str_welcome">Welcome</string>
-    <string name="login_text">Please sign in to your account.</string>
+    <string name="login_text">Please sign in to your account</string>
+    <string name="otp_text">Please sign in to continue</string>
     <string name="email_text">Email</string>
     <string name="password_text">Password</string>
     <string name="str_keep_me_log_in">Keep me logged in</string>
