@@ -355,11 +355,26 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             Log.e("selected2", "" + arrayDateMonth?.get(variable)?.id)
         } else if (check == 5) {
             Log.e("selected3", "" + arrayDateYear?.get(variable)?.name?.toInt())
-
+            if (arrayDateMonth != null && arrayDateMonth?.size!! > 0) {
+                arrayListMonth.clear()
+            }
             if (arrayDateYear?.get(variable)?.name?.toString()?.toInt()!! == currentYear) {
+                for (i in arrayListMonth.indices) {
 
+                    var model = DateModel()
+                    model.name = arrayListMonth.get(i)
+                    model.id = i + 1
+                    model.isSelected = false
+
+                    if (model.id <= currentMonth) {
+
+                        arrayDateMonth?.add(model)
+                    }
+                }
             }
             if (arrayDateYear?.get(variable)?.name?.toString()?.toInt()!! < currentYear) {
+
+
                 for (i in arrayListMonth.indices) {
 
                     var model = DateModel()
@@ -369,19 +384,11 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                     arrayDateMonth?.add(model)
                 }
-
-
-                adapterMonth =
-                    context?.let { DialogueDateAdpaterMonth(arrayDateMonth!!, it, this) }
-                recyclerViewMonth?.layoutManager = LinearLayoutManager(
-                    context,
-                    RecyclerView.VERTICAL,
-                    false
-                )
-                recyclerViewMonth?.adapter = adapterMonth
-
-
             }
+            adapterMonth?.notifyDataSetChanged()
+            adapterMonth?.onclick = this
+            adapterYear?.onclick = this
+
         }
 //        Log.e("getclickpos", arrayList.get(variable))
     }
@@ -504,10 +511,176 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
         }
 
+        class DialogueDateAdpaterMonth_(
+            var arraypos: ArrayList<DateModel>,
+            var context: Context
+
+        ) :
+            RecyclerView.Adapter<DialogueDateAdpaterMonth_.Viewholder>() {
+
+            var onclick: onClickAdapter? = null
+
+            inner class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+                var tvContent: TextView = itemView.findViewById(R.id.tvContent)
+                var llmaincontent: LinearLayout = itemView.findViewById(R.id.llmaincontent)
+            }
+
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ): DialogueDateAdpaterMonth_.Viewholder {
+                var view =
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.dialogue_common_design_date_month, parent, false)
+                return Viewholder(view)
+            }
+
+            override fun onBindViewHolder(
+                holder: DialogueDateAdpaterMonth_.Viewholder,
+                position: Int
+            ) {
+
+                holder.tvContent.text = arraypos.get(position).name.capitalize()
+
+                holder.itemView.setOnClickListener {
+
+                    if (onclick != null) {
+                        if (arraypos.get(position).isSelected) {
+                            // name!!.get(position).isSelected = false;
+                            if (arraypos != null && arraypos?.size!! > 0) {
+                                for (i in arraypos?.indices!!) {
+//                        arr?.get(i)?.setTypeface(Typeface.DEFAULT)
+                                    arraypos?.get(i)?.isSelected = false
+                                }
+                            }
+                            holder.tvContent.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.tyre_config))
+                        } else {
+                            for (date in arraypos) {
+                                if (date.isSelected) {
+                                    date.isSelected = false
+
+
+                                }
+                            }
+
+                            arraypos.get(position).isSelected = true;
+
+                        }
+                        notifyDataSetChanged()
+                        onclick?.onPositionClick(position, 4)
+                    }
+                }
+            }
+
+            override fun getItemCount(): Int {
+                return array.size
+
+            }
+
+        }
+
+        class DialogueDateAdpaterYear_(
+            var arraypos: ArrayList<DateModel>,
+            var context: Context
+
+        ) :
+            RecyclerView.Adapter<DialogueDateAdpaterYear_.Viewholder>() {
+
+            var onclick: onClickAdapter? = null
+
+            inner class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+                var tvContent: TextView = itemView.findViewById(R.id.tvContent)
+                var llmaincontent: LinearLayout = itemView.findViewById(R.id.llmaincontent)
+            }
+
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ): DialogueDateAdpaterYear_.Viewholder {
+                var view =
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.dialogue_common_design_date_year, parent, false)
+                return Viewholder(view)
+            }
+
+            override fun onBindViewHolder(
+                holder: DialogueDateAdpaterYear_.Viewholder,
+                position: Int
+            ) {
+
+                holder.tvContent.text = arraypos.get(position).name.capitalize()
+
+                holder.itemView.setOnClickListener {
+
+                    if (onclick != null) {
+                        if (arraypos.get(position).isSelected) {
+                            // name!!.get(position).isSelected = false;
+                            if (arraypos != null && array?.size!! > 0) {
+                                for (i in array?.indices!!) {
+//                        arr?.get(i)?.setTypeface(Typeface.DEFAULT)
+                                    arraypos?.get(i)?.isSelected = false
+                                }
+                            }
+                            holder.tvContent.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.tyre_config))
+                        } else {
+                            for (date in arraypos) {
+                                if (date.isSelected) {
+                                    date.isSelected = false
+
+
+                                }
+                            }
+
+                            arraypos.get(position).isSelected = true;
+
+                        }
+                        notifyDataSetChanged()
+//                        onclick?.onPositionClick(position, 5)
+
+                        if (arrayDateMonth != null && arrayDateMonth?.size!! > 0) {
+                            arrayDateMonth?.clear()
+                        }
+
+                        if (arraypos.get(position).name.toInt()!! < currentYear) {
+                            for (i in arrayListMonth.indices) {
+
+                                var model = DateModel()
+                                model.name = arrayMonth.get(i)
+                                model.id = i + 1
+                                model.isSelected = false
+
+
+                                arrayDateMonth?.add(model)
+
+                            }
+                            var adapterMonth =
+                                context?.let {
+                                    DialogueDateAdpaterMonth_(
+                                        arrayDateMonth!!,
+                                        it
+                                    )
+                                }
+
+                            recyclerViewMonth?.adapter = adapterMonth
+                        }
+                    }
+                }
+            }
+
+            override fun getItemCount(): Int {
+                return array.size
+
+            }
+
+
+        }
+
         adapterDay = context?.let { DialogueDateAdpater(arrayDate!!, it, this) }
         adapterMonth =
             context?.let { DialogueDateAdpaterMonth(arrayDateMonth!!, it, this) }
-        adapterYear = context?.let { DialogueDateAdpaterYear(arrayDateYear!!, it, this) }
+        var adapterYear = context?.let { DialogueDateAdpaterYear_(arrayDateYear!!, it) }
         recyclerViewDay?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
@@ -550,6 +723,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             dialog?.dismiss()
 
         }
+
+
 
         dialog?.show()
 

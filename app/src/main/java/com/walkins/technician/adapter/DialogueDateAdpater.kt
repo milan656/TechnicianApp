@@ -82,7 +82,7 @@ class DialogueDateAdpater(
             }
         }
 
-        if (array.get(position).isSelected) {
+        /*if (array.get(position).isSelected) {
             if (arr != null && arr?.size!! > 0) {
                 for (i in arr?.indices!!) {
 //                    arr?.get(i)?.setTypeface(arr?.get(i)?.typeface, Typeface.NORMAL)
@@ -98,7 +98,7 @@ class DialogueDateAdpater(
 //            holder.llmain.setBackgroundResource(R.drawable.default_adapter_background)
 //            holder.tvColor.setTypeface(Typeface.DEFAULT)
             holder.tvContent.setTextColor(context.resources.getColor(R.color.text_date))
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {
