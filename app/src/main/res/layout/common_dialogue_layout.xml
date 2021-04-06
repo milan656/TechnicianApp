@@ -87,37 +87,10 @@
                     android:gravity="start|center"
                     android:text="Are you sure you want to quit the process?"
                     android:textColor="@color/text_color1"
-                    android:textSize="@dimen/fourteen_sp" />
-
-                <com.walkins.technician.custom.BoldTextView
-                    android:id="@+id/tv_message1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:text="Are you sure you want to quit the process?"
-                    android:textColor="@color/text_color1"
                     android:textSize="@dimen/fourteen_sp"
-                    android:visibility="gone" />
+                    android:lineSpacingExtra="@dimen/eight_dp"/>
 
-                <com.walkins.technician.custom.BoldTextView
-                    android:id="@+id/tv_message2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:text="Are you sure you want to quit the process?"
-                    android:textColor="@color/text_color1"
-                    android:textSize="@dimen/fourteen_sp"
-                    android:visibility="gone" />
 
-                <com.walkins.technician.custom.BoldTextView
-                    android:id="@+id/tv_message3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:text="Are you sure you want to quit the process?"
-                    android:textColor="@color/text_color1"
-                    android:textSize="@dimen/fourteen_sp"
-                    android:visibility="gone" />
 
             </LinearLayout>
 

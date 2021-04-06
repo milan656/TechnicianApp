@@ -322,29 +322,14 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val btnSend = view.findViewById<Button>(R.id.btnOk)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
         val tv_message = view.findViewById<TextView>(R.id.tv_message)
-        val tv_message1 = view.findViewById<TextView>(R.id.tv_message1)
-        val tv_message2 = view.findViewById<TextView>(R.id.tv_message2)
-        val tv_message3 = view.findViewById<TextView>(R.id.tv_message3)
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
 
-        tv_message?.text = msg
-        tv_message1?.text = msg1
-        tv_message2?.text = msg2
-        tv_message3?.text = msg3
+        tv_message?.text = msg + "\n" + msg1 + "\n" + msg2 + "\n" + msg3
 
         if (msg.isNotEmpty()) {
             tv_message.visibility = View.VISIBLE
-        }
-        if (msg1.isNotEmpty()) {
-            tv_message1.visibility = View.VISIBLE
-        }
-        if (msg2.isNotEmpty()) {
-            tv_message2.visibility = View.VISIBLE
-        }
-        if (msg3.isNotEmpty()) {
-            tv_message3.visibility = View.VISIBLE
         }
 
         ivClose?.setOnClickListener {

@@ -19,7 +19,7 @@
             android:layout_centerInParent="true"
 
             android:layout_gravity="center_horizontal"
-            android:indeterminateDrawable="@drawable/ic_splash_icon" />
+            android:indeterminateDrawable="@drawable/progress_icon" />
 
         <com.walkins.technician.custom.BoldTextView
             android:layout_width="wrap_content"

@@ -1,187 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:orientation="vertical"
-    tools:context=".activity.VehicleMakeApplyTyreActivty">
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/common_toolbar" />
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnNext"
-        android:layout_below="@+id/header"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/ten_dp"
-        app:cardCornerRadius="@dimen/ten_dp"
+        app:cardCornerRadius="@dimen/eight_dp"
         app:cardElevation="@dimen/three_dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        android:layout_above="@+id/btnNext">
 
-        <LinearLayout
+        <RelativeLayout
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical"
             tools:context=".activity.VehicleMakeApplyTyreActivty">
 
-
             <LinearLayout
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/twenty_four_dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="@dimen/twelve_dp"
-                    android:layout_marginRight="@dimen/twelve_dp"
-                    android:background="@drawable/selected"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/ten_dp"
-                        android:src="@mipmap/car" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/ivEditVehicleMake"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="@dimen/twelve_dp"
-                    android:layout_marginLeft="@dimen/twelve_dp"
-                    android:padding="@dimen/six_dp"
-                    android:src="@mipmap/ic_edit_icon" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/twenty_four_dp"
-                android:layout_marginStart="@dimen/sixteen_dp"
-                android:layout_marginEnd="@dimen/sixteen_dp"
-                android:background="#BDBDBD" />
-
-            <com.walkins.technician.custom.NormalTextView
-                android:id="@+id/tvSelectTyre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/sixteen_dp"
-                android:layout_marginTop="@dimen/sixteen_dp"
-                android:layout_marginEnd="@dimen/sixteen_dp"
-                android:text="Select tyre to apply tyre pattern"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sixteen_dp"
+                android:layout_height="@dimen/seventy"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/llheader"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/sixteen_dp"
-                    android:layout_marginEnd="@dimen/sixteen_dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/eighteen_dp"
+                    android:layout_marginEnd="@dimen/eighteen_dp"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="28dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="@dimen/eight_dp"
-                        android:layout_marginRight="@dimen/eight_dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/layout_bg_secondary_"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/eight_dp"
-                        android:paddingBottom="@dimen/eight_dp">
+                        android:layout_marginEnd="@dimen/six_dp"
+                        android:layout_marginRight="@dimen/six_dp"
+                        android:src="@drawable/ic_back_arrow" />
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="-5dp"
-                            android:paddingStart="@dimen/three_dp"
-                            android:layout_marginLeft="-5dp"
-                            android:buttonTint="@color/text_color2"
-                            android:text="RF"
-                            android:textSize="@dimen/fourteen_sp"
-                            android:paddingLeft="@dimen/three_dp" />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/eight_dp"
-                        android:layout_marginEnd="@dimen/eight_dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/layout_bg_secondary_"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/eight_dp"
-                        android:paddingBottom="@dimen/eight_dp">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="-5dp"
-                            android:paddingStart="@dimen/three_dp"
-
-                            android:layout_marginLeft="-5dp"
-                            android:buttonTint="@color/text_color2"
-                            android:text="LR"
-                            android:textSize="@dimen/fourteen_sp"
-                            android:paddingLeft="@dimen/three_dp" />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/eight_dp"
-                        android:layout_marginEnd="@dimen/eight_dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/layout_bg_secondary_"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/eight_dp"
-                        android:paddingBottom="@dimen/eight_dp">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="-5dp"
-                            android:layout_marginLeft="-5dp"
-                            android:buttonTint="@color/text_color2"
-                            android:text="RR"
-                            android:paddingStart="@dimen/three_dp"
-                            android:textSize="@dimen/fourteen_sp"
-                            android:paddingLeft="@dimen/three_dp" />
-
-                    </LinearLayout>
+                    <com.walkins.technician.custom.NormalTextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/six_dp"
+                        android:layout_marginLeft="@dimen/six_dp"
+                        android:gravity="start|center"
+                        android:text="Service List"
+                        android:textColor="@color/header_title"
+                        android:textSize="@dimen/twenty_sp" />
 
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/btnNext"
+                android:layout_below="@+id/toolbar"
+                android:layout_margin="@dimen/ten_dp"
+                app:cardCornerRadius="@dimen/ten_dp"
+                app:cardElevation="@dimen/three_dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    tools:context=".activity.VehicleMakeApplyTyreActivty">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/twenty_four_dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="90dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="@dimen/twelve_dp"
+                            android:layout_marginRight="@dimen/twelve_dp"
+                            android:background="@drawable/selected"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/ten_dp"
+                                android:src="@mipmap/car" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivEditVehicleMake"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="@dimen/twelve_dp"
+                            android:layout_marginLeft="@dimen/twelve_dp"
+                            android:padding="@dimen/six_dp"
+                            android:src="@mipmap/ic_edit_icon" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/sixteen_dp"
+                        android:layout_marginTop="@dimen/twenty_four_dp"
+                        android:layout_marginEnd="@dimen/sixteen_dp"
+                        android:background="#BDBDBD" />
+
+                    <com.walkins.technician.custom.NormalTextView
+                        android:id="@+id/tvSelectTyre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/sixteen_dp"
+                        android:layout_marginTop="@dimen/sixteen_dp"
+                        android:layout_marginEnd="@dimen/sixteen_dp"
+                        android:text="Select tyre to apply tyre pattern"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/sixteen_dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/sixteen_dp"
+                            android:layout_marginEnd="@dimen/sixteen_dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="@dimen/eight_dp"
+                                android:layout_marginRight="@dimen/eight_dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/layout_bg_secondary_"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/eight_dp"
+                                android:paddingBottom="@dimen/eight_dp">
+
+                                <CheckBox
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="-5dp"
+                                    android:layout_marginLeft="-5dp"
+                                    android:buttonTint="@color/text_color2"
+                                    android:paddingStart="@dimen/three_dp"
+                                    android:paddingLeft="@dimen/three_dp"
+                                    android:text="RF"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/eight_dp"
+                                android:layout_marginEnd="@dimen/eight_dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/layout_bg_secondary_"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/eight_dp"
+                                android:paddingBottom="@dimen/eight_dp">
+
+                                <CheckBox
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="-5dp"
+                                    android:layout_marginLeft="-5dp"
+
+                                    android:buttonTint="@color/text_color2"
+                                    android:paddingStart="@dimen/three_dp"
+                                    android:paddingLeft="@dimen/three_dp"
+                                    android:text="LR"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/eight_dp"
+                                android:layout_marginEnd="@dimen/eight_dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/layout_bg_secondary_"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/eight_dp"
+                                android:paddingBottom="@dimen/eight_dp">
+
+                                <CheckBox
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="-5dp"
+                                    android:layout_marginLeft="-5dp"
+                                    android:buttonTint="@color/text_color2"
+                                    android:paddingStart="@dimen/three_dp"
+                                    android:paddingLeft="@dimen/three_dp"
+                                    android:text="RR"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <com.walkins.technician.custom.BoldButton
@@ -193,10 +249,10 @@
         android:layout_marginEnd="@dimen/fourteen_dp"
         android:layout_marginBottom="@dimen/fourteen_dp"
         android:background="@drawable/round_corner_button_yellow"
-        android:text="Next"
         android:letterSpacing="0.06"
+        android:text="Next"
+
         android:textColor="@color/white"
         android:textSize="@dimen/sixteen_sp"
         android:textStyle="bold" />
-
 </RelativeLayout>
