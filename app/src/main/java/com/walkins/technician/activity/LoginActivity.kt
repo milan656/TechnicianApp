@@ -110,12 +110,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun login() {
         if (edtLoginEmail.text?.trim()?.length == 0) {
-            edtLoginEmail.error = "Please enter phone number"
+            edtLoginEmail.error = "Please Enter Mobile number"
             //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
         if (edtLoginEmail.text?.trim()?.length != 10) {
-            edtLoginEmail.error = "Please enter valid phone number"
+            edtLoginEmail.error = "Please Enter Valid Mobile number"
             //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
@@ -167,12 +167,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun userLogin() {
         edtLoginEmail.requestFocus()
         if (edtLoginEmail.text?.trim()?.length == 0) {
-            edtLoginEmail.error = "Please enter phone number"
+            edtLoginEmail.error = "Please Enter Mobile number"
             //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
         if (edtLoginEmail.text?.trim()?.length != 10) {
-            edtLoginEmail.error = "Please enter valid phone number"
+            edtLoginEmail.error = "Please Enter Valid Mobile number"
             //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }

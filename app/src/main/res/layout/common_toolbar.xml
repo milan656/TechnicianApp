@@ -22,7 +22,7 @@
             android:layout_marginEnd="@dimen/six_dp"
             android:layout_marginRight="@dimen/six_dp"
             android:background="@color/bg_color"
-            android:src="@mipmap/ic_back_arrow" />
+            android:src="@drawable/ic_back_arrow" />
 
         <com.walkins.technician.custom.NormalTextView
             android:id="@+id/tvTitle"

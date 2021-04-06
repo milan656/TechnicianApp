@@ -77,7 +77,7 @@
                 android:id="@+id/ivHome"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@mipmap/ic_home_normal" />
+                android:src="@drawable/ic_home_normal" />
 
         </LinearLayout>
 
@@ -113,7 +113,7 @@
                 android:id="@+id/ivNotification"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@mipmap/ic_notification_icon" />
+                android:src="@drawable/ic_notification_icon" />
 
         </LinearLayout>
 
@@ -130,7 +130,7 @@
                 android:id="@+id/ivProfile"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@mipmap/ic_profile_icon" />
+                android:src="@drawable/ic_profile_icon" />
 
         </LinearLayout>
 

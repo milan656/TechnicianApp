@@ -391,7 +391,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
                                             android:gravity="center"
-                                            android:src="@mipmap/ic_nitrogen_topup" />
+                                            android:src="@mipmap/ic_wheel_balacing" />
 
                                         <com.walkins.technician.custom.NormalTextView
                                             android:layout_width="match_parent"
