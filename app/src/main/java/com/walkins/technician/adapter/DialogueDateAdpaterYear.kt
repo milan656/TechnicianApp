@@ -64,7 +64,7 @@ class DialogueDateAdpaterYear(
 
                 }
                 notifyDataSetChanged()
-                onclick?.onPositionClick(position, 3)
+                onclick?.onPositionClick(position, 5)
             }
         }
     }

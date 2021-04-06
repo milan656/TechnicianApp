@@ -38,6 +38,22 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var ivFilter: ImageView? = null
     private var selectedDate: String? = null
 
+    private var selectedYear = 0
+    private var selectedMonth = 0
+    private var selectedDay = 0
+
+    var arrayDate: ArrayList<DateModel>? = ArrayList()
+    var arrayDateMonth: ArrayList<DateModel>? = ArrayList()
+    var arrayDateYear: ArrayList<DateModel>? = ArrayList()
+
+    private var recyclerViewDay: RecyclerView? = null
+    private var recyclerViewMonth: RecyclerView? = null
+    private var recyclerViewYear: RecyclerView? = null
+
+    private var adapterDay: DialogueDateAdpater? = null
+    private var adapterMonth: DialogueDateAdpaterMonth? = null
+    private var adapterYear: DialogueDateAdpaterYear? = null
+
     private var arrayList = arrayListOf("Gallery", "Camera")
     private var arrayListMonth = arrayListOf(
         "January",
@@ -244,69 +260,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     }
 
-    private fun showBottomSheetdialog(
-        array: ArrayList<String>,
-        titleStr: String,
-        context: Context?,
-        btnBg: String
-
-    ) {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.dialogue_profile_edit_req, null)
-        val dialog =
-            getContext()?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
-
-        dialog?.setCancelable(false)
-        val width = LinearLayout.LayoutParams.MATCH_PARENT
-        val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog?.window?.setLayout(width, height)
-        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog?.setContentView(view)
-
-        val btnSend = view.findViewById<Button>(R.id.btn_send)
-        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
-        val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
-        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
-
-        tvTitleText?.text = titleStr
-        var arrayAdapter = context?.let { DialogueAdpater(array, it, this) }
-        dialogueRecycView?.layoutManager = LinearLayoutManager(
-            context,
-            RecyclerView.VERTICAL,
-            false
-        )
-        dialogueRecycView.addItemDecoration(
-            DividerItemDecoration(
-                getContext(),
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        dialogueRecycView.adapter = arrayAdapter
-        arrayAdapter?.onclick = this
-
-        ivClose?.setOnClickListener {
-            dialog?.dismiss()
-        }
-        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
-            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
-            btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
-            btnSend?.text = "Submit"
-        } else {
-            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_white))
-            btnSend.setTextColor(context?.resources?.getColor(R.color.header_title)!!)
-            btnSend?.text = "Cancel"
-        }
-
-
-        btnSend.setOnClickListener {
-
-            dialog?.dismiss()
-
-        }
-
-        dialog?.show()
-
-    }
 
     private fun showBottomSheetdialogNormal(
         array: ArrayList<String>,
@@ -396,6 +349,39 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         } else if (check == 0) {
             var intent = Intent(context, ServiceListActivity::class.java)
             startActivity(intent)
+        } else if (check == 3) {
+            Log.e("selected1", "" + arrayDate?.get(variable)?.name?.toInt())
+        } else if (check == 4) {
+            Log.e("selected2", "" + arrayDateMonth?.get(variable)?.id)
+        } else if (check == 5) {
+            Log.e("selected3", "" + arrayDateYear?.get(variable)?.name?.toInt())
+
+            if (arrayDateYear?.get(variable)?.name?.toString()?.toInt()!! == currentYear) {
+
+            }
+            if (arrayDateYear?.get(variable)?.name?.toString()?.toInt()!! < currentYear) {
+                for (i in arrayListMonth.indices) {
+
+                    var model = DateModel()
+                    model.name = arrayListMonth.get(i)
+                    model.id = i + 1
+                    model.isSelected = false
+
+                    arrayDateMonth?.add(model)
+                }
+
+
+                adapterMonth =
+                    context?.let { DialogueDateAdpaterMonth(arrayDateMonth!!, it, this) }
+                recyclerViewMonth?.layoutManager = LinearLayoutManager(
+                    context,
+                    RecyclerView.VERTICAL,
+                    false
+                )
+                recyclerViewMonth?.adapter = adapterMonth
+
+
+            }
         }
 //        Log.e("getclickpos", arrayList.get(variable))
     }
@@ -477,15 +463,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val btnSend = view.findViewById<Button>(R.id.btn_confirm)
         val btn_reset = view.findViewById<Button>(R.id.btn_reset)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
-        val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
-        val dialogueRecycViewMonth = view.findViewById<RecyclerView>(R.id.dialogueRecycView1)
-        val dialogueRecycViewYear = view.findViewById<RecyclerView>(R.id.dialogueRecycView2)
+        recyclerViewDay = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
+        recyclerViewMonth = view.findViewById<RecyclerView>(R.id.dialogueRecycView1)
+        recyclerViewYear = view.findViewById<RecyclerView>(R.id.dialogueRecycView2)
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        var arrayDate: ArrayList<DateModel>? = ArrayList()
-        var arrayDateMonth: ArrayList<DateModel>? = ArrayList()
-        var arrayDateYear: ArrayList<DateModel>? = ArrayList()
+
         for (i in array?.indices) {
 
             var model = DateModel()
@@ -520,29 +504,32 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
         }
 
-        var arrayAdapter = context?.let { DialogueDateAdpater(arrayDate!!, it, this) }
-        var arrayAdaptermonth =
+        adapterDay = context?.let { DialogueDateAdpater(arrayDate!!, it, this) }
+        adapterMonth =
             context?.let { DialogueDateAdpaterMonth(arrayDateMonth!!, it, this) }
-        var arrayAdapteryear = context?.let { DialogueDateAdpaterYear(arrayDateYear!!, it, this) }
-        dialogueRecycView?.layoutManager = LinearLayoutManager(
+        adapterYear = context?.let { DialogueDateAdpaterYear(arrayDateYear!!, it, this) }
+        recyclerViewDay?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
             false
         )
-        dialogueRecycViewMonth?.layoutManager = LinearLayoutManager(
+        recyclerViewMonth?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
             false
         )
-        dialogueRecycViewYear?.layoutManager = LinearLayoutManager(
+        recyclerViewYear?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
             false
         )
-        dialogueRecycView.adapter = arrayAdapter
-        dialogueRecycViewMonth.adapter = arrayAdaptermonth
-        dialogueRecycViewYear.adapter = arrayAdapteryear
-        arrayAdapter?.onclick = this
+        recyclerViewDay?.adapter = adapterDay
+        recyclerViewMonth?.adapter = adapterMonth
+        recyclerViewYear?.adapter = adapterYear
+
+        adapterDay?.onclick = this
+        adapterMonth?.onclick = this
+        adapterYear?.onclick = this
 
         ivClose?.setOnClickListener {
             dialog?.dismiss()
