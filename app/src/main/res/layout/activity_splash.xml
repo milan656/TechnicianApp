@@ -8,8 +8,8 @@
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@mipmap/ic_splash_icon"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:src="@mipmap/ic_splash_icon" />
 
     <LinearLayout
         android:id="@+id/llfooter"
@@ -27,10 +27,12 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/sixteen_dp"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_walkins_logo" />
+            android:src="@drawable/ic_walkins_logo_icon" />
+
 
     </LinearLayout>
 </RelativeLayout>

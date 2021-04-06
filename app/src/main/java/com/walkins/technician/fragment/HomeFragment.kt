@@ -514,7 +514,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
 
         var arrayAdapter = context?.let { DialogueDateAdpater(arrayDate!!, it, this) }
-        var arrayAdaptermonth = context?.let { DialogueDateAdpaterMonth(arrayDateMonth!!, it, this) }
+        var arrayAdaptermonth =
+            context?.let { DialogueDateAdpaterMonth(arrayDateMonth!!, it, this) }
         var arrayAdapteryear = context?.let { DialogueDateAdpaterYear(arrayDateYear!!, it, this) }
         dialogueRecycView?.layoutManager = LinearLayoutManager(
             context,
@@ -543,6 +544,15 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         btnSend.setOnClickListener {
 
+            selectedDate = "str"
+            ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
+            dialog?.dismiss()
+
+        }
+
+        btn_reset.setOnClickListener {
+            selectedDate = "str"
+            ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_calender_icon))
             dialog?.dismiss()
 
         }

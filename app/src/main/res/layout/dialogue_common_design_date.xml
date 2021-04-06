@@ -9,9 +9,9 @@
         android:id="@+id/tvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start|center"
+        android:gravity="center"
         android:padding="@dimen/fifteen_dp"
         android:textColor="@color/text_color1"
-
+        android:layout_gravity="center"
         android:textSize="@dimen/fourteen_sp" />
 </LinearLayout>
