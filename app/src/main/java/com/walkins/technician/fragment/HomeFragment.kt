@@ -20,10 +20,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ramotion.fluidslider.FluidSlider
 import com.walkins.technician.R
 import com.walkins.technician.activity.ServiceListActivity
-import com.walkins.technician.adapter.DialogueAdpater
-import com.walkins.technician.adapter.HomeListAdpater
+import com.walkins.technician.adapter.*
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.model.login.date.DateModel
 import io.apptik.widget.MultiSlider
+import java.util.*
+import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -36,8 +38,108 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var ivFilter: ImageView? = null
     private var selectedDate: String? = null
 
-
     private var arrayList = arrayListOf("Gallery", "Camera")
+    private var arrayListMonth = arrayListOf(
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "September",
+        "October",
+        "November",
+        "December"
+    )
+    private var arrayListYear = arrayListOf(
+        "2000",
+        "2001",
+        "2002",
+        "2003",
+        "2004",
+        "2005",
+        "2006",
+        "2007",
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021"
+    )
+    private var arrayListdaysFeb = arrayListOf(
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28"
+    )
+    private var arrayListdays = arrayListOf(
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31"
+    )
     private var vehicleMakeList = arrayListOf("")
     private var dummyvaluestart: String? = "0"
     private var dummyvalueend: String? = "100"
@@ -298,14 +400,21 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             var intent = Intent(context, ServiceListActivity::class.java)
             startActivity(intent)
         }
-        Log.e("getclickpos", arrayList.get(variable))
+//        Log.e("getclickpos", arrayList.get(variable))
     }
 
     override fun onClick(v: View?) {
         val i = v?.id
         when (i) {
             R.id.ivFilter -> {
-                openDateSelection()
+                showBottomSheetdialogDate(
+                    arrayListdays,
+                    arrayListdaysFeb,
+                    arrayListMonth,
+                    arrayListYear,
+                    "Choose Date",
+                    context
+                )
             }
         }
     }
@@ -345,5 +454,100 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
 
         pickerPopWin?.showPopWin(activity)
+    }
+
+    private fun showBottomSheetdialogDate(
+        array: ArrayList<String>,
+        arrayfeb: ArrayList<String>,
+        arrayMonth: ArrayList<String>,
+        arrayYear: ArrayList<String>,
+        titleStr: String,
+        context: Context?,
+
+        ) {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.dialogue_profile_edit_req_date, null)
+        val dialog =
+            context?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+
+        dialog?.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        dialog?.window?.setLayout(width, height)
+        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.setContentView(view)
+
+        val btnSend = view.findViewById<Button>(R.id.btn_confirm)
+        val btn_reset = view.findViewById<Button>(R.id.btn_reset)
+        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
+        val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
+        val dialogueRecycViewMonth = view.findViewById<RecyclerView>(R.id.dialogueRecycView1)
+        val dialogueRecycViewYear = view.findViewById<RecyclerView>(R.id.dialogueRecycView2)
+        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
+
+        tvTitleText?.text = titleStr
+        var arrayDate: ArrayList<DateModel>? = ArrayList()
+        var arrayDateMonth: ArrayList<DateModel>? = ArrayList()
+        var arrayDateYear: ArrayList<DateModel>? = ArrayList()
+        for (i in array?.indices) {
+
+            var model = DateModel()
+            model.name = array?.get(i)
+            model.isSelected = false
+            arrayDate?.add(model)
+        }
+
+        for (i in arrayMonth?.indices) {
+
+            var model = DateModel()
+            model.name = arrayMonth?.get(i)
+            model.isSelected = false
+            arrayDateMonth?.add(model)
+        }
+
+        for (i in arrayYear?.indices) {
+
+            var model = DateModel()
+            model.name = arrayYear?.get(i)
+            model.isSelected = false
+            arrayDateYear?.add(model)
+        }
+
+        var arrayAdapter = context?.let { DialogueDateAdpater(arrayDate!!, it, this) }
+        var arrayAdaptermonth = context?.let { DialogueDateAdpaterMonth(arrayDateMonth!!, it, this) }
+        var arrayAdapteryear = context?.let { DialogueDateAdpaterYear(arrayDateYear!!, it, this) }
+        dialogueRecycView?.layoutManager = LinearLayoutManager(
+            context,
+            RecyclerView.VERTICAL,
+            false
+        )
+        dialogueRecycViewMonth?.layoutManager = LinearLayoutManager(
+            context,
+            RecyclerView.VERTICAL,
+            false
+        )
+        dialogueRecycViewYear?.layoutManager = LinearLayoutManager(
+            context,
+            RecyclerView.VERTICAL,
+            false
+        )
+        dialogueRecycView.adapter = arrayAdapter
+        dialogueRecycViewMonth.adapter = arrayAdaptermonth
+        dialogueRecycViewYear.adapter = arrayAdapteryear
+        arrayAdapter?.onclick = this
+
+        ivClose?.setOnClickListener {
+            dialog?.dismiss()
+        }
+
+
+        btnSend.setOnClickListener {
+
+            dialog?.dismiss()
+
+        }
+
+        dialog?.show()
+
     }
 }

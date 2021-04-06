@@ -35,10 +35,9 @@
 
         <ImageView
             android:id="@+id/ivFilterImg"
-            android:layout_width="match_parent"
+            android:layout_width="45dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:src="@mipmap/ic_report_filter" />
+            android:src="@drawable/ic_report_filter" />
     </LinearLayout>
 
     <LinearLayout

@@ -168,9 +168,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/sixteen_dp"
+                            android:layout_marginStart="@dimen/twenty_dp"
                             android:layout_marginTop="@dimen/fourteen_dp"
-                            android:layout_marginEnd="@dimen/sixteen_dp"
+                            android:layout_marginEnd="@dimen/twenty_dp"
                             android:layout_marginBottom="@dimen/fourteen_dp"
                             android:orientation="horizontal">
 
@@ -246,7 +246,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/sixteen_dp"
+                            android:layout_margin="@dimen/twenty_dp"
                             android:orientation="horizontal">
 
                             <com.walkins.technician.custom.BoldHeavyTextView
@@ -448,6 +448,7 @@
 
                             </LinearLayout>
 
+
                         </LinearLayout>
 
 
@@ -455,11 +456,11 @@
                             android:id="@+id/llUpdatedPlacement"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/sixteen_dp"
-                            android:layout_marginTop="@dimen/five_dp"
-                            android:layout_marginEnd="@dimen/sixteen_dp"
+                            android:layout_marginStart="@dimen/twenty_dp"
+                            android:layout_marginEnd="@dimen/twenty_dp"
+                            android:layout_marginBottom="@dimen/twenty_dp"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <com.walkins.technician.custom.BoldTextView
                                 android:layout_width="match_parent"
@@ -474,229 +475,116 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/five_dp"
-                                android:paddingEnd="@dimen/five_dp">
+                                android:orientation="horizontal">
 
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="LF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="="
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/text_color2"
-                                    android:gravity="center"
-                                    android:text="LR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
                                     android:layout_gravity="center"
+                                    android:gravity="start">
+
+                                    <LinearLayout
+                                        android:layout_width="100dp"
+                                        android:layout_height="42dp"
+                                        android:layout_marginTop="@dimen/sixteen_dp"
+                                        android:background="@drawable/layout_bg_secondary_"
+                                        android:orientation="horizontal"
+                                        android:paddingStart="@dimen/five_dp"
+                                        android:paddingEnd="@dimen/five_dp">
+
+                                        <com.walkins.technician.custom.NormalTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="0.7"
+                                            android:gravity="center"
+                                            android:text="LF"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+
+                                        <com.walkins.technician.custom.NormalTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="0.7"
+                                            android:gravity="center"
+                                            android:text="="
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+
+                                        <com.walkins.technician.custom.NormalTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="0.7"
+                                            android:gravity="center"
+                                            android:text="LF"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/header_title"
-                                    android:gravity="center"
-                                    android:text="RR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/five_dp"
-                                android:paddingEnd="@dimen/five_dp">
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
                                     android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="RF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    android:gravity="center">
 
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="="
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    <LinearLayout
+                                        android:layout_width="100dp"
+                                        android:layout_height="42dp"
+                                        android:layout_marginTop="@dimen/sixteen_dp"
+                                        android:background="@drawable/layout_bg_secondary_"
+                                        android:orientation="horizontal"
+                                        android:paddingStart="@dimen/five_dp"
+                                        android:paddingEnd="@dimen/five_dp">
 
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/header_title"
-                                    android:gravity="center"
-                                    android:text="LR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                        <com.walkins.technician.custom.NormalTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="0.7"
+                                            android:gravity="center"
+                                            android:text="LF"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
 
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/text_color2"
-                                    android:gravity="center"
-                                    android:text="RR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                        <com.walkins.technician.custom.NormalTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="0.7"
+                                            android:gravity="center"
+                                            android:text="="
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
 
-                            </LinearLayout>
+                                        <com.walkins.technician.custom.NormalTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="0.7"
+                                            android:gravity="center"
+                                            android:text="LF"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/five_dp"
-                                android:paddingEnd="@dimen/five_dp">
 
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="LR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    </LinearLayout>
+                                </LinearLayout>
 
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="="
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/text_color2"
-                                    android:gravity="center"
-                                    android:text="LF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/header_title"
-                                    android:gravity="center"
-                                    android:text="RF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/sixteen_dp"
-                                android:layout_marginBottom="@dimen/fourteen_dp"
-                                android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/five_dp"
-                                android:paddingEnd="@dimen/five_dp">
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="RR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="="
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/header_title"
-                                    android:gravity="center"
-                                    android:text="LF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioButton
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/text_color2"
-                                    android:gravity="center"
-                                    android:text="RF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
 
                             </LinearLayout>
 
@@ -719,7 +607,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/sixteen_dp"
+                        android:layout_margin="@dimen/twenty_dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -978,7 +866,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/sixteen_dp"
+                        android:layout_margin="@dimen/twenty_dp"
                         android:orientation="vertical">
 
                         <LinearLayout

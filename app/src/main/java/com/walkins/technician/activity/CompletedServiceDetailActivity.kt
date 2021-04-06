@@ -62,7 +62,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         )
         pendingSuggestionsRecycView?.adapter = tyreSuggestionAdapter
 
-        tvTitle?.text = "Add Service Details"
+        tvTitle?.text = "Report Details"
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
         ivTyre4?.setOnClickListener(this)

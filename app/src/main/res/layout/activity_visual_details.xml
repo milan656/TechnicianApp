@@ -191,10 +191,10 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_condition_ok" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -204,7 +204,7 @@
                                     android:text="OK"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/twelve_sp" />
+                                    android:textSize="@dimen/fourteen_sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -215,20 +215,20 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="SUG"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/twelve_sp" />
+                                    android:textSize="@dimen/fourteen_sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -239,17 +239,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="REQ"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -286,10 +286,10 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -310,17 +310,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_condition_degrade" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="SUG"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -334,17 +334,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="REQ"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -381,10 +381,10 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -405,17 +405,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_condition_degrade" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="SUG"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -429,17 +429,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="REQ"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -476,10 +476,10 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -500,17 +500,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_condition_degrade" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="SUG"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -524,17 +524,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="REQ"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -571,10 +571,10 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -595,17 +595,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_condition_degrade" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="SUG"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -619,17 +619,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="REQ"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -666,10 +666,10 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -690,17 +690,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_blank_condition" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="SUG"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />
@@ -714,17 +714,17 @@
 
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/ic_add_icon" />
+                                    android:src="@mipmap/ic_condition_down" />
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:gravity="center"
-                                    android:text="OK"
+                                    android:text="REQ"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve_sp" />

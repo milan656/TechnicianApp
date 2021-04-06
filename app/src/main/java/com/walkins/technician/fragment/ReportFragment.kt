@@ -18,6 +18,7 @@ import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
 import com.walkins.technician.activity.SkippedServiceDetailActivity
 import com.walkins.technician.adapter.ReportAdpater
+import com.walkins.technician.adapter.ReportSkippAdpater
 import com.walkins.technician.common.onClickAdapter
 
 private const val ARG_PARAM1 = "param1"
@@ -74,20 +75,42 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         tvTitle?.text = "Your Report"
 
         ivBack?.visibility = View.GONE
-        val arrayAdapter = context?.let { ReportAdpater(Common.commonPhotoChooseArr, it, this) }
-        reportRecycView?.layoutManager = LinearLayoutManager(
-            context,
-            RecyclerView.VERTICAL,
-            false
-        )
-        /* reportRecycView?.addItemDecoration(
-             DividerItemDecoration(
-                 this,
-                 DividerItemDecoration.VERTICAL
-             )
-         )*/
-        reportRecycView?.adapter = arrayAdapter
-        arrayAdapter?.onclick = this
+
+        setadapter(skipSelected)
+    }
+
+    private fun setadapter(skipSelected: Boolean) {
+        if (!skipSelected) {
+            val arrayAdapter = context?.let { ReportAdpater(Common.commonPhotoChooseArr, it, this) }
+            reportRecycView?.layoutManager = LinearLayoutManager(
+                context,
+                RecyclerView.VERTICAL,
+                false
+            )
+            /* reportRecycView?.addItemDecoration(
+                 DividerItemDecoration(
+                     this,
+                     DividerItemDecoration.VERTICAL
+                 )
+             )*/
+            reportRecycView?.adapter = arrayAdapter
+            arrayAdapter?.onclick = this
+        } else {
+            val arrayAdapter = context?.let { ReportSkippAdpater(Common.commonPhotoChooseArr, it, this) }
+            reportRecycView?.layoutManager = LinearLayoutManager(
+                context,
+                RecyclerView.VERTICAL,
+                false
+            )
+            /* reportRecycView?.addItemDecoration(
+                 DividerItemDecoration(
+                     this,
+                     DividerItemDecoration.VERTICAL
+                 )
+             )*/
+            reportRecycView?.adapter = arrayAdapter
+            arrayAdapter?.onclick = this
+        }
     }
 
     companion object {
@@ -131,6 +154,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.white))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
                 skipSelected = false
+
+                setadapter(skipSelected)
             }
             R.id.llSkippedReport -> {
                 llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
@@ -139,6 +164,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
                 skipSelected = true
+                setadapter(skipSelected)
 
             }
 
