@@ -430,16 +430,20 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Common.collapse(llServiceExpanded!!)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = false
+                    ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
                 } else {
+                    ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = true
                     Common.expand(llServiceExpanded!!)
 
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTyreConfigExpanded!!)
+                        ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
                     }
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTechnicalSuggestionExpanded!!)
+                        ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
                     }
 
                     tvTyreConfig?.isAllCaps = false
@@ -451,15 +455,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Common.collapse(llTyreConfigExpanded!!)
                     tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTyreConfig?.isAllCaps = false
+                    ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
                 } else {
+                    ivAddTyreConfig?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTyreConfig?.isAllCaps = true
                     Common.expand(llTyreConfigExpanded!!)
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
+                        ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
                     }
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTechnicalSuggestionExpanded!!)
+                        ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
                     }
 
                     tvServices?.isAllCaps = false
@@ -471,17 +479,20 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Common.collapse(llTechnicalSuggestionExpanded!!)
                     tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTechnicalSuggetion?.isAllCaps = false
-
+                    ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
                 } else {
+                    ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTechnicalSuggetion?.isAllCaps = true
 
                     Common.expand(llTechnicalSuggestionExpanded!!)
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTyreConfigExpanded!!)
+                        ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
                     }
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
+                        ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
                     }
                     tvServices?.isAllCaps = false
                     tvTyreAddInfo?.isAllCaps = false
