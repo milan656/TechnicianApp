@@ -70,9 +70,9 @@
                 android:id="@+id/gridviewRecycMake_"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/fourteeen_dp"
+                android:layout_marginStart="@dimen/ten_dp"
                 android:layout_marginTop="@dimen/fourteen_dp"
-                android:layout_marginRight="@dimen/fourteeen_dp" />
+                android:layout_marginEnd="@dimen/ten_dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

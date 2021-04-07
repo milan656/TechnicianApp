@@ -428,6 +428,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivAddServices -> {
                 if (llServiceExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llServiceExpanded!!)
+                    Common.collapse(llUpdatedPlacement!!)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = false
                     ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
@@ -463,6 +464,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Common.expand(llTyreConfigExpanded!!)
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
+                        Common.collapse(llUpdatedPlacement!!)
                         ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
                     }
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
@@ -492,6 +494,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
+                        Common.collapse(llUpdatedPlacement!!)
                         ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
                     }
                     tvServices?.isAllCaps = false
