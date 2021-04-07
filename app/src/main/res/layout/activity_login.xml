@@ -84,7 +84,7 @@
                             <com.walkins.technician.custom.NormalEditText
                                 android:id="@+id/edtLoginEmail"
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="@dimen/eight_dp"
                                 android:background="@drawable/layout_bg_corner"
                                 android:inputType="number"

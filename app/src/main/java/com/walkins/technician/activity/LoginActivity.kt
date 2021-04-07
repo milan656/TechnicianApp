@@ -1,6 +1,8 @@
 package com.walkins.technician.activity
 
+import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -11,22 +13,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
-import com.walkins.technician.R
-import com.walkins.technician.viewmodel.LoginActivityViewModel
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
+import com.walkins.technician.R
 import com.walkins.technician.custom.BoldButton
+import com.walkins.technician.viewmodel.LoginActivityViewModel
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -46,6 +47,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         init()
 
+        /* MessageReceiver.bindListener(new SmsListener() {
+            @Override
+            public void messageReceived(String messageText) {
+                Log.i("Received_sms", "In Fragment ! " + messageText);
+                if (LoginFragment.this.getContext() != null) {
+                    mLoginVM.otp.set(messageText);
+                }
+            }
+        });*/
+
+        smsPermission()
+
         try {
             Common.isCalling = false
         } catch (e: Exception) {
@@ -63,6 +76,32 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 //        } catch (e: java.lang.Exception) {
 //            e.printStackTrace()
 //        }
+    }
+
+    private fun smsPermission() {
+        val PERMISSIONS = arrayOf(
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.READ_SMS,
+            Manifest.permission.SEND_SMS
+        )
+        if (!hasPermissions(this, *PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, 1)
+        }
+    }
+
+    fun hasPermissions(context: Context?, vararg permissions: String?): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (permission in permissions) {
+                if (ActivityCompat.checkSelfPermission(
+                        context,
+                        permission!!
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     override fun onResume() {
@@ -591,4 +630,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 */
+
+
 }

@@ -1,7 +1,11 @@
 package com.walkins.technician.activity
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
@@ -12,10 +16,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.walkins.technician.R
-import java.lang.StringBuilder
+import com.walkins.technician.common.MySMSBroadcastReceiver
 
-class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener {
+class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
+    MySMSBroadcastReceiver.OTPReceiveListener {
 
     private var tvResend: TextView? = null
     private var btnVerify: Button? = null
@@ -24,6 +32,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener {
     private var edtOtp3: EditText? = null
     private var edtOtp4: EditText? = null
     private var otp: StringBuilder? = StringBuilder()
+    private var smsBroadcastReceiver: MySMSBroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,6 +129,51 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         })
+
+        val PERMISSIONS = arrayOf(
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.READ_SMS,
+            Manifest.permission.SEND_SMS
+        )
+        if (hasPermissions(this, *PERMISSIONS)) {
+            startSMSListener()
+
+            smsBroadcastReceiver = MySMSBroadcastReceiver(this)
+            val intentFilter = IntentFilter()
+            intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION)
+            this.registerReceiver(smsBroadcastReceiver, intentFilter)
+        }
+
+    }
+
+    fun hasPermissions(context: Context?, vararg permissions: String?): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (permission in permissions) {
+                if (ActivityCompat.checkSelfPermission(
+                        context,
+                        permission!!
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    private fun startSMSListener() {
+        try {
+            val client = SmsRetriever.getClient(this)
+            val task = client.startSmsRetriever()
+            task.addOnSuccessListener {
+                // API successfully started
+            }
+            task.addOnFailureListener {
+                // Fail to start API
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -146,5 +200,13 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         }
+    }
+
+    override fun onSuccess(intent: Intent?) {
+
+    }
+
+    override fun onOTPReceived(otp: String?) {
+
     }
 }

@@ -240,7 +240,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Common.commonPhotoChooseArr,
                     "Choose From",
                     this,
-                    Common.btn_filled
+                    Common.btn_not_filled
                 )
             }
             R.id.tvSkipService -> {

@@ -68,7 +68,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 Common.commonPhotoChooseArr,
                 "Choose From",
                 context,
-                Common.btn_filled
+                Common.btn_not_filled
             )
         }
         ivBack?.visibility = View.GONE
