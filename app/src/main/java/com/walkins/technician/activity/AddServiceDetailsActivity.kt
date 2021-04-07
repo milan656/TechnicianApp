@@ -433,6 +433,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tvServices?.isAllCaps = false
                     ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
                 } else {
+                    showHideUpdatedPlacement()
                     ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = true
