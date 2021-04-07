@@ -563,7 +563,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         } else {
             return true
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
