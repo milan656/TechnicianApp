@@ -27,6 +27,7 @@
             android:layout_marginTop="@dimen/sixty_dp"
             android:layout_marginEnd="@dimen/eighteen_dp"
             android:layout_marginBottom="@dimen/sixty_dp"
+            android:visibility="gone"
             android:background="@drawable/ic_empty_circle">
 
             <LinearLayout
@@ -136,5 +137,12 @@
 
 
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/lltransparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@color/translucent_black_55">
+    </LinearLayout>
 </RelativeLayout>

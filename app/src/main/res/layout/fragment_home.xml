@@ -8,122 +8,91 @@
     android:background="@color/bg_color"
     tools:context=".fragment.HomeFragment">
 
-    <LinearLayout
-        android:id="@+id/llheader"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginEnd="@dimen/sixteen_dp"
-        android:orientation="horizontal">
 
-        <com.walkins.technician.custom.NormalTextView
-            android:id="@+id/tvUsername"
+        <LinearLayout
+            android:id="@+id/llheader"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="start|center"
-            android:text="Hello"
-            android:textColor="@color/header_title"
-            android:textSize="@dimen/twenty_sp" />
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="25dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_weight="0"
-            android:orientation="vertical">
+            <com.walkins.technician.custom.NormalTextView
+                android:id="@+id/tvUsername"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:text="Hello"
+                android:textColor="@color/header_title"
+                android:textSize="@dimen/twenty_sp" />
 
-
-            <ImageView
-                android:id="@+id/ivFilter"
+            <RelativeLayout
                 android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_calender_icon" />
+                android:layout_weight="0"
+                android:orientation="vertical">
 
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/ivFilter"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_calender_icon" />
 
 
-    </LinearLayout>
+            </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/llheader"
-        android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginEnd="@dimen/sixteen_dp"
-        android:orientation="vertical">
+        </LinearLayout>
 
-        <com.walkins.technician.custom.BoldTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Today"
-            android:textColor="@color/text_color1"
-            android:textSize="@dimen/fourteen_sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/homeRecycView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fourteen_dp" />
-
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/relNoDataView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/eighteen_dp"
-        android:layout_marginTop="@dimen/sixty_dp"
-        android:layout_marginEnd="@dimen/eighteen_dp"
-        android:layout_marginBottom="@dimen/sixty_dp"
-        android:background="@drawable/ic_empty_circle">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_below="@+id/llheader"
+            android:layout_marginStart="@dimen/eighteen_dp"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:layout_marginEnd="@dimen/eighteen_dp"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_empty_icon" />
-
-            <com.walkins.technician.custom.NormalTextView
+            <com.walkins.technician.custom.BoldTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/fourteen_dp"
-                android:alpha="0.5"
-                android:gravity="center"
-                android:text="Currently you do not have any services"
-                android:textColor="#424242"
-                android:textSize="@dimen/fourteen_sp" />
+                android:layout_marginStart="@dimen/two_dp"
+                android:layout_marginEnd="@dimen/two_dp"
+                android:text="Today"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/fourteen_sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/homeRecycView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fourteen_dp" />
+
         </LinearLayout>
-    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linearSlider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
 
-        <com.ramotion.fluidslider.FluidSlider
-            android:id="@+id/multiSlider1"
+        <LinearLayout
+            android:id="@+id/linearSlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:bar_color="#F2F5FA"
-            app:bar_text_color="@color/text_color"
-            app:size="small" />
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    </LinearLayout>
+            <com.ramotion.fluidslider.FluidSlider
+                android:id="@+id/multiSlider1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:bar_color="#F2F5FA"
+                app:bar_text_color="@color/text_color"
+                app:size="small" />
+
+        </LinearLayout>
 
 </RelativeLayout>

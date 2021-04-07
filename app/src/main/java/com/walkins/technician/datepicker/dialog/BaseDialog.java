@@ -5,6 +5,8 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -35,6 +37,8 @@ public abstract class BaseDialog {
     protected Integer titleTextColor = null;
 
     protected boolean okClicked = false;
+    protected boolean ResetClicked = false;
+    protected boolean CloseClicked = false;
     protected boolean curved = false;
     protected boolean mustBeOnFuture = false;
     protected int minutesStep = STEP_MINUTES_DEFAULT;

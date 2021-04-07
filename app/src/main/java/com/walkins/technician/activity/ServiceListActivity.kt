@@ -38,6 +38,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var arrayList = arrayListOf("one", "two", "three")
     private var adapter: ServicesListAdpater? = null
     private var tvAddress: TextView? = null
+    private var serviceStatus = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +98,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
 
+                serviceStatus = "upcoming"
+
             }
             R.id.llCompleted -> {
                 llUpcoming?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
@@ -106,7 +109,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvUpcoming?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.white))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
-
+                serviceStatus = "completed"
             }
             R.id.llSkipped -> {
                 llUpcoming?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
@@ -116,6 +119,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvUpcoming?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
+                serviceStatus = "skipped"
 
             }
             R.id.ivBack -> {
@@ -140,8 +144,19 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     override fun onPositionClick(variable: Int, check: Int) {
 
         if (check == 1) {
-            var intent = Intent(this, AddServiceDetailsActivity::class.java)
-            startActivity(intent)
+
+            if (serviceStatus.equals("upcoming")) {
+                var intent = Intent(this, AddServiceDetailsActivity::class.java)
+                startActivity(intent)
+
+            } else if (serviceStatus.equals("completed")) {
+                var intent = Intent(this, CompletedServiceDetailActivity::class.java)
+                intent.putExtra("title","Service Detail")
+                startActivity(intent)
+            } else if (serviceStatus.equals("skipped")) {
+                var intent = Intent(this, SkippedServiceDetailActivity::class.java)
+                startActivity(intent)
+            }
         }
 
     }

@@ -18,13 +18,13 @@ import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ramotion.fluidslider.FluidSlider
 import com.walkins.technician.R
+import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.activity.ServiceListActivity
 import com.walkins.technician.adapter.DialogueDateAdpater
 import com.walkins.technician.adapter.DialogueDateAdpaterMonth
 import com.walkins.technician.adapter.DialogueDateAdpaterYear
 import com.walkins.technician.adapter.HomeListAdpater
 import com.walkins.technician.common.onClickAdapter
-import com.walkins.technician.datepicker.SingleDateAndTimePicker
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.technician.model.login.date.DateModel
 import java.text.SimpleDateFormat
@@ -174,12 +174,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var tvUsername: TextView? = null
     private var homeRecycView: RecyclerView? = null
     private var adapter: HomeListAdpater? = null
-    private var relNoDataView: RelativeLayout? = null
     private var relmainContent: RelativeLayout? = null
+
     var currentYear: Int = 0
     var currentMonth: Int = 0
     var currentMonth_: String = ""
     var currentDate: Int = 0
+    var activity: MainActivity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -198,6 +199,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         currentYear = calendar.get(Calendar.YEAR)
         currentMonth = calendar.get(Calendar.MONTH)
         currentDate = calendar.get(Calendar.DATE)
+
+        activity = getActivity() as MainActivity?
 
         Log.e("getvalues", "" + currentYear + " " + currentMonth + " " + currentDate)
 
@@ -249,12 +252,11 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         ivFilter = view?.findViewById(R.id.ivFilter)
 
+
         relmainContent = view?.findViewById(R.id.relmainContent)
         tvUsername = view?.findViewById(R.id.tvUsername)
         tvUsername?.text = "Hello, " + "Arun"
         homeRecycView = view.findViewById(R.id.homeRecycView)
-        relNoDataView = view.findViewById(R.id.relNoDataView)
-        relNoDataView?.visibility = View.GONE
         ivFilter?.setOnClickListener(this)
 
         homeRecycView?.layoutManager = LinearLayoutManager(
@@ -427,9 +429,9 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     fun simpleClicked() {
 
         val calendar = Calendar.getInstance()
-        calendar[Calendar.DAY_OF_MONTH] = 4 // 4. Feb. 2018
+        calendar[Calendar.DAY_OF_MONTH] = currentMonth // 4. Feb. 2018
         calendar[Calendar.MONTH] = 1
-        calendar[Calendar.YEAR] = 2018
+        calendar[Calendar.YEAR] = currentYear
         calendar[Calendar.HOUR_OF_DAY] = 11
         calendar[Calendar.MINUTE] = 13
         val defaultDate = calendar.time
@@ -445,7 +447,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             .displayDaysOfMonth(true)
             .displayYears(true)
             .defaultDate(defaultDate)
-            .displayMonthNumbers(true) //.mustBeOnFuture()
+            .displayMonthNumbers(true).maxDateRange(Date()) //.mustBeOnFuture()
             //.minutesStep(15)
             //.mustBeOnFuture()
             //.defaultDate(defaultDate)
@@ -459,20 +461,35 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 fun onClosed(picker: SingleDateAndTimePicker?) {
                     TODO("Not yet implemented")
                 }
-
-
-
             })*/
             .title("Simple")
             .listener(object : SingleDateAndTimePickerDialog.Listener {
-                override fun onDateSelected(date: Date?) {
+                override fun onDateSelected(date: Date?, str: String) {
+                    activity?.lltransparent?.visibility = View.GONE
+                    if (str.equals("")) {
+                        simpleDateFormat = SimpleDateFormat("dd MMMM yyyy")
+                        Log.e("getdatee", "" + simpleDateFormat?.format(date))
 
-                    simpleDateFormat = SimpleDateFormat("dd MMMM YYYY")
-                    Log.e("getdatee", "" + simpleDateFormat?.format(date))
+                        selectedDate = simpleDateFormat?.format(date)
+                        ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
+                    } else if (str.equals("Reset")) {
+                        ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_calender_icon))
+                        selectedDate = ""
+                    } else if (str.equals("Close")) {
 
+                        if (selectedDate.equals("")) {
+                            ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_calender_icon))
+                        } else {
+                            ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
+                        }
+                    }
                 }
             })
+
+
+        activity?.lltransparent?.visibility = View.VISIBLE
         singleBuilder?.display()
+
 
     }
 

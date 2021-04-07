@@ -35,8 +35,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var ivBack: ImageView? = null
     private var tvCurrentDateTime: TextView? = null
     private var tvtyreServiceInfo: TextView? = null
+    private var selectedPending = ""
 
     private var ivTyre4: ImageView? = null
+    private var ivInfoImg: ImageView? = null
+    private var title: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
         ivTyre4 = findViewById(R.id.ivTyre4)
+        ivInfoImg = findViewById(R.id.ivInfoImg)
 
         tvCurrentDateTime = findViewById(R.id.tvCurrentDateTime)
         pendingSuggestionsRecycView = findViewById(R.id.pendingSuggestionsRecycView)
@@ -63,9 +67,15 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         pendingSuggestionsRecycView?.adapter = tyreSuggestionAdapter
 
         tvTitle?.text = "Report Details"
+
+        if (intent != null) {
+            if (intent.getStringExtra("title") != null) {
+                tvTitle?.text = intent.getStringExtra("title")
+            }
+        }
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
-        ivTyre4?.setOnClickListener(this)
+        ivInfoImg?.setOnClickListener(this)
 
         tvCurrentDateTime?.text = Common.getCurrentDateTime()
     }
@@ -75,8 +85,13 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         if (check == 0) {
 
             if (pendingArr?.get(variable)?.equals("Tyre Pattern")) {
-                val intent = Intent(this, VehiclePatternActivity::class.java)
-                startActivity(intent)
+                selectedPending = "pattern"
+//                val intent = Intent(this, VehiclePatternActivity::class.java)
+//                startActivity(intent)
+            } else if (pendingArr?.get(variable)?.equals("Visual Detail - LF", ignoreCase = true)) {
+                selectedPending = "visual"
+//                val intent = Intent(this, VisualDetailsActivity::class.java)
+//                startActivity(intent)
             }
         }
 
@@ -92,7 +107,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 var intent = Intent(this, CompletedVisualDetailActivity::class.java)
                 startActivity(intent)
             }
-            R.id.ivTyre4 -> {
+            R.id.ivInfoImg -> {
                 showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
             }
         }
@@ -155,6 +170,17 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         btnSend?.text = btnText
         btnSend.setOnClickListener {
             dialog?.dismiss()
+
+            if (selectedPending?.equals("pattern")) {
+//                selectedPending="pattern"
+                val intent = Intent(this, VehiclePatternActivity::class.java)
+                startActivity(intent)
+            } else if (selectedPending?.equals("visual", ignoreCase = true)) {
+//                selectedPending="visual"
+                val intent = Intent(this, VisualDetailsActivity::class.java)
+                startActivity(intent)
+            }
+
         }
 
         dialog?.show()

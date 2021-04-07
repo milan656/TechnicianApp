@@ -93,7 +93,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
             ivClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    okClicked = true;
+                    CloseClicked = true;
                     close();
                 }
             });
@@ -121,7 +121,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
             btn_reset.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    okClicked = true;
+                    ResetClicked = true;
                     close();
                 }
             });
@@ -351,9 +351,18 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
         bottomSheetHelper.hide();
 
         if (listener != null && okClicked) {
-            Log.e("getdatee11",""+picker.getDate());
-            listener.onDateSelected(picker.getDate());
+            Log.e("getdatee11", "" + picker.getDate());
+            listener.onDateSelected(picker.getDate(), "");
         }
+        if (listener != null && ResetClicked) {
+            Log.e("getdatee11", "" + picker.getDate());
+            listener.onDateSelected(picker.getDate(), "Reset");
+        }
+        if (listener != null && CloseClicked) {
+            Log.e("getdatee11", "" + picker.getDate());
+            listener.onDateSelected(picker.getDate(), "Close");
+        }
+
     }
 
     @Override
@@ -363,7 +372,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
     }
 
     public interface Listener {
-        void onDateSelected(Date date);
+        void onDateSelected(Date date, String s);
     }
 
     public interface DisplayListener {

@@ -480,10 +480,10 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
                                     android:layout_gravity="center"
-                                    android:gravity="start">
+                                    android:layout_weight="1"
+                                    android:gravity="start"
+                                    android:orientation="vertical">
 
                                     <LinearLayout
                                         android:layout_width="100dp"
@@ -534,10 +534,10 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
                                     android:layout_gravity="center"
-                                    android:gravity="center">
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
                                     <LinearLayout
                                         android:layout_width="100dp"
@@ -679,6 +679,11 @@
                                     android:layout_marginEnd="@dimen/ten_dp"
                                     android:gravity="center"
                                     android:orientation="horizontal">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1.5"
+                                        android:orientation="vertical" />
 
 
                                     <LinearLayout
@@ -712,8 +717,8 @@
 
                                                 <ImageView
                                                     android:id="@+id/ivTyre1"
-                                                    android:layout_width="62dp"
-                                                    android:layout_height="62dp"
+                                                    android:layout_width="68dp"
+                                                    android:layout_height="68dp"
                                                     android:layout_marginTop="@dimen/five_dp"
                                                     android:src="@mipmap/ic_tyre_config" />
 
@@ -739,8 +744,8 @@
 
                                                 <ImageView
                                                     android:id="@+id/ivTyre2"
-                                                    android:layout_width="62dp"
-                                                    android:layout_height="62dp"
+                                                    android:layout_width="68dp"
+                                                    android:layout_height="68dp"
                                                     android:src="@mipmap/ic_tyre_config" />
 
                                                 <ImageView
@@ -793,8 +798,8 @@
 
                                                 <ImageView
                                                     android:id="@+id/ivTyre3"
-                                                    android:layout_width="62dp"
-                                                    android:layout_height="62dp"
+                                                    android:layout_width="68dp"
+                                                    android:layout_height="68dp"
                                                     android:layout_marginTop="@dimen/five_dp"
                                                     android:src="@mipmap/ic_tyre_config" />
 
@@ -819,14 +824,26 @@
                                                 android:gravity="center"
                                                 android:orientation="vertical">
 
+                                                <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content">
 
-                                                <ImageView
 
-                                                    android:id="@+id/ivTyre4"
-                                                    android:layout_width="62dp"
-                                                    android:layout_height="62dp"
-                                                    android:src="@mipmap/ic_tyre_config" />
+                                                    <ImageView
+                                                        android:id="@+id/ivTyre4"
+                                                        android:layout_width="68dp"
+                                                        android:layout_height="68dp"
+                                                        android:layout_centerInParent="true"
+                                                        android:src="@mipmap/ic_tyre_config" />
 
+                                                    <ImageView
+                                                        android:id="@+id/ivInfoImg"
+                                                        android:layout_width="32dp"
+                                                        android:layout_height="32dp"
+                                                        android:layout_alignParentRight="true"
+                                                        android:src="@drawable/info_in_profile"
+                                                        app:tint="@color/header_title" />
+                                                </RelativeLayout>
 
                                                 <ImageView
                                                     android:layout_width="wrap_content"
@@ -843,6 +860,12 @@
                                         </RelativeLayout>
 
                                     </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1.5"
+                                        android:orientation="vertical" />
+
                                 </LinearLayout>
 
                             </RelativeLayout>

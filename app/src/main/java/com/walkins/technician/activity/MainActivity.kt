@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var prefManager: PrefManager? = null
 
     private var selectedMenu: String? = null
+    public var lltransparent: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     }
 
     private fun init() {
+        lltransparent = findViewById(R.id.lltransparent)
         ivHome = findViewById(R.id.ivHome)
         ivReport = findViewById(R.id.ivReport)
         ivProfile = findViewById(R.id.ivProfile)
