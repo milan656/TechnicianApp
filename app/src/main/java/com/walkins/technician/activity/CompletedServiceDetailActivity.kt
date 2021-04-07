@@ -2,9 +2,11 @@ package com.walkins.technician.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -20,7 +22,8 @@ import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.PendingTyreSuggestionAdpater
 import com.walkins.technician.common.onClickAdapter
 
-class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
+class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener,
+    View.OnTouchListener {
 
     private var pendingSuggestionsRecycView: RecyclerView? = null
     private var suggestionArr = arrayListOf(
@@ -37,9 +40,24 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var tvtyreServiceInfo: TextView? = null
     private var selectedPending = ""
 
+    private var tvTechnicalSuggetion: TextView? = null
+    private var tvTyreConfig: TextView? = null
+    private var tvServices: TextView? = null
+
     private var ivTyre4: ImageView? = null
     private var ivInfoImg: ImageView? = null
     private var title: String = ""
+    private var llservicecollapse: LinearLayout? = null
+    private var lltyreconfig: LinearLayout? = null
+    private var lltechnical: LinearLayout? = null
+    private var ivAddServices: ImageView? = null
+    private var ivAddTyreConfig: ImageView? = null
+    private var ivAddTechnicalSuggestion: ImageView? = null
+
+    private var llServiceExpanded: LinearLayout? = null
+    private var llTyreConfigExpanded: LinearLayout? = null
+    private var llTechnicalSuggestionExpanded: LinearLayout? = null
+    private var llUpdatedPlacement: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +67,22 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     }
 
     private fun init() {
+
+        tvTechnicalSuggetion = findViewById(R.id.tvTechnicalSuggetion)
+        tvServices = findViewById(R.id.tvServices)
+        tvTyreConfig = findViewById(R.id.tvTyreConfig)
+
+        llServiceExpanded = findViewById(R.id.llServiceExpanded)
+        llTechnicalSuggestionExpanded = findViewById(R.id.llTechnicalSuggestionExpanded)
+        llTyreConfigExpanded = findViewById(R.id.llTyreConfigExpanded)
+        llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
+
+        ivAddServices = findViewById(R.id.ivAddServices)
+        ivAddTechnicalSuggestion = findViewById(R.id.ivAddTechnicalSuggestion)
+        ivAddTyreConfig = findViewById(R.id.ivAddTyreConfig)
+        lltyreconfig = findViewById(R.id.lltyreconfig)
+        llservicecollapse = findViewById(R.id.llservicecollapse)
+        lltechnical = findViewById(R.id.lltechnical)
         tvtyreServiceInfo = findViewById(R.id.tvtyreServiceInfo)
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
@@ -76,6 +110,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
         ivInfoImg?.setOnClickListener(this)
+
+        ivAddServices?.setOnTouchListener(this)
+        ivAddTyreConfig?.setOnTouchListener(this)
+        ivAddTechnicalSuggestion?.setOnTouchListener(this)
+
 
         tvCurrentDateTime?.text = Common.getCurrentDateTime()
     }
@@ -183,7 +222,92 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
         }
 
-        dialog?.show()
+        dialog.show()
 
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        var id = v?.id
+
+        when (id) {
+            R.id.ivAddServices -> {
+                if (llServiceExpanded?.visibility == View.VISIBLE) {
+                    Common.collapse(llServiceExpanded!!)
+                    Common.collapse(llUpdatedPlacement!!)
+                    tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvServices?.isAllCaps = false
+                    ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
+                } else {
+                    ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
+                    tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvServices?.isAllCaps = true
+                    Common.expand(llServiceExpanded!!)
+
+                    if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llTyreConfigExpanded!!)
+                        ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
+                    }
+                    if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llTechnicalSuggestionExpanded!!)
+                        ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
+                    }
+
+                    tvTyreConfig?.isAllCaps = false
+                    tvTechnicalSuggetion?.isAllCaps = false
+                }
+            }
+            R.id.ivAddTyreConfig -> {
+                if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
+                    Common.collapse(llTyreConfigExpanded!!)
+                    tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTyreConfig?.isAllCaps = false
+                    ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
+                } else {
+                    ivAddTyreConfig?.setImageResource(R.mipmap.ic_minus_icon)
+                    tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTyreConfig?.isAllCaps = true
+                    Common.expand(llTyreConfigExpanded!!)
+                    if (llServiceExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llServiceExpanded!!)
+                        Common.collapse(llUpdatedPlacement!!)
+                        ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
+                    }
+                    if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llTechnicalSuggestionExpanded!!)
+                        ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
+                    }
+
+                    tvServices?.isAllCaps = false
+                    tvTechnicalSuggetion?.isAllCaps = false
+                }
+            }
+            R.id.ivAddTechnicalSuggestion -> {
+                if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
+                    Common.collapse(llTechnicalSuggestionExpanded!!)
+                    tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTechnicalSuggetion?.isAllCaps = false
+                    ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
+                } else {
+                    ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_minus_icon)
+                    tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTechnicalSuggetion?.isAllCaps = true
+
+                    Common.expand(llTechnicalSuggestionExpanded!!)
+                    if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llTyreConfigExpanded!!)
+                        ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
+                    }
+                    if (llServiceExpanded?.visibility == View.VISIBLE) {
+                        Common.collapse(llServiceExpanded!!)
+                        Common.collapse(llUpdatedPlacement!!)
+                        ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
+                    }
+                    tvServices?.isAllCaps = false
+                    tvTyreConfig?.isAllCaps = false
+                }
+            }
+
+        }
+        return false
     }
 }
