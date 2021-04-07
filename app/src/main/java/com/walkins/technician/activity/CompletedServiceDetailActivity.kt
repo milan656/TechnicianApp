@@ -58,6 +58,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var llTyreConfigExpanded: LinearLayout? = null
     private var llTechnicalSuggestionExpanded: LinearLayout? = null
     private var llUpdatedPlacement: LinearLayout? = null
+    private var lltechnicalbg: LinearLayout? = null
+    private var lltyreconfigbg: LinearLayout? = null
+    private var llservicebg: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +71,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
     private fun init() {
 
+        lltyreconfigbg = findViewById(R.id.lltyreconfigbg)
+        lltechnicalbg = findViewById(R.id.lltechnicalbg)
+        llservicebg = findViewById(R.id.llservicebg)
         tvTechnicalSuggetion = findViewById(R.id.tvTechnicalSuggetion)
         tvServices = findViewById(R.id.tvServices)
         tvTyreConfig = findViewById(R.id.tvTyreConfig)
@@ -233,11 +239,13 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             R.id.ivAddServices -> {
                 if (llServiceExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llServiceExpanded!!)
-                    Common.collapse(llUpdatedPlacement!!)
+//                    Common.collapse(llUpdatedPlacement!!)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = false
                     ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
+                    llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
+                    llservicebg?.setBackgroundDrawable(null)
                     ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = true
@@ -246,10 +254,12 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTyreConfigExpanded!!)
                         ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
+                        lltyreconfigbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTechnicalSuggestionExpanded!!)
                         ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
+                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
 
                     tvTyreConfig?.isAllCaps = false
@@ -262,19 +272,23 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTyreConfig?.isAllCaps = false
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
+                    lltyreconfigbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
+                    lltyreconfigbg?.setBackgroundDrawable(null)
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTyreConfig?.isAllCaps = true
                     Common.expand(llTyreConfigExpanded!!)
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
-                        Common.collapse(llUpdatedPlacement!!)
+//                        Common.collapse(llUpdatedPlacement!!)
                         ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
+                        llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTechnicalSuggestionExpanded!!)
                         ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
+                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
 
                     tvServices?.isAllCaps = false
@@ -287,7 +301,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTechnicalSuggetion?.isAllCaps = false
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
+                    lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
+                    lltechnicalbg?.setBackgroundDrawable(null)
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTechnicalSuggetion?.isAllCaps = true
@@ -296,11 +312,13 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTyreConfigExpanded!!)
                         ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
+                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
-                        Common.collapse(llUpdatedPlacement!!)
+//                        Common.collapse(llUpdatedPlacement!!)
                         ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
+                        llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
                     tvServices?.isAllCaps = false
                     tvTyreConfig?.isAllCaps = false
