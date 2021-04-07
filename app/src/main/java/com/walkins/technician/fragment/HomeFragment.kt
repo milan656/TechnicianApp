@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bruce.pickerview.popwindow.DatePickerPopWin
@@ -20,10 +19,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ramotion.fluidslider.FluidSlider
 import com.walkins.technician.R
 import com.walkins.technician.activity.ServiceListActivity
-import com.walkins.technician.adapter.*
+import com.walkins.technician.adapter.DialogueDateAdpater
+import com.walkins.technician.adapter.DialogueDateAdpaterMonth
+import com.walkins.technician.adapter.DialogueDateAdpaterYear
+import com.walkins.technician.adapter.HomeListAdpater
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.datepicker.SingleDateAndTimePicker
+import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.technician.model.login.date.DateModel
-import io.apptik.widget.MultiSlider
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -53,6 +57,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var adapterDay: DialogueDateAdpater? = null
     private var adapterMonth: DialogueDateAdpaterMonth? = null
     private var adapterYear: DialogueDateAdpaterYear? = null
+
+    var simpleDateFormat: SimpleDateFormat? = null
+    var simpleTimeFormat: SimpleDateFormat? = null
+    var simpleDateOnlyFormat: SimpleDateFormat? = null
+    var simpleDateLocaleFormat: SimpleDateFormat? = null
+    var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
+
 
     private var arrayList = arrayListOf("Gallery", "Camera")
     private var arrayListMonth = arrayListOf(
@@ -164,6 +175,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var homeRecycView: RecyclerView? = null
     private var adapter: HomeListAdpater? = null
     private var relNoDataView: RelativeLayout? = null
+    private var relmainContent: RelativeLayout? = null
     var currentYear: Int = 0
     var currentMonth: Int = 0
     var currentMonth_: String = ""
@@ -237,6 +249,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         ivFilter = view?.findViewById(R.id.ivFilter)
 
+        relmainContent = view?.findViewById(R.id.relmainContent)
         tvUsername = view?.findViewById(R.id.tvUsername)
         tvUsername?.text = "Hello, " + "Arun"
         homeRecycView = view.findViewById(R.id.homeRecycView)
@@ -397,17 +410,72 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val i = v?.id
         when (i) {
             R.id.ivFilter -> {
-                showBottomSheetdialogDate(
+                /*showBottomSheetdialogDate(
                     arrayListdays,
                     arrayListdaysFeb,
                     arrayListMonth,
                     arrayListYear,
                     "Choose Date",
                     context
-                )
+                )*/
+
+                simpleClicked()
             }
         }
     }
+
+    fun simpleClicked() {
+
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.DAY_OF_MONTH] = 4 // 4. Feb. 2018
+        calendar[Calendar.MONTH] = 1
+        calendar[Calendar.YEAR] = 2018
+        calendar[Calendar.HOUR_OF_DAY] = 11
+        calendar[Calendar.MINUTE] = 13
+        val defaultDate = calendar.time
+        singleBuilder = SingleDateAndTimePickerDialog.Builder(context)
+            .setTimeZone(TimeZone.getDefault())
+            .bottomSheet()
+            .curved() //.backgroundColor(Color.BLACK)
+            //.mainColor(Color.GREEN)
+            .displayHours(false)
+            .displayMinutes(false)
+            .displayDays(false)
+            .displayMonth(true)
+            .displayDaysOfMonth(true)
+            .displayYears(true)
+            .defaultDate(defaultDate)
+            .displayMonthNumbers(true) //.mustBeOnFuture()
+            //.minutesStep(15)
+            //.mustBeOnFuture()
+            //.defaultDate(defaultDate)
+            // .minDateRange(minDate)
+            // .maxDateRange(maxDate)
+            /*.displayListener(object : SingleDateAndTimePickerDialog.DisplayListener {
+                fun onDisplayed(picker: SingleDateAndTimePicker?) {
+                    TODO("Not yet implemented")
+                }
+
+                fun onClosed(picker: SingleDateAndTimePicker?) {
+                    TODO("Not yet implemented")
+                }
+
+
+
+            })*/
+            .title("Simple")
+            .listener(object : SingleDateAndTimePickerDialog.Listener {
+                override fun onDateSelected(date: Date?) {
+
+                    simpleDateFormat = SimpleDateFormat("dd MMMM YYYY")
+                    Log.e("getdatee", "" + simpleDateFormat?.format(date))
+
+                }
+            })
+        singleBuilder?.display()
+
+    }
+
 
     private fun openDateSelection() {
         val pickerPopWin = DatePickerPopWin.Builder(

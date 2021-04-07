@@ -1047,4 +1047,8 @@
     <string name="demo_min_label">Min</string>
     <string name="demo_max_label">Max</string>
     <string name="manufacturing_date">Manufacturing Date <font color='black'>*</font></string>
+    <string name="picker_today">Today</string>
+    <string name="picker_am">AM</string>
+    <string name="picker_pm">PM</string>
+
 </resources>
