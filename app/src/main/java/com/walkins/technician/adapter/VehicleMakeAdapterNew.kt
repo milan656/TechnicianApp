@@ -25,6 +25,7 @@ class VehicleMakeAdapterNew internal constructor(
         //        val textView = itemView.findViewById(R.id.tv_company_name) as TextView
         val ivVehicleImage = itemView.findViewById(R.id.ivVehicleImage) as ImageView
         val rlItemView = itemView.findViewById(R.id.rl_item_view) as RelativeLayout
+        val ivselectedVehicle = itemView.findViewById(R.id.ivselectedVehicle) as ImageView
     }
 
     private val positionClick: onClickAdapter = onPositionClick
@@ -66,6 +67,7 @@ class VehicleMakeAdapterNew internal constructor(
         holder.rlItemView.setOnClickListener {
             if (name!!.get(position).isSelected) {
                 // name!!.get(position).isSelected = false;
+                holder.ivselectedVehicle.visibility = View.VISIBLE
             } else {
                 for (date in name!!) {
                     if (date.isSelected) {
@@ -74,9 +76,16 @@ class VehicleMakeAdapterNew internal constructor(
                 }
 
                 name!!.get(position).isSelected = true;
+                holder.ivselectedVehicle?.visibility = View.VISIBLE
             }
             notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)
+        }
+
+        if (name?.get(position)?.isSelected!!) {
+            holder.ivselectedVehicle.visibility = View.VISIBLE
+        } else {
+            holder.ivselectedVehicle.visibility = View.GONE
         }
     }
 

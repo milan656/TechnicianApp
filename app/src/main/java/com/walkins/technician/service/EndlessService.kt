@@ -10,10 +10,10 @@ import android.os.IBinder
 import android.os.PowerManager
 import android.os.SystemClock
 import android.util.Log
-import android.widget.Toast
-import androidx.core.app.NotificationCompat
 import com.example.technician.common.PrefManager
 import com.example.technician.common.RetrofitCommonClass
+import com.google.gson.Gson
+import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.EntityClass
 import com.walkins.technician.R
@@ -38,6 +38,7 @@ class EndlessService : Service() {
     private var wakeLock: PowerManager.WakeLock? = null
     private var isServiceStarted = false
     var context: Context? = null
+    private var vehicleBrandModel: VehicleBrandModel? = null
 
     override fun onBind(intent: Intent): IBinder? {
         Log.e("ENDLESS-SERVICE", "Some component want to bind with the service")
@@ -190,18 +191,21 @@ class EndlessService : Service() {
         val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
 
         var call: Call<ResponseBody>? = null
-        call = warrantyApi.getVehicleType(prefManager?.getAccessToken()!!)
+        call = warrantyApi.getVehicleBrand("6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
+            prefManager?.getAccessToken()!! )
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     try {
-//                        val gson = Gson()
-//                        var vehicleTypeModel: VehicleTypeModel = gson.fromJson(
-//                            response.body().toString(),
-//                            VehicleTypeModel::class.java
-//                        )
+
+                        val gson = Gson()
+                        var vehicleBrandModel: VehicleBrandModel = gson.fromJson(
+                            response.body().toString(),
+                            VehicleBrandModel::class.java
+                        )
+                        Log.e("getmodel00::", "" + vehicleBrandModel)
 //                        checkDateTime
-                        saveVehicleTypeData()
+//                        saveVehicleTypeData(vehicleBrandModel)
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
@@ -213,7 +217,7 @@ class EndlessService : Service() {
 
     }
 
-    private fun saveVehicleTypeData() {
+    private fun saveVehicleTypeData(vehicleBrandModel: VehicleBrandModel) {
 
         var thread: Thread = Thread {
             if (mDb.daoClass().getAllVehicleType().size > 0) {
@@ -291,4 +295,6 @@ class EndlessService : Service() {
 
         return noti
     }
+
+
 }

@@ -6,6 +6,8 @@
     android:layout_margin="@dimen/ten_dp"
     android:background="@drawable/unselected">
 
+
+
     <ImageView
         android:id="@+id/ivVehicleImage"
         android:layout_width="110dp"
@@ -13,5 +15,10 @@
         android:scaleType="fitCenter"
         android:padding="@dimen/six_dp"
         android:src="@mipmap/car" />
-
+    <ImageView
+        android:id="@+id/ivselectedVehicle"
+        android:layout_width="12dp"
+        android:layout_height="10dp"
+        android:src="@drawable/ic_selected_vehicle"
+        android:layout_margin="@dimen/eight_dp" />
 </RelativeLayout>

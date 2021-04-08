@@ -53,7 +53,7 @@
                         android:paddingTop="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp"
                         android:buttonTint="@color/colorPrimary"
-                        android:text="Nitrogen Refill"
+                        android:text="Nitrogen Top Up"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/fourteen_sp" />
 
@@ -90,7 +90,7 @@
                         android:paddingBottom="@dimen/ten_dp"
 
                         android:buttonTint="@color/colorPrimary"
-                        android:text="Nitrogen Refill"
+                        android:text="Wheel Balancing"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/fourteen_sp" />
 
@@ -105,7 +105,7 @@
                         android:paddingBottom="@dimen/ten_dp"
 
                         android:buttonTint="@color/colorPrimary"
-                        android:text="Nitrogen Refill"
+                        android:text="Tyre Rotation"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/fourteen_sp" />
                 </LinearLayout>
@@ -204,6 +204,13 @@
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_marginBottom="@dimen/twenty_dp"
+            android:background="#E0E0E0" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -221,6 +228,8 @@
                 android:background="@drawable/round_corner_button_white"
                 android:gravity="center"
                 android:text="Cancel"
+                android:letterSpacing="0.06"
+                android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/sixteen_sp"
                 android:textStyle="bold" />

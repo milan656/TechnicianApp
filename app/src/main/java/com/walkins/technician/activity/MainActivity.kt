@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         setContentView(R.layout.activity_main)
         prefManager = PrefManager(this)
         init()
-//        actionOnService(Actions.START)
+        actionOnService(Actions.START)
 
     }
 

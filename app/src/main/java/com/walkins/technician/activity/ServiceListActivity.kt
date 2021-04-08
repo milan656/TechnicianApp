@@ -132,7 +132,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     this,
                     Common.btn_filled,
                     false,
-                    "Block No-2, Palm Spring,",
+                    "Palm Spring,",
                     "Vastrapur Road,",
                     "Opposite Siddhivinayak mandir,",
                     "Ahmedabad - 123456"
