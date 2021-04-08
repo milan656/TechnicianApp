@@ -1,12 +1,12 @@
 package com.walkins.technician.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +18,7 @@ import com.walkins.technician.DB.DBClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.common.SpacesItemDecoration
+import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.viewmodel.WarrantyViewModel
@@ -32,6 +33,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var tvTitle: TextView? = null
     var arrList: ArrayList<Data>? = ArrayList()
     private lateinit var mDb: DBClass
+    private var tyreConfigType: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,48 +50,56 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
 
-
         ivBack?.setOnClickListener(this)
-        tvTitle?.text = "Select Tyre Make - LF"
+
+        if (intent != null) {
+            if (intent.getStringExtra("title") != null) {
+                tvTitle?.text = intent.getStringExtra("title")
+            }
+            if (intent.getStringExtra("tyreConfigType") != null) {
+                TyreConfigClass.selectedTyreConfigType = intent.getStringExtra("tyreConfigType")!!
+            }
+        }
+//        tvTitle?.text = "Select Tyre Make - LF"
+        gridviewRecycMake_?.layoutManager =
+            GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+        gridviewRecycMake_?.addItemDecoration(
+            SpacesItemDecoration(
+                20
+            )
+        )
+        Log.e("getsizee", "" + arrList?.size)
+
+        adapter = VehicleMakeAdapterNew(this, arrList, this)
+        gridviewRecycMake_?.adapter = adapter
 
         var thread = Thread {
-            if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
-                    .getAllVehicleType()?.size > 0
-            ) {
 
-                for (i in mDb.daoClass().getAllVehicleType().indices) {
-                    var data = Data(
-                        mDb.daoClass().getAllVehicleType().get(i).brand_id,
-                        mDb.daoClass().getAllVehicleType().get(i).image_url,
-                        mDb.daoClass().getAllVehicleType().get(i).name,
-                        mDb.daoClass().getAllVehicleType().get(i).short_number,
-                        false,
-                        mDb.daoClass().getAllVehicleType().get(i).quality,
-                        mDb.daoClass().getAllVehicleType().get(i).vehicle_type
-                    )
+            fun run() {
+                runOnUiThread {
+                    Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
+                    if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
+                            .getAllVehicleType().size > 0
+                    ) {
+                        for (i in mDb.daoClass().getAllVehicleType().indices) {
+                            var data = Data(
+                                mDb.daoClass().getAllVehicleType().get(i).brand_id,
+                                mDb.daoClass().getAllVehicleType().get(i).image_url,
+                                mDb.daoClass().getAllVehicleType().get(i).name,
+                                mDb.daoClass().getAllVehicleType().get(i).short_number,
+                                false,
+                                mDb.daoClass().getAllVehicleType().get(i).quality,
+                                mDb.daoClass().getAllVehicleType().get(i).vehicle_type
+                            )
 
-                    arrList?.add(data)
+                            arrList?.add(data)
+                        }
+                        adapter?.notifyDataSetChanged()
+                    }
                 }
-                gridviewRecycMake_?.layoutManager =
-                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-                gridviewRecycMake_?.addItemDecoration(
-                    SpacesItemDecoration(
-                        20
-                    )
-                )
-
-                adapter = VehicleMakeAdapterNew(this, arrList, this)
-                gridviewRecycMake_?.adapter = adapter
-
-
             }
-
         }
-
         thread.start()
-
-
-//        getVehicleMake()
     }
 
     fun getVehicleMake() {

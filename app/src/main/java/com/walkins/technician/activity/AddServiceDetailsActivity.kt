@@ -155,7 +155,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivTyre2?.setOnTouchListener(this)
         ivTyre3?.setOnTouchListener(this)
         ivTyre4?.setOnTouchListener(this)
-        tvTyreAddInfo?.setOnTouchListener(this)
         ivAddServices?.setOnTouchListener(this)
         ivAddTyreConfig?.setOnTouchListener(this)
         llTyreConfigExpanded?.setOnTouchListener(this)
@@ -421,8 +420,24 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val intent = Intent(this, VehicleMakeActivity::class.java)
         when (id) {
 
-            R.id.tvTyreAddInfo -> {
-
+            R.id.ivTyre1 -> {
+                intent.putExtra("tyreConfigType", "LF")
+                intent.putExtra("title", "Select Tyre Make - LF")
+                startActivityForResult(intent, 1000)
+            }
+            R.id.ivTyre3 -> {
+                intent.putExtra("tyreConfigType", "RF")
+                intent.putExtra("title", "Select Tyre Make - RF")
+                startActivityForResult(intent, 1000)
+            }
+            R.id.ivTyre2 -> {
+                intent.putExtra("tyreConfigType", "LR")
+                intent.putExtra("title", "Select Tyre Make - LR")
+                startActivityForResult(intent, 1000)
+            }
+            R.id.ivTyre4 -> {
+                intent.putExtra("tyreConfigType", "RR")
+                intent.putExtra("title", "Select Tyre Make - RR")
                 startActivityForResult(intent, 1000)
             }
             R.id.ivAddServices -> {

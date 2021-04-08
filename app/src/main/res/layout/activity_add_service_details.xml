@@ -830,7 +830,7 @@
                             android:layout_marginTop="@dimen/twelve_dp"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <com.walkins.technician.custom.NormalTextView
                                 android:id="@+id/tvTyreAddInfo"

@@ -17,6 +17,7 @@ import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleModelAdapter
 import com.walkins.technician.common.SpacesItemDecoration
+import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.viewmodel.WarrantyViewModel
@@ -47,7 +48,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         ivBack = findViewById(R.id.ivBack)
 
         ivBack?.setOnClickListener(this)
-        tvTitle?.text = "Select Tyre Size - LF"
+        tvTitle?.text = "Select Tyre Size - " + TyreConfigClass.selectedTyreConfigType
 
         getVehicleMake()
     }
@@ -128,7 +129,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getmake", "" + arrList?.get(variable)?.name)
         val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
         intent.putExtra("which", "vehiclesize")
-        startActivityForResult(intent,1005)
+        startActivityForResult(intent, 1005)
 
     }
 
@@ -143,7 +144,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.e("getresult22",""+resultCode)
+        Log.e("getresult22", "" + resultCode)
         when (resultCode) {
 
             1001 -> {

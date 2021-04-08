@@ -17,6 +17,7 @@ import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleModelAdapter
 import com.walkins.technician.common.SpacesItemDecoration
+import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.viewmodel.WarrantyViewModel
@@ -47,7 +48,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         ivBack = findViewById(R.id.ivBack)
 
         ivBack?.setOnClickListener(this)
-        tvTitle?.text = "Select Tyre Pattern - LF"
+        tvTitle?.text = "Select Tyre Pattern - " + TyreConfigClass.selectedTyreConfigType
 
         getVehicleMake()
     }
@@ -128,7 +129,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         Log.e("getmake", "" + arrList?.get(variable)?.name)
         val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
         intent.putExtra("which", "vehiclepattern")
-        startActivityForResult(intent,1006)
+        startActivityForResult(intent, 1006)
 
     }
 

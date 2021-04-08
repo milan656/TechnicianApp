@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.walkins.technician.R
+import com.walkins.technician.common.TyreConfigClass
 
 class VehicleMakeApplyTyreActivty : AppCompatActivity(), View.OnClickListener {
     private var ivBack: ImageView? = null
@@ -42,15 +43,16 @@ class VehicleMakeApplyTyreActivty : AppCompatActivity(), View.OnClickListener {
             if (intent?.getStringExtra("which") != null) {
 
                 if (intent?.getStringExtra("which").equals("vehiclemake")) {
-                    tvTitle?.text = "Select Tyre Make - LF"
+                    tvTitle?.text = "Select Tyre Make - " + TyreConfigClass.selectedTyreConfigType
                     tvSelectTyre?.text = "Select tyres to apply tyre make"
                     isFromVehicleMake = true
                 } else if (intent?.getStringExtra("which").equals("vehiclepattern")) {
-                    tvTitle?.text = "Select Tyre Pattern - LF"
+                    tvTitle?.text =
+                        "Select Tyre Pattern - " + TyreConfigClass.selectedTyreConfigType
                     tvSelectTyre?.text = "Select tyres to apply tyre pattern"
                     isFromVehiclePattern = true
                 } else if (intent?.getStringExtra("which").equals("vehiclesize")) {
-                    tvTitle?.text = "Select Tyre Size - LF"
+                    tvTitle?.text = "Select Tyre Size - " + TyreConfigClass.selectedTyreConfigType
                     tvSelectTyre?.text = "Select tyres to apply tyre size"
                     isFromVehicleSize = true
                 }
