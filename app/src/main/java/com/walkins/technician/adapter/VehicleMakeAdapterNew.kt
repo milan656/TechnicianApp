@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.jkadvantage.model.vehicleBrandModel.Data
+import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
 
 
 class VehicleMakeAdapterNew internal constructor(
     private val mContext: Context,
-    private var name: List<Data>?,
+    private var name: ArrayList<Data>?,
     onPositionClick: onClickAdapter
 
 ) : RecyclerView.Adapter<VehicleMakeAdapterNew.ViewHolder>() {

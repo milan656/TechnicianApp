@@ -27,6 +27,7 @@ class VehicleModelAdapter internal constructor(
 
         //        val ivVehicleImage = itemView.findViewById(R.id.ivVehicleImage) as ImageView
         val rlItemView = itemView.findViewById(R.id.rl_item_view) as LinearLayout
+        val ivselectedVehicleModel = itemView.findViewById(R.id.ivselectedVehicleModel) as ImageView
     }
 
     private val positionClick: onClickAdapter = onPositionClick
@@ -77,6 +78,7 @@ class VehicleModelAdapter internal constructor(
                 }
 
                 name!!.get(position).isSelected = true;
+                holder.ivselectedVehicleModel?.visibility=View.VISIBLE
             }
             notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)

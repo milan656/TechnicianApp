@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_item_view"
-    android:layout_width="wrap_content"
-    android:layout_height="60dp"
+    android:layout_width="88dp"
+    android:layout_height="50dp"
     android:layout_margin="@dimen/ten_dp"
     android:background="@drawable/unselected"
     android:gravity="center"
@@ -19,9 +19,10 @@
         >
 
         <ImageView
-            android:id="@+id/ivselectedVehicle"
+            android:id="@+id/ivselectedVehicleModel"
             android:layout_width="12dp"
             android:layout_height="10dp"
+            android:visibility="gone"
             android:src="@drawable/ic_selected_vehicle"
             android:layout_marginStart="@dimen/five_dp"
             android:layout_marginLeft="@dimen/five_dp" />

@@ -12,10 +12,10 @@ import android.os.SystemClock
 import android.util.Log
 import com.example.technician.common.PrefManager
 import com.example.technician.common.RetrofitCommonClass
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
-import com.walkins.technician.DB.EntityClass
+import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.networkApi.WarrantyApi
@@ -191,21 +191,23 @@ class EndlessService : Service() {
         val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
 
         var call: Call<ResponseBody>? = null
-        call = warrantyApi.getVehicleBrand("6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
-            prefManager?.getAccessToken()!! )
+        call = warrantyApi.getVehicleBrand(
+            "6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
+            prefManager?.getAccessToken()!!
+        )
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     try {
 
-                        val gson = Gson()
+                        val gson = GsonBuilder().create()
                         var vehicleBrandModel: VehicleBrandModel = gson.fromJson(
-                            response.body().toString(),
+                            response?.body()?.string(),
                             VehicleBrandModel::class.java
                         )
                         Log.e("getmodel00::", "" + vehicleBrandModel)
 //                        checkDateTime
-//                        saveVehicleTypeData(vehicleBrandModel)
+                        saveVehicleTypeData(vehicleBrandModel)
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
@@ -223,14 +225,23 @@ class EndlessService : Service() {
             if (mDb.daoClass().getAllVehicleType().size > 0) {
                 mDb.daoClass().deleteAll()
             }
-            var entity = EntityClass()
-            entity.vehicle_type_id =
-                "hgkfdjkgfjkdgljfldk"
-            entity.name = "entityname"
-            entity.image_url = "image"
-            entity.type = "car"
 
-            mDb.daoClass().saveVehicleType(entity)
+            for (i in vehicleBrandModel?.data?.indices!!) {
+
+                var model = vehicleBrandModel.data.get(i)
+                var entity = VehicleMakeModelClass()
+
+                entity.vehicle_type =
+                    model.vehicle_type
+                entity.name = model.name
+                entity.image_url = model.image_url
+                entity.quality = model.quality
+                entity.brand_id = model.brand_id
+                entity.isSelected = false
+                entity.short_number = model.short_number
+                mDb.daoClass().saveVehicleType(entity)
+            }
+
             Log.e("response+++", "++++" + mDb.daoClass().getAllVehicleType().size)
         }
 

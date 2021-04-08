@@ -256,14 +256,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 "Basic ZG9vcnN0ZXA6MTIz=", versionCode, deviceName, androidOS, null
             )
         }*/
-        "222111"?.toLowerCase()?.trim({ it <= ' ' })?.let {
+        /*"222111"?.toLowerCase()?.trim({ it <= ' ' })?.let {
             loginViewModel.init(
                 it,
                 "12345".trim({ it <= ' ' }),
                 "password",
                 "Basic ZG9vcnN0ZXA6MTIz==", versionCode, deviceName, androidOS, null
             )
-        }
+        }*/
+
+        loginViewModel.init(
+            "222111".trim({ it <= ' ' }),
+            "12345".trim({ it <= ' ' }),
+            "password",
+            "Basic amt0eXJlOjEyMw==", versionCode, deviceName, androidOS, null
+        )
 
         loginViewModel.getLoginData()?.observe(this@LoginActivity, Observer {
 

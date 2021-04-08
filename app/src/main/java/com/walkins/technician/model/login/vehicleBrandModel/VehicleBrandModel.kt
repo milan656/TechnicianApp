@@ -20,9 +20,7 @@ data class VehicleBrandModel(
     @SerializedName("status")
     @Expose
     var status: Int,
-    var isRFSelected: Boolean = false,
-    var isLRSelected: Boolean = false,
-    var isRRSelected: Boolean = false,
+
     @SerializedName("statusCode")
     @Expose
     var statusCode: Int,
