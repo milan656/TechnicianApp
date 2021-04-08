@@ -126,7 +126,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getmake", "" + arrList?.get(variable)?.name)
         val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
         intent.putExtra("which", "vehiclemake")
-        startActivityForResult(intent,1001)
+
+        startActivityForResult(intent, 1001)
 
     }
 

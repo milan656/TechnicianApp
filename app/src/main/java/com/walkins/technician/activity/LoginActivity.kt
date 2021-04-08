@@ -248,12 +248,22 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             androidOS = field.name
         }
 
-        loginViewModel.init(
-            "222111".toLowerCase().trim({ it <= ' ' }),
-            "12345".trim({ it <= ' ' }),
-            "password",
-            "Basic amt0eXJlOjEyMw==", versionCode, deviceName, androidOS, null
-        )
+      /*  edtLoginEmail.text?.toString()?.toLowerCase()?.trim({ it <= ' ' })?.let {
+            loginViewModel.init(
+                it,
+                "jktyre@12345".trim({ it <= ' ' }),
+                "password",
+                "Basic ZG9vcnN0ZXA6MTIz=", versionCode, deviceName, androidOS, null
+            )
+        }*/
+        "222111"?.toLowerCase()?.trim({ it <= ' ' })?.let {
+            loginViewModel.init(
+                it,
+                "12345".trim({ it <= ' ' }),
+                "password",
+                "Basic ZG9vcnN0ZXA6MTIz==", versionCode, deviceName, androidOS, null
+            )
+        }
 
         loginViewModel.getLoginData()?.observe(this@LoginActivity, Observer {
 
@@ -430,7 +440,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                 } else {
                     try {
-                        loginFail(it.error.get(0).message)
+                        loginFail(it.error.get(0).message,"Oops!")
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -440,7 +450,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun loginFail(message: String) {
+    private fun loginFail(message: String,title:String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -453,7 +463,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
         val tv_message = root.findViewById<TextView>(R.id.tv_message)
-        val tv_dialogTitle = root.findViewById<TextView>(R.id.tv_dialogTitle)
+        val tv_dialogTitle = root.findViewById<TextView>(R.id.tvTitleText)
 
         tv_dialogTitle?.setText("Oops!")
 

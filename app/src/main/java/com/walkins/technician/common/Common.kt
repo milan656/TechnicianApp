@@ -56,6 +56,7 @@ class Common {
 
     companion object {
         var url: String? = "https://staging-backend.jkadvantage.co.in/api/"
+//        var url: String? = "http://52.3.195.148:5015/api/"
 
         var urlStaging: String? = "http://qa-picture.jktyrecrm.in/#/sM1I8A"
         var urlRelease: String? = "https://picture.jktyrecrm.in/#/sM1I8A"
