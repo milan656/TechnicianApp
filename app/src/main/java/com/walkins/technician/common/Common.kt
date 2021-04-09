@@ -721,10 +721,12 @@ class Common {
             view1.visibility = View.VISIBLE
         }
 
-        fun slideDown(view: View, view1: View) {
+        fun slideDown(view: View, view1: View?) {
             view.visibility = View.VISIBLE
-            view1.visibility = View.VISIBLE
 
+            if (view1 != null) {
+                view1.visibility = View.VISIBLE
+            }
             val layoutParams = view.layoutParams
             layoutParams.height = 1
             view.layoutParams = layoutParams
@@ -771,6 +773,28 @@ class Common {
                             view.layoutParams = layoutParams
                         } else {
                             view.visibility = View.GONE
+
+                        }
+                    }
+                })
+                valueAnimator.start()
+            }
+        }
+
+        fun slideUp(view: View, view1: View) {
+            view.post {
+                val height = view.height
+                val valueAnimator: ValueAnimator = ObjectAnimator.ofInt(height, 0)
+                valueAnimator.addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
+                    override fun onAnimationUpdate(animation: ValueAnimator) {
+                        val value = animation.getAnimatedValue() as Int
+                        if (value > 0) {
+                            val layoutParams = view.layoutParams
+                            layoutParams.height = value
+                            view.layoutParams = layoutParams
+                        } else {
+                            view.visibility = View.GONE
+                            view1.visibility = View.GONE
 
                         }
                     }

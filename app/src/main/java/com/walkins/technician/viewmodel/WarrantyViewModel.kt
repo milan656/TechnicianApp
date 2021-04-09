@@ -28,7 +28,7 @@ class WarrantyViewModel : ViewModel() {
 
     }
 
-    fun getVehiclePattern(brand_id: String, accessToken: String, context: Context) {
+    fun getVehiclePattern(brand_id: Int, context: Context) {
 
         warrantyRepository = WarrantyRepository().getInstance()
         PatternModel =

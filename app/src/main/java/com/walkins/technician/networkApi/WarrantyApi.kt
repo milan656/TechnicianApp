@@ -28,7 +28,7 @@ interface WarrantyApi {
         /*@Query("vehicle_type_id") category: String, @Header("Authorization") authorization: String*/
     ): Call<ResponseBody>
 
-    @GET("get-tyre-get-tyre-size")
+    @GET("get-tyre-size")
     fun getVehicleTyreSize(
         @Query("model_id") model_id: Int, @Query("make_id") make_id: Int
     ): Call<ResponseBody>

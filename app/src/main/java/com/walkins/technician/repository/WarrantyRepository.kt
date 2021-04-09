@@ -79,11 +79,11 @@ class WarrantyRepository {
     }
 
     fun getVehiclePattern(
-        brand_id: String,
+        brand_id: Int,
         context: Context
     ): MutableLiveData<PatternModel> {
         var otpData = MutableLiveData<PatternModel>()
-        otpApi.getTyrePattern(/*vehicle_type_id, access_token*/brand_id.toInt())
+        otpApi.getTyrePattern(brand_id)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,

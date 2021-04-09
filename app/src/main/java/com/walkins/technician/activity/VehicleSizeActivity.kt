@@ -3,7 +3,6 @@ package com.walkins.technician.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -15,11 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
-import com.jkadvantage.model.vehicleBrandModel.Data
-import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.R
-import com.walkins.technician.adapter.VehicleModelAdapter
 import com.walkins.technician.adapter.VehicleSizeAdapter
 import com.walkins.technician.common.SpacesItemDecoration
 import com.walkins.technician.common.TyreConfigClass
@@ -42,6 +38,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private lateinit var mDb: DBClass
     private var llVehicleMakeselectedView: LinearLayout? = null
     private var btnNext: Button? = null
+    private var tvSelectedModel: TextView? = null
+    private var ivEditVehicleMake: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,13 +57,13 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         gridviewRecycModel = findViewById(R.id.gridviewRecycModel)
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
-
+        tvSelectedModel = findViewById(R.id.tvSelectedModel)
         ivBack?.setOnClickListener(this)
         btnNext?.setOnClickListener(this)
         tvTitle?.text = "Select Tyre Size - " + TyreConfigClass.selectedTyreConfigType
-
+        ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
 //        getVehicleMake()
-
+        ivEditVehicleMake?.setOnClickListener(this)
         gridviewRecycModel?.layoutManager =
             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
         gridviewRecycModel?.addItemDecoration(
@@ -115,13 +113,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     fun getVehicleMake() {
         Common.showLoader(this)
-        prefManager.getAccessToken()?.let {
-            warrantyViewModel.getVehicleSize(
-                460, 41,
-                this@VehicleSizeActivity
 
-            )
-        }
+        warrantyViewModel.getVehicleSize(460,41,this)
 
         warrantyViewModel.getVehicleSize()
             ?.observe(this@VehicleSizeActivity, androidx.lifecycle.Observer {
@@ -191,6 +184,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Common.slideUp(gridviewRecycModel!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
+        tvSelectedModel?.text = arrList?.get(variable)?.name
+
     }
 
     override fun onClick(v: View?) {
@@ -204,6 +199,11 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 //                intent.putExtra("which", "vehiclesize")
                 startActivityForResult(intent, 1005)
             }
+            R.id.ivEditVehicleMake -> {
+                Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
+                Common.slideDown(gridviewRecycModel!!, null)
+            }
+
         }
     }
 

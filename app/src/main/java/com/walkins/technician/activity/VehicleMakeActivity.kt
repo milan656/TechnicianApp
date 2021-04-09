@@ -20,7 +20,6 @@ import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.Data
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
-import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.common.SpacesItemDecoration
@@ -43,6 +42,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var llVehicleMakeselectedView: LinearLayout? = null
     private var btnNext: Button? = null
     private var ivSelectedCar: ImageView? = null
+    private var ivEditVehicleMake: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +58,14 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         ivBack = findViewById(R.id.ivBack)
 
         ivSelectedCar = findViewById(R.id.ivSelectedCar)
+        ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
         gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
         btnNext = findViewById(R.id.btnNext)
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
 
         ivBack?.setOnClickListener(this)
         btnNext?.setOnClickListener(this)
+        ivEditVehicleMake?.setOnClickListener(this)
 
         if (intent != null) {
             if (intent.getStringExtra("title") != null) {
@@ -237,6 +239,12 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             R.id.btnNext -> {
                 var intent = Intent(this, VehiclePatternActivity::class.java)
                 startActivityForResult(intent, 1002)
+            }
+            R.id.ivEditVehicleMake -> {
+                Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
+
+                Common.slideDown(gridviewRecycMake_!!, null)
+
             }
         }
     }

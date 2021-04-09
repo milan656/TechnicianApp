@@ -24,8 +24,6 @@ import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.model.login.patternmodel.PatternData
 import com.walkins.technician.model.login.patternmodel.PatternModel
-import com.walkins.technician.model.login.sizemodel.SizeData
-import com.walkins.technician.model.login.sizemodel.SizeModel
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
 class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
@@ -42,6 +40,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
     private lateinit var mDb: DBClass
     private var btnNext: Button? = null
     private var llVehicleMakeselectedView: LinearLayout? = null
+    private var tvSelectedModel: TextView? = null
+    private var ivEditVehicleMake: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +58,12 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         ivBack = findViewById(R.id.ivBack)
         btnNext = findViewById(R.id.btnNext)
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
+        tvSelectedModel = findViewById(R.id.tvSelectedModel)
+        ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
 
         ivBack?.setOnClickListener(this)
         btnNext?.setOnClickListener(this)
+        ivEditVehicleMake?.setOnClickListener(this)
         tvTitle?.text = "Select Tyre Pattern - " + TyreConfigClass.selectedTyreConfigType
 
 
@@ -74,7 +77,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         adapter = VehiclePatternAdapter(this, arrList, this)
         gridviewRecycModel?.adapter = adapter
-        gridviewRecycModel?.visibility = View.GONE
+
         getVehicleMake()
 
         /* var thread = Thread {
@@ -112,13 +115,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
     fun getVehicleMake() {
         Common.showLoader(this)
-        prefManager.getAccessToken()?.let {
-            warrantyViewModel.getVehiclePattern(
-                "3",
-                it, this@VehiclePatternActivity
 
-            )
-        }
+        warrantyViewModel.getVehiclePattern(3, this)
 
         warrantyViewModel.getVehiclePattern()
             ?.observe(this@VehiclePatternActivity, androidx.lifecycle.Observer {
@@ -127,8 +125,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     if (it.success) {
                         patternModel = it
                         Log.e("getmodel00::", "" + patternModel)
-
-
 
                         for (i in it.data?.indices!!) {
                             if (!it.data.get(i).name.equals("Other", ignoreCase = true)) {
@@ -183,6 +179,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         Common.slideUp(gridviewRecycModel!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
+        tvSelectedModel?.text = arrList?.get(variable)?.name
+
 
     }
 
@@ -195,6 +193,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             R.id.btnNext -> {
                 var intent = Intent(this, VehicleSizeActivity::class.java)
                 startActivityForResult(intent, 1003)
+            }
+            R.id.ivEditVehicleMake -> {
+                Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
+                Common.slideDown(gridviewRecycModel!!, null)
             }
 
         }

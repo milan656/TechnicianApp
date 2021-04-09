@@ -101,11 +101,16 @@
                         android:background="@drawable/selected"
                         android:orientation="vertical">
 
-                        <ImageView
+                        <com.walkins.technician.custom.NormalTextView
+                            android:id="@+id/tvSelectedModel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/ten_dp"
-                            android:src="@mipmap/car" />
+                            android:textSize="@dimen/fourteen_dp"
+                            android:textColor="@color/text_color1"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                             />
                     </LinearLayout>
 
                     <ImageView
