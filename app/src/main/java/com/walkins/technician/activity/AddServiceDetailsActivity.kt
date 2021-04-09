@@ -35,6 +35,7 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
+import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.custom.BoldButton
 import java.io.File
@@ -424,21 +425,25 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 intent.putExtra("tyreConfigType", "LF")
                 intent.putExtra("title", "Select Tyre Make - LF")
                 startActivityForResult(intent, 1000)
+                TyreConfigClass.selectedTyreConfigType = "LFpending"
             }
             R.id.ivTyre3 -> {
                 intent.putExtra("tyreConfigType", "RF")
                 intent.putExtra("title", "Select Tyre Make - RF")
                 startActivityForResult(intent, 1000)
+                TyreConfigClass.selectedTyreConfigType = "RFpending"
             }
             R.id.ivTyre2 -> {
                 intent.putExtra("tyreConfigType", "LR")
                 intent.putExtra("title", "Select Tyre Make - LR")
                 startActivityForResult(intent, 1000)
+                TyreConfigClass.selectedTyreConfigType = "LRpending"
             }
             R.id.ivTyre4 -> {
                 intent.putExtra("tyreConfigType", "RR")
                 intent.putExtra("title", "Select Tyre Make - RR")
                 startActivityForResult(intent, 1000)
+                TyreConfigClass.selectedTyreConfigType = "RRpending"
             }
             R.id.ivAddServices -> {
                 if (llServiceExpanded?.visibility == View.VISIBLE) {
@@ -451,7 +456,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     showHideUpdatedPlacement()
                     ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
-                    tvServices?.isAllCaps = true
+                    tvServices?.isAllCaps = false
                     Common.expand(llServiceExpanded!!)
 
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
@@ -476,7 +481,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 } else {
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
-                    tvTyreConfig?.isAllCaps = true
+                    tvTyreConfig?.isAllCaps = false
                     Common.expand(llTyreConfigExpanded!!)
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
@@ -501,7 +506,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 } else {
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
-                    tvTechnicalSuggetion?.isAllCaps = true
+                    tvTechnicalSuggetion?.isAllCaps = false
 
                     Common.expand(llTechnicalSuggestionExpanded!!)
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
@@ -647,6 +652,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //                    imagePath?.let { uploadCIPImage(it) }
                 }
             }
+            1000 -> {
+                Log.e("getvaluesss", "" + TyreConfigClass.selectedTyreConfigType)
+
+                if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
+                    ivTyre1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                }
+                if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
+                    ivTyre3?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                }
+                if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
+                    ivTyre2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                }
+                if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
+                    ivTyre4?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                }
+            }
         }
     }
 
@@ -726,4 +747,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_RESULT)
     }
+
+
 }

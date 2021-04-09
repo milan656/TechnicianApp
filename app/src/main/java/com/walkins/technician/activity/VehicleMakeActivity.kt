@@ -2,9 +2,12 @@ package com.walkins.technician.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -34,6 +37,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     var arrList: ArrayList<Data>? = ArrayList()
     private lateinit var mDb: DBClass
     private var tyreConfigType: String = ""
+    private var llVehicleMakeselectedView: LinearLayout? = null
+    private var btnNext: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +54,11 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         ivBack = findViewById(R.id.ivBack)
 
         gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
+        btnNext = findViewById(R.id.btnNext)
+        llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
 
         ivBack?.setOnClickListener(this)
+        btnNext?.setOnClickListener(this)
 
         if (intent != null) {
             if (intent.getStringExtra("title") != null) {
@@ -72,34 +80,38 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         adapter = VehicleMakeAdapterNew(this, arrList, this)
         gridviewRecycMake_?.adapter = adapter
+        gridviewRecycMake_?.visibility = View.GONE
 
         var thread = Thread {
 
-            fun run() {
-                runOnUiThread {
-                    Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
-                    if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
-                            .getAllVehicleType().size > 0
-                    ) {
-                        for (i in mDb.daoClass().getAllVehicleType().indices) {
-                            var data = Data(
-                                mDb.daoClass().getAllVehicleType().get(i).brand_id,
-                                mDb.daoClass().getAllVehicleType().get(i).image_url,
-                                mDb.daoClass().getAllVehicleType().get(i).name,
-                                mDb.daoClass().getAllVehicleType().get(i).short_number,
-                                false,
-                                mDb.daoClass().getAllVehicleType().get(i).quality,
-                                mDb.daoClass().getAllVehicleType().get(i).vehicle_type
-                            )
+            Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
+            if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
+                    .getAllVehicleType().size > 0
+            ) {
+                for (i in mDb.daoClass().getAllVehicleType().indices) {
+                    var data = Data(
+                        mDb.daoClass().getAllVehicleType().get(i).brand_id,
+                        mDb.daoClass().getAllVehicleType().get(i).image_url,
+                        mDb.daoClass().getAllVehicleType().get(i).name,
+                        mDb.daoClass().getAllVehicleType().get(i).short_number,
+                        false,
+                        mDb.daoClass().getAllVehicleType().get(i).quality,
+                        mDb.daoClass().getAllVehicleType().get(i).vehicle_type
+                    )
 
-                            arrList?.add(data)
-                        }
-                        adapter?.notifyDataSetChanged()
-                    }
+                    arrList?.add(data)
                 }
+
             }
+
         }
         thread.start()
+
+        var handler = Handler()
+        handler.postDelayed(Runnable {
+            adapter?.notifyDataSetChanged()
+            gridviewRecycMake_?.visibility = View.VISIBLE
+        }, 2000)
     }
 
     fun getVehicleMake() {
@@ -173,11 +185,15 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-        Log.e("getmake", "" + arrList?.get(variable)?.name)
+        /*Log.e("getmake", "" + arrList?.get(variable)?.name)
         val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
         intent.putExtra("which", "vehiclemake")
 
-        startActivityForResult(intent, 1001)
+        startActivityForResult(intent, 1001)*/
+
+        Common.slideUp(gridviewRecycMake_!!)
+
+        Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
     }
 
@@ -187,6 +203,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             R.id.ivBack -> {
                 onBackPressed()
             }
+            R.id.btnNext -> {
+                var intent = Intent(this, VehiclePatternActivity::class.java)
+                startActivityForResult(intent, 1002)
+            }
         }
     }
 
@@ -195,6 +215,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         when (resultCode) {
             1001 -> {
+                setResult(1000)
+                finish()
+            }
+            1002 -> {
                 setResult(1000)
                 finish()
             }

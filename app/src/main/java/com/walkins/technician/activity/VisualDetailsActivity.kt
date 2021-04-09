@@ -16,6 +16,7 @@ import com.ramotion.fluidslider.FluidSlider
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
+import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
@@ -197,10 +198,24 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 onBackPressed()
             }
             R.id.btnDone -> {
+                if (TyreConfigClass.selectedTyreConfigType.equals("LFpending")) {
+                    TyreConfigClass.selectedTyreConfigType = "LF"
+                }
+                if (TyreConfigClass.selectedTyreConfigType.equals("RFpending")) {
+                    TyreConfigClass.selectedTyreConfigType = "RF"
+                }
+                if (TyreConfigClass.selectedTyreConfigType.equals("LRpending")) {
+                    TyreConfigClass.selectedTyreConfigType = "LR"
+                }
+                if (TyreConfigClass.selectedTyreConfigType.equals("RRpending")) {
+                    TyreConfigClass.selectedTyreConfigType = "RR"
+                }
                 setResult(1004)
                 finish()
             }
+
+
         }
     }
-
 }
+

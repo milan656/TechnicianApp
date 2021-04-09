@@ -1,5 +1,7 @@
 package com.example.technician.common
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
@@ -8,6 +10,7 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -15,12 +18,10 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -30,21 +31,19 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.walkins.technician.R
-import com.walkins.technician.activity.LoginActivity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jkadvantagandbadsha.model.login.UserModel
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
+import com.walkins.technician.R
+import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.custom.BoldButton
-import com.jkadvantage.model.vehicleTypeModel.VehicleTypeModel
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.File
 import java.io.IOException
-import java.lang.IllegalArgumentException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -475,7 +474,6 @@ class Common {
         }
 
 
-
         fun dateTo(date: String): String {
             var displayDate = ""
             try {
@@ -673,6 +671,83 @@ class Common {
             // MediaStore (and general)
 
             return null
+        }
+
+        fun slideToBottom(view: View) {
+            val animate = TranslateAnimation(0f, 0f, 0f, view.height.toFloat())
+            animate.setDuration(500)
+            animate.setFillAfter(true)
+            view.startAnimation(animate)
+
+            view.visibility = View.GONE
+        }
+
+
+        fun slideToTop(view: View, view1: View) {
+            val animate = TranslateAnimation(0f, 0f, view.height.toFloat(), 0f)
+            animate.setDuration(1000)
+            animate.setFillAfter(true)
+            view.startAnimation(animate)
+            view.visibility = View.VISIBLE
+            view1.visibility = View.VISIBLE
+        }
+
+        fun slideDown(view: View, view1: View) {
+            view.visibility = View.VISIBLE
+            view1.visibility = View.VISIBLE
+
+            val layoutParams = view.layoutParams
+            layoutParams.height = 1
+            view.layoutParams = layoutParams
+            view.measure(
+                View.MeasureSpec.makeMeasureSpec(
+                    Resources.getSystem().getDisplayMetrics().widthPixels,
+                    View.MeasureSpec.EXACTLY
+                ),
+                View.MeasureSpec.makeMeasureSpec(
+                    0,
+                    View.MeasureSpec.UNSPECIFIED
+                )
+            )
+            val height = view.measuredHeight
+            val valueAnimator: ValueAnimator = ObjectAnimator.ofInt(1, height)
+            valueAnimator.addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
+                override fun onAnimationUpdate(animation: ValueAnimator) {
+                    val value = animation.getAnimatedValue() as Int
+                    if (height > value) {
+                        val layoutParams = view.layoutParams
+                        layoutParams.height = value
+                        view.layoutParams = layoutParams
+                    } else {
+                        val layoutParams = view.layoutParams
+                        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                        view.layoutParams = layoutParams
+                    }
+                }
+            })
+            valueAnimator.start()
+        }
+
+
+        fun slideUp(view: View) {
+            view.post {
+                val height = view.height
+                val valueAnimator: ValueAnimator = ObjectAnimator.ofInt(height, 0)
+                valueAnimator.addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
+                    override fun onAnimationUpdate(animation: ValueAnimator) {
+                        val value = animation.getAnimatedValue() as Int
+                        if (value > 0) {
+                            val layoutParams = view.layoutParams
+                            layoutParams.height = value
+                            view.layoutParams = layoutParams
+                        } else {
+                            view.visibility = View.GONE
+
+                        }
+                    }
+                })
+                valueAnimator.start()
+            }
         }
 
         @Throws(IOException::class)

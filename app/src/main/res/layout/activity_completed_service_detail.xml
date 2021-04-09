@@ -195,7 +195,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:gravity="start|center"
-                                        android:text="Service person Name"
+                                        android:text="Service Person Name"
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/twelve_sp" />
 
