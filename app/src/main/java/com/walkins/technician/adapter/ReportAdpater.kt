@@ -20,6 +20,8 @@ class ReportAdpater(
 
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        var tvReportVehicleName: TextView = itemView.findViewById(R.id.tvReportVehicleName)
+        var tvReportVehicleNumber: TextView = itemView.findViewById(R.id.tvReportVehicleNumber)
 
     }
 
@@ -40,6 +42,15 @@ class ReportAdpater(
             if (onclick != null) {
                 onclick?.onPositionClick(position, 0)
             }
+        }
+
+        if (position == 0) {
+            holder.tvReportVehicleNumber?.text = "Maruti"
+            holder.tvReportVehicleName?.text = "GJ01RY2563"
+        }
+        if (position == 1) {
+            holder.tvReportVehicleNumber?.text = "Toyota Innova"
+            holder.tvReportVehicleName?.text = "GJ01RY9856"
         }
     }
 

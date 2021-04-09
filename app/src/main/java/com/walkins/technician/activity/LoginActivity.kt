@@ -143,7 +143,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            R.id.btnLoginToDashBoard -> userLogin()
+            R.id.btnLoginToDashBoard -> login()
         }
     }
 

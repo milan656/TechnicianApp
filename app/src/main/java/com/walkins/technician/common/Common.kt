@@ -38,6 +38,8 @@ import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.custom.BoldButton
+import com.walkins.technician.model.login.patternmodel.PatternModel
+import com.walkins.technician.model.login.sizemodel.SizeModel
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -54,7 +56,8 @@ import java.util.concurrent.TimeUnit
 class Common {
 
     companion object {
-        var url: String? = "https://staging-backend.jkadvantage.co.in/api/"
+        //        var url: String? = "https://staging-backend.jkadvantage.co.in/api/"
+        var url: String? = "https://stag-tyreservice-backend.trackwalkins.com/"
 //        var url: String? = "http://52.3.195.148:5015/api/"
 
         var urlStaging: String? = "http://qa-picture.jktyrecrm.in/#/sM1I8A"
@@ -181,6 +184,16 @@ class Common {
                             gson.fromJson(jsonObject.toString(), VehicleBrandModel::class.java)
                         return VehicleBrandModel
                     }
+                    "PatternModel" -> {
+                        val PatternModel =
+                            gson.fromJson(jsonObject.toString(), PatternModel::class.java)
+                        return PatternModel
+                    }
+                    "SizeModel" -> {
+                        val SizeModel =
+                            gson.fromJson(jsonObject.toString(), SizeModel::class.java)
+                        return SizeModel
+                    }
 
                     else -> {
                         return null
@@ -242,6 +255,22 @@ class Common {
                                         VehicleBrandModel::class.java
                                     )
                                 return VehicleBrandModel
+                            }
+                            "PatternModel" -> {
+                                val PatternModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        PatternModel::class.java
+                                    )
+                                return PatternModel
+                            }
+                            "SizeModel" -> {
+                                val SizeModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        SizeModel::class.java
+                                    )
+                                return SizeModel
                             }
 
 

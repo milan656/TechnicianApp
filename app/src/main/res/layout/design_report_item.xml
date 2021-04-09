@@ -21,6 +21,7 @@
             android:orientation="vertical">
 
             <com.walkins.technician.custom.BoldHeavyTextView
+                android:id="@+id/tvReportVehicleNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -32,6 +33,7 @@
                 android:textStyle="bold" />
 
             <com.walkins.technician.custom.NormalTextView
+                android:id="@+id/tvReportVehicleName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

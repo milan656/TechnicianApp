@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.Data
@@ -40,6 +42,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var tyreConfigType: String = ""
     private var llVehicleMakeselectedView: LinearLayout? = null
     private var btnNext: Button? = null
+    private var ivSelectedCar: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
 
+        ivSelectedCar = findViewById(R.id.ivSelectedCar)
         gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
         btnNext = findViewById(R.id.btnNext)
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
@@ -97,7 +101,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         mDb.daoClass().getAllVehicleType().get(i).short_number,
                         false,
                         mDb.daoClass().getAllVehicleType().get(i).quality,
-                        mDb.daoClass().getAllVehicleType().get(i).vehicle_type
+                        mDb.daoClass().getAllVehicleType().get(i).vehicle_type,
+                        mDb.daoClass().getAllVehicleType().get(i).concat
                     )
 
                     arrList?.add(data)
@@ -195,6 +200,16 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Common.slideUp(gridviewRecycMake_!!)
 
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
+
+        try {
+            Glide.with(this)
+                .load(arrList?.get(variable)?.concat)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.placeholder)
+                .into(ivSelectedCar!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
 /*
         var model = arrList?.get(variable)

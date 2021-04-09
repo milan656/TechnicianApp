@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
+import com.walkins.technician.model.login.patternmodel.PatternModel
+import com.walkins.technician.model.login.sizemodel.SizeModel
 import com.walkins.technician.networkApi.WarrantyApi
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -40,7 +42,7 @@ class WarrantyRepository {
         access_token: String, context: Context
     ): MutableLiveData<VehicleBrandModel> {
         var otpData = MutableLiveData<VehicleBrandModel>()
-        otpApi.getVehicleBrand(vehicle_type_id, access_token)
+        otpApi.getVehicleBrand(/*vehicle_type_id, access_token*/)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -62,6 +64,89 @@ class WarrantyRepository {
                             1,
                             context
                         ) as VehicleBrandModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
+    fun getVehiclePattern(
+        brand_id: String,
+        context: Context
+    ): MutableLiveData<PatternModel> {
+        var otpData = MutableLiveData<PatternModel>()
+        otpApi.getTyrePattern(/*vehicle_type_id, access_token*/brand_id.toInt())
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common?.getModelreturn(
+                        "PatternModel",
+                        response,
+                        0,
+                        context
+                    ) as PatternModel?
+
+
+                } else {
+                    try {
+                        otpData.value = Common?.getModelreturn(
+                            "PatternModel",
+                            response,
+                            1,
+                            context
+                        ) as PatternModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
+    fun getVehicleSize(
+        model_id: Int,
+        make_id: Int,
+        context: Context
+    ): MutableLiveData<SizeModel> {
+        var otpData = MutableLiveData<SizeModel>()
+        otpApi.getVehicleTyreSize(/*vehicle_type_id, access_token*/model_id, make_id)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common?.getModelreturn(
+                        "SizeModel",
+                        response,
+                        0,
+                        context
+                    ) as SizeModel?
+
+
+                } else {
+                    try {
+                        otpData.value = Common?.getModelreturn(
+                            "SizeModel",
+                            response,
+                            1,
+                            context
+                        ) as SizeModel?
                     } catch (e: IOException) {
                         e.printStackTrace()
                     } catch (e: Exception) {

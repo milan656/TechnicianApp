@@ -321,59 +321,59 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         if (check == 0) {
 
-            Log.e("getposition0", "" + suggestionArr?.get(variable))
+            Log.e("getposition0", "" + suggestionArr.get(variable))
         } else if (check == 1) {
-            Log.e("getposition1", "" + reasonArray?.get(variable))
+            Log.e("getposition1", "" + reasonArray.get(variable))
         } else {
-            if (Common.commonPhotoChooseArr?.get(variable).equals("Gallery")) {
-                val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    checkPermissions((this))
-                } else {
-                    try {
-                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                        intent.type = "image/*"
-                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-                if (result == true) {
-                    try {
 
-                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                        intent.type = "image/*"
-                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-                    } catch (e: Exception) {
-
-                        e.printStackTrace()
-                    }
-
-                }
-            } else if (Common.commonPhotoChooseArr?.get(variable).equals("Camera")) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_DENIED ||
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_DENIED
-                    ) {
-                        //permission was not enabled
-                        val permission = arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
-                        //show popup to request permission
-                        requestPermissions(permission, PERMISSION_CODE)
-                    } else {
-                        //permission already granted
-                        openCamera()
-                    }
-                } else {
-                    //system os is < marshmallow
-                    openCamera()
+        }
+        if (Common.commonPhotoChooseArr.get(variable).equals("Gallery")) {
+            val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                checkPermissions((this))
+            } else {
+                try {
+                    val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                    intent.type = "image/*"
+                    startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
-        }
+            if (result == true) {
+                try {
 
+                    val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                    intent.type = "image/*"
+                    startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                } catch (e: Exception) {
+
+                    e.printStackTrace()
+                }
+
+            }
+        } else if (Common.commonPhotoChooseArr?.get(variable).equals("Camera")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_DENIED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED
+                ) {
+                    //permission was not enabled
+                    val permission = arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                    //show popup to request permission
+                    requestPermissions(permission, PERMISSION_CODE)
+                } else {
+                    //permission already granted
+                    openCamera()
+                }
+            } else {
+                //system os is < marshmallow
+                openCamera()
+            }
+        }
 
     }
 

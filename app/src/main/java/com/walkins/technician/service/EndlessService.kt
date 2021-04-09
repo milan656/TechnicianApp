@@ -192,8 +192,7 @@ class EndlessService : Service() {
 
         var call: Call<ResponseBody>? = null
         call = warrantyApi.getVehicleBrand(
-            "6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
-            prefManager?.getAccessToken()!!
+
         )
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -231,14 +230,19 @@ class EndlessService : Service() {
                 var model = vehicleBrandModel.data.get(i)
                 var entity = VehicleMakeModelClass()
 
-                entity.vehicle_type =
-                    model.vehicle_type
-                entity.name = model.name
-                entity.image_url = model.image_url
-                entity.quality = model.quality
-                entity.brand_id = model.brand_id
+                if (model.vehicle_type != null && !model.vehicle_type.equals("null")) {
+                    entity.vehicle_type =
+                        model.vehicle_type
+                } else {
+                    entity.vehicle_type = ""
+                }
+                entity.name = if (model.name != null) model.name else ""
+                entity.image_url = if (model.image_url != null) model.image_url else ""
+                entity.quality = if (model.quality != null) model.quality else ""
+                entity.brand_id = if (model.brand_id != null) model.brand_id else ""
                 entity.isSelected = false
-                entity.short_number = model.short_number
+                entity.short_number = if (model.short_number != null) model.short_number else ""
+                entity.concat = if (model.concat != null) model.concat else ""
                 mDb.daoClass().saveVehicleType(entity)
             }
 

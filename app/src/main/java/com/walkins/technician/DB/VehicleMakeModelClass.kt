@@ -11,22 +11,24 @@ class VehicleMakeModelClass {
     var Id: Int = 0
 
     @ColumnInfo(name = "name")
-    var name: String = ""
+    var name: String? = ""
 
     @ColumnInfo(name = "short_number")
-    var short_number: String = ""
+    var short_number: String? = ""
 
     @ColumnInfo(name = "quality")
-    var quality: String = ""
+    var quality: String? = ""
 
     @ColumnInfo(name = "brand_id")
-    var brand_id: String = ""
+    var brand_id: String? = ""
 
     @ColumnInfo(name = "vehicle_type")
-    var vehicle_type: String = ""
+    var vehicle_type: String? = ""
 
     @ColumnInfo(name = "image_url")
-    var image_url: String = ""
+    var image_url: String? = ""
+    @ColumnInfo(name = "concat")
+    var concat: String? = ""
 
     @ColumnInfo(name = "isSelected")
     var isSelected: Boolean = false

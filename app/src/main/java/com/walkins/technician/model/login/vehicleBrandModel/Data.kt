@@ -8,6 +8,7 @@ data class Data(
     var isSelected: Boolean,
     var quality: String,
     var vehicle_type: String,
+    var concat: String,
     var isRFSelected: Boolean = false,
     var isLRSelected: Boolean = false,
     var isRRSelected: Boolean = false,

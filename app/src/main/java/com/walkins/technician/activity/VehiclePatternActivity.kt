@@ -3,7 +3,6 @@ package com.walkins.technician.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -15,27 +14,31 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
-import com.jkadvantage.model.vehicleBrandModel.Data
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.R
-import com.walkins.technician.adapter.VehicleModelAdapter
+import com.walkins.technician.adapter.VehiclePatternAdapter
 import com.walkins.technician.common.SpacesItemDecoration
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
+import com.walkins.technician.model.login.patternmodel.PatternData
+import com.walkins.technician.model.login.patternmodel.PatternModel
+import com.walkins.technician.model.login.sizemodel.SizeData
+import com.walkins.technician.model.login.sizemodel.SizeModel
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
 class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private lateinit var prefManager: PrefManager
     private var vehicleBrandModel: VehicleBrandModel? = null
+    private var patternModel: PatternModel? = null
     private lateinit var warrantyViewModel: WarrantyViewModel
-    private var adapter: VehicleModelAdapter? = null
+    private var adapter: VehiclePatternAdapter? = null
     private var gridviewRecycModel: RecyclerView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
-    var arrList: ArrayList<Data>? = ArrayList()
+    var arrList: ArrayList<PatternData>? = ArrayList()
     private lateinit var mDb: DBClass
     private var btnNext: Button? = null
     private var llVehicleMakeselectedView: LinearLayout? = null
@@ -60,7 +63,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         btnNext?.setOnClickListener(this)
         tvTitle?.text = "Select Tyre Pattern - " + TyreConfigClass.selectedTyreConfigType
 
-//        getVehicleMake()
 
         gridviewRecycModel?.layoutManager =
             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
@@ -70,59 +72,61 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             )
         )
 
-        adapter = VehicleModelAdapter(this, arrList, this)
+        adapter = VehiclePatternAdapter(this, arrList, this)
         gridviewRecycModel?.adapter = adapter
         gridviewRecycModel?.visibility = View.GONE
+        getVehicleMake()
 
-        var thread = Thread {
+        /* var thread = Thread {
 
-            Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
-            if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
-                    .getAllVehicleType().size > 0
-            ) {
-                for (i in mDb.daoClass().getAllVehicleType().indices) {
-                    var data = Data(
-                        mDb.daoClass().getAllVehicleType().get(i).brand_id,
-                        mDb.daoClass().getAllVehicleType().get(i).image_url,
-                        mDb.daoClass().getAllVehicleType().get(i).name,
-                        mDb.daoClass().getAllVehicleType().get(i).short_number,
-                        false,
-                        mDb.daoClass().getAllVehicleType().get(i).quality,
-                        mDb.daoClass().getAllVehicleType().get(i).vehicle_type
-                    )
+             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
+             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
+                     .getAllVehicleType().size > 0
+             ) {
+                 for (i in mDb.daoClass().getAllVehicleType().indices) {
+                     var data = Data(
+                         mDb.daoClass().getAllVehicleType().get(i).brand_id,
+                         mDb.daoClass().getAllVehicleType().get(i).image_url,
+                         mDb.daoClass().getAllVehicleType().get(i).name,
+                         mDb.daoClass().getAllVehicleType().get(i).short_number,
+                         false,
+                         mDb.daoClass().getAllVehicleType().get(i).quality,
+                         mDb.daoClass().getAllVehicleType().get(i).vehicle_type,
+                         mDb.daoClass().getAllVehicleType().get(i).concat
+                     )
 
-                    arrList?.add(data)
-                }
+                     arrList?.add(data)
+                 }
 
-            }
+             }
 
-        }
-        thread.start()
+         }
+         thread.start()
 
-        var handler = Handler()
-        handler.postDelayed(Runnable {
-            adapter?.notifyDataSetChanged()
-            gridviewRecycModel?.visibility = View.VISIBLE
-        }, 1000)
+         var handler = Handler()
+         handler.postDelayed(Runnable {
+             adapter?.notifyDataSetChanged()
+             gridviewRecycModel?.visibility = View.VISIBLE
+         }, 1000)*/
     }
 
     fun getVehicleMake() {
         Common.showLoader(this)
         prefManager.getAccessToken()?.let {
-            warrantyViewModel.getVehicleBrandModel(
-                "6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
+            warrantyViewModel.getVehiclePattern(
+                "3",
                 it, this@VehiclePatternActivity
 
             )
         }
 
-        warrantyViewModel.getVehicleBrand()
+        warrantyViewModel.getVehiclePattern()
             ?.observe(this@VehiclePatternActivity, androidx.lifecycle.Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
-                        vehicleBrandModel = it
-                        Log.e("getmodel00::", "" + vehicleBrandModel)
+                        patternModel = it
+                        Log.e("getmodel00::", "" + patternModel)
 
 
 
@@ -131,8 +135,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                                 arrList?.add(it.data.get(i))
                             }
                         }
+                        adapter?.notifyDataSetChanged()
 
-
+                        if (arrList?.size!! > 0) {
+                            gridviewRecycModel?.visibility = View.VISIBLE
+                        }
                     } else {
                         if (it.error != null && it.error.size > 0) {
                             if (it.error.get(0).statusCode != null) {

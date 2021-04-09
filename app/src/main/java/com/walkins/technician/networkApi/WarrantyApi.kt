@@ -23,10 +23,19 @@ interface WarrantyApi {
         @Body jsonObject: JsonObject, @Header("Authorization") authorization: String
     ): Call<ResponseBody>
 
-    @GET("v1/warranty/vehicle/get-vehicle-type-brand")
+    @GET("get-tyre-brand")
     fun getVehicleBrand(
-        @Query("vehicle_type_id") category: String, @Header("Authorization") authorization: String
+        /*@Query("vehicle_type_id") category: String, @Header("Authorization") authorization: String*/
     ): Call<ResponseBody>
+
+    @GET("get-tyre-get-tyre-size")
+    fun getVehicleTyreSize(
+        @Query("model_id") model_id: Int, @Query("make_id") make_id: Int
+    ): Call<ResponseBody>
+
+    //    https://stag-tyreservice-backend.trackwalkins.com/get-tyre-pattern?id=2
+    @GET("get-tyre-pattern")
+    fun getTyrePattern(@Query("brand_id") id: Int): Call<ResponseBody>
 
     @GET("v1/warranty/vehicle/get-vehicle-type-brand-model")
     fun getVehicleTypeBrand(
@@ -82,7 +91,7 @@ interface WarrantyApi {
         @Query("vehicle_type_brand_model_id") vehicle_type_brand_model_id: String,
         @Query("vehicle_category") vehicle_category: String,
         @Header("Authorization") authorization: String
-    ):Call<ResponseBody>
+    ): Call<ResponseBody>
 
     @GET("/api/v1/warranty/vehicle/get-vehicle-top-sku-id")
     fun callApiSkuDetailListnew(
@@ -90,7 +99,7 @@ interface WarrantyApi {
         @Query("vehicle_type_brand_id") vehicle_type_brand_id: String,
         @Query("vehicle_category") vehicle_category: String,
         @Header("Authorization") authorization: String
-    ):Call<ResponseBody>
+    ): Call<ResponseBody>
 
 }
 

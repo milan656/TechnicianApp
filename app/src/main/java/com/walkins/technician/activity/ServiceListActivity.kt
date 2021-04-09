@@ -34,7 +34,6 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var serviceRecycView: RecyclerView? = null
     private var ivInfoService: ImageView? = null
 
-
     private var arrayList = arrayListOf("one", "two", "three")
     private var adapter: ServicesListAdpater? = null
     private var tvAddress: TextView? = null

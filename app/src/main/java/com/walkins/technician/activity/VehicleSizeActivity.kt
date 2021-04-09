@@ -20,22 +20,25 @@ import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleModelAdapter
+import com.walkins.technician.adapter.VehicleSizeAdapter
 import com.walkins.technician.common.SpacesItemDecoration
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
+import com.walkins.technician.model.login.sizemodel.SizeData
+import com.walkins.technician.model.login.sizemodel.SizeModel
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
 class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private lateinit var prefManager: PrefManager
-    private var vehicleBrandModel: VehicleBrandModel? = null
+    private var sizeModel: SizeModel? = null
     private lateinit var warrantyViewModel: WarrantyViewModel
-    private var adapter: VehicleModelAdapter? = null
+    private var adapter: VehicleSizeAdapter? = null
     private var gridviewRecycModel: RecyclerView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
-    var arrList: ArrayList<Data>? = ArrayList()
+    var arrList: ArrayList<SizeData>? = ArrayList()
     private lateinit var mDb: DBClass
     private var llVehicleMakeselectedView: LinearLayout? = null
     private var btnNext: Button? = null
@@ -71,11 +74,12 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             )
         )
 
-        adapter = VehicleModelAdapter(this, arrList, this)
+        adapter = VehicleSizeAdapter(this, arrList, this)
         gridviewRecycModel?.adapter = adapter
-        gridviewRecycModel?.visibility = View.GONE
 
-        var thread = Thread {
+        getVehicleMake()
+
+        /*var thread = Thread {
 
             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
@@ -89,7 +93,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         mDb.daoClass().getAllVehicleType().get(i).short_number,
                         false,
                         mDb.daoClass().getAllVehicleType().get(i).quality,
-                        mDb.daoClass().getAllVehicleType().get(i).vehicle_type
+                        mDb.daoClass().getAllVehicleType().get(i).vehicle_type,
+                        mDb.daoClass().getAllVehicleType().get(i).concat
                     )
 
                     arrList?.add(data)
@@ -104,29 +109,27 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         handler.postDelayed(Runnable {
             adapter?.notifyDataSetChanged()
             gridviewRecycModel?.visibility = View.VISIBLE
-        }, 1000)
+        }, 1000)*/
 
     }
 
     fun getVehicleMake() {
         Common.showLoader(this)
         prefManager.getAccessToken()?.let {
-            warrantyViewModel.getVehicleBrandModel(
-                "6cdb5eb6-fd92-4bf9-bc09-cf28c11b550c",
-                it, this@VehicleSizeActivity
+            warrantyViewModel.getVehicleSize(
+                460, 41,
+                this@VehicleSizeActivity
 
             )
         }
 
-        warrantyViewModel.getVehicleBrand()
+        warrantyViewModel.getVehicleSize()
             ?.observe(this@VehicleSizeActivity, androidx.lifecycle.Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
-                        vehicleBrandModel = it
-                        Log.e("getmodel00::", "" + vehicleBrandModel)
-
-
+                        sizeModel = it
+                        Log.e("getmodel00::", "" + sizeModel)
 
                         for (i in it.data?.indices!!) {
                             if (!it.data.get(i).name.equals("Other", ignoreCase = true)) {
@@ -142,8 +145,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                             )
                         )
 
-                        adapter = VehicleModelAdapter(this, arrList, this)
-                        gridviewRecycModel?.adapter = adapter
+                        adapter?.notifyDataSetChanged()
 
 
                     } else {

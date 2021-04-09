@@ -10,14 +10,13 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/btnDone"
         android:layout_margin="@dimen/ten_dp"
         app:cardCornerRadius="@dimen/eight_dp"
         app:cardElevation="@dimen/three_dp"
-        app:cardUseCompatPadding="true"
-        android:layout_above="@+id/btnDone">
+        app:cardUseCompatPadding="true">
 
-        <RelativeLayout
-            xmlns:tools="http://schemas.android.com/tools"
+        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
@@ -220,6 +219,7 @@
                                         android:layout_height="wrap_content"
                                         android:visibility="visible"
                                         app:bar_color="#F2F5FA"
+
                                         app:bar_text_color="@color/text_color"
                                         app:size="small" />
 
@@ -246,6 +246,7 @@
                                     android:orientation="horizontal">
 
                                     <LinearLayout
+                                        android:id="@+id/llOkSideWell"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -253,6 +254,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivOkSideWell"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -277,6 +279,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivSugSideWell"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -301,6 +304,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivReqSideWell"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -348,6 +352,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivOkShoulder"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -372,6 +377,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivSugShoulder"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -396,6 +402,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivReqShoulder"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -443,6 +450,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivOkTreadDepth"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -467,6 +475,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivSugTreadDepth"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -491,6 +500,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivReqTreadDepth"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -538,6 +548,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivOkTreadWear"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -562,6 +573,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivSugTreadWear"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -586,6 +598,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivReqTreadWear"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -633,6 +646,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivOkRimDamage"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -657,6 +671,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivSugRimDamage"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -681,6 +696,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivReqRimDamage"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -728,6 +744,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivOkbubble"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -752,6 +769,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivSugbubble"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
@@ -776,6 +794,7 @@
 
 
                                         <ImageView
+                                            android:id="@+id/ivReqbubble"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_gravity="center"
