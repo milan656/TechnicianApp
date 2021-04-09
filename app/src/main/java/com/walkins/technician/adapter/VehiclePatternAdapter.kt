@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
@@ -22,7 +23,7 @@ class VehiclePatternAdapter internal constructor(
         val textView = itemView.findViewById(R.id.ivVehicleImage) as TextView
 
         //        val ivVehicleImage = itemView.findViewById(R.id.ivVehicleImage) as ImageView
-        val rlItemView = itemView.findViewById(R.id.rl_item_view) as LinearLayout
+        val rlItemView = itemView.findViewById(R.id.rl_item_view) as RelativeLayout
         val ivselectedVehicleModel = itemView.findViewById(R.id.ivselectedVehicleModel) as ImageView
     }
 
@@ -59,8 +60,11 @@ class VehiclePatternAdapter internal constructor(
         }*/
         if (name!!.get(position).isSelected) {
             holder.rlItemView.setBackgroundResource(R.drawable.selected)
+            holder.ivselectedVehicleModel?.visibility = View.VISIBLE
+
         } else {
             holder.rlItemView.setBackgroundResource(R.drawable.unselected)
+            holder.ivselectedVehicleModel?.visibility = View.GONE
         }
 
         holder.rlItemView.setOnClickListener {

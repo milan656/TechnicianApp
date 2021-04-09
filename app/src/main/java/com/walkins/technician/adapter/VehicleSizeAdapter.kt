@@ -27,7 +27,7 @@ class VehicleSizeAdapter internal constructor(
         val textView = itemView.findViewById(R.id.ivVehicleImage) as TextView
 
         //        val ivVehicleImage = itemView.findViewById(R.id.ivVehicleImage) as ImageView
-        val rlItemView = itemView.findViewById(R.id.rl_item_view) as LinearLayout
+        val rlItemView = itemView.findViewById(R.id.rl_item_view) as RelativeLayout
         val ivselectedVehicleModel = itemView.findViewById(R.id.ivselectedVehicleModel) as ImageView
     }
 
@@ -52,7 +52,6 @@ class VehicleSizeAdapter internal constructor(
         holder.textView.setText(name?.get(position)?.name)
 //        holder.textView.text = "185/65 R15"
 
-
         /*try {
             Glide.with(mContext)
                 .load(name?.get(position)?.image_url)
@@ -65,8 +64,10 @@ class VehicleSizeAdapter internal constructor(
         }*/
         if (name!!.get(position).isSelected) {
             holder.rlItemView.setBackgroundResource(R.drawable.selected)
+            holder.ivselectedVehicleModel.visibility=View.VISIBLE
         } else {
             holder.rlItemView.setBackgroundResource(R.drawable.unselected)
+            holder.ivselectedVehicleModel.visibility=View.GONE
         }
 
         holder.rlItemView.setOnClickListener {
@@ -80,7 +81,7 @@ class VehicleSizeAdapter internal constructor(
                 }
 
                 name!!.get(position).isSelected = true;
-                holder.ivselectedVehicleModel?.visibility=View.VISIBLE
+                holder.ivselectedVehicleModel.visibility=View.VISIBLE
             }
             notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)
