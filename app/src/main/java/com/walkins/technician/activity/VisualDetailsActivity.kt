@@ -43,6 +43,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var issueResolveAdapter: TyreSuggestionAdpater? = null
     private var relTyrePhotoAdd: RelativeLayout? = null
     private var btnDone: Button? = null
+    private var weightFrame: FrameLayout? = null
+    private var psiInFrame: FrameLayout? = null
+    private var psiOutFrame: FrameLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +58,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         tvTitle = findViewById(R.id.tvTitle)
         btnDone = findViewById(R.id.btnDone)
         ivBack = findViewById(R.id.ivBack)
+
+        weightFrame = findViewById(R.id.weightFrame)
+        psiOutFrame = findViewById(R.id.psiOutFrame)
+        psiInFrame = findViewById(R.id.psiInFrame)
 
         relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
@@ -76,6 +83,20 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         tvTitle?.text = "Visual Detail"
 
         btnDone?.setOnClickListener(this)
+
+        if (!TyreConfigClass.nitrogenRefillChecked) {
+            weightFrame?.visibility = View.GONE
+        } else {
+            weightFrame?.visibility = View.VISIBLE
+        }
+
+        if (!TyreConfigClass.nitrogenRefillChecked && !TyreConfigClass.nitrogenTopupChecked &&
+            !TyreConfigClass.nitrogenTyreRotationChecked && TyreConfigClass.nitrogenWheelBalancingChecked
+        ) {
+            weightFrame?.visibility = View.VISIBLE
+            psiOutFrame?.visibility = View.GONE
+            psiInFrame?.visibility = View.GONE
+        }
 
     }
 

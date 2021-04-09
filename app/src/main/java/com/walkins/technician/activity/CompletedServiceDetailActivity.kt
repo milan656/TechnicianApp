@@ -45,6 +45,10 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var tvServices: TextView? = null
 
     private var ivTyre4: ImageView? = null
+    private var ivTyre1: ImageView? = null
+    private var ivTyre2: ImageView? = null
+    private var ivTyre3: ImageView? = null
+
     private var ivInfoImg: ImageView? = null
     private var title: String = ""
     private var llservicecollapse: LinearLayout? = null
@@ -93,6 +97,10 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
         ivTyre4 = findViewById(R.id.ivTyre4)
+        ivTyre3 = findViewById(R.id.ivTyre3)
+        ivTyre2 = findViewById(R.id.ivTyre2)
+        ivTyre1 = findViewById(R.id.ivTyre1)
+
         ivInfoImg = findViewById(R.id.ivInfoImg)
 
         tvCurrentDateTime = findViewById(R.id.tvCurrentDateTime)
@@ -120,7 +128,10 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         ivAddServices?.setOnTouchListener(this)
         ivAddTyreConfig?.setOnTouchListener(this)
         ivAddTechnicalSuggestion?.setOnTouchListener(this)
-
+        ivTyre1?.setOnTouchListener(this)
+        ivTyre2?.setOnTouchListener(this)
+        ivTyre3?.setOnTouchListener(this)
+        ivTyre4?.setOnTouchListener(this)
 
         tvCurrentDateTime?.text = Common.getCurrentDateTime()
     }
@@ -147,10 +158,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         when (id) {
             R.id.ivBack -> {
                 onBackPressed()
-            }
-            R.id.tvtyreServiceInfo -> {
-                var intent = Intent(this, CompletedVisualDetailActivity::class.java)
-                startActivity(intent)
             }
             R.id.ivInfoImg -> {
                 showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
@@ -243,7 +250,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = false
                     ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
-                    llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                    llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
                     llservicebg?.setBackgroundDrawable(null)
                     ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
@@ -254,12 +261,12 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTyreConfigExpanded!!)
                         ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
-                        lltyreconfigbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                        lltyreconfigbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTechnicalSuggestionExpanded!!)
                         ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
-                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
 
                     tvTyreConfig?.isAllCaps = false
@@ -272,7 +279,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTyreConfig?.isAllCaps = false
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
-                    lltyreconfigbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                    lltyreconfigbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
                     lltyreconfigbg?.setBackgroundDrawable(null)
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_minus_icon)
@@ -283,12 +290,12 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                         Common.collapse(llServiceExpanded!!)
 //                        Common.collapse(llUpdatedPlacement!!)
                         ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
-                        llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                        llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
                     if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTechnicalSuggestionExpanded!!)
                         ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
-                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
 
                     tvServices?.isAllCaps = false
@@ -301,7 +308,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTechnicalSuggetion?.isAllCaps = false
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
-                    lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                    lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
                     lltechnicalbg?.setBackgroundDrawable(null)
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_minus_icon)
@@ -312,18 +319,39 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTyreConfigExpanded!!)
                         ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
-                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                        lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
 //                        Common.collapse(llUpdatedPlacement!!)
                         ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
-                        llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                        llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
                     tvServices?.isAllCaps = false
                     tvTyreConfig?.isAllCaps = false
                 }
             }
+            R.id.ivTyre1 -> {
+                var intent = Intent(this, CompletedVisualDetailActivity::class.java)
+                intent.putExtra("title", "Detail - LF")
+                startActivity(intent)
+            }
+            R.id.ivTyre2 -> {
+                var intent = Intent(this, CompletedVisualDetailActivity::class.java)
+                intent.putExtra("title", "Detail - RF")
+                startActivity(intent)
+            }
+            R.id.ivTyre3 -> {
+                var intent = Intent(this, CompletedVisualDetailActivity::class.java)
+                intent.putExtra("title", "Detail - LR")
+                startActivity(intent)
+            }
+            R.id.ivTyre4 -> {
+                var intent = Intent(this, CompletedVisualDetailActivity::class.java)
+                intent.putExtra("title", "Detail - RR")
+                startActivity(intent)
+            }
+
 
         }
         return false

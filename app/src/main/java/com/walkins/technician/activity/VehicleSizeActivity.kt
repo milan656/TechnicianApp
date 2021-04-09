@@ -104,7 +104,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         handler.postDelayed(Runnable {
             adapter?.notifyDataSetChanged()
             gridviewRecycModel?.visibility = View.VISIBLE
-        }, 2000)
+        }, 1000)
 
     }
 
@@ -215,6 +215,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 finish()
             }
             1004 -> {
+                setResult(1003)
                 finish()
             }
             1003 -> {

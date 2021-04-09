@@ -14,4 +14,7 @@ interface DaoClass {
 
     @Query("delete from VehicleMakeModelClass")
     fun deleteAll()
+
+    @Update
+    fun update(book: VehicleMakeModelClass)
 }

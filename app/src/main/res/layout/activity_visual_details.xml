@@ -134,6 +134,7 @@
                                 android:textSize="@dimen/fourteen_sp" />
 
                             <FrameLayout
+                                android:id="@+id/psiInFrame"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
@@ -164,6 +165,7 @@
                             </FrameLayout>
 
                             <FrameLayout
+                                android:id="@+id/psiOutFrame"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
@@ -194,6 +196,7 @@
                             </FrameLayout>
 
                             <FrameLayout
+                                android:id="@+id/weightFrame"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 

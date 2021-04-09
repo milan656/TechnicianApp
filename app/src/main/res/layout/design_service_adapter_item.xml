@@ -18,8 +18,10 @@
         app:cardUseCompatPadding="true">
 
         <LinearLayout
+            android:id="@+id/lllineView"
             android:layout_width="5dp"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:background="@color/red" />
 
         <LinearLayout
@@ -42,6 +44,7 @@
                 android:orientation="horizontal">
 
                 <com.walkins.technician.custom.BoldHeavyTextView
+                    android:id="@+id/tvVehicleNumber"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -71,6 +74,7 @@
                 android:orientation="horizontal">
 
                 <com.walkins.technician.custom.NormalTextView
+                    android:id="@+id/tvVehicleName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

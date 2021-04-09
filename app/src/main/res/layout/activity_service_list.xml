@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Upcoming - 4"
+                android:text="Upcoming - 3"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fourteen_sp" />
 

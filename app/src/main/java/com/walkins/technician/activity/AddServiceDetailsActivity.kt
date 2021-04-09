@@ -22,6 +22,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -66,6 +67,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var tvTyreConfig: TextView? = null
     private var tvServices: TextView? = null
 
+    private var cardservice: CardView? = null
+    private var cardtyreConfig: CardView? = null
+    private var cardtechinicalSuggestion: CardView? = null
+
     private var serviceExpanded = false
     private var techicalSuggestionExpanded = false
     private var tyreConfigExpanded = false
@@ -106,6 +111,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var tvSkipService: TextView? = null
     private var tvTyreAddInfo: TextView? = null
 
+    private var ivtyreLeftFront: ImageView? = null
+    private var ivtyreLeftRear: ImageView? = null
+    private var ivTyreRightFront: ImageView? = null
+    private var ivTyreRightRear: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_service_details)
@@ -131,11 +141,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         tvTechnicalSuggetion = findViewById(R.id.tvTechnicalSuggetion)
         tvServices = findViewById(R.id.tvServices)
         tvTyreConfig = findViewById(R.id.tvTyreConfig)
+        cardservice = findViewById(R.id.cardservice)
+        cardtyreConfig = findViewById(R.id.cardtyreConfig)
+        cardtechinicalSuggestion = findViewById(R.id.cardtechinicalSuggestion)
 
         ivTyre1 = findViewById(R.id.ivTyre1)
         ivTyre2 = findViewById(R.id.ivTyre2)
         ivTyre3 = findViewById(R.id.ivTyre3)
         ivTyre4 = findViewById(R.id.ivTyre4)
+
+        ivtyreLeftFront = findViewById(R.id.ivtyreLeftFront)
+        ivtyreLeftRear = findViewById(R.id.ivtyreLeftRear)
+        ivTyreRightFront = findViewById(R.id.ivTyreRightFront)
+        ivTyreRightRear = findViewById(R.id.ivTyreRightRear)
 
         chkNitrogenRefill = findViewById(R.id.chkNitrogenRefill)
         chkNitrogenTopup = findViewById(R.id.chkNitrogenTopup)
@@ -160,6 +178,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivAddTyreConfig?.setOnTouchListener(this)
         llTyreConfigExpanded?.setOnTouchListener(this)
         ivAddTechnicalSuggestion?.setOnTouchListener(this)
+        cardtechinicalSuggestion?.setOnTouchListener(this)
+        cardtyreConfig?.setOnTouchListener(this)
+        cardservice?.setOnTouchListener(this)
 
         tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this, false)
         tyreSuggestionAdapter?.onclick = this
@@ -221,6 +242,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Common.collapse(llUpdatedPlacement!!)
             }
         }
+        TyreConfigClass.nitrogenTopupChecked = chkNitrogenTopup?.isChecked!!
+        TyreConfigClass.nitrogenRefillChecked = chkNitrogenRefill?.isChecked!!
+        TyreConfigClass.nitrogenTyreRotationChecked = chkTyreRotation?.isChecked!!
+        TyreConfigClass.nitrogenWheelBalancingChecked = chkWheelBalacing?.isChecked!!
     }
 
     override fun onClick(v: View?) {
@@ -522,6 +547,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tvTyreAddInfo?.isAllCaps = false
                 }
             }
+            R.id.cardservice -> {
+                ivAddServices?.performClick()
+            }
+            R.id.cardtyreConfig -> {
+                ivAddTyreConfig?.performClick()
+            }
+            R.id.cardtechinicalSuggestion -> {
+                ivAddTechnicalSuggestion?.performClick()
+            }
         }
         return false
     }
@@ -656,16 +690,20 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getvaluesss", "" + TyreConfigClass.selectedTyreConfigType)
 
                 if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
-                    ivTyre1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivtyreLeftFront?.visibility = View.VISIBLE
                 }
                 if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
-                    ivTyre3?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyre3?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyreRightFront?.visibility = View.VISIBLE
                 }
                 if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
-                    ivTyre2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyre2?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivtyreLeftRear?.visibility = View.VISIBLE
                 }
                 if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
-                    ivTyre4?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyre4?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyreRightRear?.visibility = View.VISIBLE
                 }
             }
         }

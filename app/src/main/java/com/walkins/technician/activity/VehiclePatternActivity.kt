@@ -103,7 +103,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         handler.postDelayed(Runnable {
             adapter?.notifyDataSetChanged()
             gridviewRecycModel?.visibility = View.VISIBLE
-        }, 2000)
+        }, 1000)
     }
 
     fun getVehicleMake() {

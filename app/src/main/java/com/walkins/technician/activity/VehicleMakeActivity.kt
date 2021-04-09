@@ -18,6 +18,7 @@ import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.Data
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
+import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.common.SpacesItemDecoration
@@ -111,7 +112,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         handler.postDelayed(Runnable {
             adapter?.notifyDataSetChanged()
             gridviewRecycMake_?.visibility = View.VISIBLE
-        }, 2000)
+        }, 1000)
     }
 
     fun getVehicleMake() {
@@ -195,6 +196,21 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
+/*
+        var model = arrList?.get(variable)
+        var entity = VehicleMakeModelClass()
+
+        entity.vehicle_type =
+            model?.vehicle_type!!
+        entity.name = model.name
+        entity.image_url = model.image_url
+        entity.quality = model.quality
+        entity.brand_id = model.brand_id
+        entity.isSelected = false
+        entity.short_number = model.short_number
+        mDb.daoClass().update(entity)
+*/
+
     }
 
     override fun onClick(v: View?) {
@@ -212,7 +228,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        Log.e("getresult11t", "" + resultCode)
         when (resultCode) {
             1001 -> {
                 setResult(1000)

@@ -23,7 +23,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
     private var tyreSuggestionAdapter: PendingTyreSuggestionAdpater? = null
     private var tvTitle: TextView? = null
     private var ivBack: ImageView? = null
-
+    private var title: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,11 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         )
         issueResolvedRecycView?.adapter = tyreSuggestionAdapter
 
-        tvTitle?.text = "Details - LF"
+        if (intent != null) {
+            if (intent.getStringExtra("title") != null) {
+                tvTitle?.text = intent.getStringExtra("title")
+            }
+        }
         ivBack?.setOnClickListener(this)
 
     }

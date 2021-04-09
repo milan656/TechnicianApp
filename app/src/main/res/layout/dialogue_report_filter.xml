@@ -12,7 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <include layout="@layout/dialogue_header_design" />
 
@@ -50,9 +51,9 @@
                         android:layout_marginRight="@dimen/six_dp"
                         android:layout_weight="1"
                         android:background="@drawable/layout_bg_blue_corner"
+                        android:buttonTint="@color/colorPrimary"
                         android:paddingTop="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp"
-                        android:buttonTint="@color/colorPrimary"
                         android:text="Nitrogen Top Up"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/fourteen_sp" />
@@ -64,10 +65,10 @@
                         android:layout_marginLeft="@dimen/six_dp"
                         android:layout_weight="1"
                         android:background="@drawable/layout_bg_blue_corner"
-                        android:paddingTop="@dimen/ten_dp"
-                        android:paddingBottom="@dimen/ten_dp"
-
                         android:buttonTint="@color/colorPrimary"
+                        android:paddingTop="@dimen/ten_dp"
+
+                        android:paddingBottom="@dimen/ten_dp"
                         android:text="Nitrogen Refill"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/fourteen_sp" />
@@ -86,10 +87,10 @@
                         android:layout_marginRight="@dimen/six_dp"
                         android:layout_weight="1"
                         android:background="@drawable/layout_bg_blue_corner"
-                        android:paddingTop="@dimen/ten_dp"
-                        android:paddingBottom="@dimen/ten_dp"
-
                         android:buttonTint="@color/colorPrimary"
+                        android:paddingTop="@dimen/ten_dp"
+
+                        android:paddingBottom="@dimen/ten_dp"
                         android:text="Wheel Balancing"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/fourteen_sp" />
@@ -101,10 +102,10 @@
                         android:layout_marginLeft="@dimen/six_dp"
                         android:layout_weight="1"
                         android:background="@drawable/layout_bg_blue_corner"
-                        android:paddingTop="@dimen/ten_dp"
-                        android:paddingBottom="@dimen/ten_dp"
-
                         android:buttonTint="@color/colorPrimary"
+                        android:paddingTop="@dimen/ten_dp"
+
+                        android:paddingBottom="@dimen/ten_dp"
                         android:text="Tyre Rotation"
                         android:textColor="@color/text_color1"
                         android:textSize="@dimen/fourteen_sp" />
@@ -144,8 +145,8 @@
                 android:hint="Search here"
                 android:paddingStart="@dimen/ten_dp"
                 android:paddingTop="@dimen/ten_dp"
-                android:paddingBottom="@dimen/ten_dp"
                 android:paddingEnd="@dimen/ten_dp"
+                android:paddingBottom="@dimen/ten_dp"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
@@ -204,6 +205,7 @@
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -215,7 +217,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_margin="@dimen/twenty_dp"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:layout_marginBottom="@dimen/sixteen_dp"
             android:orientation="horizontal">
 
             <com.walkins.technician.custom.BoldButton
@@ -227,8 +231,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_corner_button_white"
                 android:gravity="center"
-                android:text="Cancel"
                 android:letterSpacing="0.06"
+                android:text="Reset"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/sixteen_sp"
@@ -244,8 +248,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_corner_button_yellow"
                 android:gravity="center"
-                android:text="Confirm"
                 android:letterSpacing="0.06"
+                android:text="Confirm"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp"

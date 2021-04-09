@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,9 @@ class ServicesListAdpater(
 
         var cardAddService: CardView = itemView.findViewById(R.id.cardAddService)
         var ivCarimg: ImageView = itemView.findViewById(R.id.ivCarimg)
+        var lllineView: LinearLayout = itemView.findViewById(R.id.lllineView)
+        var tvVehicleNumber: TextView = itemView.findViewById(R.id.tvVehicleNumber)
+        var tvVehicleName: TextView = itemView.findViewById(R.id.tvVehicleName)
     }
 
     override fun onCreateViewHolder(
@@ -55,10 +59,19 @@ class ServicesListAdpater(
 
         if (position == 0) {
             holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_car_image))
+            holder.lllineView?.setBackgroundColor(context.resources.getColor(R.color.red))
+            holder.tvVehicleName?.text = "Toyota Innova"
+            holder.tvVehicleNumber.text = "GJ01HV4521"
         } else if (position == 1) {
             holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_car_image1))
+            holder.lllineView?.setBackgroundColor(context.resources.getColor(R.color.green))
+            holder.tvVehicleName?.text = "Maruti"
+            holder.tvVehicleNumber.text = "GJ01HV0015"
         } else if (position == 2) {
             holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_no_car_image))
+            holder.lllineView?.setBackgroundColor(context.resources.getColor(R.color.blue_color))
+            holder.tvVehicleName?.text = "Maruti Suzu..Dzire"
+            holder.tvVehicleNumber.text = "GJ01HV3578"
         }
 
 
