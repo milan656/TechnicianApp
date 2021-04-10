@@ -17,4 +17,6 @@ interface DaoClass {
 
     @Update
     fun update(book: VehicleMakeModelClass)
+
+
 }

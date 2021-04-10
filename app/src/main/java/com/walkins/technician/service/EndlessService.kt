@@ -16,8 +16,12 @@ import com.google.gson.GsonBuilder
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.VehicleMakeModelClass
+import com.walkins.technician.DB.VehiclePatternModelClass
+import com.walkins.technician.DB.VehicleSizeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
+import com.walkins.technician.model.login.patternmodel.PatternModel
+import com.walkins.technician.model.login.sizemodel.SizeModel
 import com.walkins.technician.networkApi.WarrantyApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -156,11 +160,79 @@ class EndlessService : Service() {
             while (isServiceStarted) {
                 launch(Dispatchers.IO) {
                     fetchVehicleData()
+
+                    fetchPattern()
+                    fetchSize()
+
+                    stopService()
                 }
                 delay(1 * 60 * 1000)
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
+    }
+
+    private fun fetchSize() {
+        val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
+
+        var call: Call<ResponseBody>? = null
+        call = warrantyApi.getVehicleBrand(
+
+        )
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    try {
+
+                        val gson = GsonBuilder().create()
+                        var sizeModel: SizeModel = gson.fromJson(
+                            response.body()?.string(),
+                            SizeModel::class.java
+                        )
+                        Log.e("getmodel00::", "" + vehicleBrandModel)
+//                        checkDateTime
+                        saveSizeData(sizeModel)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+        })
+
+    }
+
+    private fun fetchPattern() {
+        val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
+
+        var call: Call<ResponseBody>? = null
+        call = warrantyApi.getTyrePattern(
+            3
+
+        )
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    try {
+
+                        val gson = GsonBuilder().create()
+                        var patternModel: PatternModel = gson.fromJson(
+                            response?.body()?.string(),
+                            PatternModel::class.java
+                        )
+                        Log.e("getmodel00::", "" + vehicleBrandModel)
+//                        checkDateTime
+                        savePatternData(patternModel)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+        })
+
     }
 
     private fun stopService() {
@@ -218,6 +290,54 @@ class EndlessService : Service() {
 
     }
 
+    private fun savePatternData(patternModel: PatternModel) {
+
+        var thread: Thread = Thread {
+            if (mDb.patternDaoClass().getAllPattern().size > 0) {
+                mDb.patternDaoClass().deleteAll()
+            }
+
+            for (i in patternModel.data.indices) {
+
+                var model = patternModel.data.get(i)
+                var entity = VehiclePatternModelClass()
+
+                entity.name = if (model.name != null) model.name else ""
+                entity.isSelected = false
+                mDb.patternDaoClass().savePattern(entity)
+            }
+
+            Log.e("response+++", "++++" + mDb.patternDaoClass().getAllPattern().size)
+        }
+
+        thread.start()
+
+    }
+
+    private fun saveSizeData(sizeModel: SizeModel) {
+
+        var thread: Thread = Thread {
+            if (mDb.sizeDaoClass().getAllSize().size > 0) {
+                mDb.sizeDaoClass().deleteAll()
+            }
+
+            for (i in sizeModel?.data?.indices!!) {
+
+                var model = sizeModel.data.get(i)
+                var entity = VehicleSizeModelClass()
+
+                entity.name = if (model.name != null) model.name else ""
+                entity.isSelected = false
+                mDb.sizeDaoClass().saveSize(entity)
+            }
+
+            Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize().size)
+        }
+
+        thread.start()
+
+    }
+
     private fun saveVehicleTypeData(vehicleBrandModel: VehicleBrandModel) {
 
         var thread: Thread = Thread {
@@ -230,43 +350,27 @@ class EndlessService : Service() {
                 var model = vehicleBrandModel.data.get(i)
                 var entity = VehicleMakeModelClass()
 
-                if (model.vehicle_type != null && !model.vehicle_type.equals("null")) {
-                    entity.vehicle_type =
-                        model.vehicle_type
-                } else {
-                    entity.vehicle_type = ""
-                }
                 entity.name = if (model.name != null) model.name else ""
-                entity.image_url = if (model.image_url != null) model.image_url else ""
-                entity.quality = if (model.quality != null) model.quality else ""
-                entity.brand_id = if (model.brand_id != null) model.brand_id else ""
-                entity.isSelected = false
                 entity.short_number = if (model.short_number != null) model.short_number else ""
                 entity.concat = if (model.concat != null) model.concat else ""
+                entity.image_url = if (model.image_url != null) model.image_url else ""
+                entity.brand_id = if (model.brand_id != null) model.brand_id else ""
+                entity.quality = if (model.quality != null) model.quality else ""
+
+                entity.isSelected = false
                 mDb.daoClass().saveVehicleType(entity)
             }
 
-            Log.e("response+++", "++++" + mDb.daoClass().getAllVehicleType().size)
+            Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize().size)
         }
 
         thread.start()
 
-//        for (i in vehicleTypeModel?.data?.indices!!) {
-//            var entity = EntityClass()
-//            entity.vehicle_type_id =
-//                    vehicleTypeModel.data?.get(i)?.vehicleTypeId!!
-//            entity.name = vehicleTypeModel.data?.get(i)?.name!!
-//            entity.image_url = vehicleTypeModel.data?.get(i)?.imageUrl!!
-//            entity.type = vehicleTypeModel.data?.get(i)?.type!!
-//
-//            mDb.daoClass().saveRecord(entity)
-//        }
-
     }
+
 
     private fun createNotification(): Notification {
         val notificationChannelId = "ENDLESS SERVICE CHANNEL"
-
 
         // depending on the Android API that we're dealing with we will have
         // to use a specific method to create the notification

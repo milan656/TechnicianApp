@@ -3,6 +3,7 @@ package com.walkins.technician.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -78,39 +79,37 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         adapter = VehiclePatternAdapter(this, arrList, this)
         gridviewRecycModel?.adapter = adapter
 
-        getVehicleMake()
+//        getVehicleMake()
 
-        /* var thread = Thread {
+        var thread = Thread {
 
-             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
-             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
-                     .getAllVehicleType().size > 0
-             ) {
-                 for (i in mDb.daoClass().getAllVehicleType().indices) {
-                     var data = Data(
-                         mDb.daoClass().getAllVehicleType().get(i).brand_id,
-                         mDb.daoClass().getAllVehicleType().get(i).image_url,
-                         mDb.daoClass().getAllVehicleType().get(i).name,
-                         mDb.daoClass().getAllVehicleType().get(i).short_number,
-                         false,
-                         mDb.daoClass().getAllVehicleType().get(i).quality,
-                         mDb.daoClass().getAllVehicleType().get(i).vehicle_type,
-                         mDb.daoClass().getAllVehicleType().get(i).concat
-                     )
+            Log.e("getsizee", "" + mDb.patternDaoClass().getAllPattern().size)
+            if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass()
+                    .getAllPattern().size > 0
+            ) {
+                for (i in mDb.patternDaoClass().getAllPattern().indices) {
+                    var data = PatternData(
+                        mDb.patternDaoClass().getAllPattern().get(i).patternId,
+                        mDb.patternDaoClass().getAllPattern().get(i).name,
+                        false,
+                        false,
+                        false,
+                        false
+                    )
 
-                     arrList?.add(data)
-                 }
+                    arrList?.add(data)
+                }
 
-             }
+            }
 
-         }
-         thread.start()
+        }
+        thread.start()
 
-         var handler = Handler()
-         handler.postDelayed(Runnable {
-             adapter?.notifyDataSetChanged()
-             gridviewRecycModel?.visibility = View.VISIBLE
-         }, 1000)*/
+        var handler = Handler()
+        handler.postDelayed(Runnable {
+            adapter?.notifyDataSetChanged()
+            gridviewRecycModel?.visibility = View.VISIBLE
+        }, 1000)
     }
 
     fun getVehicleMake() {

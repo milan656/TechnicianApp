@@ -5,10 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [(VehicleMakeModelClass::class)], version = 2,exportSchema = false)
+@Database(
+    entities = [(VehicleMakeModelClass::class), (VehiclePatternModelClass::class), (VehicleSizeModelClass::class)],
+    version = 2,
+    exportSchema = false
+)
 abstract class DBClass : RoomDatabase() {
 
     abstract fun daoClass(): DaoClass
+    abstract fun sizeDaoClass(): SizeDaoClass
+    abstract fun patternDaoClass(): PatternDaoClass
 
     companion object {
         private var INSTANCE: DBClass? = null

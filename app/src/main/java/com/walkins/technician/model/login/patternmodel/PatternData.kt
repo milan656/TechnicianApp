@@ -7,9 +7,12 @@ data class PatternData(
 
     @SerializedName("id")
     @Expose
-    var id: Int,
+    var patternId: Int,
     @SerializedName("name")
     @Expose
     var name: String,
-    var isSelected: Boolean = false
+    var isSelected: Boolean = false,
+    var isRFSelected: Boolean = false,
+    var isLRSelected: Boolean = false,
+    var isRRSelected: Boolean = false,
 )

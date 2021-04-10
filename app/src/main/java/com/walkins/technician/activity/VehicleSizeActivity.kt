@@ -3,6 +3,7 @@ package com.walkins.technician.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -75,24 +76,22 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         adapter = VehicleSizeAdapter(this, arrList, this)
         gridviewRecycModel?.adapter = adapter
 
-        getVehicleMake()
+//        getVehicleMake()
 
-        /*var thread = Thread {
+        var thread = Thread {
 
             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
-            if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
-                    .getAllVehicleType().size > 0
+            if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass()
+                    .getAllSize().size > 0
             ) {
-                for (i in mDb.daoClass().getAllVehicleType().indices) {
-                    var data = Data(
-                        mDb.daoClass().getAllVehicleType().get(i).brand_id,
-                        mDb.daoClass().getAllVehicleType().get(i).image_url,
-                        mDb.daoClass().getAllVehicleType().get(i).name,
-                        mDb.daoClass().getAllVehicleType().get(i).short_number,
+                for (i in mDb.sizeDaoClass().getAllSize().indices) {
+                    var data = SizeData(
+                        mDb.sizeDaoClass().getAllSize().get(i).sizeId,
+                        mDb.sizeDaoClass().getAllSize().get(i).name,
                         false,
-                        mDb.daoClass().getAllVehicleType().get(i).quality,
-                        mDb.daoClass().getAllVehicleType().get(i).vehicle_type,
-                        mDb.daoClass().getAllVehicleType().get(i).concat
+                        false,
+                        false,
+                        false
                     )
 
                     arrList?.add(data)
@@ -107,14 +106,14 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         handler.postDelayed(Runnable {
             adapter?.notifyDataSetChanged()
             gridviewRecycModel?.visibility = View.VISIBLE
-        }, 1000)*/
+        }, 1000)
 
     }
 
     fun getVehicleMake() {
         Common.showLoader(this)
 
-        warrantyViewModel.getVehicleSize(460,41,this)
+        warrantyViewModel.getVehicleSize(460, 41, this)
 
         warrantyViewModel.getVehicleSize()
             ?.observe(this@VehicleSizeActivity, androidx.lifecycle.Observer {
