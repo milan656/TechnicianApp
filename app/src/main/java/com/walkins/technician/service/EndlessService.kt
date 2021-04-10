@@ -176,7 +176,7 @@ class EndlessService : Service() {
         val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
 
         var call: Call<ResponseBody>? = null
-        call = warrantyApi.getVehicleBrand(
+        call = warrantyApi.getVehicleTyreSize(460,41
 
         )
         call.enqueue(object : Callback<ResponseBody> {
@@ -189,7 +189,7 @@ class EndlessService : Service() {
                             response.body()?.string(),
                             SizeModel::class.java
                         )
-                        Log.e("getmodel00::", "" + vehicleBrandModel)
+                        Log.e("getmodel00::", "" + sizeModel)
 //                        checkDateTime
                         saveSizeData(sizeModel)
                     } catch (e: IOException) {
@@ -221,7 +221,7 @@ class EndlessService : Service() {
                             response?.body()?.string(),
                             PatternModel::class.java
                         )
-                        Log.e("getmodel00::", "" + vehicleBrandModel)
+                        Log.e("getmodel00::", "" + patternModel)
 //                        checkDateTime
                         savePatternData(patternModel)
                     } catch (e: IOException) {

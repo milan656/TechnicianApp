@@ -17,6 +17,7 @@ import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
+import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehiclePatternAdapter
 import com.walkins.technician.common.SpacesItemDecoration
@@ -43,6 +44,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
     private var llVehicleMakeselectedView: LinearLayout? = null
     private var tvSelectedModel: TextView? = null
     private var ivEditVehicleMake: ImageView? = null
+    private var selectedPosition = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,6 +181,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
         tvSelectedModel?.text = arrList?.get(variable)?.name
+        selectedPosition = variable
 
 
     }
@@ -190,6 +193,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 onBackPressed()
             }
             R.id.btnNext -> {
+
                 var intent = Intent(this, VehicleSizeActivity::class.java)
                 startActivityForResult(intent, 1003)
             }
@@ -200,6 +204,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
