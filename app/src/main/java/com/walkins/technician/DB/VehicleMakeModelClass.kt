@@ -41,4 +41,6 @@ class VehicleMakeModelClass {
 
     @ColumnInfo(name = "isRRSelected")
     var isRRSelected: Boolean = false
+
+
 }

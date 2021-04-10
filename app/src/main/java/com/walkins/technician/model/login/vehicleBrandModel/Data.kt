@@ -13,4 +13,6 @@ data class Data(
     var isLRSelected: Boolean = false,
     var isRRSelected: Boolean = false,
 
+
+
 )

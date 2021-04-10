@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +17,7 @@ import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.Data
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
+import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.common.SpacesItemDecoration
@@ -44,6 +42,12 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var ivSelectedCar: ImageView? = null
     private var ivEditVehicleMake: ImageView? = null
 
+    private var chkRR: CheckBox? = null
+    private var chkRF: CheckBox? = null
+    private var chkLR: CheckBox? = null
+
+    private var selectedPos = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_make)
@@ -62,6 +66,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
         btnNext = findViewById(R.id.btnNext)
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
+        chkRR = findViewById(R.id.chkRR)
+        chkRF = findViewById(R.id.chkRF)
+        chkLR = findViewById(R.id.chkLR)
 
         ivBack?.setOnClickListener(this)
         btnNext?.setOnClickListener(this)
@@ -97,6 +104,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             ) {
                 for (i in mDb.daoClass().getAllVehicleType().indices) {
                     var data = Data(
+
                         mDb.daoClass().getAllVehicleType().get(i).brand_id,
                         mDb.daoClass().getAllVehicleType().get(i).image_url,
                         mDb.daoClass().getAllVehicleType().get(i).name,
@@ -213,6 +221,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             e.printStackTrace()
         }
 
+        selectedPos = variable
+
 /*
         var model = arrList?.get(variable)
         var entity = VehicleMakeModelClass()
@@ -237,8 +247,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 onBackPressed()
             }
             R.id.btnNext -> {
-                var intent = Intent(this, VehiclePatternActivity::class.java)
-                startActivityForResult(intent, 1002)
+                updateRecords()
+
             }
             R.id.ivEditVehicleMake -> {
                 Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
@@ -247,6 +257,35 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
             }
         }
+    }
+
+    private fun updateRecords() {
+        var thread = Thread {
+            var model = mDb.daoClass().getAllVehicleType().get(selectedPos)
+            var entity = VehicleMakeModelClass()
+
+            entity.name = if (model.name != null) model.name else ""
+            entity.short_number = if (model.short_number != null) model.short_number else ""
+            entity.concat = if (model.concat != null) model.concat else ""
+            entity.image_url = if (model.image_url != null) model.image_url else ""
+            entity.brand_id = if (model.brand_id != null) model.brand_id else ""
+            entity.quality = if (model.quality != null) model.quality else ""
+
+            if (chkLR?.isChecked!! || chkRF?.isChecked!! || chkRR?.isChecked!!) {
+                entity.isSelected = true
+            }
+            entity.isRFSelected = chkRF?.isChecked!!
+            entity.isRRSelected = chkRR?.isChecked!!
+            entity.isLRSelected = chkLR?.isChecked!!
+
+            mDb.daoClass().update(entity)
+
+            Log.e("getupdated", "" + mDb.daoClass().getAllVehicleType().get(selectedPos))
+
+        }
+        thread.start()
+        var intent = Intent(this, VehiclePatternActivity::class.java)
+        startActivityForResult(intent, 1002)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

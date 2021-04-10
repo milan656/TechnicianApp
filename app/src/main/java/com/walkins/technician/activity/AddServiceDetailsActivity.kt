@@ -169,6 +169,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         relCarPhotoAdd1?.setOnClickListener(this)
         relCarPhotoAdd2?.setOnClickListener(this)
         tvSkipService?.setOnClickListener(this)
+        cardtyreConfig?.setOnClickListener(this)
 
         ivTyre1?.setOnTouchListener(this)
         ivTyre2?.setOnTouchListener(this)
@@ -270,6 +271,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.tvSkipService -> {
                 openSkipServiceDialogue()
+            }
+            R.id.cardtyreConfig -> {
+                ivAddTyreConfig?.performClick()
             }
         }
     }

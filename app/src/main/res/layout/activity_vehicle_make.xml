@@ -74,7 +74,7 @@
                 android:layout_marginStart="@dimen/ten_dp"
                 android:layout_marginTop="@dimen/fourteen_dp"
                 android:layout_marginEnd="@dimen/ten_dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:context=".activity.VehicleMakeApplyTyreActivty">
 
 
@@ -193,6 +193,7 @@
                             android:paddingBottom="@dimen/eight_dp">
 
                             <CheckBox
+                                android:id="@+id/chkRF"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="-5dp"
@@ -220,6 +221,7 @@
                             android:paddingBottom="@dimen/eight_dp">
 
                             <CheckBox
+                                android:id="@+id/chkLR"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="-5dp"
@@ -248,6 +250,7 @@
                             android:paddingBottom="@dimen/eight_dp">
 
                             <CheckBox
+                                android:id="@+id/chkRR"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="-5dp"
