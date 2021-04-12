@@ -832,7 +832,7 @@
                             android:layout_marginTop="@dimen/twelve_dp"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <com.walkins.technician.custom.NormalTextView
                                 android:id="@+id/tvTyreAddInfo"
@@ -895,6 +895,16 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content">
 
+                                            <ImageView
+                                                android:id="@+id/ivInfoImgLF"
+                                                android:layout_width="32dp"
+                                                android:layout_height="32dp"
+                                                android:layout_alignParentBottom="true"
+                                                android:layout_alignParentLeft="true"
+                                                android:visibility="gone"
+                                                android:src="@drawable/info_in_profile"
+                                                app:tint="@color/header_title" />
+
                                             <LinearLayout
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
@@ -904,8 +914,8 @@
 
                                                 <ImageView
                                                     android:id="@+id/ivtyreLeftFront"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"
+                                                    android:layout_width="75dp"
+                                                    android:layout_height="25dp"
                                                     android:layout_marginTop="@dimen/ten_dp"
                                                     android:background="@drawable/layout_bg_vehicle_border"
                                                     android:gravity="center"
@@ -913,6 +923,7 @@
                                                     android:paddingEnd="@dimen/five_dp"
                                                     android:src="@drawable/ic_mrf"
                                                     android:visibility="invisible" />
+
 
                                                 <ImageView
                                                     android:id="@+id/ivTyre1"
@@ -923,6 +934,7 @@
 
 
                                             </LinearLayout>
+
                                         </RelativeLayout>
 
                                         <ImageView
@@ -932,6 +944,14 @@
                                         <RelativeLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content">
+
+                                            <ImageView
+                                                android:id="@+id/ivInfoImgLR"
+                                                android:layout_width="32dp"
+                                                android:layout_height="32dp"
+                                                android:visibility="gone"
+                                                android:src="@drawable/info_in_profile"
+                                                app:tint="@color/header_title" />
 
                                             <LinearLayout
                                                 android:layout_width="wrap_content"
@@ -950,8 +970,8 @@
 
                                                 <ImageView
                                                     android:id="@+id/ivtyreLeftRear"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"
+                                                    android:layout_width="75dp"
+                                                    android:layout_height="25dp"
                                                     android:layout_marginTop="@dimen/five_dp"
                                                     android:background="@drawable/layout_bg_vehicle_border"
                                                     android:gravity="center"
@@ -981,6 +1001,16 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content">
 
+                                            <ImageView
+                                                android:id="@+id/ivInfoImgRF"
+                                                android:layout_width="32dp"
+                                                android:layout_height="32dp"
+                                                android:visibility="gone"
+                                                android:layout_alignParentBottom="true"
+                                                android:layout_alignParentRight="true"
+                                                android:src="@drawable/info_in_profile"
+                                                app:tint="@color/header_title" />
+
                                             <LinearLayout
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
@@ -990,8 +1020,8 @@
 
                                                 <ImageView
                                                     android:id="@+id/ivTyreRightFront"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"
+                                                    android:layout_width="75dp"
+                                                    android:layout_height="25dp"
                                                     android:layout_marginTop="@dimen/five_dp"
                                                     android:background="@drawable/layout_bg_vehicle_border"
                                                     android:gravity="center"
@@ -1000,13 +1030,15 @@
                                                     android:src="@drawable/ic_mrf"
                                                     android:visibility="invisible" />
 
-                                                <ImageView
-                                                    android:id="@+id/ivTyre3"
-                                                    android:layout_width="55dp"
-                                                    android:layout_height="55dp"
-                                                    android:layout_marginTop="@dimen/five_dp"
 
-                                                    android:src="@drawable/ic_pending_tyre_config" />
+                                                    <ImageView
+                                                        android:id="@+id/ivTyre3"
+                                                        android:layout_width="55dp"
+                                                        android:layout_height="55dp"
+                                                        android:layout_marginTop="@dimen/five_dp"
+
+                                                        android:src="@drawable/ic_pending_tyre_config" />
+
 
 
                                             </LinearLayout>
@@ -1042,18 +1074,20 @@
                                                         android:src="@drawable/ic_pending_tyre_config" />
 
                                                     <ImageView
-                                                        android:id="@+id/ivInfoImg"
+                                                        android:id="@+id/ivInfoImgRR"
                                                         android:layout_width="32dp"
                                                         android:layout_height="32dp"
                                                         android:layout_alignParentRight="true"
                                                         android:src="@drawable/info_in_profile"
-                                                        app:tint="@color/header_title" />
+                                                        app:tint="@color/header_title"
+                                                        android:visibility="gone"/>
                                                 </RelativeLayout>
 
                                                 <ImageView
                                                     android:id="@+id/ivTyreRightRear"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"
+                                                    android:layout_width="75dp"
+                                                    android:layout_height="25dp"
+
                                                     android:layout_marginTop="@dimen/five_dp"
                                                     android:background="@drawable/layout_bg_vehicle_border"
                                                     android:gravity="center"

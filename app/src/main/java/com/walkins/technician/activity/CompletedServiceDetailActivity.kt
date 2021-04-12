@@ -101,7 +101,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         ivTyre2 = findViewById(R.id.ivTyre2)
         ivTyre1 = findViewById(R.id.ivTyre1)
 
-        ivInfoImg = findViewById(R.id.ivInfoImg)
+//        ivInfoImg = findViewById(R.id.ivInfoImg)
 
         tvCurrentDateTime = findViewById(R.id.tvCurrentDateTime)
         pendingSuggestionsRecycView = findViewById(R.id.pendingSuggestionsRecycView)
@@ -123,7 +123,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         }
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
-        ivInfoImg?.setOnClickListener(this)
+//        ivInfoImg?.setOnClickListener(this)
 
         ivAddServices?.setOnTouchListener(this)
         ivAddTyreConfig?.setOnTouchListener(this)
@@ -159,9 +159,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             R.id.ivBack -> {
                 onBackPressed()
             }
-            R.id.ivInfoImg -> {
-                showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
-            }
+//            R.id.ivInfoImg -> {
+//                showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
+//            }
         }
     }
 

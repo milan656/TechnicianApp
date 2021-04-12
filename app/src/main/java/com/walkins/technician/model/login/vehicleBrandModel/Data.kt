@@ -1,6 +1,7 @@
 package com.jkadvantage.model.vehicleBrandModel
 
 data class Data(
+//    var id: Int,
     val brand_id: String,
     val image_url: String,
     val name: String,
@@ -14,5 +15,4 @@ data class Data(
     var isRRSelected: Boolean = false,
 
 
-
-)
+    )

@@ -19,7 +19,7 @@ import com.walkins.technician.common.onClickAdapter
 
 class VehicleMakeAdapterNew internal constructor(
     private val mContext: Context,
-    private var name: ArrayList<Data>?,
+    private var name: ArrayList<VehicleMakeModelClass>?,
     onPositionClick: onClickAdapter
 
 ) : RecyclerView.Adapter<VehicleMakeAdapterNew.ViewHolder>() {
@@ -80,7 +80,7 @@ class VehicleMakeAdapterNew internal constructor(
                 }
 
                 name!!.get(position).isSelected = true;
-                holder.ivselectedVehicle?.visibility = View.VISIBLE
+                holder.ivselectedVehicle.visibility = View.VISIBLE
             }
             notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)

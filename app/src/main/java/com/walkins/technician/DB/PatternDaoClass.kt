@@ -1,6 +1,7 @@
 package com.walkins.technician.DB
 
 import androidx.room.*
+import androidx.room.Dao
 import com.jkadvantage.model.vehicleBrandModel.Data
 import com.walkins.technician.model.login.patternmodel.PatternData
 import com.walkins.technician.model.login.sizemodel.SizeData
@@ -11,10 +12,10 @@ interface PatternDaoClass {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun savePattern(book: VehiclePatternModelClass)
 
-    @Query(value = "Select * from VehiclePatternModelClass")
-    fun getAllPattern(): List<PatternData>
+    @Query(value = "Select * from vehiclepattern")
+    fun getAllPattern(): List<VehiclePatternModelClass>
 
-    @Query("delete from VehiclePatternModelClass")
+    @Query("delete from vehiclepattern")
     fun deleteAll()
 
     @Update

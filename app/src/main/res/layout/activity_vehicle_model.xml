@@ -196,6 +196,7 @@
                             android:paddingBottom="@dimen/eight_dp">
 
                             <CheckBox
+                                android:id="@+id/chkRF"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="-5dp"
@@ -223,6 +224,7 @@
                             android:paddingBottom="@dimen/eight_dp">
 
                             <CheckBox
+                                android:id="@+id/chkLR"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="-5dp"
@@ -251,6 +253,7 @@
                             android:paddingBottom="@dimen/eight_dp">
 
                             <CheckBox
+                                android:id="@+id/chkRR"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="-5dp"

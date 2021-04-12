@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +14,7 @@ import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
+import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehiclePatternAdapter
@@ -38,13 +36,19 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
     private var gridviewRecycModel: RecyclerView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
-    var arrList: ArrayList<PatternData>? = ArrayList()
+    var arrList: ArrayList<VehiclePatternModelClass>? = ArrayList()
     private lateinit var mDb: DBClass
     private var btnNext: Button? = null
     private var llVehicleMakeselectedView: LinearLayout? = null
     private var tvSelectedModel: TextView? = null
     private var ivEditVehicleMake: ImageView? = null
     private var selectedPosition = -1
+    private var chkRR: CheckBox? = null
+    private var chkRF: CheckBox? = null
+    private var chkLR: CheckBox? = null
+    private var selectedPos = -1
+    private var selectedTyre = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +64,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
         btnNext = findViewById(R.id.btnNext)
+        chkRR = findViewById(R.id.chkRR)
+        chkRF = findViewById(R.id.chkRF)
+        chkLR = findViewById(R.id.chkLR)
+
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
         tvSelectedModel = findViewById(R.id.tvSelectedModel)
         ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
@@ -67,7 +75,13 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         ivBack?.setOnClickListener(this)
         btnNext?.setOnClickListener(this)
         ivEditVehicleMake?.setOnClickListener(this)
-        tvTitle?.text = "Select Tyre Pattern - " + TyreConfigClass.selectedTyreConfigType
+        if (intent != null) {
+            if (intent.hasExtra("selectedTyre")) {
+
+                tvTitle?.text =
+                    "Select Tyre Pattern - " + intent.getStringExtra("selectedTyre")
+            }
+        }
 
 
         gridviewRecycModel?.layoutManager =
@@ -89,18 +103,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass()
                     .getAllPattern().size > 0
             ) {
-                for (i in mDb.patternDaoClass().getAllPattern().indices) {
-                    var data = PatternData(
-                        mDb.patternDaoClass().getAllPattern().get(i).patternId,
-                        mDb.patternDaoClass().getAllPattern().get(i).name,
-                        false,
-                        false,
-                        false,
-                        false
-                    )
-
-                    arrList?.add(data)
-                }
+                arrList?.addAll(mDb.patternDaoClass().getAllPattern())
 
             }
 
@@ -114,61 +117,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }, 1000)
     }
 
-    fun getVehicleMake() {
-        Common.showLoader(this)
-
-        warrantyViewModel.getVehiclePattern(3, this)
-
-        warrantyViewModel.getVehiclePattern()
-            ?.observe(this@VehiclePatternActivity, androidx.lifecycle.Observer {
-                Common.hideLoader()
-                if (it != null) {
-                    if (it.success) {
-                        patternModel = it
-                        Log.e("getmodel00::", "" + patternModel)
-
-                        for (i in it.data?.indices!!) {
-                            if (!it.data.get(i).name.equals("Other", ignoreCase = true)) {
-                                arrList?.add(it.data.get(i))
-                            }
-                        }
-                        adapter?.notifyDataSetChanged()
-
-                        if (arrList?.size!! > 0) {
-                            gridviewRecycModel?.visibility = View.VISIBLE
-                        }
-                    } else {
-                        if (it.error != null && it.error.size > 0) {
-                            if (it.error.get(0).statusCode != null) {
-                                if (it.error.get(0).statusCode == 400) {
-                                    prefManager.clearAll()
-                                    val intent = Intent(this, LoginActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                } else {
-                                    this@VehiclePatternActivity.let { it1 ->
-                                        Common.showShortToast(
-                                            it.error.get(0).message,
-                                            it1
-                                        )
-                                    }
-                                }
-
-                            } else {
-                                this@VehiclePatternActivity.let { it1 ->
-                                    Common.showShortToast(
-                                        it.error.get(0).message,
-                                        it1
-                                    )
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    showLongToast("Something Went Wrong", this@VehiclePatternActivity)
-                }
-            })
-    }
 
     override fun onPositionClick(variable: Int, check: Int) {
 
@@ -182,7 +130,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         tvSelectedModel?.text = arrList?.get(variable)?.name
         selectedPosition = variable
+        selectedPos = variable
 
+        chkRF?.isChecked = arrList?.get(variable)?.isRFSelected!!
+        chkLR?.isChecked = arrList?.get(variable)?.isLRSelected!!
+        chkRR?.isChecked = arrList?.get(variable)?.isRRSelected!!
 
     }
 
@@ -194,8 +146,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
             R.id.btnNext -> {
 
-                var intent = Intent(this, VehicleSizeActivity::class.java)
-                startActivityForResult(intent, 1003)
+                updateRecords()
+
             }
             R.id.ivEditVehicleMake -> {
                 Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
@@ -203,6 +155,26 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
 
         }
+    }
+
+    private fun updateRecords() {
+        var thread = Thread {
+            var entity = VehiclePatternModelClass()
+            entity.Id = arrList?.get(selectedPos)?.Id!!
+            entity.name = arrList?.get(selectedPos)?.name
+            entity.isSelected = true
+            entity.isLRSelected = chkLR?.isChecked!!
+            entity.concat = arrList?.get(selectedPos)?.concat
+            entity.image_url = arrList?.get(selectedPos)?.image_url
+            entity.isRFSelected = chkRF?.isChecked!!
+            entity.isRRSelected = chkRR?.isChecked!!
+            mDb.patternDaoClass().update(entity)
+
+        }
+        thread.start()
+        var intent = Intent(this, VehicleSizeActivity::class.java)
+        intent.putExtra("selectedTyre", selectedTyre)
+        startActivityForResult(intent, 1003)
     }
 
 

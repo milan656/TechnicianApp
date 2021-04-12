@@ -6,16 +6,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.walkins.technician.DB.DBClass
+import com.walkins.technician.DB.VehiclePatternModelClass
+import com.walkins.technician.DB.VehicleSizeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleSizeAdapter
 import com.walkins.technician.common.SpacesItemDecoration
@@ -35,12 +34,17 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var gridviewRecycModel: RecyclerView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
-    var arrList: ArrayList<SizeData>? = ArrayList()
+    var arrList: ArrayList<VehicleSizeModelClass>? = ArrayList()
     private lateinit var mDb: DBClass
     private var llVehicleMakeselectedView: LinearLayout? = null
     private var btnNext: Button? = null
     private var tvSelectedModel: TextView? = null
     private var ivEditVehicleMake: ImageView? = null
+    private var chkRR: CheckBox? = null
+    private var chkRF: CheckBox? = null
+    private var chkLR: CheckBox? = null
+    private var selectedPos = -1
+    private var selectedTyre = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +59,24 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         btnNext = findViewById(R.id.btnNext)
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
 
+        chkRR = findViewById(R.id.chkRR)
+        chkRF = findViewById(R.id.chkRF)
+        chkLR = findViewById(R.id.chkLR)
+
         gridviewRecycModel = findViewById(R.id.gridviewRecycModel)
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
         tvSelectedModel = findViewById(R.id.tvSelectedModel)
         ivBack?.setOnClickListener(this)
         btnNext?.setOnClickListener(this)
-        tvTitle?.text = "Select Tyre Size - " + TyreConfigClass.selectedTyreConfigType
+        if (intent != null) {
+            if (intent.hasExtra("selectedTyre")) {
+
+                tvTitle?.text =
+                    "Select Tyre Size - " + intent.getStringExtra("selectedTyre")
+            }
+        }
+
         ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
 //        getVehicleMake()
         ivEditVehicleMake?.setOnClickListener(this)
@@ -84,18 +99,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass()
                     .getAllSize().size > 0
             ) {
-                for (i in mDb.sizeDaoClass().getAllSize().indices) {
-                    var data = SizeData(
-                        mDb.sizeDaoClass().getAllSize().get(i).sizeId,
-                        mDb.sizeDaoClass().getAllSize().get(i).name,
-                        false,
-                        false,
-                        false,
-                        false
-                    )
-
-                    arrList?.add(data)
-                }
+                arrList?.addAll(mDb.sizeDaoClass().getAllSize())
 
             }
 
@@ -125,7 +129,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         for (i in it.data?.indices!!) {
                             if (!it.data.get(i).name.equals("Other", ignoreCase = true)) {
-                                arrList?.add(it.data.get(i))
+//                                arrList?.add(it.data.get(i))
                             }
                         }
 
@@ -184,6 +188,10 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
         tvSelectedModel?.text = arrList?.get(variable)?.name
+        selectedPos = variable
+        chkRF?.isChecked = arrList?.get(variable)?.isRFSelected!!
+        chkLR?.isChecked = arrList?.get(variable)?.isLRSelected!!
+        chkRR?.isChecked = arrList?.get(variable)?.isRRSelected!!
 
     }
 
@@ -194,9 +202,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 onBackPressed()
             }
             R.id.btnNext -> {
-                val intent = Intent(this, VisualDetailsActivity::class.java)
-//                intent.putExtra("which", "vehiclesize")
-                startActivityForResult(intent, 1005)
+                updateRecords()
+
             }
             R.id.ivEditVehicleMake -> {
                 Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
@@ -204,6 +211,23 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
 
         }
+    }
+
+    private fun updateRecords() {
+        var thread = Thread {
+            var entity = VehicleSizeModelClass()
+            entity.Id = arrList?.get(selectedPos)?.Id!!
+            entity.name = arrList?.get(selectedPos)?.name
+            entity.isSelected = true
+            entity.isLRSelected = chkLR?.isChecked!!
+            entity.isRFSelected = chkRF?.isChecked!!
+            entity.isRRSelected = chkRR?.isChecked!!
+            mDb.sizeDaoClass().update(entity)
+
+        }
+        thread.start()
+        val intent = Intent(this, VisualDetailsActivity::class.java)
+        startActivityForResult(intent, 1005)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

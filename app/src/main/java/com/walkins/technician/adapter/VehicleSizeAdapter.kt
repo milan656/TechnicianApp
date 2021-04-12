@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.jkadvantage.model.vehicleBrandModel.Data
+import com.walkins.technician.DB.VehicleSizeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.sizemodel.SizeData
@@ -19,7 +20,7 @@ import com.walkins.technician.model.login.sizemodel.SizeData
 
 class VehicleSizeAdapter internal constructor(
     private val mContext: Context,
-    private var name: List<SizeData>?,
+    private var name: ArrayList<VehicleSizeModelClass>?,
     onPositionClick: onClickAdapter
 
 ) : RecyclerView.Adapter<VehicleSizeAdapter.ViewHolder>() {

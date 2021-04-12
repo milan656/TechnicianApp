@@ -30,6 +30,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.theartofdev.edmodo.cropper.CropImage
@@ -116,6 +118,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var ivTyreRightFront: ImageView? = null
     private var ivTyreRightRear: ImageView? = null
 
+    private var ivInfoImgLF: ImageView? = null
+    private var ivInfoImgRF: ImageView? = null
+    private var ivInfoImgLR: ImageView? = null
+    private var ivInfoImgRR: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_service_details)
@@ -144,6 +151,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         cardservice = findViewById(R.id.cardservice)
         cardtyreConfig = findViewById(R.id.cardtyreConfig)
         cardtechinicalSuggestion = findViewById(R.id.cardtechinicalSuggestion)
+
+        ivInfoImgLF = findViewById(R.id.ivInfoImgLF)
+        ivInfoImgLR = findViewById(R.id.ivInfoImgLR)
+        ivInfoImgRF = findViewById(R.id.ivInfoImgRF)
+        ivInfoImgRR = findViewById(R.id.ivInfoImgRR)
 
         ivTyre1 = findViewById(R.id.ivTyre1)
         ivTyre2 = findViewById(R.id.ivTyre2)
@@ -453,26 +465,26 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivTyre1 -> {
                 intent.putExtra("tyreConfigType", "LF")
                 intent.putExtra("title", "Select Tyre Make - LF")
-                startActivityForResult(intent, 1000)
                 TyreConfigClass.selectedTyreConfigType = "LFpending"
+                startActivityForResult(intent, 1000)
             }
             R.id.ivTyre3 -> {
                 intent.putExtra("tyreConfigType", "RF")
                 intent.putExtra("title", "Select Tyre Make - RF")
-                startActivityForResult(intent, 1000)
                 TyreConfigClass.selectedTyreConfigType = "RFpending"
+                startActivityForResult(intent, 1000)
             }
             R.id.ivTyre2 -> {
                 intent.putExtra("tyreConfigType", "LR")
                 intent.putExtra("title", "Select Tyre Make - LR")
-                startActivityForResult(intent, 1000)
                 TyreConfigClass.selectedTyreConfigType = "LRpending"
+                startActivityForResult(intent, 1000)
             }
             R.id.ivTyre4 -> {
                 intent.putExtra("tyreConfigType", "RR")
                 intent.putExtra("title", "Select Tyre Make - RR")
-                startActivityForResult(intent, 1000)
                 TyreConfigClass.selectedTyreConfigType = "RRpending"
+                startActivityForResult(intent, 1000)
             }
             R.id.ivAddServices -> {
                 if (llServiceExpanded?.visibility == View.VISIBLE) {
@@ -696,18 +708,40 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
                     ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
                     ivtyreLeftFront?.visibility = View.VISIBLE
+                    ivInfoImgLF?.visibility = View.GONE
+                } else {
+                    ivInfoImgLF?.visibility = View.VISIBLE
                 }
                 if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
                     ivTyre3?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
                     ivTyreRightFront?.visibility = View.VISIBLE
+                    try {
+                        Glide.with(this)
+                            .load(TyreConfigClass.selectedMakeURL)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder)
+                            .into(ivTyreRightFront!!)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                    ivInfoImgRF?.visibility = View.GONE
+                } else {
+                    ivInfoImgRF?.visibility = View.VISIBLE
                 }
                 if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
                     ivTyre2?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
                     ivtyreLeftRear?.visibility = View.VISIBLE
+                    ivInfoImgLR?.visibility = View.GONE
+                } else {
+                    ivInfoImgLR?.visibility = View.VISIBLE
                 }
                 if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
                     ivTyre4?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
                     ivTyreRightRear?.visibility = View.VISIBLE
+                    ivInfoImgRR?.visibility = View.GONE
+                } else {
+                    ivInfoImgRR?.visibility = View.VISIBLE
                 }
             }
         }

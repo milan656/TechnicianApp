@@ -3,16 +3,16 @@ package com.walkins.technician.DB
 import androidx.room.*
 import com.jkadvantage.model.vehicleBrandModel.Data
 
-@Dao
+@androidx.room.Dao
 interface DaoClass {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveVehicleType(book: VehicleMakeModelClass)
 
-    @Query(value = "Select * from VehicleMakeModelClass")
-    fun getAllVehicleType(): List<Data>
+    @Query(value = "Select * from vehiclemake")
+    fun getAllVehicleType(): List<VehicleMakeModelClass>
 
-    @Query("delete from VehicleMakeModelClass")
+    @Query("delete from vehiclemake")
     fun deleteAll()
 
     @Update

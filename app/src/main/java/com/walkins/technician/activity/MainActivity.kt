@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.bruce.pickerview.popwindow.DatePickerPopWin
 import com.example.technician.common.Common.Companion.setTint
 import com.example.technician.common.PrefManager
+import com.walkins.technician.DB.DBClass
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.replaceFragmenty
@@ -41,14 +42,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private var selectedMenu: String? = null
     public var lltransparent: LinearLayout? = null
+    private lateinit var mDb: DBClass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         prefManager = PrefManager(this)
+        mDb = DBClass.getInstance(applicationContext)
         init()
-        actionOnService(Actions.START)
 
+        var thread = Thread {
+            if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
+                    .getAllVehicleType().size > 0
+            ) {
+
+            } else {
+                actionOnService(Actions.START)
+            }
+
+        }
+        thread.start()
     }
 
     private fun init() {

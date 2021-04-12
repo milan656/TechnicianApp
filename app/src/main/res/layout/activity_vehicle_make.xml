@@ -74,7 +74,7 @@
                 android:layout_marginStart="@dimen/ten_dp"
                 android:layout_marginTop="@dimen/fourteen_dp"
                 android:layout_marginEnd="@dimen/ten_dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
 
             <LinearLayout
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:context=".activity.VehicleMakeApplyTyreActivty">
 
 

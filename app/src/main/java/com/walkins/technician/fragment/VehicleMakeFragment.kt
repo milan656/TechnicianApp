@@ -119,8 +119,8 @@ class VehicleMakeFragment : Fragment(), onClickAdapter {
                             )
                         )
 
-                        adapter = context?.let { it1 -> VehicleMakeAdapterNew(it1, arrList, this) }
-                        gridviewRecycMake_?.adapter = adapter
+//                        adapter = context?.let { it1 -> VehicleMakeAdapterNew(it1, arrList, this) }
+//                        gridviewRecycMake_?.adapter = adapter
 
 
                     } else {

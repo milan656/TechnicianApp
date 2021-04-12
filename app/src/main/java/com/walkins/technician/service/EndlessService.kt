@@ -14,10 +14,7 @@ import com.example.technician.common.PrefManager
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.GsonBuilder
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
-import com.walkins.technician.DB.DBClass
-import com.walkins.technician.DB.VehicleMakeModelClass
-import com.walkins.technician.DB.VehiclePatternModelClass
-import com.walkins.technician.DB.VehicleSizeModelClass
+import com.walkins.technician.DB.*
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.model.login.patternmodel.PatternModel
@@ -176,7 +173,8 @@ class EndlessService : Service() {
         val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
 
         var call: Call<ResponseBody>? = null
-        call = warrantyApi.getVehicleTyreSize(460,41
+        call = warrantyApi.getVehicleTyreSize(
+            460, 41
 
         )
         call.enqueue(object : Callback<ResponseBody> {
@@ -350,6 +348,8 @@ class EndlessService : Service() {
                 var model = vehicleBrandModel.data.get(i)
                 var entity = VehicleMakeModelClass()
 
+//                entity.Id = model.id
+
                 entity.name = if (model.name != null) model.name else ""
                 entity.short_number = if (model.short_number != null) model.short_number else ""
                 entity.concat = if (model.concat != null) model.concat else ""
@@ -362,6 +362,13 @@ class EndlessService : Service() {
             }
 
             Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize().size)
+
+//            save Cource Data
+            val courseName: String = "name"
+            val courseDescription: String = "cource Descriptino"
+            val courseDuration: String = "1 mionth"
+            val model = CourseModal(courseName, courseDescription, courseDuration)
+            mDb.dao().insert(model)
         }
 
         thread.start()

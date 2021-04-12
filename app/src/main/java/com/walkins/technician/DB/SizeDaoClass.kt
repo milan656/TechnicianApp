@@ -1,19 +1,20 @@
 package com.walkins.technician.DB
 
 import androidx.room.*
+import androidx.room.Dao
 import com.jkadvantage.model.vehicleBrandModel.Data
 import com.walkins.technician.model.login.sizemodel.SizeData
 
-@Dao
+@androidx.room.Dao
 interface SizeDaoClass {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveSize(book: VehicleSizeModelClass)
 
-    @Query(value = "Select * from VehicleSizeModelClass")
-    fun getAllSize(): List<SizeData>
+    @Query(value = "Select * from vehiclesize")
+    fun getAllSize(): List<VehicleSizeModelClass>
 
-    @Query("delete from VehicleSizeModelClass")
+    @Query("delete from vehiclesize")
     fun deleteAll()
 
     @Update

@@ -9,13 +9,14 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.patternmodel.PatternData
 
 class VehiclePatternAdapter internal constructor(
     private val mContext: Context,
-    private var name: List<PatternData>?,
+    private var name: ArrayList<VehiclePatternModelClass>?,
     onPositionClick: onClickAdapter
 
 ) : RecyclerView.Adapter<VehiclePatternAdapter.ViewHolder>() {
