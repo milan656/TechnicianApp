@@ -29,14 +29,15 @@ class TyreConfigClass {
         var LRVehicleSize = false
         var LRVehicleVisualDetail = false
 
-        var LFCompleted=false
-        var LRCompleted=false
-        var RFCompleted=false
-        var RRCompleted=false
+        var LFCompleted = false
+        var LRCompleted = false
+        var RFCompleted = false
+        var RRCompleted = false
 
-        var selectedMakeURL=""
+        var selectedMakeURL = ""
 
-        var clickedTyre=""
+        var clickedTyre = ""
+        var pendingTyre = ""
 
     }
 }

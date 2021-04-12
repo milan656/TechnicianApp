@@ -340,6 +340,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.LRVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail - LR")
                 }
+                TyreConfigClass.pendingTyre = "LR"
                 showBottomSheetdialog(
                     pendingArr!!,
                     "LR Pending",
@@ -363,6 +364,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.LFVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail - LF")
                 }
+                TyreConfigClass.pendingTyre = "LF"
                 showBottomSheetdialog(
                     pendingArr!!,
                     "LF Pending",
@@ -387,6 +389,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.RRVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail - RR")
                 }
+                TyreConfigClass.pendingTyre = "RR"
                 showBottomSheetdialog(
                     pendingArr!!,
                     "RR Pending",
@@ -410,6 +413,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.RFVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail - RF")
                 }
+                TyreConfigClass.pendingTyre = "RF"
                 showBottomSheetdialog(
                     pendingArr!!,
                     "RF Pending",
@@ -691,6 +695,35 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             Log.e("pendingarr", "" + pendingArr?.get(variable))
 
+            if (TyreConfigClass.pendingTyre.equals("LF")) {
+                var intent = Intent(this, VehicleMakeActivity::class.java)
+                intent.putExtra("tyreConfigType", "LF")
+                intent.putExtra("title", "Select Tyre Make - LF")
+                TyreConfigClass.selectedTyreConfigType = "LFpending"
+                TyreConfigClass.clickedTyre = "LF"
+                startActivityForResult(intent, 1000)
+            } else if (TyreConfigClass.pendingTyre.equals("LR")) {
+                var intent = Intent(this, VehicleMakeActivity::class.java)
+                intent.putExtra("tyreConfigType", "LR")
+                intent.putExtra("title", "Select Tyre Make - LR")
+                TyreConfigClass.selectedTyreConfigType = "LRpending"
+                TyreConfigClass.clickedTyre = "LR"
+                startActivityForResult(intent, 1000)
+            } else if (TyreConfigClass.pendingTyre.equals("RF")) {
+                var intent = Intent(this, VehicleMakeActivity::class.java)
+                intent.putExtra("tyreConfigType", "RF")
+                intent.putExtra("title", "Select Tyre Make - RF")
+                TyreConfigClass.selectedTyreConfigType = "RFpending"
+                TyreConfigClass.clickedTyre = "RF"
+                startActivityForResult(intent, 1000)
+            } else if (TyreConfigClass.pendingTyre.equals("RR")) {
+                var intent = Intent(this, VehicleMakeActivity::class.java)
+                intent.putExtra("tyreConfigType", "RR")
+                intent.putExtra("title", "Select Tyre Make - RR")
+                TyreConfigClass.selectedTyreConfigType = "RRpending"
+                TyreConfigClass.clickedTyre = "RR"
+                startActivityForResult(intent, 1000)
+            }
 
         }
 
