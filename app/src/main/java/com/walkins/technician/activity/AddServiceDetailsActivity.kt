@@ -466,24 +466,28 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 intent.putExtra("tyreConfigType", "LF")
                 intent.putExtra("title", "Select Tyre Make - LF")
                 TyreConfigClass.selectedTyreConfigType = "LFpending"
+                TyreConfigClass.clickedTyre = "LF"
                 startActivityForResult(intent, 1000)
             }
             R.id.ivTyre3 -> {
                 intent.putExtra("tyreConfigType", "RF")
                 intent.putExtra("title", "Select Tyre Make - RF")
                 TyreConfigClass.selectedTyreConfigType = "RFpending"
+                TyreConfigClass.clickedTyre = "RF"
                 startActivityForResult(intent, 1000)
             }
             R.id.ivTyre2 -> {
                 intent.putExtra("tyreConfigType", "LR")
                 intent.putExtra("title", "Select Tyre Make - LR")
                 TyreConfigClass.selectedTyreConfigType = "LRpending"
+                TyreConfigClass.clickedTyre = "LR"
                 startActivityForResult(intent, 1000)
             }
             R.id.ivTyre4 -> {
                 intent.putExtra("tyreConfigType", "RR")
                 intent.putExtra("title", "Select Tyre Make - RR")
                 TyreConfigClass.selectedTyreConfigType = "RRpending"
+                TyreConfigClass.clickedTyre = "RR"
                 startActivityForResult(intent, 1000)
             }
             R.id.ivAddServices -> {
@@ -705,43 +709,55 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             1000 -> {
                 Log.e("getvaluesss", "" + TyreConfigClass.selectedTyreConfigType)
 
-                if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
-                    ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                    ivtyreLeftFront?.visibility = View.VISIBLE
-                    ivInfoImgLF?.visibility = View.GONE
-                } else {
-                    ivInfoImgLF?.visibility = View.VISIBLE
-                }
-                if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
-                    ivTyre3?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                    ivTyreRightFront?.visibility = View.VISIBLE
-                    try {
-                        Glide.with(this)
-                            .load(TyreConfigClass.selectedMakeURL)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.placeholder)
-                            .into(ivTyreRightFront!!)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                if (TyreConfigClass.clickedTyre.equals("LF")) {
+                    if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
+                        ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                        ivtyreLeftFront?.visibility = View.VISIBLE
+                        ivInfoImgLF?.visibility = View.GONE
+                    } else {
+                        ivInfoImgLF?.visibility = View.VISIBLE
+
                     }
-                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                    ivInfoImgRF?.visibility = View.GONE
-                } else {
-                    ivInfoImgRF?.visibility = View.VISIBLE
                 }
-                if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
-                    ivTyre2?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                    ivtyreLeftRear?.visibility = View.VISIBLE
-                    ivInfoImgLR?.visibility = View.GONE
-                } else {
-                    ivInfoImgLR?.visibility = View.VISIBLE
+                if (TyreConfigClass.clickedTyre.equals("RF")) {
+                    if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
+                        ivTyre3?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                        ivTyreRightFront?.visibility = View.VISIBLE
+                        try {
+                            Glide.with(this)
+                                .load(TyreConfigClass.selectedMakeURL)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.placeholder)
+                                .into(ivTyreRightFront!!)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                        Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                        ivInfoImgRF?.visibility = View.GONE
+                    } else {
+                        ivInfoImgRF?.visibility = View.VISIBLE
+
+                    }
                 }
-                if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
-                    ivTyre4?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                    ivTyreRightRear?.visibility = View.VISIBLE
-                    ivInfoImgRR?.visibility = View.GONE
-                } else {
-                    ivInfoImgRR?.visibility = View.VISIBLE
+                if (TyreConfigClass.clickedTyre.equals("LR")) {
+                    if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
+                        ivTyre2?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                        ivtyreLeftRear?.visibility = View.VISIBLE
+                        ivInfoImgLR?.visibility = View.GONE
+                    } else {
+                        ivInfoImgLR?.visibility = View.VISIBLE
+
+                    }
+                }
+                if (TyreConfigClass.clickedTyre.equals("RR")) {
+                    if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
+                        ivTyre4?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                        ivTyreRightRear?.visibility = View.VISIBLE
+                        ivInfoImgRR?.visibility = View.GONE
+                    } else {
+                        ivInfoImgRR?.visibility = View.VISIBLE
+
+                    }
                 }
             }
         }

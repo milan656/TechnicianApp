@@ -31,5 +31,7 @@ class TyreConfigClass {
 
         var selectedMakeURL=""
 
+        var clickedTyre=""
+
     }
 }

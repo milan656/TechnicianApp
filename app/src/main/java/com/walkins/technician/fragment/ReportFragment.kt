@@ -2,24 +2,31 @@ package com.walkins.technician.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
+import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
 import com.walkins.technician.activity.SkippedServiceDetailActivity
+import com.walkins.technician.adapter.AutoSuggestProductAdapter
 import com.walkins.technician.adapter.ReportAdpater
 import com.walkins.technician.adapter.ReportSkippAdpater
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.model.login.makemodel.VehicleMakeData
+import com.walkins.technician.model.login.makemodel.VehicleModelData
+import com.walkins.technician.viewmodel.MakeModelViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -31,12 +38,24 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var tvTitle: TextView? = null
     private var ivFilterImg: ImageView? = null
     private var reportRecycView: RecyclerView? = null
+    private val listClicked = ArrayList<String>()
+    private var adapter: AutoSuggestProductAdapter? = null
+
+    private lateinit var prefManager: PrefManager
+    private lateinit var makeModelViewModel: MakeModelViewModel
 
     private var llCompleted: LinearLayout? = null
     private var tvSkipped: TextView? = null
     private var tvCompleted: TextView? = null
     private var llSkipped: LinearLayout? = null
     private var skipSelected = false
+
+    private var actvehicleMake: AutoCompleteTextView? = null
+    private var actvehicleModel: AutoCompleteTextView? = null
+    private var actvehicleSociety: AutoCompleteTextView? = null
+
+    private var makeSearchdata: ArrayList<VehicleMakeData>? = ArrayList()
+    private var modelSearchdata: ArrayList<VehicleModelData>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +70,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_report, container, false)
-
+        prefManager = context?.let { PrefManager(it) }!!
+        makeModelViewModel = ViewModelProviders.of(this).get(MakeModelViewModel::class.java)
         init(view)
         return view
     }
@@ -61,6 +81,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         llCompleted = view?.findViewById(R.id.llCompletedReport)
         tvSkipped = view?.findViewById(R.id.tvSkipped)
         tvCompleted = view?.findViewById(R.id.tvCompleted)
+
+
 
         reportRecycView = view?.findViewById(R.id.reportRecycView)
         tvTitle = view?.findViewById(R.id.tvTitle)
@@ -96,7 +118,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
         } else {
-            val arrayAdapter = context?.let { ReportSkippAdpater(Common.commonPhotoChooseArr, it, this) }
+            val arrayAdapter =
+                context?.let { ReportSkippAdpater(Common.commonPhotoChooseArr, it, this) }
             reportRecycView?.layoutManager = LinearLayoutManager(
                 context,
                 RecyclerView.VERTICAL,
@@ -196,6 +219,107 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val btnConfirm = view.findViewById<Button>(R.id.btnConfirm)
         val btnCancel = view.findViewById<Button>(R.id.btnCancel)
 
+        actvehicleMake = view?.findViewById(R.id.actvehicleMake)
+        actvehicleModel = view?.findViewById(R.id.actvehicleModel)
+        actvehicleSociety = view?.findViewById(R.id.actvehicleSociety)
+
+
+        actvehicleMake!!.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                if (s?.toString()?.length!! > 0) {
+
+                    searchMake(actvehicleMake?.text.toString())
+                } else {
+
+                }
+            }
+
+        })
+
+        actvehicleMake!!.onItemClickListener =
+            object : AdapterView.OnItemClickListener {
+                override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                }
+            }
+        actvehicleModel!!.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                if (s?.toString()?.length!! > 0) {
+
+                    searchModel(actvehicleModel?.text.toString())
+                } else {
+
+                }
+            }
+
+        })
+
+        actvehicleModel!!.onItemClickListener =
+            object : AdapterView.OnItemClickListener {
+                override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                }
+            }
+        actvehicleSociety!!.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                if (s?.toString()?.length!! > 0) {
+
+                    searchSociety(actvehicleSociety?.text.toString())
+                } else {
+
+                }
+            }
+
+        })
+
+        actvehicleSociety!!.onItemClickListener =
+            object : AdapterView.OnItemClickListener {
+                override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                }
+            }
         tvTitleText?.text = titleStr
 
         ivClose?.setOnClickListener {
@@ -211,4 +335,76 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         dialog?.show()
     }
+
+    private fun searchModel(toString: String) {
+
+    }
+
+    private fun searchMake(toString: String) {
+        context?.let { makeModelViewModel?.getVehicleMake(it) }
+
+        makeModelViewModel?.getVehicleMakeList()?.observe(this, Observer {
+
+            if (it != null) {
+                if (it.success) {
+
+                    makeSearchdata?.addAll(it.data)
+                    try {
+                        makeDataForSearchApi(makeSearchdata!!)
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
+        })
+    }
+
+    private fun searchSociety(toString: String) {
+
+    }
+
+    private fun makeDataForSearchApi(makeSearchdata: ArrayList<VehicleMakeData>) {
+
+        listClicked.clear()
+        try {
+            for ((index, value) in makeSearchdata.withIndex()) {
+                val string =
+                    makeSearchdata.get(index).name + " --> " + makeSearchdata.get(index).id
+                listClicked.add(string)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        Log.e("listClicked", "" + listClicked)
+        if (listClicked.size > 0) {
+            adapter =
+                context?.let {
+                    AutoSuggestProductAdapter(
+                        it,
+                        android.R.layout.simple_list_item_1,
+                        listClicked
+                    )
+                }
+            actvehicleMake?.threshold = 1
+            actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
+        } else {
+            var noValueList: ArrayList<String> = ArrayList()
+            noValueList.add("No any dealer found")
+            adapter =
+                context?.let {
+                    AutoSuggestProductAdapter(
+                        it,
+                        android.R.layout.simple_list_item_1,
+                        noValueList
+                    )
+                }
+            actvehicleMake?.threshold = 1
+            actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
+        }
+    }
+
 }

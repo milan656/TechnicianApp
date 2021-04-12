@@ -135,7 +135,8 @@
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
-            <com.walkins.technician.custom.NormalEditText
+            <AutoCompleteTextView
+                android:id="@+id/actvehicleMake"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
@@ -143,10 +144,7 @@
                 android:drawableRight="@drawable/search"
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingTop="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:paddingBottom="@dimen/ten_dp"
+                android:padding="@dimen/twelve_dp"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
@@ -165,7 +163,8 @@
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
-            <com.walkins.technician.custom.NormalEditText
+            <AutoCompleteTextView
+                android:id="@+id/actvehicleModel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
@@ -173,7 +172,7 @@
                 android:drawableRight="@drawable/search"
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
-                android:padding="@dimen/ten_dp"
+                android:padding="@dimen/twelve_dp"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
@@ -193,7 +192,8 @@
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
-            <com.walkins.technician.custom.NormalEditText
+            <AutoCompleteTextView
+                android:id="@+id/actvehicleSociety"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
@@ -201,7 +201,7 @@
                 android:drawableRight="@drawable/search"
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
-                android:padding="@dimen/ten_dp"
+                android:padding="@dimen/twelve_dp"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 

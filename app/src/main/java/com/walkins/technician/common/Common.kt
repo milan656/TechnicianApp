@@ -38,6 +38,7 @@ import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.custom.BoldButton
+import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import okhttp3.ResponseBody
@@ -271,6 +272,15 @@ class Common {
                                         SizeModel::class.java
                                     )
                                 return SizeModel
+                            }
+
+                            "VehicleMakeModel" -> {
+                                val VehicleMakeModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        VehicleMakeModel::class.java
+                                    )
+                                return VehicleMakeModel
                             }
 
 
