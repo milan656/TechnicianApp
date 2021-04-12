@@ -208,7 +208,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         ivOkbubble?.setOnClickListener(this)
         ivSugbubble?.setOnClickListener(this)
         ivReqbubble?.setOnClickListener(this)
-
     }
 
     fun psiInSlider() {
