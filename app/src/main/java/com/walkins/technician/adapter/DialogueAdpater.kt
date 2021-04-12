@@ -36,7 +36,11 @@ class DialogueAdpater(
         holder.itemView.setOnClickListener {
 
             if (onclick != null) {
-                onclick?.onPositionClick(position, 10)
+                if (array.get(position).equals("Gallery") || array.get(position).equals("Camera")) {
+                    onclick?.onPositionClick(position, 10)
+                } else {
+                    onclick?.onPositionClick(position, 11)
+                }
             }
         }
     }

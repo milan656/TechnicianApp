@@ -870,7 +870,7 @@
                                     android:textSize="@dimen/eighteen_sp"
                                     android:textStyle="bold" />
 
-                                <ImageView
+                                <com.walkins.technician.custom.CircularImageView
                                     android:id="@+id/ivPickedImage1"
                                     android:layout_width="150dp"
                                     android:layout_height="match_parent"
@@ -878,6 +878,8 @@
                                     android:layout_centerInParent="true"
                                     android:scaleType="fitCenter"
                                     android:visibility="gone"
+
+                                    app:civ_shadow_radius="@dimen/five_dp"
                                     android:src="@drawable/ic_camera_icon"/>
 
                                 <ImageView

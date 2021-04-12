@@ -47,7 +47,7 @@ import java.io.File
 
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
-
+    var pendingArr: ArrayList<String>? = null
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGE_REQUEST = 100
     private lateinit var mCurrentPhotoPath: String
@@ -326,72 +326,97 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             R.id.ivInfoImgLR -> {
 
-                var pendingArr = arrayListOf<String>()
+                pendingArr = arrayListOf<String>()
 
                 if (TyreConfigClass.LRVehicleMake == false) {
-                    pendingArr.add("Tyre Make")
+                    pendingArr?.add("Tyre Make")
                 }
                 if (TyreConfigClass.LRVehiclePattern == false) {
-                    pendingArr.add("Tyre Pattern")
+                    pendingArr?.add("Tyre Pattern")
                 }
                 if (TyreConfigClass.LRVehicleSize == false) {
-                    pendingArr.add("Tyre Size")
+                    pendingArr?.add("Tyre Size")
                 }
                 if (TyreConfigClass.LRVehicleVisualDetail == false) {
-                    pendingArr.add("Visual Detail - LR")
+                    pendingArr?.add("Visual Detail - LR")
                 }
-                showBottomSheetdialog(pendingArr, "LR Pending", this, Common.btn_filled, "Proceed")
+                showBottomSheetdialog(
+                    pendingArr!!,
+                    "LR Pending",
+                    this,
+                    Common.btn_filled,
+                    "Proceed"
+                )
             }
             R.id.ivInfoImgLF -> {
-                var pendingArr = arrayListOf<String>()
+                pendingArr = arrayListOf<String>()
 
                 if (TyreConfigClass.LFVehicleMake == false) {
-                    pendingArr.add("Tyre Make")
+                    pendingArr?.add("Tyre Make")
                 }
                 if (TyreConfigClass.LFVehiclePattern == false) {
-                    pendingArr.add("Tyre Pattern")
+                    pendingArr?.add("Tyre Pattern")
                 }
                 if (TyreConfigClass.LFVehicleSize == false) {
-                    pendingArr.add("Tyre Size")
+                    pendingArr?.add("Tyre Size")
                 }
                 if (TyreConfigClass.LFVehicleVisualDetail == false) {
-                    pendingArr.add("Visual Detail - LF")
+                    pendingArr?.add("Visual Detail - LF")
                 }
-                showBottomSheetdialog(pendingArr, "LF Pending", this, Common.btn_filled, "Proceed")
+                showBottomSheetdialog(
+                    pendingArr!!,
+                    "LF Pending",
+                    this,
+                    Common.btn_filled,
+                    "Proceed"
+                )
+
             }
             R.id.ivInfoImgRR -> {
-                var pendingArr = arrayListOf<String>()
+                pendingArr = arrayListOf<String>()
 
                 if (TyreConfigClass.RRVehicleMake == false) {
-                    pendingArr.add("Tyre Make")
+                    pendingArr?.add("Tyre Make")
                 }
                 if (TyreConfigClass.RRVehiclePattern == false) {
-                    pendingArr.add("Tyre Pattern")
+                    pendingArr?.add("Tyre Pattern")
                 }
                 if (TyreConfigClass.RRVehicleSize == false) {
-                    pendingArr.add("Tyre Size")
+                    pendingArr?.add("Tyre Size")
                 }
                 if (TyreConfigClass.RRVehicleVisualDetail == false) {
-                    pendingArr.add("Visual Detail - RR")
+                    pendingArr?.add("Visual Detail - RR")
                 }
-                showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
+                showBottomSheetdialog(
+                    pendingArr!!,
+                    "RR Pending",
+                    this,
+                    Common.btn_filled,
+                    "Proceed"
+                )
             }
             R.id.ivInfoImgRF -> {
-                var pendingArr = arrayListOf<String>()
+                pendingArr = arrayListOf<String>()
 
                 if (TyreConfigClass.RFVehicleMake == false) {
-                    pendingArr.add("Tyre Make")
+                    pendingArr?.add("Tyre Make")
                 }
                 if (TyreConfigClass.RFVehiclePattern == false) {
-                    pendingArr.add("Tyre Pattern")
+                    pendingArr?.add("Tyre Pattern")
                 }
                 if (TyreConfigClass.RFVehicleSize == false) {
-                    pendingArr.add("Tyre Size")
+                    pendingArr?.add("Tyre Size")
                 }
                 if (TyreConfigClass.RFVehicleVisualDetail == false) {
-                    pendingArr.add("Visual Detail - RF")
+                    pendingArr?.add("Visual Detail - RF")
                 }
-                showBottomSheetdialog(pendingArr, "RF Pending", this, Common.btn_filled, "Proceed")
+                showBottomSheetdialog(
+                    pendingArr!!,
+                    "RF Pending",
+                    this,
+                    Common.btn_filled,
+                    "Proceed"
+                )
             }
 
             R.id.ivAddServices -> {
@@ -662,6 +687,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     openCamera()
                 }
             }
+        } else if (check == 11) {
+
+            Log.e("pendingarr", "" + pendingArr?.get(variable))
+
+
         }
 
 
