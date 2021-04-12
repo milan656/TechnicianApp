@@ -85,11 +85,11 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 //        tvTitle?.text = "Select Tyre Make - LF"
         gridviewRecycMake_?.layoutManager =
             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-        gridviewRecycMake_?.addItemDecoration(
-            SpacesItemDecoration(
-                20
-            )
-        )
+//        gridviewRecycMake_?.addItemDecoration(
+//            SpacesItemDecoration(
+//                20
+//            )
+//        )
         Log.e("getsizee121", "" + arrList?.size)
 
         adapter = VehicleMakeAdapterNew(this, arrList, this)

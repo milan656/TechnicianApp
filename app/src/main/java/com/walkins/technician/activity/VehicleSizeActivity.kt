@@ -83,11 +83,11 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         ivEditVehicleMake?.setOnClickListener(this)
         gridviewRecycModel?.layoutManager =
             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-        gridviewRecycModel?.addItemDecoration(
-            SpacesItemDecoration(
-                20
-            )
-        )
+//        gridviewRecycModel?.addItemDecoration(
+//            SpacesItemDecoration(
+//                20
+//            )
+//        )
 
         adapter = VehicleSizeAdapter(this, arrList, this)
         gridviewRecycModel?.adapter = adapter

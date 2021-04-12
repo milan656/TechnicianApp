@@ -87,11 +87,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         gridviewRecycModel?.layoutManager =
             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-        gridviewRecycModel?.addItemDecoration(
-            SpacesItemDecoration(
-                20
-            )
-        )
+//        gridviewRecycModel?.addItemDecoration(
+//            SpacesItemDecoration(
+//                20
+//            )
+//        )
 
         adapter = VehiclePatternAdapter(this, arrList, this)
         gridviewRecycModel?.adapter = adapter
