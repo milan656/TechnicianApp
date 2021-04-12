@@ -78,8 +78,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (intent.getStringExtra("title") != null) {
                 tvTitle?.text = intent.getStringExtra("title")
             }
-            if (intent.getStringExtra("tyreConfigType") != null) {
-                selectedTyre = intent.getStringExtra("tyreConfigType")!!
+            if (intent.getStringExtra("selectedTyre") != null) {
+                selectedTyre = intent.getStringExtra("selectedTyre")!!
             }
         }
 //        tvTitle?.text = "Select Tyre Make - LF"
