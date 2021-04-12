@@ -850,6 +850,7 @@
                                 android:orientation="vertical">
 
                                 <com.walkins.technician.custom.BoldTextView
+                                    android:id="@+id/tvCarphoto1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/ten_dp"
@@ -860,6 +861,7 @@
                                     android:textSize="@dimen/fourteen_sp" />
 
                                 <com.walkins.technician.custom.BoldHeavyTextView
+                                    android:id="@+id/tvAddPhoto1"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
@@ -867,6 +869,25 @@
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="@dimen/eighteen_sp"
                                     android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/ivPickedImage1"
+                                    android:layout_width="150dp"
+                                    android:layout_height="match_parent"
+                                    android:padding="@dimen/ten_dp"
+                                    android:layout_centerInParent="true"
+                                    android:scaleType="fitCenter"
+                                    android:visibility="gone"
+                                    android:src="@drawable/ic_camera_icon"/>
+
+                                <ImageView
+                                    android:id="@+id/ivEditImg2"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_alignParentRight="true"
+                                    android:visibility="gone"
+                                    android:layout_margin="@dimen/ten_dp"
+                                    android:src="@drawable/ic_edit_image"/>
                             </RelativeLayout>
 
                         </LinearLayout>
