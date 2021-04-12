@@ -36,7 +36,7 @@ class DialogueAdpater(
         holder.itemView.setOnClickListener {
 
             if (onclick != null) {
-                onclick?.onPositionClick(position, 0)
+                onclick?.onPositionClick(position, 10)
             }
         }
     }

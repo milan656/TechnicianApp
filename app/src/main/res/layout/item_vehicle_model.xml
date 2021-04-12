@@ -6,11 +6,10 @@
     android:layout_margin="@dimen/ten_dp"
     android:background="@drawable/unselected">
 
-
     <com.walkins.technician.custom.NormalTextView
         android:id="@+id/ivVehicleImage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="@dimen/six_dp"
         android:textColor="@color/text_color1"
         android:textSize="@dimen/fourteen_sp"

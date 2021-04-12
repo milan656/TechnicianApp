@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_item_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/ten_dp"
-    android:background="@drawable/unselected">
+    android:orientation="vertical">
 
+    <RelativeLayout
+        android:id="@+id/rl_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/unselected">
 
-    <ImageView
-        android:id="@+id/ivVehicleImage"
-        android:layout_width="110dp"
-        android:layout_height="60dp"
-        android:padding="@dimen/six_dp"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/car" />
+        <ImageView
+            android:id="@+id/ivVehicleImage"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:padding="@dimen/six_dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/car" />
 
-    <ImageView
-        android:id="@+id/ivselectedVehicle"
-        android:layout_width="12dp"
-        android:layout_height="10dp"
-        android:layout_margin="@dimen/six_dp"
-        android:src="@drawable/ic_selected_vehicle"
-        android:visibility="gone" />
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/ivselectedVehicle"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_margin="@dimen/six_dp"
+            android:src="@drawable/ic_selected_vehicle"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

@@ -29,6 +29,11 @@ class TyreConfigClass {
         var LRVehicleSize = false
         var LRVehicleVisualDetail = false
 
+        var LFCompleted=false
+        var LRCompleted=false
+        var RFCompleted=false
+        var RRCompleted=false
+
         var selectedMakeURL=""
 
         var clickedTyre=""

@@ -123,11 +123,16 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         }
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
+
+        ivAddServices?.setOnClickListener(this)
+        ivAddTyreConfig?.setOnClickListener(this)
+        ivAddTechnicalSuggestion?.setOnClickListener(this)
+        llservicecollapse?.setOnClickListener(this)
+        lltyreconfig?.setOnClickListener(this)
+        lltechnical?.setOnClickListener(this)
 //        ivInfoImg?.setOnClickListener(this)
 
-        ivAddServices?.setOnTouchListener(this)
-        ivAddTyreConfig?.setOnTouchListener(this)
-        ivAddTechnicalSuggestion?.setOnTouchListener(this)
+
         ivTyre1?.setOnTouchListener(this)
         ivTyre2?.setOnTouchListener(this)
         ivTyre3?.setOnTouchListener(this)
@@ -159,90 +164,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             R.id.ivBack -> {
                 onBackPressed()
             }
-//            R.id.ivInfoImg -> {
-//                showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
-//            }
-        }
-    }
-
-    private fun showBottomSheetdialog(
-        array: ArrayList<String>,
-        titleStr: String,
-        context: Context?,
-        btnBg: String,
-        btnText: String
-
-    ) {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.dialogue_profile_edit_req, null)
-        val dialog =
-            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
-
-        dialog.setCancelable(false)
-        val width = LinearLayout.LayoutParams.MATCH_PARENT
-        val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog.window?.setLayout(width, height)
-        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(view)
-
-        val btnSend = view.findViewById<Button>(R.id.btn_send)
-        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
-        val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
-        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
-
-        tvTitleText.text = titleStr
-        var arrayAdapter = context?.let { DialogueAdpater(array, it, this) }
-        dialogueRecycView?.layoutManager = LinearLayoutManager(
-            context,
-            RecyclerView.VERTICAL,
-            false
-        )
-        dialogueRecycView.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        dialogueRecycView.adapter = arrayAdapter
-        arrayAdapter?.onclick = this
-
-        ivClose?.setOnClickListener {
-            dialog?.dismiss()
-        }
-        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
-            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
-            btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
-            btnSend?.text = "Submit"
-        } else {
-            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_white))
-            btnSend.setTextColor(context?.resources?.getColor(R.color.header_title)!!)
-            btnSend?.text = "Cancel"
-        }
-
-        btnSend?.text = btnText
-        btnSend.setOnClickListener {
-            dialog?.dismiss()
-
-            if (selectedPending?.equals("pattern")) {
-//                selectedPending="pattern"
-                val intent = Intent(this, VehiclePatternActivity::class.java)
-                startActivity(intent)
-            } else if (selectedPending?.equals("visual", ignoreCase = true)) {
-//                selectedPending="visual"
-                val intent = Intent(this, VisualDetailsActivity::class.java)
-                startActivity(intent)
-            }
-
-        }
-
-        dialog.show()
-
-    }
-
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        var id = v?.id
-
-        when (id) {
             R.id.ivAddServices -> {
                 if (llServiceExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llServiceExpanded!!)
@@ -331,6 +252,100 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     tvTyreConfig?.isAllCaps = false
                 }
             }
+            R.id.lltechnical -> {
+                ivAddTechnicalSuggestion?.performClick()
+            }
+            R.id.llservicecollapse -> {
+                ivAddServices?.performClick()
+            }
+            R.id.lltyreconfig -> {
+                ivAddTyreConfig?.performClick()
+            }
+//            R.id.ivInfoImg -> {
+//                showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
+//            }
+        }
+    }
+
+    private fun showBottomSheetdialog(
+        array: ArrayList<String>,
+        titleStr: String,
+        context: Context?,
+        btnBg: String,
+        btnText: String
+
+    ) {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.dialogue_profile_edit_req, null)
+        val dialog =
+            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+
+        dialog.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        dialog.window?.setLayout(width, height)
+        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(view)
+
+        val btnSend = view.findViewById<Button>(R.id.btn_send)
+        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
+        val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
+        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
+
+        tvTitleText.text = titleStr
+        var arrayAdapter = context?.let { DialogueAdpater(array, it, this) }
+        dialogueRecycView?.layoutManager = LinearLayoutManager(
+            context,
+            RecyclerView.VERTICAL,
+            false
+        )
+        dialogueRecycView.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        dialogueRecycView.adapter = arrayAdapter
+        arrayAdapter?.onclick = this
+
+        ivClose?.setOnClickListener {
+            dialog?.dismiss()
+        }
+        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
+            btnSend?.text = "Submit"
+        } else {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_white))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.header_title)!!)
+            btnSend?.text = "Cancel"
+        }
+
+        btnSend?.text = btnText
+        btnSend.setOnClickListener {
+            dialog?.dismiss()
+
+            if (selectedPending?.equals("pattern")) {
+//                selectedPending="pattern"
+                val intent = Intent(this, VehiclePatternActivity::class.java)
+                startActivity(intent)
+            } else if (selectedPending?.equals("visual", ignoreCase = true)) {
+//                selectedPending="visual"
+                val intent = Intent(this, VisualDetailsActivity::class.java)
+                startActivity(intent)
+            }
+
+        }
+
+        dialog.show()
+
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        var id = v?.id
+
+        when (id) {
+
             R.id.ivTyre1 -> {
                 var intent = Intent(this, CompletedVisualDetailActivity::class.java)
                 intent.putExtra("title", "Detail - LF")

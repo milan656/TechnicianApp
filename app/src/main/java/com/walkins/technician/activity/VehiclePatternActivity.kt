@@ -80,6 +80,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                 tvTitle?.text =
                     "Select Tyre Pattern - " + intent.getStringExtra("selectedTyre")
+                selectedTyre = intent.getStringExtra("selectedTyre")!!
             }
         }
 
@@ -172,6 +173,18 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         }
         thread.start()
+
+        if (selectedTyre.equals("LF")) {
+
+            TyreConfigClass.LFVehiclePattern = true
+        } else if (selectedTyre.equals("LR")) {
+            TyreConfigClass.LRVehiclePattern = true
+        } else if (selectedTyre.equals("RF")) {
+            TyreConfigClass.RFVehiclePattern = true
+        } else if (selectedTyre.equals("RR")) {
+            TyreConfigClass.RRVehiclePattern = true
+        }
+        Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
         var intent = Intent(this, VehicleSizeActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)
         startActivityForResult(intent, 1003)

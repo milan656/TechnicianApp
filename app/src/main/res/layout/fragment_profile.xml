@@ -33,6 +33,7 @@
                 android:layout_height="132dp">
 
                 <com.walkins.technician.custom.CircularImageView
+                    android:id="@+id/ivProfileImg"
                     android:layout_width="132dp"
                     android:layout_height="132dp"
                     android:src="@mipmap/app_icon_logo"

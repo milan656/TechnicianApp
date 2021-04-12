@@ -39,6 +39,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var ivFilterImg: ImageView? = null
     private var reportRecycView: RecyclerView? = null
     private val listClicked = ArrayList<String>()
+    private val listClickedModel = ArrayList<String>()
     private var adapter: AutoSuggestProductAdapter? = null
 
     private lateinit var prefManager: PrefManager
@@ -56,6 +57,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     private var makeSearchdata: ArrayList<VehicleMakeData>? = ArrayList()
     private var modelSearchdata: ArrayList<VehicleModelData>? = ArrayList()
+    private var selectedMakeId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -254,6 +256,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             object : AdapterView.OnItemClickListener {
                 override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
+                    selectedMakeId = makeSearchdata?.get(p2)?.id!!
                 }
             }
         actvehicleModel!!.addTextChangedListener(object : TextWatcher {
@@ -337,7 +340,26 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun searchModel(toString: String) {
+        context?.let { makeModelViewModel?.getVehicleModel(it, selectedMakeId) }
 
+        makeModelViewModel?.getVehicleModelList()?.observe(this, Observer {
+
+            if (it != null) {
+                if (it.success) {
+
+                    modelSearchdata?.addAll(it.data)
+                    try {
+                        modelDataForSearchApi(modelSearchdata!!)
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
+        })
     }
 
     private fun searchMake(toString: String) {
@@ -373,7 +395,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         try {
             for ((index, value) in makeSearchdata.withIndex()) {
                 val string =
-                    makeSearchdata.get(index).name + " --> " + makeSearchdata.get(index).id
+                    makeSearchdata.get(index).name/* + " --> " + makeSearchdata.get(index).id*/
                 listClicked.add(string)
             }
         } catch (e: Exception) {
@@ -406,5 +428,46 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
         }
     }
+
+    private fun modelDataForSearchApi(modelSearchData: ArrayList<VehicleModelData>) {
+
+        listClickedModel.clear()
+        try {
+            for ((index, value) in modelSearchData.withIndex()) {
+                val string =
+                    modelSearchData.get(index).name + " --> " + modelSearchData.get(index).id
+                listClickedModel.add(string)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        Log.e("listClicked", "" + listClicked)
+        if (listClickedModel.size > 0) {
+            adapter =
+                context?.let {
+                    AutoSuggestProductAdapter(
+                        it,
+                        android.R.layout.simple_list_item_1,
+                        listClickedModel
+                    )
+                }
+            actvehicleMake?.threshold = 1
+            actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
+        } else {
+            var noValueList: ArrayList<String> = ArrayList()
+            noValueList.add("No any dealer found")
+            adapter =
+                context?.let {
+                    AutoSuggestProductAdapter(
+                        it,
+                        android.R.layout.simple_list_item_1,
+                        noValueList
+                    )
+                }
+            actvehicleMake?.threshold = 1
+            actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
+        }
+    }
+
 
 }

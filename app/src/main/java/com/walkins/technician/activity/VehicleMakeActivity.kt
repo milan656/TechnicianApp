@@ -185,6 +185,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
 
+
+
         if (selectedTyre.equals("LF")) {
 
             TyreConfigClass.LFVehicleMake = true
@@ -195,6 +197,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         } else if (selectedTyre.equals("RR")) {
             TyreConfigClass.RRVehicleMake = true
         }
+        Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)
         var intent = Intent(this, VehiclePatternActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)
         startActivityForResult(intent, 1002)

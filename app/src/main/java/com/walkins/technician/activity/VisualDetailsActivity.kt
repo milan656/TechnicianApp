@@ -55,6 +55,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var ivReqbubble: ImageView? = null
 
     private var tvTitle: TextView? = null
+    private var selectedTyre: String? = null
 
 
     private var issueResolvedRecycView: RecyclerView? = null
@@ -106,6 +107,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         relTyrePhotoAdd?.setOnClickListener(this)
         ivBack?.setOnClickListener(this)
         tvTitle?.text = "Visual Detail"
+
+        if (intent != null) {
+            if (intent.hasExtra("selectedTyre")) {
+                selectedTyre = intent.getStringExtra("selectedTyre")
+            }
+        }
 
         btnDone?.setOnClickListener(this)
 
@@ -293,6 +300,17 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 onBackPressed()
             }
             R.id.btnDone -> {
+                if (selectedTyre.equals("LF")) {
+
+                    TyreConfigClass.LFVehicleVisualDetail = true
+                } else if (selectedTyre.equals("LR")) {
+                    TyreConfigClass.LRVehicleVisualDetail = true
+                } else if (selectedTyre.equals("RF")) {
+                    TyreConfigClass.RFVehicleVisualDetail = true
+                } else if (selectedTyre.equals("RR")) {
+                    TyreConfigClass.RRVehicleVisualDetail = true
+                }
+
                 if (TyreConfigClass.selectedTyreConfigType.equals("LFpending")) {
                     TyreConfigClass.selectedTyreConfigType = "LF"
                 }

@@ -74,6 +74,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                 tvTitle?.text =
                     "Select Tyre Size - " + intent.getStringExtra("selectedTyre")
+                selectedTyre = intent.getStringExtra("selectedTyre")!!
             }
         }
 
@@ -226,7 +227,20 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         }
         thread.start()
+
+        if (selectedTyre.equals("LF")) {
+
+            TyreConfigClass.LFVehicleSize = true
+        } else if (selectedTyre.equals("LR")) {
+            TyreConfigClass.LRVehicleSize = true
+        } else if (selectedTyre.equals("RF")) {
+            TyreConfigClass.RFVehicleSize = true
+        } else if (selectedTyre.equals("RR")) {
+            TyreConfigClass.RRVehicleSize = true
+        }
+        Log.e("getvalueee22", "" + selectedTyre + " " + TyreConfigClass.RFVehicleSize)
         val intent = Intent(this, VisualDetailsActivity::class.java)
+        intent.putExtra("selectedTyre", selectedTyre)
         startActivityForResult(intent, 1005)
     }
 

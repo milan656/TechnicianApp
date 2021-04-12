@@ -228,7 +228,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardservice"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fourteen_dp"
@@ -240,6 +240,7 @@
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
+                        android:id="@+id/cardservice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -247,544 +248,549 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/twenty_dp"
-                            android:orientation="horizontal">
-
-                            <com.walkins.technician.custom.BoldHeavyTextView
-                                android:id="@+id/tvServices"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Services"
-
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <ImageView
-                                android:id="@+id/ivAddServices"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_weight="0"
-                                android:padding="@dimen/three_dp"
-                                android:src="@mipmap/ic_add_icon" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/llServiceExpanded"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="130dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="@dimen/ten_dp"
-                                android:layout_marginEnd="@dimen/ten_dp"
-                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/twenty_dp"
                                 android:orientation="horizontal">
 
-                                <LinearLayout
+                                <com.walkins.technician.custom.BoldHeavyTextView
+                                    android:id="@+id/tvServices"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
+                                    android:text="Services"
 
-                                    <LinearLayout
-                                        android:layout_width="105dp"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/service_layout_bg"
-                                        android:orientation="vertical">
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
 
-                                        <CheckBox
-                                            android:id="@+id/chkNitrogenTopup"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:buttonTint="@color/text_color2" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="@dimen/eighteen_dp"
-                                            android:layout_marginEnd="@dimen/eighteen_dp"
-                                            android:layout_marginBottom="@dimen/fourteen_dp"
-
-                                            android:orientation="vertical">
-
-                                            <ImageView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:gravity="center"
-                                                android:src="@mipmap/ic_nitrogen_topup" />
-
-                                            <com.walkins.technician.custom.NormalTextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="@dimen/three_dp"
-                                                android:gravity="center"
-                                                android:text="Nitrogen Top Up"
-                                                android:textColor="@color/text_color1"
-                                                android:textSize="@dimen/fourteen_sp" />
-
-                                        </LinearLayout>
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:layout_width="106dp"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/service_layout_bg"
-                                        android:orientation="vertical">
-
-                                        <CheckBox
-                                            android:id="@+id/chkNitrogenRefill"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:buttonTint="@color/text_color2" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="@dimen/eighteen_dp"
-                                            android:layout_marginEnd="@dimen/eighteen_dp"
-                                            android:layout_marginBottom="@dimen/fourteen_dp"
-                                            android:orientation="vertical">
-
-                                            <ImageView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:gravity="center"
-                                                android:src="@mipmap/ic_nitrogen_refil" />
-
-                                            <com.walkins.technician.custom.NormalTextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="@dimen/three_dp"
-                                                android:gravity="center"
-                                                android:text="Nitrogen Refill"
-                                                android:textColor="@color/text_color1"
-                                                android:textSize="@dimen/fourteen_sp" />
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-                                </LinearLayout>
-
+                                <ImageView
+                                    android:id="@+id/ivAddServices"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_weight="0"
+                                    android:padding="@dimen/three_dp"
+                                    android:src="@mipmap/ic_add_icon" />
 
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="130dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="@dimen/ten_dp"
-                                android:layout_marginTop="32dp"
-                                android:layout_marginEnd="@dimen/ten_dp"
-                                android:layout_marginBottom="32dp"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:layout_width="106dp"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/service_layout_bg"
-                                        android:orientation="vertical">
-
-                                        <CheckBox
-                                            android:id="@+id/chkWheelBalacing"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:buttonTint="@color/text_color2" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="@dimen/eighteen_dp"
-                                            android:layout_marginEnd="@dimen/eighteen_dp"
-                                            android:layout_marginBottom="@dimen/fourteen_dp"
-                                            android:orientation="vertical">
-
-                                            <ImageView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:gravity="center"
-                                                android:src="@mipmap/ic_wheel_balacing" />
-
-                                            <com.walkins.technician.custom.NormalTextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="@dimen/three_dp"
-                                                android:gravity="center"
-                                                android:text="Wheel Balancing"
-                                                android:textColor="@color/text_color1"
-                                                android:textSize="@dimen/fourteen_sp" />
-
-                                        </LinearLayout>
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:layout_width="106dp"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/service_layout_bg"
-                                        android:orientation="vertical">
-
-                                        <CheckBox
-                                            android:id="@+id/chkTyreRotation"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:buttonTint="@color/text_color2" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="@dimen/eighteen_dp"
-                                            android:layout_marginEnd="@dimen/eighteen_dp"
-                                            android:layout_marginBottom="@dimen/fourteen_dp"
-                                            android:orientation="vertical">
-
-                                            <ImageView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:gravity="center"
-                                                android:src="@mipmap/ic_tyre_rotation" />
-
-                                            <com.walkins.technician.custom.NormalTextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="@dimen/three_dp"
-                                                android:gravity="center"
-                                                android:text="Tyre Rotation"
-                                                android:textColor="@color/text_color1"
-                                                android:textSize="@dimen/fourteen_sp" />
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-                                </LinearLayout>
-
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/llUpdatedPlacement"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/sixteen_dp"
-                            android:layout_marginEnd="@dimen/sixteen_dp"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <com.walkins.technician.custom.BoldHeavyTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:text="updated placement"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
+                                android:id="@+id/llServiceExpanded"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/five_dp"
-                                android:paddingEnd="@dimen/five_dp">
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="130dp"
                                     android:layout_gravity="center"
-                                    android:layout_weight="0.7"
+                                    android:layout_marginStart="@dimen/ten_dp"
+                                    android:layout_marginEnd="@dimen/ten_dp"
                                     android:gravity="center"
-                                    android:text="LF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="="
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioGroup
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
                                     android:orientation="horizontal">
 
-                                    <RadioButton
-                                        android:layout_width="0dp"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/text_color2"
                                         android:gravity="center"
-                                        android:text="LR"
-                                        android:textAllCaps="true"
-                                        android:textColor="@color/text_color1"
-                                        android:textSize="@dimen/fourteen_sp" />
+                                        android:orientation="vertical">
 
-                                    <RadioButton
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
+                                        <LinearLayout
+                                            android:layout_width="105dp"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/service_layout_bg"
+                                            android:orientation="vertical">
+
+                                            <CheckBox
+                                                android:id="@+id/chkNitrogenTopup"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:buttonTint="@color/text_color2" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="@dimen/eighteen_dp"
+                                                android:layout_marginEnd="@dimen/eighteen_dp"
+                                                android:layout_marginBottom="@dimen/fourteen_dp"
+
+                                                android:orientation="vertical">
+
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center"
+                                                    android:src="@mipmap/ic_nitrogen_topup" />
+
+                                                <com.walkins.technician.custom.NormalTextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginTop="@dimen/three_dp"
+                                                    android:gravity="center"
+                                                    android:text="Nitrogen Top Up"
+                                                    android:textColor="@color/text_color1"
+                                                    android:textSize="@dimen/fourteen_sp" />
+
+                                            </LinearLayout>
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
                                         android:layout_gravity="center"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/header_title"
                                         android:gravity="center"
-                                        android:text="RR"
-                                        android:textAllCaps="true"
-                                        android:textColor="@color/text_color1"
-                                        android:textSize="@dimen/fourteen_sp" />
+                                        android:orientation="vertical">
 
-                                </RadioGroup>
+                                        <LinearLayout
+                                            android:layout_width="106dp"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/service_layout_bg"
+                                            android:orientation="vertical">
+
+                                            <CheckBox
+                                                android:id="@+id/chkNitrogenRefill"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:buttonTint="@color/text_color2" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="@dimen/eighteen_dp"
+                                                android:layout_marginEnd="@dimen/eighteen_dp"
+                                                android:layout_marginBottom="@dimen/fourteen_dp"
+                                                android:orientation="vertical">
+
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center"
+                                                    android:src="@mipmap/ic_nitrogen_refil" />
+
+                                                <com.walkins.technician.custom.NormalTextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginTop="@dimen/three_dp"
+                                                    android:gravity="center"
+                                                    android:text="Nitrogen Refill"
+                                                    android:textColor="@color/text_color1"
+                                                    android:textSize="@dimen/fourteen_sp" />
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="130dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="@dimen/ten_dp"
+                                    android:layout_marginTop="32dp"
+                                    android:layout_marginEnd="@dimen/ten_dp"
+                                    android:layout_marginBottom="32dp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="106dp"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/service_layout_bg"
+                                            android:orientation="vertical">
+
+                                            <CheckBox
+                                                android:id="@+id/chkWheelBalacing"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:buttonTint="@color/text_color2" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="@dimen/eighteen_dp"
+                                                android:layout_marginEnd="@dimen/eighteen_dp"
+                                                android:layout_marginBottom="@dimen/fourteen_dp"
+                                                android:orientation="vertical">
+
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center"
+                                                    android:src="@mipmap/ic_wheel_balacing" />
+
+                                                <com.walkins.technician.custom.NormalTextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginTop="@dimen/three_dp"
+                                                    android:gravity="center"
+                                                    android:text="Wheel Balancing"
+                                                    android:textColor="@color/text_color1"
+                                                    android:textSize="@dimen/fourteen_sp" />
+
+                                            </LinearLayout>
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="106dp"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/service_layout_bg"
+                                            android:orientation="vertical">
+
+                                            <CheckBox
+                                                android:id="@+id/chkTyreRotation"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:buttonTint="@color/text_color2" />
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="@dimen/eighteen_dp"
+                                                android:layout_marginEnd="@dimen/eighteen_dp"
+                                                android:layout_marginBottom="@dimen/fourteen_dp"
+                                                android:orientation="vertical">
+
+                                                <ImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center"
+                                                    android:src="@mipmap/ic_tyre_rotation" />
+
+                                                <com.walkins.technician.custom.NormalTextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginTop="@dimen/three_dp"
+                                                    android:gravity="center"
+                                                    android:text="Tyre Rotation"
+                                                    android:textColor="@color/text_color1"
+                                                    android:textSize="@dimen/fourteen_sp" />
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/five_dp"
-                                android:paddingEnd="@dimen/five_dp">
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="RF"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="="
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioGroup
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
-
-                                    <RadioButton
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="1"
-                                        android:buttonTint="@color/header_title"
-                                        android:gravity="center"
-                                        android:text="LR"
-                                        android:textAllCaps="true"
-                                        android:textColor="@color/text_color1"
-                                        android:textSize="@dimen/fourteen_sp" />
-
-                                    <RadioButton
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="1"
-                                        android:buttonTint="@color/text_color2"
-                                        android:gravity="center"
-                                        android:text="RR"
-                                        android:textAllCaps="true"
-                                        android:textColor="@color/text_color1"
-                                        android:textSize="@dimen/fourteen_sp" />
-                                </RadioGroup>
-                            </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/llUpdatedPlacement"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/sixteen_dp"
-                                android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/five_dp"
-                                android:paddingEnd="@dimen/five_dp">
+                                android:layout_marginStart="@dimen/sixteen_dp"
+                                android:layout_marginEnd="@dimen/sixteen_dp"
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="LR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="="
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioGroup
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                <com.walkins.technician.custom.BoldHeavyTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    android:text="updated placement"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp"
+                                    android:textStyle="bold" />
 
-                                    <RadioButton
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/sixteen_dp"
+                                    android:background="@drawable/layout_bg_secondary_"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="@dimen/five_dp"
+                                    android:paddingEnd="@dimen/five_dp">
+
+                                    <com.walkins.technician.custom.NormalTextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:layout_weight="1"
-                                        android:buttonTint="@color/text_color2"
+                                        android:layout_weight="0.7"
                                         android:gravity="center"
                                         android:text="LF"
                                         android:textAllCaps="true"
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/fourteen_sp" />
 
-                                    <RadioButton
+                                    <com.walkins.technician.custom.NormalTextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
+                                        android:layout_weight="0.7"
+                                        android:gravity="center"
+                                        android:text="="
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <RadioGroup
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/header_title"
+                                        android:orientation="horizontal">
+
+                                        <RadioButton
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:buttonTint="@color/text_color2"
+                                            android:gravity="center"
+                                            android:text="LR"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+
+                                        <RadioButton
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:buttonTint="@color/header_title"
+                                            android:gravity="center"
+                                            android:text="RR"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+
+                                    </RadioGroup>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/sixteen_dp"
+                                    android:background="@drawable/layout_bg_secondary_"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="@dimen/five_dp"
+                                    android:paddingEnd="@dimen/five_dp">
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.7"
                                         android:gravity="center"
                                         android:text="RF"
                                         android:textAllCaps="true"
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/fourteen_sp" />
-                                </RadioGroup>
-                            </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/sixteen_dp"
-                                android:layout_marginBottom="@dimen/fourteen_dp"
-                                android:background="@drawable/layout_bg_secondary_"
-                                android:orientation="horizontal"
-                                android:paddingStart="@dimen/five_dp"
-                                android:paddingEnd="@dimen/five_dp">
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="RR"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.7"
-                                    android:gravity="center"
-                                    android:text="="
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <RadioGroup
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
-
-                                    <RadioButton
+                                    <com.walkins.technician.custom.NormalTextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:layout_weight="1"
-                                        android:buttonTint="@color/header_title"
+                                        android:layout_weight="0.7"
                                         android:gravity="center"
-                                        android:text="LF"
+                                        android:text="="
                                         android:textAllCaps="true"
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/fourteen_sp" />
 
-                                    <RadioButton
+                                    <RadioGroup
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <RadioButton
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:buttonTint="@color/header_title"
+                                            android:gravity="center"
+                                            android:text="LR"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+
+                                        <RadioButton
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:buttonTint="@color/text_color2"
+                                            android:gravity="center"
+                                            android:text="RR"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+                                    </RadioGroup>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/sixteen_dp"
+                                    android:background="@drawable/layout_bg_secondary_"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="@dimen/five_dp"
+                                    android:paddingEnd="@dimen/five_dp">
+
+                                    <com.walkins.technician.custom.NormalTextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:layout_weight="1"
-                                        android:buttonTint="@color/text_color2"
+                                        android:layout_weight="0.7"
                                         android:gravity="center"
-                                        android:text="RF"
+                                        android:text="LR"
                                         android:textAllCaps="true"
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/fourteen_sp" />
-                                </RadioGroup>
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.7"
+                                        android:gravity="center"
+                                        android:text="="
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <RadioGroup
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <RadioButton
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:buttonTint="@color/text_color2"
+                                            android:gravity="center"
+                                            android:text="LF"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+
+                                        <RadioButton
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:buttonTint="@color/header_title"
+                                            android:gravity="center"
+                                            android:text="RF"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+                                    </RadioGroup>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/sixteen_dp"
+                                    android:layout_marginBottom="@dimen/fourteen_dp"
+                                    android:background="@drawable/layout_bg_secondary_"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="@dimen/five_dp"
+                                    android:paddingEnd="@dimen/five_dp">
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.7"
+                                        android:gravity="center"
+                                        android:text="RR"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.7"
+                                        android:gravity="center"
+                                        android:text="="
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <RadioGroup
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <RadioButton
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:buttonTint="@color/header_title"
+                                            android:gravity="center"
+                                            android:text="LF"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+
+                                        <RadioButton
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:buttonTint="@color/text_color2"
+                                            android:gravity="center"
+                                            android:text="RF"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/text_color1"
+                                            android:textSize="@dimen/fourteen_sp" />
+                                    </RadioGroup>
+                                </LinearLayout>
+
                             </LinearLayout>
 
                         </LinearLayout>
-
                     </LinearLayout>
-
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardtyreConfig"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fourteen_dp"
@@ -795,240 +801,246 @@
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
+                        android:id="@+id/cardtyreConfig"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/twenty_dp"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_margin="@dimen/twenty_dp"
+                            android:orientation="vertical">
 
-                            <com.walkins.technician.custom.BoldHeavyTextView
-                                android:id="@+id/tvTyreConfig"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Tyre Configuration"
+                                android:orientation="horizontal">
 
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
+                                <com.walkins.technician.custom.BoldHeavyTextView
+                                    android:id="@+id/tvTyreConfig"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Tyre Configuration"
 
-                            <ImageView
-                                android:id="@+id/ivAddTyreConfig"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_weight="0"
-                                android:padding="@dimen/three_dp"
-                                android:src="@mipmap/ic_add_icon" />
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
 
-                        </LinearLayout>
+                                <ImageView
+                                    android:id="@+id/ivAddTyreConfig"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_weight="0"
+                                    android:padding="@dimen/three_dp"
+                                    android:src="@mipmap/ic_add_icon" />
 
-                        <LinearLayout
-                            android:id="@+id/llTyreConfigExpanded"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/twelve_dp"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:visibility="visible">
+                            </LinearLayout>
 
-                            <com.walkins.technician.custom.NormalTextView
-                                android:id="@+id/tvTyreAddInfo"
+                            <LinearLayout
+                                android:id="@+id/llTyreConfigExpanded"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:background="@drawable/tyre_config"
+                                android:layout_marginTop="@dimen/twelve_dp"
                                 android:gravity="center"
-                                android:text="Click on any tyre to start adding info "
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/twenty_dp"
-                                android:layout_marginBottom="@dimen/twenty_dp">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_tyre_config_car" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:id="@+id/tvTyreAddInfo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginStart="@dimen/ten_dp"
-                                    android:layout_marginEnd="@dimen/ten_dp"
+                                    android:background="@drawable/tyre_config"
                                     android:gravity="center"
-                                    android:orientation="horizontal">
+                                    android:text="Click on any tyre to start adding info "
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:layout_marginBottom="@dimen/twenty_dp">
 
                                     <LinearLayout
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="1.6"
-                                        android:orientation="vertical" />
-
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="1"
+                                        android:layout_centerInParent="true"
                                         android:gravity="center"
                                         android:orientation="vertical">
 
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
-
-                                            <ImageView
-                                                android:id="@+id/ivInfoImgLF"
-                                                android:layout_width="32dp"
-                                                android:layout_height="32dp"
-                                                android:layout_alignParentBottom="true"
-                                                android:layout_alignParentLeft="true"
-                                                android:visibility="gone"
-                                                android:src="@drawable/info_in_profile"
-                                                app:tint="@color/header_title" />
-
-                                            <LinearLayout
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_centerHorizontal="true"
-                                                android:gravity="center"
-                                                android:orientation="vertical">
-
-                                                <ImageView
-                                                    android:id="@+id/ivtyreLeftFront"
-                                                    android:layout_width="75dp"
-                                                    android:layout_height="25dp"
-                                                    android:layout_marginTop="@dimen/ten_dp"
-                                                    android:background="@drawable/layout_bg_vehicle_border"
-                                                    android:gravity="center"
-                                                    android:paddingStart="@dimen/five_dp"
-                                                    android:paddingEnd="@dimen/five_dp"
-                                                    android:src="@drawable/ic_mrf"
-                                                    android:visibility="invisible" />
-
-
-                                                <ImageView
-                                                    android:id="@+id/ivTyre1"
-                                                    android:layout_width="55dp"
-                                                    android:layout_height="55dp"
-                                                    android:layout_marginTop="@dimen/five_dp"
-                                                    android:src="@drawable/ic_pending_tyre_config" />
-
-
-                                            </LinearLayout>
-
-                                        </RelativeLayout>
-
                                         <ImageView
                                             android:layout_width="wrap_content"
-                                            android:layout_height="30dp" />
-
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
-
-                                            <ImageView
-                                                android:id="@+id/ivInfoImgLR"
-                                                android:layout_width="32dp"
-                                                android:layout_height="32dp"
-                                                android:visibility="gone"
-                                                android:src="@drawable/info_in_profile"
-                                                app:tint="@color/header_title" />
-
-                                            <LinearLayout
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_centerHorizontal="true"
-                                                android:gravity="center"
-                                                android:orientation="vertical">
+                                            android:layout_height="match_parent"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/ic_tyre_config_car" />
 
 
-                                                <ImageView
-                                                    android:id="@+id/ivTyre2"
-                                                    android:layout_width="55dp"
-                                                    android:layout_height="55dp"
-
-                                                    android:src="@drawable/ic_pending_tyre_config" />
-
-                                                <ImageView
-                                                    android:id="@+id/ivtyreLeftRear"
-                                                    android:layout_width="75dp"
-                                                    android:layout_height="25dp"
-                                                    android:layout_marginTop="@dimen/five_dp"
-                                                    android:background="@drawable/layout_bg_vehicle_border"
-                                                    android:gravity="center"
-                                                    android:paddingStart="@dimen/five_dp"
-                                                    android:paddingEnd="@dimen/five_dp"
-                                                    android:src="@drawable/ic_mrf"
-                                                    android:visibility="invisible" />
-                                            </LinearLayout>
-                                        </RelativeLayout>
                                     </LinearLayout>
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2"
-                                        android:orientation="vertical" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:layout_weight="1"
+                                        android:layout_marginStart="@dimen/ten_dp"
+                                        android:layout_marginEnd="@dimen/ten_dp"
                                         android:gravity="center"
-                                        android:orientation="vertical">
+                                        android:orientation="horizontal">
 
-                                        <RelativeLayout
+                                        <LinearLayout
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1.6"
+                                            android:orientation="vertical" />
 
-                                            <ImageView
-                                                android:id="@+id/ivInfoImgRF"
-                                                android:layout_width="32dp"
-                                                android:layout_height="32dp"
-                                                android:visibility="gone"
-                                                android:layout_alignParentBottom="true"
-                                                android:layout_alignParentRight="true"
-                                                android:src="@drawable/info_in_profile"
-                                                app:tint="@color/header_title" />
 
-                                            <LinearLayout
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_centerHorizontal="true"
-                                                android:gravity="center"
-                                                android:orientation="vertical">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
 
                                                 <ImageView
-                                                    android:id="@+id/ivTyreRightFront"
-                                                    android:layout_width="75dp"
-                                                    android:layout_height="25dp"
-                                                    android:layout_marginTop="@dimen/five_dp"
-                                                    android:background="@drawable/layout_bg_vehicle_border"
+                                                    android:id="@+id/ivInfoImgLF"
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_alignParentLeft="true"
+                                                    android:layout_alignParentBottom="true"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="gone"
+                                                    app:tint="@color/header_title" />
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_centerHorizontal="true"
                                                     android:gravity="center"
-                                                    android:paddingStart="@dimen/five_dp"
-                                                    android:paddingEnd="@dimen/five_dp"
-                                                    android:src="@drawable/ic_mrf"
-                                                    android:visibility="invisible" />
+                                                    android:orientation="vertical">
+
+                                                    <ImageView
+                                                        android:id="@+id/ivtyreLeftFront"
+                                                        android:layout_width="75dp"
+                                                        android:layout_height="25dp"
+                                                        android:layout_marginTop="@dimen/ten_dp"
+                                                        android:background="@drawable/layout_bg_vehicle_border"
+                                                        android:gravity="center"
+                                                        android:paddingStart="@dimen/five_dp"
+                                                        android:paddingEnd="@dimen/five_dp"
+                                                        android:src="@drawable/ic_mrf"
+                                                        android:visibility="invisible" />
+
+
+                                                    <ImageView
+                                                        android:id="@+id/ivTyre1"
+                                                        android:layout_width="55dp"
+                                                        android:layout_height="55dp"
+                                                        android:layout_marginTop="@dimen/five_dp"
+                                                        android:src="@drawable/ic_pending_tyre_config" />
+
+
+                                                </LinearLayout>
+
+                                            </RelativeLayout>
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="30dp" />
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+
+                                                <ImageView
+                                                    android:id="@+id/ivInfoImgLR"
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="gone"
+                                                    app:tint="@color/header_title" />
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:gravity="center"
+                                                    android:orientation="vertical">
+
+
+                                                    <ImageView
+                                                        android:id="@+id/ivTyre2"
+                                                        android:layout_width="55dp"
+                                                        android:layout_height="55dp"
+
+                                                        android:src="@drawable/ic_pending_tyre_config" />
+
+                                                    <ImageView
+                                                        android:id="@+id/ivtyreLeftRear"
+                                                        android:layout_width="75dp"
+                                                        android:layout_height="25dp"
+                                                        android:layout_marginTop="@dimen/five_dp"
+                                                        android:background="@drawable/layout_bg_vehicle_border"
+                                                        android:gravity="center"
+                                                        android:paddingStart="@dimen/five_dp"
+                                                        android:paddingEnd="@dimen/five_dp"
+                                                        android:src="@drawable/ic_mrf"
+                                                        android:visibility="invisible" />
+                                                </LinearLayout>
+                                            </RelativeLayout>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2"
+                                            android:orientation="vertical" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <RelativeLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+
+                                                <ImageView
+                                                    android:id="@+id/ivInfoImgRF"
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_alignParentRight="true"
+                                                    android:layout_alignParentBottom="true"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="gone"
+                                                    app:tint="@color/header_title" />
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_centerHorizontal="true"
+                                                    android:gravity="center"
+                                                    android:orientation="vertical">
+
+                                                    <ImageView
+                                                        android:id="@+id/ivTyreRightFront"
+                                                        android:layout_width="75dp"
+                                                        android:layout_height="25dp"
+                                                        android:layout_marginTop="@dimen/five_dp"
+                                                        android:background="@drawable/layout_bg_vehicle_border"
+                                                        android:gravity="center"
+                                                        android:paddingStart="@dimen/five_dp"
+                                                        android:paddingEnd="@dimen/five_dp"
+                                                        android:src="@drawable/ic_mrf"
+                                                        android:visibility="invisible" />
 
 
                                                     <ImageView
@@ -1040,85 +1052,85 @@
                                                         android:src="@drawable/ic_pending_tyre_config" />
 
 
+                                                </LinearLayout>
+                                            </RelativeLayout>
 
-                                            </LinearLayout>
-                                        </RelativeLayout>
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="30dp" />
-
-
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="30dp" />
 
 
-                                            <LinearLayout
+                                            <RelativeLayout
                                                 android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_centerHorizontal="true"
-                                                android:gravity="center"
-                                                android:orientation="vertical">
+                                                android:layout_height="wrap_content">
 
-                                                <RelativeLayout
+
+                                                <LinearLayout
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content">
-
-
-                                                    <ImageView
-                                                        android:id="@+id/ivTyre4"
-                                                        android:layout_width="55dp"
-                                                        android:layout_height="55dp"
-                                                        android:layout_centerInParent="true"
-                                                        android:src="@drawable/ic_pending_tyre_config" />
-
-                                                    <ImageView
-                                                        android:id="@+id/ivInfoImgRR"
-                                                        android:layout_width="32dp"
-                                                        android:layout_height="32dp"
-                                                        android:layout_alignParentRight="true"
-                                                        android:src="@drawable/info_in_profile"
-                                                        app:tint="@color/header_title"
-                                                        android:visibility="gone"/>
-                                                </RelativeLayout>
-
-                                                <ImageView
-                                                    android:id="@+id/ivTyreRightRear"
-                                                    android:layout_width="75dp"
-                                                    android:layout_height="25dp"
-
-                                                    android:layout_marginTop="@dimen/five_dp"
-                                                    android:background="@drawable/layout_bg_vehicle_border"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_centerHorizontal="true"
                                                     android:gravity="center"
-                                                    android:paddingStart="@dimen/five_dp"
-                                                    android:paddingEnd="@dimen/five_dp"
-                                                    android:src="@drawable/ic_mrf"
-                                                    android:visibility="invisible" />
+                                                    android:orientation="vertical">
 
-                                            </LinearLayout>
+                                                    <RelativeLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
 
-                                        </RelativeLayout>
+
+                                                        <ImageView
+                                                            android:id="@+id/ivTyre4"
+                                                            android:layout_width="55dp"
+                                                            android:layout_height="55dp"
+                                                            android:layout_centerInParent="true"
+                                                            android:src="@drawable/ic_pending_tyre_config" />
+
+                                                        <ImageView
+                                                            android:id="@+id/ivInfoImgRR"
+                                                            android:layout_width="32dp"
+                                                            android:layout_height="32dp"
+                                                            android:layout_alignParentRight="true"
+                                                            android:src="@drawable/info_in_profile"
+                                                            android:visibility="gone"
+                                                            app:tint="@color/header_title" />
+                                                    </RelativeLayout>
+
+                                                    <ImageView
+                                                        android:id="@+id/ivTyreRightRear"
+                                                        android:layout_width="75dp"
+                                                        android:layout_height="25dp"
+
+                                                        android:layout_marginTop="@dimen/five_dp"
+                                                        android:background="@drawable/layout_bg_vehicle_border"
+                                                        android:gravity="center"
+                                                        android:paddingStart="@dimen/five_dp"
+                                                        android:paddingEnd="@dimen/five_dp"
+                                                        android:src="@drawable/ic_mrf"
+                                                        android:visibility="invisible" />
+
+                                                </LinearLayout>
+
+                                            </RelativeLayout>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1.6"
+                                            android:orientation="vertical" />
 
                                     </LinearLayout>
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1.6"
-                                        android:orientation="vertical" />
+                                </RelativeLayout>
+                            </LinearLayout>
 
-                                </LinearLayout>
 
-                            </RelativeLayout>
                         </LinearLayout>
-
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardtechinicalSuggestion"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fourteen_dp"
@@ -1130,167 +1142,213 @@
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
+                        android:id="@+id/cardtechinicalSuggestion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/twenty_dp"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <com.walkins.technician.custom.BoldHeavyTextView
-                                android:id="@+id/tvTechnicalSuggetion"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Technical Suggestions"
-
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                            <ImageView
-                                android:id="@+id/ivAddTechnicalSuggestion"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_weight="0"
-                                android:padding="@dimen/three_dp"
-                                android:src="@mipmap/ic_add_icon" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/llTechnicalSuggestionExpanded"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/fourteen_dp"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/suggestionsRecycView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/twenty_dp"
-                                android:text="More Suggestions (optional)"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/twelve_sp" />
-
-                            <com.walkins.technician.custom.NormalEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/five_dp"
-                                android:background="@drawable/layout_bg_corner"
-                                android:gravity="start|top"
-                                android:inputType="textMultiLine"
-                                android:minLines="5" />
-
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/twenty_dp"
-                                android:text="Next Service Due"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/twelve_sp" />
+                            android:layout_margin="@dimen/twenty_dp"
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/five_dp"
-                                android:background="@drawable/layout_bg_corner"
                                 android:orientation="horizontal">
 
-                                <com.walkins.technician.custom.NormalEditText
-                                    android:layout_width="0dp"
+                                <com.walkins.technician.custom.BoldHeavyTextView
+                                    android:id="@+id/tvTechnicalSuggetion"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-
                                     android:layout_weight="1"
-                                    android:background="@null"
-                                    android:inputType="textMultiLine"
-                                    android:paddingStart="@dimen/ten_dp"
-                                    android:paddingTop="@dimen/six_dp"
-                                    android:paddingEnd="@dimen/ten_dp"
-                                    android:paddingBottom="@dimen/six_dp"
+                                    android:text="Technical Suggestions"
+
+                                    android:textColor="@color/text_color1"
                                     android:textSize="@dimen/fourteen_sp" />
 
                                 <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginEnd="@dimen/eight_dp"
-                                    android:layout_marginRight="@dimen/eight_dp"
-                                    android:paddingTop="@dimen/two_dp"
-                                    android:paddingBottom="@dimen/two_dp"
-                                    android:src="@mipmap/ic_calender_icon" />
+                                    android:id="@+id/ivAddTechnicalSuggestion"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_weight="0"
+                                    android:padding="@dimen/three_dp"
+                                    android:src="@mipmap/ic_add_icon" />
+
                             </LinearLayout>
 
-
-                            <RelativeLayout
-                                android:id="@+id/relCarPhotoAdd1"
+                            <LinearLayout
+                                android:id="@+id/llTechnicalSuggestionExpanded"
                                 android:layout_width="match_parent"
-                                android:layout_height="200dp"
-                                android:layout_marginTop="@dimen/twenty_dp"
-                                android:background="@color/bg_color"
-                                android:orientation="vertical">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/fourteen_dp"
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
-
-                                <com.walkins.technician.custom.BoldTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/ten_dp"
-                                    android:alpha="0.5"
-                                    android:gravity="center"
-                                    android:text="Car Photo 1"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <com.walkins.technician.custom.BoldHeavyTextView
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/suggestionsRecycView"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:text="Add Car Photo"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="@dimen/eighteen_sp"
-                                    android:textStyle="bold" />
-                            </RelativeLayout>
+                                    android:layout_height="wrap_content" />
 
-                            <RelativeLayout
-                                android:id="@+id/relCarPhotoAdd2"
-                                android:layout_width="match_parent"
-                                android:layout_height="200dp"
-                                android:layout_marginTop="@dimen/twenty_dp"
-                                android:background="@color/bg_color"
-                                android:orientation="vertical">
-
-
-                                <com.walkins.technician.custom.BoldTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/ten_dp"
-                                    android:alpha="0.5"
-                                    android:gravity="center"
-                                    android:text="Car Photo 2"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/fourteen_sp" />
-
-                                <com.walkins.technician.custom.BoldHeavyTextView
+                                <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:text="Add Car Photo"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="@dimen/eighteen_sp"
-                                    android:textStyle="bold" />
-                            </RelativeLayout>
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:text="More Suggestions (optional)"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/twelve_sp" />
+
+                                <com.walkins.technician.custom.NormalEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/five_dp"
+                                    android:background="@drawable/layout_bg_corner"
+                                    android:gravity="start|top"
+                                    android:inputType="textMultiLine"
+                                    android:minLines="5" />
 
 
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:text="Next Service Due"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/twelve_sp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/five_dp"
+                                    android:background="@drawable/layout_bg_corner"
+                                    android:orientation="horizontal">
+
+                                    <com.walkins.technician.custom.NormalEditText
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+
+                                        android:layout_weight="1"
+                                        android:background="@null"
+                                        android:inputType="textMultiLine"
+                                        android:paddingStart="@dimen/ten_dp"
+                                        android:paddingTop="@dimen/six_dp"
+                                        android:paddingEnd="@dimen/ten_dp"
+                                        android:paddingBottom="@dimen/six_dp"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <ImageView
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginEnd="@dimen/eight_dp"
+                                        android:layout_marginRight="@dimen/eight_dp"
+                                        android:paddingTop="@dimen/two_dp"
+                                        android:paddingBottom="@dimen/two_dp"
+                                        android:src="@mipmap/ic_calender_icon" />
+                                </LinearLayout>
+
+
+                                <RelativeLayout
+                                    android:id="@+id/relCarPhotoAdd1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:background="@color/bg_color"
+                                    android:orientation="vertical">
+
+
+                                    <com.walkins.technician.custom.BoldTextView
+                                        android:id="@+id/tvCarphoto1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="@dimen/ten_dp"
+                                        android:alpha="0.5"
+                                        android:gravity="center"
+                                        android:text="Car Photo 1"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <com.walkins.technician.custom.BoldHeavyTextView
+                                        android:id="@+id/tvAddPhoto1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="Add Car Photo"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/eighteen_sp"
+                                        android:textStyle="bold" />
+
+                                    <ImageView
+                                        android:id="@+id/ivPickedImage"
+                                        android:layout_width="150dp"
+                                        android:layout_height="match_parent"
+                                        android:padding="@dimen/ten_dp"
+                                        android:layout_centerInParent="true"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/ic_camera_icon"/>
+
+                                    <ImageView
+                                        android:id="@+id/ivEditImg1"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_margin="@dimen/ten_dp"
+                                        android:src="@drawable/ic_edit_image"/>
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/relCarPhotoAdd2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:background="@color/bg_color"
+                                    android:orientation="vertical">
+
+
+                                    <com.walkins.technician.custom.BoldTextView
+                                        android:id="@+id/tvCarphoto2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="@dimen/ten_dp"
+                                        android:alpha="0.5"
+                                        android:gravity="center"
+                                        android:text="Car Photo 2"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <com.walkins.technician.custom.BoldHeavyTextView
+                                        android:id="@+id/tvAddPhoto2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="Add Car Photo"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/eighteen_sp"
+                                        android:textStyle="bold" />
+
+                                    <ImageView
+                                        android:id="@+id/ivPickedImage1"
+                                        android:layout_width="150dp"
+                                        android:layout_height="match_parent"
+                                        android:padding="@dimen/ten_dp"
+                                        android:layout_centerInParent="true"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/ic_camera_icon"/>
+
+                                    <ImageView
+                                        android:id="@+id/ivEditImg2"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_margin="@dimen/ten_dp"
+                                        android:src="@drawable/ic_edit_image"/>
+                                </RelativeLayout>
+
+
+                            </LinearLayout>
                         </LinearLayout>
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
