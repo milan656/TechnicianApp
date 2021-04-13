@@ -135,6 +135,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var ivInfoImgLR: ImageView? = null
     private var ivInfoImgRR: ImageView? = null
 
+    private var ivPhoneCall: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_service_details)
@@ -168,6 +170,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivInfoImgLR = findViewById(R.id.ivInfoImgLR)
         ivInfoImgRF = findViewById(R.id.ivInfoImgRF)
         ivInfoImgRR = findViewById(R.id.ivInfoImgRR)
+
+        ivPhoneCall = findViewById(R.id.ivPhoneCall)
 
         ivInfoImgRR?.setOnClickListener(this)
         ivInfoImgRF?.setOnClickListener(this)
@@ -226,6 +230,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivTyre3?.setOnTouchListener(this)
         ivTyre4?.setOnTouchListener(this)
         llTyreConfigExpanded?.setOnTouchListener(this)
+        ivPhoneCall?.setOnTouchListener(this)
 
         tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this, false)
         tyreSuggestionAdapter?.onclick = this
@@ -839,6 +844,20 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     TyreConfigClass.selectedTyreConfigType = "RRpending"
                     TyreConfigClass.clickedTyre = "RR"
                     startActivityForResult(intent, 1000)
+                }
+            }
+            R.id.ivPhoneCall -> {
+                if (!Common.checkCallPermission(this)) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.CALL_PHONE),
+                        1
+                    )
+                } else {
+                    val phone = "+919428297300"
+                    val callIntent = Intent(Intent.ACTION_CALL)
+                    callIntent.data = Uri.parse("tel:$phone")
+                    startActivity(callIntent)
                 }
             }
 

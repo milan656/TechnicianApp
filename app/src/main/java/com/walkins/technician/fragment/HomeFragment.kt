@@ -62,7 +62,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     var simpleDateOnlyFormat: SimpleDateFormat? = null
     var simpleDateLocaleFormat: SimpleDateFormat? = null
     var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
-
+    var sectionModelArrayList: ArrayList<SectionModel> = ArrayList()
 
     private var arrayList = arrayListOf("Gallery", "Camera")
 
@@ -187,7 +187,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun populateRecyclerView() {
-        val sectionModelArrayList: ArrayList<SectionModel> = ArrayList()
+
         //for loop for sections
         for (i in 1..2) {
             val itemArrayList: ArrayList<String> = ArrayList()
@@ -200,7 +200,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             if (i == 1) {
                 sectionModelArrayList.add(SectionModel("Today", itemArrayList))
             } else if (i == 2) {
-                sectionModelArrayList.add(SectionModel("13 April", itemArrayList))
+                sectionModelArrayList.add(SectionModel("29 April", itemArrayList))
             }
         }
         val adapter = context?.let {
@@ -302,8 +302,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             )
 
         } else if (check == 0) {
+
             var intent = Intent(context, ServiceListActivity::class.java)
             startActivity(intent)
+        } else {
+            Log.e("getsection", "" + sectionModelArrayList?.get(variable)?.sectionLabel)
+            Log.e("getsection", "" + check)
         }
 //        Log.e("getclickpos", arrayList.get(variable))
     }

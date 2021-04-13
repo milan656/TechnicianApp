@@ -1,9 +1,11 @@
 package com.walkins.technician.activity
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,6 +14,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.PermissionChecker
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +26,7 @@ import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.PendingTyreSuggestionAdpater
 import com.walkins.technician.common.onClickAdapter
+
 
 class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener,
     View.OnTouchListener {
@@ -48,6 +54,8 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var ivTyre1: ImageView? = null
     private var ivTyre2: ImageView? = null
     private var ivTyre3: ImageView? = null
+
+    private var ivPhoneCall: ImageView? = null
 
     private var ivInfoImg: ImageView? = null
     private var title: String = ""
@@ -86,6 +94,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         llTechnicalSuggestionExpanded = findViewById(R.id.llTechnicalSuggestionExpanded)
         llTyreConfigExpanded = findViewById(R.id.llTyreConfigExpanded)
         llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
+        ivPhoneCall = findViewById(R.id.ivPhoneCall)
 
         ivAddServices = findViewById(R.id.ivAddServices)
         ivAddTechnicalSuggestion = findViewById(R.id.ivAddTechnicalSuggestion)
@@ -137,6 +146,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         ivTyre2?.setOnTouchListener(this)
         ivTyre3?.setOnTouchListener(this)
         ivTyre4?.setOnTouchListener(this)
+        ivPhoneCall?.setOnTouchListener(this)
 
         tvCurrentDateTime?.text = Common.getCurrentDateTime()
     }
@@ -176,7 +186,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     llservicebg?.setBackgroundDrawable(null)
                     ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
-                    tvServices?.isAllCaps = true
+                    tvServices?.isAllCaps = false
                     Common.expand(llServiceExpanded!!)
 
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
@@ -205,7 +215,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     lltyreconfigbg?.setBackgroundDrawable(null)
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
-                    tvTyreConfig?.isAllCaps = true
+                    tvTyreConfig?.isAllCaps = false
                     Common.expand(llTyreConfigExpanded!!)
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llServiceExpanded!!)
@@ -234,7 +244,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     lltechnicalbg?.setBackgroundDrawable(null)
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
-                    tvTechnicalSuggetion?.isAllCaps = true
+                    tvTechnicalSuggetion?.isAllCaps = false
 
                     Common.expand(llTechnicalSuggestionExpanded!!)
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
@@ -366,9 +376,24 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 intent.putExtra("title", "Detail - RR")
                 startActivity(intent)
             }
+            R.id.ivPhoneCall -> {
+                if (!Common.checkCallPermission(this)) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.CALL_PHONE),
+                        1
+                    )
+                } else {
+                    val phone = "+919428297300"
+                    val callIntent = Intent(Intent.ACTION_CALL)
+                    callIntent.data = Uri.parse("tel:$phone")
+                    startActivity(callIntent)
+                }
+            }
 
 
         }
         return false
     }
+
 }

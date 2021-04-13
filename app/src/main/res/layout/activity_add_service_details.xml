@@ -214,6 +214,7 @@
                             </LinearLayout>
 
                             <ImageView
+                                android:id="@+id/ivPhoneCall"
                                 android:layout_width="50dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -850,7 +851,7 @@
                                 android:layout_marginTop="@dimen/twelve_dp"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:id="@+id/tvTyreAddInfo"

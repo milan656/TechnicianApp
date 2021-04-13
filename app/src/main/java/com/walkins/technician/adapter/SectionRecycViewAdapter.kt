@@ -76,6 +76,8 @@ class SectionRecyclerViewAdapter(
         adapter?.onclick = this
 
 
+
+
     }
 
     override fun getItemCount(): Int {

@@ -1,5 +1,6 @@
 package com.example.technician.common
 
+import android.Manifest
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.TargetApi
@@ -9,6 +10,7 @@ import android.app.Dialog
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.database.Cursor
@@ -29,6 +31,8 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
+import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -847,6 +851,11 @@ class Common {
 
         fun isGooglePhotosUri(uri: Uri): Boolean {
             return "com.google.android.apps.photos.content" == uri.authority
+        }
+        fun checkCallPermission(context: Context): Boolean {
+            val permission = Manifest.permission.CALL_PHONE
+            val res: Int = checkCallingOrSelfPermission(context,permission)
+            return res == PackageManager.PERMISSION_GRANTED
         }
 
         fun getDataColumn(
