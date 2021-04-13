@@ -54,25 +54,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/llheader"
             android:layout_marginStart="@dimen/eighteen_dp"
-            android:layout_marginTop="@dimen/sixteen_dp"
             android:layout_marginEnd="@dimen/eighteen_dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/ten_dp">
 
-            <com.walkins.technician.custom.BoldTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/two_dp"
-                android:layout_marginEnd="@dimen/two_dp"
-                android:text="Today"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp"
-                android:textStyle="bold" />
+
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/homeRecycView"
+                android:id="@+id/sectioned_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fourteen_dp" />
+                 />
 
         </LinearLayout>
 

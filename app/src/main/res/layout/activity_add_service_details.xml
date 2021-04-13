@@ -240,7 +240,7 @@
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
-                        android:id="@+id/cardservice"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -251,10 +251,13 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/cardservice"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/twenty_dp"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:layout_gravity="center"
+                                android:gravity="start|center">
 
                                 <com.walkins.technician.custom.BoldHeavyTextView
                                     android:id="@+id/tvServices"
@@ -801,7 +804,7 @@
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
-                        android:id="@+id/cardtyreConfig"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -813,9 +816,12 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/cardtyreConfig"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:layout_gravity="center"
+                                android:gravity="start|center">
 
                                 <com.walkins.technician.custom.BoldHeavyTextView
                                     android:id="@+id/tvTyreConfig"
@@ -1142,21 +1148,25 @@
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
-                        android:id="@+id/cardtechinicalSuggestion"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <LinearLayout
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/twenty_dp"
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/cardtechinicalSuggestion"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:layout_gravity="center"
+                                android:gravity="start|center">
 
                                 <com.walkins.technician.custom.BoldHeavyTextView
                                     android:id="@+id/tvTechnicalSuggetion"

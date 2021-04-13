@@ -2,7 +2,6 @@ package com.walkins.technician.fragment
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,20 +11,20 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bruce.pickerview.popwindow.DatePickerPopWin
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ramotion.fluidslider.FluidSlider
 import com.walkins.technician.R
+import com.walkins.technician.activity.ListHeaderActivity
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.activity.ServiceListActivity
-import com.walkins.technician.adapter.DialogueDateAdpater
-import com.walkins.technician.adapter.DialogueDateAdpaterMonth
-import com.walkins.technician.adapter.DialogueDateAdpaterYear
-import com.walkins.technician.adapter.HomeListAdpater
+import com.walkins.technician.adapter.*
+import com.walkins.technician.common.RecyclerViewType
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
+import com.walkins.technician.model.login.SectionModel
 import com.walkins.technician.model.login.date.DateModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -156,18 +155,30 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         relmainContent = view?.findViewById(R.id.relmainContent)
         tvUsername = view?.findViewById(R.id.tvUsername)
         tvUsername?.text = "Hello, " + "Arun"
-        homeRecycView = view.findViewById(R.id.homeRecycView)
         ivFilter?.setOnClickListener(this)
 
+//        homeRecycView = view.findViewById(R.id.homeRecycView)
+//
+//        homeRecycView?.layoutManager = LinearLayoutManager(
+//            context,
+//            RecyclerView.VERTICAL,
+//            false
+//        )
+//        adapter = context?.let { HomeListAdpater(arrayList, it, this) }
+//        homeRecycView?.adapter = adapter
+//        adapter?.onclick = this
+
+        homeRecycView = view.findViewById(R.id.sectioned_recycler_view)
+
+        homeRecycView?.setHasFixedSize(true)
         homeRecycView?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
             false
         )
-        adapter = context?.let { HomeListAdpater(arrayList, it, this) }
-        homeRecycView?.adapter = adapter
-        adapter?.onclick = this
 
+
+        populateRecyclerView()
 // Java
 
 
@@ -175,6 +186,35 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     }
 
+    private fun populateRecyclerView() {
+        val sectionModelArrayList: ArrayList<SectionModel> = ArrayList()
+        //for loop for sections
+        for (i in 1..2) {
+            val itemArrayList: ArrayList<String> = ArrayList()
+            //for loop for items
+            for (j in 1..2) {
+                itemArrayList.add("Item $j")
+            }
+
+            //add the section and items to array list
+            if (i == 1) {
+                sectionModelArrayList.add(SectionModel("Today", itemArrayList))
+            } else if (i == 2) {
+                sectionModelArrayList.add(SectionModel("13 April", itemArrayList))
+            }
+        }
+        val adapter = context?.let {
+            SectionRecyclerViewAdapter(
+                it,
+                RecyclerViewType.LINEAR_VERTICAL,
+                sectionModelArrayList, this
+            )
+        }
+        homeRecycView?.setAdapter(adapter)
+        adapter?.onclick = this
+
+
+    }
 
     private fun showBottomSheetdialogNormal(
         array: ArrayList<String>,
@@ -272,16 +312,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val i = v?.id
         when (i) {
             R.id.ivFilter -> {
-                /*showBottomSheetdialogDate(
-                    arrayListdays,
-                    arrayListdaysFeb,
-                    arrayListMonth,
-                    arrayListYear,
-                    "Choose Date",
-                    context
-                )*/
-
                 simpleClicked()
+
             }
         }
     }
@@ -338,7 +370,10 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         selectedDate = ""
                     } else if (str.equals("Close")) {
                         Log.e("getdatee1", "" + selectedDate)
-                        if (selectedDate == null || selectedDate.equals("null") || selectedDate.equals("")) {
+                        if (selectedDate == null || selectedDate.equals("null") || selectedDate.equals(
+                                ""
+                            )
+                        ) {
                             ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_calender_icon))
                         } else {
                             ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))

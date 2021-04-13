@@ -7,22 +7,30 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeListAdpater(
     var array: ArrayList<String>,
     var context: Context,
     onPositionClick: onClickAdapter
 ) :
-    RecyclerView.Adapter<HomeListAdpater.Viewholder>() {
+    RecyclerView.Adapter<HomeListAdpater.Viewholder>(){
 
     var onclick: onClickAdapter? = null
+    private var mDateFormat: SimpleDateFormat? = null
+    private var mDateFormatTime: SimpleDateFormat? = null
+    private var mToday = ""
 
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var ivInfo: ImageView = itemView.findViewById(R.id.ivInfo)
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeListAdpater.Viewholder {
         var view =
@@ -52,5 +60,7 @@ class HomeListAdpater(
         return array.size
 
     }
+
+
 
 }

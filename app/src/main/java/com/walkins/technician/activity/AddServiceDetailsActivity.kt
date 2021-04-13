@@ -51,7 +51,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGE_REQUEST = 100
     private lateinit var mCurrentPhotoPath: String
-
+    var dialog: BottomSheetDialog? = null
     var image_uri: Uri? = null
     private val IMAGE_CAPTURE_RESULT = 1001
     private val PERMISSION_CODE = 1000;
@@ -525,15 +525,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
-        val dialog =
+        dialog =
             this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
-        dialog.setCancelable(false)
+        dialog?.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog.window?.setLayout(width, height)
-        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(view)
+        dialog?.window?.setLayout(width, height)
+        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btn_send)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
@@ -571,7 +571,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         btnSend?.text = btnText
         btnSend.setOnClickListener {
-            dialog.dismiss()
+            dialog?.dismiss()
 
             /*if (selectedPending?.equals("pattern")) {
 //                selectedPending="pattern"
@@ -582,10 +582,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 val intent = Intent(this, VisualDetailsActivity::class.java)
                 startActivity(intent)
             }*/
-
         }
-
-        dialog.show()
+        dialog?.show()
 
     }
 
@@ -707,26 +705,30 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             if (TyreConfigClass.pendingTyre.equals("LF")) {
 
-                intent?.putExtra("tyreConfigType", "LF")
+                intent?.putExtra("selectedTyre", "LF")
                 intent?.putExtra("title", "Select Tyre Make - LF")
                 TyreConfigClass.selectedTyreConfigType = "LFpending"
                 TyreConfigClass.clickedTyre = "LF"
 
             } else if (TyreConfigClass.pendingTyre.equals("LR")) {
-                intent?.putExtra("tyreConfigType", "LR")
+                intent?.putExtra("selectedTyre", "LR")
                 intent?.putExtra("title", "Select Tyre Make - LR")
                 TyreConfigClass.selectedTyreConfigType = "LRpending"
                 TyreConfigClass.clickedTyre = "LR"
             } else if (TyreConfigClass.pendingTyre.equals("RF")) {
-                intent?.putExtra("tyreConfigType", "RF")
+                intent?.putExtra("selectedTyre", "RF")
                 intent?.putExtra("title", "Select Tyre Make - RF")
                 TyreConfigClass.selectedTyreConfigType = "RFpending"
                 TyreConfigClass.clickedTyre = "RF"
             } else if (TyreConfigClass.pendingTyre.equals("RR")) {
-                intent?.putExtra("tyreConfigType", "RR")
+                intent?.putExtra("selectedTyre", "RR")
                 intent?.putExtra("title", "Select Tyre Make - RR")
                 TyreConfigClass.selectedTyreConfigType = "RRpending"
                 TyreConfigClass.clickedTyre = "RR"
+            }
+
+            if (dialog != null && dialog?.isShowing!!) {
+                dialog?.dismiss()
             }
             startActivityForResult(intent, 1000)
         }
