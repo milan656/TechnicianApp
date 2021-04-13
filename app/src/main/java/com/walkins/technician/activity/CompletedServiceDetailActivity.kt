@@ -384,7 +384,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                         1
                     )
                 } else {
-                    val phone = "+919428297300"
+                    val phone = "+91942829730011"
                     val callIntent = Intent(Intent.ACTION_CALL)
                     callIntent.data = Uri.parse("tel:$phone")
                     startActivity(callIntent)

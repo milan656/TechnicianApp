@@ -33,6 +33,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
+import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -854,7 +855,7 @@ class Common {
         }
         fun checkCallPermission(context: Context): Boolean {
             val permission = Manifest.permission.CALL_PHONE
-            val res: Int = checkCallingOrSelfPermission(context,permission)
+            val res: Int = checkSelfPermission(context,permission)
             return res == PackageManager.PERMISSION_GRANTED
         }
 

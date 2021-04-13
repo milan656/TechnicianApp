@@ -56,6 +56,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private val IMAGE_CAPTURE_RESULT = 1001
     private val PERMISSION_CODE = 1000;
 
+    var imagePickerDialog: BottomSheetDialog? = null
     private var ivInfoAddService: ImageView? = null
     private var ivAddServices: ImageView? = null
     private var ivAddTyreConfig: ImageView? = null
@@ -644,7 +645,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             Log.e("getposition1", "" + reasonArray.get(variable))
         } else if (check == 10) {
 
-            if (Common.commonPhotoChooseArr?.get(variable)?.equals("Gallery")) {
+            if (imagePickerDialog != null && imagePickerDialog?.isShowing!!) {
+                imagePickerDialog?.dismiss()
+            }
+            if (Common.commonPhotoChooseArr.get(variable)?.equals("Gallery")) {
                 val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     checkPermissions((this))
                 } else {
@@ -750,15 +754,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
-        val dialog =
+        imagePickerDialog =
             this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
-        dialog.setCancelable(false)
+        imagePickerDialog?.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog.window?.setLayout(width, height)
-        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(view)
+        imagePickerDialog?.window?.setLayout(width, height)
+        imagePickerDialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        imagePickerDialog?.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btn_send)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
@@ -782,7 +786,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         arrayAdapter?.onclick = this
 
         ivClose?.setOnClickListener {
-            dialog.dismiss()
+            imagePickerDialog?.dismiss()
         }
         if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
             btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
@@ -797,11 +801,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         btnSend.setOnClickListener {
 
-            dialog.dismiss()
+            imagePickerDialog?.dismiss()
 
         }
 
-        dialog.show()
+        imagePickerDialog?.show()
 
     }
 
@@ -854,7 +858,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         1
                     )
                 } else {
-                    val phone = "+919428297300"
+                    val phone = "+91942829730011"
                     val callIntent = Intent(Intent.ACTION_CALL)
                     callIntent.data = Uri.parse("tel:$phone")
                     startActivity(callIntent)
@@ -933,7 +937,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //                image_view.setImageURI(image_uri)
 
                 Log.e("imagepath222", "" + image_uri)
-                ivPickedImage?.setImageURI(image_uri)
+
                 CropImage.activity(image_uri)
                     .start(this)
             }
@@ -951,21 +955,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     //To get the File for further usage
                     val auxFile = File(mCurrentPhotoPath)
                     Log.e("imagepath2", "" + auxFile)
-                    var mImageBitmap = MediaStore.Images.Media.getBitmap(
-                        this.getContentResolver(),
-                        Uri.parse(mCurrentPhotoPath)
-                    );
-                    Glide.with(this)
-                        .load(Uri.fromFile(auxFile))
-                        .into(ivPickedImage!!)
 
                     CropImage.activity(Uri.fromFile(auxFile))
                         .start(this)
 
-                    /* uploadProfileImage(auxFile)
-                     Glide.with(this)
-                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
-                         .into(imgProfile)*/
+
                 }
             }
 
@@ -981,9 +975,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
-                    Glide.with(this)
-                        .load(Uri.fromFile(imagePath))
-                        .into(ivPickedImage!!)
 
                     Log.i("imagePath", "++++" + imagePath)
 
@@ -997,6 +988,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (resultCode == Activity.RESULT_OK) {
 
                     //To get the File for further usage
+
                     val selectedImage = result.uri
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -1004,15 +996,29 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
-                    Log.e("imagepath1", "" + imagePath + " " + selectedImage)
+                    Log.e("imagepath1", "" + imagePath + " " + selectedImage + " " + selectImage1)
+                    Log.e("imagepath2", "" + Uri.fromFile(imagePath))
 
                     if (selectImage1) {
+                        try {
+//                            Glide.with(this)
+//                                .load(Uri.fromFile(imagePath))
+//                                .into(ivPickedImage!!)
 
+                            ivPickedImage?.setImageBitmap(result?.bitmap)
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                            Log.e("imagepath1", "" + e.cause + " " + e.message)
+                        }
                         relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                         ivEditImg1?.visibility = View.VISIBLE
                         tvAddPhoto1?.visibility = View.GONE
                         tvCarphoto1?.visibility = View.GONE
                     } else {
+//                        Glide.with(this)
+//                            .load(Uri.fromFile(imagePath))
+//                            .into(ivPickedImage1!!)
+                        ivPickedImage1?.setImageBitmap(result?.bitmap)
                         relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                         ivEditImg2?.visibility = View.VISIBLE
                         tvAddPhoto2?.visibility = View.GONE
