@@ -702,8 +702,297 @@
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/fourteen_sp" />
 
-                                    <include
-                                        layout="@layout/design_tyre"/>
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="240dp"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:layout_marginTop="@dimen/twelve_dp">
+
+                                        <LinearLayout
+                                            android:layout_width="280dp"
+                                            android:layout_height="240dp"
+                                            android:layout_centerInParent="true"
+                                            android:layout_gravity="center"
+                                            android:orientation="horizontal"
+                                            android:gravity="center">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginEnd="-8dp"
+                                                android:layout_marginRight="-8dp"
+                                                android:orientation="vertical">
+
+                                                <ImageView
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                                <ImageView
+                                                    android:id="@+id/ivInfoImgLF"
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                                <ImageView
+
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                                <ImageView
+                                                    android:id="@+id/ivInfoImgLR"
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                                <ImageView
+
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                            </LinearLayout>
+
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:layout_marginEnd="-12dp"
+                                                android:layout_marginRight="-12dp">
+
+                                                <ImageView
+                                                    android:id="@+id/ivtyreLeftFront"
+                                                    android:layout_width="65dp"
+                                                    android:layout_height="25dp"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:background="@drawable/layout_bg_vehicle_border"
+                                                    android:gravity="center"
+                                                    android:src="@drawable/ic_mrf"
+                                                    android:visibility="invisible" />
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+
+
+                                                    <ImageView
+                                                        android:id="@+id/ivTyre1"
+                                                        android:layout_width="55dp"
+                                                        android:layout_height="55dp"
+                                                        android:layout_marginTop="@dimen/five_dp"
+                                                        android:src="@drawable/ic_completed_tyre_config" />
+
+
+                                                </LinearLayout>
+
+
+                                                <ImageView
+                                                    android:layout_width="55dp"
+                                                    android:layout_height="35dp"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:src="@drawable/ic_completed_tyre_config"
+                                                    android:visibility="invisible" />
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+
+
+                                                    <ImageView
+                                                        android:id="@+id/ivTyre2"
+                                                        android:layout_width="55dp"
+                                                        android:layout_height="55dp"
+                                                        android:layout_marginTop="@dimen/five_dp"
+                                                        android:src="@drawable/ic_completed_tyre_config" />
+                                                </LinearLayout>
+
+                                                <ImageView
+                                                    android:id="@+id/ivtyreLeftRear"
+                                                    android:layout_width="65dp"
+                                                    android:layout_height="25dp"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:background="@drawable/layout_bg_vehicle_border"
+                                                    android:gravity="center"
+                                                    android:src="@drawable/ic_mrf"
+                                                    android:visibility="invisible" />
+
+                                            </LinearLayout>
+
+
+                                            <ImageView
+                                                android:layout_width="90dp"
+                                                android:layout_height="match_parent"
+                                                android:layout_gravity="center"
+                                                android:src="@drawable/ic_tyre_config_car1" />
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_marginStart="-12dp"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+                                                android:layout_marginLeft="-12dp">
+
+
+                                                <ImageView
+                                                    android:id="@+id/ivTyreRightFront"
+                                                    android:layout_width="65dp"
+                                                    android:layout_height="25dp"
+                                                    android:layout_gravity="start"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:background="@drawable/layout_bg_vehicle_border"
+                                                    android:gravity="start"
+                                                    android:src="@drawable/ic_mrf"
+                                                    android:visibility="invisible" />
+
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:gravity="center"
+                                                    android:orientation="horizontal">
+
+
+                                                    <ImageView
+                                                        android:id="@+id/ivTyre3"
+                                                        android:layout_width="55dp"
+                                                        android:layout_height="55dp"
+                                                        android:layout_gravity="center"
+                                                        android:layout_marginTop="@dimen/five_dp"
+                                                        android:src="@drawable/ic_completed_tyre_config" />
+
+
+                                                </LinearLayout>
+
+
+                                                <ImageView
+                                                    android:layout_width="55dp"
+                                                    android:layout_height="35dp"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:src="@drawable/ic_completed_tyre_config"
+                                                    android:visibility="invisible" />
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+
+                                                    <ImageView
+                                                        android:id="@+id/ivTyre4"
+                                                        android:layout_width="55dp"
+                                                        android:layout_height="55dp"
+                                                        android:layout_marginTop="@dimen/five_dp"
+                                                        android:src="@drawable/ic_completed_tyre_config" />
+
+
+                                                </LinearLayout>
+
+                                                <ImageView
+                                                    android:id="@+id/ivTyreRightRear"
+                                                    android:layout_width="65dp"
+                                                    android:layout_height="25dp"
+                                                    android:layout_gravity="start"
+                                                    android:layout_marginTop="@dimen/five_dp"
+                                                    android:background="@drawable/layout_bg_vehicle_border"
+                                                    android:gravity="start"
+                                                    android:src="@drawable/ic_mrf"
+                                                    android:visibility="invisible" />
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="-8dp"
+                                                android:layout_marginLeft="-8dp"
+                                                android:orientation="vertical">
+
+                                                <ImageView
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                                <ImageView
+                                                    android:id="@+id/ivInfoImgRF"
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                                <ImageView
+
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                                <ImageView
+                                                    android:id="@+id/ivInfoImgRR"
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                                <ImageView
+
+                                                    android:layout_width="32dp"
+                                                    android:layout_height="32dp"
+                                                    android:layout_gravity="top"
+                                                    android:src="@drawable/info_in_profile"
+                                                    android:visibility="invisible"
+
+                                                    app:tint="@color/header_title" />
+
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+
+                                    </RelativeLayout>
                                 </LinearLayout>
 
 
