@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
+import com.example.technician.common.RetrofitCommonClass
+import com.google.gson.GsonBuilder
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.VehicleMakeModelClass
@@ -24,7 +26,13 @@ import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showLongToast
 import com.walkins.technician.model.login.patternmodel.PatternData
 import com.walkins.technician.model.login.patternmodel.PatternModel
+import com.walkins.technician.networkApi.WarrantyApi
 import com.walkins.technician.viewmodel.WarrantyViewModel
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.IOException
 
 class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
@@ -116,6 +124,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             adapter?.notifyDataSetChanged()
             gridviewRecycModel?.visibility = View.VISIBLE
         }, 1000)
+
+
     }
 
 

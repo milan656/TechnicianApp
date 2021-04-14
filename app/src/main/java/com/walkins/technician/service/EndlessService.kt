@@ -157,10 +157,8 @@ class EndlessService : Service() {
             while (isServiceStarted) {
                 launch(Dispatchers.IO) {
                     fetchVehicleData()
-
                     fetchPattern()
                     fetchSize()
-
                     stopService()
                 }
                 delay(1 * 60 * 1000)
@@ -201,37 +199,6 @@ class EndlessService : Service() {
 
     }
 
-    private fun fetchPattern() {
-        val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
-
-        var call: Call<ResponseBody>? = null
-        call = warrantyApi.getTyrePattern(
-            3
-
-        )
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    try {
-
-                        val gson = GsonBuilder().create()
-                        var patternModel: PatternModel = gson.fromJson(
-                            response?.body()?.string(),
-                            PatternModel::class.java
-                        )
-                        Log.e("getmodel00::", "" + patternModel)
-//                        checkDateTime
-                        savePatternData(patternModel)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
-        })
-
-    }
 
     private fun stopService() {
         Log.e("ENDLESS-SERVICE", "Stopping the foreground service")
@@ -277,6 +244,38 @@ class EndlessService : Service() {
                         Log.e("getmodel00::", "" + vehicleBrandModel)
 //                        checkDateTime
                         saveVehicleTypeData(vehicleBrandModel)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+        })
+
+    }
+
+    private fun fetchPattern() {
+        val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
+
+        var call: Call<ResponseBody>? = null
+        call = warrantyApi.getTyrePattern(
+            3
+
+        )
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    try {
+
+                        val gson = GsonBuilder().create()
+                        var patternModel: PatternModel = gson.fromJson(
+                            response?.body()?.string(),
+                            PatternModel::class.java
+                        )
+                        Log.e("getmodel00::", "" + patternModel)
+//                        checkDateTime
+                        savePatternData(patternModel)
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }

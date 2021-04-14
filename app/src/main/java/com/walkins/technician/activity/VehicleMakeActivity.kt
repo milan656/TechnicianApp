@@ -136,6 +136,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         }
 
         selectedPos = variable
+        Log.e("getselected", "" + arrList?.get(selectedPos)?.Id)
 
         chkRF?.isChecked = arrList?.get(variable)?.isRFSelected!!
         chkLR?.isChecked = arrList?.get(variable)?.isLRSelected!!
@@ -200,6 +201,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)
         var intent = Intent(this, VehiclePatternActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)
+        intent.putExtra("selectedVehicleMake", "" + arrList?.get(selectedPos)?.Id)
         startActivityForResult(intent, 1002)
     }
 
