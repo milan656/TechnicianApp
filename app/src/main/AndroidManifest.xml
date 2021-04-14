@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.example.technician.common.MainApplication"
@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnicianApp">
-        <activity android:name=".activity.ListHeaderActivity"></activity>
+        <activity android:name=".activity.ReportFilterActivity"></activity>
+        <activity android:name=".activity.ListHeaderActivity" />
         <activity android:name=".activity.CompletedVisualDetailActivity" />
         <activity android:name=".activity.VehicleMakeApplyTyreActivty" />
         <activity android:name=".activity.VehicleSizeActivity" />

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/ten_dp"
+        app:cardCornerRadius="@dimen/eight_dp"
+        app:cardElevation="@dimen/three_dp"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_above="@+id/llfooter"
+                tools:context=".activity.ServiceListActivity">
+
+                <LinearLayout
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/seventy"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llheader"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/eighteen_dp"
+                        android:layout_marginEnd="@dimen/eighteen_dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivBack"
+                            android:layout_width="25dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/six_dp"
+                            android:layout_marginRight="@dimen/six_dp"
+                            android:src="@drawable/ic_back_arrow" />
+
+                        <com.walkins.technician.custom.BoldTextView
+                            android:id="@+id/tvTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/six_dp"
+                            android:layout_marginLeft="@dimen/six_dp"
+                            android:gravity="start|center"
+                            android:text="Choose Filter"
+                            android:textColor="@color/header_title"
+                            android:textSize="@dimen/twenty_sp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/twenty_dp"
+                            android:layout_marginTop="@dimen/twenty_four_dp"
+                            android:layout_marginEnd="@dimen/twenty_dp"
+                            android:orientation="vertical">
+
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Type of Services"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/twelve_dp"
+                                    android:orientation="horizontal">
+
+                                    <CheckBox
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="@dimen/six_dp"
+
+                                        android:layout_marginRight="@dimen/six_dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/layout_bg_blue_corner"
+                                        android:buttonTint="@color/colorPrimary"
+                                        android:paddingTop="@dimen/ten_dp"
+                                        android:paddingBottom="@dimen/ten_dp"
+                                        android:text="Nitrogen Top Up"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <CheckBox
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/six_dp"
+                                        android:layout_marginLeft="@dimen/six_dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/layout_bg_blue_corner"
+                                        android:buttonTint="@color/colorPrimary"
+                                        android:paddingTop="@dimen/ten_dp"
+
+                                        android:paddingBottom="@dimen/ten_dp"
+                                        android:text="Nitrogen Refill"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/twelve_dp"
+                                    android:orientation="horizontal">
+
+                                    <CheckBox
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="@dimen/six_dp"
+                                        android:layout_marginRight="@dimen/six_dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/layout_bg_blue_corner"
+                                        android:buttonTint="@color/colorPrimary"
+                                        android:paddingTop="@dimen/ten_dp"
+
+                                        android:paddingBottom="@dimen/ten_dp"
+                                        android:text="Wheel Balancing"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                    <CheckBox
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/six_dp"
+                                        android:layout_marginLeft="@dimen/six_dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/layout_bg_blue_corner"
+                                        android:buttonTint="@color/colorPrimary"
+                                        android:paddingTop="@dimen/ten_dp"
+
+                                        android:paddingBottom="@dimen/ten_dp"
+                                        android:text="Tyre Rotation"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/twenty_four_dp"
+                            android:background="#E0E0E0" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/twenty_dp"
+                            android:layout_marginTop="@dimen/twenty_four_dp"
+                            android:layout_marginEnd="@dimen/twenty_dp"
+                            android:orientation="vertical">
+
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Vehicle Make"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actvehicleMake"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ten_dp"
+                                android:background="@drawable/layout_bg_corner"
+                                android:drawableRight="@drawable/search"
+                                android:drawableTint="@color/colorPrimary"
+                                android:hint="Search here"
+                                android:padding="@dimen/twelve_dp"
+                                android:textSize="@dimen/fourteen_sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/twenty_dp"
+                            android:layout_marginTop="@dimen/sixteen_dp"
+                            android:layout_marginEnd="@dimen/twenty_dp"
+                            android:orientation="vertical">
+
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Vehicle Model"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actvehicleModel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ten_dp"
+                                android:background="@drawable/layout_bg_corner"
+                                android:drawableRight="@drawable/search"
+                                android:drawableTint="@color/colorPrimary"
+                                android:hint="Search here"
+                                android:padding="@dimen/twelve_dp"
+                                android:textSize="@dimen/fourteen_sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/twenty_dp"
+                            android:layout_marginTop="@dimen/sixteen_dp"
+                            android:layout_marginEnd="@dimen/twenty_dp"
+                            android:layout_marginBottom="@dimen/sixteen_dp"
+                            android:orientation="vertical">
+
+                            <com.walkins.technician.custom.NormalTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Society"
+                                android:textColor="@color/text_color1"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actvehicleSociety"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ten_dp"
+                                android:background="@drawable/layout_bg_corner"
+                                android:drawableRight="@drawable/search"
+                                android:drawableTint="@color/colorPrimary"
+                                android:hint="Search here"
+                                android:padding="@dimen/twelve_dp"
+                                android:textSize="@dimen/fourteen_sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llfooter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:layout_marginBottom="@dimen/twenty_dp"
+                    android:background="#E0E0E0" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:layout_marginBottom="@dimen/sixteen_dp"
+                    android:orientation="horizontal">
+
+                    <com.walkins.technician.custom.BoldButton
+                        android:id="@+id/btnCancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/eight_dp"
+                        android:layout_marginRight="@dimen/eight_dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_button_white"
+                        android:gravity="center"
+                        android:letterSpacing="0.06"
+                        android:text="Reset"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:textStyle="bold" />
+
+                    <com.walkins.technician.custom.BoldButton
+                        android:id="@+id/btnConfirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/eight_dp"
+                        android:layout_marginEnd="@dimen/eight_dp"
+                        android:layout_marginRight="@dimen/eight_dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_button_yellow"
+                        android:gravity="center"
+                        android:letterSpacing="0.06"
+                        android:text="Confirm"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

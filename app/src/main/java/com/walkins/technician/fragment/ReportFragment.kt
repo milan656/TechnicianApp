@@ -19,6 +19,7 @@ import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
+import com.walkins.technician.activity.ReportFilterActivity
 import com.walkins.technician.activity.SkippedServiceDetailActivity
 import com.walkins.technician.adapter.AutoSuggestProductAdapter
 import com.walkins.technician.adapter.ReportAdpater
@@ -170,7 +171,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //                onBackPressed()
             }
             R.id.ivFilterImg -> {
-                openReportFilterDialogue("Choose Filter")
+//                openReportFilterDialogue("Choose Filter")
+                var intent = Intent(context, ReportFilterActivity::class.java)
+                startActivityForResult(intent, 100)
             }
             R.id.llCompletedReport -> {
                 llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_red_layout))
@@ -469,5 +472,20 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (resultCode) {
+            100 -> {
+                Log.e("getresults", "" + data?.getStringExtra("action"))
+
+                if (data?.getStringExtra("action").equals("confirm")) {
+
+                } else if (data?.getStringExtra("action").equals("reset")) {
+
+                }
+            }
+        }
+    }
 
 }
