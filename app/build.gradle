@@ -148,6 +148,4 @@ dependencies {
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'
     implementation 'com.brucetoo.pickview:library:1.2.3'
 
-    implementation 'ca.barrenechea.header-decor:header-decor:0.2.6'
-//    implementation 'com.shuhart.stickyheader:stickyheader:1.0.5'
 }

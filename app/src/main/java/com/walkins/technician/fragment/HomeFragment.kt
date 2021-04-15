@@ -11,13 +11,11 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ramotion.fluidslider.FluidSlider
 import com.walkins.technician.R
-import com.walkins.technician.activity.ListHeaderActivity
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.activity.ServiceListActivity
 import com.walkins.technician.adapter.*

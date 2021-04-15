@@ -15,12 +15,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
-import com.walkins.technician.DB.CourseModal
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
-import com.walkins.technician.common.SpacesItemDecoration
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.viewmodel.WarrantyViewModel
