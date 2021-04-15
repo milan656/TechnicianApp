@@ -25,6 +25,12 @@
     <dimen name="wheel_spacing">30dp</dimen>
     <dimen name="wheelSelectorHeight">40dp</dimen>
 
+    <dimen name="otp_customotp_view_item_size">57dp</dimen>
+    <dimen name="otp_customotp_view_item_radius">2dp</dimen>
+    <dimen name="otp_customotp_view_item_spacing">5dp</dimen>
+    <dimen name="otp_customotp_view_item_line_width">2dp</dimen>
+    <dimen name="otp_customotp_view_cursor_width">2dp</dimen>
+
 
 
 

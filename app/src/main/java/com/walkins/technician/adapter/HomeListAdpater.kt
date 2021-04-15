@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
 import java.text.SimpleDateFormat

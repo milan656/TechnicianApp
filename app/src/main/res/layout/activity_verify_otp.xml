@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bg_color"
 
     android:orientation="vertical">
@@ -68,113 +69,122 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:orientation="vertical">
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/twenty_four_dp"
-                                android:layout_marginEnd="@dimen/twenty_four_dp"
-                                android:text="@string/otp_code"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/sixteen_sp" />
 
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/sixteen_dp"
-                                android:layout_marginTop="@dimen/eight_dp"
-                                android:layout_marginEnd="@dimen/sixteen_dp"
-                                android:orientation="horizontal">
 
-                                <com.walkins.technician.custom.NormalEditText
-                                    android:id="@+id/edtOtp1"
+                                android:orientation="vertical">
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/twenty_four_dp"
+                                    android:layout_marginEnd="@dimen/twenty_four_dp"
+                                    android:text="@string/otp_code"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/sixteen_sp" />
+
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/sixteen_dp"
+                                    android:layout_marginTop="@dimen/eight_dp"
+                                    android:layout_marginEnd="@dimen/sixteen_dp"
+                                    android:orientation="horizontal">
+
+                                    <com.walkins.technician.custom.NormalEditText
+                                        android:id="@+id/edtOtp1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="@dimen/eight_dp"
+                                        android:layout_marginEnd="@dimen/eight_dp"
+                                        android:layout_marginRight="@dimen/eight_dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/layout_bg_corner"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:maxLength="1"
+                                        android:padding="8dip"
+                                        android:singleLine="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/sixteen_sp" />
+
+                                    <com.walkins.technician.custom.NormalEditText
+                                        android:id="@+id/edtOtp2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:layout_marginStart="@dimen/eight_dp"
+                                        android:layout_marginEnd="@dimen/eight_dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/layout_bg_corner"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:maxLength="1"
+                                        android:padding="8dip"
+                                        android:singleLine="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/sixteen_sp" />
+
+                                    <com.walkins.technician.custom.NormalEditText
+                                        android:id="@+id/edtOtp3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="@dimen/eight_dp"
+                                        android:layout_marginEnd="@dimen/eight_dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/layout_bg_corner"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:maxLength="1"
+                                        android:padding="8dip"
+                                        android:singleLine="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/sixteen_sp" />
+
+                                    <com.walkins.technician.custom.NormalEditText
+                                        android:id="@+id/edtOtp4"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="@dimen/eight_dp"
+                                        android:layout_marginEnd="@dimen/eight_dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/layout_bg_corner"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:maxLength="1"
+                                        android:padding="8dip"
+                                        android:singleLine="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/sixteen_sp" />
+
+                                </LinearLayout>
+
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:id="@+id/tvResend"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginStart="@dimen/eight_dp"
-                                    android:layout_marginEnd="@dimen/eight_dp"
-                                    android:layout_marginRight="@dimen/eight_dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/layout_bg_corner"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:maxLength="1"
-                                    android:padding="8dip"
-                                    android:singleLine="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/sixteen_sp" />
+                                    android:layout_marginStart="@dimen/twenty_four_dp"
+                                    android:layout_marginTop="@dimen/eight_dp"
+                                    android:layout_marginEnd="@dimen/twenty_four_dp"
+                                    android:gravity="start|center"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/fourteen_sp" />
 
-                                <com.walkins.technician.custom.NormalEditText
-                                    android:id="@+id/edtOtp2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="50dp"
-                                    android:layout_marginStart="@dimen/eight_dp"
-                                    android:layout_marginEnd="@dimen/eight_dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/layout_bg_corner"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:maxLength="1"
-                                    android:padding="8dip"
-                                    android:singleLine="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/sixteen_sp" />
-
-                                <com.walkins.technician.custom.NormalEditText
-                                    android:id="@+id/edtOtp3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="50dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginStart="@dimen/eight_dp"
-                                    android:layout_marginEnd="@dimen/eight_dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/layout_bg_corner"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:maxLength="1"
-                                    android:padding="8dip"
-                                    android:singleLine="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/sixteen_sp" />
-
-                                <com.walkins.technician.custom.NormalEditText
-                                    android:id="@+id/edtOtp4"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="50dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginStart="@dimen/eight_dp"
-                                    android:layout_marginEnd="@dimen/eight_dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/layout_bg_corner"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:maxLength="1"
-                                    android:padding="8dip"
-                                    android:singleLine="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/sixteen_sp" />
 
                             </LinearLayout>
 
-
-                            <com.walkins.technician.custom.NormalTextView
-                                android:id="@+id/tvResend"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="@dimen/twenty_four_dp"
-                                android:layout_marginTop="@dimen/eight_dp"
-                                android:layout_marginEnd="@dimen/twenty_four_dp"
-                                android:gravity="start|center"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/fourteen_sp" />
-
-
                         </LinearLayout>
-
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -229,8 +239,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:scaleType="fitCenter"
                     android:layout_marginTop="@dimen/sixteen_dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_walkins_logo_icon" />
 
 

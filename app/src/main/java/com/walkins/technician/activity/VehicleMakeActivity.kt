@@ -22,6 +22,9 @@ import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.viewmodel.WarrantyViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
     private lateinit var prefManager: PrefManager
@@ -94,8 +97,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         gridviewRecycMake_?.adapter = adapter
         gridviewRecycMake_?.visibility = View.GONE
 
-        var thread = Thread {
-
+        GlobalScope.launch(Dispatchers.Main) {
             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
                     .getAllVehicleType().size > 0
@@ -103,6 +105,11 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                 arrList?.addAll(mDb.daoClass().getAllVehicleType())
             }
+        }
+
+        var thread = Thread {
+
+
 
         }
         thread.start()

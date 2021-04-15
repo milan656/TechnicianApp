@@ -51,11 +51,10 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         edtOtp4 = findViewById(R.id.edtOtp4)
 
         btnVerify?.setOnClickListener(this)
-        btnVerify?.isEnabled = false
 
         tvResend?.text = Html.fromHtml("Didn't receive OTP? <font color='blue'>Resend<font/>")
 
-        edtOtp1?.requestFocus()
+//        edtOtp1?.requestFocus()
         edtOtp1?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -68,7 +67,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             override fun afterTextChanged(s: Editable?) {
 
                 if (s != null && s.length != 0 && s.length == 1) {
-                    otp?.append(s.toString())
+
                     edtOtp2?.requestFocus()
                 }
 
@@ -86,7 +85,6 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s.length != 0 && s.length == 1) {
-                    otp?.append(s.toString())
                     edtOtp3?.requestFocus()
                 }
             }
@@ -103,7 +101,6 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s.length != 0 && s.length == 1) {
-                    otp?.append(s.toString())
                     edtOtp4?.requestFocus()
                 }
 
@@ -121,9 +118,8 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s.length != 0 && s.length == 1) {
-                    otp?.append(s.toString())
                     edtOtp4?.clearFocus()
-                    btnVerify?.isEnabled = true
+                    btnVerify?.performClick()
                 }
 
             }
@@ -179,12 +175,17 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     override fun onClick(v: View?) {
         var i = v?.id
         if (i == R.id.btnVerify) {
-
+            Log.e("verifyy", "call0")
             if (edtOtp1?.text?.toString()?.length == 1 &&
                 edtOtp2?.text?.toString()?.length == 1 &&
                 edtOtp3?.text?.toString()?.length == 1 &&
                 edtOtp4?.text?.toString()?.length == 1
             ) {
+
+                otp?.append(edtOtp1?.text?.toString()?.toInt())
+                    ?.append(edtOtp2?.text?.toString()?.toInt())
+                    ?.append(edtOtp3?.text?.toString()?.toInt())
+                    ?.append(edtOtp4?.text?.toString()?.toInt())
 
                 Log.e("verifyy", "" + otp)
                 if (otp?.toString()?.length == 4) {
@@ -192,10 +193,11 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please enter Valid OTP", Toast.LENGTH_SHORT).show()
                 }
 
             } else {
+                Log.e("verifyy", "call")
                 Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show()
             }
 
