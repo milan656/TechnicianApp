@@ -75,6 +75,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     var currentYear: Int = 0
     var currentMonth: Int = 0
+    var currentDay: Int = 0
     var currentMonth_: String = ""
     var currentDate: Int = 0
     var activity: MainActivity? = null
@@ -96,6 +97,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         currentYear = calendar.get(Calendar.YEAR)
         currentMonth = calendar.get(Calendar.MONTH)
         currentDate = calendar.get(Calendar.DATE)
+        currentDay = calendar.get(Calendar.DAY_OF_MONTH)
 
         activity = getActivity() as MainActivity?
 
@@ -323,11 +325,11 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     fun simpleClicked() {
 
         val calendar = Calendar.getInstance()
-        calendar[Calendar.DAY_OF_MONTH] = currentMonth // 4. Feb. 2018
-        calendar[Calendar.MONTH] = 1
+        calendar[Calendar.DAY_OF_MONTH] = currentDay // 4. Feb. 2018
+        calendar[Calendar.MONTH] = currentMonth
         calendar[Calendar.YEAR] = currentYear
-        calendar[Calendar.HOUR_OF_DAY] = 11
-        calendar[Calendar.MINUTE] = 13
+//        calendar[Calendar.HOUR_OF_DAY] = 11
+//        calendar[Calendar.MINUTE] = 13
         val defaultDate = calendar.time
         singleBuilder = SingleDateAndTimePickerDialog.Builder(context)
             .setTimeZone(TimeZone.getDefault())
@@ -341,7 +343,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             .displayDaysOfMonth(true)
             .displayYears(true)
             .defaultDate(defaultDate)
-            .displayMonthNumbers(true).maxDateRange(Date()) //.mustBeOnFuture()
+            .displayMonthNumbers(true).minDateRange(Date()) //.mustBeOnFuture()
             //.minutesStep(15)
             //.mustBeOnFuture()
             //.defaultDate(defaultDate)

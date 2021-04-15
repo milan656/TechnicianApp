@@ -32,8 +32,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fourteen_dp"
-                    android:layout_marginEnd="@dimen/fourteen_dp"
+                    android:layout_marginStart="@dimen/eighteen_dp"
+                    android:layout_marginEnd="@dimen/eighteen_dp"
                     android:orientation="horizontal">
 
 
@@ -43,8 +43,8 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginRight="1dp"
                         android:layout_weight="1"
-                        app:cardCornerRadius="@dimen/five_dp"
-                        app:cardElevation="@dimen/two_dp"
+                        app:cardCornerRadius="@dimen/eight_dp"
+                        app:cardElevation="@dimen/four_dp"
                         app:cardUseCompatPadding="true">
 
                         <LinearLayout
@@ -149,8 +149,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fourteen_dp"
-                    android:layout_marginEnd="@dimen/fourteen_dp"
+                    android:layout_marginStart="@dimen/eighteen_dp"
+                    android:layout_marginEnd="@dimen/eighteen_dp"
                     android:orientation="horizontal">
 
 
@@ -161,7 +161,7 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginRight="1dp"
                         android:layout_weight="1"
-                        app:cardCornerRadius="@dimen/five_dp"
+                        app:cardCornerRadius="@dimen/eight_dp"
                         app:cardElevation="@dimen/two_dp"
                         app:cardUseCompatPadding="true">
 
@@ -232,11 +232,11 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fourteen_dp"
+                    android:layout_marginStart="@dimen/eighteen_dp"
                     android:layout_marginTop="@dimen/fourteen_dp"
-                    android:layout_marginEnd="@dimen/fourteen_dp"
+                    android:layout_marginEnd="@dimen/eighteen_dp"
                     android:visibility="visible"
-                    app:cardCornerRadius="@dimen/five_dp"
+                    app:cardCornerRadius="@dimen/eight_dp"
                     app:cardElevation="@dimen/two_dp"
                     app:cardUseCompatPadding="true">
 
@@ -797,10 +797,10 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fourteen_dp"
+                    android:layout_marginStart="@dimen/eighteen_dp"
                     android:layout_marginTop="@dimen/fourteen_dp"
-                    android:layout_marginEnd="@dimen/fourteen_dp"
-                    app:cardCornerRadius="@dimen/five_dp"
+                    android:layout_marginEnd="@dimen/eighteen_dp"
+                    app:cardCornerRadius="@dimen/eight_dp"
                     app:cardElevation="@dimen/two_dp"
                     app:cardUseCompatPadding="true">
 
@@ -876,11 +876,11 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fourteen_dp"
+                    android:layout_marginStart="@dimen/eighteen_dp"
                     android:layout_marginTop="@dimen/fourteen_dp"
-                    android:layout_marginEnd="@dimen/fourteen_dp"
+                    android:layout_marginEnd="@dimen/eighteen_dp"
                     android:layout_marginBottom="@dimen/fourteen_dp"
-                    app:cardCornerRadius="@dimen/five_dp"
+                    app:cardCornerRadius="@dimen/eight_dp"
                     app:cardElevation="@dimen/two_dp"
                     app:cardUseCompatPadding="true">
 
@@ -1126,8 +1126,8 @@
         <com.walkins.technician.custom.BoldHeavyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/five_dp"
-            android:layout_marginEnd="@dimen/five_dp"
+            android:layout_marginStart="@dimen/eight_dp"
+            android:layout_marginEnd="@dimen/eight_dp"
             android:layout_marginBottom="@dimen/twelve_dp"
             android:background="@drawable/rounded_blue"
             android:gravity="center"

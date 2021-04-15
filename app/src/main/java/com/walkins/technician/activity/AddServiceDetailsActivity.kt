@@ -143,6 +143,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         setContentView(R.layout.activity_add_service_details)
 
         init()
+
+
     }
 
     private fun init() {
@@ -302,7 +304,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         when (id) {
 
             R.id.ivInfoAddService -> {
-
+                showBottomSheetdialogNormal(
+                    Common.commonPhotoChooseArr,
+                    "Address Details",
+                    this,
+                    Common.btn_filled,
+                    false, "Palm Spring,", "Vastrapur Road,", "Opposite Siddhivinayak mandir,",
+                    "Ahmedabad - 123456"
+                )
             }
             R.id.ivBack -> {
                 onBackPressed()
@@ -520,6 +529,67 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
     }
+
+    private fun showBottomSheetdialogNormal(
+        array: ArrayList<String>,
+        titleStr: String,
+        context: Context?,
+        btnBg: String,
+        isBtnVisible: Boolean,
+        msg: String,
+        msg1: String,
+        msg2: String,
+        msg3: String,
+    ) {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.common_dialogue_layout, null)
+        val dialog =
+            this?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+
+        dialog?.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        dialog?.window?.setLayout(width, height)
+        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.setContentView(view)
+
+        val btnSend = view.findViewById<Button>(R.id.btnOk)
+        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
+        val tv_message = view.findViewById<TextView>(R.id.tv_message)
+        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
+
+        tvTitleText?.text = titleStr
+
+        tv_message?.text = msg + "\n" + msg1 + "\n" + msg2 + "\n" + msg3
+
+        if (msg.isNotEmpty()) {
+            tv_message.visibility = View.VISIBLE
+        }
+
+        ivClose?.setOnClickListener {
+            dialog?.dismiss()
+        }
+        if (isBtnVisible) {
+            btnSend.visibility = View.VISIBLE
+        } else {
+            btnSend.visibility = View.GONE
+        }
+        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
+            btnSend?.text = "Submit"
+        } else {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_white))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.header_title)!!)
+            btnSend?.text = "Cancel"
+        }
+
+        btnSend.setOnClickListener {
+            dialog?.dismiss()
+        }
+        dialog?.show()
+    }
+
 
     private fun showBottomSheetdialog(
         array: ArrayList<String>,

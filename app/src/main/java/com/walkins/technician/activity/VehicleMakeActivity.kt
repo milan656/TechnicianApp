@@ -1,5 +1,6 @@
 package com.walkins.technician.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -97,7 +98,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         gridviewRecycMake_?.adapter = adapter
         gridviewRecycMake_?.visibility = View.GONE
 
-        GlobalScope.launch(Dispatchers.Main) {
+        var thread = Thread {
             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
                     .getAllVehicleType().size > 0
@@ -105,11 +106,6 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                 arrList?.addAll(mDb.daoClass().getAllVehicleType())
             }
-        }
-
-        var thread = Thread {
-
-
 
         }
         thread.start()
@@ -125,6 +121,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+
+        var arr= listOf("one",1,"two",2,10)
+        var filter=
 
         Common.slideUp(gridviewRecycMake_!!)
 
