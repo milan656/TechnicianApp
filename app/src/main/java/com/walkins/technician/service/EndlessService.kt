@@ -238,7 +238,7 @@ class EndlessService : Service() {
 
                         val gson = GsonBuilder().create()
                         var vehicleBrandModel: VehicleBrandModel = gson.fromJson(
-                            response?.body()?.string(),
+                            response.body()?.string(),
                             VehicleBrandModel::class.java
                         )
                         Log.e("getmodel00::", "" + vehicleBrandModel)
@@ -347,8 +347,6 @@ class EndlessService : Service() {
                 var model = vehicleBrandModel.data.get(i)
                 var entity = VehicleMakeModelClass()
 
-//                entity.Id = model.id
-
                 entity.name = if (model.name != null) model.name else ""
                 entity.short_number = if (model.short_number != null) model.short_number else ""
                 entity.concat = if (model.concat != null) model.concat else ""
@@ -359,15 +357,7 @@ class EndlessService : Service() {
                 entity.isSelected = false
                 mDb.daoClass().saveVehicleType(entity)
             }
-
             Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize().size)
-
-//            save Cource Data
-            val courseName: String = "name"
-            val courseDescription: String = "cource Descriptino"
-            val courseDuration: String = "1 mionth"
-            val model = CourseModal(courseName, courseDescription, courseDuration)
-            mDb.dao().insert(model)
         }
 
         thread.start()
