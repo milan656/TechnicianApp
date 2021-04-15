@@ -43,7 +43,7 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginRight="1dp"
                         android:layout_weight="1"
-                        app:cardCornerRadius="@dimen/eight_dp"
+                        app:cardCornerRadius="@dimen/ten_dp"
                         app:cardElevation="@dimen/two_dp"
                         app:cardUseCompatPadding="true">
 
@@ -161,7 +161,7 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginRight="1dp"
                         android:layout_weight="1"
-                        app:cardCornerRadius="@dimen/eight_dp"
+                        app:cardCornerRadius="@dimen/ten_dp"
                         app:cardElevation="@dimen/two_dp"
                         app:cardUseCompatPadding="true">
 
@@ -242,7 +242,7 @@
                         android:layout_height="wrap_content"
 
                         android:visibility="visible"
-                        app:cardCornerRadius="@dimen/eight_dp"
+                        app:cardCornerRadius="@dimen/ten_dp"
                         app:cardElevation="@dimen/two_dp"
                         app:cardUseCompatPadding="true">
 
@@ -638,7 +638,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        app:cardCornerRadius="@dimen/eight_dp"
+                        app:cardCornerRadius="@dimen/ten_dp"
                         app:cardElevation="@dimen/two_dp"
                         app:cardUseCompatPadding="true">
 
@@ -1014,7 +1014,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="@dimen/eight_dp"
+                        app:cardCornerRadius="@dimen/ten_dp"
                         app:cardElevation="@dimen/two_dp"
                         app:cardUseCompatPadding="true">
 
