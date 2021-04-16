@@ -33,7 +33,6 @@
                 android:layout_marginRight="1dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="@dimen/ten_dp"
-                app:cardElevation="@dimen/two_dp"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -132,7 +131,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-
         </LinearLayout>
 
         <LinearLayout
@@ -150,7 +148,6 @@
                 android:layout_marginRight="1dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="@dimen/ten_dp"
-                app:cardElevation="@dimen/two_dp"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout

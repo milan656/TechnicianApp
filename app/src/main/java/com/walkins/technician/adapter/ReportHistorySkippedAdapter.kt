@@ -25,6 +25,7 @@ class ReportHistorySkippedAdapter(
 ) :
     RecyclerView.Adapter<ReportHistorySkippedAdapter.ViewHolder>(),
     StickyHeaderAdapter<ReportHistorySkippedAdapter.HeaderHolder?> {
+
     private val mContext: Context
     private val mInflater: LayoutInflater
     private val mDataset: List<ReportHistoryModel>

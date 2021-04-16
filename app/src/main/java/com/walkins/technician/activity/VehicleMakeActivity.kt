@@ -94,6 +94,24 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 //        )
         Log.e("getsizee121", "" + arrList?.size)
 
+        if (selectedTyre.equals("LF")) {
+            chkRF?.text = "RF"
+            chkLR?.text = "LR"
+            chkRR?.text = "RR"
+        } else if (selectedTyre.equals("RF")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "LR"
+            chkRR?.text = "RR"
+        } else if (selectedTyre.equals("LR")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "RF"
+            chkRR?.text = "RR"
+        } else if (selectedTyre.equals("RR")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "RF"
+            chkRR?.text = "LR"
+        }
+
         adapter = VehicleMakeAdapterNew(this, arrList, this)
         gridviewRecycMake_?.adapter = adapter
         gridviewRecycMake_?.visibility = View.GONE
@@ -122,10 +140,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     override fun onPositionClick(variable: Int, check: Int) {
 
 
-        var arr= listOf("one",1,"two",2,10)
-        var filter=
+        var arr = listOf("one", 1, "two", 2, 10)
+        var filter =
 
-        Common.slideUp(gridviewRecycMake_!!)
+            Common.slideUp(gridviewRecycMake_!!)
 
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
@@ -190,8 +208,6 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
 
-
-
         if (selectedTyre.equals("LF")) {
 
             TyreConfigClass.LFVehicleMake = true
@@ -202,6 +218,72 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         } else if (selectedTyre.equals("RR")) {
             TyreConfigClass.RRVehicleMake = true
         }
+        Log.e("pendingArr87979",""+TyreConfigClass.LFVehicleMake)
+
+        if (selectedTyre.equals("LF")) {
+            chkRF?.text = "RF"
+            chkLR?.text = "LR"
+            chkRR?.text = "RR"
+
+            if (chkRF?.isChecked!!) {
+                TyreConfigClass.RFVehicleMake = true
+            }
+            if (chkLR?.isChecked!!) {
+                TyreConfigClass.LRVehicleMake = true
+            }
+            if (chkRR?.isChecked!!) {
+                TyreConfigClass.RRVehicleMake = true
+            }
+            Log.e("pendingArr8969",""+TyreConfigClass.LFVehicleMake)
+        } else if (selectedTyre.equals("RF")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "LR"
+            chkRR?.text = "RR"
+
+            if (chkRF?.isChecked!!) {
+                TyreConfigClass.LFVehicleMake = true
+            }
+            if (chkLR?.isChecked!!) {
+                TyreConfigClass.LRVehicleMake = true
+            }
+            if (chkRR?.isChecked!!) {
+                TyreConfigClass.RRVehicleMake = true
+            }
+            Log.e("pendingArr67575",""+TyreConfigClass.LFVehicleMake)
+
+        } else if (selectedTyre.equals("LR")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "RF"
+            chkRR?.text = "RR"
+
+            if (chkRF?.isChecked!!) {
+                TyreConfigClass.LFVehicleMake = true
+            }
+            if (chkLR?.isChecked!!) {
+                TyreConfigClass.RFVehicleMake = true
+            }
+            if (chkRR?.isChecked!!) {
+                TyreConfigClass.RRVehicleMake = true
+            }
+            Log.e("pendingArr0",""+TyreConfigClass.LFVehicleMake)
+
+        } else if (selectedTyre.equals("RR")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "RF"
+            chkRR?.text = "LR"
+
+            if (chkRF?.isChecked!!) {
+                TyreConfigClass.LFVehicleMake = true
+            }
+            if (chkLR?.isChecked!!) {
+                TyreConfigClass.RFVehicleMake = true
+            }
+            if (chkRR?.isChecked!!) {
+                TyreConfigClass.LRVehicleMake = true
+            }
+            Log.e("pendingArr54654",""+TyreConfigClass.LFVehicleMake)
+        }
+
         Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)
         var intent = Intent(this, VehiclePatternActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)

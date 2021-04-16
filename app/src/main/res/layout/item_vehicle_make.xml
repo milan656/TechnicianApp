@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/unselected"
-        android:layout_margin="@dimen/ten_dp">
+        android:layout_margin="@dimen/six_dp">
 
         <ImageView
             android:id="@+id/ivVehicleImage"

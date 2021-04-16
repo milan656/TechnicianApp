@@ -8,7 +8,7 @@
         android:id="@+id/rl_item_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/ten_dp"
+        android:layout_margin="@dimen/six_dp"
         android:background="@drawable/unselected">
 
         <com.walkins.technician.custom.NormalTextView

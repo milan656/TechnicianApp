@@ -371,15 +371,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             //.defaultDate(defaultDate)
             // .minDateRange(minDate)
             // .maxDateRange(maxDate)
-            /*.displayListener(object : SingleDateAndTimePickerDialog.DisplayListener {
-                fun onDisplayed(picker: SingleDateAndTimePicker?) {
-                    TODO("Not yet implemented")
-                }
 
-                fun onClosed(picker: SingleDateAndTimePicker?) {
-                    TODO("Not yet implemented")
-                }
-            })*/
             .title("Simple")
             .listener(object : SingleDateAndTimePickerDialog.Listener {
                 override fun onDateSelected(date: Date?, str: String) {

@@ -145,18 +145,18 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
         btnDone?.setOnClickListener(this)
 
-        if (!TyreConfigClass.nitrogenRefillChecked) {
+        if (TyreConfigClass.nitrogenRefillChecked || TyreConfigClass.nitrogenTopupChecked
+        ) {
+            psiOutFrame?.visibility = View.VISIBLE
+            psiInFrame?.visibility = View.VISIBLE
+        } else {
+            psiOutFrame?.visibility = View.GONE
+            psiInFrame?.visibility = View.GONE
+        }
+        if (!TyreConfigClass.nitrogenWheelBalancingChecked) {
             weightFrame?.visibility = View.GONE
         } else {
             weightFrame?.visibility = View.VISIBLE
-        }
-
-        if (!TyreConfigClass.nitrogenRefillChecked && !TyreConfigClass.nitrogenTopupChecked &&
-            !TyreConfigClass.nitrogenTyreRotationChecked && TyreConfigClass.nitrogenWheelBalancingChecked
-        ) {
-            weightFrame?.visibility = View.VISIBLE
-            psiOutFrame?.visibility = View.GONE
-            psiInFrame?.visibility = View.GONE
         }
 
         ivOkSideWell = findViewById(R.id.ivOkSideWell)
@@ -249,7 +249,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-        if (check==10){
+        if (check == 10) {
             if (Common.commonPhotoChooseArr?.get(variable)?.equals("Gallery")) {
                 val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     checkPermissions(this)
@@ -382,6 +382,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 onBackPressed()
             }
             R.id.btnDone -> {
+                Log.e("getslectedtyre", "" + selectedTyre)
                 if (selectedTyre.equals("LF")) {
 
                     TyreConfigClass.LFVehicleVisualDetail = true

@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/six_dp"
     app:cardCornerRadius="@dimen/ten_dp"
-    app:cardElevation="@dimen/four_dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -125,13 +124,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/eight_dp"
-                    android:layout_marginLeft="@dimen/eight_dp"
                     android:alpha="0.6"
                     android:gravity="center"
                     android:text="40"
+                    android:layout_marginStart="-5dp"
                     android:textColor="@color/text_color1"
-                    android:textSize="@dimen/fourteen_sp" />
+                    android:textSize="@dimen/fourteen_sp"
+                    android:layout_marginLeft="-5dp" />
             </LinearLayout>
 
         </LinearLayout>

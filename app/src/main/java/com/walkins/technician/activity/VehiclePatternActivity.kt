@@ -104,7 +104,23 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         adapter = VehiclePatternAdapter(this, arrList, this)
         gridviewRecycModel?.adapter = adapter
 
-//        getVehicleMake()
+        if (selectedTyre.equals("LF")) {
+            chkRF?.text = "RF"
+            chkLR?.text = "LR"
+            chkRR?.text = "RR"
+        } else if (selectedTyre.equals("RF")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "LR"
+            chkRR?.text = "RR"
+        } else if (selectedTyre.equals("LR")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "RF"
+            chkRR?.text = "RR"
+        } else if (selectedTyre.equals("RR")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "RF"
+            chkRR?.text = "LR"
+        }
 
         var thread = Thread {
 
@@ -193,6 +209,68 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             TyreConfigClass.RFVehiclePattern = true
         } else if (selectedTyre.equals("RR")) {
             TyreConfigClass.RRVehiclePattern = true
+        }
+
+
+        if (selectedTyre.equals("LF")) {
+            chkRF?.text = "RF"
+            chkLR?.text = "LR"
+            chkRR?.text = "RR"
+
+            if (chkRF?.isChecked!!) {
+                TyreConfigClass.RFVehiclePattern = true
+            }
+            if (chkLR?.isChecked!!) {
+                TyreConfigClass.LRVehiclePattern = true
+            }
+            if (chkRR?.isChecked!!) {
+                TyreConfigClass.RRVehiclePattern = true
+            }
+        } else if (selectedTyre.equals("RF")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "LR"
+            chkRR?.text = "RR"
+
+            if (chkRF?.isChecked!!) {
+                TyreConfigClass.LFVehiclePattern = true
+            }
+            if (chkLR?.isChecked!!) {
+                TyreConfigClass.LRVehiclePattern = true
+            }
+            if (chkRR?.isChecked!!) {
+                TyreConfigClass.RRVehiclePattern = true
+            }
+
+        } else if (selectedTyre.equals("LR")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "RF"
+            chkRR?.text = "RR"
+
+            if (chkRF?.isChecked!!) {
+                TyreConfigClass.LFVehiclePattern = true
+            }
+            if (chkLR?.isChecked!!) {
+                TyreConfigClass.RFVehiclePattern = true
+            }
+            if (chkRR?.isChecked!!) {
+                TyreConfigClass.RRVehiclePattern = true
+            }
+
+        } else if (selectedTyre.equals("RR")) {
+            chkRF?.text = "LF"
+            chkLR?.text = "RF"
+            chkRR?.text = "LR"
+
+            if (chkRF?.isChecked!!) {
+                TyreConfigClass.LFVehiclePattern = true
+            }
+            if (chkLR?.isChecked!!) {
+                TyreConfigClass.RFVehiclePattern = true
+            }
+            if (chkRR?.isChecked!!) {
+                TyreConfigClass.LRVehiclePattern = true
+            }
+
         }
         Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
         var intent = Intent(this, VehicleSizeActivity::class.java)
