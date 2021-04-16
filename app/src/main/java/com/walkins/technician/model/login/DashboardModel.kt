@@ -5,6 +5,8 @@ data class DashboardModel(
     var upcomingCount: Int,
     var completedCount: Int,
     var skippedCount: Int,
-    var carCount: Int
+    var carCount: Int,
+    var createdAt: Long = 0,
+    val updatedAt: Long = 0
 
 )

@@ -92,15 +92,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //
 //        fillRecyclerView()
         for (i in 0..5) {
-            val dashboardModel = DashboardModel()
-            dashboardModel.business = "business"
-            dashboardModel.updatedAt = System.currentTimeMillis()
-            dashboardModel.phoneNumber = "phone"
-            dashboardModel.name = "name"
 
             when (i) {
                 0, 1 -> {
-                    dashboardModel.createdAt = System.currentTimeMillis()
+                    var dashboardModel = DashboardModel("Titanium City Center,Anandnagar",
+                        34,30,4,40,System.currentTimeMillis(),
+                    System.currentTimeMillis())
+
                 }
                 2, 3, 4, 5 -> {
                     val dateString = "30/09/2021"
