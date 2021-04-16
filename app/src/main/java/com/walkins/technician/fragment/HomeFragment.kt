@@ -67,7 +67,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     private var stickyIdsCounter = 0
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
