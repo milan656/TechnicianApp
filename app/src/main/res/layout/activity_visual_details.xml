@@ -113,7 +113,6 @@
                                 android:textColor="@color/text_color1"
                                 android:textSize="@dimen/fourteen_sp" />
 
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -130,7 +129,6 @@
                                 android:text="lf tyre service"
                                 android:textAllCaps="true"
                                 android:textColor="@color/text_color1"
-
                                 android:textSize="@dimen/fourteen_sp" />
 
                             <FrameLayout
