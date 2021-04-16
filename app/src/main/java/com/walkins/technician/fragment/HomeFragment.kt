@@ -9,13 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.trading212.demo.item.SimpleStickyTextRecyclerItem
 import com.trading212.diverserecycleradapter.DiverseRecyclerAdapter
-import com.trading212.stickyheader.StickyHeaderDecoration
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.activity.ServiceListActivity
@@ -42,7 +43,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var selectedDate: String? = null
 
     var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()
-    var historyDataList: ArrayList<LeadHistoryData> = java.util.ArrayList<LeadHistoryData>()
+    var historyDataList: ArrayList<LeadHistoryData> = ArrayList<LeadHistoryData>()
 
     var simpleDateFormat: SimpleDateFormat? = null
     var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
@@ -65,7 +66,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
     }
 
-    private lateinit var stickyHeaderDecoration: StickyHeaderDecoration
 
     private var stickyIdsCounter = 0
     private var mAdapter: LeadHistoryAdapter? = null
@@ -92,24 +92,41 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //
 //        fillRecyclerView()
         for (i in 0..5) {
-            val leadHistoryData: LeadHistoryData = LeadHistoryData()
-            leadHistoryData.business = "business"
-            leadHistoryData.updatedAt = System.currentTimeMillis()
-            leadHistoryData.phoneNumber = "phone"
-            leadHistoryData.name = "name"
-            leadHistoryData.createdAt = System.currentTimeMillis()
+            val dashboardModel = DashboardModel()
+            dashboardModel.business = "business"
+            dashboardModel.updatedAt = System.currentTimeMillis()
+            dashboardModel.phoneNumber = "phone"
+            dashboardModel.name = "name"
+
+            when (i) {
+                0, 1 -> {
+                    dashboardModel.createdAt = System.currentTimeMillis()
+                }
+                2, 3, 4, 5 -> {
+                    val dateString = "30/09/2021"
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val date = sdf.parse(dateString)
+
+                    val startDate = date.time
+                    leadHistoryData.createdAt = startDate
+                }
+            }
             leadHistoryData.id = "id"
 
 
             historyDataList.add(leadHistoryData)
         }
 
+//        homeRecycView?.setHasFixedSize(true)
         mAdapter = context?.let { LeadHistoryAdapter(it, historyDataList) }
-        val decor = StickyHeaderDecoration()
-        homeRecycView?.setHasFixedSize(true)
-        homeRecycView?.setAdapter(mAdapter)
+        var decor = StickyHeaderDecoration(mAdapter)
 
+        // use a linear layout manager
+        val layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+        homeRecycView?.setLayoutManager(layoutManager)
+        homeRecycView?.setAdapter(mAdapter)
         homeRecycView?.addItemDecoration(decor)
+
         return view
 
     }
@@ -157,9 +174,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         adapter.addItems(gamesRecyclerItems, false)
 
 
-
-        stickyHeaderDecoration = StickyHeaderDecoration()
-        homeRecycView?.addItemDecoration(stickyHeaderDecoration)
+//        stickyHeaderDecoration = StickyHeaderDecoration(mAdapter)
+//        homeRecycView?.addItemDecoration(stickyHeaderDecoration)
 
         homeRecycView?.adapter = adapter
 

@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.walkins.technician.adapter.LeadHistoryAdapter
 import java.util.*
 
 /**
@@ -19,7 +20,7 @@ import java.util.*
  *
  * Although not necessary usage of DiverseRecyclerAdapter simplifies the creation of sticky headers.
  */
-class StickyHeaderDecoration : RecyclerView.ItemDecoration() {
+class StickyHeaderDecoration(mAdapter: LeadHistoryAdapter?) : RecyclerView.ItemDecoration() {
 
     private val stickyHeadersMap: MutableMap<Any, RecyclerView.ViewHolder?> = linkedMapOf()
 
