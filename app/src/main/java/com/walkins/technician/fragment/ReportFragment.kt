@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -21,13 +22,14 @@ import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
 import com.walkins.technician.activity.ReportFilterActivity
 import com.walkins.technician.activity.SkippedServiceDetailActivity
-import com.walkins.technician.adapter.AutoSuggestProductAdapter
-import com.walkins.technician.adapter.ReportAdpater
-import com.walkins.technician.adapter.ReportSkippAdpater
+import com.walkins.technician.adapter.*
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.model.login.DashboardModel
+import com.walkins.technician.model.login.ReportHistoryModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeData
 import com.walkins.technician.model.login.makemodel.VehicleModelData
 import com.walkins.technician.viewmodel.MakeModelViewModel
+import java.text.SimpleDateFormat
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -42,6 +44,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private val listClicked = ArrayList<String>()
     private val listClickedModel = ArrayList<String>()
     private var adapter: AutoSuggestProductAdapter? = null
+
+    var historyDataList: ArrayList<ReportHistoryModel> = ArrayList<ReportHistoryModel>()
 
     private lateinit var prefManager: PrefManager
     private lateinit var makeModelViewModel: MakeModelViewModel
@@ -85,8 +89,6 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         tvSkipped = view?.findViewById(R.id.tvSkipped)
         tvCompleted = view?.findViewById(R.id.tvCompleted)
 
-
-
         reportRecycView = view?.findViewById(R.id.reportRecycView)
         tvTitle = view?.findViewById(R.id.tvTitle)
         ivBack = view?.findViewById(R.id.ivBack)
@@ -101,12 +103,54 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         ivBack?.visibility = View.GONE
 
-        setadapter(skipSelected)
+//        setadapter(skipSelected)
+
+        for (i in 0..5) {
+
+            var dashboardModel: ReportHistoryModel? = null
+            when (i) {
+                0, 1 -> {
+                    dashboardModel = ReportHistoryModel(
+                        "Titanium City Center,Anandnagar",
+                        24, 20, 21, 45, System.currentTimeMillis(),
+                        System.currentTimeMillis()
+                    )
+
+                }
+                2, 3, 4, 5 -> {
+                    val dateString = "30/09/2021"
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val date = sdf.parse(dateString)
+
+                    val startDate = date.time
+                    dashboardModel = ReportHistoryModel(
+                        "Prahladnagar garden",
+                        34, 30, 4, 40, startDate,
+                        startDate
+                    )
+                }
+            }
+
+            historyDataList.add(dashboardModel!!)
+        }
+
+//        homeRecycView?.setHasFixedSize(true)
+        var mAdapter = context?.let { ReportHistoryAdapter(it, historyDataList, this) }
+        var decor = StickyHeaderDecoration(mAdapter)
+
+        // use a linear layout manager
+        val layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+        reportRecycView?.setLayoutManager(layoutManager)
+        reportRecycView?.setAdapter(mAdapter)
+        reportRecycView?.addItemDecoration(decor)
+        mAdapter?.onclick = this
+
+
     }
 
     private fun setadapter(skipSelected: Boolean) {
         if (!skipSelected) {
-            val arrayAdapter = context?.let { ReportAdpater(Common.commonPhotoChooseArr, it, this) }
+            val arrayAdapter = context?.let { ReportHistoryAdapter(it,historyDataList, this) }
             reportRecycView?.layoutManager = LinearLayoutManager(
                 context,
                 RecyclerView.VERTICAL,
@@ -122,7 +166,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             arrayAdapter?.onclick = this
         } else {
             val arrayAdapter =
-                context?.let { ReportSkippAdpater(Common.commonPhotoChooseArr, it, this) }
+                context?.let { ReportHistorySkippedAdapter(it,historyDataList, this) }
             reportRecycView?.layoutManager = LinearLayoutManager(
                 context,
                 RecyclerView.VERTICAL,

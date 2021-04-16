@@ -8,9 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/six_dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
+        android:layout_marginTop="@dimen/two_dp"
         android:layout_weight="1"
         app:cardCornerRadius="@dimen/ten_dp"
         app:cardElevation="@dimen/four_dp"
@@ -20,18 +18,13 @@
             android:id="@+id/lllineView"
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/red" />
+            android:background="@color/red"
+            android:orientation="vertical" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/sixteen_dp"
-            android:layout_marginLeft="@dimen/sixteen_dp"
-            android:layout_marginTop="@dimen/fourteen_dp"
-            android:layout_marginEnd="@dimen/fourteen_dp"
-            android:layout_marginRight="@dimen/fourteen_dp"
-            android:layout_marginBottom="@dimen/fourteen_dp"
+            android:layout_margin="@dimen/fourteen_dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -51,16 +44,15 @@
                     android:gravity="start|center|bottom"
                     android:text="GJ01RY3771"
                     android:textColor="@color/text_color1"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/eighteen_sp" />
+                    android:textSize="@dimen/eighteen_sp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/ivCarimg"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center|bottom"
-                    android:src="@drawable/ic_car_image"
-                    />
+                    android:src="@drawable/ic_car_image" />
             </LinearLayout>
 
             <LinearLayout
@@ -107,9 +99,7 @@
         android:id="@+id/cardAddService"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="@dimen/six_dp"
+        android:layout_marginTop="@dimen/two_dp"
         android:layout_weight="3"
         app:cardCornerRadius="@dimen/ten_dp"
         app:cardElevation="@dimen/four_dp"
@@ -119,8 +109,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_service_icon"
-             />
+            android:src="@mipmap/ic_service_icon" />
 
     </androidx.cardview.widget.CardView>
 

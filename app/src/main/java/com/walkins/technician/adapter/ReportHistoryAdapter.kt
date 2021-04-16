@@ -15,25 +15,26 @@ import com.walkins.technician.common.OnBottomReachedListener
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.DashboardModel
 import com.walkins.technician.model.login.LeadHistoryData
+import com.walkins.technician.model.login.ReportHistoryModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LeadHistoryAdapter(
-    private val mActivity: Context, dataset: List<DashboardModel>,
+class ReportHistoryAdapter(
+    private val mActivity: Context, dataset: List<ReportHistoryModel>,
     onPositionClick: onClickAdapter
 ) :
-    RecyclerView.Adapter<LeadHistoryAdapter.ViewHolder>(),
-    StickyHeaderAdapter<LeadHistoryAdapter.HeaderHolder?> {
+    RecyclerView.Adapter<ReportHistoryAdapter.ViewHolder>(),
+    StickyHeaderAdapter<ReportHistoryAdapter.HeaderHolder?> {
     private val mContext: Context
     private val mInflater: LayoutInflater
-    private val mDataset: List<DashboardModel>
+    private val mDataset: List<ReportHistoryModel>
     private val mDateFormat: SimpleDateFormat
     private val mDateFormatTime: SimpleDateFormat
     private var mToday = ""
     var onclick: onClickAdapter? = null
     private var onBottomReachedListener: OnBottomReachedListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = mInflater.inflate(R.layout.design_home_adapter_item, parent, false)
+        val view: View = mInflater.inflate(R.layout.design_report_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -44,7 +45,7 @@ class LeadHistoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         Log.e("getdatee00", "" + mDataset.get(position))
-        val item: DashboardModel = mDataset[position]
+        val item: ReportHistoryModel = mDataset[position]
 //        if (item.getName().equals("") || item.getName() == null) {
 //            holder.name.visibility = View.GONE
 //        } else {
@@ -60,19 +61,6 @@ class LeadHistoryAdapter(
                 onclick?.onPositionClick(position, 0)
             }
         }
-
-        holder.ivInfo?.setOnClickListener {
-
-            if (onclick != null) {
-                onclick?.onPositionClick(position, 1)
-            }
-        }
-
-        holder.tvCompleted?.text = mDataset.get(position).completedCount.toString()
-        holder.tvUpcoming?.text = mDataset.get(position).upcomingCount.toString()
-        holder.tvSkipped?.text = mDataset.get(position).skippedCount.toString()
-        holder.tvCarCount?.text = mDataset.get(position).carCount.toString()
-        holder.tvaddress?.text = mDataset.get(position).addressTitle
     }
 
     override fun getItemCount(): Int {
@@ -80,7 +68,7 @@ class LeadHistoryAdapter(
     }
 
     override fun getHeaderId(position: Int): Long {
-        val item: DashboardModel = mDataset[position]
+        val item: ReportHistoryModel = mDataset[position]
         var headerId = 0L
         try {
             headerId = mDateFormat.parse(mDateFormat.format(Date(item.createdAt))).time
@@ -99,12 +87,8 @@ class LeadHistoryAdapter(
         mRoot
     ) {
 
-        var ivInfo = mRoot.findViewById<ImageView>(R.id.ivInfo)
-        var tvUpcoming = mRoot.findViewById<TextView>(R.id.tvUpcoming)
-        var tvCompleted = mRoot.findViewById<TextView>(R.id.tvCompleted)
-        var tvSkipped = mRoot.findViewById<TextView>(R.id.tvSkipped)
-        var tvCarCount = mRoot.findViewById<TextView>(R.id.tvCarCount)
-        var tvaddress = mRoot.findViewById<TextView>(R.id.tvaddress)
+        var tvReportVehicleName: TextView = itemView.findViewById(R.id.tvReportVehicleName)
+        var tvReportVehicleNumber: TextView = itemView.findViewById(R.id.tvReportVehicleNumber)
 
     }
 
@@ -124,7 +108,7 @@ class LeadHistoryAdapter(
     }
 
     override fun onBindHeaderViewHolder(p0: HeaderHolder?, p1: Int) {
-        val item: DashboardModel = mDataset[p1]
+        val item: ReportHistoryModel = mDataset[p1]
 
         p0?.timestamp?.text = mDateFormat.format(Date(item.createdAt)).toString()
         if (mToday == p0?.timestamp?.text) {

@@ -157,7 +157,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/fourteen_dp"
+                        android:layout_marginTop="@dimen/twelve_dp"
                         android:layout_marginEnd="1dp"
                         android:layout_marginRight="1dp"
                         android:layout_weight="1"
@@ -233,7 +233,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/eighteen_dp"
-                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:layout_marginTop="@dimen/twelve_dp"
                     android:layout_marginEnd="@dimen/eighteen_dp"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/eight_dp"
@@ -798,7 +798,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/eighteen_dp"
-                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:layout_marginTop="@dimen/twelve_dp"
                     android:layout_marginEnd="@dimen/eighteen_dp"
                     app:cardCornerRadius="@dimen/eight_dp"
                     app:cardElevation="@dimen/two_dp"
@@ -877,7 +877,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/eighteen_dp"
-                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:layout_marginTop="@dimen/twelve_dp"
                     android:layout_marginEnd="@dimen/eighteen_dp"
                     android:layout_marginBottom="@dimen/fourteen_dp"
                     app:cardCornerRadius="@dimen/eight_dp"
@@ -1112,7 +1112,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <com.walkins.technician.custom.NormalTextView
+        <com.walkins.technician.custom.BoldTextView
             android:id="@+id/tvSkipService"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

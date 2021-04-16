@@ -87,18 +87,16 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         homeRecycView = view.findViewById(R.id.recyclerView)
 
-
-//        homeRecycView?.layoutManager = context?.let { DiverseLinearLayoutManager(it) }
-//
-//        fillRecyclerView()
         for (i in 0..5) {
 
-            var dashboardModel:DashboardModel?=null
+            var dashboardModel: DashboardModel? = null
             when (i) {
                 0, 1 -> {
-                    dashboardModel = DashboardModel("Titanium City Center,Anandnagar",
-                        34,30,4,40,System.currentTimeMillis(),
-                    System.currentTimeMillis())
+                    dashboardModel = DashboardModel(
+                        "Titanium City Center,Anandnagar",
+                        24, 20, 21, 45, System.currentTimeMillis(),
+                        System.currentTimeMillis()
+                    )
 
                 }
                 2, 3, 4, 5 -> {
@@ -107,9 +105,11 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     val date = sdf.parse(dateString)
 
                     val startDate = date.time
-                    dashboardModel = DashboardModel("Titanium City Center,Anandnagar",
-                        34,30,4,40,startDate,
-                        startDate)
+                    dashboardModel = DashboardModel(
+                        "Prahladnagar garden",
+                        34, 30, 4, 40, startDate,
+                        startDate
+                    )
                 }
             }
 
@@ -117,7 +117,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
 
 //        homeRecycView?.setHasFixedSize(true)
-        mAdapter = context?.let { LeadHistoryAdapter(it, historyDataList) }
+        mAdapter = context?.let { LeadHistoryAdapter(it, historyDataList, this) }
         var decor = StickyHeaderDecoration(mAdapter)
 
         // use a linear layout manager
@@ -125,6 +125,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         homeRecycView?.setLayoutManager(layoutManager)
         homeRecycView?.setAdapter(mAdapter)
         homeRecycView?.addItemDecoration(decor)
+        mAdapter?.onclick = this
 
         return view
 

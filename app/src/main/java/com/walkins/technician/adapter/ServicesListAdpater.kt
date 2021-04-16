@@ -42,8 +42,6 @@ class ServicesListAdpater(
 
     override fun onBindViewHolder(holder: ServicesListAdpater.Viewholder, position: Int) {
 
-//        holder.tvContent.text = array.get(position).capitalize()
-
         holder.itemView.setOnClickListener {
 
             if (onclick != null) {
@@ -51,7 +49,7 @@ class ServicesListAdpater(
             }
         }
 
-        holder.cardAddService?.setOnClickListener {
+        holder.cardAddService.setOnClickListener {
             if (onclick != null) {
                 onclick?.onPositionClick(position, 1)
             }
