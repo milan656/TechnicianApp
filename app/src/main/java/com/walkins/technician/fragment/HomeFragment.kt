@@ -43,7 +43,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var selectedDate: String? = null
 
     var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()
-    var historyDataList: ArrayList<LeadHistoryData> = ArrayList<LeadHistoryData>()
+    var historyDataList: ArrayList<DashboardModel> = ArrayList<DashboardModel>()
 
     var simpleDateFormat: SimpleDateFormat? = null
     var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
@@ -93,9 +93,10 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //        fillRecyclerView()
         for (i in 0..5) {
 
+            var dashboardModel:DashboardModel?=null
             when (i) {
                 0, 1 -> {
-                    var dashboardModel = DashboardModel("Titanium City Center,Anandnagar",
+                    dashboardModel = DashboardModel("Titanium City Center,Anandnagar",
                         34,30,4,40,System.currentTimeMillis(),
                     System.currentTimeMillis())
 
@@ -106,13 +107,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     val date = sdf.parse(dateString)
 
                     val startDate = date.time
-                    leadHistoryData.createdAt = startDate
+                    dashboardModel = DashboardModel("Titanium City Center,Anandnagar",
+                        34,30,4,40,startDate,
+                        startDate)
                 }
             }
-            leadHistoryData.id = "id"
 
-
-            historyDataList.add(leadHistoryData)
+            historyDataList.add(dashboardModel!!)
         }
 
 //        homeRecycView?.setHasFixedSize(true)
