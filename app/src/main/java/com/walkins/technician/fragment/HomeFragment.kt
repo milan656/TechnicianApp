@@ -24,7 +24,9 @@ import com.walkins.technician.activity.ServiceListActivity
 import com.walkins.technician.common.item.SimpleTextRecyclerItem
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
+import com.walkins.technician.model.login.DashboardModel
 import com.walkins.technician.model.login.SectionModel
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -40,7 +42,9 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var ivFilter: ImageView? = null
     private var selectedDate: String? = null
 
-    var gamesRecyclerItems = listOf<SimpleTextRecyclerItem>()
+    var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()
+    var second = ArrayList<SimpleTextRecyclerItem>()
+    var third = ArrayList<SimpleTextRecyclerItem>()
 
     var simpleDateFormat: SimpleDateFormat? = null
     var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
@@ -94,45 +98,24 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     fun fillRecyclerView() {
         val adapter = DiverseRecyclerAdapter()
-        gamesRecyclerItems = generateGamesList().map { SimpleTextRecyclerItem(it, this) }
-        for (i in 1..3) {
+//        gamesRecyclerItems = generateGamesList().map { SimpleTextRecyclerItem(it, this) }
+        var model = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
+        gamesRecyclerItems.add(SimpleTextRecyclerItem("", model, this))
 
-            if (i == 1) {
-                adapter.addItem(
-                    SimpleStickyTextRecyclerItem(
-                        SimpleStickyTextRecyclerItem.StickyData(
-                            "Today",
-                            ++stickyIdsCounter
-                        )
-                    ), false
-                )
-                adapter.addItems(gamesRecyclerItems, false)
+        var modelSecond = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
+        second.add(SimpleTextRecyclerItem("", modelSecond, this))
 
-            } else if (i == 2) {
-                adapter.addItem(
-                    SimpleStickyTextRecyclerItem(
-                        SimpleStickyTextRecyclerItem.StickyData(
-                            "29 April",
-                            ++stickyIdsCounter
-                        )
-                    ), false
-                )
-                adapter.addItems(gamesRecyclerItems, false)
+        var modelThird = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
+        third.add(SimpleTextRecyclerItem("", modelThird, this))
 
-            } else if (i == 3) {
-                adapter.addItem(
-                    SimpleStickyTextRecyclerItem(
-                        SimpleStickyTextRecyclerItem.StickyData(
-                            "15 May",
-                            ++stickyIdsCounter
-                        )
-                    ), false
-                )
-                adapter.addItems(gamesRecyclerItems, false)
+        adapter.addItem(SimpleStickyTextRecyclerItem(SimpleStickyTextRecyclerItem.StickyData("Today", ++stickyIdsCounter)), false)
+        adapter.addItems(gamesRecyclerItems, false)
 
-            }
-        }
+        adapter.addItem(SimpleStickyTextRecyclerItem(SimpleStickyTextRecyclerItem.StickyData("29 April", ++stickyIdsCounter)), false)
+        adapter.addItems(second, false)
 
+        adapter.addItem(SimpleStickyTextRecyclerItem(SimpleStickyTextRecyclerItem.StickyData("15 May", ++stickyIdsCounter)), false)
+        adapter.addItems(third, false)
 
 
         stickyHeaderDecoration = StickyHeaderDecoration()
@@ -143,24 +126,24 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         adapter.onItemActionListener = object : DiverseRecyclerAdapter.OnItemActionListener() {
             override fun onItemClicked(v: View, position: Int) {
 
-                adapter.insertItem(
-                    0,
-                    SimpleStickyTextRecyclerItem(
-                        SimpleStickyTextRecyclerItem.StickyData(
-                            "Item${System.currentTimeMillis()}",
-                            ++stickyIdsCounter
-                        )
+                try {
+                    Log.e(
+                        "getclick",
+                        "" + adapter.getItem(position)
                     )
-                )
-                adapter.insertItem(
-                    0,
-                    SimpleTextRecyclerItem("Item${System.currentTimeMillis()}", this@HomeFragment)
-                )
+                    Log.e(
+                        "getclick",
+                        "" + adapter.getSelectedItems().get(position)
+                    )
+//                    Log.e("getclick", "" + gamesRecyclerItems.get(position).type)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e("getclick", "" + e.cause + " " + e.message)
+                }
             }
 
             override fun onItemLongClicked(v: View, position: Int): Boolean {
-
-                adapter.removeItem(1)
 
                 return super.onItemLongClicked(v, position)
             }
@@ -175,6 +158,15 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         "Titanium City Center,Anandnagar",
         "Titanium City Center,Anandnagar"
     )
+
+    fun generateList(): ArrayList<DashboardModel> {
+
+        var list = ArrayList<DashboardModel>()
+
+
+//        list.add(model)
+        return list
+    }
 
     fun generateProgrammingLanguagesList() = listOf(
         "Titanium City Center,Anandnagar",
@@ -275,8 +267,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             )
 
         } else if (check == 0) {
-
-            Log.e("getsection", "" + sectionModelArrayList?.get(variable)?.sectionLabel)
 
             var intent = Intent(context, ServiceListActivity::class.java)
             startActivity(intent)

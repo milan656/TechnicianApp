@@ -45,6 +45,7 @@
                     android:orientation="vertical">
 
                     <com.walkins.technician.custom.BoldTextView
+                        android:id="@+id/tvUpcoming"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="34"
@@ -66,6 +67,7 @@
                     android:orientation="vertical">
 
                     <com.walkins.technician.custom.NormalTextView
+                        android:id="@+id/tvCompleted"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="2"
@@ -87,6 +89,7 @@
                     android:orientation="vertical">
 
                     <com.walkins.technician.custom.NormalTextView
+                        android:id="@+id/tvSkipped"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="4"
@@ -118,6 +121,7 @@
                     android:src="@mipmap/ic_small_car" />
 
                 <com.walkins.technician.custom.NormalTextView
+                    android:id="@+id/tvCarCount"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
