@@ -649,6 +649,46 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         btnSend.setOnClickListener {
             dialog?.dismiss()
 
+            Log.e("pendingarr", "" + pendingArr?.get(0))
+            var intent: Intent? = null
+            if (pendingArr?.get(0).equals("Tyre Make")) {
+                intent = Intent(this, VehicleMakeActivity::class.java)
+            } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
+                intent = Intent(this, VehiclePatternActivity::class.java)
+            } else if (pendingArr?.get(0).equals("Tyre Size")) {
+                intent = Intent(this, VehicleSizeActivity::class.java)
+            } else if (pendingArr?.get(0).equals("Visual Detail")) {
+                intent = Intent(this, VisualDetailsActivity::class.java)
+            }
+
+            if (TyreConfigClass.pendingTyre.equals("LF")) {
+
+                intent?.putExtra("selectedTyre", "LF")
+                intent?.putExtra("title", "Select Tyre Make - LF")
+                TyreConfigClass.selectedTyreConfigType = "LFpending"
+                TyreConfigClass.clickedTyre = "LF"
+
+            } else if (TyreConfigClass.pendingTyre.equals("LR")) {
+                intent?.putExtra("selectedTyre", "LR")
+                intent?.putExtra("title", "Select Tyre Make - LR")
+                TyreConfigClass.selectedTyreConfigType = "LRpending"
+                TyreConfigClass.clickedTyre = "LR"
+            } else if (TyreConfigClass.pendingTyre.equals("RF")) {
+                intent?.putExtra("selectedTyre", "RF")
+                intent?.putExtra("title", "Select Tyre Make - RF")
+                TyreConfigClass.selectedTyreConfigType = "RFpending"
+                TyreConfigClass.clickedTyre = "RF"
+            } else if (TyreConfigClass.pendingTyre.equals("RR")) {
+                intent?.putExtra("selectedTyre", "RR")
+                intent?.putExtra("title", "Select Tyre Make - RR")
+                TyreConfigClass.selectedTyreConfigType = "RRpending"
+                TyreConfigClass.clickedTyre = "RR"
+            }
+
+            if (dialog != null && dialog?.isShowing!!) {
+                dialog?.dismiss()
+            }
+            startActivityForResult(intent, 1000)
             /*if (selectedPending?.equals("pattern")) {
 //                selectedPending="pattern"
                 val intent = Intent(this, VehiclePatternActivity::class.java)
@@ -770,46 +810,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         } else if (check == 11) {
 
-            Log.e("pendingarr", "" + pendingArr?.get(variable))
-            var intent: Intent? = null
-            if (pendingArr?.get(variable).equals("Tyre Make")) {
-                intent = Intent(this, VehicleMakeActivity::class.java)
-            } else if (pendingArr?.get(variable).equals("Tyre Pattern")) {
-                intent = Intent(this, VehiclePatternActivity::class.java)
-            } else if (pendingArr?.get(variable).equals("Tyre Size")) {
-                intent = Intent(this, VehicleSizeActivity::class.java)
-            } else if (pendingArr?.get(variable).equals("Visual Detail")) {
-                intent = Intent(this, VisualDetailsActivity::class.java)
-            }
 
-            if (TyreConfigClass.pendingTyre.equals("LF")) {
-
-                intent?.putExtra("selectedTyre", "LF")
-                intent?.putExtra("title", "Select Tyre Make - LF")
-                TyreConfigClass.selectedTyreConfigType = "LFpending"
-                TyreConfigClass.clickedTyre = "LF"
-
-            } else if (TyreConfigClass.pendingTyre.equals("LR")) {
-                intent?.putExtra("selectedTyre", "LR")
-                intent?.putExtra("title", "Select Tyre Make - LR")
-                TyreConfigClass.selectedTyreConfigType = "LRpending"
-                TyreConfigClass.clickedTyre = "LR"
-            } else if (TyreConfigClass.pendingTyre.equals("RF")) {
-                intent?.putExtra("selectedTyre", "RF")
-                intent?.putExtra("title", "Select Tyre Make - RF")
-                TyreConfigClass.selectedTyreConfigType = "RFpending"
-                TyreConfigClass.clickedTyre = "RF"
-            } else if (TyreConfigClass.pendingTyre.equals("RR")) {
-                intent?.putExtra("selectedTyre", "RR")
-                intent?.putExtra("title", "Select Tyre Make - RR")
-                TyreConfigClass.selectedTyreConfigType = "RRpending"
-                TyreConfigClass.clickedTyre = "RR"
-            }
-
-            if (dialog != null && dialog?.isShowing!!) {
-                dialog?.dismiss()
-            }
-            startActivityForResult(intent, 1000)
         }
 
 
@@ -1109,6 +1110,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         ivtyreLeftFront?.visibility = View.VISIBLE
                         ivInfoImgLF?.visibility = View.GONE
                         TyreConfigClass.LFCompleted = true
+
+                        try {
+                            Glide.with(this)
+                                .load(TyreConfigClass.selectedMakeURL)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.placeholder)
+                                .into(ivTyreRightFront!!)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                        Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
                     } else {
                         ivInfoImgLF?.visibility = View.VISIBLE
 
@@ -1141,6 +1153,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         ivtyreLeftRear?.visibility = View.VISIBLE
                         ivInfoImgLR?.visibility = View.GONE
                         TyreConfigClass.LRCompleted = true
+
+                        try {
+                            Glide.with(this)
+                                .load(TyreConfigClass.selectedMakeURL)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.placeholder)
+                                .into(ivTyreRightFront!!)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                        Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
                     } else {
                         ivInfoImgLR?.visibility = View.VISIBLE
 
@@ -1153,6 +1176,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         ivTyreRightRear?.visibility = View.VISIBLE
                         ivInfoImgRR?.visibility = View.GONE
                         TyreConfigClass.RRCompleted = true
+
+                        try {
+                            Glide.with(this)
+                                .load(TyreConfigClass.selectedMakeURL)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.placeholder)
+                                .into(ivTyreRightFront!!)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                        Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
                     } else {
                         ivInfoImgRR?.visibility = View.VISIBLE
 

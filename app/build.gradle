@@ -147,5 +147,6 @@ dependencies {
     implementation 'io.apptik.widget:multislider:1.3'
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'
     implementation 'com.brucetoo.pickview:library:1.2.3'
+    implementation 'com.trading212:diverse-recycler-adapter:0.9.11'
 
 }

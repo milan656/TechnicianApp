@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.walkins.technician.custom.BoldTextView
+    android:id="@+id/textView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start|center"
+    android:padding="@dimen/six_dp"
+    android:textStyle="bold"
+    android:textColor="@color/text_color1"
+    android:textSize="@dimen/sixteen_sp"/>

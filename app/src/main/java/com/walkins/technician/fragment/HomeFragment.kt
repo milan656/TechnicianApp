@@ -9,21 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ramotion.fluidslider.FluidSlider
+import com.trading212.demo.item.SimpleStickyTextRecyclerItem
+import com.trading212.diverserecycleradapter.DiverseRecyclerAdapter
+import com.trading212.diverserecycleradapter.layoutmanager.DiverseLinearLayoutManager
+import com.trading212.stickyheader.StickyHeaderDecoration
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.activity.ServiceListActivity
-import com.walkins.technician.adapter.*
-import com.walkins.technician.common.RecyclerViewType
+import com.walkins.technician.common.item.SimpleTextRecyclerItem
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.technician.model.login.SectionModel
-import com.walkins.technician.model.login.date.DateModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,38 +40,17 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var ivFilter: ImageView? = null
     private var selectedDate: String? = null
 
-    private var selectedYear = 0
-    private var selectedMonth = 0
-    private var selectedDay = 0
-
-    var arrayDate: ArrayList<DateModel>? = ArrayList()
-    var arrayDateMonth: ArrayList<DateModel>? = ArrayList()
-    var arrayDateYear: ArrayList<DateModel>? = ArrayList()
-
-    private var recyclerViewDay: RecyclerView? = null
-    private var recyclerViewMonth: RecyclerView? = null
-    private var recyclerViewYear: RecyclerView? = null
-
-    private var adapterDay: DialogueDateAdpater? = null
-    private var adapterMonth: DialogueDateAdpaterMonth? = null
-    private var adapterYear: DialogueDateAdpaterYear? = null
+    var gamesRecyclerItems = listOf<SimpleTextRecyclerItem>()
 
     var simpleDateFormat: SimpleDateFormat? = null
-    var simpleTimeFormat: SimpleDateFormat? = null
-    var simpleDateOnlyFormat: SimpleDateFormat? = null
-    var simpleDateLocaleFormat: SimpleDateFormat? = null
     var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
     var sectionModelArrayList: ArrayList<SectionModel> = ArrayList()
 
     private var arrayList = arrayListOf("Gallery", "Camera")
 
-    private var vehicleMakeList = arrayListOf("")
-    private var dummyvaluestart: String? = "0"
-    private var dummyvalueend: String? = "100"
 
     private var tvUsername: TextView? = null
     private var homeRecycView: RecyclerView? = null
-    private var adapter: HomeListAdpater? = null
     private var relmainContent: RelativeLayout? = null
 
     var currentYear: Int = 0
@@ -88,6 +68,11 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
     }
 
+    private lateinit var stickyHeaderDecoration: StickyHeaderDecoration
+
+    private var stickyIdsCounter = 0
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -104,36 +89,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         Log.e("getvalues", "" + currentYear + " " + currentMonth + " " + currentDate)
 
 
-//        val multiSlider1 = view.findViewById<MultiSlider>(R.id.multiSlider1)
-//        val starting_point = view.findViewById<TextView>(R.id.starting_point)
-//        val last_end = view.findViewById<TextView>(R.id.last_end)
-//        multiSlider1?.min = dummyvaluestart?.toInt()!!
-//        multiSlider1?.max = dummyvalueend?.toInt()!!
-//
-//        multiSlider1.setNumberOfThumbs(2)
-//        multiSlider1.setOnThumbValueChangeListener(object : MultiSlider.SimpleChangeListener() {
-//            override fun onValueChanged(
-//                multiSlider: MultiSlider,
-//                thumb: MultiSlider.Thumb,
-//                thumbIndex: Int,
-//                value: Int
-//            ) {
-//                if (thumbIndex == 0) {
-//                    starting_point!!.text = value.toString()
-//                    dummyvaluestart = "" + value
-//                } else {
-//
-//                    dummyvalueend = "" + value
-//
-//                    if (value == 100) {
-//                        last_end!!.text = "100"
-//                    } else {
-//                        last_end!!.text = value.toString()
-//                    }
-//                }
-//            }
-//        })
-//
         // Kotlin
         val max = 45
         val min = 10
@@ -157,64 +112,113 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         tvUsername?.text = "Hello, " + "Arun"
         ivFilter?.setOnClickListener(this)
 
-//        homeRecycView = view.findViewById(R.id.homeRecycView)
 //
-//        homeRecycView?.layoutManager = LinearLayoutManager(
-//            context,
-//            RecyclerView.VERTICAL,
-//            false
-//        )
-//        adapter = context?.let { HomeListAdpater(arrayList, it, this) }
-//        homeRecycView?.adapter = adapter
-//        adapter?.onclick = this
+        homeRecycView = view.findViewById(R.id.recyclerView)
 
-        homeRecycView = view.findViewById(R.id.sectioned_recycler_view)
+        homeRecycView?.layoutManager = context?.let { DiverseLinearLayoutManager(it) }
 
-        homeRecycView?.setHasFixedSize(true)
-        homeRecycView?.layoutManager = LinearLayoutManager(
-            context,
-            RecyclerView.VERTICAL,
-            false
-        )
-
-
-        populateRecyclerView()
-// Java
-
+        fillRecyclerView()
 
         return view
 
     }
 
-    private fun populateRecyclerView() {
+    fun fillRecyclerView() {
+        val adapter = DiverseRecyclerAdapter()
+        gamesRecyclerItems = generateGamesList().map { SimpleTextRecyclerItem(it, this) }
+        for (i in 1..3) {
 
-        //for loop for sections
-        for (i in 1..2) {
-            val itemArrayList: ArrayList<String> = ArrayList()
-            //for loop for items
-            for (j in 1..2) {
-                itemArrayList.add("Item $j")
-            }
-
-            //add the section and items to array list
             if (i == 1) {
-                sectionModelArrayList.add(SectionModel("Today", itemArrayList))
+                adapter.addItem(
+                    SimpleStickyTextRecyclerItem(
+                        SimpleStickyTextRecyclerItem.StickyData(
+                            "Today",
+                            ++stickyIdsCounter
+                        )
+                    ), false
+                )
+                adapter.addItems(gamesRecyclerItems, false)
+
             } else if (i == 2) {
-                sectionModelArrayList.add(SectionModel("29 April", itemArrayList))
+                adapter.addItem(
+                    SimpleStickyTextRecyclerItem(
+                        SimpleStickyTextRecyclerItem.StickyData(
+                            "29 April",
+                            ++stickyIdsCounter
+                        )
+                    ), false
+                )
+                adapter.addItems(gamesRecyclerItems, false)
+
+            } else if (i == 3) {
+                adapter.addItem(
+                    SimpleStickyTextRecyclerItem(
+                        SimpleStickyTextRecyclerItem.StickyData(
+                            "15 May",
+                            ++stickyIdsCounter
+                        )
+                    ), false
+                )
+                adapter.addItems(gamesRecyclerItems, false)
+
             }
         }
-        val adapter = context?.let {
-            SectionRecyclerViewAdapter(
-                it,
-                RecyclerViewType.LINEAR_VERTICAL,
-                sectionModelArrayList, this
-            )
+
+
+
+        stickyHeaderDecoration = StickyHeaderDecoration()
+        homeRecycView?.addItemDecoration(stickyHeaderDecoration)
+
+        homeRecycView?.adapter = adapter
+
+        adapter.onItemActionListener = object : DiverseRecyclerAdapter.OnItemActionListener() {
+            override fun onItemClicked(v: View, position: Int) {
+
+                adapter.insertItem(
+                    0,
+                    SimpleStickyTextRecyclerItem(
+                        SimpleStickyTextRecyclerItem.StickyData(
+                            "Item${System.currentTimeMillis()}",
+                            ++stickyIdsCounter
+                        )
+                    )
+                )
+                adapter.insertItem(
+                    0,
+                    SimpleTextRecyclerItem("Item${System.currentTimeMillis()}", this@HomeFragment)
+                )
+            }
+
+            override fun onItemLongClicked(v: View, position: Int): Boolean {
+
+                adapter.removeItem(1)
+
+                return super.onItemLongClicked(v, position)
+            }
         }
-        homeRecycView?.setAdapter(adapter)
-        adapter?.onclick = this
 
-
+        adapter.notifyDataSetChanged()
     }
+
+
+    fun generateGamesList() = listOf(
+        "Titanium City Center,Anandnagar",
+        "Titanium City Center,Anandnagar",
+        "Titanium City Center,Anandnagar"
+    )
+
+    fun generateProgrammingLanguagesList() = listOf(
+        "Titanium City Center,Anandnagar",
+        "Titanium City Center,Anandnagar",
+        "Titanium City Center,Anandnagar"
+    )
+
+    fun generateSongsList() = listOf(
+        "Titanium City Center,Anandnagar",
+        "Titanium City Center,Anandnagar",
+        "Titanium City Center,Anandnagar"
+    )
+
 
     private fun showBottomSheetdialogNormal(
         array: ArrayList<String>,
@@ -303,6 +307,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         } else if (check == 0) {
 
+            Log.e("getsection", "" + sectionModelArrayList?.get(variable)?.sectionLabel)
+
             var intent = Intent(context, ServiceListActivity::class.java)
             startActivity(intent)
         } else {
@@ -331,6 +337,11 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //        calendar[Calendar.HOUR_OF_DAY] = 11
 //        calendar[Calendar.MINUTE] = 13
         val defaultDate = calendar.time
+        calendar.add(Calendar.DATE, 1)
+        calendar.add(Calendar.MONTH, 0)
+        calendar.add(Calendar.YEAR, 0)
+        val future: Date = calendar.getTime()
+        Log.e("getfuturedate", "" + future)
         singleBuilder = SingleDateAndTimePickerDialog.Builder(context)
             .setTimeZone(TimeZone.getDefault())
             .bottomSheet()
@@ -343,7 +354,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             .displayDaysOfMonth(true)
             .displayYears(true)
             .defaultDate(defaultDate)
-            .displayMonthNumbers(true).minDateRange(Date()) //.mustBeOnFuture()
+            .displayMonthNumbers(true)
+            .minDateRange(future) //.mustBeOnFuture()
             //.minutesStep(15)
             //.mustBeOnFuture()
             //.defaultDate(defaultDate)
