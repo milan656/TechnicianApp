@@ -53,11 +53,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var homeRecycView: RecyclerView? = null
     private var relmainContent: RelativeLayout? = null
 
-    var currentYear: Int = 0
-    var currentMonth: Int = 0
-    var currentDay: Int = 0
-    var currentMonth_: String = ""
-    var currentDate: Int = 0
     var activity: MainActivity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,40 +74,15 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        currentYear = calendar.get(Calendar.YEAR)
-        currentMonth = calendar.get(Calendar.MONTH)
-        currentDate = calendar.get(Calendar.DATE)
-        currentDay = calendar.get(Calendar.DAY_OF_MONTH)
-
         activity = getActivity() as MainActivity?
 
-        Log.e("getvalues", "" + currentYear + " " + currentMonth + " " + currentDate)
-
-
-        // Kotlin
-        val max = 45
-        val min = 10
-        val total = max - min
-
-        val slider = view.findViewById<FluidSlider>(R.id.multiSlider1)
-        slider.positionListener = { pos ->
-            slider.bubbleText = "${min + (total * pos).toInt()}"
-            Log.e("getvaluess", "" + pos)
-        }
-        slider.position = 0.3f
-        slider.startText = "$min"
-        slider.endText = "$max"
-        slider.animation?.cancel()
-
         ivFilter = view?.findViewById(R.id.ivFilter)
-
 
         relmainContent = view?.findViewById(R.id.relmainContent)
         tvUsername = view?.findViewById(R.id.tvUsername)
         tvUsername?.text = "Hello, " + "Arun"
         ivFilter?.setOnClickListener(this)
 
-//
         homeRecycView = view.findViewById(R.id.recyclerView)
 
         homeRecycView?.layoutManager = context?.let { DiverseLinearLayoutManager(it) }
@@ -331,12 +301,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     fun simpleClicked() {
 
         val calendar = Calendar.getInstance()
-        calendar[Calendar.DAY_OF_MONTH] = currentDay // 4. Feb. 2018
-        calendar[Calendar.MONTH] = currentMonth
-        calendar[Calendar.YEAR] = currentYear
-//        calendar[Calendar.HOUR_OF_DAY] = 11
-//        calendar[Calendar.MINUTE] = 13
-        val defaultDate = calendar.time
+
         calendar.add(Calendar.DATE, 1)
         calendar.add(Calendar.MONTH, 0)
         calendar.add(Calendar.YEAR, 0)
@@ -353,7 +318,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             .displayMonth(true)
             .displayDaysOfMonth(true)
             .displayYears(true)
-            .defaultDate(defaultDate)
+            .defaultDate(future)
             .displayMonthNumbers(true)
             .minDateRange(future) //.mustBeOnFuture()
             //.minutesStep(15)

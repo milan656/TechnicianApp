@@ -67,23 +67,4 @@
 
         </LinearLayout>
 
-
-        <LinearLayout
-            android:id="@+id/linearSlider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <com.ramotion.fluidslider.FluidSlider
-                android:id="@+id/multiSlider1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:bar_color="#F2F5FA"
-                app:bar_text_color="@color/text_color"
-                app:size="small" />
-
-        </LinearLayout>
-
 </RelativeLayout>
