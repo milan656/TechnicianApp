@@ -290,7 +290,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     fun showHideUpdatedPlacement() {
         if (chkTyreRotation?.isChecked!!
         ) {
-            Common.expand(llUpdatedPlacement!!)
+            if (llUpdatedPlacement?.visibility == View.GONE) {
+                Common.expand(llUpdatedPlacement!!)
+            }
         } else {
             if (llUpdatedPlacement?.visibility == View.VISIBLE) {
                 Common.collapse(llUpdatedPlacement!!)
