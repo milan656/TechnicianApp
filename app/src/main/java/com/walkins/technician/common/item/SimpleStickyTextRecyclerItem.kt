@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.trading212.diverserecycleradapter.DiverseRecyclerAdapter
 import com.trading212.stickyheader.StickyHeader
 import com.walkins.technician.R
+import com.walkins.technician.adapter.DiverseRecyclerAdapterNew
 import com.walkins.technician.common.onClickAdapter
 
 class SimpleStickyTextRecyclerItem(stickyData: StickyData

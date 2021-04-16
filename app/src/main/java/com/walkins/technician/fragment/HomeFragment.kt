@@ -13,20 +13,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.ramotion.fluidslider.FluidSlider
 import com.trading212.demo.item.SimpleStickyTextRecyclerItem
 import com.trading212.diverserecycleradapter.DiverseRecyclerAdapter
-import com.trading212.diverserecycleradapter.layoutmanager.DiverseLinearLayoutManager
 import com.trading212.stickyheader.StickyHeaderDecoration
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.activity.ServiceListActivity
+import com.walkins.technician.adapter.LeadHistoryAdapter
 import com.walkins.technician.common.item.SimpleTextRecyclerItem
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.technician.model.login.DashboardModel
+import com.walkins.technician.model.login.LeadHistoryData
 import com.walkins.technician.model.login.SectionModel
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -43,8 +42,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var selectedDate: String? = null
 
     var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()
-    var second = ArrayList<SimpleTextRecyclerItem>()
-    var third = ArrayList<SimpleTextRecyclerItem>()
+    var historyDataList: ArrayList<LeadHistoryData> = java.util.ArrayList<LeadHistoryData>()
 
     var simpleDateFormat: SimpleDateFormat? = null
     var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
@@ -70,6 +68,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private lateinit var stickyHeaderDecoration: StickyHeaderDecoration
 
     private var stickyIdsCounter = 0
+    private var mAdapter: LeadHistoryAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,10 +87,29 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         homeRecycView = view.findViewById(R.id.recyclerView)
 
-        homeRecycView?.layoutManager = context?.let { DiverseLinearLayoutManager(it) }
 
-        fillRecyclerView()
+//        homeRecycView?.layoutManager = context?.let { DiverseLinearLayoutManager(it) }
+//
+//        fillRecyclerView()
+        for (i in 0..5) {
+            val leadHistoryData: LeadHistoryData = LeadHistoryData()
+            leadHistoryData.business = "business"
+            leadHistoryData.updatedAt = System.currentTimeMillis()
+            leadHistoryData.phoneNumber = "phone"
+            leadHistoryData.name = "name"
+            leadHistoryData.createdAt = System.currentTimeMillis()
+            leadHistoryData.id = "id"
 
+
+            historyDataList.add(leadHistoryData)
+        }
+
+        mAdapter = context?.let { LeadHistoryAdapter(it, historyDataList) }
+        val decor = StickyHeaderDecoration()
+        homeRecycView?.setHasFixedSize(true)
+        homeRecycView?.setAdapter(mAdapter)
+
+        homeRecycView?.addItemDecoration(decor)
         return view
 
     }
@@ -102,20 +120,42 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         var model = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
         gamesRecyclerItems.add(SimpleTextRecyclerItem("", model, this))
 
-        var modelSecond = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
-        second.add(SimpleTextRecyclerItem("", modelSecond, this))
+        var modelsecond = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
+        gamesRecyclerItems.add(SimpleTextRecyclerItem("", modelsecond, this))
 
         var modelThird = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
-        third.add(SimpleTextRecyclerItem("", modelThird, this))
+        gamesRecyclerItems.add(SimpleTextRecyclerItem("", modelThird, this))
 
-        adapter.addItem(SimpleStickyTextRecyclerItem(SimpleStickyTextRecyclerItem.StickyData("Today", ++stickyIdsCounter)), false)
+        adapter.addItem(
+            SimpleStickyTextRecyclerItem(
+                SimpleStickyTextRecyclerItem.StickyData(
+                    "Today",
+                    ++stickyIdsCounter
+                )
+            ), false
+        )
         adapter.addItems(gamesRecyclerItems, false)
 
-        adapter.addItem(SimpleStickyTextRecyclerItem(SimpleStickyTextRecyclerItem.StickyData("29 April", ++stickyIdsCounter)), false)
-        adapter.addItems(second, false)
+        adapter.addItem(
+            SimpleStickyTextRecyclerItem(
+                SimpleStickyTextRecyclerItem.StickyData(
+                    "29 April",
+                    ++stickyIdsCounter
+                )
+            ), false
+        )
+        adapter.addItems(gamesRecyclerItems, false)
 
-        adapter.addItem(SimpleStickyTextRecyclerItem(SimpleStickyTextRecyclerItem.StickyData("15 May", ++stickyIdsCounter)), false)
-        adapter.addItems(third, false)
+        adapter.addItem(
+            SimpleStickyTextRecyclerItem(
+                SimpleStickyTextRecyclerItem.StickyData(
+                    "15 May",
+                    ++stickyIdsCounter
+                )
+            ), false
+        )
+        adapter.addItems(gamesRecyclerItems, false)
+
 
 
         stickyHeaderDecoration = StickyHeaderDecoration()
@@ -129,13 +169,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 try {
                     Log.e(
                         "getclick",
-                        "" + adapter.getItem(position)
+                        "" + gamesRecyclerItems.get(position)
                     )
                     Log.e(
                         "getclick",
-                        "" + adapter.getSelectedItems().get(position)
+                        "" + gamesRecyclerItems.get(position)
                     )
-//                    Log.e("getclick", "" + gamesRecyclerItems.get(position).type)
+                    Log.e("getclick", "" + gamesRecyclerItems.get(position).type)
 
                 } catch (e: Exception) {
                     e.printStackTrace()

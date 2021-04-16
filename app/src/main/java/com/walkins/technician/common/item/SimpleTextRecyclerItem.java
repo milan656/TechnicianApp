@@ -92,8 +92,14 @@ public class SimpleTextRecyclerItem extends DiverseRecyclerAdapter.RecyclerItem<
 
         @Override
         protected void bindTo(@Nullable String data) {
-//            textView.setText();
+            textView.setText(data);
 
         }
     }
+
+    public void setDashboard(DashboardModel dashboard) {
+        this.dashboard = dashboard;
+    }
+
+
 }
