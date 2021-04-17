@@ -22,4 +22,5 @@ interface PatternDaoClass {
     fun update(book: VehiclePatternModelClass)
 
 
+
 }
