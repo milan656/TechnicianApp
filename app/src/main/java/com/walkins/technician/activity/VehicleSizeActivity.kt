@@ -17,10 +17,7 @@ import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.DB.VehicleSizeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleSizeAdapter
-import com.walkins.technician.common.SpacesItemDecoration
-import com.walkins.technician.common.TyreConfigClass
-import com.walkins.technician.common.onClickAdapter
-import com.walkins.technician.common.showLongToast
+import com.walkins.technician.common.*
 import com.walkins.technician.model.login.sizemodel.SizeData
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import com.walkins.technician.viewmodel.WarrantyViewModel
@@ -316,6 +313,11 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
 
         }
+
+        TyreDetailCommonClass.tyreType = selectedTyre
+        TyreDetailCommonClass.vehicleSize = arrList?.get(selectedPos)?.name
+        TyreDetailCommonClass.vehicleSizeId = arrList?.get(selectedPos)?.sizeId?.toString()
+
         Log.e("getvalueee22", "" + selectedTyre + " " + TyreConfigClass.RFVehicleSize)
         val intent = Intent(this, VisualDetailsActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)

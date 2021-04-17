@@ -300,6 +300,7 @@ class EndlessService : Service() {
                 var entity = VehiclePatternModelClass()
 
                 entity.name = if (model.name != null) model.name else ""
+                entity.patternId = model.patternId
                 entity.isSelected = false
                 mDb.patternDaoClass().savePattern(entity)
             }
@@ -318,12 +319,13 @@ class EndlessService : Service() {
                 mDb.sizeDaoClass().deleteAll()
             }
 
-            for (i in sizeModel?.data?.indices!!) {
+            for (i in sizeModel.data.indices) {
 
                 var model = sizeModel.data.get(i)
                 var entity = VehicleSizeModelClass()
 
                 entity.name = if (model.name != null) model.name else ""
+                entity.sizeId = model.sizeId
                 entity.isSelected = false
                 mDb.sizeDaoClass().saveSize(entity)
             }
@@ -342,7 +344,7 @@ class EndlessService : Service() {
                 mDb.daoClass().deleteAll()
             }
 
-            for (i in vehicleBrandModel?.data?.indices!!) {
+            for (i in vehicleBrandModel.data?.indices!!) {
 
                 var model = vehicleBrandModel.data.get(i)
                 var entity = VehicleMakeModelClass()

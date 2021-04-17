@@ -17,10 +17,12 @@ import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
+import com.walkins.technician.DB.TyreRRDetail
 import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.common.TyreConfigClass
+import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.viewmodel.WarrantyViewModel
 import kotlinx.coroutines.Dispatchers
@@ -218,7 +220,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         } else if (selectedTyre.equals("RR")) {
             TyreConfigClass.RRVehicleMake = true
         }
-        Log.e("pendingArr87979",""+TyreConfigClass.LFVehicleMake)
+        Log.e("pendingArr87979", "" + TyreConfigClass.LFVehicleMake)
 
         if (selectedTyre.equals("LF")) {
             chkRF?.text = "RF"
@@ -234,7 +236,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.RRVehicleMake = true
             }
-            Log.e("pendingArr8969",""+TyreConfigClass.LFVehicleMake)
+            Log.e("pendingArr8969", "" + TyreConfigClass.LFVehicleMake)
         } else if (selectedTyre.equals("RF")) {
             chkRF?.text = "LF"
             chkLR?.text = "LR"
@@ -249,7 +251,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.RRVehicleMake = true
             }
-            Log.e("pendingArr67575",""+TyreConfigClass.LFVehicleMake)
+            Log.e("pendingArr67575", "" + TyreConfigClass.LFVehicleMake)
 
         } else if (selectedTyre.equals("LR")) {
             chkRF?.text = "LF"
@@ -265,7 +267,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.RRVehicleMake = true
             }
-            Log.e("pendingArr0",""+TyreConfigClass.LFVehicleMake)
+            Log.e("pendingArr0", "" + TyreConfigClass.LFVehicleMake)
 
         } else if (selectedTyre.equals("RR")) {
             chkRF?.text = "LF"
@@ -281,8 +283,13 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.LRVehicleMake = true
             }
-            Log.e("pendingArr54654",""+TyreConfigClass.LFVehicleMake)
+            Log.e("pendingArr54654", "" + TyreConfigClass.LFVehicleMake)
         }
+
+        TyreDetailCommonClass.tyreType = selectedTyre
+        TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.concat
+        TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.Id?.toString()
+
 
         Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)
         var intent = Intent(this, VehiclePatternActivity::class.java)

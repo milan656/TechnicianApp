@@ -41,6 +41,7 @@ import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
 import com.walkins.technician.common.TyreConfigClass
+import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.custom.BoldButton
 import java.io.File
@@ -1210,6 +1211,25 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getvaluesss", "" + TyreConfigClass.selectedTyreConfigType)
 
 
+                Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeId!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePattern!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePatternId!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSize!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSizeId!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.manufaturingDate!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.psiInTyreService!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.psiOutTyreService!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.weightTyreService!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.sidewell!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.shoulder!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.treadDepth!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.treadWear!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.rimDamage!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.bubble!!)
+                Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
 
                 if (TyreConfigClass.clickedTyre.equals("LF")) {
                     if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {

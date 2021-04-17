@@ -20,10 +20,7 @@ import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehiclePatternAdapter
-import com.walkins.technician.common.SpacesItemDecoration
-import com.walkins.technician.common.TyreConfigClass
-import com.walkins.technician.common.onClickAdapter
-import com.walkins.technician.common.showLongToast
+import com.walkins.technician.common.*
 import com.walkins.technician.model.login.patternmodel.PatternData
 import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.networkApi.WarrantyApi
@@ -272,6 +269,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
 
         }
+
+        TyreDetailCommonClass.tyreType = selectedTyre
+        TyreDetailCommonClass.vehiclePattern = arrList?.get(selectedPos)?.name
+        TyreDetailCommonClass.vehiclePatternId = arrList?.get(selectedPos)?.patternId?.toString()
+
         Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
         var intent = Intent(this, VehicleSizeActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)

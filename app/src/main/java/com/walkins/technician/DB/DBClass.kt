@@ -1,9 +1,7 @@
 package com.walkins.technician.DB
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import com.walkins.technician.DB.tyredao.DaoLF
 import com.walkins.technician.DB.tyredao.DaoLR
 import com.walkins.technician.DB.tyredao.DaoRF
@@ -20,6 +18,7 @@ import com.walkins.technician.DB.tyredao.DaoRR
     version = 2,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class DBClass : RoomDatabase() {
 
     abstract fun daoClass(): DaoClass

@@ -32,6 +32,7 @@ import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
 import com.walkins.technician.common.TyreConfigClass
+import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
 import java.io.File
 
@@ -49,6 +50,15 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var ivSugSideWell: ImageView? = null
     private var ivReqSideWell: ImageView? = null
 
+    private var psiInTyreService: String? = null
+    private var psiOutTyreService: String? = null
+    private var weightTyreService: String? = null
+    private var sidewell: String? = ""
+    private var shoulder: String? = ""
+    private var treadWear: String? = ""
+    private var treadDepth: String? = ""
+    private var rimDamage: String? = ""
+    private var bubble: String? = ""
 
     private var ivOkShoulder: ImageView? = null
     private var ivSugShoulder: ImageView? = null
@@ -99,6 +109,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var weightFrame: FrameLayout? = null
     private var psiInFrame: FrameLayout? = null
     private var psiOutFrame: FrameLayout? = null
+    private var edtManufaturingDate: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +129,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         tvAddPhoto1 = findViewById(R.id.tvAddPhoto1)
         tvCarphoto1 = findViewById(R.id.tvCarphoto1)
 
+        edtManufaturingDate = findViewById(R.id.edtManufaturingDate)
         relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
         issueResolveAdapter = TyreSuggestionAdpater(issueResolveArr, this, this, false)
@@ -214,7 +226,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         sliderIn = findViewById<FluidSlider>(R.id.multiSlider1)
         sliderIn?.positionListener = { pos ->
             sliderIn?.bubbleText = "${min + (total * pos).toInt()}"
-            Log.e("getvaluess", "" + pos)
+            Log.e("getvaluess", "" + sliderIn?.bubbleText)
+            psiInTyreService = sliderIn?.bubbleText
         }
         sliderIn?.position = 0.3f
         sliderIn?.startText = "$min"
@@ -226,7 +239,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         multiSliderPsiOut = findViewById<FluidSlider>(R.id.multiSliderPsiOut)
         multiSliderPsiOut?.positionListener = { pos ->
             multiSliderPsiOut?.bubbleText = "${min + (total * pos).toInt()}"
-            Log.e("getvaluess", "" + pos)
+            Log.e("getvaluess", "" + multiSliderPsiOut?.bubbleText)
+            psiOutTyreService = multiSliderPsiOut?.bubbleText
         }
         multiSliderPsiOut?.position = 0.3f
         multiSliderPsiOut?.startText = "$min"
@@ -238,7 +252,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         multiSliderWeight = findViewById<FluidSlider>(R.id.multiSliderWeight)
         multiSliderWeight?.positionListener = { pos ->
             multiSliderWeight?.bubbleText = "${min + (total * pos).toInt()}"
-            Log.e("getvaluess", "" + pos)
+            Log.e("getvaluess", "" + multiSliderWeight?.bubbleText)
+            weightTyreService = multiSliderWeight?.bubbleText
         }
         multiSliderWeight?.position = 0.3f
         multiSliderWeight?.startText = "$min"
@@ -406,6 +421,19 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 if (TyreConfigClass.selectedTyreConfigType.equals("RRpending")) {
                     TyreConfigClass.selectedTyreConfigType = "RR"
                 }
+
+                TyreDetailCommonClass.manufaturingDate = edtManufaturingDate?.text.toString()
+                TyreDetailCommonClass.psiInTyreService = psiInTyreService
+                TyreDetailCommonClass.psiOutTyreService = psiOutTyreService
+                TyreDetailCommonClass.weightTyreService = weightTyreService
+                TyreDetailCommonClass.sidewell = sidewell
+                TyreDetailCommonClass.shoulder = shoulder
+                TyreDetailCommonClass.treadWear = treadWear
+                TyreDetailCommonClass.treadDepth = treadDepth
+                TyreDetailCommonClass.rimDamage = rimDamage
+                TyreDetailCommonClass.bubble = bubble
+                TyreDetailCommonClass.issueResolvedArr = issueResolveArr
+
                 setResult(1004)
                 finish()
             }
@@ -414,94 +442,113 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 ivOkSideWell?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugSideWell?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqSideWell?.setImageResource(R.mipmap.ic_blank_condition)
+
+                sidewell = "Ok"
             }
             R.id.ivSugSideWell -> {
 
                 ivSugSideWell?.setImageResource(R.mipmap.ic_condition_degrade)
                 ivOkSideWell?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqSideWell?.setImageResource(R.mipmap.ic_blank_condition)
+                sidewell = "SUG"
             }
             R.id.ivReqSideWell -> {
 
                 ivReqSideWell?.setImageResource(R.mipmap.ic_condition_down)
                 ivSugSideWell?.setImageResource(R.mipmap.ic_blank_condition)
                 ivOkSideWell?.setImageResource(R.mipmap.ic_blank_condition)
+                sidewell = "REQ"
             }
 
             R.id.ivOkShoulder -> {
                 ivOkShoulder?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugShoulder?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqShoulder?.setImageResource(R.mipmap.ic_blank_condition)
+                shoulder = "Ok"
             }
             R.id.ivSugShoulder -> {
                 ivSugShoulder?.setImageResource(R.mipmap.ic_condition_degrade)
                 ivOkShoulder?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqShoulder?.setImageResource(R.mipmap.ic_blank_condition)
+                shoulder = "SUG"
             }
             R.id.ivReqShoulder -> {
                 ivReqShoulder?.setImageResource(R.mipmap.ic_condition_down)
                 ivSugShoulder?.setImageResource(R.mipmap.ic_blank_condition)
                 ivOkShoulder?.setImageResource(R.mipmap.ic_blank_condition)
+                shoulder = "REQ"
             }
             R.id.ivOkTreadDepth -> {
                 ivOkTreadDepth?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugTreadDepth?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqTreadDepth?.setImageResource(R.mipmap.ic_blank_condition)
+                treadDepth = "Ok"
             }
             R.id.ivSugTreadDepth -> {
                 ivSugTreadDepth?.setImageResource(R.mipmap.ic_condition_degrade)
                 ivOkTreadDepth?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqTreadDepth?.setImageResource(R.mipmap.ic_blank_condition)
+                treadDepth = "SUG"
             }
             R.id.ivReqTreadDepth -> {
                 ivReqTreadDepth?.setImageResource(R.mipmap.ic_condition_down)
                 ivSugTreadDepth?.setImageResource(R.mipmap.ic_blank_condition)
                 ivOkTreadDepth?.setImageResource(R.mipmap.ic_blank_condition)
+                treadDepth = "REQ"
             }
             R.id.ivOkTreadWear -> {
                 ivOkTreadWear?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugTreadWear?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqTreadWear?.setImageResource(R.mipmap.ic_blank_condition)
+                treadWear = "Ok"
             }
             R.id.ivSugTreadWear -> {
                 ivSugTreadWear?.setImageResource(R.mipmap.ic_condition_degrade)
                 ivOkTreadWear?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqTreadWear?.setImageResource(R.mipmap.ic_blank_condition)
+                treadWear = "SUG"
             }
             R.id.ivReqTreadWear -> {
                 ivReqTreadWear?.setImageResource(R.mipmap.ic_condition_down)
                 ivSugTreadWear?.setImageResource(R.mipmap.ic_blank_condition)
                 ivOkTreadWear?.setImageResource(R.mipmap.ic_blank_condition)
+                treadWear = "REQ"
             }
             R.id.ivOkRimDamage -> {
                 ivOkRimDamage?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugRimDamage?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqRimDamage?.setImageResource(R.mipmap.ic_blank_condition)
+                rimDamage = "Ok"
             }
             R.id.ivSugRimDamage -> {
                 ivSugRimDamage?.setImageResource(R.mipmap.ic_condition_degrade)
                 ivOkRimDamage?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqRimDamage?.setImageResource(R.mipmap.ic_blank_condition)
+                rimDamage = "SUG"
             }
             R.id.ivReqRimDamage -> {
                 ivReqRimDamage?.setImageResource(R.mipmap.ic_condition_down)
                 ivSugRimDamage?.setImageResource(R.mipmap.ic_blank_condition)
                 ivOkRimDamage?.setImageResource(R.mipmap.ic_blank_condition)
+                rimDamage = "REQ"
             }
             R.id.ivOkbubble -> {
                 ivOkbubble?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugSideWell?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqSideWell?.setImageResource(R.mipmap.ic_blank_condition)
+                bubble = "Ok"
             }
             R.id.ivSugbubble -> {
                 ivSugbubble?.setImageResource(R.mipmap.ic_condition_degrade)
                 ivSugbubble?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqbubble?.setImageResource(R.mipmap.ic_blank_condition)
+                bubble = "SUG"
             }
             R.id.ivReqbubble -> {
                 ivReqbubble?.setImageResource(R.mipmap.ic_condition_down)
                 ivSugbubble?.setImageResource(R.mipmap.ic_blank_condition)
                 ivOkbubble?.setImageResource(R.mipmap.ic_blank_condition)
+                bubble = "REQ"
             }
 
 

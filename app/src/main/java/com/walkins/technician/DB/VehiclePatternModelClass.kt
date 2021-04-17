@@ -9,6 +9,7 @@ class VehiclePatternModelClass {
 
     @PrimaryKey(autoGenerate = true)
     var Id: Int = 0
+    var patternId: Int? = 0
     var name: String? = ""
     var image_url: String? = ""
     var concat: String? = ""
