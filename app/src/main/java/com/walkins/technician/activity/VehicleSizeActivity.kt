@@ -119,7 +119,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     Log.e("getpattersize", "" + arrList?.get(i)?.name)
                 }
 
-                if (selectedTyre.equals("LF")) {
+                /*if (selectedTyre.equals("LF")) {
 
                     if (mDb.daoLF().getAll().size > 0) {
                         for (i in mDb.daoLF().getAll().indices) {
@@ -155,7 +155,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     }
 
                 }
-
+*/
             }
 
         }

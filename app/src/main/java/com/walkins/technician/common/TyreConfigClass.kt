@@ -39,5 +39,10 @@ class TyreConfigClass {
         var clickedTyre = ""
         var pendingTyre = ""
 
+        var TyreLFObject = "TyreLFObject"
+        var TyreLRObject = "TyreLRObject"
+        var TyreRFObject = "TyreRFObject"
+        var TyreRRObject = "TyreRRObject"
+
     }
 }

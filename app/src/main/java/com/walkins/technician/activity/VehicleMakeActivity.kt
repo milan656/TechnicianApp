@@ -1,6 +1,5 @@
 package com.walkins.technician.activity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -15,9 +14,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
-import com.walkins.technician.DB.TyreRRDetail
 import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
@@ -25,9 +25,6 @@ import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.viewmodel.WarrantyViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
     private lateinit var prefManager: PrefManager
@@ -127,6 +124,24 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
 
             if (selectedTyre.equals("LF")) {
+                if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                    !prefManager?.getValue(TyreConfigClass.TyreLFObject).equals("")
+                ) {
+                    var str = prefManager?.getValue(TyreConfigClass.TyreLFObject)
+                    try {
+                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                        Log.e("getstr", "" + json)
+                        selectedName = json.get("vehicleMake")?.asString!!
+                        Log.e("getstr", "" + selectedName)
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+
+
+                }
+            }
+
+            /*if (selectedTyre.equals("LF")) {
 
                 if (mDb.daoLF().getAll().size > 0) {
                     for (i in mDb.daoLF().getAll().indices) {
@@ -162,7 +177,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     }
                 }
 
-            }
+            }*/
 
         }
         thread.start()

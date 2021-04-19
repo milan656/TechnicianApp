@@ -225,7 +225,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         ivReqbubble?.setOnClickListener(this)
 
 
-        var thread = Thread {
+       /* var thread = Thread {
             if (selectedTyre.equals("LF")) {
 
                 if (mDb.daoLF().getAll().size > 0) {
@@ -578,7 +578,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
 
         }
-        thread.start()
+        thread.start()*/
     }
 
     fun psiInSlider() {

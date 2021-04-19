@@ -35,7 +35,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.Common.Companion.getFile
+import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.DB.*
 import com.walkins.technician.R
@@ -45,10 +48,12 @@ import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.custom.BoldButton
+import org.json.JSONObject
 import java.io.File
 
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
+    private lateinit var prefManager: PrefManager
     private lateinit var mDb: DBClass
     var pendingArr: ArrayList<String>? = null
     val REQUEST_IMAGE_CAPTURE = 1
@@ -145,6 +150,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_service_details)
         mDb = DBClass.getInstance(this)
+        prefManager = PrefManager(this)
         init()
 
         var threa = Thread {
@@ -1285,6 +1291,47 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getvaluess_all--1 size", TyreDetailCommonClass.chk1Size!!)
                 Log.e("getvaluess_all--2 size", TyreDetailCommonClass.chk2Size!!)
                 Log.e("getvaluess_all--3 size", TyreDetailCommonClass.chk3Size!!)
+
+                var json = JsonObject()
+                var jsonArr = JsonArray()
+                json.addProperty("tyreType", TyreDetailCommonClass.tyreType)
+                json.addProperty("vehicleMake", TyreDetailCommonClass.vehicleMake)
+                json.addProperty("vehicleMakeId", TyreDetailCommonClass.vehicleMakeId)
+                json.addProperty("vehiclePattern", TyreDetailCommonClass.vehiclePattern)
+                json.addProperty("vehiclePatternId", TyreDetailCommonClass.vehiclePatternId)
+                json.addProperty("vehicleSize", TyreDetailCommonClass.vehicleSize)
+                json.addProperty("vehicleSizeId", TyreDetailCommonClass.vehicleSizeId)
+                json.addProperty("manufaturingDate", TyreDetailCommonClass.manufaturingDate)
+                json.addProperty("psiInTyreService", TyreDetailCommonClass.psiInTyreService)
+                json.addProperty("psiOutTyreService", TyreDetailCommonClass.psiOutTyreService)
+                json.addProperty("weightTyreService", TyreDetailCommonClass.weightTyreService)
+                json.addProperty("sidewell", TyreDetailCommonClass.sidewell)
+                json.addProperty("shoulder", TyreDetailCommonClass.shoulder)
+                json.addProperty("treadDepth", TyreDetailCommonClass.treadDepth)
+                json.addProperty("treadWear", TyreDetailCommonClass.treadWear)
+                json.addProperty("rimDamage", TyreDetailCommonClass.rimDamage)
+                json.addProperty("bubble", TyreDetailCommonClass.bubble)
+
+                for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
+                    jsonArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i))
+                }
+                json.add("issueResolvedArr", jsonArr)
+                json.addProperty(
+                    "visualDetailPhotoUrl",
+                    TyreDetailCommonClass.visualDetailPhotoUrl
+                )
+                if (TyreDetailCommonClass.tyreType.equals("LF")) {
+                    prefManager.setValue(TyreConfigClass.TyreLFObject, json.toString())
+                }
+                if (TyreDetailCommonClass.tyreType.equals("LR")) {
+                    prefManager.setValue(TyreConfigClass.TyreLRObject, json.toString())
+                }
+                if (TyreDetailCommonClass.tyreType.equals("RF")) {
+                    prefManager.setValue(TyreConfigClass.TyreRFObject, json.toString())
+                }
+                if (TyreDetailCommonClass.tyreType.equals("RR")) {
+                    prefManager.setValue(TyreConfigClass.TyreRRObject, json.toString())
+                }
 
 
                 val thread = Thread {

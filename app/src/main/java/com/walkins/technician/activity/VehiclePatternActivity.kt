@@ -131,7 +131,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     Log.e("getpatter", "" + arrList?.get(i)?.name)
                 }
 
-                if (selectedTyre.equals("LF")) {
+                /*if (selectedTyre.equals("LF")) {
 
                     if (mDb.daoLF().getAll().size > 0) {
                         for (i in mDb.daoLF().getAll().indices) {
@@ -166,7 +166,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         }
                     }
 
-                }
+                }*/
 
             }
 
