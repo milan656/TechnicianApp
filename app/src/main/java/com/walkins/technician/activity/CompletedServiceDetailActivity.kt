@@ -183,7 +183,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
 //                    llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
-                    llservicebg?.setBackgroundDrawable(null)
+//                    llservicebg?.setBackgroundDrawable(null)
                     ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = false
@@ -212,7 +212,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
 //                    lltyreconfigbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
-                    lltyreconfigbg?.setBackgroundDrawable(null)
+//                    lltyreconfigbg?.setBackgroundDrawable(null)
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTyreConfig?.isAllCaps = false
@@ -241,7 +241,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
 //                    lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
-                    lltechnicalbg?.setBackgroundDrawable(null)
+//                    lltechnicalbg?.setBackgroundDrawable(null)
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_minus_icon)
                     tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvTechnicalSuggetion?.isAllCaps = false

@@ -102,7 +102,7 @@ class ReportHistoryAdapter(
         mContext = mActivity
         mInflater = LayoutInflater.from(mContext)
         mDataset = dataset
-        mDateFormat = SimpleDateFormat("dd-MM-yyyy")
+        mDateFormat = SimpleDateFormat("dd MMMM yy")
         mDateFormatTime = SimpleDateFormat("hh:mm a")
         mToday = mDateFormat.format(Date())
     }

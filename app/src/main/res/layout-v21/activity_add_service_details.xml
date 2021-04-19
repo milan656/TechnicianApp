@@ -54,10 +54,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <LinearLayout
+                        <androidx.cardview.widget.CardView
                             android:layout_width="5dp"
                             android:layout_height="match_parent"
-                            android:background="@color/red" />
+                            app:cardCornerRadius="@dimen/ten_dp">
+
+                            <LinearLayout
+                                android:layout_width="5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/red" />
+                        </androidx.cardview.widget.CardView>
 
                         <LinearLayout
                             android:layout_width="0dp"

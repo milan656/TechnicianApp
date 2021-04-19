@@ -118,7 +118,7 @@ class LeadHistoryAdapter(
         mContext = mActivity
         mInflater = LayoutInflater.from(mContext)
         mDataset = dataset
-        mDateFormat = SimpleDateFormat("dd-MM-yyyy")
+        mDateFormat = SimpleDateFormat("dd MMMM")
         mDateFormatTime = SimpleDateFormat("hh:mm a")
         mToday = mDateFormat.format(Date())
     }

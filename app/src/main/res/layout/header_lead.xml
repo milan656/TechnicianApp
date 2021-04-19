@@ -9,9 +9,12 @@
         android:id="@+id/timestamp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/six_dp"
+        android:paddingTop="@dimen/six_dp"
+        android:paddingBottom="@dimen/twelve_dp"
+        android:paddingEnd="@dimen/six_dp"
         android:text="timestamp"
         android:textColor="@color/text_color1"
         android:textSize="@dimen/fourteen_sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingRight="@dimen/six_dp" />
 </LinearLayout>
