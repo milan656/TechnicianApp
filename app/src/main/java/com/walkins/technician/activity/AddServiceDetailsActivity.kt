@@ -935,13 +935,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else if (pendingArr?.get(0).equals("Visual Detail")) {
                         intent = Intent(this, VisualDetailsActivity::class.java)
                     }
-                    if (!TyreConfigClass.LFCompleted) {
-                        intent?.putExtra("selectedTyre", "LF")
-                        intent?.putExtra("title", "Select Tyre Make - LF")
-                        TyreConfigClass.selectedTyreConfigType = "LFpending"
-                        TyreConfigClass.clickedTyre = "LF"
-                        startActivityForResult(intent, 1000)
-                    }
+                    intent?.putExtra("selectedTyre", "LF")
+                    intent?.putExtra("title", "Select Tyre Make - LF")
+                    TyreConfigClass.selectedTyreConfigType = "LFpending"
+                    TyreConfigClass.clickedTyre = "LF"
+                    startActivityForResult(intent, 1000)
                 } else {
                     intent = Intent(this, VehicleMakeActivity::class.java)
                     intent?.putExtra("selectedTyre", "LF")
@@ -979,13 +977,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else if (pendingArr?.get(0).equals("Visual Detail")) {
                         intent = Intent(this, VisualDetailsActivity::class.java)
                     }
-                    if (!TyreConfigClass.RFCompleted) {
-                        intent?.putExtra("selectedTyre", "RF")
-                        intent?.putExtra("title", "Select Tyre Make - RF")
-                        TyreConfigClass.selectedTyreConfigType = "RFpending"
-                        TyreConfigClass.clickedTyre = "RF"
-                        startActivityForResult(intent, 1000)
-                    }
+                    intent?.putExtra("selectedTyre", "RF")
+                    intent?.putExtra("title", "Select Tyre Make - RF")
+                    TyreConfigClass.selectedTyreConfigType = "RFpending"
+                    TyreConfigClass.clickedTyre = "RF"
+                    startActivityForResult(intent, 1000)
                 } else {
                     Log.e("pendingg", "call0")
                     intent = Intent(this, VehicleMakeActivity::class.java)
@@ -1022,13 +1018,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else if (pendingArr?.get(0).equals("Visual Detail")) {
                         intent = Intent(this, VisualDetailsActivity::class.java)
                     }
-                    if (!TyreConfigClass.LRCompleted) {
-                        intent?.putExtra("selectedTyre", "LR")
-                        intent?.putExtra("title", "Select Tyre Make - LR")
-                        TyreConfigClass.selectedTyreConfigType = "LRpending"
-                        TyreConfigClass.clickedTyre = "LR"
-                        startActivityForResult(intent, 1000)
-                    }
+                    intent?.putExtra("selectedTyre", "LR")
+                    intent?.putExtra("title", "Select Tyre Make - LR")
+                    TyreConfigClass.selectedTyreConfigType = "LRpending"
+                    TyreConfigClass.clickedTyre = "LR"
+                    startActivityForResult(intent, 1000)
                 } else {
                     intent = Intent(this, VehicleMakeActivity::class.java)
                     intent?.putExtra("selectedTyre", "LR")
@@ -1064,13 +1058,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else if (pendingArr?.get(0).equals("Visual Detail")) {
                         intent = Intent(this, VisualDetailsActivity::class.java)
                     }
-                    if (!TyreConfigClass.RRCompleted) {
-                        intent?.putExtra("selectedTyre", "RR")
-                        intent?.putExtra("title", "Select Tyre Make - RR")
-                        TyreConfigClass.selectedTyreConfigType = "RRpending"
-                        TyreConfigClass.clickedTyre = "RR"
-                        startActivityForResult(intent, 1000)
-                    }
+                    intent?.putExtra("selectedTyre", "RR")
+                    intent?.putExtra("title", "Select Tyre Make - RR")
+                    TyreConfigClass.selectedTyreConfigType = "RRpending"
+                    TyreConfigClass.clickedTyre = "RR"
+                    startActivityForResult(intent, 1000)
                 } else {
                     intent = Intent(this, VehicleMakeActivity::class.java)
                     intent.putExtra("selectedTyre", "RR")
