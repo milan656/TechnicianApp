@@ -147,6 +147,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         mDb = DBClass.getInstance(applicationContext)
         init()
 
+        var threa = Thread {
+            for (i in mDb.daoRF().getAll().indices) {
+                Log.e("getview", "" + mDb.daoRF().getAll().get(i).id)
+            }
+
+        }
+        threa.start()
+
 
     }
 
@@ -251,10 +259,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         checkChangeListener()
 
-        TyreConfigClass.LFCompleted = false
-        TyreConfigClass.LRCompleted = false
-        TyreConfigClass.RFCompleted = false
-        TyreConfigClass.RRCompleted = false
+//        TyreConfigClass.LFCompleted = false
+//        TyreConfigClass.LRCompleted = false
+//        TyreConfigClass.RFCompleted = false
+//        TyreConfigClass.RRCompleted = false
     }
 
     private fun checkChangeListener() {
@@ -1281,101 +1289,108 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getvaluess_all", TyreDetailCommonClass.chk3Size!!)
 
 
-
                 var thread = Thread {
                     if (TyreDetailCommonClass.tyreType.equals("LF")) {
-                        Log.e("iscompleted::lf",""+TyreConfigClass.LFCompleted)
+                        Log.e("iscompleted::lf", "" + TyreConfigClass.LFCompleted)
+
+                        var entity = TyreLFDetail()
+                        entity.vehicleMake = TyreDetailCommonClass.vehicleMake
+                        entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+                        entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                        entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
+                        entity.vehicleSize = TyreDetailCommonClass.vehicleSize
+                        entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                        entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
+                        entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
+                        entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
+                        entity.weightTyreService = TyreDetailCommonClass.weightTyreService
+                        entity.sidewell = TyreDetailCommonClass.sidewell
+                        entity.shoulder = TyreDetailCommonClass.shoulder
+                        entity.treadWear = TyreDetailCommonClass.treadWear
+                        entity.treadDepth = TyreDetailCommonClass.treadDepth
+                        entity.rimDamage = TyreDetailCommonClass.rimDamage
+                        entity.bubble = TyreDetailCommonClass.bubble
+                        entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
+                        entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
+
                         if (!TyreConfigClass.LFCompleted) {
                             if (mDb.daoLF().getAll().size > 0) {
                                 mDb.daoLF().deleteAll()
                             }
 
-                            var entity = TyreLFDetail()
-                            entity.vehicleMake = TyreDetailCommonClass.vehicleMake
-                            entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-                            entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                            entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
-                            entity.vehicleSize = TyreDetailCommonClass.vehicleSize
-                            entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                            entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
-                            entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
-                            entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
-                            entity.weightTyreService = TyreDetailCommonClass.weightTyreService
-                            entity.sidewell = TyreDetailCommonClass.sidewell
-                            entity.shoulder = TyreDetailCommonClass.shoulder
-                            entity.treadWear = TyreDetailCommonClass.treadWear
-                            entity.treadDepth = TyreDetailCommonClass.treadDepth
-                            entity.rimDamage = TyreDetailCommonClass.rimDamage
-                            entity.bubble = TyreDetailCommonClass.bubble
-                            entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
-                            entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
-
                             mDb.daoLF().save(entity)
 
+                        } else {
+                            mDb.daoLF().update(entity)
                         }
 
                     } else if (TyreDetailCommonClass.tyreType.equals("LR")) {
-                        Log.e("iscompleted::lr",""+TyreConfigClass.LRCompleted)
+                        Log.e("iscompleted::lr", "" + TyreConfigClass.LRCompleted)
+
+                        var entity = TyreLRDetail()
+
+                        entity.vehicleMake = TyreDetailCommonClass.vehicleMake
+                        entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+                        entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                        entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
+                        entity.vehicleSize = TyreDetailCommonClass.vehicleSize
+                        entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                        entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
+                        entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
+                        entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
+                        entity.weightTyreService = TyreDetailCommonClass.weightTyreService
+                        entity.sidewell = TyreDetailCommonClass.sidewell
+                        entity.shoulder = TyreDetailCommonClass.shoulder
+                        entity.treadWear = TyreDetailCommonClass.treadWear
+                        entity.treadDepth = TyreDetailCommonClass.treadDepth
+                        entity.rimDamage = TyreDetailCommonClass.rimDamage
+                        entity.bubble = TyreDetailCommonClass.bubble
+                        entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
+                        entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
+
                         if (!TyreConfigClass.LRCompleted) {
                             if (mDb.daoLR().getAll().size > 0) {
                                 mDb.daoLR().deleteAll()
                             }
-
-                            var entity = TyreLRDetail()
-
-                            entity.vehicleMake = TyreDetailCommonClass.vehicleMake
-                            entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-                            entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                            entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
-                            entity.vehicleSize = TyreDetailCommonClass.vehicleSize
-                            entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                            entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
-                            entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
-                            entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
-                            entity.weightTyreService = TyreDetailCommonClass.weightTyreService
-                            entity.sidewell = TyreDetailCommonClass.sidewell
-                            entity.shoulder = TyreDetailCommonClass.shoulder
-                            entity.treadWear = TyreDetailCommonClass.treadWear
-                            entity.treadDepth = TyreDetailCommonClass.treadDepth
-                            entity.rimDamage = TyreDetailCommonClass.rimDamage
-                            entity.bubble = TyreDetailCommonClass.bubble
-                            entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
-                            entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
-
                             mDb.daoLR().save(entity)
+                        } else {
+                            mDb.daoLR().update(entity)
                         }
                     } else if (TyreDetailCommonClass.tyreType.equals("RF")) {
-                        Log.e("iscompleted::rf",""+TyreConfigClass.RFCompleted)
+                        Log.e("iscompleted::rf", "" + TyreConfigClass.RFCompleted)
+                        var entity = TyreRFDetail()
+                        entity.vehicleMake = TyreDetailCommonClass.vehicleMake
+                        entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+                        entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                        entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
+                        entity.vehicleSize = TyreDetailCommonClass.vehicleSize
+                        entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                        entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
+                        entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
+                        entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
+                        entity.weightTyreService = TyreDetailCommonClass.weightTyreService
+                        entity.sidewell = TyreDetailCommonClass.sidewell
+                        entity.shoulder = TyreDetailCommonClass.shoulder
+                        entity.treadWear = TyreDetailCommonClass.treadWear
+                        entity.treadDepth = TyreDetailCommonClass.treadDepth
+                        entity.rimDamage = TyreDetailCommonClass.rimDamage
+                        entity.bubble = TyreDetailCommonClass.bubble
+                        entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
+                        entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
+
                         if (!TyreConfigClass.RFCompleted) {
-                            if (mDb.daoRF().getAll().size > 0) {
-                                mDb.daoRF().deleteAll()
-                            }
-
-
-                            var entity = TyreRFDetail()
-                            entity.vehicleMake = TyreDetailCommonClass.vehicleMake
-                            entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-                            entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                            entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
-                            entity.vehicleSize = TyreDetailCommonClass.vehicleSize
-                            entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                            entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
-                            entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
-                            entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
-                            entity.weightTyreService = TyreDetailCommonClass.weightTyreService
-                            entity.sidewell = TyreDetailCommonClass.sidewell
-                            entity.shoulder = TyreDetailCommonClass.shoulder
-                            entity.treadWear = TyreDetailCommonClass.treadWear
-                            entity.treadDepth = TyreDetailCommonClass.treadDepth
-                            entity.rimDamage = TyreDetailCommonClass.rimDamage
-                            entity.bubble = TyreDetailCommonClass.bubble
-                            entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
-                            entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
-
+//                            if (mDb.daoRF().getAll().size > 0) {
+//                                mDb.daoRF().deleteAll()
+//                            }
                             mDb.daoRF().save(entity)
+                        } else {
+//                            entity.id = arrList?.get(selectedPos)?.Id!!
+                            mDb.daoRF().update(entity)
                         }
+
+
                     } else if (TyreDetailCommonClass.tyreType.equals("RR")) {
-                        Log.e("iscompleted::rr",""+TyreConfigClass.RRCompleted)
+                        Log.e("iscompleted::rr", "" + TyreConfigClass.RRCompleted)
                         if (!TyreConfigClass.RRCompleted) {
 
                             if (mDb.daoRR().getAll().size > 0) {
@@ -1408,94 +1423,102 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
                 thread.start()
 
+                if (!TyreConfigClass.LFCompleted) {
+                    if (TyreConfigClass.clickedTyre.equals("LF")) {
+                        if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
+                            ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                            ivtyreLeftFront?.visibility = View.VISIBLE
+                            ivInfoImgLF?.visibility = View.GONE
+                            TyreConfigClass.LFCompleted = true
 
-                if (TyreConfigClass.clickedTyre.equals("LF")) {
-                    if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
-                        ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                        ivtyreLeftFront?.visibility = View.VISIBLE
-                        ivInfoImgLF?.visibility = View.GONE
-                        TyreConfigClass.LFCompleted = true
+                            try {
+                                Glide.with(this)
+                                    .load(TyreConfigClass.selectedMakeURL)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.placeholder)
+                                    .into(ivTyreRightFront!!)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                            Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                        } else {
+                            ivInfoImgLF?.visibility = View.VISIBLE
 
-                        try {
-                            Glide.with(this)
-                                .load(TyreConfigClass.selectedMakeURL)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.placeholder)
-                                .into(ivTyreRightFront!!)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
                         }
-                        Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                    } else {
-                        ivInfoImgLF?.visibility = View.VISIBLE
-
                     }
                 }
-                if (TyreConfigClass.clickedTyre.equals("RF")) {
-                    if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
-                        ivTyre3?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                        ivTyreRightFront?.visibility = View.VISIBLE
-                        TyreConfigClass.RFCompleted = true
-                        try {
-                            Glide.with(this)
-                                .load(TyreConfigClass.selectedMakeURL)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.placeholder)
-                                .into(ivTyreRightFront!!)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                        Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                        ivInfoImgRF?.visibility = View.GONE
-                    } else {
-                        ivInfoImgRF?.visibility = View.VISIBLE
+                if (!TyreConfigClass.RFCompleted) {
+                    if (TyreConfigClass.clickedTyre.equals("RF")) {
+                        if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
+                            ivTyre3?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                            ivTyreRightFront?.visibility = View.VISIBLE
+                            TyreConfigClass.RFCompleted = true
+                            try {
+                                Glide.with(this)
+                                    .load(TyreConfigClass.selectedMakeURL)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.placeholder)
+                                    .into(ivTyreRightFront!!)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                            Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                            ivInfoImgRF?.visibility = View.GONE
+                        } else {
+                            ivInfoImgRF?.visibility = View.VISIBLE
 
+                        }
                     }
                 }
-                if (TyreConfigClass.clickedTyre.equals("LR")) {
-                    if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
-                        ivTyre2?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                        ivtyreLeftRear?.visibility = View.VISIBLE
-                        ivInfoImgLR?.visibility = View.GONE
-                        TyreConfigClass.LRCompleted = true
+                if (!TyreConfigClass.LRCompleted) {
+                    if (TyreConfigClass.clickedTyre.equals("LR")) {
+                        if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
+                            ivTyre2?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                            ivtyreLeftRear?.visibility = View.VISIBLE
+                            ivInfoImgLR?.visibility = View.GONE
+                            TyreConfigClass.LRCompleted = true
 
-                        try {
-                            Glide.with(this)
-                                .load(TyreConfigClass.selectedMakeURL)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.placeholder)
-                                .into(ivTyreRightFront!!)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
+                            try {
+                                Glide.with(this)
+                                    .load(TyreConfigClass.selectedMakeURL)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.placeholder)
+                                    .into(ivTyreRightFront!!)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                            Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                        } else {
+                            ivInfoImgLR?.visibility = View.VISIBLE
+
                         }
-                        Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                    } else {
-                        ivInfoImgLR?.visibility = View.VISIBLE
-
                     }
                 }
-                if (TyreConfigClass.clickedTyre.equals("RR")) {
+                if (!TyreConfigClass.RRCompleted) {
+                    if (TyreConfigClass.clickedTyre.equals("RR")) {
 
-                    if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
-                        ivTyre4?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                        ivTyreRightRear?.visibility = View.VISIBLE
-                        ivInfoImgRR?.visibility = View.GONE
-                        TyreConfigClass.RRCompleted = true
+                        if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
+                            ivTyre4?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                            ivTyreRightRear?.visibility = View.VISIBLE
+                            ivInfoImgRR?.visibility = View.GONE
+                            TyreConfigClass.RRCompleted = true
 
-                        try {
-                            Glide.with(this)
-                                .load(TyreConfigClass.selectedMakeURL)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.placeholder)
-                                .into(ivTyreRightFront!!)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
+                            try {
+                                Glide.with(this)
+                                    .load(TyreConfigClass.selectedMakeURL)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.placeholder)
+                                    .into(ivTyreRightFront!!)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                            Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                        } else {
+                            ivInfoImgRR?.visibility = View.VISIBLE
+
                         }
-                        Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                    } else {
-                        ivInfoImgRR?.visibility = View.VISIBLE
-
                     }
+
                 }
 
 
