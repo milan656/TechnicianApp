@@ -114,6 +114,11 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     .getAllSize().size > 0
             ) {
                 arrList?.addAll(mDb.sizeDaoClass().getAllSize())
+                for (i in arrList?.indices!!){
+
+                    Log.e("getpattersize",""+arrList?.get(i)?.sizeId)
+                    Log.e("getpattersize",""+arrList?.get(i)?.name)
+                }
 
             }
 
@@ -317,6 +322,17 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         TyreDetailCommonClass.tyreType = selectedTyre
         TyreDetailCommonClass.vehicleSize = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehicleSizeId = arrList?.get(selectedPos)?.sizeId?.toString()
+
+        if (chkLR?.isChecked!!) {
+            TyreDetailCommonClass.chk1Size = chkLR?.text.toString()
+        }
+        if (chkRF?.isChecked!!) {
+            TyreDetailCommonClass.chk2Size = chkRF?.text.toString()
+        }
+        if (chkRR?.isChecked!!) {
+            TyreDetailCommonClass.chk3Size = chkRR?.text.toString()
+        }
+
 
         Log.e("getvalueee22", "" + selectedTyre + " " + TyreConfigClass.RFVehicleSize)
         val intent = Intent(this, VisualDetailsActivity::class.java)

@@ -52,6 +52,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     private var selectedPos = -1
 
+    private var selectedName: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_make)
@@ -114,9 +116,6 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             chkRR?.text = "LR"
         }
 
-        adapter = VehicleMakeAdapterNew(this, arrList, this)
-        gridviewRecycMake_?.adapter = adapter
-        gridviewRecycMake_?.visibility = View.GONE
 
         var thread = Thread {
             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
@@ -127,8 +126,49 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 arrList?.addAll(mDb.daoClass().getAllVehicleType())
             }
 
+            if (selectedTyre.equals("LF")) {
+
+                if (mDb.daoLF().getAll().size > 0) {
+                    for (i in mDb.daoLF().getAll().indices) {
+                        Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.vehicleMake)
+                        Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.vehicleMakeId)
+                        selectedName = mDb.daoLF().getAll().get(i).vehicleMake!!
+                    }
+                }
+            } else if (selectedTyre.equals("LR")) {
+                if (mDb.daoLR().getAll().size > 0) {
+                    for (i in mDb.daoLR().getAll().indices) {
+                        Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i)?.vehicleMake)
+                        Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i)?.vehicleMakeId)
+                        selectedName = mDb.daoLR().getAll().get(i).vehicleMake!!
+                    }
+                }
+
+            } else if (selectedTyre.equals("RF")) {
+                if (mDb.daoRF().getAll().size > 0) {
+                    for (i in mDb.daoRF().getAll().indices) {
+                        Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i)?.vehicleMake)
+                        Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i)?.vehicleMakeId)
+                        selectedName = mDb.daoRF().getAll().get(i).vehicleMake!!
+                    }
+                }
+
+            } else if (selectedTyre.equals("RR")) {
+                if (mDb.daoRR().getAll().size > 0) {
+                    for (i in mDb.daoRR().getAll().indices) {
+                        Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i)?.vehicleMake)
+                        Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i)?.vehicleMakeId)
+                        selectedName = mDb.daoRR().getAll().get(i).vehicleMake!!
+                    }
+                }
+
+            }
+
         }
         thread.start()
+        adapter = VehicleMakeAdapterNew(this, arrList, this, selectedName)
+        gridviewRecycMake_?.adapter = adapter
+        gridviewRecycMake_?.visibility = View.GONE
 
         var handler = Handler()
         handler.postDelayed(Runnable {
@@ -287,8 +327,18 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         }
 
         TyreDetailCommonClass.tyreType = selectedTyre
-        TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.concat
+        TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.Id?.toString()
+
+        if (chkLR?.isChecked!!) {
+            TyreDetailCommonClass.chk1Make = chkLR?.text.toString()
+        }
+        if (chkRF?.isChecked!!) {
+            TyreDetailCommonClass.chk2Make = chkRF?.text.toString()
+        }
+        if (chkRR?.isChecked!!) {
+            TyreDetailCommonClass.chk3Make = chkRR?.text.toString()
+        }
 
 
         Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)

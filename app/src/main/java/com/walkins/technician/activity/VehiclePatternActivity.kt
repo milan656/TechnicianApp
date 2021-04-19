@@ -127,6 +127,12 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             ) {
                 arrList?.addAll(mDb.patternDaoClass().getAllPattern())
 
+                for (i in arrList?.indices!!){
+
+                    Log.e("getpatter",""+arrList?.get(i)?.patternId)
+                    Log.e("getpatter",""+arrList?.get(i)?.name)
+                }
+
             }
 
         }
@@ -273,6 +279,17 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         TyreDetailCommonClass.tyreType = selectedTyre
         TyreDetailCommonClass.vehiclePattern = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehiclePatternId = arrList?.get(selectedPos)?.patternId?.toString()
+
+        if (chkLR?.isChecked!!) {
+            TyreDetailCommonClass.chk1Pattern = chkLR?.text.toString()
+        }
+        if (chkRF?.isChecked!!) {
+            TyreDetailCommonClass.chk2Pattern = chkRF?.text.toString()
+        }
+        if (chkRR?.isChecked!!) {
+            TyreDetailCommonClass.chk3Pattern = chkRR?.text.toString()
+        }
+
 
         Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
         var intent = Intent(this, VehicleSizeActivity::class.java)

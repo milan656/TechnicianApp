@@ -263,7 +263,6 @@
                 android:layout_gravity="top"
                 android:src="@drawable/info_in_profile"
                 android:visibility="invisible"
-
                 app:tint="@color/header_title" />
 
             <ImageView
@@ -273,17 +272,14 @@
                 android:layout_gravity="top"
                 android:src="@drawable/info_in_profile"
                 android:visibility="invisible"
-
                 app:tint="@color/header_title" />
 
             <ImageView
-
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="top"
                 android:src="@drawable/info_in_profile"
                 android:visibility="invisible"
-
                 app:tint="@color/header_title" />
 
         </LinearLayout>

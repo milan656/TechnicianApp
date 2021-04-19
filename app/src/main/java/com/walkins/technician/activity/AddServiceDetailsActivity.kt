@@ -37,6 +37,7 @@ import com.example.technician.common.Common
 import com.example.technician.common.Common.Companion.getFile
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.theartofdev.edmodo.cropper.CropImage
+import com.walkins.technician.DB.*
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
@@ -48,6 +49,7 @@ import java.io.File
 
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
+    private lateinit var mDb: DBClass
     var pendingArr: ArrayList<String>? = null
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGE_REQUEST = 100
@@ -142,7 +144,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_service_details)
-
+        mDb = DBClass.getInstance(applicationContext)
         init()
 
 
@@ -911,19 +913,28 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.LFVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail")
                 }
-                if (pendingArr?.get(0).equals("Tyre Make")) {
+                if (pendingArr?.size!! > 0) {
+                    if (pendingArr?.get(0).equals("Tyre Make")) {
+                        intent = Intent(this, VehicleMakeActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
+                        intent = Intent(this, VehiclePatternActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Tyre Size")) {
+                        intent = Intent(this, VehicleSizeActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Visual Detail")) {
+                        intent = Intent(this, VisualDetailsActivity::class.java)
+                    }
+                    if (!TyreConfigClass.LFCompleted) {
+                        intent?.putExtra("selectedTyre", "LF")
+                        intent?.putExtra("title", "Select Tyre Make - LF")
+                        TyreConfigClass.selectedTyreConfigType = "LFpending"
+                        TyreConfigClass.clickedTyre = "LF"
+                        startActivityForResult(intent, 1000)
+                    }
+                } else {
                     intent = Intent(this, VehicleMakeActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
-                    intent = Intent(this, VehiclePatternActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Tyre Size")) {
-                    intent = Intent(this, VehicleSizeActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Visual Detail")) {
-                    intent = Intent(this, VisualDetailsActivity::class.java)
-                }
-                if (!TyreConfigClass.LFCompleted) {
                     intent?.putExtra("selectedTyre", "LF")
                     intent?.putExtra("title", "Select Tyre Make - LF")
-                    TyreConfigClass.selectedTyreConfigType = "LFpending"
+                    TyreConfigClass.selectedTyreConfigType = "LF"
                     TyreConfigClass.clickedTyre = "LF"
                     startActivityForResult(intent, 1000)
                 }
@@ -944,19 +955,29 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.RFVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail")
                 }
-                if (pendingArr?.get(0).equals("Tyre Make")) {
+                if (pendingArr?.size!! > 0) {
+                    if (pendingArr?.get(0).equals("Tyre Make")) {
+                        intent = Intent(this, VehicleMakeActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
+                        intent = Intent(this, VehiclePatternActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Tyre Size")) {
+                        intent = Intent(this, VehicleSizeActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Visual Detail")) {
+                        intent = Intent(this, VisualDetailsActivity::class.java)
+                    }
+                    if (!TyreConfigClass.RFCompleted) {
+                        intent?.putExtra("selectedTyre", "RF")
+                        intent?.putExtra("title", "Select Tyre Make - RF")
+                        TyreConfigClass.selectedTyreConfigType = "RFpending"
+                        TyreConfigClass.clickedTyre = "RF"
+                        startActivityForResult(intent, 1000)
+                    }
+
+                } else {
                     intent = Intent(this, VehicleMakeActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
-                    intent = Intent(this, VehiclePatternActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Tyre Size")) {
-                    intent = Intent(this, VehicleSizeActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Visual Detail")) {
-                    intent = Intent(this, VisualDetailsActivity::class.java)
-                }
-                if (!TyreConfigClass.RFCompleted) {
                     intent?.putExtra("selectedTyre", "RF")
                     intent?.putExtra("title", "Select Tyre Make - RF")
-                    TyreConfigClass.selectedTyreConfigType = "RFpending"
+                    TyreConfigClass.selectedTyreConfigType = "RF"
                     TyreConfigClass.clickedTyre = "RF"
                     startActivityForResult(intent, 1000)
                 }
@@ -977,19 +998,28 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.LRVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail")
                 }
-                if (pendingArr?.get(0).equals("Tyre Make")) {
+                if (pendingArr?.size!! > 0) {
+                    if (pendingArr?.get(0).equals("Tyre Make")) {
+                        intent = Intent(this, VehicleMakeActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
+                        intent = Intent(this, VehiclePatternActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Tyre Size")) {
+                        intent = Intent(this, VehicleSizeActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Visual Detail")) {
+                        intent = Intent(this, VisualDetailsActivity::class.java)
+                    }
+                    if (!TyreConfigClass.LRCompleted) {
+                        intent?.putExtra("selectedTyre", "LR")
+                        intent?.putExtra("title", "Select Tyre Make - LR")
+                        TyreConfigClass.selectedTyreConfigType = "LRpending"
+                        TyreConfigClass.clickedTyre = "LR"
+                        startActivityForResult(intent, 1000)
+                    }
+                } else {
                     intent = Intent(this, VehicleMakeActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
-                    intent = Intent(this, VehiclePatternActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Tyre Size")) {
-                    intent = Intent(this, VehicleSizeActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Visual Detail")) {
-                    intent = Intent(this, VisualDetailsActivity::class.java)
-                }
-                if (!TyreConfigClass.LRCompleted) {
                     intent?.putExtra("selectedTyre", "LR")
                     intent?.putExtra("title", "Select Tyre Make - LR")
-                    TyreConfigClass.selectedTyreConfigType = "LRpending"
+                    TyreConfigClass.selectedTyreConfigType = "LR"
                     TyreConfigClass.clickedTyre = "LR"
                     startActivityForResult(intent, 1000)
                 }
@@ -1010,19 +1040,28 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.RRVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail")
                 }
-                if (pendingArr?.get(0).equals("Tyre Make")) {
+                if (pendingArr?.size!! > 0) {
+                    if (pendingArr?.get(0).equals("Tyre Make")) {
+                        intent = Intent(this, VehicleMakeActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
+                        intent = Intent(this, VehiclePatternActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Tyre Size")) {
+                        intent = Intent(this, VehicleSizeActivity::class.java)
+                    } else if (pendingArr?.get(0).equals("Visual Detail")) {
+                        intent = Intent(this, VisualDetailsActivity::class.java)
+                    }
+                    if (!TyreConfigClass.RRCompleted) {
+                        intent?.putExtra("selectedTyre", "RR")
+                        intent?.putExtra("title", "Select Tyre Make - RR")
+                        TyreConfigClass.selectedTyreConfigType = "RRpending"
+                        TyreConfigClass.clickedTyre = "RR"
+                        startActivityForResult(intent, 1000)
+                    }
+                } else {
                     intent = Intent(this, VehicleMakeActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
-                    intent = Intent(this, VehiclePatternActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Tyre Size")) {
-                    intent = Intent(this, VehicleSizeActivity::class.java)
-                } else if (pendingArr?.get(0).equals("Visual Detail")) {
-                    intent = Intent(this, VisualDetailsActivity::class.java)
-                }
-                if (!TyreConfigClass.RRCompleted) {
-                    intent?.putExtra("selectedTyre", "RR")
-                    intent?.putExtra("title", "Select Tyre Make - RR")
-                    TyreConfigClass.selectedTyreConfigType = "RRpending"
+                    intent.putExtra("selectedTyre", "RR")
+                    intent.putExtra("title", "Select Tyre Make - RR")
+                    TyreConfigClass.selectedTyreConfigType = "RR"
                     TyreConfigClass.clickedTyre = "RR"
                     startActivityForResult(intent, 1000)
                 }
@@ -1231,6 +1270,140 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
                 Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
 
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk1Make!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk2Make!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk3Make!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk1Pattern!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk2Pattern!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk3Pattern!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk1Size!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk2Size!!)
+                Log.e("getvaluess_all", TyreDetailCommonClass.chk3Size!!)
+
+
+                var thread = Thread {
+                    if (TyreDetailCommonClass.tyreType.equals("LF")) {
+                        if (!TyreConfigClass.LFCompleted) {
+                            if (mDb.daoLF().getAll().size > 0) {
+                                mDb.daoLF().deleteAll()
+                            }
+
+                            var entity = TyreLFDetail()
+                            entity.vehicleMake = TyreDetailCommonClass.vehicleMake
+                            entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+                            entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                            entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
+                            entity.vehicleSize = TyreDetailCommonClass.vehicleSize
+                            entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                            entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
+                            entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
+                            entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
+                            entity.weightTyreService = TyreDetailCommonClass.weightTyreService
+                            entity.sidewell = TyreDetailCommonClass.sidewell
+                            entity.shoulder = TyreDetailCommonClass.shoulder
+                            entity.treadWear = TyreDetailCommonClass.treadWear
+                            entity.treadDepth = TyreDetailCommonClass.treadDepth
+                            entity.rimDamage = TyreDetailCommonClass.rimDamage
+                            entity.bubble = TyreDetailCommonClass.bubble
+                            entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
+                            entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
+
+                            mDb.daoLF().save(entity)
+
+                        }
+
+                    } else if (TyreDetailCommonClass.tyreType.equals("LR")) {
+                        if (!TyreConfigClass.LRCompleted) {
+                            if (mDb.daoLR().getAll().size > 0) {
+                                mDb.daoLR().deleteAll()
+                            }
+
+                            var entity = TyreLRDetail()
+
+                            entity.vehicleMake = TyreDetailCommonClass.vehicleMake
+                            entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+                            entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                            entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
+                            entity.vehicleSize = TyreDetailCommonClass.vehicleSize
+                            entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                            entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
+                            entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
+                            entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
+                            entity.weightTyreService = TyreDetailCommonClass.weightTyreService
+                            entity.sidewell = TyreDetailCommonClass.sidewell
+                            entity.shoulder = TyreDetailCommonClass.shoulder
+                            entity.treadWear = TyreDetailCommonClass.treadWear
+                            entity.treadDepth = TyreDetailCommonClass.treadDepth
+                            entity.rimDamage = TyreDetailCommonClass.rimDamage
+                            entity.bubble = TyreDetailCommonClass.bubble
+                            entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
+                            entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
+
+                            mDb.daoLR().save(entity)
+                        }
+                    } else if (TyreDetailCommonClass.tyreType.equals("RF")) {
+                        if (!TyreConfigClass.RFCompleted) {
+                            if (mDb.daoRF().getAll().size > 0) {
+                                mDb.daoRF().deleteAll()
+                            }
+
+
+                            var entity = TyreRFDetail()
+                            entity.vehicleMake = TyreDetailCommonClass.vehicleMake
+                            entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+                            entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                            entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
+                            entity.vehicleSize = TyreDetailCommonClass.vehicleSize
+                            entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                            entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
+                            entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
+                            entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
+                            entity.weightTyreService = TyreDetailCommonClass.weightTyreService
+                            entity.sidewell = TyreDetailCommonClass.sidewell
+                            entity.shoulder = TyreDetailCommonClass.shoulder
+                            entity.treadWear = TyreDetailCommonClass.treadWear
+                            entity.treadDepth = TyreDetailCommonClass.treadDepth
+                            entity.rimDamage = TyreDetailCommonClass.rimDamage
+                            entity.bubble = TyreDetailCommonClass.bubble
+                            entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
+                            entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
+
+                            mDb.daoRF().save(entity)
+                        }
+                    } else if (TyreDetailCommonClass.tyreType.equals("RR")) {
+                        if (!TyreConfigClass.RRCompleted) {
+
+                            if (mDb.daoRR().getAll().size > 0) {
+                                mDb.daoRR().deleteAll()
+                            }
+                            var entity = TyreRRDetail()
+                            entity.vehicleMake = TyreDetailCommonClass.vehicleMake
+                            entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+                            entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                            entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
+                            entity.vehicleSize = TyreDetailCommonClass.vehicleSize
+                            entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                            entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
+                            entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
+                            entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
+                            entity.weightTyreService = TyreDetailCommonClass.weightTyreService
+                            entity.sidewell = TyreDetailCommonClass.sidewell
+                            entity.shoulder = TyreDetailCommonClass.shoulder
+                            entity.treadWear = TyreDetailCommonClass.treadWear
+                            entity.treadDepth = TyreDetailCommonClass.treadDepth
+                            entity.rimDamage = TyreDetailCommonClass.rimDamage
+                            entity.bubble = TyreDetailCommonClass.bubble
+                            entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
+                            entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
+
+                            mDb.daoRR().save(entity)
+                        }
+                    }
+
+                }
+                thread.start()
+
+
                 if (TyreConfigClass.clickedTyre.equals("LF")) {
                     if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
                         ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
@@ -1319,6 +1492,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     }
                 }
+
+
             }
         }
     }

@@ -25,5 +25,17 @@ class TyreDetailCommonClass {
         var issueResolvedArr: ArrayList<String>? = ArrayList()
         var visualDetailPhotoUrl: String? = ""
 
+        var chk1Make: String? = ""
+        var chk2Make: String? = ""
+        var chk3Make: String? = ""
+
+        var chk1Pattern: String? = ""
+        var chk2Pattern: String? = ""
+        var chk3Pattern: String? = ""
+
+        var chk1Size: String? = ""
+        var chk2Size: String? = ""
+        var chk3Size: String? = ""
+
     }
 }

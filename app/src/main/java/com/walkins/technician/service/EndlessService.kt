@@ -161,7 +161,7 @@ class EndlessService : Service() {
                     fetchSize()
                     stopService()
                 }
-                delay(1 * 60 * 1000)
+                delay(5 * 60 * 1000) // 5 min delay
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
@@ -296,16 +296,16 @@ class EndlessService : Service() {
 
             for (i in patternModel.data.indices) {
 
-                var model = patternModel.data.get(i)
                 var entity = VehiclePatternModelClass()
 
-                entity.name = if (model.name != null) model.name else ""
-                entity.patternId = model.patternId
+                entity.name =
+                    if (patternModel.data?.get(i)?.name != null) patternModel.data?.get(i)?.name else ""
+                entity.patternId = patternModel.data?.get(i)?.patternId
                 entity.isSelected = false
                 mDb.patternDaoClass().savePattern(entity)
             }
 
-            Log.e("response+++", "++++" + mDb.patternDaoClass().getAllPattern().size)
+            Log.e("response+++", "++++" + mDb.patternDaoClass().getAllPattern())
         }
 
         thread.start()
@@ -321,16 +321,16 @@ class EndlessService : Service() {
 
             for (i in sizeModel.data.indices) {
 
-                var model = sizeModel.data.get(i)
                 var entity = VehicleSizeModelClass()
 
-                entity.name = if (model.name != null) model.name else ""
-                entity.sizeId = model.sizeId
+                entity.name =
+                    if (sizeModel.data?.get(i)?.name != null) sizeModel.data.get(i).name else ""
+                entity.sizeId = sizeModel.data.get(i).sizeId
                 entity.isSelected = false
                 mDb.sizeDaoClass().saveSize(entity)
             }
 
-            Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize().size)
+            Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize())
         }
 
         thread.start()

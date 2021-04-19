@@ -20,7 +20,8 @@ import com.walkins.technician.common.onClickAdapter
 class VehicleMakeAdapterNew internal constructor(
     private val mContext: Context,
     private var name: ArrayList<VehicleMakeModelClass>?,
-    onPositionClick: onClickAdapter
+    onPositionClick: onClickAdapter,
+    private var selectedName: String
 
 ) : RecyclerView.Adapter<VehicleMakeAdapterNew.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -52,6 +53,14 @@ class VehicleMakeAdapterNew internal constructor(
 
         Log.e("getimages", "" + name?.get(position)?.concat)
         Log.e("getimages", "" + name?.get(position)?.name)
+
+        Log.e("selectedmake", "" + selectedName)
+        if (selectedName != null && !selectedName.equals("")) {
+            Log.e("selectedmake", "" + selectedName + " " + name?.get(position)?.name)
+            if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
+                holder.rlItemView.performClick()
+            }
+        }
         try {
             Glide.with(mContext)
                 .load(name?.get(position)?.concat)
@@ -67,6 +76,7 @@ class VehicleMakeAdapterNew internal constructor(
         } else {
             holder.rlItemView.setBackgroundResource(R.drawable.unselected)
         }
+
 
         holder.rlItemView.setOnClickListener {
             if (name!!.get(position).isSelected) {
