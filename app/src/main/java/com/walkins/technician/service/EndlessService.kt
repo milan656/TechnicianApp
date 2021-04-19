@@ -156,9 +156,14 @@ class EndlessService : Service() {
         GlobalScope.launch(Dispatchers.IO) {
             while (isServiceStarted) {
                 launch(Dispatchers.IO) {
-                    fetchVehicleData()
-                    fetchPattern()
-                    fetchSize()
+//                    fetchVehicleData()
+//                    fetchPattern()
+//                    fetchSize()
+
+                    saveStaticVehicleMake()
+                    saveStaticPatternData()
+                    saveStaticSize()
+
                     stopService()
                 }
                 delay(5 * 60 * 1000) // 5 min delay
@@ -312,6 +317,31 @@ class EndlessService : Service() {
 
     }
 
+    private fun saveStaticPatternData() {
+
+        var thread: Thread = Thread {
+            if (mDb.patternDaoClass().getAllPattern().size > 0) {
+                mDb.patternDaoClass().deleteAll()
+            }
+
+            for (i in 0..10) {
+
+                var entity = VehiclePatternModelClass()
+
+                entity.name =
+                    "101H546 45"
+                entity.patternId = 45 + i
+                entity.isSelected = false
+                mDb.patternDaoClass().savePattern(entity)
+            }
+
+            Log.e("response+++", "++++" + mDb.patternDaoClass().getAllPattern())
+        }
+
+        thread.start()
+
+    }
+
     private fun saveSizeData(sizeModel: SizeModel) {
 
         var thread: Thread = Thread {
@@ -337,6 +367,27 @@ class EndlessService : Service() {
 
     }
 
+    fun saveStaticSize() {
+        val thread = Thread {
+            if (mDb.sizeDaoClass().getAllSize().size > 0) {
+                mDb.sizeDaoClass().deleteAll()
+            }
+
+            for (i in 0..10) {
+
+                var entity = VehicleSizeModelClass()
+
+                entity.name =
+                    "120H 785"
+                entity.sizeId = 655 + i
+                entity.isSelected = false
+                mDb.sizeDaoClass().saveSize(entity)
+            }
+        }
+        thread.start()
+    }
+
+
     private fun saveVehicleTypeData(vehicleBrandModel: VehicleBrandModel) {
 
         var thread: Thread = Thread {
@@ -344,20 +395,26 @@ class EndlessService : Service() {
                 mDb.daoClass().deleteAll()
             }
 
-            for (i in vehicleBrandModel.data?.indices!!) {
+            if (vehicleBrandModel.data != null && vehicleBrandModel.data.size!! > 0) {
+                for (i in vehicleBrandModel.data?.indices!!) {
 
-                var model = vehicleBrandModel.data.get(i)
-                var entity = VehicleMakeModelClass()
+                    var model = vehicleBrandModel.data.get(i)
+                    var entity = VehicleMakeModelClass()
 
-                entity.name = if (model.name != null) model.name else ""
-                entity.short_number = if (model.short_number != null) model.short_number else ""
-                entity.concat = if (model.concat != null) model.concat else ""
-                entity.image_url = if (model.image_url != null) model.image_url else ""
-                entity.brand_id = if (model.brand_id != null) model.brand_id else ""
-                entity.quality = if (model.quality != null) model.quality else ""
+                    entity.name = if (model.name != null) model.name else ""
+                    entity.short_number = if (model.short_number != null) model.short_number else ""
+                    entity.concat = if (model.concat != null) model.concat else ""
+                    entity.image_url = if (model.image_url != null) model.image_url else ""
+                    entity.brand_id = if (model.brand_id != null) model.brand_id else ""
+                    entity.quality = if (model.quality != null) model.quality else ""
 
-                entity.isSelected = false
-                mDb.daoClass().saveVehicleType(entity)
+                    entity.isSelected = false
+                    mDb.daoClass().saveVehicleType(entity)
+                }
+
+            } else {
+
+                saveStaticVehicleMake()
             }
             Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize().size)
         }
@@ -366,6 +423,27 @@ class EndlessService : Service() {
 
     }
 
+    fun saveStaticVehicleMake() {
+        val thread = Thread {
+            for (i in 0..10) {
+//                    var model = vehicleBrandModel.data.get(i)
+                var entity = VehicleMakeModelClass()
+
+                entity.name = "Test name"
+                entity.short_number = ""
+                entity.concat =
+                    "https://stag-tyreservice-backend.trackwalkins.com/get-tyre-pattern"
+                entity.image_url =
+                    "https://stag-tyreservice-backend.trackwalkins.com/get-tyre-pattern"
+                entity.brand_id = ""
+                entity.quality = ""
+
+                entity.isSelected = false
+                mDb.daoClass().saveVehicleType(entity)
+            }
+        }
+        thread.start()
+    }
 
     private fun createNotification(): Notification {
         val notificationChannelId = "ENDLESS SERVICE CHANNEL"
