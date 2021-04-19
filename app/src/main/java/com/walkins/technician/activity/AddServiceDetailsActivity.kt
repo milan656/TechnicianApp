@@ -144,7 +144,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_service_details)
-        mDb = DBClass.getInstance(applicationContext)
+        mDb = DBClass.getInstance(this)
         init()
 
         var threa = Thread {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_marginTop="@dimen/eight_dp"
@@ -19,12 +18,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/three_dp"
+        android:layout_marginEnd="@dimen/two_dp"
         android:layout_weight="1"
         android:background="@drawable/common_rounded"
         android:elevation="@dimen/twenty_dp"
-        android:orientation="horizontal"
-        android:layout_marginRight="@dimen/three_dp">
+        android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
 
@@ -131,13 +129,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/three_dp"
+        android:layout_marginStart="@dimen/two_dp"
         android:layout_weight="3"
         android:background="@drawable/common_rounded"
         android:elevation="@dimen/twenty_dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/three_dp">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="32dp"

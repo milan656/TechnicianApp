@@ -107,8 +107,8 @@
         android:layout_marginTop="@dimen/twenty_dp"
         android:layout_marginEnd="@dimen/sixteen_dp"
         android:background="@drawable/common_rounded"
-        android:orientation="horizontal"
-        android:elevation="@dimen/twenty_dp">
+        android:elevation="@dimen/twenty_dp"
+        android:orientation="horizontal">
 
         <com.walkins.technician.custom.BoldHeavyTextView
             android:id="@+id/tvAddress"

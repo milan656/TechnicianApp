@@ -23,7 +23,7 @@ class ServicesListAdpater(
 
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var cardAddService: CardView = itemView.findViewById(R.id.cardAddService)
+        var cardAddService: LinearLayout = itemView.findViewById(R.id.cardAddService)
         var ivCarimg: ImageView = itemView.findViewById(R.id.ivCarimg)
         var lllineView: LinearLayout = itemView.findViewById(R.id.lllineView)
         var tvVehicleNumber: TextView = itemView.findViewById(R.id.tvVehicleNumber)
