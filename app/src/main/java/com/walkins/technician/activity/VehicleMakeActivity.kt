@@ -245,14 +245,12 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             entity.isRRSelected = chkRR?.isChecked!!
 
             mDb.daoClass().update(entity)
-
         }
         thread.start()
 
         TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
 
         if (selectedTyre.equals("LF")) {
-
             TyreConfigClass.LFVehicleMake = true
         } else if (selectedTyre.equals("LR")) {
             TyreConfigClass.LRVehicleMake = true
@@ -268,6 +266,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             chkLR?.text = "LR"
             chkRR?.text = "RR"
 
+            TyreConfigClass.RFVehicleMake = false
+            TyreConfigClass.LRVehicleMake = false
+            TyreConfigClass.RRVehicleMake = false
+
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.RFVehicleMake = true
             }
@@ -277,11 +279,17 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.RRVehicleMake = true
             }
+
+
             Log.e("pendingArr8969", "" + TyreConfigClass.LFVehicleMake)
         } else if (selectedTyre.equals("RF")) {
             chkRF?.text = "LF"
             chkLR?.text = "LR"
             chkRR?.text = "RR"
+
+            TyreConfigClass.LFVehicleMake = false
+            TyreConfigClass.LRVehicleMake = false
+            TyreConfigClass.RRVehicleMake = false
 
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.LFVehicleMake = true
@@ -292,6 +300,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.RRVehicleMake = true
             }
+
+
             Log.e("pendingArr67575", "" + TyreConfigClass.LFVehicleMake)
 
         } else if (selectedTyre.equals("LR")) {
@@ -299,6 +309,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             chkLR?.text = "RF"
             chkRR?.text = "RR"
 
+            TyreConfigClass.LFVehicleMake = false
+            TyreConfigClass.RFVehicleMake = false
+            TyreConfigClass.RRVehicleMake = false
+
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.LFVehicleMake = true
             }
@@ -308,12 +322,18 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.RRVehicleMake = true
             }
+
+
             Log.e("pendingArr0", "" + TyreConfigClass.LFVehicleMake)
 
         } else if (selectedTyre.equals("RR")) {
             chkRF?.text = "LF"
             chkLR?.text = "RF"
             chkRR?.text = "LR"
+
+            TyreConfigClass.LFVehicleMake = false
+            TyreConfigClass.RFVehicleMake = false
+            TyreConfigClass.LRVehicleMake = false
 
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.LFVehicleMake = true
@@ -324,6 +344,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.LRVehicleMake = true
             }
+
+
             Log.e("pendingArr54654", "" + TyreConfigClass.LFVehicleMake)
         }
 
@@ -331,11 +353,11 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.Id?.toString()
 
-        if (chkLR?.isChecked!!) {
-            TyreDetailCommonClass.chk1Make = chkLR?.text.toString()
-        }
         if (chkRF?.isChecked!!) {
-            TyreDetailCommonClass.chk2Make = chkRF?.text.toString()
+            TyreDetailCommonClass.chk1Make = chkRF?.text.toString()
+        }
+        if (chkLR?.isChecked!!) {
+            TyreDetailCommonClass.chk2Make = chkLR?.text.toString()
         }
         if (chkRR?.isChecked!!) {
             TyreDetailCommonClass.chk3Make = chkRR?.text.toString()
@@ -347,6 +369,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         intent.putExtra("selectedTyre", selectedTyre)
         intent.putExtra("selectedVehicleMake", "" + arrList?.get(selectedPos)?.Id)
         startActivityForResult(intent, 1002)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -1276,20 +1276,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
                 Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
 
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk1Make!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk2Make!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk3Make!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk1Pattern!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk2Pattern!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk3Pattern!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk1Size!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk2Size!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.chk3Size!!)
-
+                Log.e("getvaluess_all--1 make", TyreDetailCommonClass.chk1Make!!)
+                Log.e("getvaluess_all--2 make", TyreDetailCommonClass.chk2Make!!)
+                Log.e("getvaluess_all--3 make", TyreDetailCommonClass.chk3Make!!)
+                Log.e("getvaluess_all--1 patte", TyreDetailCommonClass.chk1Pattern!!)
+                Log.e("getvaluess_all--2 patte", TyreDetailCommonClass.chk2Pattern!!)
+                Log.e("getvaluess_all--3 patte", TyreDetailCommonClass.chk3Pattern!!)
+                Log.e("getvaluess_all--1 size", TyreDetailCommonClass.chk1Size!!)
+                Log.e("getvaluess_all--2 size", TyreDetailCommonClass.chk2Size!!)
+                Log.e("getvaluess_all--3 size", TyreDetailCommonClass.chk3Size!!)
 
 
                 val thread = Thread {
-                    if (TyreDetailCommonClass.tyreType.equals("LF")) {
+                    /*if (TyreDetailCommonClass.tyreType.equals("LF")) {
                         Log.e("iscompleted::lf", "" + TyreConfigClass.LFCompleted)
 
                         var entity = TyreLFDetail()
@@ -1318,6 +1317,68 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
 
                             mDb.daoLF().save(entity)
+
+                            if (TyreDetailCommonClass.chk1Make.equals("RF")) {
+                                val entityRF = TyreRFDetail()
+                                entityRF.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityRF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (TyreDetailCommonClass.chk1Pattern.equals("RF")) {
+                                    entityRF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityRF.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk1Size.equals("RF")) {
+                                    entityRF.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityRF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+
+                                if (mDb.daoRF().getAll().size > 0) {
+                                    mDb.daoRF().deleteAll()
+                                }
+                                mDb.daoRF().save(entityRF)
+                            }
+                            if (TyreDetailCommonClass.chk2Make.equals("LR")) {
+
+                                val entityLR = TyreLRDetail()
+                                entityLR.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityLR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (mDb.daoLR().getAll().size > 0) {
+                                    mDb.daoLR().deleteAll()
+                                }
+
+                                if (TyreDetailCommonClass.chk2Pattern.equals("LR")) {
+                                    entityLR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityLR.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk2Size.equals("LR")) {
+                                    entityLR.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityLR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+                                mDb.daoLR().save(entityLR)
+                            }
+                            if (TyreDetailCommonClass.chk3Make.equals("RR")) {
+                                val entityRR = TyreRRDetail()
+                                entityRR.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityRR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (mDb.daoRR().getAll().size > 0) {
+                                    mDb.daoRR().deleteAll()
+                                }
+
+                                if (TyreDetailCommonClass.chk3Pattern.equals("RR")) {
+                                    entityRR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityRR.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk3Size.equals("RR")) {
+                                    entityRR.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityRR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+                                mDb.daoRR().save(entityRR)
+                            }
 
                         } else {
                             var id: Int = -1
@@ -1357,6 +1418,69 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             if (mDb.daoLR().getAll().size > 0) {
                                 mDb.daoLR().deleteAll()
                             }
+
+                            if (TyreDetailCommonClass.chk1Make.equals("LF")) {
+                                val entityLF = TyreLFDetail()
+                                entityLF.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityLF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (TyreDetailCommonClass.chk1Pattern.equals("LF")) {
+                                    entityLF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityLF.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk1Size.equals("LF")) {
+                                    entityLF.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityLF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+
+                                if (mDb.daoLF().getAll().size > 0) {
+                                    mDb.daoLF().deleteAll()
+                                }
+                                mDb.daoLF().save(entityLF)
+                            }
+                            if (TyreDetailCommonClass.chk2Make.equals("RF")) {
+
+                                val entityRF = TyreRFDetail()
+                                entityRF.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityRF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (mDb.daoRF().getAll().size > 0) {
+                                    mDb.daoRF().deleteAll()
+                                }
+
+                                if (TyreDetailCommonClass.chk2Pattern.equals("RF")) {
+                                    entityRF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityRF.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk2Size.equals("RF")) {
+                                    entityRF.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityRF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+                                mDb.daoRF().save(entityRF)
+                            }
+                            if (TyreDetailCommonClass.chk3Make.equals("RR")) {
+                                val entityRR = TyreRRDetail()
+                                entityRR.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityRR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (mDb.daoRR().getAll().size > 0) {
+                                    mDb.daoRR().deleteAll()
+                                }
+
+                                if (TyreDetailCommonClass.chk3Pattern.equals("RR")) {
+                                    entityRR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityRR.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk3Size.equals("RR")) {
+                                    entityRR.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityRR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+                                mDb.daoRR().save(entityRR)
+                            }
+
                             mDb.daoLR().save(entity)
                         } else {
                             var id: Int = -1
@@ -1395,6 +1519,69 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                 mDb.daoRF().deleteAll()
                             }
                             mDb.daoRF().save(entity)
+
+                            if (TyreDetailCommonClass.chk1Make.equals("LF")) {
+                                val entityLF = TyreLFDetail()
+                                entityLF.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityLF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (TyreDetailCommonClass.chk1Pattern.equals("LF")) {
+                                    entityLF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityLF.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk1Size.equals("LF")) {
+                                    entityLF.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityLF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+
+                                if (mDb.daoLF().getAll().size > 0) {
+                                    mDb.daoLF().deleteAll()
+                                }
+                                mDb.daoLF().save(entityLF)
+                            }
+                            if (TyreDetailCommonClass.chk2Make.equals("LR")) {
+
+                                val entityLR = TyreLRDetail()
+                                entityLR.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityLR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (mDb.daoLR().getAll().size > 0) {
+                                    mDb.daoLR().deleteAll()
+                                }
+
+                                if (TyreDetailCommonClass.chk2Pattern.equals("LR")) {
+                                    entityLR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityLR.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk2Size.equals("LR")) {
+                                    entityLR.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityLR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+                                mDb.daoLR().save(entityLR)
+                            }
+                            if (TyreDetailCommonClass.chk3Make.equals("RR")) {
+                                val entityRR = TyreRRDetail()
+                                entityRR.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityRR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (mDb.daoRR().getAll().size > 0) {
+                                    mDb.daoRR().deleteAll()
+                                }
+
+                                if (TyreDetailCommonClass.chk3Pattern.equals("RR")) {
+                                    entityRR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityRR.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk3Size.equals("RR")) {
+                                    entityRR.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityRR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+                                mDb.daoRR().save(entityRR)
+                            }
+
                         } else {
                             var id: Int = -1
                             for (i in mDb.daoRF().getAll().indices) {
@@ -1404,6 +1591,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             entity.id = id
 
                             mDb.daoRF().update(entity)
+
+                            for (i in mDb.daoRF().getAll().indices) {
+                                Log.e("getupdated", "" + mDb.daoRF().getAll().get(i))
+                            }
                         }
 
                     } else if (TyreDetailCommonClass.tyreType.equals("RR")) {
@@ -1436,6 +1627,68 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
 
                             mDb.daoRR().save(entity)
+
+                            if (TyreDetailCommonClass.chk1Make.equals("LF")) {
+                                val entityLF = TyreLFDetail()
+                                entityLF.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityLF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (TyreDetailCommonClass.chk1Pattern.equals("LF")) {
+                                    entityLF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityLF.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk1Size.equals("LF")) {
+                                    entityLF.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityLF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+
+                                if (mDb.daoLF().getAll().size > 0) {
+                                    mDb.daoLF().deleteAll()
+                                }
+                                mDb.daoLF().save(entityLF)
+                            }
+                            if (TyreDetailCommonClass.chk2Make.equals("RF")) {
+
+                                val entityRF = TyreRFDetail()
+                                entityRF.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityRF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (mDb.daoRF().getAll().size > 0) {
+                                    mDb.daoRF().deleteAll()
+                                }
+
+                                if (TyreDetailCommonClass.chk2Pattern.equals("RF")) {
+                                    entityRF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityRF.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk2Size.equals("RF")) {
+                                    entityRF.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityRF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+                                mDb.daoRF().save(entityRF)
+                            }
+                            if (TyreDetailCommonClass.chk3Make.equals("LR")) {
+                                val entityLR = TyreLRDetail()
+                                entityLR.vehicleMake = TyreDetailCommonClass.vehicleMake
+                                entityLR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
+
+                                if (mDb.daoLR().getAll().size > 0) {
+                                    mDb.daoLR().deleteAll()
+                                }
+
+                                if (TyreDetailCommonClass.chk3Pattern.equals("LR")) {
+                                    entityLR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
+                                    entityLR.vehiclePatternId =
+                                        TyreDetailCommonClass.vehiclePatternId
+                                }
+                                if (TyreDetailCommonClass.chk3Size.equals("LR")) {
+                                    entityLR.vehicleSize = TyreDetailCommonClass.vehicleSize
+                                    entityLR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
+                                }
+                                mDb.daoLR().save(entityLR)
+                            }
                         } else {
                             var id: Int = -1
                             for (i in mDb.daoRR().getAll().indices) {
@@ -1446,7 +1699,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                             mDb.daoRR().update(entity)
                         }
-                    }
+                    }*/
 
                 }
                 thread.start()

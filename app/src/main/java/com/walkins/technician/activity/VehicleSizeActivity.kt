@@ -113,10 +113,10 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     .getAllSize().size > 0
             ) {
                 arrList?.addAll(mDb.sizeDaoClass().getAllSize())
-                for (i in arrList?.indices!!){
+                for (i in arrList?.indices!!) {
 
-                    Log.e("getpattersize",""+arrList?.get(i)?.sizeId)
-                    Log.e("getpattersize",""+arrList?.get(i)?.name)
+                    Log.e("getpattersize", "" + arrList?.get(i)?.sizeId)
+                    Log.e("getpattersize", "" + arrList?.get(i)?.name)
                 }
 
                 if (selectedTyre.equals("LF")) {
@@ -163,7 +163,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         var handler = Handler()
         handler.postDelayed(Runnable {
-            adapter = VehicleSizeAdapter(this, arrList, this,selectedId)
+            adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
             gridviewRecycModel?.adapter = adapter
 
             gridviewRecycModel?.visibility = View.VISIBLE
@@ -315,6 +315,10 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             chkLR?.text = "LR"
             chkRR?.text = "RR"
 
+            TyreConfigClass.LFVehicleSize = false
+            TyreConfigClass.LRVehicleSize = false
+            TyreConfigClass.RRVehicleSize = false
+
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.LFVehicleSize = true
             }
@@ -361,16 +365,21 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         TyreDetailCommonClass.vehicleSize = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehicleSizeId = arrList?.get(selectedPos)?.sizeId?.toString()
 
-        if (chkLR?.isChecked!!) {
-            TyreDetailCommonClass.chk1Size = chkLR?.text.toString()
-        }
         if (chkRF?.isChecked!!) {
-            TyreDetailCommonClass.chk2Size = chkRF?.text.toString()
+            TyreDetailCommonClass.chk1Size = chkRF?.text.toString()
+        } else {
+            TyreDetailCommonClass.chk1Size = chkRF?.text.toString() + " " + chkRF?.isChecked
+        }
+        if (chkLR?.isChecked!!) {
+            TyreDetailCommonClass.chk2Size = chkLR?.text.toString()
+        } else {
+            TyreDetailCommonClass.chk2Size = chkLR?.text.toString() + " " + chkLR?.isChecked
         }
         if (chkRR?.isChecked!!) {
             TyreDetailCommonClass.chk3Size = chkRR?.text.toString()
+        } else {
+            TyreDetailCommonClass.chk3Size = chkRR?.text.toString() + " " + chkRR?.isChecked
         }
-
 
         Log.e("getvalueee22", "" + selectedTyre + " " + TyreConfigClass.RFVehicleSize)
         val intent = Intent(this, VisualDetailsActivity::class.java)

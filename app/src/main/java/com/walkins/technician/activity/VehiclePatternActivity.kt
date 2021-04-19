@@ -255,7 +255,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             chkRF?.text = "RF"
             chkLR?.text = "LR"
             chkRR?.text = "RR"
-
+            TyreConfigClass.RFVehiclePattern = false
+            TyreConfigClass.LRVehiclePattern = false
+            TyreConfigClass.RRVehiclePattern = false
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.RFVehiclePattern = true
             }
@@ -269,7 +271,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             chkRF?.text = "LF"
             chkLR?.text = "LR"
             chkRR?.text = "RR"
-
+            TyreConfigClass.LFVehiclePattern = false
+            TyreConfigClass.LRVehiclePattern = false
+            TyreConfigClass.RRVehiclePattern = false
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.LFVehiclePattern = true
             }
@@ -284,7 +288,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             chkRF?.text = "LF"
             chkLR?.text = "RF"
             chkRR?.text = "RR"
-
+            TyreConfigClass.LFVehiclePattern = false
+            TyreConfigClass.RFVehiclePattern = false
+            TyreConfigClass.RRVehiclePattern = false
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.LFVehiclePattern = true
             }
@@ -299,7 +305,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             chkRF?.text = "LF"
             chkLR?.text = "RF"
             chkRR?.text = "LR"
-
+            TyreConfigClass.LFVehiclePattern = false
+            TyreConfigClass.RFVehiclePattern = false
+            TyreConfigClass.LRVehiclePattern = false
             if (chkRF?.isChecked!!) {
                 TyreConfigClass.LFVehiclePattern = true
             }
@@ -316,14 +324,20 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         TyreDetailCommonClass.vehiclePattern = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehiclePatternId = arrList?.get(selectedPos)?.patternId?.toString()
 
-        if (chkLR?.isChecked!!) {
-            TyreDetailCommonClass.chk1Pattern = chkLR?.text.toString()
-        }
         if (chkRF?.isChecked!!) {
-            TyreDetailCommonClass.chk2Pattern = chkRF?.text.toString()
+            TyreDetailCommonClass.chk1Pattern = chkRF?.text.toString()
+        } else {
+            TyreDetailCommonClass.chk1Pattern = chkRF?.text.toString() + " " + chkRF?.isChecked
+        }
+        if (chkLR?.isChecked!!) {
+            TyreDetailCommonClass.chk2Pattern = chkLR?.text.toString()
+        } else {
+            TyreDetailCommonClass.chk2Pattern = chkLR?.text.toString() + " " + chkLR?.isChecked
         }
         if (chkRR?.isChecked!!) {
             TyreDetailCommonClass.chk3Pattern = chkRR?.text.toString()
+        } else {
+            TyreDetailCommonClass.chk3Pattern = chkRR?.text.toString() + " " + chkRR?.isChecked
         }
 
 
