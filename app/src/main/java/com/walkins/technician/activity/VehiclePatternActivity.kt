@@ -14,6 +14,8 @@ import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.VehicleMakeModelClass
@@ -131,6 +133,60 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     Log.e("getpatter", "" + arrList?.get(i)?.name)
                 }
 
+                if (selectedTyre.equals("LF")) {
+                    if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+                    ) {
+                        var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                        try {
+                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                            selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                if (selectedTyre.equals("LR")) {
+                    if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+                    ) {
+                        var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                        try {
+                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                            selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                if (selectedTyre.equals("RF")) {
+                    if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+                    ) {
+                        var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                        try {
+                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                            selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                if (selectedTyre.equals("RR")) {
+                    if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+                    ) {
+                        var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                        try {
+                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                            selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+
                 /*if (selectedTyre.equals("LF")) {
 
                     if (mDb.daoLF().getAll().size > 0) {
@@ -175,6 +231,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         val handler = Handler()
         handler.postDelayed(Runnable {
+            Log.e("getid",""+selectedId)
             adapter = VehiclePatternAdapter(this, arrList, this, selectedId)
             gridviewRecycModel?.adapter = adapter
             gridviewRecycModel?.visibility = View.VISIBLE

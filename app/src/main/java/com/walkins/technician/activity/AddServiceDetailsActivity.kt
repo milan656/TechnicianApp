@@ -967,7 +967,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (TyreConfigClass.RFVehicleVisualDetail == false) {
                     pendingArr?.add("Visual Detail")
                 }
+                Log.e("pendingg", "" + pendingArr)
                 if (pendingArr?.size!! > 0) {
+                    Log.e("pendingg", "" + TyreConfigClass.RFCompleted)
                     if (pendingArr?.get(0).equals("Tyre Make")) {
                         intent = Intent(this, VehicleMakeActivity::class.java)
                     } else if (pendingArr?.get(0).equals("Tyre Pattern")) {
@@ -984,11 +986,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.clickedTyre = "RF"
                         startActivityForResult(intent, 1000)
                     }
-
                 } else {
+                    Log.e("pendingg", "call0")
                     intent = Intent(this, VehicleMakeActivity::class.java)
-                    intent?.putExtra("selectedTyre", "RF")
-                    intent?.putExtra("title", "Select Tyre Make - RF")
+                    intent.putExtra("selectedTyre", "RF")
+                    intent.putExtra("title", "Select Tyre Make - RF")
                     TyreConfigClass.selectedTyreConfigType = "RF"
                     TyreConfigClass.clickedTyre = "RF"
                     startActivityForResult(intent, 1000)

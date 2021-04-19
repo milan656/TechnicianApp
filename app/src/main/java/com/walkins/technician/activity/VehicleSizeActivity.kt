@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.DB.VehicleSizeModelClass
@@ -119,6 +121,59 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     Log.e("getpattersize", "" + arrList?.get(i)?.name)
                 }
 
+                if (selectedTyre.equals("LF")) {
+                    if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+                    ) {
+                        var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                        try {
+                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                            selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                if (selectedTyre.equals("LR")) {
+                    if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+                    ) {
+                        var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                        try {
+                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                            selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                if (selectedTyre.equals("RF")) {
+                    if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+                    ) {
+                        var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                        try {
+                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                            selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                if (selectedTyre.equals("RR")) {
+                    if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+                    ) {
+                        var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                        try {
+                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                            selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
                 /*if (selectedTyre.equals("LF")) {
 
                     if (mDb.daoLF().getAll().size > 0) {
@@ -163,6 +218,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         var handler = Handler()
         handler.postDelayed(Runnable {
+            Log.e("getid",""+selectedId)
             adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
             gridviewRecycModel?.adapter = adapter
 
@@ -295,7 +351,6 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             TyreConfigClass.RRVehicleSize = true
         }
 
-
         if (selectedTyre.equals("LF")) {
             chkRF?.text = "RF"
             chkLR?.text = "LR"
@@ -367,18 +422,12 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         if (chkRF?.isChecked!!) {
             TyreDetailCommonClass.chk1Size = chkRF?.text.toString()
-        } else {
-            TyreDetailCommonClass.chk1Size = chkRF?.text.toString() + " " + chkRF?.isChecked
         }
         if (chkLR?.isChecked!!) {
             TyreDetailCommonClass.chk2Size = chkLR?.text.toString()
-        } else {
-            TyreDetailCommonClass.chk2Size = chkLR?.text.toString() + " " + chkLR?.isChecked
         }
         if (chkRR?.isChecked!!) {
             TyreDetailCommonClass.chk3Size = chkRR?.text.toString()
-        } else {
-            TyreDetailCommonClass.chk3Size = chkRR?.text.toString() + " " + chkRR?.isChecked
         }
 
         Log.e("getvalueee22", "" + selectedTyre + " " + TyreConfigClass.RFVehicleSize)

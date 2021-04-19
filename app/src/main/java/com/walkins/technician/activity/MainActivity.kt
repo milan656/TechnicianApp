@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
                     .getAllVehicleType().size > 0
             ) {
+//                actionOnService(Actions.START)
+
             } else {
                 actionOnService(Actions.START)
             }

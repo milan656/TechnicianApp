@@ -125,19 +125,54 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
             if (selectedTyre.equals("LF")) {
                 if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                    !prefManager?.getValue(TyreConfigClass.TyreLFObject).equals("")
+                    !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
                 ) {
-                    var str = prefManager?.getValue(TyreConfigClass.TyreLFObject)
+                    var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        Log.e("getstr", "" + json)
                         selectedName = json.get("vehicleMake")?.asString!!
-                        Log.e("getstr", "" + selectedName)
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
-
-
+                }
+            }
+            if (selectedTyre.equals("LR")) {
+                if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+                ) {
+                    var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                    try {
+                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                        selectedName = json.get("vehicleMake")?.asString!!
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+            if (selectedTyre.equals("RF")) {
+                if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+                ) {
+                    var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                    try {
+                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                        selectedName = json.get("vehicleMake")?.asString!!
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+            if (selectedTyre.equals("RR")) {
+                if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+                ) {
+                    var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                    try {
+                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                        selectedName = json.get("vehicleMake")?.asString!!
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
 
@@ -181,8 +216,6 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         }
         thread.start()
-
-        gridviewRecycMake_?.visibility = View.GONE
 
         var handler = Handler()
         handler.postDelayed(Runnable {

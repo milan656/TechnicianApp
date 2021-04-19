@@ -1,6 +1,7 @@
 package com.walkins.technician.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,7 @@ class VehicleSizeAdapter internal constructor(
     private val mContext: Context,
     private var name: ArrayList<VehicleSizeModelClass>?,
     onPositionClick: onClickAdapter,
-    private var selectedId:Int
+    private var selectedId: Int
 
 ) : RecyclerView.Adapter<VehicleSizeAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -52,6 +53,7 @@ class VehicleSizeAdapter internal constructor(
 
     override fun onBindViewHolder(holder: VehicleSizeAdapter.ViewHolder, position: Int) {
         holder.textView.setText(name?.get(position)?.name)
+        Log.e("getsizdata", "" + name?.get(position)?.sizeId + " " + name?.get(position)?.name)
 //        holder.textView.text = "185/65 R15"
 
         /*try {
@@ -66,10 +68,10 @@ class VehicleSizeAdapter internal constructor(
         }*/
         if (name!!.get(position).isSelected) {
             holder.rlItemView.setBackgroundResource(R.drawable.selected)
-            holder.ivselectedVehicleModel.visibility=View.VISIBLE
+            holder.ivselectedVehicleModel.visibility = View.VISIBLE
         } else {
             holder.rlItemView.setBackgroundResource(R.drawable.unselected)
-            holder.ivselectedVehicleModel.visibility=View.GONE
+            holder.ivselectedVehicleModel.visibility = View.GONE
         }
 
         holder.rlItemView.setOnClickListener {
@@ -83,7 +85,7 @@ class VehicleSizeAdapter internal constructor(
                 }
 
                 name!!.get(position).isSelected = true;
-                holder.ivselectedVehicleModel.visibility=View.VISIBLE
+                holder.ivselectedVehicleModel.visibility = View.VISIBLE
             }
             notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)
@@ -101,7 +103,7 @@ class VehicleSizeAdapter internal constructor(
                     }
 
                     name?.get(position)?.isSelected = true
-                    holder.ivselectedVehicleModel.visibility=View.VISIBLE
+                    holder.ivselectedVehicleModel.visibility = View.VISIBLE
                 }
                 positionClick.onPositionClick(position, 0)
             }
