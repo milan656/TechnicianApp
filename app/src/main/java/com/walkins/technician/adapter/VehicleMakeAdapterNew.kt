@@ -54,13 +54,8 @@ class VehicleMakeAdapterNew internal constructor(
         Log.e("getimages", "" + name?.get(position)?.concat)
         Log.e("getimages", "" + name?.get(position)?.name)
 
-        Log.e("selectedmake", "" + selectedName)
-        if (selectedName != null && !selectedName.equals("")) {
-            Log.e("selectedmake", "" + selectedName + " " + name?.get(position)?.name)
-            if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
-                holder.rlItemView.performClick()
-            }
-        }
+        Log.e("getimages", "::::" + selectedName)
+
         try {
             Glide.with(mContext)
                 .load(name?.get(position)?.concat)
@@ -100,6 +95,27 @@ class VehicleMakeAdapterNew internal constructor(
             holder.ivselectedVehicle.visibility = View.VISIBLE
         } else {
             holder.ivselectedVehicle.visibility = View.GONE
+        }
+
+        if (selectedName != null && !selectedName.equals("")) {
+            if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
+                Log.e("selectedmake", "::::" + selectedName + " " + name?.get(position)?.name)
+                if (name!!.get(position).isSelected) {
+                    // name!!.get(position).isSelected = false;
+                    holder.ivselectedVehicle.visibility = View.VISIBLE
+                } else {
+                    for (date in name!!) {
+                        if (date.isSelected) {
+                            date.isSelected = false
+                        }
+                    }
+
+                    name!!.get(position).isSelected = true;
+                    holder.ivselectedVehicle.visibility = View.VISIBLE
+                }
+//                notifyDataSetChanged()
+                positionClick.onPositionClick(position, 0)
+            }
         }
     }
 

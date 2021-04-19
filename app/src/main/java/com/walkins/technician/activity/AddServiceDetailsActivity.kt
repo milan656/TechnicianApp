@@ -1281,8 +1281,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getvaluess_all", TyreDetailCommonClass.chk3Size!!)
 
 
+
                 var thread = Thread {
                     if (TyreDetailCommonClass.tyreType.equals("LF")) {
+                        Log.e("iscompleted::lf",""+TyreConfigClass.LFCompleted)
                         if (!TyreConfigClass.LFCompleted) {
                             if (mDb.daoLF().getAll().size > 0) {
                                 mDb.daoLF().deleteAll()
@@ -1313,6 +1315,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         }
 
                     } else if (TyreDetailCommonClass.tyreType.equals("LR")) {
+                        Log.e("iscompleted::lr",""+TyreConfigClass.LRCompleted)
                         if (!TyreConfigClass.LRCompleted) {
                             if (mDb.daoLR().getAll().size > 0) {
                                 mDb.daoLR().deleteAll()
@@ -1342,6 +1345,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             mDb.daoLR().save(entity)
                         }
                     } else if (TyreDetailCommonClass.tyreType.equals("RF")) {
+                        Log.e("iscompleted::rf",""+TyreConfigClass.RFCompleted)
                         if (!TyreConfigClass.RFCompleted) {
                             if (mDb.daoRF().getAll().size > 0) {
                                 mDb.daoRF().deleteAll()
@@ -1371,6 +1375,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             mDb.daoRF().save(entity)
                         }
                     } else if (TyreDetailCommonClass.tyreType.equals("RR")) {
+                        Log.e("iscompleted::rr",""+TyreConfigClass.RRCompleted)
                         if (!TyreConfigClass.RRCompleted) {
 
                             if (mDb.daoRR().getAll().size > 0) {

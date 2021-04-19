@@ -53,7 +53,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
     private var chkLR: CheckBox? = null
     private var selectedPos = -1
     private var selectedTyre = ""
-
+    private var selectedId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,8 +98,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 //            )
 //        )
 
-        adapter = VehiclePatternAdapter(this, arrList, this)
-        gridviewRecycModel?.adapter = adapter
 
         if (selectedTyre.equals("LF")) {
             chkRF?.text = "RF"
@@ -127,10 +125,47 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             ) {
                 arrList?.addAll(mDb.patternDaoClass().getAllPattern())
 
-                for (i in arrList?.indices!!){
+                for (i in arrList?.indices!!) {
 
-                    Log.e("getpatter",""+arrList?.get(i)?.patternId)
-                    Log.e("getpatter",""+arrList?.get(i)?.name)
+                    Log.e("getpatter", "" + arrList?.get(i)?.patternId)
+                    Log.e("getpatter", "" + arrList?.get(i)?.name)
+                }
+
+                if (selectedTyre.equals("LF")) {
+
+                    if (mDb.daoLF().getAll().size > 0) {
+                        for (i in mDb.daoLF().getAll().indices) {
+                            Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i).vehiclePatternId)
+                            selectedId = mDb.daoLF().getAll().get(i).vehiclePatternId?.toInt()!!
+                        }
+                    }
+                } else if (selectedTyre.equals("LR")) {
+                    if (mDb.daoLR().getAll().size > 0) {
+                        for (i in mDb.daoLR().getAll().indices) {
+                            Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i).vehiclePattern)
+                            Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i).vehiclePatternId)
+                            selectedId = mDb.daoLR().getAll().get(i).vehiclePatternId?.toInt()!!
+                        }
+                    }
+
+                } else if (selectedTyre.equals("RF")) {
+                    if (mDb.daoRF().getAll().size > 0) {
+                        for (i in mDb.daoRF().getAll().indices) {
+                            Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i).vehiclePattern)
+                            Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i).vehiclePatternId)
+                            selectedId = mDb.daoRF().getAll().get(i).vehiclePatternId?.toInt()!!
+                        }
+                    }
+
+                } else if (selectedTyre.equals("RR")) {
+                    if (mDb.daoRR().getAll().size > 0) {
+                        for (i in mDb.daoRR().getAll().indices) {
+                            Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehiclePattern)
+                            Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehiclePatternId)
+                            selectedId = mDb.daoRR().getAll().get(i).vehiclePatternId?.toInt()!!
+                        }
+                    }
+
                 }
 
             }
@@ -138,9 +173,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }
         thread.start()
 
-        var handler = Handler()
+        val handler = Handler()
         handler.postDelayed(Runnable {
-            adapter?.notifyDataSetChanged()
+            adapter = VehiclePatternAdapter(this, arrList, this, selectedId)
+            gridviewRecycModel?.adapter = adapter
             gridviewRecycModel?.visibility = View.VISIBLE
         }, 1000)
 

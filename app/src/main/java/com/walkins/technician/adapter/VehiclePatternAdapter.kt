@@ -17,7 +17,8 @@ import com.walkins.technician.model.login.patternmodel.PatternData
 class VehiclePatternAdapter internal constructor(
     private val mContext: Context,
     private var name: ArrayList<VehiclePatternModelClass>?,
-    onPositionClick: onClickAdapter
+    onPositionClick: onClickAdapter,
+    private var selectedId: Int
 
 ) : RecyclerView.Adapter<VehiclePatternAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,16 +50,6 @@ class VehiclePatternAdapter internal constructor(
         holder.textView.setText(name?.get(position)?.name)
 //        holder.textView.text = "185/65 R15"
 
-        /*try {
-            Glide.with(mContext)
-                .load(name?.get(position)?.image_url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder)
-                .into(holder.ivVehicleImage)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }*/
         if (name!!.get(position).isSelected) {
             holder.rlItemView.setBackgroundResource(R.drawable.selected)
             holder.ivselectedVehicleModel?.visibility = View.VISIBLE
@@ -83,6 +74,25 @@ class VehiclePatternAdapter internal constructor(
             }
             notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)
+        }
+
+        if (selectedId != -1) {
+            if (selectedId == name?.get(position)?.patternId) {
+                if (name!!.get(position).isSelected) {
+                    // name!!.get(position).isSelected = false;
+                } else {
+                    for (date in name!!) {
+                        if (date.isSelected) {
+                            date.isSelected = false
+                        }
+                    }
+
+                    name!!.get(position).isSelected = true;
+                    holder.ivselectedVehicleModel?.visibility = View.VISIBLE
+                }
+//            notifyDataSetChanged()
+                positionClick.onPositionClick(position, 0)
+            }
         }
     }
 

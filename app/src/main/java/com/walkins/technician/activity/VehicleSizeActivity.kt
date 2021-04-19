@@ -41,6 +41,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var chkRF: CheckBox? = null
     private var chkLR: CheckBox? = null
     private var selectedPos = -1
+    private var selectedId = -1
     private var selectedTyre = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,8 +87,6 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 //            )
 //        )
 
-        adapter = VehicleSizeAdapter(this, arrList, this)
-        gridviewRecycModel?.adapter = adapter
 
         if (selectedTyre.equals("LF")) {
             chkRF?.text = "RF"
@@ -120,6 +119,43 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     Log.e("getpattersize",""+arrList?.get(i)?.name)
                 }
 
+                if (selectedTyre.equals("LF")) {
+
+                    if (mDb.daoLF().getAll().size > 0) {
+                        for (i in mDb.daoLF().getAll().indices) {
+                            Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i).vehicleSizeId)
+                            selectedId = mDb.daoLF().getAll().get(i).vehicleSizeId?.toInt()!!
+                        }
+                    }
+                } else if (selectedTyre.equals("LR")) {
+                    if (mDb.daoLR().getAll().size > 0) {
+                        for (i in mDb.daoLR().getAll().indices) {
+                            Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i).vehicleSize)
+                            Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i).vehicleSizeId)
+                            selectedId = mDb.daoLR().getAll().get(i).vehicleSizeId?.toInt()!!
+                        }
+                    }
+
+                } else if (selectedTyre.equals("RF")) {
+                    if (mDb.daoRF().getAll().size > 0) {
+                        for (i in mDb.daoRF().getAll().indices) {
+                            Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i).vehicleSize)
+                            Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i).vehicleSizeId)
+                            selectedId = mDb.daoRF().getAll().get(i).vehicleSizeId?.toInt()!!
+                        }
+                    }
+
+                } else if (selectedTyre.equals("RR")) {
+                    if (mDb.daoRR().getAll().size > 0) {
+                        for (i in mDb.daoRR().getAll().indices) {
+                            Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehicleSize)
+                            Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehicleSizeId)
+                            selectedId = mDb.daoRR().getAll().get(i).vehicleSizeId?.toInt()!!
+                        }
+                    }
+
+                }
+
             }
 
         }
@@ -127,7 +163,9 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         var handler = Handler()
         handler.postDelayed(Runnable {
-            adapter?.notifyDataSetChanged()
+            adapter = VehicleSizeAdapter(this, arrList, this,selectedId)
+            gridviewRecycModel?.adapter = adapter
+
             gridviewRecycModel?.visibility = View.VISIBLE
         }, 1000)
 

@@ -166,14 +166,14 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         }
         thread.start()
-        adapter = VehicleMakeAdapterNew(this, arrList, this, selectedName)
-        gridviewRecycMake_?.adapter = adapter
+
         gridviewRecycMake_?.visibility = View.GONE
 
         var handler = Handler()
         handler.postDelayed(Runnable {
-            Log.e("getsizee00", "" + arrList?.size)
-            adapter?.notifyDataSetChanged()
+            Log.e("getsizee00", "" + arrList?.size + " " + selectedName)
+            adapter = VehicleMakeAdapterNew(this, arrList, this, selectedName)
+            gridviewRecycMake_?.adapter = adapter
             gridviewRecycMake_?.visibility = View.VISIBLE
         }, 1000)
     }
@@ -200,7 +200,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         }
 
         selectedPos = variable
-        Log.e("getselected", "" + arrList?.get(selectedPos)?.Id)
+        Log.e("getselected", "" + arrList?.get(selectedPos)?.name)
+        Log.e("getselected", "" + arrList?.get(selectedPos)?.concat)
 
         chkRF?.isChecked = arrList?.get(variable)?.isRFSelected!!
         chkLR?.isChecked = arrList?.get(variable)?.isLRSelected!!

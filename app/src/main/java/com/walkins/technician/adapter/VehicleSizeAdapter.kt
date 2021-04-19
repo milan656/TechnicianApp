@@ -21,7 +21,8 @@ import com.walkins.technician.model.login.sizemodel.SizeData
 class VehicleSizeAdapter internal constructor(
     private val mContext: Context,
     private var name: ArrayList<VehicleSizeModelClass>?,
-    onPositionClick: onClickAdapter
+    onPositionClick: onClickAdapter,
+    private var selectedId:Int
 
 ) : RecyclerView.Adapter<VehicleSizeAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -86,6 +87,24 @@ class VehicleSizeAdapter internal constructor(
             }
             notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)
+        }
+
+        if (selectedId != -1) {
+            if (selectedId == name?.get(position)?.sizeId) {
+                if (name?.get(position)?.isSelected!!) {
+                    // name!!.get(position).isSelected = false;
+                } else {
+                    for (date in name!!) {
+                        if (date.isSelected) {
+                            date.isSelected = false
+                        }
+                    }
+
+                    name?.get(position)?.isSelected = true
+                    holder.ivselectedVehicleModel.visibility=View.VISIBLE
+                }
+                positionClick.onPositionClick(position, 0)
+            }
         }
     }
 
