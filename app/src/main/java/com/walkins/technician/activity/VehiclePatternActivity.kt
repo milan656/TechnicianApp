@@ -141,6 +141,22 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+
+                            runOnUiThread {
+                                chkRF?.isChecked =
+                                    if (json.get(TyreKey.chk1Pattern)
+                                            .equals("RF,true")
+                                    ) true else false
+                                chkLR?.isChecked =
+                                    if (json.get(TyreKey.chk2Pattern)
+                                            .equals("LR,true")
+                                    ) true else false
+                                chkRR?.isChecked =
+                                    if (json.get(TyreKey.chk3Pattern)
+                                            .equals("RR,true")
+                                    ) true else false
+
+                            }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -154,6 +170,21 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+
+                            runOnUiThread {
+                                chkRF?.isChecked =
+                                    if (json.get(TyreKey.chk1Pattern)
+                                            .equals("LF,true")
+                                    ) true else false
+                                chkLR?.isChecked =
+                                    if (json.get(TyreKey.chk2Pattern)
+                                            .equals("RF,true")
+                                    ) true else false
+                                chkRR?.isChecked =
+                                    if (json.get(TyreKey.chk3Pattern)
+                                            .equals("RR,true")
+                                    ) true else false
+                            }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -167,6 +198,20 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+
+                            runOnUiThread {
+                                chkRF?.isChecked =
+                                    if (json.get(TyreKey.chk1Pattern)?.asString.equals("LF,true")) true else false
+                                chkLR?.isChecked =
+                                    if (json.get(TyreKey.chk2Pattern)?.asString.equals("LR,true")) true else false
+                                chkRR?.isChecked =
+                                    if (json.get(TyreKey.chk3Pattern)?.asString.equals("RR,true")) true else false
+
+                                Log.e(
+                                    "getval0",
+                                    "" + chkRF?.isChecked + " " + chkLR?.isChecked + " " + chkRR?.isChecked
+                                )
+                            }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -180,6 +225,22 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+
+                            runOnUiThread {
+                                chkRF?.isChecked =
+                                    if (json.get(TyreKey.chk1Pattern)
+                                            .equals("LF,true")
+                                    ) true else false
+                                chkLR?.isChecked =
+                                    if (json.get(TyreKey.chk2Pattern)
+                                            .equals("RF,true")
+                                    ) true else false
+                                chkRR?.isChecked =
+                                    if (json.get(TyreKey.chk3Pattern)
+                                            .equals("LR,true")
+                                    ) true else false
+
+                            }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -187,42 +248,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 }
 
 
-                /*if (selectedTyre.equals("LF")) {
-
-                    if (mDb.daoLF().getAll().size > 0) {
-                        for (i in mDb.daoLF().getAll().indices) {
-                            Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i).vehiclePatternId)
-                            selectedId = mDb.daoLF().getAll().get(i).vehiclePatternId?.toInt()!!
-                        }
-                    }
-                } else if (selectedTyre.equals("LR")) {
-                    if (mDb.daoLR().getAll().size > 0) {
-                        for (i in mDb.daoLR().getAll().indices) {
-                            Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i).vehiclePattern)
-                            Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i).vehiclePatternId)
-                            selectedId = mDb.daoLR().getAll().get(i).vehiclePatternId?.toInt()!!
-                        }
-                    }
-
-                } else if (selectedTyre.equals("RF")) {
-                    if (mDb.daoRF().getAll().size > 0) {
-                        for (i in mDb.daoRF().getAll().indices) {
-                            Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i).vehiclePattern)
-                            Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i).vehiclePatternId)
-                            selectedId = mDb.daoRF().getAll().get(i).vehiclePatternId?.toInt()!!
-                        }
-                    }
-
-                } else if (selectedTyre.equals("RR")) {
-                    if (mDb.daoRR().getAll().size > 0) {
-                        for (i in mDb.daoRR().getAll().indices) {
-                            Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehiclePattern)
-                            Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehiclePatternId)
-                            selectedId = mDb.daoRR().getAll().get(i).vehiclePatternId?.toInt()!!
-                        }
-                    }
-
-                }*/
 
             }
 
@@ -231,7 +256,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         val handler = Handler()
         handler.postDelayed(Runnable {
-            Log.e("getid",""+selectedId)
+            Log.e("getid", "" + selectedId)
             adapter = VehiclePatternAdapter(this, arrList, this, selectedId)
             gridviewRecycModel?.adapter = adapter
             gridviewRecycModel?.visibility = View.VISIBLE
@@ -254,10 +279,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         tvSelectedModel?.text = arrList?.get(variable)?.name
         selectedPosition = variable
         selectedPos = variable
-
-        chkRF?.isChecked = arrList?.get(variable)?.isRFSelected!!
-        chkLR?.isChecked = arrList?.get(variable)?.isLRSelected!!
-        chkRR?.isChecked = arrList?.get(variable)?.isRRSelected!!
 
     }
 
@@ -282,16 +303,16 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
     private fun updateRecords() {
         var thread = Thread {
-            var entity = VehiclePatternModelClass()
-            entity.Id = arrList?.get(selectedPos)?.Id!!
-            entity.name = arrList?.get(selectedPos)?.name
-            entity.isSelected = true
-            entity.isLRSelected = chkLR?.isChecked!!
-            entity.concat = arrList?.get(selectedPos)?.concat
-            entity.image_url = arrList?.get(selectedPos)?.image_url
-            entity.isRFSelected = chkRF?.isChecked!!
-            entity.isRRSelected = chkRR?.isChecked!!
-            mDb.patternDaoClass().update(entity)
+//            var entity = VehiclePatternModelClass()
+//            entity.Id = arrList?.get(selectedPos)?.Id!!
+//            entity.name = arrList?.get(selectedPos)?.name
+//            entity.isSelected = true
+//            entity.isLRSelected = chkLR?.isChecked!!
+//            entity.concat = arrList?.get(selectedPos)?.concat
+//            entity.image_url = arrList?.get(selectedPos)?.image_url
+//            entity.isRFSelected = chkRF?.isChecked!!
+//            entity.isRRSelected = chkRR?.isChecked!!
+//            mDb.patternDaoClass().update(entity)
 
         }
         thread.start()
@@ -381,22 +402,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         TyreDetailCommonClass.vehiclePattern = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehiclePatternId = arrList?.get(selectedPos)?.patternId?.toString()
 
-        if (chkRF?.isChecked!!) {
-            TyreDetailCommonClass.chk1Pattern = chkRF?.text.toString()
-        } else {
-            TyreDetailCommonClass.chk1Pattern = chkRF?.text.toString() + " " + chkRF?.isChecked
-        }
-        if (chkLR?.isChecked!!) {
-            TyreDetailCommonClass.chk2Pattern = chkLR?.text.toString()
-        } else {
-            TyreDetailCommonClass.chk2Pattern = chkLR?.text.toString() + " " + chkLR?.isChecked
-        }
-        if (chkRR?.isChecked!!) {
-            TyreDetailCommonClass.chk3Pattern = chkRR?.text.toString()
-        } else {
-            TyreDetailCommonClass.chk3Pattern = chkRR?.text.toString() + " " + chkRR?.isChecked
-        }
-
+        TyreDetailCommonClass.chk1Pattern = chkRF?.text.toString() + "," + chkRF?.isChecked
+        TyreDetailCommonClass.chk2Pattern = chkLR?.text.toString() + "," + chkLR?.isChecked
+        TyreDetailCommonClass.chk3Pattern = chkRR?.text.toString() + "," + chkRR?.isChecked
 
         Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
         var intent = Intent(this, VehicleSizeActivity::class.java)

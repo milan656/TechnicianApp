@@ -129,6 +129,22 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+
+                            runOnUiThread {
+                                chkRF?.isChecked =
+                                    if (json.get(TyreKey.chk1Size)
+                                            .equals("RF,true")
+                                    ) true else false
+                                chkLR?.isChecked =
+                                    if (json.get(TyreKey.chk2Size)
+                                            .equals("LR,true")
+                                    ) true else false
+                                chkRR?.isChecked =
+                                    if (json.get(TyreKey.chk3Size)
+                                            .equals("RR,true")
+                                    ) true else false
+
+                            }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -142,6 +158,21 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+
+                            runOnUiThread {
+                                chkRF?.isChecked =
+                                    if (json.get(TyreKey.chk1Size)
+                                            .equals("LF,true")
+                                    ) true else false
+                                chkLR?.isChecked =
+                                    if (json.get(TyreKey.chk2Size)
+                                            .equals("RF,true")
+                                    ) true else false
+                                chkRR?.isChecked =
+                                    if (json.get(TyreKey.chk3Size)
+                                            .equals("RR,true")
+                                    ) true else false
+                            }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -155,6 +186,20 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+
+                            runOnUiThread {
+                                chkRF?.isChecked =
+                                    if (json.get(TyreKey.chk1Size)?.asString.equals("LF,true")) true else false
+                                chkLR?.isChecked =
+                                    if (json.get(TyreKey.chk2Size)?.asString.equals("LR,true")) true else false
+                                chkRR?.isChecked =
+                                    if (json.get(TyreKey.chk3Size)?.asString.equals("RR,true")) true else false
+
+                                Log.e(
+                                    "getval0",
+                                    "" + chkRF?.isChecked + " " + chkLR?.isChecked + " " + chkRR?.isChecked
+                                )
+                            }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -168,6 +213,22 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+
+                            runOnUiThread {
+                                chkRF?.isChecked =
+                                    if (json.get(TyreKey.chk1Size)
+                                            .equals("LF,true")
+                                    ) true else false
+                                chkLR?.isChecked =
+                                    if (json.get(TyreKey.chk2Size)
+                                            .equals("RF,true")
+                                    ) true else false
+                                chkRR?.isChecked =
+                                    if (json.get(TyreKey.chk3Size)
+                                            .equals("LR,true")
+                                    ) true else false
+
+                            }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -218,7 +279,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         var handler = Handler()
         handler.postDelayed(Runnable {
-            Log.e("getid",""+selectedId)
+            Log.e("getid", "" + selectedId)
             adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
             gridviewRecycModel?.adapter = adapter
 
@@ -302,9 +363,6 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         tvSelectedModel?.text = arrList?.get(variable)?.name
         selectedPos = variable
-        chkRF?.isChecked = arrList?.get(variable)?.isRFSelected!!
-        chkLR?.isChecked = arrList?.get(variable)?.isLRSelected!!
-        chkRR?.isChecked = arrList?.get(variable)?.isRRSelected!!
 
     }
 
@@ -328,14 +386,14 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     private fun updateRecords() {
         var thread = Thread {
-            var entity = VehicleSizeModelClass()
-            entity.Id = arrList?.get(selectedPos)?.Id!!
-            entity.name = arrList?.get(selectedPos)?.name
-            entity.isSelected = true
-            entity.isLRSelected = chkLR?.isChecked!!
-            entity.isRFSelected = chkRF?.isChecked!!
-            entity.isRRSelected = chkRR?.isChecked!!
-            mDb.sizeDaoClass().update(entity)
+//            var entity = VehicleSizeModelClass()
+//            entity.Id = arrList?.get(selectedPos)?.Id!!
+//            entity.name = arrList?.get(selectedPos)?.name
+//            entity.isSelected = true
+//            entity.isLRSelected = chkLR?.isChecked!!
+//            entity.isRFSelected = chkRF?.isChecked!!
+//            entity.isRRSelected = chkRR?.isChecked!!
+//            mDb.sizeDaoClass().update(entity)
 
         }
         thread.start()
@@ -420,15 +478,9 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         TyreDetailCommonClass.vehicleSize = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehicleSizeId = arrList?.get(selectedPos)?.sizeId?.toString()
 
-        if (chkRF?.isChecked!!) {
-            TyreDetailCommonClass.chk1Size = chkRF?.text.toString()
-        }
-        if (chkLR?.isChecked!!) {
-            TyreDetailCommonClass.chk2Size = chkLR?.text.toString()
-        }
-        if (chkRR?.isChecked!!) {
-            TyreDetailCommonClass.chk3Size = chkRR?.text.toString()
-        }
+        TyreDetailCommonClass.chk1Size = chkRF?.text.toString() + "," + chkRF?.isChecked
+        TyreDetailCommonClass.chk2Size = chkLR?.text.toString() + "," + chkLR?.isChecked
+        TyreDetailCommonClass.chk3Size = chkRR?.text.toString() + "," + chkRR?.isChecked
 
         Log.e("getvalueee22", "" + selectedTyre + " " + TyreConfigClass.RFVehicleSize)
         val intent = Intent(this, VisualDetailsActivity::class.java)

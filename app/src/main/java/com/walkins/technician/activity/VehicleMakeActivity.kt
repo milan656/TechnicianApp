@@ -23,6 +23,7 @@ import com.walkins.technician.R
 import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
+import com.walkins.technician.common.TyreKey
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
@@ -113,13 +114,11 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             chkRR?.text = "LR"
         }
 
-
         var thread = Thread {
-            Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
+            Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size+" "+selectedTyre)
             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
                     .getAllVehicleType().size > 0
             ) {
-
                 arrList?.addAll(mDb.daoClass().getAllVehicleType())
             }
 
@@ -131,6 +130,18 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
+
+                        runOnUiThread {
+
+                            chkRF?.isChecked =
+                                if (json.get(TyreKey.chk1Make).equals("RF,true")) true else false
+                            chkLR?.isChecked =
+                                if (json.get(TyreKey.chk2Make).equals("LR,true")) true else false
+                            chkRR?.isChecked =
+                                if (json.get(TyreKey.chk3Make).equals("RR,true")) true else false
+                        }
+
+                        Log.e("getsizee", "lf")
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
@@ -144,6 +155,18 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
+
+                        runOnUiThread {
+
+                            chkRF?.isChecked =
+                                if (json.get(TyreKey.chk1Make).equals("LF,true")) true else false
+                            chkLR?.isChecked =
+                                if (json.get(TyreKey.chk2Make).equals("RF,true")) true else false
+                            chkRR?.isChecked =
+                                if (json.get(TyreKey.chk3Make).equals("RR,true")) true else false
+                        }
+
+                        Log.e("getsizee", "lr")
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
@@ -157,6 +180,23 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
+
+                        Log.e("getval", "" + json.get(TyreKey.chk1Make)?.asString)
+                        Log.e("getval", "" + json.get(TyreKey.chk2Make)?.asString)
+                        Log.e("getval", "" + json.get(TyreKey.chk3Make)?.asString)
+                        runOnUiThread {
+                            chkRF?.isChecked =
+                                if (json.get(TyreKey.chk1Make)?.asString.equals("LF,true")) true else false
+                            chkLR?.isChecked =
+                                if (json.get(TyreKey.chk2Make)?.asString.equals("LR,true")) true else false
+                            chkRR?.isChecked =
+                                if (json.get(TyreKey.chk3Make)?.asString.equals("RR,true")) true else false
+
+                            Log.e(
+                                "getval0",
+                                "" + chkRF?.isChecked + " " + chkLR?.isChecked + " " + chkRR?.isChecked
+                            )
+                        }
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
@@ -170,49 +210,24 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
+
+                        runOnUiThread {
+
+                            chkRF?.isChecked =
+                                if (json.get(TyreKey.chk1Make).equals("LF,true")) true else false
+                            chkLR?.isChecked =
+                                if (json.get(TyreKey.chk2Make).equals("RF,true")) true else false
+                            chkRR?.isChecked =
+                                if (json.get(TyreKey.chk3Make).equals("LR,true")) true else false
+                        }
+
+                        Log.e("getsizee", "rr")
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
                 }
             }
 
-            /*if (selectedTyre.equals("LF")) {
-
-                if (mDb.daoLF().getAll().size > 0) {
-                    for (i in mDb.daoLF().getAll().indices) {
-                        Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.vehicleMake)
-                        Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.vehicleMakeId)
-                        selectedName = mDb.daoLF().getAll().get(i).vehicleMake!!
-                    }
-                }
-            } else if (selectedTyre.equals("LR")) {
-                if (mDb.daoLR().getAll().size > 0) {
-                    for (i in mDb.daoLR().getAll().indices) {
-                        Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i)?.vehicleMake)
-                        Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i)?.vehicleMakeId)
-                        selectedName = mDb.daoLR().getAll().get(i).vehicleMake!!
-                    }
-                }
-
-            } else if (selectedTyre.equals("RF")) {
-                if (mDb.daoRF().getAll().size > 0) {
-                    for (i in mDb.daoRF().getAll().indices) {
-                        Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i)?.vehicleMake)
-                        Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i)?.vehicleMakeId)
-                        selectedName = mDb.daoRF().getAll().get(i).vehicleMake!!
-                    }
-                }
-
-            } else if (selectedTyre.equals("RR")) {
-                if (mDb.daoRR().getAll().size > 0) {
-                    for (i in mDb.daoRR().getAll().indices) {
-                        Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i)?.vehicleMake)
-                        Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i)?.vehicleMakeId)
-                        selectedName = mDb.daoRR().getAll().get(i).vehicleMake!!
-                    }
-                }
-
-            }*/
 
         }
         thread.start()
@@ -251,9 +266,6 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getselected", "" + arrList?.get(selectedPos)?.name)
         Log.e("getselected", "" + arrList?.get(selectedPos)?.concat)
 
-        chkRF?.isChecked = arrList?.get(variable)?.isRFSelected!!
-        chkLR?.isChecked = arrList?.get(variable)?.isLRSelected!!
-        chkRR?.isChecked = arrList?.get(variable)?.isRRSelected!!
 
     }
 
@@ -278,21 +290,21 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     private fun updateRecords() {
         var thread = Thread {
-            var entity = VehicleMakeModelClass()
-            entity.Id = arrList?.get(selectedPos)?.Id!!
-            entity.name = arrList?.get(selectedPos)?.name
-            entity.isSelected = true
-            entity.isLRSelected = chkLR?.isChecked!!
-            entity.brand_id = arrList?.get(selectedPos)?.brand_id
-            entity.vehicle_type = arrList?.get(selectedPos)?.vehicle_type
-            entity.short_number = arrList?.get(selectedPos)?.short_number
-            entity.concat = arrList?.get(selectedPos)?.concat
-            entity.image_url = arrList?.get(selectedPos)?.image_url
-            entity.quality = arrList?.get(selectedPos)?.quality
-            entity.isRFSelected = chkRF?.isChecked!!
-            entity.isRRSelected = chkRR?.isChecked!!
-
-            mDb.daoClass().update(entity)
+//            var entity = VehicleMakeModelClass()
+//            entity.Id = arrList?.get(selectedPos)?.Id!!
+//            entity.name = arrList?.get(selectedPos)?.name
+//            entity.isSelected = true
+//            entity.isLRSelected = chkLR?.isChecked!!
+//            entity.brand_id = arrList?.get(selectedPos)?.brand_id
+//            entity.vehicle_type = arrList?.get(selectedPos)?.vehicle_type
+//            entity.short_number = arrList?.get(selectedPos)?.short_number
+//            entity.concat = arrList?.get(selectedPos)?.concat
+//            entity.image_url = arrList?.get(selectedPos)?.image_url
+//            entity.quality = arrList?.get(selectedPos)?.quality
+//            entity.isRFSelected = chkRF?.isChecked!!
+//            entity.isRRSelected = chkRR?.isChecked!!
+//
+//            mDb.daoClass().update(entity)
         }
         thread.start()
 
@@ -401,15 +413,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.Id?.toString()
 
-        if (chkRF?.isChecked!!) {
-            TyreDetailCommonClass.chk1Make = chkRF?.text.toString()
-        }
-        if (chkLR?.isChecked!!) {
-            TyreDetailCommonClass.chk2Make = chkLR?.text.toString()
-        }
-        if (chkRR?.isChecked!!) {
-            TyreDetailCommonClass.chk3Make = chkRR?.text.toString()
-        }
+        TyreDetailCommonClass.chk1Make = chkRF?.text.toString() + "," + chkRF?.isChecked
+        TyreDetailCommonClass.chk2Make = chkLR?.text.toString() + "," + chkLR?.isChecked
+        TyreDetailCommonClass.chk3Make = chkRR?.text.toString() + "," + chkRR?.isChecked
 
 
         Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)
