@@ -1233,7 +1233,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             PICK_IMAGE_REQUEST -> {
                 if (resultCode == Activity.RESULT_OK) {
-
                     //To get the File for further usage
                     val selectedImage = data?.data
                     Log.e("imagepath2322", "" + selectedImage)
