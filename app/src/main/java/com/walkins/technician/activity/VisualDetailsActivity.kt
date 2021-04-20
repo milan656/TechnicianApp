@@ -225,360 +225,360 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         ivReqbubble?.setOnClickListener(this)
 
 
-       /* var thread = Thread {
-            if (selectedTyre.equals("LF")) {
+        /* var thread = Thread {
+             if (selectedTyre.equals("LF")) {
 
-                if (mDb.daoLF().getAll().size > 0) {
-                    for (i in mDb.daoLF().getAll().indices) {
-                        Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.manufaturingDate)
-                        Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.psiInTyreService)
-                        Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.psiOutTyreService)
-                        Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.sidewell)
-                        edtManufaturingDate?.setText(mDb.daoLF().getAll().get(i)?.manufaturingDate)
-                        sliderIn?.bubbleText = mDb.daoLF().getAll().get(i)?.psiInTyreService
-                        multiSliderWeight?.bubbleText =
-                            mDb.daoLF().getAll().get(i)?.weightTyreService
-                        multiSliderPsiOut?.bubbleText =
-                            mDb.daoLF().getAll().get(i)?.psiOutTyreService
+                 if (mDb.daoLF().getAll().size > 0) {
+                     for (i in mDb.daoLF().getAll().indices) {
+                         Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.manufaturingDate)
+                         Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.psiInTyreService)
+                         Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.psiOutTyreService)
+                         Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i)?.sidewell)
+                         edtManufaturingDate?.setText(mDb.daoLF().getAll().get(i)?.manufaturingDate)
+                         sliderIn?.bubbleText = mDb.daoLF().getAll().get(i)?.psiInTyreService
+                         multiSliderWeight?.bubbleText =
+                             mDb.daoLF().getAll().get(i)?.weightTyreService
+                         multiSliderPsiOut?.bubbleText =
+                             mDb.daoLF().getAll().get(i)?.psiOutTyreService
 
-                        if (mDb.daoLF().getAll().get(i).sidewell.equals("Ok")) {
-                            ivOkSideWell?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).sidewell.equals("SUG")) {
-                            ivSugSideWell?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).sidewell.equals("REQ")) {
-                            ivReqSideWell?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).shoulder.equals("Ok")) {
-                            ivOkShoulder?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).shoulder.equals("SUG")) {
-                            ivSugShoulder?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).shoulder.equals("REQ")) {
-                            ivReqShoulder?.performClick()
-                        }
+                         if (mDb.daoLF().getAll().get(i).sidewell.equals("Ok")) {
+                             ivOkSideWell?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).sidewell.equals("SUG")) {
+                             ivSugSideWell?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).sidewell.equals("REQ")) {
+                             ivReqSideWell?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).shoulder.equals("Ok")) {
+                             ivOkShoulder?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).shoulder.equals("SUG")) {
+                             ivSugShoulder?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).shoulder.equals("REQ")) {
+                             ivReqShoulder?.performClick()
+                         }
 
-                        if (mDb.daoLF().getAll().get(i).treadDepth.equals("REQ")) {
-                            ivReqTreadDepth?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).treadDepth.equals("Ok")) {
-                            ivOkTreadDepth?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).treadDepth.equals("SUG")) {
-                            ivSugTreadDepth?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).treadWear.equals("REQ")) {
-                            ivReqTreadWear?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).treadWear.equals("Ok")) {
-                            ivOkTreadWear?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).treadWear.equals("SUG")) {
-                            ivSugTreadWear?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).rimDamage.equals("REQ")) {
-                            ivReqRimDamage?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).rimDamage.equals("Ok")) {
-                            ivOkRimDamage?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).rimDamage.equals("SUG")) {
-                            ivSugRimDamage?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).bubble.equals("REQ")) {
-                            ivReqbubble?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).bubble.equals("Ok")) {
-                            ivOkbubble?.performClick()
-                        }
-                        if (mDb.daoLF().getAll().get(i).bubble.equals("SUG")) {
-                            ivSugbubble?.performClick()
-                        }
-                        try {
-                            Glide.with(this)
-                                .load(mDb.daoLF().getAll().get(i).visualDetailPhotoUrl!!)
-                                .into(ivPickedImage1!!)
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-                }
-            } else if (selectedTyre.equals("LR")) {
-                if (mDb.daoLR().getAll().size > 0) {
-                    for (i in mDb.daoLR().getAll().indices) {
-                        Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i)?.vehicleMake)
-                        Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i)?.vehicleMakeId)
-                        edtManufaturingDate?.setText(mDb.daoLR().getAll().get(i).manufaturingDate!!)
-                        sliderIn?.bubbleText = mDb.daoLR().getAll().get(i).psiInTyreService
-                        multiSliderPsiOut?.bubbleText =
-                            mDb.daoLR().getAll().get(i).psiOutTyreService
-                        multiSliderWeight?.bubbleText =
-                            mDb.daoLR().getAll().get(i).weightTyreService
+                         if (mDb.daoLF().getAll().get(i).treadDepth.equals("REQ")) {
+                             ivReqTreadDepth?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).treadDepth.equals("Ok")) {
+                             ivOkTreadDepth?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).treadDepth.equals("SUG")) {
+                             ivSugTreadDepth?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).treadWear.equals("REQ")) {
+                             ivReqTreadWear?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).treadWear.equals("Ok")) {
+                             ivOkTreadWear?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).treadWear.equals("SUG")) {
+                             ivSugTreadWear?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).rimDamage.equals("REQ")) {
+                             ivReqRimDamage?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).rimDamage.equals("Ok")) {
+                             ivOkRimDamage?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).rimDamage.equals("SUG")) {
+                             ivSugRimDamage?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).bubble.equals("REQ")) {
+                             ivReqbubble?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).bubble.equals("Ok")) {
+                             ivOkbubble?.performClick()
+                         }
+                         if (mDb.daoLF().getAll().get(i).bubble.equals("SUG")) {
+                             ivSugbubble?.performClick()
+                         }
+                         try {
+                             Glide.with(this)
+                                 .load(mDb.daoLF().getAll().get(i).visualDetailPhotoUrl!!)
+                                 .into(ivPickedImage1!!)
+                         } catch (e: java.lang.Exception) {
+                             e.printStackTrace()
+                         }
+                     }
+                 }
+             } else if (selectedTyre.equals("LR")) {
+                 if (mDb.daoLR().getAll().size > 0) {
+                     for (i in mDb.daoLR().getAll().indices) {
+                         Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i)?.vehicleMake)
+                         Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i)?.vehicleMakeId)
+                         edtManufaturingDate?.setText(mDb.daoLR().getAll().get(i).manufaturingDate!!)
+                         sliderIn?.bubbleText = mDb.daoLR().getAll().get(i).psiInTyreService
+                         multiSliderPsiOut?.bubbleText =
+                             mDb.daoLR().getAll().get(i).psiOutTyreService
+                         multiSliderWeight?.bubbleText =
+                             mDb.daoLR().getAll().get(i).weightTyreService
 
-                        if (mDb.daoLR().getAll().get(i).sidewell.equals("Ok")) {
-                            ivOkSideWell?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).sidewell.equals("SUG")) {
-                            ivSugSideWell?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).sidewell.equals("REQ")) {
-                            ivReqSideWell?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).shoulder.equals("Ok")) {
-                            ivOkShoulder?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).shoulder.equals("SUG")) {
-                            ivSugShoulder?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).shoulder.equals("REQ")) {
-                            ivReqShoulder?.performClick()
-                        }
+                         if (mDb.daoLR().getAll().get(i).sidewell.equals("Ok")) {
+                             ivOkSideWell?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).sidewell.equals("SUG")) {
+                             ivSugSideWell?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).sidewell.equals("REQ")) {
+                             ivReqSideWell?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).shoulder.equals("Ok")) {
+                             ivOkShoulder?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).shoulder.equals("SUG")) {
+                             ivSugShoulder?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).shoulder.equals("REQ")) {
+                             ivReqShoulder?.performClick()
+                         }
 
-                        if (mDb.daoLR().getAll().get(i).treadDepth.equals("REQ")) {
-                            ivReqTreadDepth?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).treadDepth.equals("Ok")) {
-                            ivOkTreadDepth?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).treadDepth.equals("SUG")) {
-                            ivSugTreadDepth?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).treadWear.equals("REQ")) {
-                            ivReqTreadWear?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).treadWear.equals("Ok")) {
-                            ivOkTreadWear?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).treadWear.equals("SUG")) {
-                            ivSugTreadWear?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).rimDamage.equals("REQ")) {
-                            ivReqRimDamage?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).rimDamage.equals("Ok")) {
-                            ivOkRimDamage?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).rimDamage.equals("SUG")) {
-                            ivSugRimDamage?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).bubble.equals("REQ")) {
-                            ivReqbubble?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).bubble.equals("Ok")) {
-                            ivOkbubble?.performClick()
-                        }
-                        if (mDb.daoLR().getAll().get(i).bubble.equals("SUG")) {
-                            ivSugbubble?.performClick()
-                        }
-                        try {
-                            Glide.with(this)
-                                .load(mDb.daoLR().getAll().get(i).visualDetailPhotoUrl!!)
-                                .into(ivPickedImage1!!)
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-                }
+                         if (mDb.daoLR().getAll().get(i).treadDepth.equals("REQ")) {
+                             ivReqTreadDepth?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).treadDepth.equals("Ok")) {
+                             ivOkTreadDepth?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).treadDepth.equals("SUG")) {
+                             ivSugTreadDepth?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).treadWear.equals("REQ")) {
+                             ivReqTreadWear?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).treadWear.equals("Ok")) {
+                             ivOkTreadWear?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).treadWear.equals("SUG")) {
+                             ivSugTreadWear?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).rimDamage.equals("REQ")) {
+                             ivReqRimDamage?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).rimDamage.equals("Ok")) {
+                             ivOkRimDamage?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).rimDamage.equals("SUG")) {
+                             ivSugRimDamage?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).bubble.equals("REQ")) {
+                             ivReqbubble?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).bubble.equals("Ok")) {
+                             ivOkbubble?.performClick()
+                         }
+                         if (mDb.daoLR().getAll().get(i).bubble.equals("SUG")) {
+                             ivSugbubble?.performClick()
+                         }
+                         try {
+                             Glide.with(this)
+                                 .load(mDb.daoLR().getAll().get(i).visualDetailPhotoUrl!!)
+                                 .into(ivPickedImage1!!)
+                         } catch (e: java.lang.Exception) {
+                             e.printStackTrace()
+                         }
+                     }
+                 }
 
-            } else if (selectedTyre.equals("RF")) {
-                if (mDb.daoRF().getAll().size > 0) {
-                    for (i in mDb.daoRF().getAll().indices) {
-                        Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i)?.manufaturingDate)
-                        Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i)?.psiInTyreService)
-                        edtManufaturingDate?.setText(mDb.daoRF().getAll().get(i).manufaturingDate!!)
-                        sliderIn?.bubbleText = mDb.daoRF().getAll().get(i).psiInTyreService
-                        multiSliderWeight?.bubbleText =
-                            mDb.daoRF().getAll().get(i).weightTyreService
-                        multiSliderPsiOut?.bubbleText =
-                            mDb.daoRF().getAll().get(i).psiOutTyreService
+             } else if (selectedTyre.equals("RF")) {
+                 if (mDb.daoRF().getAll().size > 0) {
+                     for (i in mDb.daoRF().getAll().indices) {
+                         Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i)?.manufaturingDate)
+                         Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i)?.psiInTyreService)
+                         edtManufaturingDate?.setText(mDb.daoRF().getAll().get(i).manufaturingDate!!)
+                         sliderIn?.bubbleText = mDb.daoRF().getAll().get(i).psiInTyreService
+                         multiSliderWeight?.bubbleText =
+                             mDb.daoRF().getAll().get(i).weightTyreService
+                         multiSliderPsiOut?.bubbleText =
+                             mDb.daoRF().getAll().get(i).psiOutTyreService
 
-                        if (mDb.daoRF().getAll().get(i).sidewell.equals("Ok")) {
-                            runOnUiThread {
-                                ivOkSideWell?.performClick()
-                            }
+                         if (mDb.daoRF().getAll().get(i).sidewell.equals("Ok")) {
+                             runOnUiThread {
+                                 ivOkSideWell?.performClick()
+                             }
 
-                        }
-                        if (mDb.daoRF().getAll().get(i).sidewell.equals("SUG")) {
-                            runOnUiThread {
-                                ivSugSideWell?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).sidewell.equals("REQ")) {
-                            runOnUiThread {
-                                ivReqSideWell?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).shoulder.equals("Ok")) {
-                            runOnUiThread {
-                                ivOkShoulder?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).shoulder.equals("SUG")) {
-                            runOnUiThread {
-                                ivSugShoulder?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).shoulder.equals("REQ")) {
-                            runOnUiThread {
-                                ivReqShoulder?.performClick()
-                            }
-                        }
+                         }
+                         if (mDb.daoRF().getAll().get(i).sidewell.equals("SUG")) {
+                             runOnUiThread {
+                                 ivSugSideWell?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).sidewell.equals("REQ")) {
+                             runOnUiThread {
+                                 ivReqSideWell?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).shoulder.equals("Ok")) {
+                             runOnUiThread {
+                                 ivOkShoulder?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).shoulder.equals("SUG")) {
+                             runOnUiThread {
+                                 ivSugShoulder?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).shoulder.equals("REQ")) {
+                             runOnUiThread {
+                                 ivReqShoulder?.performClick()
+                             }
+                         }
 
-                        if (mDb.daoRF().getAll().get(i).treadDepth.equals("REQ")) {
-                            runOnUiThread {
-                                ivReqTreadDepth?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).treadDepth.equals("Ok")) {
-                            runOnUiThread {
-                                ivOkTreadDepth?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).treadDepth.equals("SUG")) {
-                            runOnUiThread {
-                                ivSugTreadDepth?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).treadWear.equals("REQ")) {
-                            runOnUiThread {
-                                ivReqTreadWear?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).treadWear.equals("Ok")) {
-                            runOnUiThread {
-                                ivOkTreadWear?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).treadWear.equals("SUG")) {
-                            runOnUiThread {
-                                ivSugTreadWear?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).rimDamage.equals("REQ")) {
-                            runOnUiThread {
-                                ivReqRimDamage?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).rimDamage.equals("Ok")) {
-                            runOnUiThread {
-                                ivOkRimDamage?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).rimDamage.equals("SUG")) {
-                            runOnUiThread {
-                                ivSugRimDamage?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).bubble.equals("REQ")) {
-                            runOnUiThread {
-                                ivReqbubble?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).bubble.equals("Ok")) {
-                            runOnUiThread {
-                                ivOkbubble?.performClick()
-                            }
-                        }
-                        if (mDb.daoRF().getAll().get(i).bubble.equals("SUG")) {
-                            runOnUiThread {
-                                ivSugbubble?.performClick()
-                            }
-                        }
-                        runOnUiThread {
-                            try {
-                                Glide.with(this)
-                                    .load(mDb.daoRF().getAll().get(i).visualDetailPhotoUrl!!)
-                                    .into(ivPickedImage1!!)
-                            } catch (e: java.lang.Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-                }
+                         if (mDb.daoRF().getAll().get(i).treadDepth.equals("REQ")) {
+                             runOnUiThread {
+                                 ivReqTreadDepth?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).treadDepth.equals("Ok")) {
+                             runOnUiThread {
+                                 ivOkTreadDepth?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).treadDepth.equals("SUG")) {
+                             runOnUiThread {
+                                 ivSugTreadDepth?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).treadWear.equals("REQ")) {
+                             runOnUiThread {
+                                 ivReqTreadWear?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).treadWear.equals("Ok")) {
+                             runOnUiThread {
+                                 ivOkTreadWear?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).treadWear.equals("SUG")) {
+                             runOnUiThread {
+                                 ivSugTreadWear?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).rimDamage.equals("REQ")) {
+                             runOnUiThread {
+                                 ivReqRimDamage?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).rimDamage.equals("Ok")) {
+                             runOnUiThread {
+                                 ivOkRimDamage?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).rimDamage.equals("SUG")) {
+                             runOnUiThread {
+                                 ivSugRimDamage?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).bubble.equals("REQ")) {
+                             runOnUiThread {
+                                 ivReqbubble?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).bubble.equals("Ok")) {
+                             runOnUiThread {
+                                 ivOkbubble?.performClick()
+                             }
+                         }
+                         if (mDb.daoRF().getAll().get(i).bubble.equals("SUG")) {
+                             runOnUiThread {
+                                 ivSugbubble?.performClick()
+                             }
+                         }
+                         runOnUiThread {
+                             try {
+                                 Glide.with(this)
+                                     .load(mDb.daoRF().getAll().get(i).visualDetailPhotoUrl!!)
+                                     .into(ivPickedImage1!!)
+                             } catch (e: java.lang.Exception) {
+                                 e.printStackTrace()
+                             }
+                         }
+                     }
+                 }
 
-            } else if (selectedTyre.equals("RR")) {
-                if (mDb.daoRR().getAll().size > 0) {
-                    for (i in mDb.daoRR().getAll().indices) {
-                        Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehicleMake)
-                        Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehicleMakeId)
-                        edtManufaturingDate?.setText(mDb.daoRR().getAll().get(i).manufaturingDate!!)
-                        sliderIn?.bubbleText = mDb.daoRR().getAll().get(i).psiInTyreService
-                        multiSliderPsiOut?.bubbleText =
-                            mDb.daoRR().getAll().get(i).psiOutTyreService
-                        multiSliderWeight?.bubbleText =
-                            mDb.daoRR().getAll().get(i).weightTyreService
+             } else if (selectedTyre.equals("RR")) {
+                 if (mDb.daoRR().getAll().size > 0) {
+                     for (i in mDb.daoRR().getAll().indices) {
+                         Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehicleMake)
+                         Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehicleMakeId)
+                         edtManufaturingDate?.setText(mDb.daoRR().getAll().get(i).manufaturingDate!!)
+                         sliderIn?.bubbleText = mDb.daoRR().getAll().get(i).psiInTyreService
+                         multiSliderPsiOut?.bubbleText =
+                             mDb.daoRR().getAll().get(i).psiOutTyreService
+                         multiSliderWeight?.bubbleText =
+                             mDb.daoRR().getAll().get(i).weightTyreService
 
-                        if (mDb.daoRR().getAll().get(i).sidewell.equals("Ok")) {
-                            ivOkSideWell?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).sidewell.equals("SUG")) {
-                            ivSugSideWell?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).sidewell.equals("REQ")) {
-                            ivReqSideWell?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).shoulder.equals("Ok")) {
-                            ivOkShoulder?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).shoulder.equals("SUG")) {
-                            ivSugShoulder?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).shoulder.equals("REQ")) {
-                            ivReqShoulder?.performClick()
-                        }
+                         if (mDb.daoRR().getAll().get(i).sidewell.equals("Ok")) {
+                             ivOkSideWell?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).sidewell.equals("SUG")) {
+                             ivSugSideWell?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).sidewell.equals("REQ")) {
+                             ivReqSideWell?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).shoulder.equals("Ok")) {
+                             ivOkShoulder?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).shoulder.equals("SUG")) {
+                             ivSugShoulder?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).shoulder.equals("REQ")) {
+                             ivReqShoulder?.performClick()
+                         }
 
-                        if (mDb.daoRR().getAll().get(i).treadDepth.equals("REQ")) {
-                            ivReqTreadDepth?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).treadDepth.equals("Ok")) {
-                            ivOkTreadDepth?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).treadDepth.equals("SUG")) {
-                            ivSugTreadDepth?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).treadWear.equals("REQ")) {
-                            ivReqTreadWear?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).treadWear.equals("Ok")) {
-                            ivOkTreadWear?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).treadWear.equals("SUG")) {
-                            ivSugTreadWear?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).rimDamage.equals("REQ")) {
-                            ivReqRimDamage?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).rimDamage.equals("Ok")) {
-                            ivOkRimDamage?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).rimDamage.equals("SUG")) {
-                            ivSugRimDamage?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).bubble.equals("REQ")) {
-                            ivReqbubble?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).bubble.equals("Ok")) {
-                            ivOkbubble?.performClick()
-                        }
-                        if (mDb.daoRR().getAll().get(i).bubble.equals("SUG")) {
-                            ivSugbubble?.performClick()
-                        }
-                        try {
-                            Glide.with(this)
-                                .load(mDb.daoRR().getAll().get(i).visualDetailPhotoUrl!!)
-                                .into(ivPickedImage1!!)
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-                }
+                         if (mDb.daoRR().getAll().get(i).treadDepth.equals("REQ")) {
+                             ivReqTreadDepth?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).treadDepth.equals("Ok")) {
+                             ivOkTreadDepth?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).treadDepth.equals("SUG")) {
+                             ivSugTreadDepth?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).treadWear.equals("REQ")) {
+                             ivReqTreadWear?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).treadWear.equals("Ok")) {
+                             ivOkTreadWear?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).treadWear.equals("SUG")) {
+                             ivSugTreadWear?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).rimDamage.equals("REQ")) {
+                             ivReqRimDamage?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).rimDamage.equals("Ok")) {
+                             ivOkRimDamage?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).rimDamage.equals("SUG")) {
+                             ivSugRimDamage?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).bubble.equals("REQ")) {
+                             ivReqbubble?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).bubble.equals("Ok")) {
+                             ivOkbubble?.performClick()
+                         }
+                         if (mDb.daoRR().getAll().get(i).bubble.equals("SUG")) {
+                             ivSugbubble?.performClick()
+                         }
+                         try {
+                             Glide.with(this)
+                                 .load(mDb.daoRR().getAll().get(i).visualDetailPhotoUrl!!)
+                                 .into(ivPickedImage1!!)
+                         } catch (e: java.lang.Exception) {
+                             e.printStackTrace()
+                         }
+                     }
+                 }
 
-            }
+             }
 
-        }
-        thread.start()*/
+         }
+         thread.start()*/
     }
 
     fun psiInSlider() {
@@ -781,6 +781,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     TyreConfigClass.selectedTyreConfigType = "RR"
                 }
 
+                TyreDetailCommonClass.tyreType = selectedTyre
                 TyreDetailCommonClass.manufaturingDate = edtManufaturingDate?.text.toString()
                 TyreDetailCommonClass.psiInTyreService = psiInTyreService
                 TyreDetailCommonClass.psiOutTyreService = psiOutTyreService

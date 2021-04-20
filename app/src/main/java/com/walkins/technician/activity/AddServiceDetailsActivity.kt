@@ -1370,6 +1370,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     TyreDetailCommonClass.visualDetailPhotoUrl
                 )
 
+
+                storeMake()
+
                 if (TyreDetailCommonClass.tyreType.equals("LF")) {
                     prefManager.setValue(TyreConfigClass.TyreLFObject, json.toString())
                 }
@@ -1383,9 +1386,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     prefManager.setValue(TyreConfigClass.TyreRRObject, json.toString())
                 }
 
-                storeMake()
-
-                Log.e("getjsonobject", "" + prefManager.getValue(TyreConfigClass.TyreRFObject))
+                Log.e("getjsonobject", "" + json)
 
 
                 val thread = Thread {
@@ -1909,385 +1910,994 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private fun storeMake() {
         if (TyreDetailCommonClass.tyreType.equals("LF")) {
-            val jsonrf = JsonObject()
-            jsonrf.addProperty(TyreKey.tyreType, "RF")
-            jsonrf.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk1Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk1Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonrf.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            ) {
 
-            jsonrf.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk1Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk1Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
-            prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                var lfObject: JSONObject? = JSONObject(str)
+                lfObject?.remove(TyreKey.vehicleMake)
+                lfObject?.remove(TyreKey.vehicleMakeId)
+                lfObject?.remove(TyreKey.vehiclePattern)
+                lfObject?.remove(TyreKey.vehiclePatternId)
+                lfObject?.remove(TyreKey.vehicleSize)
+                lfObject?.remove(TyreKey.vehicleSizeId)
+
+                lfObject?.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk1Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject?.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk1Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject?.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject?.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+
+
+                lfObject?.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk1Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject?.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk1Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonrf: JsonObject = JsonObject()
+                try {
+                    jsonrf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
+
+            } else {
+                var jsonrf: JsonObject = JsonObject()
+                jsonrf.addProperty(TyreKey.tyreType, "RF")
+                jsonrf.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk1Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk1Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonrf.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+
+
+                jsonrf.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk1Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk1Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
+            }
+
 //                    =================================================================
-            val jsonlr = JsonObject()
-            jsonlr.addProperty(TyreKey.tyreType, "LR")
-            jsonlr.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonlr.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlr.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonlr: JsonObject = JsonObject()
+                try {
+                    jsonlr = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlr.toString())
+            } else {
+                val jsonlr = JsonObject()
+                jsonlr.addProperty(TyreKey.tyreType, "LR")
+                jsonlr.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonlr.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlr.toString())
+            }
+
+
 //                    ===========================
-            val jsonrr = JsonObject()
-            jsonrr.addProperty(TyreKey.tyreType, "RR")
-            jsonrr.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonrr.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreRRObject, jsonrr.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                val jsonParser = JsonParser()
+                var jsonrr: JsonObject = JsonObject()
+                try {
+                    jsonrr = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreRRObject, jsonrr.toString())
+
+            } else {
+                val jsonrr = JsonObject()
+                jsonrr.addProperty(TyreKey.tyreType, "RR")
+                jsonrr.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonrr.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreRRObject, jsonrr.toString())
+            }
+
 
         }
 
-//        ahithi baki nichenu
+
         if (TyreDetailCommonClass.tyreType.equals("LR")) {
-            val jsonlr = JsonObject()
-            jsonlr.addProperty(TyreKey.tyreType, "LF")
-            jsonlr.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonlr.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlr.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlf.toString())
+            } else {
+                val jsonlr = JsonObject()
+                jsonlr.addProperty(TyreKey.tyreType, "LF")
+                jsonlr.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonlr.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlr.toString())
+            }
+
 //                    ===========================================================
-            val jsonrf = JsonObject()
-            jsonrf.addProperty(TyreKey.tyreType, "RF")
-            jsonrf.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonrf.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreRFObject, jsonlf.toString())
+            } else {
+                val jsonrf = JsonObject()
+                jsonrf.addProperty(TyreKey.tyreType, "RF")
+                jsonrf.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonrf.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
+            }
+
 //                    ======================================================================
-            val jsonrr = JsonObject()
-            jsonrr.addProperty(TyreKey.tyreType, "RR")
-            jsonrr.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk3Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonrr.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk3Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk3Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreRRObject, jsonrr.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreRRObject, jsonlf.toString())
+            } else {
+                val jsonrr = JsonObject()
+                jsonrr.addProperty(TyreKey.tyreType, "RR")
+                jsonrr.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonrr.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreRRObject, jsonrr.toString())
+            }
+
+
         }
         if (TyreDetailCommonClass.tyreType.equals("RF")) {
 
 //                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")){
-            val jsonlf = JsonObject()
-            jsonlf.addProperty(TyreKey.tyreType, "LF")
-            jsonlf.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonlf.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonlf.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonlf.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonlf.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonlf.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlf.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlf.toString())
+            } else {
+                val jsonlf = JsonObject()
+                jsonlf.addProperty(TyreKey.tyreType, "LF")
+                jsonlf.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonlf.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonlf.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonlf.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonlf.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonlf.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlf.toString())
+            }
+
 
 //                    }
 //                    ===========================================================
 //                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")){
-            val jsonlr = JsonObject()
-            jsonlr.addProperty(TyreKey.tyreType, "LR")
-            jsonlr.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonlr.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlr.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlf.toString())
+            } else {
+                val jsonlr = JsonObject()
+                jsonlr.addProperty(TyreKey.tyreType, "LR")
+                jsonlr.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonlr.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk2Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlr.toString())
+            }
+
 
 //                    }
 //                    ================================================
 //                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")){
-            val jsonrr = JsonObject()
-            jsonrr.addProperty(TyreKey.tyreType, "RR")
-            jsonrr.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonrr.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonrr.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreRRObject, jsonrr.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreRRObject, jsonlf.toString())
+            } else {
+                val jsonrr = JsonObject()
+                jsonrr.addProperty(TyreKey.tyreType, "RR")
+                jsonrr.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonrr.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonrr.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk3Size.equals("RR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreRRObject, jsonrr.toString())
+            }
+
 
         }
         if (TyreDetailCommonClass.tyreType.equals("RR")) {
-            val jsonlf = JsonObject()
-            jsonlf.addProperty(TyreKey.tyreType, "LF")
-            jsonlf.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonlf.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonlf.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonlf.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonlf.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonlf.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlf.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlf.toString())
+            } else {
+                val jsonlf = JsonObject()
+                jsonlf.addProperty(TyreKey.tyreType, "LF")
+                jsonlf.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonlf.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonlf.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonlf.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonlf.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonlf.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk1Size.equals("LF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreLFObject, jsonlf.toString())
+            }
+
 //                    ==================================================================
-            val jsonrf = JsonObject()
-            jsonrf.addProperty(TyreKey.tyreType, "RF")
-            jsonrf.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonrf.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonrf.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreRFObject, jsonlf.toString())
+            }else{
+                val jsonrf = JsonObject()
+                jsonrf.addProperty(TyreKey.tyreType, "RF")
+                jsonrf.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonrf.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonrf.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk2Size.equals("RF,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
+            }
+
 //                    ====================================================================
-            val jsonlr = JsonObject()
-            jsonlr.addProperty(TyreKey.tyreType, "LR")
-            jsonlr.addProperty(
-                TyreKey.vehicleMake,
-                if (TyreDetailCommonClass.chk3Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleMakeId,
-                if (TyreDetailCommonClass.chk3Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
-            )
 
-            jsonlr.addProperty(
-                TyreKey.vehiclePattern,
-                if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehiclePatternId,
-                if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleSize,
-                if (TyreDetailCommonClass.chk3Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
-            )
-            jsonlr.addProperty(
-                TyreKey.vehicleSizeId,
-                if (TyreDetailCommonClass.chk3Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
-            )
+            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            ) {
 
-            prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlr.toString())
+                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                var lfObject: JSONObject = JSONObject(str)
+                lfObject.remove(TyreKey.vehicleMake)
+                lfObject.remove(TyreKey.vehicleMakeId)
+                lfObject.remove(TyreKey.vehiclePattern)
+                lfObject.remove(TyreKey.vehiclePatternId)
+                lfObject.remove(TyreKey.vehicleSize)
+                lfObject.remove(TyreKey.vehicleSizeId)
+
+                lfObject.put(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk3Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk3Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                lfObject.put(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                lfObject.put(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk3Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                lfObject.put(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk3Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+                val jsonParser = JsonParser()
+                var jsonlf: JsonObject = JsonObject()
+                try {
+                    jsonlf = jsonParser.parse(lfObject.toString()) as JsonObject
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlf.toString())
+            }else{
+                val jsonlr = JsonObject()
+                jsonlr.addProperty(TyreKey.tyreType, "LR")
+                jsonlr.addProperty(
+                    TyreKey.vehicleMake,
+                    if (TyreDetailCommonClass.chk3Make.equals("LR,true")) TyreDetailCommonClass.vehicleMake else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleMakeId,
+                    if (TyreDetailCommonClass.chk3Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                )
+
+                jsonlr.addProperty(
+                    TyreKey.vehiclePattern,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePattern else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehiclePatternId,
+                    if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleSize,
+                    if (TyreDetailCommonClass.chk3Size.equals("LR,true")) TyreDetailCommonClass.vehicleSize else ""
+                )
+                jsonlr.addProperty(
+                    TyreKey.vehicleSizeId,
+                    if (TyreDetailCommonClass.chk3Size.equals("LR,true")) TyreDetailCommonClass.vehicleSizeId else ""
+                )
+
+                prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlr.toString())
+            }
+
 
         }
 
     }
-
 
 
     override fun onRequestPermissionsResult(

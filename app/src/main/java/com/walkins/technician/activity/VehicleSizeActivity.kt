@@ -235,47 +235,127 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     }
                 }
 
-                /*if (selectedTyre.equals("LF")) {
+//              ======================================================================
 
-                    if (mDb.daoLF().getAll().size > 0) {
-                        for (i in mDb.daoLF().getAll().indices) {
-                            Log.e("getdetailss", "" + mDb.daoLF().getAll().get(i).vehicleSizeId)
-                            selectedId = mDb.daoLF().getAll().get(i).vehicleSizeId?.toInt()!!
-                        }
-                    }
-                } else if (selectedTyre.equals("LR")) {
-                    if (mDb.daoLR().getAll().size > 0) {
-                        for (i in mDb.daoLR().getAll().indices) {
-                            Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i).vehicleSize)
-                            Log.e("getdetailss", "" + mDb.daoLR().getAll().get(i).vehicleSizeId)
-                            selectedId = mDb.daoLR().getAll().get(i).vehicleSizeId?.toInt()!!
-                        }
-                    }
+                if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+                ) {
+                    var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                    try {
+                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
-                } else if (selectedTyre.equals("RF")) {
-                    if (mDb.daoRF().getAll().size > 0) {
-                        for (i in mDb.daoRF().getAll().indices) {
-                            Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i).vehicleSize)
-                            Log.e("getdetailss", "" + mDb.daoRF().getAll().get(i).vehicleSizeId)
-                            selectedId = mDb.daoRF().getAll().get(i).vehicleSizeId?.toInt()!!
-                        }
-                    }
+                        if (selectedId != null && !selectedId.equals("") &&
+                            selectedId.equals(json.get("vehicleSizeId")?.asString!!)
+                        ) {
+                            runOnUiThread {
 
-                } else if (selectedTyre.equals("RR")) {
-                    if (mDb.daoRR().getAll().size > 0) {
-                        for (i in mDb.daoRR().getAll().indices) {
-                            Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehicleSize)
-                            Log.e("getdetailss", "" + mDb.daoRR().getAll().get(i).vehicleSizeId)
-                            selectedId = mDb.daoRR().getAll().get(i).vehicleSizeId?.toInt()!!
+                                if (chkRF?.text?.toString().equals("LF")) {
+                                    chkRF?.isChecked = true
+                                }
+                                if (chkLR?.text?.toString().equals("LF")) {
+                                    chkLR?.isChecked = true
+                                }
+                                if (chkRR?.text?.toString().equals("LF")) {
+                                    chkRR?.isChecked = true
+                                }
+                            }
                         }
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
                     }
-
                 }
-*/
+
+                if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+                ) {
+                    var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                    try {
+                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                        if (selectedId != null && !selectedId.equals("") &&
+                            selectedId.equals(json.get("vehicleSizeId")?.asString!!)
+                        ) {
+                            runOnUiThread {
+
+                                if (chkRF?.text?.toString().equals("LR")) {
+                                    chkRF?.isChecked = true
+                                }
+                                if (chkLR?.text?.toString().equals("LR")) {
+                                    chkLR?.isChecked = true
+                                }
+                                if (chkRR?.text?.toString().equals("LR")) {
+                                    chkRR?.isChecked = true
+                                }
+                            }
+                        }
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+                ) {
+                    var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                    try {
+                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                        if (selectedId != null && !selectedId.equals("") &&
+                            selectedId.equals(json.get("vehicleSizeId")?.asString!!)
+                        ) {
+                            runOnUiThread {
+
+                                if (chkRF?.text?.toString().equals("RF")) {
+                                    chkRF?.isChecked = true
+                                }
+                                if (chkLR?.text?.toString().equals("RF")) {
+                                    chkLR?.isChecked = true
+                                }
+                                if (chkRR?.text?.toString().equals("RF")) {
+                                    chkRR?.isChecked = true
+                                }
+                            }
+                        }
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+                ) {
+                    var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                    try {
+                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                        if (selectedId != null && !selectedId.equals("") &&
+                            selectedId.equals(json.get("vehicleSizeId")?.asString!!)
+                        ) {
+                            runOnUiThread {
+
+                                if (chkRF?.text?.toString().equals("RR")) {
+                                    chkRF?.isChecked = true
+                                }
+                                if (chkLR?.text?.toString().equals("RR")) {
+                                    chkLR?.isChecked = true
+                                }
+                                if (chkRR?.text?.toString().equals("RR")) {
+                                    chkRR?.isChecked = true
+                                }
+                            }
+                        }
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+
             }
 
         }
         thread.start()
+
+
 
         var handler = Handler()
         handler.postDelayed(Runnable {
