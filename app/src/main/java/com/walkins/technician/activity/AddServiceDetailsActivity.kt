@@ -48,7 +48,6 @@ import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialogDueDate
 import com.walkins.technician.model.login.IssueResolveModel
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
@@ -323,35 +322,24 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (prefManager?.getValue("AddServiceSuggestion") != null &&
             !prefManager.getValue("AddServiceSuggestion").equals("")
         ) {
-            Log.e("getvalues", "" + prefManager.getValue("AddServiceSuggestion"))
 
-            var jsonArr:JSONArray= JSONArray(prefManager.getValue("AddServiceSuggestion"))
 
-            val list = ArrayList<String>()
-            try {
-                var i = 0
-                val l: Int = jsonArr.length()
-                while (i < l) {
-                    list.add(jsonArr.get(i).toString())
-                    i++
-                }
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
+            val jsonText: String = prefManager.getValue("AddServiceSuggestion")!!
+            Log.e("getobjj", "" + jsonText)
 
-            for (i in suggestionArray?.indices!!) {
-
-                for (j in list.indices) {
-
-                    if (suggestionArray?.get(i)?.issueName.equals(list.get(j))) {
-                        suggestionArray?.get(i)?.isSelected = true
-                        selectedSuggestionArr?.add(suggestionArray?.get(i)?.issueName!!)
-                    }
-                }
-                Log.e("getvalues", "" + suggestionArray?.get(i)?.issueName)
-                Log.e("getvalues", "" + suggestionArray?.get(i)?.isSelected)
-            }
-            tyreSuggestionAdapter?.notifyDataSetChanged()
+//            for (i in suggestionArray?.indices!!) {
+//
+//                for (j in arrlist.indices) {
+//
+//                    if (suggestionArray?.get(i)?.issueName?.equals(arrlist.get(j))!!) {
+//                        suggestionArray?.get(i)?.isSelected = true
+//                        selectedSuggestionArr?.add(suggestionArray?.get(i)?.issueName!!)
+//                    }
+//                }
+//                Log.e("getvalues", "" + suggestionArray?.get(i)?.issueName)
+//                Log.e("getvalues", "" + suggestionArray?.get(i)?.isSelected)
+//            }
+//            tyreSuggestionAdapter?.notifyDataSetChanged()
 
         }
     }
@@ -465,10 +453,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         llTyreConfigExpanded?.setOnTouchListener(this)
         ivPhoneCall?.setOnTouchListener(this)
 
-        for (i in suggestionArr?.indices) {
-            suggestionArray?.add(IssueResolveModel(suggestionArr.get(i), false))
+        for (i in suggestionArr.indices) {
+            suggestionArray?.add(IssueResolveModel(suggestionArr.get(i) + " " + i, false))
         }
-        for (i in reasonArray?.indices) {
+        for (i in reasonArray.indices) {
             reasonArrayList?.add(IssueResolveModel(reasonArray.get(i), false))
         }
 
@@ -1137,7 +1125,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 selectedSuggestionArr?.add(suggestionArray?.get(variable)?.issueName!!)
             }
 
-            prefManager?.setValue("AddServiceSuggestion", "" + selectedSuggestionArr)
+            prefManager?.saveArrayList("AddServiceSuggestion", selectedSuggestionArr)
         }
 
         if (check == 0) {

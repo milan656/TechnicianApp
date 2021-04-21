@@ -393,7 +393,20 @@ class PrefManager(context: Context) {
         val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         return sharedPreferences.getString(key, "")!!
     }
-
+    fun saveArrayList(key: String, vehicleList: ArrayList<String>?) {
+        val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val textList: MutableList<String> = ArrayList()
+        textList.addAll(vehicleList!!)
+        val jsonText = gson.toJson(textList)
+        try {
+            editor.putString(key, jsonText)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        editor.commit()
+    }
     fun setGoogleRatingLink(googleRating: String?) {
         val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
