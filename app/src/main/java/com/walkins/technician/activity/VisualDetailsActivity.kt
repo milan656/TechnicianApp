@@ -6,9 +6,11 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,7 +27,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.technician.common.Common
+import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.ramotion.fluidslider.FluidSlider
 import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.DB.DBClass
@@ -34,8 +39,14 @@ import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
+import com.walkins.technician.common.TyreKey
 import com.walkins.technician.common.onClickAdapter
 import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
@@ -47,6 +58,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     var total = max - min
 
     private lateinit var mDb: DBClass
+    private lateinit var prefManager: PrefManager
+    private var cameraDialog: BottomSheetDialog? = null
 
     private var ivBack: ImageView? = null
     private var ivOkSideWell: ImageView? = null
@@ -90,14 +103,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var tvAddPhoto1: TextView? = null
     private var selectedTyre: String? = null
 
-    val REQUEST_IMAGE_CAPTURE = 1
-    val PICK_IMAGE_REQUEST = 100
-    private lateinit var mCurrentPhotoPath: String
-
-    var image_uri: Uri? = null
-    private val IMAGE_CAPTURE_RESULT = 1001
-    private val PERMISSION_CODE = 1000;
-
     private var issueResolvedRecycView: RecyclerView? = null
     private var issueResolveArr = arrayListOf(
         "Improve this for the tyre in alignment",
@@ -114,11 +119,36 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var psiOutFrame: FrameLayout? = null
     private var edtManufaturingDate: EditText? = null
 
+
+    // image picker code
+    val REQUEST_IMAGE = 100
+    val REQUEST_PERMISSION = 200
+    private var imageFilePath = ""
+    private var IMAGE_PICK_CODE = 1010;
+    private var PERMISSION_CODE = 1011;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visual_details)
-        mDb = DBClass.getInstance(applicationContext)
+        mDb = DBClass.getInstance(this)
+        prefManager = PrefManager(this)
+
+        requestPermissionForImage()
         init()
+    }
+
+    private fun requestPermissionForImage() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                REQUEST_PERMISSION
+            )
+        }
     }
 
     private fun init() {
@@ -144,9 +174,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         )
         issueResolvedRecycView?.adapter = issueResolveAdapter
 
-        psiInSlider()
-        psiOutSlider()
-        weightSlider()
+
 
         relTyrePhotoAdd?.setOnClickListener(this)
         ivBack?.setOnClickListener(this)
@@ -224,7 +252,68 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         ivSugbubble?.setOnClickListener(this)
         ivReqbubble?.setOnClickListener(this)
 
+        psiInSlider()
+        psiOutSlider()
+        weightSlider()
 
+        if (selectedTyre.equals("LF")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                    getData(json)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                }
+            }
+        }
+        if (selectedTyre.equals("LR")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                    getData(json)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                }
+            }
+        }
+        if (selectedTyre.equals("RF")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    getData(json)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                }
+            }
+        }
+        if (selectedTyre.equals("RR")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    getData(json)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                }
+            }
+        }
         /* var thread = Thread {
              if (selectedTyre.equals("LF")) {
 
@@ -581,6 +670,109 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
          thread.start()*/
     }
 
+    private fun getData(json: JsonObject) {
+        Log.e("getobje", "" + json)
+        edtManufaturingDate?.setText(json.get(TyreKey.manufaturingDate)?.asString!!)
+        sliderIn?.bubbleText = json.get(TyreKey.psiInTyreService)?.asString!!
+
+        multiSliderWeight?.bubbleText =
+            json.get(TyreKey.weightTyreService)?.asString!!
+        multiSliderPsiOut?.bubbleText =
+            json.get(TyreKey.psiOutTyreService)?.asString!!
+
+        psiInTyreService = json.get(TyreKey.psiInTyreService)?.asString!!
+        psiOutTyreService = json.get(TyreKey.psiOutTyreService)?.asString!!
+        weightTyreService = json.get(TyreKey.weightTyreService)?.asString!!
+
+        if (json.get(TyreKey.sidewell)?.asString!!.equals("Ok")) {
+            ivOkSideWell?.performClick()
+            sidewell = "Ok"
+        }
+        if (json.get(TyreKey.sidewell)?.asString!!.equals("SUG")) {
+            ivSugSideWell?.performClick()
+            sidewell = "SUG"
+        }
+        if (json.get(TyreKey.sidewell)?.asString!!.equals("REQ")) {
+            ivReqSideWell?.performClick()
+            sidewell = "REQ"
+        }
+        if (json.get(TyreKey.shoulder)?.asString!!.equals("Ok")) {
+            ivOkShoulder?.performClick()
+            shoulder = "Ok"
+        }
+        if (json.get(TyreKey.shoulder)?.asString!!.equals("SUG")) {
+            ivSugShoulder?.performClick()
+            shoulder = "SUG"
+        }
+        if (json.get(TyreKey.shoulder)?.asString!!.equals("REQ")) {
+            ivReqShoulder?.performClick()
+            shoulder = "REQ"
+        }
+
+        if (json.get(TyreKey.treadDepth)?.asString!!.equals("REQ")) {
+            ivReqTreadDepth?.performClick()
+            treadDepth = "REQ"
+        }
+        if (json.get(TyreKey.treadDepth)?.asString!!.equals("Ok")) {
+            ivOkTreadDepth?.performClick()
+            treadDepth = "Ok"
+        }
+        if (json.get(TyreKey.treadDepth)?.asString!!.equals("SUG")) {
+            ivSugTreadDepth?.performClick()
+            treadDepth = "SUG"
+        }
+        if (json.get(TyreKey.treadWear)?.asString!!.equals("REQ")) {
+            ivReqTreadWear?.performClick()
+            treadWear = "REQ"
+        }
+        if (json.get(TyreKey.treadWear)?.asString!!.equals("Ok")) {
+            ivOkTreadWear?.performClick()
+            treadWear = "Ok"
+        }
+        if (json.get(TyreKey.treadWear)?.asString!!.equals("SUG")) {
+            ivSugTreadWear?.performClick()
+            treadWear = "SUG"
+        }
+        if (json.get(TyreKey.rimDamage)?.asString!!.equals("REQ")) {
+            ivReqRimDamage?.performClick()
+            rimDamage = "REQ"
+        }
+        if (json.get(TyreKey.rimDamage)?.asString!!.equals("Ok")) {
+            ivOkRimDamage?.performClick()
+            rimDamage = "Ok"
+        }
+        if (json.get(TyreKey.rimDamage)?.asString!!.equals("SUG")) {
+            ivSugRimDamage?.performClick()
+            rimDamage = "SUG"
+        }
+        if (json.get(TyreKey.bubble)?.asString!!.equals("REQ")) {
+            ivReqbubble?.performClick()
+            rimDamage = "REQ"
+        }
+        if (json.get(TyreKey.bubble)?.asString!!.equals("Ok")) {
+            ivOkbubble?.performClick()
+            bubble = "OK"
+        }
+        if (json.get(TyreKey.bubble)?.asString!!.equals("SUG")) {
+            ivSugbubble?.performClick()
+            bubble = "SUG"
+        }
+        try {
+//            Glide.with(this)
+//                .load(json.get(TyreKey.visualDetailPhotoUrl)?.asString!!)
+//                .into(ivPickedImage1!!)
+
+            var uri = Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString!!)
+            TyreDetailCommonClass.visualDetailPhotoUrl =
+                json.get(TyreKey.visualDetailPhotoUrl)?.asString
+            ivPickedImage1?.setImageURI(uri)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+
+
+    }
+
     fun psiInSlider() {
         sliderIn = findViewById<FluidSlider>(R.id.multiSlider1)
         sliderIn?.positionListener = { pos ->
@@ -588,7 +780,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getvaluess", "" + sliderIn?.bubbleText)
             psiInTyreService = sliderIn?.bubbleText
         }
-        sliderIn?.position = 0.3f
+//        sliderIn?.position = 0.3f
         sliderIn?.startText = "$min"
         sliderIn?.endText = "$max"
         sliderIn?.animation?.cancel()
@@ -601,7 +793,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getvaluess", "" + multiSliderPsiOut?.bubbleText)
             psiOutTyreService = multiSliderPsiOut?.bubbleText
         }
-        multiSliderPsiOut?.position = 0.3f
+//        multiSliderPsiOut?.position = 0.3f
         multiSliderPsiOut?.startText = "$min"
         multiSliderPsiOut?.endText = "$max"
         multiSliderPsiOut?.animation?.cancel()
@@ -614,7 +806,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getvaluess", "" + multiSliderWeight?.bubbleText)
             weightTyreService = multiSliderWeight?.bubbleText
         }
-        multiSliderWeight?.position = 0.3f
+//        multiSliderWeight?.position = 0.3f
         multiSliderWeight?.startText = "$min"
         multiSliderWeight?.endText = "$max"
         multiSliderWeight?.animation?.cancel()
@@ -624,56 +816,60 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     override fun onPositionClick(variable: Int, check: Int) {
 
         if (check == 10) {
+            if (cameraDialog != null && cameraDialog?.isShowing!!) {
+                cameraDialog?.dismiss()
+            }
             if (Common.commonPhotoChooseArr?.get(variable)?.equals("Gallery")) {
-                val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    checkPermissions(this)
-                } else {
-                    try {
-                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                        intent.type = "image/*"
-                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-                if (result == true) {
-                    try {
-
-                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                        intent.type = "image/*"
-                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-                    } catch (e: Exception) {
-
-                        e.printStackTrace()
-                    }
-
-                } else {
-                    //  Common.showShortToast("Permission Granted",requireActivity())
-                }
+                openGallery()
             }
             if (Common.commonPhotoChooseArr?.get(variable)?.equals("Camera")) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_DENIED ||
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_DENIED
-                    ) {
-                        //permission was not enabled
-                        val permission = arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
-                        //show popup to request permission
-                        requestPermissions(permission, PERMISSION_CODE)
-                    } else {
-                        //permission already granted
-                        openCamera()
-                    }
-                } else {
-                    //system os is < marshmallow
-                    openCamera()
-                }
+                openCamera()
             }
+        }
+    }
+
+    private fun openCamera() {
+        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (pictureIntent.resolveActivity(packageManager) != null) {
+            var photoFile: File? = null
+            photoFile = try {
+                createImageFile()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                return
+            }
+            val photoUri: Uri =
+                FileProvider.getUriForFile(this, "$packageName.provider", photoFile!!)
+            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+            startActivityForResult(pictureIntent, REQUEST_IMAGE)
+        }
+    }
+
+    private fun createImageFile(): File? {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "IMG_" + timeStamp + "_"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+        imageFilePath = image.absolutePath
+        return image
+    }
+
+    private fun openGallery() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE);
+            } else {
+                //permission already granted
+                pickImageFromGallery();
+            }
+        } else {
+            //system OS is < Marshmallow
+            pickImageFromGallery();
         }
     }
 
@@ -686,15 +882,15 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
-        val dialog =
+        cameraDialog =
             this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
-        dialog.setCancelable(false)
+        cameraDialog?.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog.window?.setLayout(width, height)
-        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(view)
+        cameraDialog?.window?.setLayout(width, height)
+        cameraDialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        cameraDialog?.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btn_send)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
@@ -718,7 +914,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         arrayAdapter?.onclick = this
 
         ivClose?.setOnClickListener {
-            dialog?.dismiss()
+            cameraDialog?.dismiss()
         }
         if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
             btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
@@ -733,11 +929,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
         btnSend.setOnClickListener {
 
-            dialog?.dismiss()
+            cameraDialog?.dismiss()
 
         }
 
-        dialog?.show()
+        cameraDialog?.show()
 
     }
 
@@ -757,6 +953,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
             R.id.btnDone -> {
                 Log.e("getslectedtyre", "" + selectedTyre)
+
+                if (!checkValidation()) {
+                    return
+                }
+
                 if (selectedTyre.equals("LF")) {
 
                     TyreConfigClass.LFVehicleVisualDetail = true
@@ -793,6 +994,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 TyreDetailCommonClass.rimDamage = rimDamage
                 TyreDetailCommonClass.bubble = bubble
                 TyreDetailCommonClass.issueResolvedArr = issueResolveArr
+
+                Log.e("getslider", "" + TyreDetailCommonClass.psiInTyreService)
+                Log.e("getslider", "" + TyreDetailCommonClass.psiOutTyreService)
+                Log.e("getslider", "" + TyreDetailCommonClass.weightTyreService)
 
                 setResult(1004)
                 finish()
@@ -900,7 +1105,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
             R.id.ivSugbubble -> {
                 ivSugbubble?.setImageResource(R.mipmap.ic_condition_degrade)
-                ivSugbubble?.setImageResource(R.mipmap.ic_blank_condition)
+                ivOkbubble?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqbubble?.setImageResource(R.mipmap.ic_blank_condition)
                 bubble = "SUG"
             }
@@ -915,155 +1120,29 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun checkPermissions(context: FragmentActivity?): Boolean {
-        val currentAPIVersion = Build.VERSION.SDK_INT
-        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
-            if (context?.let {
-                    ContextCompat.checkSelfPermission(
-                        it,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                } !== PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.CAMERA
-                ) !== PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        context as Activity,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                    || ActivityCompat.shouldShowRequestPermissionRationale(
-                        context as Activity,
-                        Manifest.permission.CAMERA
-                    )
-                ) {
-                    val alertBuilder = android.app.AlertDialog.Builder(context)
-                    alertBuilder.setCancelable(true)
-                    alertBuilder.setTitle("Permission necessary")
-                    alertBuilder.setMessage("External storage permission is necessary")
-                    alertBuilder.setPositiveButton(
-                        android.R.string.yes
-                    ) { dialog, which ->
-                        requestPermissions(
-                            arrayOf<String>(
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA
-                            ),
-                            123
-                        )
-                    }
-                    val alert = alertBuilder.create()
-                    alert.show()
-                } else {
+    private fun checkValidation(): Boolean {
 
-                    requestPermissions(
-                        arrayOf<String>(
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA
-                        ), 123
-                    );
+        if (edtManufaturingDate?.text?.toString().equals("")) {
+            Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
+            return false
+        }
 
-                }
-                return false
-            } else {
-                return true
-            }
+        if (sidewell.equals("") || shoulder.equals("") || treadWear.equals("") ||
+            treadDepth.equals("") || rimDamage.equals("") || bubble.equals("")
+        ) {
+            Toast.makeText(this, "Please Select Icons", Toast.LENGTH_SHORT).show()
+            return false
         } else {
             return true
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
 
-            IMAGE_CAPTURE_RESULT -> {
-//                image_view.setImageURI(image_uri)
-
-                Log.e("imagepath222", "" + image_uri)
-                ivPickedImage1?.setImageURI(image_uri)
-                CropImage.activity(image_uri)
-                    .start(this)
-            }
-
-
-            REQUEST_IMAGE_CAPTURE -> {
-                if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
-                    val auxFile = File(mCurrentPhotoPath)
-                    Log.e("imagepath2", "" + auxFile)
-                    var mImageBitmap = MediaStore.Images.Media.getBitmap(
-                        this?.getContentResolver(),
-                        Uri.parse(mCurrentPhotoPath)
-                    );
-                    Glide.with(this)
-                        .load(Uri.fromFile(auxFile))
-                        .into(ivPickedImage1!!)
-
-                    CropImage.activity(Uri.fromFile(auxFile))
-                        .start(this as Activity)
-
-                    /* uploadProfileImage(auxFile)
-                     Glide.with(this)
-                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
-                         .into(imgProfile)*/
-                }
-            }
-
-            PICK_IMAGE_REQUEST -> {
-                if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
-                    val selectedImage = data?.data
-                    Log.e("imagepath2322", "" + selectedImage)
-
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        this?.let { Common.getFile(it, selectedImage) }
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-                    ivEditImg2?.visibility = View.VISIBLE
-                    tvAddPhoto1?.visibility = View.GONE
-                    tvCarphoto1?.visibility = View.GONE
-                    Glide.with(this)
-                        .load(Uri.fromFile(imagePath))
-                        .into(ivPickedImage1!!)
-
-                    Log.i("imagePath", "++++" + imagePath)
-
-                    CropImage.activity(selectedImage)
-                        .start(this as Activity)
-                }
-            }
-
-            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                val result = CropImage.getActivityResult(data)
-                if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
-                    val selectedImage = result.uri
-
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        this?.let { Common.getFile(it, selectedImage) }
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    Log.e("imagepath1", "" + imagePath + " " + selectedImage)
-                    Glide.with(this)
-                        .load(Uri.fromFile(imagePath))
-                        .into(ivPickedImage1!!)
-
-//                    ivProfileImg?.setImageURI(selectedImage)
-
-
-//                    imagePath?.let { uploadCIPImage(it) }
-                }
-            }
-
-        }
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
     override fun onRequestPermissionsResult(
@@ -1071,78 +1150,43 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.size > 0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED
                 ) {
-                    //permission from popup was granted
-                    openCamera()
+                    //permission from popup granted
+                    pickImageFromGallery()
                 } else {
-                    //permission from popup was denied
-                    Common.hideLoader()
+                    //permission from popup denied
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
-                }
-            }
-            123 -> {
-                if (grantResults.get(1) != -1) {
-                    if (grantResults.size > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        val file: File = this?.let { Common.createFile(it) }!!
-
-                        mCurrentPhotoPath = file.absolutePath
-
-                        val uri: Uri = this?.let {
-                            FileProvider.getUriForFile(
-                                it,
-                                "com.walkins.technician.android.fileprovider",
-                                file
-                            )
-                        }!!
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-
-                    }
-                } else {
-
-                }
-            }
-
-            124 -> {
-                if (grantResults?.get(1) != -1) {
-                    if (grantResults.size > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        try {
-                            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "image/*"
-                            startActivityForResult(intent, PICK_IMAGE_REQUEST)
-
-                        } catch (e: Exception) {
-
-                            e.printStackTrace()
-                        }
-                    }
-                } else {
-
                 }
             }
         }
     }
 
-    private fun openCamera() {
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.TITLE, "New Picture")
-        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-        image_uri = contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        //camera intent
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_RESULT)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                ivPickedImage1?.setImageURI(Uri.parse(imageFilePath))
+                ivPickedImage1?.visibility = View.VISIBLE
+                ivEditImg2?.visibility = View.VISIBLE
+                tvAddPhoto1?.visibility = View.GONE
+                tvCarphoto1?.visibility = View.GONE
+                TyreDetailCommonClass.visualDetailPhotoUrl = imageFilePath
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "You cancelled the operation", Toast.LENGTH_SHORT).show()
+            }
+        }
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            ivPickedImage1?.setImageURI(data?.data)
+            ivPickedImage1?.visibility = View.VISIBLE
+            ivEditImg2?.visibility = View.VISIBLE
+            tvAddPhoto1?.visibility = View.GONE
+            tvCarphoto1?.visibility = View.GONE
+            TyreDetailCommonClass.visualDetailPhotoUrl = data?.data?.toString()
+        }
     }
 }
 

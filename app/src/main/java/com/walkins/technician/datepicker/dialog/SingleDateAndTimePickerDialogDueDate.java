@@ -6,13 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -23,10 +16,15 @@ import com.walkins.technician.datepicker.DateHelper;
 import com.walkins.technician.datepicker.SingleDateAndTimePicker;
 import com.walkins.technician.datepicker.widget.DateWithLabel;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import static com.walkins.technician.datepicker.widget.SingleDateAndTimeConstants.STEP_MINUTES_DEFAULT;
 
 
-public class SingleDateAndTimePickerDialog extends BaseDialog {
+public class SingleDateAndTimePickerDialogDueDate extends BaseDialog {
 
     private final DateHelper dateHelper = new DateHelper();
     private Listener listener;
@@ -45,11 +43,11 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
     @Nullable
     private DisplayListener displayListener;
 
-    public SingleDateAndTimePickerDialog(Boolean isResetOff, Context context) {
+    public SingleDateAndTimePickerDialogDueDate(Boolean isResetOff, Context context) {
         this(context, false);
     }
 
-    private SingleDateAndTimePickerDialog(Context context, boolean bottomSheet) {
+    private SingleDateAndTimePickerDialogDueDate(Context context, boolean bottomSheet) {
         final int layout = bottomSheet ? R.layout.bottom_sheet_picker_bottom_sheet :
                 R.layout.bottom_sheet_picker;
         this.bottomSheetHelper = new BottomSheetHelper(context, layout);
@@ -69,7 +67,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
 
             @Override
             public void onClose() {
-                SingleDateAndTimePickerDialog.this.onClose();
+                SingleDateAndTimePickerDialogDueDate.this.onClose();
 
                 if (displayListener != null) {
                     displayListener.onClosed(picker);
@@ -118,6 +116,9 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
             }
         }
         final Button btn_reset = (Button) view.findViewById(R.id.btn_reset);
+
+
+        btn_reset.setVisibility(View.GONE);
 
         if (btn_reset != null) {
             btn_reset.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +216,6 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
         }
 
 
-
         picker.setDisplayDays(displayDays);
         picker.setDisplayMonths(displayMonth);
         picker.setDisplayDaysOfMonth(displayDaysOfMonth);
@@ -223,17 +223,17 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
         picker.setDisplayHours(displayHours);
     }
 
-    public SingleDateAndTimePickerDialog setListener(Listener listener) {
+    public SingleDateAndTimePickerDialogDueDate setListener(Listener listener) {
         this.listener = listener;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setCurved(boolean curved) {
+    public SingleDateAndTimePickerDialogDueDate setCurved(boolean curved) {
         this.curved = curved;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setMinutesStep(int minutesStep) {
+    public SingleDateAndTimePickerDialogDueDate setMinutesStep(int minutesStep) {
         this.minutesStep = minutesStep;
         return this;
     }
@@ -242,103 +242,103 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
         this.displayListener = displayListener;
     }
 
-    public SingleDateAndTimePickerDialog setTitle(@Nullable String title) {
+    public SingleDateAndTimePickerDialogDueDate setTitle(@Nullable String title) {
         this.title = title;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setTitleTextSize(@Nullable Integer titleTextSize) {
+    public SingleDateAndTimePickerDialogDueDate setTitleTextSize(@Nullable Integer titleTextSize) {
         this.titleTextSize = titleTextSize;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setBottomSheetHeight(@Nullable Integer bottomSheetHeight) {
+    public SingleDateAndTimePickerDialogDueDate setBottomSheetHeight(@Nullable Integer bottomSheetHeight) {
         this.bottomSheetHeight = bottomSheetHeight;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setTodayText(@Nullable String todayText) {
+    public SingleDateAndTimePickerDialogDueDate setTodayText(@Nullable String todayText) {
         this.todayText = todayText;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setMustBeOnFuture(boolean mustBeOnFuture) {
+    public SingleDateAndTimePickerDialogDueDate setMustBeOnFuture(boolean mustBeOnFuture) {
         this.mustBeOnFuture = mustBeOnFuture;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setMinDateRange(Date minDate) {
+    public SingleDateAndTimePickerDialogDueDate setMinDateRange(Date minDate) {
         this.minDate = minDate;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setMaxDateRange(Date maxDate) {
+    public SingleDateAndTimePickerDialogDueDate setMaxDateRange(Date maxDate) {
         this.maxDate = maxDate;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setDefaultDate(Date defaultDate) {
+    public SingleDateAndTimePickerDialogDueDate setDefaultDate(Date defaultDate) {
         this.defaultDate = defaultDate;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setDisplayDays(boolean displayDays) {
+    public SingleDateAndTimePickerDialogDueDate setDisplayDays(boolean displayDays) {
         this.displayDays = displayDays;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setDisplayMinutes(boolean displayMinutes) {
+    public SingleDateAndTimePickerDialogDueDate setDisplayMinutes(boolean displayMinutes) {
         this.displayMinutes = displayMinutes;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setDisplayMonthNumbers(boolean displayMonthNumbers) {
+    public SingleDateAndTimePickerDialogDueDate setDisplayMonthNumbers(boolean displayMonthNumbers) {
         this.displayMonthNumbers = displayMonthNumbers;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setDisplayHours(boolean displayHours) {
+    public SingleDateAndTimePickerDialogDueDate setDisplayHours(boolean displayHours) {
         this.displayHours = displayHours;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setDisplayDaysOfMonth(boolean displayDaysOfMonth) {
+    public SingleDateAndTimePickerDialogDueDate setDisplayDaysOfMonth(boolean displayDaysOfMonth) {
         this.displayDaysOfMonth = displayDaysOfMonth;
         return this;
     }
 
 
-    private SingleDateAndTimePickerDialog setDisplayMonth(boolean displayMonth) {
+    private SingleDateAndTimePickerDialogDueDate setDisplayMonth(boolean displayMonth) {
         this.displayMonth = displayMonth;
         return this;
     }
 
-    private SingleDateAndTimePickerDialog setDisplayYears(boolean displayYears) {
+    private SingleDateAndTimePickerDialogDueDate setDisplayYears(boolean displayYears) {
         this.displayYears = displayYears;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setDayFormatter(SimpleDateFormat dayFormatter) {
+    public SingleDateAndTimePickerDialogDueDate setDayFormatter(SimpleDateFormat dayFormatter) {
         this.dayFormatter = dayFormatter;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setCustomLocale(Locale locale) {
+    public SingleDateAndTimePickerDialogDueDate setCustomLocale(Locale locale) {
         this.customLocale = locale;
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setIsAmPm(boolean isAmPm) {
+    public SingleDateAndTimePickerDialogDueDate setIsAmPm(boolean isAmPm) {
         this.isAmPm = Boolean.valueOf(isAmPm);
         return this;
     }
 
-    public SingleDateAndTimePickerDialog setFocusable(boolean focusable) {
+    public SingleDateAndTimePickerDialogDueDate setFocusable(boolean focusable) {
         bottomSheetHelper.setFocusable(focusable);
         return this;
     }
 
-    private SingleDateAndTimePickerDialog setTimeZone(TimeZone timeZone) {
+    private SingleDateAndTimePickerDialogDueDate setTimeZone(TimeZone timeZone) {
         dateHelper.setTimeZone(timeZone);
         return this;
     }
@@ -387,7 +387,7 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
 
     public static class Builder {
         private final Context context;
-        private SingleDateAndTimePickerDialog dialog;
+        private SingleDateAndTimePickerDialogDueDate dialog;
 
         @Nullable
         private Listener listener;
@@ -600,8 +600,8 @@ public class SingleDateAndTimePickerDialog extends BaseDialog {
             return this;
         }
 
-        public SingleDateAndTimePickerDialog build() {
-            final SingleDateAndTimePickerDialog dialog = new SingleDateAndTimePickerDialog(context, bottomSheet)
+        public SingleDateAndTimePickerDialogDueDate build() {
+            final SingleDateAndTimePickerDialogDueDate dialog = new SingleDateAndTimePickerDialogDueDate(context, bottomSheet)
                     .setTitle(title)
                     .setTitleTextSize(titleTextSize)
                     .setBottomSheetHeight(bottomSheetHeight)

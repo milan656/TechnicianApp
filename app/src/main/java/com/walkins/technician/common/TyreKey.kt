@@ -6,6 +6,7 @@ class TyreKey {
         var tyreType = "tyreType"
         var vehicleMake = "vehicleMake"
         var vehicleMakeId = "vehicleMakeId"
+        var vehicleMakeURL = "vehicleMakeURL"
         var vehiclePattern = "vehiclePattern"
         var vehiclePatternId = "vehiclePatternId"
         var vehicleSize = "vehicleSize"
@@ -20,6 +21,7 @@ class TyreKey {
         var treadWear = "treadWear"
         var rimDamage = "rimDamage"
         var bubble = "bubble"
+        var visualDetailPhotoUrl = "visualDetailPhotoUrl"
         var chk1Make = "chk1Make"
         var chk2Make = "chk2Make"
         var chk3Make = "chk3Make"
@@ -29,5 +31,6 @@ class TyreKey {
         var chk1Size = "chk1Size"
         var chk2Size = "chk2Size"
         var chk3Size = "chk3Size"
+        var isCompleted = "false"
     }
 }

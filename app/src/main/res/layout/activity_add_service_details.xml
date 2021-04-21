@@ -867,7 +867,7 @@
                                 android:layout_marginTop="@dimen/twelve_dp"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:id="@+id/tvTyreAddInfo"
@@ -989,7 +989,8 @@
                                     android:background="@drawable/layout_bg_corner"
                                     android:orientation="horizontal">
 
-                                    <com.walkins.technician.custom.NormalEditText
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:id="@+id/tvNextServiceDueDate"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
 
@@ -1003,6 +1004,7 @@
                                         android:textSize="@dimen/fourteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/ivDueDate"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:layout_gravity="center"

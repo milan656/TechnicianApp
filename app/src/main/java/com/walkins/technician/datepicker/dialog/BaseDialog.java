@@ -60,6 +60,7 @@ public abstract class BaseDialog {
 
     @Nullable
     protected Boolean isAmPm;
+    protected Boolean isResetOff;
 
     protected SimpleDateFormat dayFormatter;
 

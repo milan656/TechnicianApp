@@ -949,7 +949,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/fourteen_dp"
                                 android:orientation="vertical"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/suggestionsRecycView"
@@ -1046,7 +1046,7 @@
 
                                     <ImageView
                                         android:id="@+id/ivPickedImage"
-                                        android:layout_width="150dp"
+                                        android:layout_width="200dp"
                                         android:layout_height="match_parent"
                                         android:layout_centerInParent="true"
                                         android:padding="@dimen/ten_dp"
@@ -1094,7 +1094,7 @@
 
                                     <ImageView
                                         android:id="@+id/ivPickedImage1"
-                                        android:layout_width="150dp"
+                                        android:layout_width="200dp"
                                         android:layout_height="match_parent"
                                         android:layout_centerInParent="true"
                                         android:padding="@dimen/ten_dp"

@@ -432,9 +432,9 @@ class EndlessService : Service() {
                 entity.name = "Test name"
                 entity.short_number = ""
                 entity.concat =
-                    "https://stag-tyreservice-backend.trackwalkins.com/get-tyre-pattern"
+                    "https://homepages.cae.wisc.edu/~ece533/images/serrano.png"
                 entity.image_url =
-                    "https://stag-tyreservice-backend.trackwalkins.com/get-tyre-pattern"
+                    "https://homepages.cae.wisc.edu/~ece533/images/serrano.png"
                 entity.brand_id = ""
                 entity.quality = ""
 

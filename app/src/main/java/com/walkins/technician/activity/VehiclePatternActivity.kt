@@ -142,18 +142,22 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
-                            Log.e("getpatterlf", "" + json+" "+selectedId)
+                            Log.e("getpatterlf", "" + json + " " + selectedId)
                             runOnUiThread {
+
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Pattern)
+                                    if (json.get(TyreKey.chk1Pattern)?.asString
+                                            .equals("RF,true") != null && json.get(TyreKey.chk1Pattern)?.asString
                                             .equals("RF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Pattern)
+                                    if (json.get(TyreKey.chk2Pattern)?.asString
+                                            .equals("LR,true") != null && json.get(TyreKey.chk2Pattern)?.asString
                                             .equals("LR,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Pattern)
+                                    if (json.get(TyreKey.chk3Pattern)?.asString
+                                            .equals("RR,true") != null && json.get(TyreKey.chk3Pattern)?.asString
                                             .equals("RR,true")
                                     ) true else false
 
@@ -171,19 +175,22 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
-                            Log.e("getpatterlr", "" + json+" "+selectedId)
+                            Log.e("getpatterlr", "" + json + " " + selectedId)
                             runOnUiThread {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Pattern)
-                                            .equals("LF,true")
+                                    if (json.get(TyreKey.chk1Pattern)?.asString.equals("LF,true") != null && json.get(
+                                            TyreKey.chk1Pattern
+                                        )?.asString.equals("LF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Pattern)
-                                            .equals("RF,true")
+                                    if (json.get(TyreKey.chk2Pattern)?.asString.equals("RF,true") != null && json.get(
+                                            TyreKey.chk2Pattern
+                                        )?.asString.equals("RF,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Pattern)
-                                            .equals("RR,true")
+                                    if (json.get(TyreKey.chk3Pattern)?.asString.equals("RR,true") != null && json.get(
+                                            TyreKey.chk3Pattern
+                                        )?.asString.equals("RR,true")
                                     ) true else false
                             }
                         } catch (e: java.lang.Exception) {
@@ -199,14 +206,23 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
-                            Log.e("getpatterrf", "" + json+" "+selectedId)
+                            Log.e("getpatterrf", "" + json + " " + selectedId)
                             runOnUiThread {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Pattern)?.asString.equals("LF,true")) true else false
+                                    if (json.get(TyreKey.chk1Pattern)?.asString != null && json.get(
+                                            TyreKey.chk1Pattern
+                                        )?.asString.equals("LF,true")
+                                    ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Pattern)?.asString.equals("LR,true")) true else false
+                                    if (json.get(TyreKey.chk2Pattern)?.asString != null && json.get(
+                                            TyreKey.chk2Pattern
+                                        )?.asString.equals("LR,true")
+                                    ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Pattern)?.asString.equals("RR,true")) true else false
+                                    if (json.get(TyreKey.chk3Pattern)?.asString != null && json.get(
+                                            TyreKey.chk3Pattern
+                                        )?.asString.equals("RR,true")
+                                    ) true else false
 
                                 Log.e(
                                     "getval0",
@@ -226,19 +242,22 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
-                            Log.e("getpatterrr", "" + json+" "+selectedId)
+                            Log.e("getpatterrr", "" + json + " " + selectedId)
                             runOnUiThread {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Pattern)
-                                            .equals("LF,true")
+                                    if (json.get(TyreKey.chk1Pattern)?.asString != null && json.get(
+                                            TyreKey.chk1Pattern
+                                        )?.asString.equals("LF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Pattern)
-                                            .equals("RF,true")
+                                    if (json.get(TyreKey.chk2Pattern).asString != null && json.get(
+                                            TyreKey.chk2Pattern
+                                        ).asString.equals("RF,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Pattern)
-                                            .equals("LR,true")
+                                    if (json.get(TyreKey.chk3Pattern).asString != null && json.get(
+                                            TyreKey.chk3Pattern
+                                        ).asString.equals("LR,true")
                                     ) true else false
 
                             }
@@ -256,12 +275,16 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-
-                        if (selectedId != null && !selectedId.equals("") &&
-                            selectedId.equals(json.get("vehiclePatternId")?.asString!!)
-                        ) {
-                            Log.e("getobj",""+selectedId+" "+json.get("vehiclePatternId")?.asString)
-                            Log.e("getobj",""+json+" ")
+                        Log.e(
+                            "getobjlf",
+                            "" + json.get("vehiclePatternId")?.asString + " " + selectedId
+                        )
+                        if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                            Log.e(
+                                "getobjlf",
+                                "" + selectedId + " " + json.get("vehiclePatternId")?.asString
+                            )
+                            Log.e("getobjlf", "" + json + " ")
                             runOnUiThread {
 
                                 if (chkRF?.text?.toString().equals("LF")) {
@@ -286,12 +309,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-
-                        if (selectedId != null && !selectedId.equals("") &&
-                            selectedId.equals(json.get("vehiclePatternId")?.asString!!)
-                        ) {
-                            Log.e("getobj",""+selectedId+" ")
-                            Log.e("getobj",""+json+" ")
+                        Log.e("getobjlr", "" + json.get("vehiclePatternId")?.asString + " ")
+                        if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                            Log.e("getobjlr", "" + selectedId + " ")
+                            Log.e("getobjlr", "" + json + " ")
                             runOnUiThread {
 
                                 if (chkRF?.text?.toString().equals("LR")) {
@@ -316,12 +337,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-
-                        if (selectedId != null && !selectedId.equals("") &&
-                            selectedId.equals(json.get("vehiclePatternId")?.asString!!)
-                        ) {
-                            Log.e("getobj",""+selectedId+" ")
-                            Log.e("getobj",""+json+" ")
+                        Log.e("getobjrfpa", "" + json + " ")
+                        Log.e("getobjrfpa", "" + json.get("vehiclePatternId")?.asString + " ")
+                        if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                            Log.e("getobjrfpa", "" + selectedId + " ")
+                            Log.e("getobjrfpa", "" + json + " ")
                             runOnUiThread {
 
                                 if (chkRF?.text?.toString().equals("RF")) {
@@ -346,12 +366,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-
-                        if (selectedId != null && !selectedId.equals("") &&
-                            selectedId.equals(json.get("vehiclePatternId")?.asString!!)
-                        ) {
-                            Log.e("getobj",""+selectedId+" ")
-                            Log.e("getobj",""+json+" ")
+                        Log.e("getobjrr", "" + json.get("vehiclePatternId")?.asString + " ")
+                        if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                            Log.e("getobjrr", "" + selectedId + " ")
+                            Log.e("getobjrr", "" + json + " ")
                             runOnUiThread {
 
                                 if (chkRF?.text?.toString().equals("RR")) {
@@ -369,7 +387,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         e.printStackTrace()
                     }
                 }
-
 
 
             }

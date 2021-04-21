@@ -7,6 +7,7 @@ class TyreDetailCommonClass {
         var tyreType: String? = ""
         var vehicleMake: String? = ""
         var vehicleMakeId: String? = ""
+        var vehicleMakeURL: String? = ""
         var vehiclePattern: String? = ""
         var vehiclePatternId: String? = ""
         var vehicleSize: String? = ""
@@ -36,6 +37,8 @@ class TyreDetailCommonClass {
         var chk1Size: String? = ""
         var chk2Size: String? = ""
         var chk3Size: String? = ""
+
+        var isCompleted = false
 
     }
 }

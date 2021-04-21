@@ -133,19 +133,19 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         runOnUiThread {
 
-                            if (json.get(TyreKey.chk1Make)!=null){
+                            if (json.get(TyreKey.chk1Make).asString!=null){
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Make).equals("RF,true")) true else false
+                                    if (json.get(TyreKey.chk1Make).asString.equals("RF,true")) true else false
                             }
-                            if (json.get(TyreKey.chk2Make)!=null) {
+                            if (json.get(TyreKey.chk2Make).asString!=null) {
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Make)
+                                    if (json.get(TyreKey.chk2Make).asString
                                             .equals("LR,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk3Make)!=null) {
+                            if (json.get(TyreKey.chk3Make).asString!=null) {
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Make)
+                                    if (json.get(TyreKey.chk3Make).asString
                                             .equals("RR,true")
                                     ) true else false
                             }
@@ -168,21 +168,21 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         runOnUiThread {
 
-                            if (json.get(TyreKey.chk1Make)!=null) {
+                            if (json.get(TyreKey.chk1Make).asString!=null) {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Make)
+                                    if (json.get(TyreKey.chk1Make).asString
                                             .equals("LF,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk2Make)!=null) {
+                            if (json.get(TyreKey.chk2Make).asString!=null) {
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Make)
+                                    if (json.get(TyreKey.chk2Make).asString
                                             .equals("RF,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk3Make)!=null) {
+                            if (json.get(TyreKey.chk3Make).asString!=null) {
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Make)
+                                    if (json.get(TyreKey.chk3Make).asString
                                             .equals("RR,true")
                                     ) true else false
                             }
@@ -207,15 +207,15 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         Log.e("getval", "" + json.get(TyreKey.chk2Make)?.asString)
                         Log.e("getval", "" + json.get(TyreKey.chk3Make)?.asString)
                         runOnUiThread {
-                            if (json.get(TyreKey.chk1Make)!=null) {
+                            if (json.get(TyreKey.chk1Make).asString!=null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make)?.asString.equals("LF,true")) true else false
                             }
-                            if (json.get(TyreKey.chk2Make)!=null) {
+                            if (json.get(TyreKey.chk2Make).asString!=null) {
                                 chkLR?.isChecked =
                                     if (json.get(TyreKey.chk2Make)?.asString.equals("LR,true")) true else false
                             }
-                            if (json.get(TyreKey.chk3Make)!=null) {
+                            if (json.get(TyreKey.chk3Make).asString!=null) {
                                 chkRR?.isChecked =
                                     if (json.get(TyreKey.chk3Make)?.asString.equals("RR,true")) true else false
                             }
@@ -240,21 +240,21 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         selectedName = json.get("vehicleMake")?.asString!!
 
                         runOnUiThread {
-                            if (json.get(TyreKey.chk1Make)!=null) {
+                            if (json.get(TyreKey.chk1Make).asString!=null) {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Make)
+                                    if (json.get(TyreKey.chk1Make).asString
                                             .equals("LF,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk2Make)!=null) {
+                            if (json.get(TyreKey.chk2Make).asString!=null) {
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Make)
+                                    if (json.get(TyreKey.chk2Make).asString
                                             .equals("RF,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk3Make)!=null) {
+                            if (json.get(TyreKey.chk3Make).asString!=null) {
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Make)
+                                    if (json.get(TyreKey.chk3Make).asString
                                             .equals("LR,true")
                                     ) true else false
                             }
@@ -302,9 +302,11 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
+                    Log.e("getobjj",""+json+" "+selectedName)
                     if (selectedName != null && !selectedName.equals("") &&
                         selectedName.equals(json.get("vehicleMake")?.asString!!)
                     ) {
+                        Log.e("getobjj",""+json.get("vehicleMake")?.asString)
                         runOnUiThread {
 
                             if (chkRF?.text?.toString().equals("LR")) {
@@ -466,6 +468,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         thread.start()
 
         TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
+        TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat!!
 
         if (selectedTyre.equals("LF")) {
             TyreConfigClass.LFVehicleMake = true

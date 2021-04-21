@@ -337,13 +337,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val i = v?.id
         when (i) {
             R.id.ivFilter -> {
-                simpleClicked()
+                openDatePicker()
 
             }
         }
     }
 
-    fun simpleClicked() {
+    fun openDatePicker() {
 
         val calendar = Calendar.getInstance()
 
