@@ -21,6 +21,7 @@ import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.R
+import com.walkins.technician.adapter.VehicleMakeAdapterNew
 import com.walkins.technician.adapter.VehiclePatternAdapter
 import com.walkins.technician.common.*
 import com.walkins.technician.model.login.patternmodel.PatternData
@@ -146,18 +147,18 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                             runOnUiThread {
 
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Pattern)?.asString
-                                            .equals("RF,true") != null && json.get(TyreKey.chk1Pattern)?.asString
+                                    if (json.get(TyreKey.chk1Pattern)
+                                             != null && json.get(TyreKey.chk1Pattern)?.asString
                                             .equals("RF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Pattern)?.asString
-                                            .equals("LR,true") != null && json.get(TyreKey.chk2Pattern)?.asString
+                                    if (json.get(TyreKey.chk2Pattern)
+                                             != null && json.get(TyreKey.chk2Pattern)?.asString
                                             .equals("LR,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Pattern)?.asString
-                                            .equals("RR,true") != null && json.get(TyreKey.chk3Pattern)?.asString
+                                    if (json.get(TyreKey.chk3Pattern)
+                                             != null && json.get(TyreKey.chk3Pattern)?.asString
                                             .equals("RR,true")
                                     ) true else false
 
@@ -178,17 +179,17 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                             Log.e("getpatterlr", "" + json + " " + selectedId)
                             runOnUiThread {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Pattern)?.asString.equals("LF,true") != null && json.get(
+                                    if (json.get(TyreKey.chk1Pattern)!= null && json.get(
                                             TyreKey.chk1Pattern
                                         )?.asString.equals("LF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Pattern)?.asString.equals("RF,true") != null && json.get(
+                                    if (json.get(TyreKey.chk2Pattern) != null && json.get(
                                             TyreKey.chk2Pattern
                                         )?.asString.equals("RF,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Pattern)?.asString.equals("RR,true") != null && json.get(
+                                    if (json.get(TyreKey.chk3Pattern) != null && json.get(
                                             TyreKey.chk3Pattern
                                         )?.asString.equals("RR,true")
                                     ) true else false
@@ -209,17 +210,17 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                             Log.e("getpatterrf", "" + json + " " + selectedId)
                             runOnUiThread {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Pattern)?.asString != null && json.get(
+                                    if (json.get(TyreKey.chk1Pattern) != null && json.get(
                                             TyreKey.chk1Pattern
                                         )?.asString.equals("LF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Pattern)?.asString != null && json.get(
+                                    if (json.get(TyreKey.chk2Pattern) != null && json.get(
                                             TyreKey.chk2Pattern
                                         )?.asString.equals("LR,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Pattern)?.asString != null && json.get(
+                                    if (json.get(TyreKey.chk3Pattern)!= null && json.get(
                                             TyreKey.chk3Pattern
                                         )?.asString.equals("RR,true")
                                     ) true else false
@@ -245,17 +246,17 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                             Log.e("getpatterrr", "" + json + " " + selectedId)
                             runOnUiThread {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Pattern)?.asString != null && json.get(
+                                    if (json.get(TyreKey.chk1Pattern) != null && json.get(
                                             TyreKey.chk1Pattern
                                         )?.asString.equals("LF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Pattern).asString != null && json.get(
+                                    if (json.get(TyreKey.chk2Pattern) != null && json.get(
                                             TyreKey.chk2Pattern
                                         ).asString.equals("RF,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Pattern).asString != null && json.get(
+                                    if (json.get(TyreKey.chk3Pattern) != null && json.get(
                                             TyreKey.chk3Pattern
                                         ).asString.equals("LR,true")
                                     ) true else false
@@ -435,6 +436,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
             }
             R.id.ivEditVehicleMake -> {
+                gridviewRecycModel?.layoutManager =
+                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+                adapter = VehiclePatternAdapter(this, arrList, this, -1)
+                gridviewRecycModel?.adapter = adapter
+
                 Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
                 Common.slideDown(gridviewRecycModel!!, null)
             }

@@ -18,6 +18,7 @@ import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.DB.VehicleSizeModelClass
 import com.walkins.technician.R
+import com.walkins.technician.adapter.VehiclePatternAdapter
 import com.walkins.technician.adapter.VehicleSizeAdapter
 import com.walkins.technician.common.*
 import com.walkins.technician.model.login.sizemodel.SizeData
@@ -158,17 +159,17 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                             runOnUiThread {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Size).asString != null && json.get(
+                                    if (json.get(TyreKey.chk1Size) != null && json.get(
                                             TyreKey.chk1Size
                                         ).asString.equals("LF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Size).asString != null && json.get(
+                                    if (json.get(TyreKey.chk2Size) != null && json.get(
                                             TyreKey.chk2Size
                                         ).asString.equals("RF,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Size).asString != null && json.get(
+                                    if (json.get(TyreKey.chk3Size) != null && json.get(
                                             TyreKey.chk3Size
                                         ).asString.equals("RR,true")
                                     ) true else false
@@ -189,17 +190,17 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                             runOnUiThread {
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Size)?.asString != null && json.get(
+                                    if (json.get(TyreKey.chk1Size) != null && json.get(
                                             TyreKey.chk1Size
                                         )?.asString.equals("LF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Size)?.asString != null && json.get(
+                                    if (json.get(TyreKey.chk2Size) != null && json.get(
                                             TyreKey.chk2Size
                                         )?.asString.equals("LR,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Size)?.asString != null && json.get(
+                                    if (json.get(TyreKey.chk3Size) != null && json.get(
                                             TyreKey.chk3Size
                                         )?.asString.equals("RR,true")
                                     ) true else false
@@ -226,17 +227,15 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                             runOnUiThread {
 
                                 chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Size)?.asString
-                                            .equals("LF,true") != null && json.get(TyreKey.chk1Size)?.asString
+                                    if (json.get(TyreKey.chk1Size) != null && json.get(TyreKey.chk1Size)?.asString
                                             .equals("LF,true")
                                     ) true else false
                                 chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Size)?.asString
-                                            .equals("RF,true") != null && json.get(TyreKey.chk2Size)?.asString
+                                    if (json.get(TyreKey.chk2Size) != null && json.get(TyreKey.chk2Size)?.asString
                                             .equals("RF,true")
                                     ) true else false
                                 chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Size)?.asString.equals("LR,true") != null && json.get(
+                                    if (json.get(TyreKey.chk3Size) != null && json.get(
                                             TyreKey.chk3Size
                                         )?.asString.equals("LR,true")
                                     ) true else false
@@ -459,6 +458,11 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
             }
             R.id.ivEditVehicleMake -> {
+                gridviewRecycModel?.layoutManager =
+                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+                adapter = VehicleSizeAdapter(this, arrList, this, -1)
+                gridviewRecycModel?.adapter = adapter
+
                 Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
                 Common.slideDown(gridviewRecycModel!!, null)
             }

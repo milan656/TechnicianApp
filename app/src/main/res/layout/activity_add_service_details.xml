@@ -965,6 +965,7 @@
                                     android:textSize="@dimen/twelve_sp" />
 
                                 <com.walkins.technician.custom.NormalEditText
+                                    android:id="@+id/edtMoreSuggestion"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
@@ -1145,6 +1146,7 @@
             android:textSize="@dimen/eighteen_sp" />
 
         <com.walkins.technician.custom.BoldHeavyTextView
+            android:id="@+id/btnSubmitAndComplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight_dp"
@@ -1152,6 +1154,7 @@
             android:layout_marginBottom="@dimen/twelve_dp"
             android:background="@drawable/rounded_blue"
             android:gravity="center"
+            android:clickable="false"
             android:padding="@dimen/ten_dp"
             android:text="Submit and Complete"
             android:textAllCaps="false"

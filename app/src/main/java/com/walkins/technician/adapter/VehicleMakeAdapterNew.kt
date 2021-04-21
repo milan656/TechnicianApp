@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.walkins.technician.DB.VehicleMakeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
+import java.util.logging.Handler
 
 
 class VehicleMakeAdapterNew internal constructor(
@@ -38,7 +39,7 @@ class VehicleMakeAdapterNew internal constructor(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): VehicleMakeAdapterNew.ViewHolder {
+    ): ViewHolder {
         var grid: View
         val inflater = mContext
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -48,7 +49,7 @@ class VehicleMakeAdapterNew internal constructor(
         return ViewHolder(grid)
     }
 
-    override fun onBindViewHolder(holder: VehicleMakeAdapterNew.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        holder.textView.setText(name?.get(position)?.name)
 
         Log.e("getimages", "" + name?.get(position)?.concat)
@@ -87,7 +88,7 @@ class VehicleMakeAdapterNew internal constructor(
                 name!!.get(position).isSelected = true;
                 holder.ivselectedVehicle.visibility = View.VISIBLE
             }
-            notifyDataSetChanged()
+//            notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)
         }
 
@@ -97,29 +98,37 @@ class VehicleMakeAdapterNew internal constructor(
             holder.ivselectedVehicle.visibility = View.GONE
         }
 
-        if (selectedName != null && !selectedName.equals("")) {
-            if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
-                Log.e("selectedmake", "::::" + selectedName + " " + name?.get(position)?.name)
-                if (name!!.get(position).isSelected) {
-                    // name!!.get(position).isSelected = false;
-                    holder.ivselectedVehicle.visibility = View.VISIBLE
-                } else {
-                    for (date in name!!) {
-                        if (date.isSelected) {
-                            date.isSelected = false
+        var handler = android.os.Handler()
+        handler.postDelayed(Runnable {
+            if (selectedName != null && !selectedName.equals("")) {
+                /*if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
+                    Log.e("selectedmake", "::::" + selectedName + " " + name?.get(position)?.name)
+                    if (name!!.get(position).isSelected) {
+                        // name!!.get(position).isSelected = false;
+                        holder.ivselectedVehicle.visibility = View.VISIBLE
+                    } else {
+                        for (date in name!!) {
+                            if (date.isSelected) {
+                                date.isSelected = false
+                            }
                         }
-                    }
 
-                    name!!.get(position).isSelected = true;
-                    holder.ivselectedVehicle.visibility = View.VISIBLE
-                }
-//                notifyDataSetChanged()
-                positionClick.onPositionClick(position, 0)
+                        name!!.get(position).isSelected = true;
+                        holder.ivselectedVehicle.visibility = View.VISIBLE
+                    }
+                    notifyDataSetChanged()
+                    positionClick.onPositionClick(position, 0)
+                }*/
+
+                holder.rlItemView?.performClick()
             }
-        }
+        }, 2000)
+
+
     }
 
     override fun getItemCount(): Int {
+        Log.e("getimages", "" + name?.size)
         return name?.size!!
     }
 

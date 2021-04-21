@@ -133,17 +133,17 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         runOnUiThread {
 
-                            if (json.get(TyreKey.chk1Make).asString!=null){
+                            if (json.get(TyreKey.chk1Make).asString != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString.equals("RF,true")) true else false
                             }
-                            if (json.get(TyreKey.chk2Make).asString!=null) {
+                            if (json.get(TyreKey.chk2Make).asString != null) {
                                 chkLR?.isChecked =
                                     if (json.get(TyreKey.chk2Make).asString
                                             .equals("LR,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk3Make).asString!=null) {
+                            if (json.get(TyreKey.chk3Make).asString != null) {
                                 chkRR?.isChecked =
                                     if (json.get(TyreKey.chk3Make).asString
                                             .equals("RR,true")
@@ -168,19 +168,19 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         runOnUiThread {
 
-                            if (json.get(TyreKey.chk1Make).asString!=null) {
+                            if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString
                                             .equals("LF,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk2Make).asString!=null) {
+                            if (json.get(TyreKey.chk2Make) != null) {
                                 chkLR?.isChecked =
                                     if (json.get(TyreKey.chk2Make).asString
                                             .equals("RF,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk3Make).asString!=null) {
+                            if (json.get(TyreKey.chk3Make) != null) {
                                 chkRR?.isChecked =
                                     if (json.get(TyreKey.chk3Make).asString
                                             .equals("RR,true")
@@ -207,15 +207,15 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         Log.e("getval", "" + json.get(TyreKey.chk2Make)?.asString)
                         Log.e("getval", "" + json.get(TyreKey.chk3Make)?.asString)
                         runOnUiThread {
-                            if (json.get(TyreKey.chk1Make).asString!=null) {
+                            if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make)?.asString.equals("LF,true")) true else false
                             }
-                            if (json.get(TyreKey.chk2Make).asString!=null) {
+                            if (json.get(TyreKey.chk2Make) != null) {
                                 chkLR?.isChecked =
                                     if (json.get(TyreKey.chk2Make)?.asString.equals("LR,true")) true else false
                             }
-                            if (json.get(TyreKey.chk3Make).asString!=null) {
+                            if (json.get(TyreKey.chk3Make) != null) {
                                 chkRR?.isChecked =
                                     if (json.get(TyreKey.chk3Make)?.asString.equals("RR,true")) true else false
                             }
@@ -240,19 +240,19 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         selectedName = json.get("vehicleMake")?.asString!!
 
                         runOnUiThread {
-                            if (json.get(TyreKey.chk1Make).asString!=null) {
+                            if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString
                                             .equals("LF,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk2Make).asString!=null) {
+                            if (json.get(TyreKey.chk2Make) != null) {
                                 chkLR?.isChecked =
                                     if (json.get(TyreKey.chk2Make).asString
                                             .equals("RF,true")
                                     ) true else false
                             }
-                            if (json.get(TyreKey.chk3Make).asString!=null) {
+                            if (json.get(TyreKey.chk3Make) != null) {
                                 chkRR?.isChecked =
                                     if (json.get(TyreKey.chk3Make).asString
                                             .equals("LR,true")
@@ -302,11 +302,11 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
-                    Log.e("getobjj",""+json+" "+selectedName)
+                    Log.e("getobjj", "" + json + " " + selectedName)
                     if (selectedName != null && !selectedName.equals("") &&
                         selectedName.equals(json.get("vehicleMake")?.asString!!)
                     ) {
-                        Log.e("getobjj",""+json.get("vehicleMake")?.asString)
+                        Log.e("getobjj", "" + json.get("vehicleMake")?.asString)
                         runOnUiThread {
 
                             if (chkRF?.text?.toString().equals("LR")) {
@@ -332,8 +332,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
-                    Log.e("getobj",""+json+" ")
-                    Log.e("getobj",""+selectedName+" ")
+                    Log.e("getobj", "" + json + " ")
+                    Log.e("getobj", "" + selectedName + " ")
 
                     if (selectedName != null && !selectedName.equals("") &&
                         selectedName.equals(json.get("vehicleMake")?.asString!!)
@@ -388,9 +388,6 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         thread.start()
 
 
-
-
-
         var handler = Handler()
         handler.postDelayed(Runnable {
             Log.e("getsizee00", "" + arrList?.size + " " + selectedName)
@@ -403,11 +400,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-
-        var arr = listOf("one", 1, "two", 2, 10)
-        var filter =
-
-            Common.slideUp(gridviewRecycMake_!!)
+        Common.slideUp(gridviewRecycMake_!!)
 
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
@@ -420,6 +413,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+
 
         selectedPos = variable
         Log.e("getselected", "" + arrList?.get(selectedPos)?.name)
@@ -439,10 +434,21 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
             }
             R.id.ivEditVehicleMake -> {
+                gridviewRecycMake_?.layoutManager =
+                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+                adapter = VehicleMakeAdapterNew(this, arrList, this, "")
+                gridviewRecycMake_?.adapter = adapter
                 Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
 
                 Common.slideDown(gridviewRecycMake_!!, null)
 
+//                Log.e("getdata", "" + arrList?.size + " " + gridviewRecycMake_?.visibility)
+//                gridviewRecycMake_?.layoutManager =
+//                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+//                adapter = VehicleMakeAdapterNew(this, arrList, this, "")
+//                gridviewRecycMake_?.adapter = adapter
+//                gridviewRecycMake_?.visibility = View.VISIBLE
+//                llVehicleMakeselectedView?.visibility=View.GONE
             }
         }
     }

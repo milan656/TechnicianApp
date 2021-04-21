@@ -17,6 +17,7 @@ import com.walkins.technician.DB.VehicleSizeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.sizemodel.SizeData
+import java.util.logging.Handler
 
 
 class VehicleSizeAdapter internal constructor(
@@ -91,23 +92,29 @@ class VehicleSizeAdapter internal constructor(
             positionClick.onPositionClick(position, 0)
         }
 
-        if (selectedId != -1) {
-            if (selectedId == name?.get(position)?.sizeId) {
-                if (name?.get(position)?.isSelected!!) {
-                    // name!!.get(position).isSelected = false;
-                } else {
-                    for (date in name!!) {
-                        if (date.isSelected) {
-                            date.isSelected = false
+        var handler=android.os.Handler()
+        handler.postDelayed(Runnable {
+            if (selectedId != -1) {
+                if (selectedId == name?.get(position)?.sizeId) {
+                    if (name?.get(position)?.isSelected!!) {
+                        // name!!.get(position).isSelected = false;
+                    } else {
+                        for (date in name!!) {
+                            if (date.isSelected) {
+                                date.isSelected = false
+                            }
                         }
-                    }
 
-                    name?.get(position)?.isSelected = true
-                    holder.ivselectedVehicleModel.visibility = View.VISIBLE
+                        name?.get(position)?.isSelected = true
+                        holder.ivselectedVehicleModel.visibility = View.VISIBLE
+                    }
+                    notifyDataSetChanged()
+                    positionClick.onPositionClick(position, 0)
                 }
-                positionClick.onPositionClick(position, 0)
             }
-        }
+
+        },2000)
+
     }
 
     override fun getItemCount(): Int {
