@@ -206,6 +206,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
 
+                        Log.e("getvalselected", "" + selectedName)
                         Log.e("getval", "" + json.get(TyreKey.chk1Make)?.asString)
                         Log.e("getval", "" + json.get(TyreKey.chk2Make)?.asString)
                         Log.e("getval", "" + json.get(TyreKey.chk3Make)?.asString)

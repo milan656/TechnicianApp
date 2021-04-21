@@ -120,9 +120,12 @@ class VehicleMakeAdapterNew internal constructor(
                     positionClick.onPositionClick(position, 0)
                 }*/
 
-                holder.rlItemView?.performClick()
+                if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
+                    holder.rlItemView.performClick()
+                }
+
             }
-        }, 1000)
+        }, 800)
 
 
     }

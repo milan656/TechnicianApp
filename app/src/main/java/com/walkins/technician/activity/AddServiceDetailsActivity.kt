@@ -1,9 +1,7 @@
 package com.walkins.technician.activity
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,7 +10,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -24,26 +21,21 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
-import androidx.annotation.RequiresApi
-import androidx.cardview.widget.CardView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
-import com.example.technician.common.Common.Companion.getFile
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.DB.*
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
@@ -53,14 +45,17 @@ import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.TyreKey
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.custom.BoldButton
-import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialogDueDate
+import com.walkins.technician.model.login.IssueResolveModel
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
@@ -104,6 +99,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var chkTyreRotation: CheckBox? = null
 
     private var suggestionsRecycView: RecyclerView? = null
+    private var selectedSuggestionArr: ArrayList<String>? = ArrayList()
     private var suggestionArr = arrayListOf(
         "Improve this for the tyre in alignment",
         "Improve this for the tyre in alignment",
@@ -111,6 +107,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         "Improve this for the tyre in alignment",
         "Improve this for the tyre in alignment"
     )
+    private var suggestionArray: ArrayList<IssueResolveModel>? = ArrayList()
     var reasonArray = arrayListOf(
         "The car was unavailable",
         "Need more time to resolve",
@@ -118,6 +115,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         "Need more time to resolve",
         "The customer request a delay"
     )
+    private var reasonArrayList: ArrayList<IssueResolveModel>? = ArrayList()
+
+
     private var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
 
     private var relCarPhotoAdd2: RelativeLayout? = null
@@ -261,7 +261,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
         if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-            !prefManager?.getValue(TyreConfigClass.TyreRRObject).equals("")
+            !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
         ) {
             var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
             try {
@@ -288,6 +288,72 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
+        if (prefManager.getValue(TyreKey.nitrogenRefil) != null && prefManager.getValue(TyreKey.nitrogenRefil)
+                .equals("true")
+        ) {
+            chkNitrogenRefill?.isChecked = true
+        }
+        if (prefManager.getValue(TyreKey.nitrogenTopup) != null && prefManager.getValue(TyreKey.nitrogenTopup)
+                .equals("true")
+        ) {
+            chkNitrogenTopup?.isChecked = true
+        }
+        if (prefManager.getValue(TyreKey.wheelBalancing) != null && prefManager.getValue(TyreKey.wheelBalancing)
+                .equals("true")
+        ) {
+            chkWheelBalacing?.isChecked = true
+        }
+        if (prefManager.getValue(TyreKey.tyreRotation) != null && prefManager.getValue(TyreKey.tyreRotation)
+                .equals("true")
+        ) {
+            chkTyreRotation?.isChecked = true
+        }
+
+        if (prefManager.getValue(TyreKey.nextDueDate) != null && !prefManager.getValue(TyreKey.nextDueDate)
+                .equals("")
+        ) {
+            tvNextServiceDueDate?.text = prefManager.getValue(TyreKey.nextDueDate)
+        }
+        if (prefManager.getValue(TyreKey.moreSuggestion) != null && !prefManager.getValue(TyreKey.moreSuggestion)
+                .equals("")
+        ) {
+            edtMoreSuggestion?.setText(prefManager.getValue(TyreKey.moreSuggestion))
+        }
+
+        if (prefManager?.getValue("AddServiceSuggestion") != null &&
+            !prefManager.getValue("AddServiceSuggestion").equals("")
+        ) {
+            Log.e("getvalues", "" + prefManager.getValue("AddServiceSuggestion"))
+
+            var jsonArr:JSONArray= JSONArray(prefManager.getValue("AddServiceSuggestion"))
+
+            val list = ArrayList<String>()
+            try {
+                var i = 0
+                val l: Int = jsonArr.length()
+                while (i < l) {
+                    list.add(jsonArr.get(i).toString())
+                    i++
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
+            for (i in suggestionArray?.indices!!) {
+
+                for (j in list.indices) {
+
+                    if (suggestionArray?.get(i)?.issueName.equals(list.get(j))) {
+                        suggestionArray?.get(i)?.isSelected = true
+                        selectedSuggestionArr?.add(suggestionArray?.get(i)?.issueName!!)
+                    }
+                }
+                Log.e("getvalues", "" + suggestionArray?.get(i)?.issueName)
+                Log.e("getvalues", "" + suggestionArray?.get(i)?.isSelected)
+            }
+            tyreSuggestionAdapter?.notifyDataSetChanged()
+
+        }
     }
 
     private fun requestPermissionForImage() {
@@ -399,7 +465,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         llTyreConfigExpanded?.setOnTouchListener(this)
         ivPhoneCall?.setOnTouchListener(this)
 
-        tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArr, this, this, false)
+        for (i in suggestionArr?.indices) {
+            suggestionArray?.add(IssueResolveModel(suggestionArr.get(i), false))
+        }
+        for (i in reasonArray?.indices) {
+            reasonArrayList?.add(IssueResolveModel(reasonArray.get(i), false))
+        }
+
+        tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArray!!, this, this, false)
         tyreSuggestionAdapter?.onclick = this
         suggestionsRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -410,9 +483,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         ivBack?.setOnClickListener(this)
 
-        checkChangeListener()
-
         getStoredObjects()
+
+        checkChangeListener()
 
         edtMoreSuggestion?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -426,6 +499,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             override fun afterTextChanged(s: Editable?) {
 
                 if (s != null && s?.toString().length > 0) {
+                    prefManager?.setValue(
+                        TyreKey.moreSuggestion,
+                        edtMoreSuggestion?.text?.toString()
+                    )
                     checkSubmitBtn()
                 }
             }
@@ -444,6 +521,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s?.toString().length > 2) {
                     TyreConfigClass.nextDueDate = tvNextServiceDueDate?.text?.toString()!!
+                    prefManager?.setValue(
+                        TyreKey.nextDueDate,
+                        tvNextServiceDueDate?.text?.toString()
+                    )
                     checkSubmitBtn()
                 }
             }
@@ -505,6 +586,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         TyreConfigClass.nitrogenRefillChecked = chkNitrogenRefill?.isChecked!!
         TyreConfigClass.nitrogenTyreRotationChecked = chkTyreRotation?.isChecked!!
         TyreConfigClass.nitrogenWheelBalancingChecked = chkWheelBalacing?.isChecked!!
+
+        prefManager.setValue(TyreKey.nitrogenTopup, "" + chkNitrogenTopup?.isChecked)
+        prefManager.setValue(TyreKey.nitrogenRefil, "" + chkNitrogenRefill?.isChecked)
+        prefManager.setValue(TyreKey.tyreRotation, "" + chkTyreRotation?.isChecked)
+        prefManager.setValue(TyreKey.wheelBalancing, "" + chkWheelBalacing?.isChecked)
     }
 
     override fun onClick(v: View?) {
@@ -1018,7 +1104,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
         var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
-        tyreSuggestionAdapter = TyreSuggestionAdpater(reasonArray, this, this, true)
+        tyreSuggestionAdapter = TyreSuggestionAdpater(reasonArrayList!!, this, this, true)
         tyreSuggestionAdapter?.onclick = this
         pendingReasonRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -1045,6 +1131,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
     override fun onPositionClick(variable: Int, check: Int) {
+
+        if (check == 5) {
+            if (suggestionArray?.get(variable)?.isSelected!!) {
+                selectedSuggestionArr?.add(suggestionArray?.get(variable)?.issueName!!)
+            }
+
+            prefManager?.setValue("AddServiceSuggestion", "" + selectedSuggestionArr)
+        }
 
         if (check == 0) {
 
@@ -1365,6 +1459,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         tvAddPhoto1?.visibility = View.GONE
                         tvCarphoto1?.visibility = View.GONE
                         TyreConfigClass.CarPhoto_1 = imageFilePath
+                        relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     } else {
                         ivPickedImage1?.setImageURI(Uri.parse(imageFilePath))
                         ivPickedImage1?.visibility = View.VISIBLE
@@ -1372,6 +1467,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         tvAddPhoto2?.visibility = View.GONE
                         tvCarphoto2?.visibility = View.GONE
                         TyreConfigClass.CarPhoto_2 = imageFilePath
+                        relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
                     }
                     checkSubmitBtn()
@@ -1389,6 +1485,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         tvAddPhoto1?.visibility = View.GONE
                         tvCarphoto1?.visibility = View.GONE
                         TyreConfigClass.CarPhoto_1 = data?.data?.toString()!!
+                        relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     } catch (e: Exception) {
                         Log.e("getexp", "" + e.message + " " + e.cause)
                         e.printStackTrace()
@@ -1403,6 +1500,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         tvAddPhoto2?.visibility = View.GONE
                         tvCarphoto2?.visibility = View.GONE
                         TyreConfigClass.CarPhoto_2 = data?.data?.toString()!!
+                        relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     } catch (e: Exception) {
                         Log.e("getexp", "" + e.message + " " + e.cause)
                         e.printStackTrace()
@@ -1615,9 +1713,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
                 for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
+
                     jsonArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i))
                 }
-                json.add("issueResolvedArr", jsonArr)
+                json.add(TyreKey.issueResolvedArr, jsonArr)
                 json.addProperty(
                     "visualDetailPhotoUrl",
                     TyreDetailCommonClass.visualDetailPhotoUrl
@@ -2099,9 +2198,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         Log.e("getimagess", "" + TyreConfigClass.moreSuggestions)
 
-        if (tvNextServiceDueDate?.text?.toString() != null && !tvNextServiceDueDate?.text?.toString().equals("")) {
+        if (tvNextServiceDueDate?.text?.toString() != null && !tvNextServiceDueDate?.text?.toString()
+                .equals("")
+        ) {
 
-        }else{
+        } else {
             Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
             return
         }

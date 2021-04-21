@@ -2,11 +2,9 @@ package com.walkins.technician.activity
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,24 +14,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.google.gson.reflect.TypeToken
 import com.ramotion.fluidslider.FluidSlider
-import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
@@ -42,8 +37,11 @@ import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.TyreKey
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.model.login.IssueResolveModel
+import org.json.JSONArray
 import java.io.File
 import java.io.IOException
+import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -105,6 +103,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var selectedTyre: String? = null
 
     private var issueResolvedRecycView: RecyclerView? = null
+    private var selectedIssueArr: ArrayList<String>? = ArrayList()
     private var issueResolveArr = arrayListOf(
         "Improve this for the tyre in alignment",
         "Improve this for the tyre in alignment",
@@ -112,6 +111,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         "Improve this for the tyre in alignment",
         "Improve this for the tyre in alignment"
     )
+
+    private var issueResolveArray: ArrayList<IssueResolveModel>? = ArrayList()
     private var issueResolveAdapter: TyreSuggestionAdpater? = null
     private var relTyrePhotoAdd: RelativeLayout? = null
     private var btnDone: Button? = null
@@ -166,16 +167,18 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         edtManufaturingDate = findViewById(R.id.edtManufaturingDate)
         relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
-        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArr, this, this, false)
-        issueResolveAdapter?.onclick = this
+
+        for (i in issueResolveArr.indices) {
+            issueResolveArray?.add(IssueResolveModel(issueResolveArr.get(i) + " " + i, false))
+        }
+        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArray!!, this, this, false)
         issueResolvedRecycView?.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,
             false
         )
         issueResolvedRecycView?.adapter = issueResolveAdapter
-
-
+        issueResolveAdapter?.onclick = this
 
         relTyrePhotoAdd?.setOnClickListener(this)
         ivBack?.setOnClickListener(this)
@@ -186,6 +189,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 selectedTyre = intent.getStringExtra("selectedTyre")
             }
         }
+
+        tvCarphoto1?.setText("" + selectedTyre + " " + "Photo")
 
         btnDone?.setOnClickListener(this)
 
@@ -763,20 +768,39 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //                .load(json.get(TyreKey.visualDetailPhotoUrl)?.asString!!)
 //                .into(ivPickedImage1!!)
 
-            if (json.get("isCameraSelectedVisualDetail")?.asBoolean!!){
+            if (json.get("isCameraSelectedVisualDetail")?.asBoolean!!) {
 
                 ivPickedImage1?.setImageURI(Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString))
-            }else{
+            } else {
                 ivPickedImage1?.setImageURI(Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString))
             }
             TyreDetailCommonClass.visualDetailPhotoUrl =
                 json.get(TyreKey.visualDetailPhotoUrl)?.asString
 
-
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
 
+        var arr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
+        Log.e("getvalues", "" + arr)
+        val gson = Gson()
+        val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+        val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+        Log.e("getvalues", "" + arrlist)
+        for (i in issueResolveArray?.indices!!) {
+
+            for (j in arrlist.indices) {
+
+                if (issueResolveArray?.get(i)?.issueName.equals(arrlist.get(j))) {
+                    issueResolveArray?.get(i)?.isSelected = true
+                    selectedIssueArr?.add(issueResolveArray?.get(i)?.issueName!!)
+                }
+            }
+            Log.e("getvalues", "" + issueResolveArray?.get(i)?.issueName)
+            Log.e("getvalues", "" + issueResolveArray?.get(i)?.isSelected)
+        }
+
+        issueResolveAdapter?.notifyDataSetChanged()
 
     }
 
@@ -821,6 +845,17 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     }
 
     override fun onPositionClick(variable: Int, check: Int) {
+
+        Log.e("getposs", "" + variable + " " + check)
+        if (check == 5) {
+            if (issueResolveArray?.get(variable)?.isSelected!!) {
+                selectedIssueArr?.add(issueResolveArray?.get(variable)?.issueName!!)
+            }
+            Log.e("getpos", "" + issueResolveArray?.get(variable)?.isSelected)
+            Log.e("getpos", "" + issueResolveArray?.get(variable)?.issueName)
+        }
+
+
 
         if (check == 10) {
             if (cameraDialog != null && cameraDialog?.isShowing!!) {
@@ -1000,8 +1035,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 TyreDetailCommonClass.treadDepth = treadDepth
                 TyreDetailCommonClass.rimDamage = rimDamage
                 TyreDetailCommonClass.bubble = bubble
-                TyreDetailCommonClass.issueResolvedArr = issueResolveArr
 
+                TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
+
+                Log.e("getslider", "" + TyreDetailCommonClass.issueResolvedArr)
                 Log.e("getslider", "" + TyreDetailCommonClass.psiInTyreService)
                 Log.e("getslider", "" + TyreDetailCommonClass.psiOutTyreService)
                 Log.e("getslider", "" + TyreDetailCommonClass.weightTyreService)

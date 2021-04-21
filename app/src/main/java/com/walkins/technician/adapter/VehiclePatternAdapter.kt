@@ -97,7 +97,7 @@ class VehiclePatternAdapter internal constructor(
                 }
             }
 
-        }, 1000)
+        }, 800)
 
 
     }

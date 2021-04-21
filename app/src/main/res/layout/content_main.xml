@@ -76,7 +76,7 @@
 
             <ImageView
                 android:id="@+id/ivHome"
-                android:layout_width="25dp"
+                android:layout_width="13dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_home_normal" />
 
@@ -102,7 +102,7 @@
 
 
         <LinearLayout
-            android:id="@+id/llhome2"
+            android:id="@+id/llNotification"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -112,14 +112,14 @@
 
             <ImageView
                 android:id="@+id/ivNotification"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="18dp"
+                android:layout_height="16dp"
                 android:src="@drawable/ic_notification_icon" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llhome3"
+            android:id="@+id/llProfile"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"

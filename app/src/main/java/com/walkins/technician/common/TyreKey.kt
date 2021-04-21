@@ -22,6 +22,7 @@ class TyreKey {
         var rimDamage = "rimDamage"
         var bubble = "bubble"
         var visualDetailPhotoUrl = "visualDetailPhotoUrl"
+        var issueResolvedArr = "issueResolvedArr"
         var chk1Make = "chk1Make"
         var chk2Make = "chk2Make"
         var chk3Make = "chk3Make"
@@ -32,5 +33,13 @@ class TyreKey {
         var chk2Size = "chk2Size"
         var chk3Size = "chk3Size"
         var isCompleted = "false"
+
+        var nitrogenTopup = "nitrogenTopup"
+        var nitrogenRefil = "nitrogenRefil"
+        var tyreRotation = "tyreRotation"
+        var wheelBalancing = "wheelBalancing"
+
+        var nextDueDate = "nextDueDate"
+        var moreSuggestion = "moreSuggestion"
     }
 }

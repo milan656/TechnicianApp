@@ -1,6 +1,7 @@
 package com.walkins.technician.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,10 @@ import androidx.appcompat.content.res.AppCompatResources.getColorStateList
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.model.login.IssueResolveModel
 
 class TyreSuggestionAdpater(
-    var array: ArrayList<String>,
+    var array: ArrayList<IssueResolveModel>,
     var context: Context,
     onPositionClick: onClickAdapter,
     var isFromDialog: Boolean
@@ -30,27 +32,39 @@ class TyreSuggestionAdpater(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TyreSuggestionAdpater.Viewholder {
+    ): Viewholder {
         var view =
             LayoutInflater.from(context).inflate(R.layout.tyre_suggestions_design, parent, false)
         return Viewholder(view)
     }
 
-    override fun onBindViewHolder(holder: TyreSuggestionAdpater.Viewholder, position: Int) {
+    override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
-        holder.chkTyreSuggestion.text = array.get(position).capitalize()
+        holder.chkTyreSuggestion.text = array.get(position).issueName.capitalize()
 
-        holder.itemView.setOnClickListener {
-
-            if (!isFromDialog) {
-                if (onclick != null) {
-                    onclick?.onPositionClick(position, 0)
-                }
-            } else {
-                if (onclick != null) {
-                    onclick?.onPositionClick(position, 1)
-                }
+        if (array.get(position).isSelected) {
+            holder.chkTyreSuggestion.isChecked = true
+            holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                holder.chkTyreSuggestion.setButtonTintList(
+                    getColorStateList(
+                        context,
+                        R.color.colorPrimary
+                    )
+                )
             }
+        } else {
+            holder.chkTyreSuggestion.isChecked = false
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                holder.chkTyreSuggestion.setButtonTintList(
+                    getColorStateList(
+                        context,
+                        R.color.header_title
+                    )
+                )
+            }
+            holder.chkTyreSuggestion.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_red_corner))
+
         }
 
         holder.chkTyreSuggestion.setOnCheckedChangeListener(object :
@@ -67,6 +81,19 @@ class TyreSuggestionAdpater(
                         )
                     }
                     holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
+                    array.get(position).isSelected = true
+                    Log.e("clickcall", "000")
+                    if (!isFromDialog) {
+                        if (onclick != null) {
+                            Log.e("clickcall", "0")
+                            onclick?.onPositionClick(position, 5)
+                        }
+                    } else {
+                        if (onclick != null) {
+                            Log.e("clickcall", "1")
+                            onclick?.onPositionClick(position, 6)
+                        }
+                    }
                 } else {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         holder.chkTyreSuggestion.setButtonTintList(
@@ -76,8 +103,20 @@ class TyreSuggestionAdpater(
                             )
                         )
                     }
-                    holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_red_corner))
-
+                    holder.chkTyreSuggestion.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_red_corner))
+                    array.get(position).isSelected = false
+                    Log.e("clickcall", "000")
+                    if (!isFromDialog) {
+                        if (onclick != null) {
+                            Log.e("clickcall", "0")
+                            onclick?.onPositionClick(position, 5)
+                        }
+                    } else {
+                        if (onclick != null) {
+                            Log.e("clickcall", "1")
+                            onclick?.onPositionClick(position, 6)
+                        }
+                    }
                 }
             }
 

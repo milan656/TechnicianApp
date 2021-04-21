@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,8 +18,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -32,8 +35,13 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.common.TyreConfigClass
+import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
 import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -47,15 +55,14 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
 
-    val REQUEST_IMAGE_CAPTURE = 1
-    val PICK_IMAGE_REQUEST = 100
-    private lateinit var mCurrentPhotoPath: String
 
-    var image_uri: Uri? = null
-    private val IMAGE_CAPTURE_RESULT = 1001
-    private val PERMISSION_CODE = 1000;
     private var ivProfileImg:ImageView?=null
-
+    // image picker code
+    val REQUEST_IMAGE = 100
+    val REQUEST_PERMISSION = 200
+    private var imageFilePath = ""
+    private var IMAGE_PICK_CODE = 1010;
+    private var PERMISSION_CODE = 1011;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +80,23 @@ class ProfileFragment : Fragment(), onClickAdapter {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         init(view)
+
+        requestPermissionForImage()
         return view
+    }
+
+    private fun requestPermissionForImage() {
+        if (context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE) } !==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                context as Activity, arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                REQUEST_PERMISSION
+            )
+        }
     }
 
     private fun init(view: View?) {
@@ -182,199 +205,42 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
         if (check==10){
             if (Common.commonPhotoChooseArr?.get(variable)?.equals("Gallery")) {
-                val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    checkPermissions((context as FragmentActivity?))
-                } else {
-                    try {
-                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                        intent.type = "image/*"
-                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-                if (result == true) {
-                    try {
-
-                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                        intent.type = "image/*"
-                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-                    } catch (e: Exception) {
-
-                        e.printStackTrace()
-                    }
-
-                } else {
-                    //  Common.showShortToast("Permission Granted",requireActivity())
-                }
+                openGallery()
             }
             if (Common.commonPhotoChooseArr?.get(variable)?.equals("Camera")) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (context?.checkSelfPermission(Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_DENIED ||
-                        context?.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_DENIED
-                    ) {
-                        //permission was not enabled
-                        val permission = arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
-                        //show popup to request permission
-                        requestPermissions(permission, PERMISSION_CODE)
-                    } else {
-                        //permission already granted
-                        openCamera()
-                    }
-                } else {
-                    //system os is < marshmallow
-                    openCamera()
-                }
+                openCamera()
             }
         }
     }
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun checkPermissions(context: FragmentActivity?): Boolean {
-        val currentAPIVersion = Build.VERSION.SDK_INT
-        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
-            if (context?.let {
-                    ContextCompat.checkSelfPermission(
-                        it,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                } !== PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.CAMERA
-                ) !== PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        context as Activity,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                    || ActivityCompat.shouldShowRequestPermissionRationale(
-                        context as Activity,
-                        Manifest.permission.CAMERA
-                    )
-                ) {
-                    val alertBuilder = android.app.AlertDialog.Builder(context)
-                    alertBuilder.setCancelable(true)
-                    alertBuilder.setTitle("Permission necessary")
-                    alertBuilder.setMessage("External storage permission is necessary")
-                    alertBuilder.setPositiveButton(
-                        android.R.string.yes
-                    ) { dialog, which ->
-                        requestPermissions(
-                            arrayOf<String>(
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA
-                            ),
-                            123
-                        )
-                    }
-                    val alert = alertBuilder.create()
-                    alert.show()
-                } else {
 
-                    requestPermissions(
-                        arrayOf<String>(
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA
-                        ), 123
-                    );
 
-                }
-                return false
+
+    private fun openGallery() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE);
             } else {
-                return true
+                //permission already granted
+                pickImageFromGallery();
             }
         } else {
-            return true
+            //system OS is < Marshmallow
+            pickImageFromGallery();
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-
-            IMAGE_CAPTURE_RESULT -> {
-//                image_view.setImageURI(image_uri)
-
-                Log.e("imagepath222", "" + image_uri)
-                ivProfileImg?.setImageURI(image_uri)
-                CropImage.activity(image_uri)
-                    .start(context as Activity)
-            }
 
 
-            REQUEST_IMAGE_CAPTURE -> {
-                if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
-                    val auxFile = File(mCurrentPhotoPath)
-                    Log.e("imagepath2", "" + auxFile)
-                    var mImageBitmap = MediaStore.Images.Media.getBitmap(
-                        context?.getContentResolver(),
-                        Uri.parse(mCurrentPhotoPath)
-                    );
-                    Glide.with(this)
-                        .load(Uri.fromFile(auxFile))
-                        .into(ivProfileImg!!)
-
-                    CropImage.activity(Uri.fromFile(auxFile))
-                        .start(context as Activity)
-
-                    /* uploadProfileImage(auxFile)
-                     Glide.with(this)
-                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
-                         .into(imgProfile)*/
-                }
-            }
-
-            PICK_IMAGE_REQUEST -> {
-                if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
-                    val selectedImage = data?.data
-                    Log.e("imagepath2322", "" + selectedImage)
-
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        context?.let { Common.getFile(it, selectedImage) }
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    Glide.with(this)
-                        .load(Uri.fromFile(imagePath))
-                        .into(ivProfileImg!!)
-
-                    Log.i("imagePath", "++++" + imagePath)
-
-                    CropImage.activity(selectedImage)
-                        .start(context as Activity)
-                }
-            }
-
-            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                val result = CropImage.getActivityResult(data)
-                if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
-                    val selectedImage = result.uri
-
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        context?.let { Common.getFile(it, selectedImage) }
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    Log.e("imagepath1", "" + imagePath + " " + selectedImage)
-
-//                    ivProfileImg?.setImageURI(selectedImage)
-
-
-//                    imagePath?.let { uploadCIPImage(it) }
-                }
-            }
-
-        }
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
     override fun onRequestPermissionsResult(
@@ -382,78 +248,59 @@ class ProfileFragment : Fragment(), onClickAdapter {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.size > 0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED
                 ) {
-                    //permission from popup was granted
-                    openCamera()
+                    //permission from popup granted
+                    pickImageFromGallery()
                 } else {
-                    //permission from popup was denied
-                    Common.hideLoader()
+                    //permission from popup denied
                     Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
-                }
-            }
-            123 -> {
-                if (grantResults.get(1) != -1) {
-                    if (grantResults.size > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        val file: File = context?.let { Common.createFile(it) }!!
-
-                        mCurrentPhotoPath = file.absolutePath
-
-                        val uri: Uri = context?.let {
-                            FileProvider.getUriForFile(
-                                it,
-                                "com.walkins.technician.android.fileprovider",
-                                file
-                            )
-                        }!!
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-
-                    }
-                } else {
-
-                }
-            }
-
-            124 -> {
-                if (grantResults?.get(1) != -1) {
-                    if (grantResults.size > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        try {
-                            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "image/*"
-                            startActivityForResult(intent, PICK_IMAGE_REQUEST)
-
-                        } catch (e: Exception) {
-
-                            e.printStackTrace()
-                        }
-                    }
-                } else {
-
                 }
             }
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                ivProfileImg?.setImageURI(Uri.parse(imageFilePath))
+            } else if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                Toast.makeText(context, "You cancelled the operation", Toast.LENGTH_SHORT).show()
+            }
+        }
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            ivProfileImg?.setImageURI(data?.data)
+        }
+    }
+
     private fun openCamera() {
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.TITLE, "New Picture")
-        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-        image_uri = context?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        //camera intent
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_RESULT)
+        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (pictureIntent.resolveActivity(context?.packageManager!!) != null) {
+            var photoFile: File? = null
+            photoFile = try {
+                createImageFile()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                return
+            }
+            val photoUri: Uri =
+                context?.let { FileProvider.getUriForFile(it, "$context?.packageName.provider", photoFile!!) }!!
+            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+            startActivityForResult(pictureIntent, REQUEST_IMAGE)
+        }
+    }
+
+    private fun createImageFile(): File? {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "IMG_" + timeStamp + "_"
+        val storageDir = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+        imageFilePath = image.absolutePath
+        return image
     }
 
 }

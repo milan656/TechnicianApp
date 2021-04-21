@@ -113,7 +113,7 @@ class VehicleSizeAdapter internal constructor(
                 }
             }
 
-        },1000)
+        },800)
 
     }
 

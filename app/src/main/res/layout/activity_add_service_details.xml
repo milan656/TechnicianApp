@@ -949,7 +949,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/fourteen_dp"
                                 android:orientation="vertical"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/suggestionsRecycView"
@@ -968,12 +968,11 @@
                                     android:id="@+id/edtMoreSuggestion"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/five_dp"
+                                    android:padding="@dimen/five_dp"
                                     android:background="@drawable/layout_bg_corner"
                                     android:gravity="start|top"
                                     android:inputType="textMultiLine"
                                     android:minLines="5" />
-
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:layout_width="match_parent"

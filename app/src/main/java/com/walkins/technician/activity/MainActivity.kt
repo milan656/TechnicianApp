@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var ivReport: ImageView? = null
     private var ivProfile: ImageView? = null
     private var llhome: LinearLayout? = null
+    private var llReport: LinearLayout? = null
+    private var llNotification: LinearLayout? = null
+    private var llProfile: LinearLayout? = null
     private var tvUsername: TextView? = null
 
     private var prefManager: PrefManager? = null
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         prefManager = PrefManager(this)
-        mDb = DBClass.getInstance(applicationContext)
+        mDb = DBClass.getInstance(this)
         init()
 
         var thread = Thread {
@@ -72,16 +75,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         ivProfile = findViewById(R.id.ivProfile)
         ivNotification = findViewById(R.id.ivNotification)
         llhome = findViewById(R.id.llhome)
+        llReport = findViewById(R.id.llReport)
+        llProfile = findViewById(R.id.llProfile)
+        llNotification = findViewById(R.id.llNotification)
         tvUsername = findViewById(R.id.tvUsername)
 
         ivHome?.setOnClickListener(this)
         ivProfile?.setOnClickListener(this)
         ivReport?.setOnClickListener(this)
         ivNotification?.setOnClickListener(this)
+        llhome?.setOnClickListener(this)
+        llReport?.setOnClickListener(this)
+        llNotification?.setOnClickListener(this)
+        llProfile?.setOnClickListener(this)
+        ivNotification?.setOnClickListener(this)
+        ivNotification?.setOnClickListener(this)
 
         tvUsername?.text = "Hello, " + "Arun"
 
-        ivHome?.performClick()
+        llhome?.performClick()
 
     }
 
@@ -110,7 +122,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         val i = v?.id
         when (i) {
-            R.id.ivHome -> {
+            R.id.llhome -> {
 
                 replaceFragmenty(
                     fragment = HomeFragment.newInstance("", ""),
@@ -126,7 +138,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivProfile?.setTint(this, R.color.text_color1)
 
             }
-            R.id.ivReport -> {
+            R.id.llReport -> {
                 replaceFragmenty(
                     fragment = ReportFragment.newInstance("", ""),
                     allowStateLoss = true,
@@ -142,7 +154,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
             }
-            R.id.ivNotification -> {
+            R.id.llNotification -> {
 
                 selectedMenu = "notification"
                 replaceFragmenty(
@@ -158,7 +170,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
             }
-            R.id.ivProfile -> {
+            R.id.llProfile -> {
 
                 selectedMenu = "profile"
                 replaceFragmenty(
