@@ -109,6 +109,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             chkRR?.text = "LR"
         }
 
+        Common.showLoader(this)
         var thread = Thread {
 
             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
@@ -365,6 +366,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             gridviewRecycModel?.adapter = adapter
 
             gridviewRecycModel?.visibility = View.VISIBLE
+            Common.hideLoader()
         }, 1000)
 
     }

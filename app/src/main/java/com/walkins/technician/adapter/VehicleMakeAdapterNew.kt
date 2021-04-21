@@ -122,7 +122,7 @@ class VehicleMakeAdapterNew internal constructor(
 
                 holder.rlItemView?.performClick()
             }
-        }, 2000)
+        }, 1000)
 
 
     }

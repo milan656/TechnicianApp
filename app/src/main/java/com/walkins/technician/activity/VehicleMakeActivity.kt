@@ -28,6 +28,7 @@ import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.viewmodel.WarrantyViewModel
 
 class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
+
     private lateinit var prefManager: PrefManager
     private var vehicleBrandModel: VehicleBrandModel? = null
     private lateinit var warrantyViewModel: WarrantyViewModel
@@ -113,6 +114,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             chkLR?.text = "RF"
             chkRR?.text = "LR"
         }
+
+        Common.showLoader(this)
 
         var thread = Thread {
             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size + " " + selectedTyre)
@@ -394,6 +397,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             adapter = VehicleMakeAdapterNew(this, arrList, this, selectedName)
             gridviewRecycMake_?.adapter = adapter
             gridviewRecycMake_?.visibility = View.VISIBLE
+            Common.hideLoader()
         }, 1000)
     }
 

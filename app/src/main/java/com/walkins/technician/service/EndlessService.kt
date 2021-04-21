@@ -329,7 +329,7 @@ class EndlessService : Service() {
                 var entity = VehiclePatternModelClass()
 
                 entity.name =
-                    "101H546 45"
+                    "101H546 45"+i
                 entity.patternId = 45 + i
                 entity.isSelected = false
                 mDb.patternDaoClass().savePattern(entity)
@@ -378,7 +378,7 @@ class EndlessService : Service() {
                 var entity = VehicleSizeModelClass()
 
                 entity.name =
-                    "120H 785"
+                    "120H 785"+i
                 entity.sizeId = 655 + i
                 entity.isSelected = false
                 mDb.sizeDaoClass().saveSize(entity)
@@ -429,7 +429,7 @@ class EndlessService : Service() {
 //                    var model = vehicleBrandModel.data.get(i)
                 var entity = VehicleMakeModelClass()
 
-                entity.name = "Test name"
+                entity.name = "Test name" + i
                 entity.short_number = ""
                 entity.concat =
                     "https://homepages.cae.wisc.edu/~ece533/images/serrano.png"

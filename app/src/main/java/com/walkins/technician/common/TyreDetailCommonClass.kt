@@ -25,6 +25,7 @@ class TyreDetailCommonClass {
         var bubble: String? = ""
         var issueResolvedArr: ArrayList<String>? = ArrayList()
         var visualDetailPhotoUrl: String? = ""
+        var isCameraSelectedVisualDetail = false
 
         var chk1Make: String? = ""
         var chk2Make: String? = ""

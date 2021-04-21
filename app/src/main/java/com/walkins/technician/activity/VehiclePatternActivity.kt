@@ -119,6 +119,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             chkLR?.text = "RF"
             chkRR?.text = "LR"
         }
+        Common.showLoader(this)
 
         var thread = Thread {
 
@@ -402,6 +403,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             adapter = VehiclePatternAdapter(this, arrList, this, selectedId)
             gridviewRecycModel?.adapter = adapter
             gridviewRecycModel?.visibility = View.VISIBLE
+            Common.hideLoader()
         }, 1000)
 
 

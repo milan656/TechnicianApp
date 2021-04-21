@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -762,10 +763,16 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //                .load(json.get(TyreKey.visualDetailPhotoUrl)?.asString!!)
 //                .into(ivPickedImage1!!)
 
-            var uri = Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString!!)
+            if (json.get("isCameraSelectedVisualDetail")?.asBoolean!!){
+
+                ivPickedImage1?.setImageURI(Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString))
+            }else{
+                ivPickedImage1?.setImageURI(Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString))
+            }
             TyreDetailCommonClass.visualDetailPhotoUrl =
                 json.get(TyreKey.visualDetailPhotoUrl)?.asString
-            ivPickedImage1?.setImageURI(uri)
+
+
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
@@ -1175,6 +1182,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 tvAddPhoto1?.visibility = View.GONE
                 tvCarphoto1?.visibility = View.GONE
                 TyreDetailCommonClass.visualDetailPhotoUrl = imageFilePath
+                Log.e("getimageuri", "" + imageFilePath)
+                TyreDetailCommonClass.isCameraSelectedVisualDetail = true
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "You cancelled the operation", Toast.LENGTH_SHORT).show()
             }
@@ -1186,6 +1195,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             tvAddPhoto1?.visibility = View.GONE
             tvCarphoto1?.visibility = View.GONE
             TyreDetailCommonClass.visualDetailPhotoUrl = data?.data?.toString()
+            Log.e("getimageuri", "" + data?.data)
+            TyreDetailCommonClass.isCameraSelectedVisualDetail = false
         }
     }
 }

@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -412,6 +414,43 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         getStoredObjects()
 
+        edtMoreSuggestion?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                if (s != null && s?.toString().length > 0) {
+                    checkSubmitBtn()
+                }
+            }
+
+        })
+
+        tvNextServiceDueDate?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null && s?.toString().length > 2) {
+                    TyreConfigClass.nextDueDate = tvNextServiceDueDate?.text?.toString()!!
+                    checkSubmitBtn()
+                }
+            }
+
+        })
+
+
 //        TyreConfigClass.LFCompleted = false
 //        TyreConfigClass.LRCompleted = false
 //        TyreConfigClass.RFCompleted = false
@@ -765,7 +804,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         selectedDate = simpleDateFormat?.format(date)
                         Log.e("getdatee00", "" + selectedDate)
                         tvNextServiceDueDate?.text = selectedDate
-                        TyreConfigClass.nextDueDate = selectedDate!!
+
 
                     } else if (str.equals("Reset")) {
                         Log.e("getdatee2", "" + selectedDate)
@@ -1335,6 +1374,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.CarPhoto_2 = imageFilePath
 
                     }
+                    checkSubmitBtn()
                 } else if (resultCode == RESULT_CANCELED) {
                     Toast.makeText(this, "You cancelled the operation", Toast.LENGTH_SHORT).show()
                 }
@@ -1370,6 +1410,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
 
                 }
+                checkSubmitBtn()
             }
 
 
@@ -1580,6 +1621,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 json.addProperty(
                     "visualDetailPhotoUrl",
                     TyreDetailCommonClass.visualDetailPhotoUrl
+                )
+                json.addProperty(
+                    "isCameraSelectedVisualDetail",
+                    TyreDetailCommonClass.isCameraSelectedVisualDetail
                 )
 
 
@@ -2036,48 +2081,59 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getimagess", "" + TyreConfigClass.nitrogenTyreRotationChecked)
                 Log.e("getimagess", "" + TyreConfigClass.nitrogenWheelBalancingChecked)
                 Log.e("getimagess", "" + TyreConfigClass.nextDueDate)
-                TyreConfigClass.moreSuggestions = edtMoreSuggestion?.text?.toString()!!
-                Log.e("getimagess", "" + TyreConfigClass.moreSuggestions)
 
-                if (TyreConfigClass.nextDueDate != null && !TyreConfigClass.nextDueDate.equals("")) {
-//                    Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (!TyreConfigClass.nitrogenWheelBalancingChecked && !TyreConfigClass.nitrogenTyreRotationChecked &&
-                    !TyreConfigClass.nitrogenTopupChecked && !TyreConfigClass.nitrogenRefillChecked
-                ) {
-//                    Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
-                    return
-                }
-
-                if (!TyreConfigClass.LFCompleted || !TyreConfigClass.RFCompleted || !TyreConfigClass.LRCompleted
-                    || !TyreConfigClass.RRCompleted
-                ) {
-//                    Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
-
-                } else {
-//                    Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
-
-                } else {
-//                    Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
-                    return
-                }
-
-                btnSubmitAndComplete?.isClickable = true
-                btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.round_corner_button_yellow))
-
+                checkSubmitBtn()
 
             }
         }
     }
 
     private fun checkSubmitBtn() {
+        try {
+            if (edtMoreSuggestion?.text?.toString() != null) {
+                TyreConfigClass.moreSuggestions = edtMoreSuggestion?.text?.toString()!!
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        Log.e("getimagess", "" + TyreConfigClass.moreSuggestions)
+
+        if (tvNextServiceDueDate?.text?.toString() != null && !tvNextServiceDueDate?.text?.toString().equals("")) {
+
+        }else{
+            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!TyreConfigClass.nitrogenWheelBalancingChecked && !TyreConfigClass.nitrogenTyreRotationChecked &&
+            !TyreConfigClass.nitrogenTopupChecked && !TyreConfigClass.nitrogenRefillChecked
+        ) {
+            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!TyreConfigClass.LFCompleted || !TyreConfigClass.RFCompleted || !TyreConfigClass.LRCompleted
+            || !TyreConfigClass.RRCompleted
+        ) {
+            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
+
+        } else {
+            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
+
+        } else {
+            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        btnSubmitAndComplete?.isClickable = true
+        btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.round_corner_button_yellow))
 
     }
 
