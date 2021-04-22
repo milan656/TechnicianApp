@@ -91,6 +91,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         ivNotification?.setOnClickListener(this)
         ivNotification?.setOnClickListener(this)
 
+
+
         tvUsername?.text = "Hello, " + "Arun"
 
         llhome?.performClick()
@@ -122,7 +124,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         val i = v?.id
         when (i) {
-            R.id.llhome -> {
+            R.id.llhome,R.id.ivHome -> {
 
                 replaceFragmenty(
                     fragment = HomeFragment.newInstance("", ""),
@@ -138,7 +140,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivProfile?.setTint(this, R.color.text_color1)
 
             }
-            R.id.llReport -> {
+            R.id.llReport,R.id.ivReport -> {
                 replaceFragmenty(
                     fragment = ReportFragment.newInstance("", ""),
                     allowStateLoss = true,
@@ -154,7 +156,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
             }
-            R.id.llNotification -> {
+            R.id.llNotification,R.id.ivNotification -> {
 
                 selectedMenu = "notification"
                 replaceFragmenty(
@@ -170,7 +172,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
             }
-            R.id.llProfile -> {
+            R.id.llProfile,R.id.ivProfile -> {
 
                 selectedMenu = "profile"
                 replaceFragmenty(

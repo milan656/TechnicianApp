@@ -166,7 +166,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var IMAGE_PICK_CODE = 1010;
     private var PERMISSION_CODE = 1011;
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_service_details)
@@ -181,7 +180,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     fun getStoredObjects() {
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-            !prefManager?.getValue(TyreConfigClass.TyreLFObject).equals("")
+            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
         ) {
             var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
             try {
@@ -196,13 +195,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
                     TyreConfigClass.LFVehicleMake = true
                 }
-                if ((json.get(TyreKey.vehicleMake)?.asString != null &&
+                if ((
                             !json.get(TyreKey.vehiclePattern)?.asString.equals("") &&
                             !json.get(TyreKey.vehiclePatternId)?.asString.equals(""))
                 ) {
                     TyreConfigClass.LFVehiclePattern = true
                 }
-                if ((json.get(TyreKey.vehicleMake)?.asString != null &&
+                if ((
                             !json.get(TyreKey.vehicleSize)?.asString.equals("") &&
                             !json.get(TyreKey.vehicleSizeId)?.asString.equals(""))
                 ) {
@@ -257,13 +256,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
                     TyreConfigClass.RFVehicleMake = true
                 }
-                if ((json.get(TyreKey.vehicleMake)?.asString != null &&
+                if ((
                             !json.get(TyreKey.vehiclePattern)?.asString.equals("") &&
                             !json.get(TyreKey.vehiclePatternId)?.asString.equals(""))
                 ) {
                     TyreConfigClass.RFVehiclePattern = true
                 }
-                if ((json.get(TyreKey.vehicleMake)?.asString != null &&
+                if ((
                             !json.get(TyreKey.vehicleSize)?.asString.equals("") &&
                             !json.get(TyreKey.vehicleSizeId)?.asString.equals(""))
                 ) {
@@ -314,13 +313,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
                     TyreConfigClass.LRVehicleMake = true
                 }
-                if ((json.get(TyreKey.vehicleMake)?.asString != null &&
+                if ((
                             !json.get(TyreKey.vehiclePattern)?.asString.equals("") &&
                             !json.get(TyreKey.vehiclePatternId)?.asString.equals(""))
                 ) {
                     TyreConfigClass.LRVehiclePattern = true
                 }
-                if ((json.get(TyreKey.vehicleMake)?.asString != null &&
+                if ((
                             !json.get(TyreKey.vehicleSize)?.asString.equals("") &&
                             !json.get(TyreKey.vehicleSizeId)?.asString.equals(""))
                 ) {
@@ -372,13 +371,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
                     TyreConfigClass.RRVehicleMake = true
                 }
-                if ((json.get(TyreKey.vehicleMake)?.asString != null &&
+                if ((
                             !json.get(TyreKey.vehiclePattern)?.asString.equals("") &&
                             !json.get(TyreKey.vehiclePatternId)?.asString.equals(""))
                 ) {
                     TyreConfigClass.RRVehiclePattern = true
                 }
-                if ((json.get(TyreKey.vehicleMake)?.asString != null &&
+                if ((
                             !json.get(TyreKey.vehicleSize)?.asString.equals("") &&
                             !json.get(TyreKey.vehicleSizeId)?.asString.equals(""))
                 ) {
@@ -446,7 +445,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             !prefManager.getValue("AddServiceSuggestion").equals("")
         ) {
 
-            val jsonText: String = prefManager.getValue("AddServiceSuggestion")!!
+            val jsonText: String = prefManager.getValue("AddServiceSuggestion")
             Log.e("getobjj", "" + jsonText)
 
 //            for (i in suggestionArray?.indices!!) {
@@ -1925,33 +1924,33 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ) {
 
         } else {
-            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (!TyreConfigClass.nitrogenWheelBalancingChecked && !TyreConfigClass.nitrogenTyreRotationChecked &&
             !TyreConfigClass.nitrogenTopupChecked && !TyreConfigClass.nitrogenRefillChecked
         ) {
-            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (!TyreConfigClass.LFCompleted || !TyreConfigClass.RFCompleted || !TyreConfigClass.LRCompleted
             || !TyreConfigClass.RRCompleted
         ) {
-            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
 
         } else {
-            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
 
         } else {
-            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -1968,13 +1967,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
             ) {
 
-
                 val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                 var lfObject: JSONObject? = JSONObject(str)
                 Log.e("getobjlf", "" + lfObject.toString())
                 Log.e("getobjlf", "" + TyreDetailCommonClass.chk1Make)
-
-
 
                 if (TyreDetailCommonClass.chk1Make.equals("RF,true")) {
                     lfObject?.remove(TyreKey.vehicleMake)

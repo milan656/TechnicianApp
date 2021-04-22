@@ -76,8 +76,8 @@
 
             <ImageView
                 android:id="@+id/ivHome"
-                android:layout_width="13dp"
-                android:layout_height="25dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_home_normal" />
 
         </LinearLayout>
@@ -94,8 +94,8 @@
 
             <ImageView
                 android:id="@+id/ivReport"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_report" />
 
         </LinearLayout>
@@ -112,8 +112,8 @@
 
             <ImageView
                 android:id="@+id/ivNotification"
-                android:layout_width="18dp"
-                android:layout_height="16dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_notification_icon" />
 
         </LinearLayout>
@@ -129,8 +129,8 @@
 
             <ImageView
                 android:id="@+id/ivProfile"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_profile_icon" />
 
         </LinearLayout>

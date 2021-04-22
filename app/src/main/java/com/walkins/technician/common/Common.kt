@@ -860,7 +860,7 @@ class Common {
             return res == PackageManager.PERMISSION_GRANTED
         }
 
-        fun setBlankAllValues() {
+        fun setClearAllValues() {
             TyreDetailCommonClass.tyreType = ""
             TyreDetailCommonClass.vehicleMake = ""
             TyreDetailCommonClass.vehicleMakeId = ""

@@ -79,6 +79,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         btnNext?.setOnClickListener(this)
         ivEditVehicleMake?.setOnClickListener(this)
 
+//        Common.setClearAllValues()
+
         if (intent != null) {
             if (intent.getStringExtra("title") != null) {
                 tvTitle?.text = intent.getStringExtra("title")
@@ -87,6 +89,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 selectedTyre = intent.getStringExtra("selectedTyre")!!
             }
         }
+
+        TyreDetailCommonClass.tyreType = selectedTyre
 //        tvTitle?.text = "Select Tyre Make - LF"
         gridviewRecycMake_?.layoutManager =
             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
@@ -458,7 +462,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getselected", "" + arrList?.get(selectedPos)?.concat)
         selectedName = arrList?.get(selectedPos)?.name!!
 
-        if (selectedTyre.equals("LF")) {
+       /* if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
                 !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
             ) {
@@ -717,7 +721,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-        }
+        }*/
     }
 
     override fun onClick(v: View?) {
@@ -751,27 +755,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     }
 
     private fun updateRecords() {
-        var thread = Thread {
-//            var entity = VehicleMakeModelClass()
-//            entity.Id = arrList?.get(selectedPos)?.Id!!
-//            entity.name = arrList?.get(selectedPos)?.name
-//            entity.isSelected = true
-//            entity.isLRSelected = chkLR?.isChecked!!
-//            entity.brand_id = arrList?.get(selectedPos)?.brand_id
-//            entity.vehicle_type = arrList?.get(selectedPos)?.vehicle_type
-//            entity.short_number = arrList?.get(selectedPos)?.short_number
-//            entity.concat = arrList?.get(selectedPos)?.concat
-//            entity.image_url = arrList?.get(selectedPos)?.image_url
-//            entity.quality = arrList?.get(selectedPos)?.quality
-//            entity.isRFSelected = chkRF?.isChecked!!
-//            entity.isRRSelected = chkRR?.isChecked!!
-//
-//            mDb.daoClass().update(entity)
-        }
-        thread.start()
 
-        TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
-        TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat!!
+
+
 
         if (selectedTyre.equals("LF")) {
             TyreConfigClass.LFVehicleMake = true
@@ -875,11 +861,12 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         TyreDetailCommonClass.tyreType = selectedTyre
         TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.name
         TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.Id?.toString()
+        TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
+        TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat!!
 
         TyreDetailCommonClass.chk1Make = chkRF?.text.toString() + "," + chkRF?.isChecked
         TyreDetailCommonClass.chk2Make = chkLR?.text.toString() + "," + chkLR?.isChecked
         TyreDetailCommonClass.chk3Make = chkRR?.text.toString() + "," + chkRR?.isChecked
-
 
         Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)
         var intent = Intent(this, VehiclePatternActivity::class.java)

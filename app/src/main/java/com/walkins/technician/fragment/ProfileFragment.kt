@@ -55,8 +55,9 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
 
+    private var ivProfileImg: ImageView? = null
+    private var imageDialog: BottomSheetDialog? = null
 
-    private var ivProfileImg:ImageView?=null
     // image picker code
     val REQUEST_IMAGE = 100
     val REQUEST_PERMISSION = 200
@@ -86,7 +87,12 @@ class ProfileFragment : Fragment(), onClickAdapter {
     }
 
     private fun requestPermissionForImage() {
-        if (context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE) } !==
+        if (context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            } !==
             PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
@@ -146,15 +152,15 @@ class ProfileFragment : Fragment(), onClickAdapter {
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
-        val dialog =
+        imageDialog =
             getContext()?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
-        dialog?.setCancelable(false)
+        imageDialog?.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog?.window?.setLayout(width, height)
-        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog?.setContentView(view)
+        imageDialog?.window?.setLayout(width, height)
+        imageDialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        imageDialog?.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btn_send)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
@@ -178,7 +184,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
         arrayAdapter?.onclick = this
 
         ivClose?.setOnClickListener {
-            dialog?.dismiss()
+            imageDialog?.dismiss()
         }
         if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
             btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
@@ -193,26 +199,28 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
         btnSend.setOnClickListener {
 
-            dialog?.dismiss()
+            imageDialog?.dismiss()
 
         }
 
-        dialog?.show()
+        imageDialog?.show()
 
     }
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-        if (check==10){
-            if (Common.commonPhotoChooseArr?.get(variable)?.equals("Gallery")) {
+        if (check == 10) {
+            if (imageDialog != null && imageDialog?.isShowing!!) {
+                imageDialog?.dismiss()
+            }
+            if (Common.commonPhotoChooseArr.get(variable).equals("Gallery")) {
                 openGallery()
             }
-            if (Common.commonPhotoChooseArr?.get(variable)?.equals("Camera")) {
+            if (Common.commonPhotoChooseArr.get(variable).equals("Camera")) {
                 openCamera()
             }
         }
     }
-
 
 
     private fun openGallery() {
@@ -233,7 +241,6 @@ class ProfileFragment : Fragment(), onClickAdapter {
             pickImageFromGallery();
         }
     }
-
 
 
     private fun pickImageFromGallery() {
@@ -288,7 +295,13 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 return
             }
             val photoUri: Uri =
-                context?.let { FileProvider.getUriForFile(it, "$context?.packageName.provider", photoFile!!) }!!
+                context?.let {
+                    FileProvider.getUriForFile(
+                        it,
+                        "$context?.packageName.provider",
+                        photoFile!!
+                    )
+                }!!
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
             startActivityForResult(pictureIntent, REQUEST_IMAGE)
         }

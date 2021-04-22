@@ -339,11 +339,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        Log.e("getobjrfpa", "" + json + " ")
                         Log.e("getobjrfpa", "" + json.get("vehiclePatternId")?.asString + " ")
                         if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
                             Log.e("getobjrfpa", "" + selectedId + " ")
-                            Log.e("getobjrfpa", "" + json + " ")
                             runOnUiThread {
 
                                 if (chkRF?.text?.toString().equals("RF")) {
@@ -395,7 +393,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         }
         thread.start()
-
 
         val handler = Handler()
         handler.postDelayed(Runnable {
@@ -454,7 +451,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         selectedPosition = variable
         selectedPos = variable
 
-        if (selectedTyre.equals("LF")) {
+       /* if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
                 !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
             ) {
@@ -701,7 +698,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-        }
+        }*/
     }
 
     override fun onClick(v: View?) {

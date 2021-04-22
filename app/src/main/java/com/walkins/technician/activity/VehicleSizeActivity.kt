@@ -592,7 +592,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         selectedId = arrList?.get(variable)?.sizeId!!
         Log.e("getsizeid", "" + selectedId)
 
-        if (selectedTyre.equals("LF")) {
+       /* if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
                 !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
             ) {
@@ -831,7 +831,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-        }
+        }*/
 
     }
 
