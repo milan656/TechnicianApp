@@ -49,5 +49,7 @@ class TyreConfigClass {
         var CarPhoto_1 = ""
         var CarPhoto_2 = ""
 
+        var backgroundWebServiceCallTime = "backgroundWebServiceCallTime"
+
     }
 }

@@ -1,10 +1,10 @@
 package com.example.technician.common
 
+import android.R.attr.data
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.IOException
-import java.lang.NullPointerException
 
 
 class PrefManager(context: Context) {
@@ -406,6 +406,16 @@ class PrefManager(context: Context) {
             e.printStackTrace()
         }
         editor.commit()
+    }
+
+    fun saveArray(key: String, list: ArrayList<String>){
+        val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+//        val textList: List<String> = ArrayList(data)
+        val jsonText = gson.toJson(list)
+        editor.putString(key, jsonText)
+        editor.apply()
     }
     fun setGoogleRatingLink(googleRating: String?) {
         val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)

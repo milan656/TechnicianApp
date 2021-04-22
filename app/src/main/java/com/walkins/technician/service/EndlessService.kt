@@ -9,12 +9,17 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.os.SystemClock
+import android.text.format.Time
 import android.util.Log
+import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.GsonBuilder
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
-import com.walkins.technician.DB.*
+import com.walkins.technician.DB.DBClass
+import com.walkins.technician.DB.VehicleMakeModelClass
+import com.walkins.technician.DB.VehiclePatternModelClass
+import com.walkins.technician.DB.VehicleSizeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.model.login.patternmodel.PatternModel
@@ -160,13 +165,45 @@ class EndlessService : Service() {
 //                    fetchPattern()
 //                    fetchSize()
 
-                    saveStaticVehicleMake()
-                    saveStaticPatternData()
-                    saveStaticSize()
 
+                    val sdfo = SimpleDateFormat("dd-MM-yyyy hh:mm")
+
+                    // Get the two dates to be compared
+
+                    // Get the two dates to be compared
+                    var date = Date()
+                    val formatter = SimpleDateFormat("dd-MM-yyyy hh:mm")
+                    val answer = formatter.format(date)
+                    Log.d("answer", answer)
+                    val d1 = sdfo.parse(answer)
+                    val d2 = sdfo.parse("22-04-2021 06:05")
+
+                    // Print the dates
+                    println("Date1 : " + sdfo.format(d1))
+                    println("Date2 : " + sdfo.format(d2))
+
+                    // Compare the dates
+                    if (d1.after(d2)) {
+
+                        // When Date d1 > Date d2
+                        println("Date1 is greater then Date2")
+                        Log.e("callapi","call")
+                        saveStaticVehicleMake()
+                        saveStaticPatternData()
+                        saveStaticSize()
+                    } else if (d1.before(d2)) {
+
+                        // When Date d1 < Date d2
+                        println("Date1 is less then Date2")
+
+                    } else if (d1.equals(d2)) {
+
+                        // When Date d1 = Date d2
+                        println("Date1 is equal to Date2")
+                    }
                     stopService()
                 }
-                delay(5 * 60 * 1000) // 5 min delay
+                delay(2 * 60 * 1000) // 5 min delay
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
@@ -329,7 +366,7 @@ class EndlessService : Service() {
                 var entity = VehiclePatternModelClass()
 
                 entity.name =
-                    "101H546 45"+i
+                    "101H546 45" + i
                 entity.patternId = 45 + i
                 entity.isSelected = false
                 mDb.patternDaoClass().savePattern(entity)
@@ -378,7 +415,7 @@ class EndlessService : Service() {
                 var entity = VehicleSizeModelClass()
 
                 entity.name =
-                    "120H 785"+i
+                    "120H 785" + i
                 entity.sizeId = 655 + i
                 entity.isSelected = false
                 mDb.sizeDaoClass().saveSize(entity)
