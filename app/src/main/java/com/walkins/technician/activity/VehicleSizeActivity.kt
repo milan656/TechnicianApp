@@ -132,6 +132,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
 
+
                             runOnUiThread {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Size)!=null && json.get(TyreKey.chk1Size).asString.equals("RF,true")
@@ -188,7 +189,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                             selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
-
+                            Log.e("getobjrfche",""+json+" "+selectedId)
                             runOnUiThread {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Size) != null && json.get(
@@ -256,7 +257,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-
+                        Log.e("getobjrfche00",""+json+" "+selectedId+" ")
+                        Log.e("getobjrfche00",""+json.get("vehicleSizeId")?.asString?.toInt())
                         if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
                             runOnUiThread {
 

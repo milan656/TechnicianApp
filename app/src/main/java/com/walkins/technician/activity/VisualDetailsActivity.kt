@@ -1179,6 +1179,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         } else {
             return true
         }
+
+        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
+            Toast.makeText(this, "Please Select Issue resolved List", Toast.LENGTH_SHORT).show()
+            return true
+        } else {
+            return false
+        }
     }
 
 

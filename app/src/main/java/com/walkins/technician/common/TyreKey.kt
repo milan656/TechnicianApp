@@ -32,7 +32,7 @@ class TyreKey {
         var chk1Size = "chk1Size"
         var chk2Size = "chk2Size"
         var chk3Size = "chk3Size"
-        var isCompleted = "false"
+        var isCompleted = "isCompleted"
 
         var nitrogenTopup = "nitrogenTopup"
         var nitrogenRefil = "nitrogenRefil"
