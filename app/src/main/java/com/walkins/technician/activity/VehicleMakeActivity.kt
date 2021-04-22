@@ -444,7 +444,6 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     override fun onPositionClick(variable: Int, check: Int) {
 
         Common.slideUp(gridviewRecycMake_!!)
-
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
         try {
