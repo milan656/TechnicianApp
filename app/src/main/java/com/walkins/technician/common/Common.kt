@@ -42,6 +42,7 @@ import com.jkadvantagandbadsha.model.login.UserModel
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
+import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
@@ -857,6 +858,39 @@ class Common {
             val permission = Manifest.permission.CALL_PHONE
             val res: Int = checkSelfPermission(context,permission)
             return res == PackageManager.PERMISSION_GRANTED
+        }
+
+        fun setBlankAllValues() {
+            TyreDetailCommonClass.tyreType = ""
+            TyreDetailCommonClass.vehicleMake = ""
+            TyreDetailCommonClass.vehicleMakeId = ""
+            TyreDetailCommonClass.vehiclePattern = ""
+            TyreDetailCommonClass.vehiclePatternId = ""
+            TyreDetailCommonClass.vehicleSize = ""
+            TyreDetailCommonClass.vehicleSizeId = ""
+            TyreDetailCommonClass.vehicleMakeURL = ""
+            TyreDetailCommonClass.manufaturingDate = ""
+            TyreDetailCommonClass.psiInTyreService = ""
+            TyreDetailCommonClass.psiOutTyreService = ""
+            TyreDetailCommonClass.weightTyreService = ""
+            TyreDetailCommonClass.sidewell = ""
+            TyreDetailCommonClass.shoulder = ""
+            TyreDetailCommonClass.treadDepth = ""
+            TyreDetailCommonClass.treadWear = ""
+            TyreDetailCommonClass.rimDamage = ""
+            TyreDetailCommonClass.bubble = ""
+            TyreDetailCommonClass.issueResolvedArr = ArrayList()
+            TyreDetailCommonClass.visualDetailPhotoUrl = ""
+            TyreDetailCommonClass.isCameraSelectedVisualDetail = false
+            TyreDetailCommonClass.chk1Make = ""
+            TyreDetailCommonClass.chk1Pattern = ""
+            TyreDetailCommonClass.chk1Size = ""
+            TyreDetailCommonClass.chk2Make = ""
+            TyreDetailCommonClass.chk2Pattern = ""
+            TyreDetailCommonClass.chk2Size = ""
+            TyreDetailCommonClass.chk3Make = ""
+            TyreDetailCommonClass.chk3Pattern = ""
+            TyreDetailCommonClass.chk3Size = ""
         }
 
         fun getDataColumn(

@@ -157,6 +157,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     var simpleDateFormat: SimpleDateFormat? = null
     private var selectedDate: String? = null
     var singleBuilder: SingleDateAndTimePickerDialogDueDate.Builder? = null
+    var lltransparent: LinearLayout? = null
 
     // image picker code
     val REQUEST_IMAGE = 100
@@ -504,6 +505,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         tvNextServiceDueDate = findViewById(R.id.tvNextServiceDueDate)
         edtMoreSuggestion = findViewById(R.id.edtMoreSuggestion)
         btnSubmitAndComplete = findViewById(R.id.btnSubmitAndComplete)
+        lltransparent = findViewById(R.id.lltransparent)
 
         ivInfoImgLF = findViewById(R.id.ivInfoImgLF)
         ivInfoImgLR = findViewById(R.id.ivInfoImgLR)
@@ -993,6 +995,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             .title("Simple")
             .listener(object : SingleDateAndTimePickerDialogDueDate.Listener {
                 override fun onDateSelected(date: Date?, str: String) {
+                    lltransparent?.visibility = View.GONE
                     if (str.equals("")) {
                         simpleDateFormat = SimpleDateFormat("dd MMMM yyyy")
                         Log.e("getdatee", "" + simpleDateFormat?.format(date))
@@ -1019,6 +1022,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             })
 
+        lltransparent?.visibility = View.VISIBLE
         singleBuilder?.display()
 
     }
@@ -1903,38 +1907,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
     }
 
-    private fun setBlankAllValues() {
-        TyreDetailCommonClass.tyreType = ""
-        TyreDetailCommonClass.vehicleMake = ""
-        TyreDetailCommonClass.vehicleMakeId = ""
-        TyreDetailCommonClass.vehiclePattern = ""
-        TyreDetailCommonClass.vehiclePatternId = ""
-        TyreDetailCommonClass.vehicleSize = ""
-        TyreDetailCommonClass.vehicleSizeId = ""
-        TyreDetailCommonClass.vehicleMakeURL = ""
-        TyreDetailCommonClass.manufaturingDate = ""
-        TyreDetailCommonClass.psiInTyreService = ""
-        TyreDetailCommonClass.psiOutTyreService = ""
-        TyreDetailCommonClass.weightTyreService = ""
-        TyreDetailCommonClass.sidewell = ""
-        TyreDetailCommonClass.shoulder = ""
-        TyreDetailCommonClass.treadDepth = ""
-        TyreDetailCommonClass.treadWear = ""
-        TyreDetailCommonClass.rimDamage = ""
-        TyreDetailCommonClass.bubble = ""
-        TyreDetailCommonClass.issueResolvedArr = ArrayList()
-        TyreDetailCommonClass.visualDetailPhotoUrl = ""
-        TyreDetailCommonClass.isCameraSelectedVisualDetail = false
-        TyreDetailCommonClass.chk1Make = ""
-        TyreDetailCommonClass.chk1Pattern = ""
-        TyreDetailCommonClass.chk1Size = ""
-        TyreDetailCommonClass.chk2Make = ""
-        TyreDetailCommonClass.chk2Pattern = ""
-        TyreDetailCommonClass.chk2Size = ""
-        TyreDetailCommonClass.chk3Make = ""
-        TyreDetailCommonClass.chk3Pattern = ""
-        TyreDetailCommonClass.chk3Size = ""
-    }
+
 
     private fun checkSubmitBtn() {
         try {

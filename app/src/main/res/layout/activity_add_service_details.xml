@@ -969,6 +969,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/five_dp"
+                                    android:layout_marginTop="@dimen/five_dp"
                                     android:background="@drawable/layout_bg_corner"
                                     android:gravity="start|top"
                                     android:inputType="textMultiLine"
@@ -1161,4 +1162,13 @@
             android:textSize="@dimen/eighteen_sp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lltransparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@color/translucent_black_55"/>
+
 </RelativeLayout>
