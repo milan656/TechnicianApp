@@ -272,6 +272,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llSugSideWell"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -297,6 +298,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llREQSideWell"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -345,6 +347,7 @@
                                     android:orientation="horizontal">
 
                                     <LinearLayout
+                                        android:id="@+id/llOkShoulder"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -370,6 +373,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llSugShoulder"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -395,6 +399,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llReqShoulder"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -443,6 +448,7 @@
                                     android:orientation="horizontal">
 
                                     <LinearLayout
+                                        android:id="@+id/llOkTreadDepth"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -468,6 +474,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llSugTreadDepth"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -493,6 +500,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llReqTreadDepth"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -541,6 +549,7 @@
                                     android:orientation="horizontal">
 
                                     <LinearLayout
+                                        android:id="@+id/llOkTreadWear"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -566,6 +575,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llSugTreadWear"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -591,6 +601,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llReqTreadWear"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -633,6 +644,7 @@
                                     android:textSize="@dimen/fourteen_sp" />
 
                                 <LinearLayout
+                                    android:id="@+id/llOkRimDamage"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/twenty_dp"
@@ -664,6 +676,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llSugRimDamage"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -689,6 +702,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llReqRimDamage"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -737,6 +751,7 @@
                                     android:orientation="horizontal">
 
                                     <LinearLayout
+                                        android:id="@+id/llOkBubble"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -762,6 +777,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llSugBubble"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -787,6 +803,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llReqBubble"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
