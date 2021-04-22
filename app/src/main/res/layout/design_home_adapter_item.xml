@@ -12,7 +12,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:background="@drawable/cardview"
+    android:background="@drawable/common_rounded"
     android:layout_margin="@dimen/ten_dp"
     android:elevation="@dimen/twenty_dp">
 

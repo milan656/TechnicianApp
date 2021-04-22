@@ -8,7 +8,6 @@ import android.widget.TextView
 import com.trading212.diverserecycleradapter.DiverseRecyclerAdapter
 import com.trading212.stickyheader.StickyHeader
 import com.walkins.technician.R
-import com.walkins.technician.adapter.DiverseRecyclerAdapterNew
 import com.walkins.technician.common.onClickAdapter
 
 class SimpleStickyTextRecyclerItem(stickyData: StickyData
@@ -19,9 +18,6 @@ class SimpleStickyTextRecyclerItem(stickyData: StickyData
     var onclick: onClickAdapter? = null
 
     override val type = TYPE
-
-
-
 
     override fun createViewHolder(parent: ViewGroup, inflater: LayoutInflater): ViewHolder = ViewHolder(
             inflater.inflate(R.layout.item_sticky_text, parent, false))
