@@ -583,11 +583,6 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-//        Log.e("getmake", "" + arrList?.get(variable)?.name)
-//        val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
-//        intent.putExtra("which", "vehiclesize")
-//        startActivityForResult(intent, 1005)
-
         Common.slideUp(gridviewRecycModel!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
