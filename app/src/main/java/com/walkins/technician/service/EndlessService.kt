@@ -235,7 +235,6 @@ class EndlessService : Service() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
         })
 
