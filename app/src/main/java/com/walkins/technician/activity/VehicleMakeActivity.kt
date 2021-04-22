@@ -278,6 +278,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
+                    chkRF?.isChecked = false
+                    chkLR?.isChecked = false
+                    chkRR?.isChecked = false
                     if (selectedName != null && !selectedName.equals("") &&
                         selectedName.equals(json.get("vehicleMake")?.asString!!)
                     ) {

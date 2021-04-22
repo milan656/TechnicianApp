@@ -811,7 +811,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getvaluess", "" + sliderIn?.bubbleText)
             psiInTyreService = sliderIn?.bubbleText
         }
-//        sliderIn?.position = 0.3f
+        sliderIn?.position = 0.3f
         sliderIn?.startText = "$min"
         sliderIn?.endText = "$max"
         sliderIn?.animation?.cancel()
@@ -824,7 +824,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getvaluess", "" + multiSliderPsiOut?.bubbleText)
             psiOutTyreService = multiSliderPsiOut?.bubbleText
         }
-//        multiSliderPsiOut?.position = 0.3f
+        multiSliderPsiOut?.position = 0.3f
         multiSliderPsiOut?.startText = "$min"
         multiSliderPsiOut?.endText = "$max"
         multiSliderPsiOut?.animation?.cancel()
@@ -837,7 +837,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getvaluess", "" + multiSliderWeight?.bubbleText)
             weightTyreService = multiSliderWeight?.bubbleText
         }
-//        multiSliderWeight?.position = 0.3f
+        multiSliderWeight?.position = 0.3f
         multiSliderWeight?.startText = "$min"
         multiSliderWeight?.endText = "$max"
         multiSliderWeight?.animation?.cancel()

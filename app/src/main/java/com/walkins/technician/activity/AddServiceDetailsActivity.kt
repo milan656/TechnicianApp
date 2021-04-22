@@ -1833,11 +1833,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
                 json.add(TyreKey.issueResolvedArr, jsonArr)
                 json.addProperty(
-                    "visualDetailPhotoUrl",
+                    TyreKey.visualDetailPhotoUrl,
                     TyreDetailCommonClass.visualDetailPhotoUrl
                 )
                 json.addProperty(
-                    "isCameraSelectedVisualDetail",
+                    TyreKey.isCameraSelectedVisualDetail,
                     TyreDetailCommonClass.isCameraSelectedVisualDetail
                 )
 
@@ -1874,422 +1874,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     "" + prefManager.getValue(TyreConfigClass.TyreRRObject)
                 )
 
-                val thread = Thread {
-                    /* if (TyreDetailCommonClass.tyreType.equals("LF")) {
-                         Log.e("iscompleted::lf", "" + TyreConfigClass.LFCompleted)
-
-                         var entity = TyreLFDetail()
-                         entity.vehicleMake = TyreDetailCommonClass.vehicleMake
-                         entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-                         entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                         entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
-                         entity.vehicleSize = TyreDetailCommonClass.vehicleSize
-                         entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                         entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
-                         entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
-                         entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
-                         entity.weightTyreService = TyreDetailCommonClass.weightTyreService
-                         entity.sidewell = TyreDetailCommonClass.sidewell
-                         entity.shoulder = TyreDetailCommonClass.shoulder
-                         entity.treadWear = TyreDetailCommonClass.treadWear
-                         entity.treadDepth = TyreDetailCommonClass.treadDepth
-                         entity.rimDamage = TyreDetailCommonClass.rimDamage
-                         entity.bubble = TyreDetailCommonClass.bubble
-                         entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
-                         entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
-
-                         if (!TyreConfigClass.LFCompleted) {
-                             if (mDb.daoLF().getAll().size > 0) {
-                                 mDb.daoLF().deleteAll()
-                             }
-
-                             mDb.daoLF().save(entity)
-
-                             if (TyreDetailCommonClass.chk1Make.equals("RF")) {
-                                 val entityRF = TyreRFDetail()
-                                 entityRF.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityRF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (TyreDetailCommonClass.chk1Pattern.equals("RF")) {
-                                     entityRF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityRF.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk1Size.equals("RF")) {
-                                     entityRF.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityRF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-
-                                 if (mDb.daoRF().getAll().size > 0) {
-                                     mDb.daoRF().deleteAll()
-                                 }
-                                 mDb.daoRF().save(entityRF)
-                             }
-                             if (TyreDetailCommonClass.chk2Make.equals("LR")) {
-
-                                 val entityLR = TyreLRDetail()
-                                 entityLR.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityLR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (mDb.daoLR().getAll().size > 0) {
-                                     mDb.daoLR().deleteAll()
-                                 }
-
-                                 if (TyreDetailCommonClass.chk2Pattern.equals("LR")) {
-                                     entityLR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityLR.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk2Size.equals("LR")) {
-                                     entityLR.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityLR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-                                 mDb.daoLR().save(entityLR)
-                             }
-                             if (TyreDetailCommonClass.chk3Make.equals("RR")) {
-                                 val entityRR = TyreRRDetail()
-                                 entityRR.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityRR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (mDb.daoRR().getAll().size > 0) {
-                                     mDb.daoRR().deleteAll()
-                                 }
-
-                                 if (TyreDetailCommonClass.chk3Pattern.equals("RR")) {
-                                     entityRR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityRR.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk3Size.equals("RR")) {
-                                     entityRR.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityRR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-                                 mDb.daoRR().save(entityRR)
-                             }
-
-                         } else {
-                             var id: Int = -1
-                             for (i in mDb.daoLF().getAll().indices) {
-                                 Log.e("getview", "" + mDb.daoRF().getAll().get(i).id)
-                                 id = mDb.daoLF().getAll().get(i).id
-                             }
-                             entity.id = id
-                             mDb.daoLF().update(entity)
-                         }
-
-                     } else if (TyreDetailCommonClass.tyreType.equals("LR")) {
-                         Log.e("iscompleted::lr", "" + TyreConfigClass.LRCompleted)
-
-                         var entity = TyreLRDetail()
-
-                         entity.vehicleMake = TyreDetailCommonClass.vehicleMake
-                         entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-                         entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                         entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
-                         entity.vehicleSize = TyreDetailCommonClass.vehicleSize
-                         entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                         entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
-                         entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
-                         entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
-                         entity.weightTyreService = TyreDetailCommonClass.weightTyreService
-                         entity.sidewell = TyreDetailCommonClass.sidewell
-                         entity.shoulder = TyreDetailCommonClass.shoulder
-                         entity.treadWear = TyreDetailCommonClass.treadWear
-                         entity.treadDepth = TyreDetailCommonClass.treadDepth
-                         entity.rimDamage = TyreDetailCommonClass.rimDamage
-                         entity.bubble = TyreDetailCommonClass.bubble
-                         entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
-                         entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
-
-                         if (!TyreConfigClass.LRCompleted) {
-                             if (mDb.daoLR().getAll().size > 0) {
-                                 mDb.daoLR().deleteAll()
-                             }
-
-                             if (TyreDetailCommonClass.chk1Make.equals("LF")) {
-                                 val entityLF = TyreLFDetail()
-                                 entityLF.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityLF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (TyreDetailCommonClass.chk1Pattern.equals("LF")) {
-                                     entityLF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityLF.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk1Size.equals("LF")) {
-                                     entityLF.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityLF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-
-                                 if (mDb.daoLF().getAll().size > 0) {
-                                     mDb.daoLF().deleteAll()
-                                 }
-                                 mDb.daoLF().save(entityLF)
-                             }
-                             if (TyreDetailCommonClass.chk2Make.equals("RF")) {
-
-                                 val entityRF = TyreRFDetail()
-                                 entityRF.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityRF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (mDb.daoRF().getAll().size > 0) {
-                                     mDb.daoRF().deleteAll()
-                                 }
-
-                                 if (TyreDetailCommonClass.chk2Pattern.equals("RF")) {
-                                     entityRF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityRF.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk2Size.equals("RF")) {
-                                     entityRF.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityRF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-                                 mDb.daoRF().save(entityRF)
-                             }
-                             if (TyreDetailCommonClass.chk3Make.equals("RR")) {
-                                 val entityRR = TyreRRDetail()
-                                 entityRR.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityRR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (mDb.daoRR().getAll().size > 0) {
-                                     mDb.daoRR().deleteAll()
-                                 }
-
-                                 if (TyreDetailCommonClass.chk3Pattern.equals("RR")) {
-                                     entityRR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityRR.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk3Size.equals("RR")) {
-                                     entityRR.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityRR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-                                 mDb.daoRR().save(entityRR)
-                             }
-
-                             mDb.daoLR().save(entity)
-                         } else {
-                             var id: Int = -1
-                             for (i in mDb.daoLR().getAll().indices) {
-                                 Log.e("getview", "" + mDb.daoRF().getAll().get(i).id)
-                                 id = mDb.daoLR().getAll().get(i).id
-                             }
-                             entity.id = id
-
-                             mDb.daoLR().update(entity)
-                         }
-                     } else if (TyreDetailCommonClass.tyreType.equals("RF")) {
-                         Log.e("iscompleted::rf", "" + TyreConfigClass.RFCompleted)
-                         var entity = TyreRFDetail()
-                         entity.vehicleMake = TyreDetailCommonClass.vehicleMake
-                         entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-                         entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                         entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
-                         entity.vehicleSize = TyreDetailCommonClass.vehicleSize
-                         entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                         entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
-                         entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
-                         entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
-                         entity.weightTyreService = TyreDetailCommonClass.weightTyreService
-                         entity.sidewell = TyreDetailCommonClass.sidewell
-                         entity.shoulder = TyreDetailCommonClass.shoulder
-                         entity.treadWear = TyreDetailCommonClass.treadWear
-                         entity.treadDepth = TyreDetailCommonClass.treadDepth
-                         entity.rimDamage = TyreDetailCommonClass.rimDamage
-                         entity.bubble = TyreDetailCommonClass.bubble
-                         entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
-                         entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
-
-                         if (!TyreConfigClass.RFCompleted) {
-                             if (mDb.daoRF().getAll().size > 0) {
-                                 mDb.daoRF().deleteAll()
-                             }
-                             mDb.daoRF().save(entity)
-
-                             if (TyreDetailCommonClass.chk1Make.equals("LF")) {
-                                 val entityLF = TyreLFDetail()
-                                 entityLF.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityLF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (TyreDetailCommonClass.chk1Pattern.equals("LF")) {
-                                     entityLF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityLF.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk1Size.equals("LF")) {
-                                     entityLF.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityLF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-
-                                 if (mDb.daoLF().getAll().size > 0) {
-                                     mDb.daoLF().deleteAll()
-                                 }
-                                 mDb.daoLF().save(entityLF)
-                             }
-                             if (TyreDetailCommonClass.chk2Make.equals("LR")) {
-
-                                 val entityLR = TyreLRDetail()
-                                 entityLR.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityLR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (mDb.daoLR().getAll().size > 0) {
-                                     mDb.daoLR().deleteAll()
-                                 }
-
-                                 if (TyreDetailCommonClass.chk2Pattern.equals("LR")) {
-                                     entityLR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityLR.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk2Size.equals("LR")) {
-                                     entityLR.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityLR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-                                 mDb.daoLR().save(entityLR)
-                             }
-                             if (TyreDetailCommonClass.chk3Make.equals("RR")) {
-                                 val entityRR = TyreRRDetail()
-                                 entityRR.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityRR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (mDb.daoRR().getAll().size > 0) {
-                                     mDb.daoRR().deleteAll()
-                                 }
-
-                                 if (TyreDetailCommonClass.chk3Pattern.equals("RR")) {
-                                     entityRR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityRR.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk3Size.equals("RR")) {
-                                     entityRR.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityRR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-                                 mDb.daoRR().save(entityRR)
-                             }
-
-                         } else {
-                             var id: Int = -1
-                             for (i in mDb.daoRF().getAll().indices) {
-                                 Log.e("getview", "" + mDb.daoRF().getAll().get(i).id)
-                                 id = mDb.daoRF().getAll().get(i).id
-                             }
-                             entity.id = id
-
-                             mDb.daoRF().update(entity)
-
-                             for (i in mDb.daoRF().getAll().indices) {
-                                 Log.e("getupdated", "" + mDb.daoRF().getAll().get(i))
-                             }
-                         }
-
-                     } else if (TyreDetailCommonClass.tyreType.equals("RR")) {
-                         Log.e("iscompleted::rr", "" + TyreConfigClass.RRCompleted)
-
-                         var entity = TyreRRDetail()
-                         entity.vehicleMake = TyreDetailCommonClass.vehicleMake
-                         entity.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-                         entity.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                         entity.vehiclePatternId = TyreDetailCommonClass.vehiclePatternId
-                         entity.vehicleSize = TyreDetailCommonClass.vehicleSize
-                         entity.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                         entity.manufaturingDate = TyreDetailCommonClass.manufaturingDate
-                         entity.psiInTyreService = TyreDetailCommonClass.psiInTyreService
-                         entity.psiOutTyreService = TyreDetailCommonClass.psiOutTyreService
-                         entity.weightTyreService = TyreDetailCommonClass.weightTyreService
-                         entity.sidewell = TyreDetailCommonClass.sidewell
-                         entity.shoulder = TyreDetailCommonClass.shoulder
-                         entity.treadWear = TyreDetailCommonClass.treadWear
-                         entity.treadDepth = TyreDetailCommonClass.treadDepth
-                         entity.rimDamage = TyreDetailCommonClass.rimDamage
-                         entity.bubble = TyreDetailCommonClass.bubble
-                         entity.issueResolvedArr = TyreDetailCommonClass.issueResolvedArr
-                         entity.visualDetailPhotoUrl = TyreDetailCommonClass.visualDetailPhotoUrl
-
-                         if (!TyreConfigClass.RRCompleted) {
-
-                             if (mDb.daoRR().getAll().size > 0) {
-                                 mDb.daoRR().deleteAll()
-                             }
-
-                             mDb.daoRR().save(entity)
-
-                             if (TyreDetailCommonClass.chk1Make.equals("LF")) {
-                                 val entityLF = TyreLFDetail()
-                                 entityLF.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityLF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (TyreDetailCommonClass.chk1Pattern.equals("LF")) {
-                                     entityLF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityLF.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk1Size.equals("LF")) {
-                                     entityLF.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityLF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-
-                                 if (mDb.daoLF().getAll().size > 0) {
-                                     mDb.daoLF().deleteAll()
-                                 }
-                                 mDb.daoLF().save(entityLF)
-                             }
-                             if (TyreDetailCommonClass.chk2Make.equals("RF")) {
-
-                                 val entityRF = TyreRFDetail()
-                                 entityRF.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityRF.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (mDb.daoRF().getAll().size > 0) {
-                                     mDb.daoRF().deleteAll()
-                                 }
-
-                                 if (TyreDetailCommonClass.chk2Pattern.equals("RF")) {
-                                     entityRF.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityRF.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk2Size.equals("RF")) {
-                                     entityRF.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityRF.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-                                 mDb.daoRF().save(entityRF)
-                             }
-                             if (TyreDetailCommonClass.chk3Make.equals("LR")) {
-                                 val entityLR = TyreLRDetail()
-                                 entityLR.vehicleMake = TyreDetailCommonClass.vehicleMake
-                                 entityLR.vehicleMakeId = TyreDetailCommonClass.vehicleMakeId
-
-                                 if (mDb.daoLR().getAll().size > 0) {
-                                     mDb.daoLR().deleteAll()
-                                 }
-
-                                 if (TyreDetailCommonClass.chk3Pattern.equals("LR")) {
-                                     entityLR.vehiclePattern = TyreDetailCommonClass.vehiclePattern
-                                     entityLR.vehiclePatternId =
-                                         TyreDetailCommonClass.vehiclePatternId
-                                 }
-                                 if (TyreDetailCommonClass.chk3Size.equals("LR")) {
-                                     entityLR.vehicleSize = TyreDetailCommonClass.vehicleSize
-                                     entityLR.vehicleSizeId = TyreDetailCommonClass.vehicleSizeId
-                                 }
-                                 mDb.daoLR().save(entityLR)
-                             }
-                         } else {
-                             var id: Int = -1
-                             for (i in mDb.daoRR().getAll().indices) {
-                                 Log.e("getview", "" + mDb.daoRF().getAll().get(i).id)
-                                 id = mDb.daoRR().getAll().get(i).id
-                             }
-                             entity.id = id
-
-                             mDb.daoRR().update(entity)
-                         }
-                     }
- */
-                }
-                thread.start()
 
                 chkNitrogenTopup?.isChecked = TyreConfigClass.nitrogenTopupChecked
                 chkNitrogenRefill?.isChecked = TyreConfigClass.nitrogenRefillChecked
@@ -2313,8 +1897,43 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 getStoredObjects()
                 checkSubmitBtn()
 
+//                setBlankAllValues()
+
             }
         }
+    }
+
+    private fun setBlankAllValues() {
+        TyreDetailCommonClass.tyreType = ""
+        TyreDetailCommonClass.vehicleMake = ""
+        TyreDetailCommonClass.vehicleMakeId = ""
+        TyreDetailCommonClass.vehiclePattern = ""
+        TyreDetailCommonClass.vehiclePatternId = ""
+        TyreDetailCommonClass.vehicleSize = ""
+        TyreDetailCommonClass.vehicleSizeId = ""
+        TyreDetailCommonClass.vehicleMakeURL = ""
+        TyreDetailCommonClass.manufaturingDate = ""
+        TyreDetailCommonClass.psiInTyreService = ""
+        TyreDetailCommonClass.psiOutTyreService = ""
+        TyreDetailCommonClass.weightTyreService = ""
+        TyreDetailCommonClass.sidewell = ""
+        TyreDetailCommonClass.shoulder = ""
+        TyreDetailCommonClass.treadDepth = ""
+        TyreDetailCommonClass.treadWear = ""
+        TyreDetailCommonClass.rimDamage = ""
+        TyreDetailCommonClass.bubble = ""
+        TyreDetailCommonClass.issueResolvedArr = ArrayList()
+        TyreDetailCommonClass.visualDetailPhotoUrl = ""
+        TyreDetailCommonClass.isCameraSelectedVisualDetail = false
+        TyreDetailCommonClass.chk1Make = ""
+        TyreDetailCommonClass.chk1Pattern = ""
+        TyreDetailCommonClass.chk1Size = ""
+        TyreDetailCommonClass.chk2Make = ""
+        TyreDetailCommonClass.chk2Pattern = ""
+        TyreDetailCommonClass.chk2Size = ""
+        TyreDetailCommonClass.chk3Make = ""
+        TyreDetailCommonClass.chk3Pattern = ""
+        TyreDetailCommonClass.chk3Size = ""
     }
 
     private fun checkSubmitBtn() {
@@ -2380,11 +1999,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                 var lfObject: JSONObject? = JSONObject(str)
                 Log.e("getobjlf", "" + lfObject.toString())
-                Log.e("getobjlf",""+TyreDetailCommonClass.chk1Make)
+                Log.e("getobjlf", "" + TyreDetailCommonClass.chk1Make)
 
 
 
-                if (TyreDetailCommonClass.chk1Make.equals("RF,true")){
+                if (TyreDetailCommonClass.chk1Make.equals("RF,true")) {
                     lfObject?.remove(TyreKey.vehicleMake)
                     lfObject?.remove(TyreKey.vehicleMakeId)
 
@@ -2394,11 +2013,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     )
                     lfObject?.put(
                         TyreKey.vehicleMakeId,
-                         TyreDetailCommonClass.vehicleMakeId
+                        TyreDetailCommonClass.vehicleMakeId
                     )
                 }
 
-                if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")){
+                if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) {
                     lfObject?.remove(TyreKey.vehiclePattern)
                     lfObject?.remove(TyreKey.vehiclePatternId)
                     lfObject?.put(
@@ -2411,12 +2030,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     )
                 }
 
-                if (TyreDetailCommonClass.chk1Size.equals("RF,true")){
+                if (TyreDetailCommonClass.chk1Size.equals("RF,true")) {
                     lfObject?.remove(TyreKey.vehicleSize)
                     lfObject?.remove(TyreKey.vehicleSizeId)
                     lfObject?.put(
                         TyreKey.vehicleSize,
-                         TyreDetailCommonClass.vehicleSize
+                        TyreDetailCommonClass.vehicleSize
                     )
                     lfObject?.put(
                         TyreKey.vehicleSizeId,
@@ -2489,14 +2108,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
                 var lfObject: JSONObject = JSONObject(str)
-                Log.e("getobjlr",""+lfObject.toString())
-                Log.e("getobjlr",""+TyreDetailCommonClass.chk2Make)
-                Log.e("getobjlr",""+TyreDetailCommonClass.chk2Pattern)
-                Log.e("getobjlr",""+TyreDetailCommonClass.chk2Size)
+                Log.e("getobjlr", "" + lfObject.toString())
+                Log.e("getobjlr", "" + TyreDetailCommonClass.chk2Make)
+                Log.e("getobjlr", "" + TyreDetailCommonClass.chk2Pattern)
+                Log.e("getobjlr", "" + TyreDetailCommonClass.chk2Size)
 
 
 
-                if (TyreDetailCommonClass.chk2Make.equals("LR,true")){
+                if (TyreDetailCommonClass.chk2Make.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -2508,7 +2127,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")){
+                if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -2520,7 +2139,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk2Size.equals("LR,true")){
+                if (TyreDetailCommonClass.chk2Size.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -2601,11 +2220,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                Log.e("getobjrr",""+lfObject.toString())
-                Log.e("getobjrr",""+TyreDetailCommonClass.chk3Make)
-                Log.e("getobjrr",""+TyreDetailCommonClass.chk3Pattern)
-                Log.e("getobjrr",""+TyreDetailCommonClass.chk3Size)
-                if (TyreDetailCommonClass.chk3Make.equals("RR,true")){
+                Log.e("getobjrr", "" + lfObject.toString())
+                Log.e("getobjrr", "" + TyreDetailCommonClass.chk3Make)
+                Log.e("getobjrr", "" + TyreDetailCommonClass.chk3Pattern)
+                Log.e("getobjrr", "" + TyreDetailCommonClass.chk3Size)
+                if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -2617,7 +2236,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")){
+                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -2629,7 +2248,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk3Size.equals("RR,true")){
+                if (TyreDetailCommonClass.chk3Size.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -2714,11 +2333,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                 Log.e("getobjlr23",""+lfObject.toString())
-                 Log.e("getobjlr23",""+TyreDetailCommonClass.chk1Make)
-                 Log.e("getobjlr23",""+TyreDetailCommonClass.chk1Pattern)
-                 Log.e("getobjlr23",""+TyreDetailCommonClass.chk1Size)
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")){
+                Log.e("getobjlr23", "" + lfObject.toString())
+                Log.e("getobjlr23", "" + TyreDetailCommonClass.chk1Make)
+                Log.e("getobjlr23", "" + TyreDetailCommonClass.chk1Pattern)
+                Log.e("getobjlr23", "" + TyreDetailCommonClass.chk1Size)
+                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -2730,7 +2349,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")){
+                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -2742,7 +2361,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")){
+                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -2824,7 +2443,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                if (TyreDetailCommonClass.chk2Make.equals("RF,true")){
+                if (TyreDetailCommonClass.chk2Make.equals("RF,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -2836,7 +2455,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")){
+                if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -2848,7 +2467,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk2Size.equals("RF,true")){
+                if (TyreDetailCommonClass.chk2Size.equals("RF,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -2928,7 +2547,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                if (TyreDetailCommonClass.chk3Make.equals("RR,true")){
+                if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -2940,7 +2559,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")){
+                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -2952,7 +2571,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk3Size.equals("RR,true")){
+                if (TyreDetailCommonClass.chk3Size.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -3021,7 +2640,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 prefManager.setValue(TyreConfigClass.TyreRRObject, jsonrr.toString())
             }
 
-
         }
         if (TyreDetailCommonClass.tyreType.equals("RF")) {
 
@@ -3035,7 +2653,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getobjlf11", "" + TyreDetailCommonClass.chk1Pattern)
                 Log.e("getobjlf11", "" + TyreDetailCommonClass.vehiclePattern)
                 Log.e("getobjlf11", "" + TyreDetailCommonClass.vehiclePatternId)
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")){
+                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -3060,7 +2678,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehiclePatternId
                     )
                 }
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")){
+                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -3179,11 +2797,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                Log.e("getobjlr0",""+lfObject.toString())
-                Log.e("getobjlr0",""+TyreDetailCommonClass.chk2Make)
-                Log.e("getobjlr0",""+TyreDetailCommonClass.chk2Pattern)
-                Log.e("getobjlr0",""+TyreDetailCommonClass.chk2Size)
-                if (TyreDetailCommonClass.chk2Make.equals("LR,true")){
+                Log.e("getobjlr0", "" + lfObject.toString())
+                Log.e("getobjlr0", "" + TyreDetailCommonClass.chk2Make)
+                Log.e("getobjlr0", "" + TyreDetailCommonClass.chk2Pattern)
+                Log.e("getobjlr0", "" + TyreDetailCommonClass.chk2Size)
+                if (TyreDetailCommonClass.chk2Make.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -3195,7 +2813,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")){
+                if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -3207,7 +2825,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk2Size.equals("LR,true")){
+                if (TyreDetailCommonClass.chk2Size.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -3290,7 +2908,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                if (TyreDetailCommonClass.chk3Make.equals("RR,true")){
+                if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -3302,7 +2920,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")){
+                if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -3314,7 +2932,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk3Size.equals("RR,true")){
+                if (TyreDetailCommonClass.chk3Size.equals("RR,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -3397,7 +3015,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                if (TyreDetailCommonClass.chk1Make.equals("LF,true")){
+                if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -3409,7 +3027,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")){
+                if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -3421,7 +3039,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk1Size.equals("LF,true")){
+                if (TyreDetailCommonClass.chk1Size.equals("LF,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -3501,7 +3119,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                if (TyreDetailCommonClass.chk2Make.equals("RF,true")){
+                if (TyreDetailCommonClass.chk2Make.equals("RF,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -3513,7 +3131,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")){
+                if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -3525,7 +3143,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk2Size.equals("RF,true")){
+                if (TyreDetailCommonClass.chk2Size.equals("RF,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(
@@ -3605,7 +3223,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
 
-                if (TyreDetailCommonClass.chk3Make.equals("LR,true")){
+                if (TyreDetailCommonClass.chk3Make.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehicleMake)
                     lfObject.remove(TyreKey.vehicleMakeId)
                     lfObject.put(
@@ -3617,7 +3235,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk3Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")){
+                if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehiclePattern)
                     lfObject.remove(TyreKey.vehiclePatternId)
                     lfObject.put(
@@ -3629,7 +3247,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) TyreDetailCommonClass.vehiclePatternId else ""
                     )
                 }
-                if (TyreDetailCommonClass.chk3Size.equals("LR,true")){
+                if (TyreDetailCommonClass.chk3Size.equals("LR,true")) {
                     lfObject.remove(TyreKey.vehicleSize)
                     lfObject.remove(TyreKey.vehicleSizeId)
                     lfObject.put(

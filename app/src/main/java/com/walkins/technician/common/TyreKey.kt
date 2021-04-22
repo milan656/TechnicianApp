@@ -22,6 +22,7 @@ class TyreKey {
         var rimDamage = "rimDamage"
         var bubble = "bubble"
         var visualDetailPhotoUrl = "visualDetailPhotoUrl"
+        var isCameraSelectedVisualDetail = "isCameraSelectedVisualDetail"
         var issueResolvedArr = "issueResolvedArr"
         var chk1Make = "chk1Make"
         var chk2Make = "chk2Make"
