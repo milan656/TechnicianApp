@@ -22,6 +22,7 @@ import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.DB.VehicleSizeModelClass
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
+import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import com.walkins.technician.networkApi.WarrantyApi
@@ -165,7 +166,6 @@ class EndlessService : Service() {
 //                    fetchPattern()
 //                    fetchSize()
 
-
                     val sdfo = SimpleDateFormat("dd-MM-yyyy hh:mm")
 
                     // Get the two dates to be compared
@@ -176,7 +176,10 @@ class EndlessService : Service() {
                     val answer = formatter.format(date)
                     Log.d("answer", answer)
                     val d1 = sdfo.parse(answer)
+
                     val d2 = sdfo.parse("22-04-2021 06:05")
+
+//                    prefManager?.setValue(TyreConfigClass.backgroundWebServiceCallTime,answer)
 
                     // Print the dates
                     println("Date1 : " + sdfo.format(d1))
@@ -187,7 +190,7 @@ class EndlessService : Service() {
 
                         // When Date d1 > Date d2
                         println("Date1 is greater then Date2")
-                        Log.e("callapi","call")
+                        Log.e("callapi", "call")
                         saveStaticVehicleMake()
                         saveStaticPatternData()
                         saveStaticSize()
@@ -235,6 +238,7 @@ class EndlessService : Service() {
                     }
                 }
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
         })
 
@@ -461,6 +465,12 @@ class EndlessService : Service() {
 
     fun saveStaticVehicleMake() {
         val thread = Thread {
+
+            if (mDb.daoClass().getAllVehicleType() != null) {
+                if (mDb.daoClass().getAllVehicleType().size > 0) {
+                    mDb.daoClass().deleteAll()
+                }
+            }
             for (i in 0..10) {
 //                    var model = vehicleBrandModel.data.get(i)
                 var entity = VehicleMakeModelClass()

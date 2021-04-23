@@ -1,10 +1,14 @@
 package com.walkins.technician.repository
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.walkins.technician.networkApi.login.LoginApi
 import com.jkadvantagandbadsha.model.login.UserModel
+import com.jkadvantage.model.customerIntraction.uploadimage.UploadImageModel
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -177,5 +181,48 @@ class LoginRepository {
         return loginData
     }
 
+    fun uploadImage(
+        jsonObject: MultipartBody.Part,
+        type: String,
+        authorizationToke: String, context: Context
+    ): MutableLiveData<UploadImageModel> {
+        val loginData = MutableLiveData<UploadImageModel>()
+        loginApi.uploadFile(jsonObject, authorizationToke, type)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        loginData.value = Common?.getModelreturn(
+                            "UploadImageModel",
+                            response,
+                            0,
+                            context
+                        ) as UploadImageModel?
 
+                    } else {
+                        try {
+                            loginData.value = Common?.getModelreturn(
+                                "UploadImageModel",
+                                response,
+                                1,
+                                context
+                            ) as UploadImageModel?
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                }
+            })
+        return loginData
+    }
 }

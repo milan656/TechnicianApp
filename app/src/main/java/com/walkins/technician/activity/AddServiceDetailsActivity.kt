@@ -452,7 +452,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Array<String>::class.java
             )
 
-            selectedSuggestionArr?.clear()
+            for (i in text?.indices!!) {
+                Log.e("getarray", "" + text.get(i))
+            }
+            for (i in suggestionArray?.indices!!) {
+                Log.e("getarraysuggestion", "" + suggestionArray?.get(i))
+            }
 
             if ((suggestionArray != null && suggestionArray?.size!! > 0) &&
                 (text != null && text.size > 0)
@@ -460,15 +465,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 for (i in suggestionArray?.indices!!) {
 
                     for (j in text.indices) {
-                        Log.e("getobjj", "" + text.get(j))
                         if (suggestionArray?.get(i)?.issueName?.equals(text.get(j))!!) {
+                            Log.e("getobjj", "" + text.get(j))
                             suggestionArray?.get(i)?.isSelected = true
-                            selectedSuggestionArr?.add(suggestionArray?.get(i)?.issueName!!)
+
                         }
                     }
-                    Log.e("getvalues", "" + suggestionArray?.get(i)?.issueName)
-                    Log.e("getvalues", "" + suggestionArray?.get(i)?.isSelected)
                 }
+
+                for (i in suggestionArray?.indices!!) {
+                    Log.e("getarraysuggestion", "" + suggestionArray?.get(i))
+                }
+
                 tyreSuggestionAdapter?.notifyDataSetChanged()
             }
 
@@ -1257,17 +1265,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     override fun onPositionClick(variable: Int, check: Int) {
 
         if (check == 5) {
-            if (suggestionArray?.get(variable)?.isSelected!!) {
-                selectedSuggestionArr?.add(suggestionArray?.get(variable)?.issueName!!)
-            } else {
-                if (!suggestionArray?.get(variable)?.isSelected!!) {
-                    selectedSuggestionArr?.removeAt(variable)
+            if (tyreSuggestionAdapter?.getList()!=null && tyreSuggestionAdapter?.getList()?.size!!>0){
+                for (i in tyreSuggestionAdapter?.getList()?.indices!!){
+                    if (tyreSuggestionAdapter?.getList()?.get(i)?.isSelected!!){
+                        selectedSuggestionArr?.add(tyreSuggestionAdapter?.getList()?.get(i)?.issueName!!)
+                    }
                 }
             }
 
             Log.e("getsizee", "" + selectedSuggestionArr)
             prefManager.saveArray("AddServiceSuggestion", selectedSuggestionArr!!)
         }
+
 
         if (check == 0) {
 

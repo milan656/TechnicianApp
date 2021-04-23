@@ -7,13 +7,13 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.ContentUris
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -31,14 +31,13 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
-import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jkadvantagandbadsha.model.login.UserModel
+import com.jkadvantage.model.customerIntraction.uploadimage.UploadImageModel
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
@@ -48,17 +47,18 @@ import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import okhttp3.ResponseBody
+import org.jetbrains.annotations.NotNull
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
-import java.io.File
-import java.io.IOException
+import java.io.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 class Common {
 
@@ -125,6 +125,41 @@ class Common {
             }
 
             return time
+        }
+
+        fun saveImage(context: Context, bitmap: Bitmap, name: String, extension: String) {
+            val folder =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            var file = File(folder, name + extension)
+            try {
+                var stream: OutputStream? = null
+                stream = FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                stream.flush()
+                stream.close()
+
+                val fstream: FileOutputStream = FileOutputStream(file)
+                fstream.write(file.readBytes())
+                fstream.close()
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+
+
+        fun getFile(filename: String?): File {
+            val folder =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            var myFile = File(folder, filename)
+            val fstream = FileInputStream(myFile)
+            val sbuffer = StringBuffer()
+            var i: Int
+            while (fstream.read().also { i = it } != -1) {
+                sbuffer.append(i.toChar())
+            }
+            fstream.close()
+            return myFile
         }
 
         fun dateDiffrence(past: Date?, now: Date?): String? {
@@ -200,6 +235,22 @@ class Common {
                         val SizeModel =
                             gson.fromJson(jsonObject.toString(), SizeModel::class.java)
                         return SizeModel
+                    }
+                    "VehicleMakeModel" -> {
+                        val VehicleMakeModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                VehicleMakeModel::class.java
+                            )
+                        return VehicleMakeModel
+                    }
+                    "UploadImageModel" -> {
+                        val UploadImageModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                UploadImageModel::class.java
+                            )
+                        return UploadImageModel
                     }
 
                     else -> {
@@ -287,6 +338,14 @@ class Common {
                                         VehicleMakeModel::class.java
                                     )
                                 return VehicleMakeModel
+                            }
+                            "UploadImageModel" -> {
+                                val UploadImageModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        UploadImageModel::class.java
+                                    )
+                                return UploadImageModel
                             }
 
 
@@ -854,9 +913,10 @@ class Common {
         fun isGooglePhotosUri(uri: Uri): Boolean {
             return "com.google.android.apps.photos.content" == uri.authority
         }
+
         fun checkCallPermission(context: Context): Boolean {
             val permission = Manifest.permission.CALL_PHONE
-            val res: Int = checkSelfPermission(context,permission)
+            val res: Int = checkSelfPermission(context, permission)
             return res == PackageManager.PERMISSION_GRANTED
         }
 

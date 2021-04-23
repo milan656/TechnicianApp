@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -38,8 +40,9 @@ import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.TyreKey
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.IssueResolveModel
-import org.json.JSONArray
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
@@ -865,12 +868,35 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //            Glide.with(this)
 //                .load(json.get(TyreKey.visualDetailPhotoUrl)?.asString!!)
 //                .into(ivPickedImage1!!)
+                TyreDetailCommonClass.visualDetailPhotoUrl =
+                    json.get(TyreKey.visualDetailPhotoUrl)?.asString
 
+                TyreDetailCommonClass.isCameraSelectedVisualDetail =
+                    json.get(TyreKey.isCameraSelectedVisualDetail)?.asBoolean!!
+
+                Log.e("getstoredValue", "" + TyreDetailCommonClass.isCameraSelectedVisualDetail)
+                Log.e("getstoredValue", "" + TyreDetailCommonClass.visualDetailPhotoUrl)
                 if (json.get("isCameraSelectedVisualDetail")?.asBoolean!!) {
 
-                    ivPickedImage1?.setImageURI(Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString))
+                    try {
+                        ivPickedImage1?.setImageURI(Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString))
+                    } catch (e: java.lang.Exception) {
+                        Log.e("getstoredValue0", "" + e.cause + " " + e.message)
+                        e.printStackTrace()
+                    }
+
                 } else {
-                    ivPickedImage1?.setImageURI(Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString))
+                    Log.e("getstoredValue0", "" + json.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                    var file:File=Common.getFile(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                    try {
+
+                        ivPickedImage1?.setImageURI(Uri.parse(file.absolutePath))
+                        Log.e("getstoredValue0", "" + file.absolutePath)
+                    } catch (e: FileNotFoundException) {
+                        e.printStackTrace()
+                        Log.e("getstoredValue0", "" + e.message + " " + e.cause)
+                    }
+
                 }
                 TyreDetailCommonClass.visualDetailPhotoUrl =
                     json.get(TyreKey.visualDetailPhotoUrl)?.asString
@@ -1047,19 +1073,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     override fun onPositionClick(variable: Int, check: Int) {
 
         Log.e("getposs", "" + variable + " " + check)
-        if (check == 5) {
-            if (issueResolveArray?.get(variable)?.isSelected!!) {
-                selectedIssueArr?.add(issueResolveArray?.get(variable)?.issueName!!)
-            } else {
-                if (selectedIssueArr?.contains(issueResolveArray?.get(variable)?.issueName!!)!!) {
-                    selectedIssueArr?.removeAt(variable)
-                }
-            }
-            Log.e("getpos", "" + issueResolveArray?.get(variable)?.isSelected)
-            Log.e("getpos", "" + issueResolveArray?.get(variable)?.issueName)
-        }
-
-
 
         if (check == 10) {
             if (cameraDialog != null && cameraDialog?.isShowing!!) {
@@ -1381,12 +1394,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
             isValid = false
         }
-        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
-
-        } else {
-            Toast.makeText(this, "Please Select Issue Resolve List", Toast.LENGTH_SHORT).show()
-            isValid = false
-        }
+//        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
+//
+//        } else {
+//            Toast.makeText(this, "Please Select Issue Resolve List", Toast.LENGTH_SHORT).show()
+//            isValid = false
+//        }
         if (sidewell.equals("") || shoulder.equals("") || treadWear.equals("") ||
             treadDepth.equals("") || rimDamage.equals("") || bubble.equals("")
         ) {
@@ -1448,9 +1461,42 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             ivEditImg2?.visibility = View.VISIBLE
             tvAddPhoto1?.visibility = View.GONE
             tvCarphoto1?.visibility = View.GONE
-            TyreDetailCommonClass.visualDetailPhotoUrl = data?.data?.toString()
-            Log.e("getimageuri", "" + data?.data)
+
+            val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, data?.data)
+
+            val imageName = "${System.currentTimeMillis()}"
+            Common.saveImage(this, bitmap, imageName, ".png")
+
+            TyreDetailCommonClass.visualDetailPhotoUrl = imageName + ".png"
+            Log.e("getimageuri", "" + imageName)
             TyreDetailCommonClass.isCameraSelectedVisualDetail = false
+        }
+    }
+
+
+    fun loadBitmap(fileName: String): Bitmap {
+
+        var fileInputStream: FileInputStream? = null
+        var bitmap: Bitmap? = null;
+        try {
+            fileInputStream = this.openFileInput(fileName);
+            bitmap = BitmapFactory.decodeStream(fileInputStream);
+            fileInputStream.close();
+        } catch (e: Exception) {
+            e.printStackTrace();
+        }
+        return bitmap!!;
+    }
+
+    fun loadFromFile(filename: String?): Bitmap? {
+        return try {
+            val f = File(filename)
+            if (!f.exists()) {
+                return null
+            }
+            BitmapFactory.decodeFile(filename)
+        } catch (e: java.lang.Exception) {
+            null
         }
     }
 }

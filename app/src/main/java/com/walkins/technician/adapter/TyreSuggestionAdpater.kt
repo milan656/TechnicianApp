@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.CompoundButton
-import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources.getColorStateList
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
@@ -23,6 +22,7 @@ class TyreSuggestionAdpater(
     RecyclerView.Adapter<TyreSuggestionAdpater.Viewholder>() {
 
     var onclick: onClickAdapter? = null
+    var arrayChecked: ArrayList<IssueResolveModel>? = ArrayList()
 
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -81,7 +81,7 @@ class TyreSuggestionAdpater(
                         )
                     }
                     holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
-                    array.get(position).isSelected = true
+
                     Log.e("clickcall", "000")
                     if (!isFromDialog) {
                         if (onclick != null) {
@@ -94,6 +94,9 @@ class TyreSuggestionAdpater(
                             onclick?.onPositionClick(position, 6)
                         }
                     }
+
+                    array.get(position).isSelected = true
+                    arrayChecked?.add(array.get(position))
                 } else {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         holder.chkTyreSuggestion.setButtonTintList(
@@ -104,8 +107,7 @@ class TyreSuggestionAdpater(
                         )
                     }
                     holder.chkTyreSuggestion.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_red_corner))
-                    array.get(position).isSelected = false
-                    Log.e("clickcall", "000")
+
                     if (!isFromDialog) {
                         if (onclick != null) {
                             Log.e("clickcall", "0")
@@ -117,7 +119,12 @@ class TyreSuggestionAdpater(
                             onclick?.onPositionClick(position, 6)
                         }
                     }
+
+                    array.get(position).isSelected = false
+                    arrayChecked?.remove(array.get(position))
+
                 }
+
             }
 
         })
@@ -128,4 +135,8 @@ class TyreSuggestionAdpater(
 
     }
 
+    fun getList(): ArrayList<IssueResolveModel>? {
+        Log.e("clickcall", "" + arrayChecked?.size!!)
+        return arrayChecked
+    }
 }

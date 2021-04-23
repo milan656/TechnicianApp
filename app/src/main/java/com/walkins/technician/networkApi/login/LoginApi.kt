@@ -1,6 +1,7 @@
 package com.walkins.technician.networkApi.login
 
 import com.jkadvantagandbadsha.model.login.UserModel
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -33,5 +34,13 @@ interface LoginApi {
         @Field("grant_type") grantType: String,
         @Field("refresh_token") refreshToken: String
     ): Call<UserModel>
+
+    @Multipart
+    @POST("v1/user/upload-profile-image")
+    fun uploadFile(
+        @Part file: MultipartBody.Part,
+        @Header("Authorization") authorizationToke: String,
+        @Query("type") type: String
+    ): Call<ResponseBody>
 
 }
