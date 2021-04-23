@@ -42,5 +42,7 @@ class TyreKey {
 
         var nextDueDate = "nextDueDate"
         var moreSuggestion = "moreSuggestion"
+
+        var something_went_wrong="Something Went Wrong"
     }
 }

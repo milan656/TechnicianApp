@@ -24,6 +24,15 @@ class CommonRepo {
         commonApi = RetrofitCommonClass.createService(CommonApi::class.java)
     }
 
+    companion object
+
+    fun getInstance(): CommonRepo {
+        if (commonRepo == null) {
+            commonRepo = CommonRepo()
+        }
+        return commonRepo as CommonRepo
+    }
+
     fun getListOfIssue(
         context: Context
     ): MutableLiveData<IssueListModel> {

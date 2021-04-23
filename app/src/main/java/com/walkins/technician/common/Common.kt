@@ -45,6 +45,7 @@ import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
+import com.walkins.technician.model.login.servicemodel.AddServiceModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import okhttp3.ResponseBody
 import org.jetbrains.annotations.NotNull
@@ -253,6 +254,15 @@ class Common {
                             )
                         return UploadImageModel
                     }
+                    "AddServiceModel" -> {
+                        val AddServiceModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                AddServiceModel::class.java
+                            )
+                        return AddServiceModel
+                    }
+
 
                     else -> {
                         return null
@@ -347,6 +357,15 @@ class Common {
                                         UploadImageModel::class.java
                                     )
                                 return UploadImageModel
+                            }
+
+                            "AddServiceModel" -> {
+                                val AddServiceModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        AddServiceModel::class.java
+                                    )
+                                return AddServiceModel
                             }
 
 
