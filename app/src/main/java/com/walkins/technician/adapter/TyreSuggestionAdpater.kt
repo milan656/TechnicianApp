@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getColorStateList
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.IssueResolveModel
+
 
 class TyreSuggestionAdpater(
     var array: ArrayList<IssueResolveModel>,
@@ -35,6 +36,8 @@ class TyreSuggestionAdpater(
     ): Viewholder {
         var view =
             LayoutInflater.from(context).inflate(R.layout.tyre_suggestions_design, parent, false)
+
+
         return Viewholder(view)
     }
 
@@ -42,9 +45,11 @@ class TyreSuggestionAdpater(
 
         holder.chkTyreSuggestion.text = array.get(position).issueName.capitalize()
 
+        holder.chkTyreSuggestion.setTag(position)
+
         if (array.get(position).isSelected) {
             holder.chkTyreSuggestion.isChecked = true
-            holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
+            holder.chkTyreSuggestion.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 holder.chkTyreSuggestion.setButtonTintList(
                     getColorStateList(
@@ -67,67 +72,82 @@ class TyreSuggestionAdpater(
 
         }
 
-        holder.chkTyreSuggestion.setOnCheckedChangeListener(object :
-            CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        holder.chkTyreSuggestion.setOnClickListener {
+            var pos: Int = holder.chkTyreSuggestion.getTag() as Int
+            Toast.makeText(
+                context,
+                array.get(pos).issueName + " clicked!",
+                Toast.LENGTH_SHORT
+            ).show()
 
-                if (isChecked) {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        holder.chkTyreSuggestion.setButtonTintList(
-                            getColorStateList(
-                                context,
-                                R.color.colorPrimary
-                            )
-                        )
-                    }
-                    holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
-
-                    Log.e("clickcall", "000")
-                    if (!isFromDialog) {
-                        if (onclick != null) {
-                            Log.e("clickcall", "0")
-                            onclick?.onPositionClick(position, 5)
-                        }
-                    } else {
-                        if (onclick != null) {
-                            Log.e("clickcall", "1")
-                            onclick?.onPositionClick(position, 6)
-                        }
-                    }
-
-                    array.get(position).isSelected = true
-                    arrayChecked?.add(array.get(position))
-                } else {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        holder.chkTyreSuggestion.setButtonTintList(
-                            getColorStateList(
-                                context,
-                                R.color.header_title
-                            )
-                        )
-                    }
-                    holder.chkTyreSuggestion.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_red_corner))
-
-                    if (!isFromDialog) {
-                        if (onclick != null) {
-                            Log.e("clickcall", "0")
-                            onclick?.onPositionClick(position, 5)
-                        }
-                    } else {
-                        if (onclick != null) {
-                            Log.e("clickcall", "1")
-                            onclick?.onPositionClick(position, 6)
-                        }
-                    }
-
-                    array.get(position).isSelected = false
-                    arrayChecked?.remove(array.get(position))
-
-                }
-
+            if (array.get(pos).isSelected) {
+                array.get(pos).isSelected = false
+            } else {
+                array.get(pos).isSelected = true
             }
+        }
 
-        })
+        /* holder.chkTyreSuggestion.setOnCheckedChangeListener(object :
+             CompoundButton.OnCheckedChangeListener {
+             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+
+                 if (isChecked) {
+                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                         holder.chkTyreSuggestion.setButtonTintList(
+                             getColorStateList(
+                                 context,
+                                 R.color.colorPrimary
+                             )
+                         )
+                     }
+                     holder.chkTyreSuggestion?.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
+
+                     Log.e("clickcall", "000")
+                     array.get(position).isSelected = true
+                     arrayChecked?.add(array.get(position))
+                     if (!isFromDialog) {
+                         if (onclick != null) {
+                             Log.e("clickcall", "0")
+                             onclick?.onPositionClick(position, 5)
+                         }
+                     } else {
+                         if (onclick != null) {
+                             Log.e("clickcall", "1")
+                             onclick?.onPositionClick(position, 6)
+                         }
+                     }
+
+
+                 } else {
+                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                         holder.chkTyreSuggestion.setButtonTintList(
+                             getColorStateList(
+                                 context,
+                                 R.color.header_title
+                             )
+                         )
+                     }
+                     holder.chkTyreSuggestion.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_red_corner))
+                     array.get(position).isSelected = false
+                     arrayChecked?.remove(array.get(position))
+                     if (!isFromDialog) {
+                         if (onclick != null) {
+                             Log.e("clickcall", "0")
+                             onclick?.onPositionClick(position, 5)
+                         }
+                     } else {
+                         if (onclick != null) {
+                             Log.e("clickcall", "1")
+                             onclick?.onPositionClick(position, 6)
+                         }
+                     }
+
+
+                 }
+
+             }
+
+         })*/
     }
 
     override fun getItemCount(): Int {
@@ -135,8 +155,5 @@ class TyreSuggestionAdpater(
 
     }
 
-    fun getList(): ArrayList<IssueResolveModel>? {
-        Log.e("clickcall", "" + arrayChecked?.size!!)
-        return arrayChecked
-    }
+
 }

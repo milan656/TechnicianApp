@@ -887,7 +887,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                 } else {
                     Log.e("getstoredValue0", "" + json.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                    var file:File=Common.getFile(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                    var file: File =
+                        Common.getFile(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
                     try {
 
                         ivPickedImage1?.setImageURI(Uri.parse(file.absolutePath))
@@ -938,35 +939,65 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (selectedTyre != null && !selectedTyre.equals("")) {
             TyreDetailCommonClass.tyreType = selectedTyre
         }
-        if (json.get(TyreKey.vehicleMake) != null && !json.get(TyreKey.vehicleMake)?.asString.equals("")) {
+        if (json.get(TyreKey.vehicleMake) != null && !json.get(TyreKey.vehicleMake)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.vehicleMake = json.get(TyreKey.vehicleMake)?.asString
         }
-        if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")) {
+        if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
         }
-        if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals("")) {
+        if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.vehiclePattern = json.get(TyreKey.vehiclePattern)?.asString
         }
-        if (json.get(TyreKey.vehiclePatternId) != null && !json.get(TyreKey.vehiclePatternId)?.asString.equals("")) {
+        if (json.get(TyreKey.vehiclePatternId) != null && !json.get(TyreKey.vehiclePatternId)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.vehiclePatternId = json.get(TyreKey.vehiclePatternId)?.asString
         }
-        if (json.get(TyreKey.vehicleSize) != null && !json.get(TyreKey.vehicleSize)?.asString.equals("")) {
+        if (json.get(TyreKey.vehicleSize) != null && !json.get(TyreKey.vehicleSize)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.vehicleSize = json.get(TyreKey.vehicleSize)?.asString
         }
-        if (json.get(TyreKey.vehicleSizeId) != null && !json.get(TyreKey.vehicleSizeId)?.asString.equals("")) {
+        if (json.get(TyreKey.vehicleSizeId) != null && !json.get(TyreKey.vehicleSizeId)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.vehicleSizeId = json.get(TyreKey.vehicleSizeId)?.asString
         }
 
-        if (json.get(TyreKey.manufaturingDate) != null && !json.get(TyreKey.manufaturingDate)?.asString.equals("")) {
+        if (json.get(TyreKey.manufaturingDate) != null && !json.get(TyreKey.manufaturingDate)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.manufaturingDate = json.get(TyreKey.manufaturingDate)?.asString
         }
-        if (json.get(TyreKey.psiInTyreService) != null && !json.get(TyreKey.psiInTyreService)?.asString.equals("")) {
+        if (json.get(TyreKey.psiInTyreService) != null && !json.get(TyreKey.psiInTyreService)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.psiInTyreService = json.get(TyreKey.psiInTyreService)?.asString
         }
-        if (json.get(TyreKey.psiOutTyreService) != null && !json.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
+        if (json.get(TyreKey.psiOutTyreService) != null && !json.get(TyreKey.psiOutTyreService)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.psiOutTyreService = json.get(TyreKey.psiOutTyreService)?.asString
         }
-        if (json.get(TyreKey.weightTyreService) != null && !json.get(TyreKey.weightTyreService)?.asString.equals("")) {
+        if (json.get(TyreKey.weightTyreService) != null && !json.get(TyreKey.weightTyreService)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.weightTyreService = json.get(TyreKey.weightTyreService)?.asString
         }
         if (json.get(TyreKey.sidewell) != null && !json.get(TyreKey.sidewell)?.asString.equals("")) {
@@ -987,7 +1018,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (json.get(TyreKey.bubble) != null && !json.get(TyreKey.bubble)?.asString.equals("")) {
             TyreDetailCommonClass.bubble = json.get(TyreKey.bubble)?.asString
         }
-        if (json.get(TyreKey.visualDetailPhotoUrl) != null && !json.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")) {
+        if (json.get(TyreKey.visualDetailPhotoUrl) != null && !json.get(TyreKey.visualDetailPhotoUrl)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.visualDetailPhotoUrl =
                 json.get(TyreKey.visualDetailPhotoUrl)?.asString
         }
@@ -1001,7 +1035,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
             TyreDetailCommonClass.chk1Make = json.get(TyreKey.chk1Make)?.asString
         }
-        if (json.get(TyreKey.chk1Pattern) != null && !json.get(TyreKey.chk1Pattern)?.asString.equals("")) {
+        if (json.get(TyreKey.chk1Pattern) != null && !json.get(TyreKey.chk1Pattern)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.chk1Pattern = json.get(TyreKey.chk1Pattern)?.asString
         }
         if (json.get(TyreKey.chk1Size) != null && !json.get(TyreKey.chk1Size)?.asString.equals("")) {
@@ -1010,7 +1047,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (json.get(TyreKey.chk2Make) != null && !json.get(TyreKey.chk2Make)?.asString.equals("")) {
             TyreDetailCommonClass.chk2Make = json.get(TyreKey.chk2Make)?.asString
         }
-        if (json.get(TyreKey.chk2Pattern) != null && !json.get(TyreKey.chk2Pattern)?.asString.equals("")) {
+        if (json.get(TyreKey.chk2Pattern) != null && !json.get(TyreKey.chk2Pattern)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.chk2Pattern = json.get(TyreKey.chk2Pattern)?.asString
         }
         if (json.get(TyreKey.chk2Size) != null && !json.get(TyreKey.chk2Size)?.asString.equals("")) {
@@ -1019,7 +1059,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (json.get(TyreKey.chk3Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
             TyreDetailCommonClass.chk3Make = json.get(TyreKey.chk3Make)?.asString
         }
-        if (json.get(TyreKey.chk3Pattern) != null && !json.get(TyreKey.chk3Pattern)?.asString.equals("")) {
+        if (json.get(TyreKey.chk3Pattern) != null && !json.get(TyreKey.chk3Pattern)?.asString.equals(
+                ""
+            )
+        ) {
             TyreDetailCommonClass.chk3Pattern = json.get(TyreKey.chk3Pattern)?.asString
         }
         if (json.get(TyreKey.chk3Size) != null && !json.get(TyreKey.chk3Size)?.asString.equals("")) {
@@ -1254,6 +1297,19 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 TyreDetailCommonClass.rimDamage = rimDamage
                 TyreDetailCommonClass.bubble = bubble
 
+                selectedIssueArr?.clear()
+
+                if (issueResolveArray != null) {
+                    Log.e("issuelist", "" + issueResolveAdapter)
+                    for (i in issueResolveArray?.indices!!) {
+                        Log.e("issuelist", "" + issueResolveArray?.get(i))
+                        if (issueResolveArray?.get(i)?.isSelected!!) {
+                            selectedIssueArr?.add(
+                                issueResolveArray?.get(i)?.issueName!!
+                            )
+                        }
+                    }
+                }
                 TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
 
                 Log.e("getslider", "" + TyreDetailCommonClass.issueResolvedArr)

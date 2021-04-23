@@ -1583,11 +1583,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     override fun onPositionClick(variable: Int, check: Int) {
 
         if (check == 5) {
-            if (tyreSuggestionAdapter?.getList() != null && tyreSuggestionAdapter?.getList()?.size!! > 0) {
-                for (i in tyreSuggestionAdapter?.getList()?.indices!!) {
-                    if (tyreSuggestionAdapter?.getList()?.get(i)?.isSelected!!) {
+            suggestionArray?.clear()
+
+            if (suggestionArray != null) {
+//                Log.e("issuelist", "" + issueResolveAdapter)
+                for (i in suggestionArray?.indices!!) {
+                    if (suggestionArray?.get(i)?.isSelected!!) {
                         selectedSuggestionArr?.add(
-                            tyreSuggestionAdapter?.getList()?.get(i)?.issueName!!
+                            suggestionArray?.get(i)?.issueName!!
                         )
                     }
                 }
