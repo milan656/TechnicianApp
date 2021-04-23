@@ -143,7 +143,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            R.id.btnLoginToDashBoard -> login()
+            R.id.btnLoginToDashBoard -> userLogin()
         }
     }
 
@@ -248,14 +248,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             androidOS = field.name
         }
 
-      /*  edtLoginEmail.text?.toString()?.toLowerCase()?.trim({ it <= ' ' })?.let {
-            loginViewModel.init(
-                it,
-                "jktyre@12345".trim({ it <= ' ' }),
-                "password",
-                "Basic ZG9vcnN0ZXA6MTIz=", versionCode, deviceName, androidOS, null
-            )
-        }*/
+        /*  edtLoginEmail.text?.toString()?.toLowerCase()?.trim({ it <= ' ' })?.let {
+              loginViewModel.init(
+                  it,
+                  "jktyre@12345".trim({ it <= ' ' }),
+                  "password",
+                  "Basic ZG9vcnN0ZXA6MTIz=", versionCode, deviceName, androidOS, null
+              )
+          }*/
         /*"222111"?.toLowerCase()?.trim({ it <= ' ' })?.let {
             loginViewModel.init(
                 it,
@@ -265,17 +265,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             )
         }*/
 
+        var dealerLogin = "9898987411"
+        var dealerPassword = "jktyre@12345"
+        var technicianLogin = "9978785623"
+        var technicianPassword = "9978785623"
+
         loginViewModel.init(
-            "222111".trim({ it <= ' ' }),
-            "12345".trim({ it <= ' ' }),
+            dealerLogin.trim({ it <= ' ' }),
+            dealerPassword.trim({ it <= ' ' }),
             "password",
-            "Basic amt0eXJlOjEyMw==", versionCode, deviceName, androidOS, null
+            "Basic ZG9vcnN0ZXA6MTIz", versionCode, deviceName, androidOS, null
         )
 
         loginViewModel.getLoginData()?.observe(this@LoginActivity, Observer {
 
             Common.hideLoader()
-
 
             //  Common.hideLoader()
             if (it != null) {
@@ -284,26 +288,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     prefManager.setRefreshToken(it.refreshToken)
                     prefManager.setToken(it.token)
                     prefManager.setUuid(it.userDetailModel!!.uuid)
-                    prefManager.setSapId(it.userDetailModel!!.sap_id)
-
 
 //                    firebaseAnalytics?.setUserId(it.userDetailModel?.sap_id!!);
 
-                    prefManager.setVideoUrl(it.videoURL)
                     prefManager.setAccessTokenExpireDate(it.accessTokenExpiresAt)
-                    prefManager.setType(it.userDetailModel?.type!!)
-                    if (it.dealerType != null) {
-                        prefManager.setDealerType(it.dealerType)
-                    }
-//                    if (it.customer_class_type != null) {
-//                        prefManager.setCustomerClassType(it.customer_class_type)
-//                    }
-//                    if (it.display_type != null) {
-//                        prefManager.setDisplayType(it.display_type)
-//                    }
-//                    if (it.userDetailModel?.customer_class != null) {
-//                        prefManager.setCustomerClass(it.userDetailModel?.customer_class)
-//                    }
                     if (it.userDetailModel?.owner_name != null) {
                         prefManager.setOwnerName(it.userDetailModel?.owner_name)
                     }
@@ -447,7 +435,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                 } else {
                     try {
-                        loginFail(it.error.get(0).message,"Oops!")
+                        loginFail(it.error.get(0).message, "Oops!")
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -457,7 +445,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun loginFail(message: String,title:String) {
+    private fun loginFail(message: String, title: String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT

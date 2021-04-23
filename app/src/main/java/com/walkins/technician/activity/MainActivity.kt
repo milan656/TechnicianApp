@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         setContentView(R.layout.activity_main)
         prefManager = PrefManager(this)
         mDb = DBClass.getInstance(this)
+        Log.e("getaccessToken", "" + prefManager?.getAccessToken())
         init()
 
         var thread = Thread {
@@ -124,7 +125,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         val i = v?.id
         when (i) {
-            R.id.llhome,R.id.ivHome -> {
+            R.id.llhome, R.id.ivHome -> {
 
                 replaceFragmenty(
                     fragment = HomeFragment.newInstance("", ""),
@@ -140,7 +141,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivProfile?.setTint(this, R.color.text_color1)
 
             }
-            R.id.llReport,R.id.ivReport -> {
+            R.id.llReport, R.id.ivReport -> {
                 replaceFragmenty(
                     fragment = ReportFragment.newInstance("", ""),
                     allowStateLoss = true,
@@ -156,7 +157,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
             }
-            R.id.llNotification,R.id.ivNotification -> {
+            R.id.llNotification, R.id.ivNotification -> {
 
                 selectedMenu = "notification"
                 replaceFragmenty(
@@ -172,7 +173,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
             }
-            R.id.llProfile,R.id.ivProfile -> {
+            R.id.llProfile, R.id.ivProfile -> {
 
                 selectedMenu = "profile"
                 replaceFragmenty(

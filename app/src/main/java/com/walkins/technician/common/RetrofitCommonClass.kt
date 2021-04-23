@@ -47,11 +47,12 @@ class RetrofitCommonClass {
             .addInterceptor(object : Interceptor {
                 override fun intercept(chain: Interceptor.Chain): Response {
                     val request =
-                        chain.request().newBuilder().addHeader("app", "advantage")
+                        chain.request().newBuilder()
+                        /*addHeader("app", "advantage")
                             .addHeader("device_type", "android")
                             .addHeader("apk_version", "" + versionCode)
                             .addHeader("mobile_model", "" + getDeviceName())
-                            .addHeader("mobile_os_version", "" + getOsName())
+                            .addHeader("mobile_os_version", "" + getOsName())*/
                             .addHeader("Content-Type", "application/json").build()
                     return chain.proceed(request)
 
