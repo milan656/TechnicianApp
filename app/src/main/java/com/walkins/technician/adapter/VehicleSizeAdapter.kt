@@ -108,12 +108,11 @@ class VehicleSizeAdapter internal constructor(
                         name?.get(position)?.isSelected = true
                         holder.ivselectedVehicleModel.visibility = View.VISIBLE
                     }
-                    notifyDataSetChanged()
                     positionClick.onPositionClick(position, 0)
                 }
             }
 
-        },800)
+        },700)
 
     }
 

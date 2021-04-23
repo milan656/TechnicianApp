@@ -101,7 +101,7 @@ class VehicleMakeAdapterNew internal constructor(
         var handler = android.os.Handler()
         handler.postDelayed(Runnable {
             if (selectedName != null && !selectedName.equals("")) {
-                /*if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
+                if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
                     Log.e("selectedmake", "::::" + selectedName + " " + name?.get(position)?.name)
                     if (name!!.get(position).isSelected) {
                         // name!!.get(position).isSelected = false;
@@ -116,16 +116,15 @@ class VehicleMakeAdapterNew internal constructor(
                         name!!.get(position).isSelected = true;
                         holder.ivselectedVehicle.visibility = View.VISIBLE
                     }
-                    notifyDataSetChanged()
                     positionClick.onPositionClick(position, 0)
-                }*/
-
-                if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
-                    holder.rlItemView.performClick()
                 }
 
+//                if (selectedName.equals(name?.get(position)?.name, ignoreCase = true)) {
+//                    holder.rlItemView.performClick()
+//                }
+
             }
-        }, 800)
+        }, 700)
 
 
     }
