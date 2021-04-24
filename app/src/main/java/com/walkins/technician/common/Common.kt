@@ -47,6 +47,7 @@ import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
+import com.walkins.technician.model.login.makemodel.VehicleModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
@@ -281,6 +282,14 @@ class Common {
                             )
                         return VehicleMakeModel
                     }
+                    "VehicleModel" -> {
+                        val VehicleModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                VehicleModel::class.java
+                            )
+                        return VehicleModel
+                    }
                     "UploadImageModel" -> {
                         val UploadImageModel =
                             gson.fromJson(
@@ -384,6 +393,14 @@ class Common {
                                         VehicleMakeModel::class.java
                                     )
                                 return VehicleMakeModel
+                            }
+                            "VehicleModel" -> {
+                                val VehicleModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        VehicleModel::class.java
+                                    )
+                                return VehicleModel
                             }
                             "UploadImageModel" -> {
                                 val UploadImageModel =
