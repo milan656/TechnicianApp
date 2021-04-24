@@ -192,22 +192,14 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     override fun onClick(v: View?) {
         var i = v?.id
         if (i == R.id.btnVerify) {
-            Log.e("verifyy", "call0")
             if (edtOtp1?.text?.toString()?.length == 1 &&
                 edtOtp2?.text?.toString()?.length == 1 &&
                 edtOtp3?.text?.toString()?.length == 1 &&
                 edtOtp4?.text?.toString()?.length == 1
             ) {
 
-                Log.e("verifyy", "" + otp)
-                if (otp?.toString()?.length == 4) {
-                    userLogin()
-                } else {
-                    Toast.makeText(this, "Please enter Valid OTP", Toast.LENGTH_SHORT).show()
-                }
-
+                userLogin()
             } else {
-                Log.e("verifyy", "call")
                 Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show()
             }
 
@@ -278,9 +270,13 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         var technicianLogin = "9978785623"
         var technicianPassword = "1212"
 
+        var OTP =
+            edtOtp1?.text?.toString() + edtOtp2?.text?.toString() + edtOtp3?.text?.toString() + edtOtp4?.text?.toString()
+
+        Log.e("getotp",""+OTP)
         loginViewModel.init(
             intent?.getStringExtra("number")?.trim({ it <= ' ' })!!,
-            technicianPassword.trim({ it <= ' ' }),
+            OTP.trim({ it <= ' ' }),
             "password",
             "Basic ZG9vcnN0ZXA6MTIz", versionCode, deviceName, androidOS, null
         )
@@ -355,7 +351,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                     prefManager.isLogin(true)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
-                    finish()
+                    finishAffinity()
 
                     /*when {
                         prefManager?.getValue("customerClass") != null && prefManager.getValue(

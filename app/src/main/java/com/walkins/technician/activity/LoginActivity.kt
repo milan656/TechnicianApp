@@ -160,10 +160,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val intent = Intent(this, VerifyOtpActivity::class.java)
-//        intent.putExtra("number",edtLoginEmail.text?.toString())
-        intent.putExtra("number", "9978785623")
+        intent.putExtra("number",edtLoginEmail.text?.toString())
+//        intent.putExtra("number", "9978785623")
         startActivity(intent)
-        finish()
+
 
     }
 
@@ -319,6 +319,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     Log.e("getType", "" + it.userDetailModel!!.type)
                     prefManager.isLogin(true)
                     val intent = Intent(this, VerifyOtpActivity::class.java)
+
                     startActivity(intent)
                     finish()
 

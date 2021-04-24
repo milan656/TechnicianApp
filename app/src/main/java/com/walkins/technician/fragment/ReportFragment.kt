@@ -387,7 +387,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun searchModel(toString: String) {
-        context?.let { makeModelViewModel?.getVehicleModel(it, selectedMakeId) }
+        context?.let { makeModelViewModel?.getVehicleModel(it, selectedMakeId,prefManager.getAccessToken()!!) }
 
         makeModelViewModel?.getVehicleModelList()?.observe(this, Observer {
 
@@ -410,7 +410,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun searchMake(toString: String) {
-        context?.let { makeModelViewModel?.getVehicleMake(it) }
+        context?.let { makeModelViewModel?.getVehicleMake(it,prefManager.getAccessToken()!!) }
 
         makeModelViewModel?.getVehicleMakeList()?.observe(this, Observer {
 

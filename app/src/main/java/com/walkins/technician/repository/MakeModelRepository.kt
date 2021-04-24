@@ -41,10 +41,11 @@ class MakeModelRepository {
 
 
     fun getVehicleMake(
-        context: Context
+        context: Context,
+        accessToken:String
     ): MutableLiveData<VehicleMakeModel> {
         var otpData = MutableLiveData<VehicleMakeModel>()
-        otpApi.getVehicleMake(/*vehicle_type_id, access_token*/)
+        otpApi.getVehicleMake(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -82,10 +83,11 @@ class MakeModelRepository {
 
     fun getVehicleModel(
         makeId: Int,
+        accessToken: String,
         context: Context
     ): MutableLiveData<VehicleModel> {
         var otpData = MutableLiveData<VehicleModel>()
-        otpApi.getVehicleModel(makeId)
+        otpApi.getVehicleModel(makeId,accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,

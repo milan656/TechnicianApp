@@ -159,15 +159,22 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun searchModel(toString: String) {
-        this?.let { makeModelViewModel?.getVehicleModel(it, selectedMakeId) }
+        this.let {
+            makeModelViewModel.getVehicleModel(
+                it,
+                selectedMakeId,
+                prefManager.getAccessToken()!!
+            )
+        }
 
-        makeModelViewModel?.getVehicleModelList()?.observe(this, Observer {
+        makeModelViewModel.getVehicleModelList()?.observe(this, Observer {
 
             if (it != null) {
                 if (it.success) {
                     modelSearchdata?.clear()
                     modelSearchdata?.addAll(it.data)
                     try {
+                        Log.e("getmodelata",""+modelSearchdata?.size)
                         modelDataForSearchApi(modelSearchdata!!)
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
@@ -182,9 +189,9 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun searchMake(toString: String) {
-        this?.let { makeModelViewModel?.getVehicleMake(it) }
+        makeModelViewModel.getVehicleMake(this, prefManager.getAccessToken()!!)
 
-        makeModelViewModel?.getVehicleMakeList()?.observe(this, Observer {
+        makeModelViewModel.getVehicleMakeList()?.observe(this, Observer {
 
             if (it != null) {
                 if (it.success) {
@@ -255,13 +262,13 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
         try {
             for ((index, value) in modelSearchData.withIndex()) {
                 val string =
-                    modelSearchData.get(index).name + " --> " + modelSearchData.get(index).id
+                    modelSearchData.get(index).name /*+ " --> " + modelSearchData.get(index).id*/
                 listClickedModel.add(string)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        Log.e("listClicked", "" + listClicked)
+        Log.e("listClickedModel", "" + listClickedModel)
         if (listClickedModel.size > 0) {
             adapter =
                 this?.let {

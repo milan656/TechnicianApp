@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.facebook.AccessToken
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.makemodel.VehicleModel
@@ -23,11 +24,11 @@ class MakeModelViewModel : ViewModel() {
         return makeModelClass!!
     }
 
-    fun getVehicleMake(context: Context) {
+    fun getVehicleMake(context: Context,accessToken: String) {
 
         makeModelRepository = MakeModelRepository().getInstance()
         makeModelClass =
-            makeModelRepository!!.getVehicleMake(context)
+            makeModelRepository!!.getVehicleMake(context,accessToken)
 
     }
 
@@ -35,11 +36,11 @@ class MakeModelViewModel : ViewModel() {
         return modelclass!!
     }
 
-    fun getVehicleModel(context: Context, makeId: Int) {
+    fun getVehicleModel(context: Context, makeId: Int,accessToken: String) {
 
         makeModelRepository = MakeModelRepository().getInstance()
         modelclass =
-            makeModelRepository!!.getVehicleModel(makeId, context)
+            makeModelRepository!!.getVehicleModel(makeId, accessToken,context)
 
     }
 
