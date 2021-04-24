@@ -265,24 +265,26 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         Log.e("getobjrfche00", "" + json + " " + selectedId + " ")
-                        Log.e("getobjrfche00", "" + json.get("vehicleSizeId")?.asString?.toInt())
 
                         chkRF?.isChecked = false
                         chkLR?.isChecked = false
                         chkRR?.isChecked = false
-                        if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
-                            runOnUiThread {
+                        if (json.get("vehicleSizeId")!=null && !json.get("vehicleSizeId")?.asString.equals("")){
+                            if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
+                                runOnUiThread {
 
-                                if (chkRF?.text?.toString().equals("LF")) {
-                                    chkRF?.isChecked = true
-                                }
-                                if (chkLR?.text?.toString().equals("LF")) {
-                                    chkLR?.isChecked = true
-                                }
-                                if (chkRR?.text?.toString().equals("LF")) {
-                                    chkRR?.isChecked = true
+                                    if (chkRF?.text?.toString().equals("LF")) {
+                                        chkRF?.isChecked = true
+                                    }
+                                    if (chkLR?.text?.toString().equals("LF")) {
+                                        chkLR?.isChecked = true
+                                    }
+                                    if (chkRR?.text?.toString().equals("LF")) {
+                                        chkRR?.isChecked = true
+                                    }
                                 }
                             }
+
                         }
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
@@ -298,17 +300,20 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         chkRF?.isChecked = false
                         chkLR?.isChecked = false
                         chkRR?.isChecked = false
-                        if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
-                            runOnUiThread {
+                        if (json.get("vehicleSizeId")!=null && !json.get("vehicleSizeId")?.asString.equals("")){
 
-                                if (chkRF?.text?.toString().equals("LR")) {
-                                    chkRF?.isChecked = true
-                                }
-                                if (chkLR?.text?.toString().equals("LR")) {
-                                    chkLR?.isChecked = true
-                                }
-                                if (chkRR?.text?.toString().equals("LR")) {
-                                    chkRR?.isChecked = true
+                            if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
+                                runOnUiThread {
+
+                                    if (chkRF?.text?.toString().equals("LR")) {
+                                        chkRF?.isChecked = true
+                                    }
+                                    if (chkLR?.text?.toString().equals("LR")) {
+                                        chkLR?.isChecked = true
+                                    }
+                                    if (chkRR?.text?.toString().equals("LR")) {
+                                        chkRR?.isChecked = true
+                                    }
                                 }
                             }
                         }
@@ -326,17 +331,20 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         chkRF?.isChecked = false
                         chkLR?.isChecked = false
                         chkRR?.isChecked = false
-                        if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
-                            runOnUiThread {
+                        if (json.get("vehicleSizeId")!=null && !json.get("vehicleSizeId")?.asString.equals("")){
 
-                                if (chkRF?.text?.toString().equals("RF")) {
-                                    chkRF?.isChecked = true
-                                }
-                                if (chkLR?.text?.toString().equals("RF")) {
-                                    chkLR?.isChecked = true
-                                }
-                                if (chkRR?.text?.toString().equals("RF")) {
-                                    chkRR?.isChecked = true
+                            if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
+                                runOnUiThread {
+
+                                    if (chkRF?.text?.toString().equals("RF")) {
+                                        chkRF?.isChecked = true
+                                    }
+                                    if (chkLR?.text?.toString().equals("RF")) {
+                                        chkLR?.isChecked = true
+                                    }
+                                    if (chkRR?.text?.toString().equals("RF")) {
+                                        chkRR?.isChecked = true
+                                    }
                                 }
                             }
                         }
@@ -354,17 +362,20 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         chkRF?.isChecked = false
                         chkLR?.isChecked = false
                         chkRR?.isChecked = false
-                        if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
-                            runOnUiThread {
+                        if (json.get("vehicleSizeId")!=null && !json.get("vehicleSizeId")?.asString.equals("")){
 
-                                if (chkRF?.text?.toString().equals("RR")) {
-                                    chkRF?.isChecked = true
-                                }
-                                if (chkLR?.text?.toString().equals("RR")) {
-                                    chkLR?.isChecked = true
-                                }
-                                if (chkRR?.text?.toString().equals("RR")) {
-                                    chkRR?.isChecked = true
+                            if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
+                                runOnUiThread {
+
+                                    if (chkRF?.text?.toString().equals("RR")) {
+                                        chkRF?.isChecked = true
+                                    }
+                                    if (chkLR?.text?.toString().equals("RR")) {
+                                        chkLR?.isChecked = true
+                                    }
+                                    if (chkRR?.text?.toString().equals("RR")) {
+                                        chkRR?.isChecked = true
+                                    }
                                 }
                             }
                         }

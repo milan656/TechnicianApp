@@ -19,6 +19,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.view.animation.Animation
@@ -128,6 +129,36 @@ class Common {
 
             return time
         }
+
+        fun getDeviceName(): String {
+            val manufacturer = Build.MANUFACTURER
+            val model = Build.MODEL
+            return if (model.startsWith(manufacturer)) {
+                capitalize(model)
+            } else capitalize(manufacturer) + " " + model
+        }
+        private fun capitalize(str: String): String {
+            if (TextUtils.isEmpty(str)) {
+                return str
+            }
+            val arr = str.toCharArray()
+            var capitalizeNext = true
+
+            val phrase = StringBuilder()
+            for (c in arr) {
+                if (capitalizeNext && Character.isLetter(c)) {
+                    phrase.append(Character.toUpperCase(c))
+                    capitalizeNext = false
+                    continue
+                } else if (Character.isWhitespace(c)) {
+                    capitalizeNext = true
+                }
+                phrase.append(c)
+            }
+
+            return phrase.toString()
+        }
+
 
         fun saveImage(context: Context, bitmap: Bitmap, name: String, extension: String) {
             val folder =
@@ -420,6 +451,15 @@ class Common {
                 e.printStackTrace()
                 return null
             }
+        }
+
+        fun createImageFile(context: Context): File? {
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val imageFileName = "IMG_" + timeStamp + "_"
+            val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+//            imageFilePath = image.absolutePath
+            return image
         }
 
         private fun showDialogueForWarning(

@@ -143,7 +143,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            R.id.btnLoginToDashBoard -> userLogin()
+            R.id.btnLoginToDashBoard -> login()
         }
     }
 
@@ -158,8 +158,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
-        prefManager.isLogin(true)
+
         val intent = Intent(this, VerifyOtpActivity::class.java)
+//        intent.putExtra("number",edtLoginEmail.text?.toString())
+        intent.putExtra("number", "9978785623")
         startActivity(intent)
         finish()
 
@@ -170,35 +172,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 //        startActivity(intent)
     }
 
-    fun getDeviceName(): String {
-        val manufacturer = Build.MANUFACTURER
-        val model = Build.MODEL
-        return if (model.startsWith(manufacturer)) {
-            capitalize(model)
-        } else capitalize(manufacturer) + " " + model
-    }
-
-    private fun capitalize(str: String): String {
-        if (TextUtils.isEmpty(str)) {
-            return str
-        }
-        val arr = str.toCharArray()
-        var capitalizeNext = true
-
-        val phrase = StringBuilder()
-        for (c in arr) {
-            if (capitalizeNext && Character.isLetter(c)) {
-                phrase.append(Character.toUpperCase(c))
-                capitalizeNext = false
-                continue
-            } else if (Character.isWhitespace(c)) {
-                capitalizeNext = true
-            }
-            phrase.append(c)
-        }
-
-        return phrase.toString()
-    }
 
     /*
     * User Login Function with validation
@@ -232,7 +205,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val manager = context.packageManager
 
         var versionCode: Int = 0
-        var deviceName: String? = getDeviceName()
+        var deviceName: String? = Common.getDeviceName()
         var androidOS = Build.VERSION.RELEASE
 
         try {
@@ -271,8 +244,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         var technicianPassword = "9978785623"
 
         loginViewModel.init(
-            dealerLogin.trim({ it <= ' ' }),
-            dealerPassword.trim({ it <= ' ' }),
+            technicianLogin.trim({ it <= ' ' }),
+            technicianPassword.trim({ it <= ' ' }),
             "password",
             "Basic ZG9vcnN0ZXA6MTIz", versionCode, deviceName, androidOS, null
         )

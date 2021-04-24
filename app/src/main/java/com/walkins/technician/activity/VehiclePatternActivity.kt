@@ -132,13 +132,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             ) {
                 arrList?.addAll(mDb.patternDaoClass().getAllPattern())
 
-                for (i in arrList?.indices!!) {
-
-                    Log.e("getpatter", "" + arrList?.get(i)?.patternId)
-                    Log.e("getpatter", "" + arrList?.get(i)?.name)
-                }
-
-                Log.e("getpatter", "" + selectedTyre)
                 if (selectedTyre.equals("LF")) {
                     if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
                         !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -146,7 +139,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                            selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                            if (json.get("vehiclePatternId")!=null && !json.get("vehiclePatternId")?.asString.equals("")){
+
+                                selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                            }
                             Log.e("getpatterlf", "" + json + " " + selectedId)
                             setData(json)
                             runOnUiThread {
@@ -180,7 +176,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                            selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                            if (json.get("vehiclePatternId")!=null && !json.get("vehiclePatternId")?.asString.equals("")){
+
+                                selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                            }
                             Log.e("getpatterlr", "" + json + " " + selectedId)
                             setData(json)
                             runOnUiThread {
@@ -212,7 +211,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                            selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                            if (json.get("vehiclePatternId")!=null && !json.get("vehiclePatternId")?.asString.equals("")){
+
+                                selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                            }
                             Log.e("getpatterrf", "" + json + " " + selectedId)
                             setData(json)
                             runOnUiThread {
@@ -249,7 +251,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
                         try {
                             var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                            selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                            if (json.get("vehiclePatternId")!=null && !json.get("vehiclePatternId")?.asString.equals("")){
+
+                                selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                            }
                             Log.e("getpatterrr", "" + json + " " + selectedId)
                             setData(json)
                             runOnUiThread {
@@ -284,28 +289,31 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        Log.e(
-                            "getobjlf",
-                            "" + json.get("vehiclePatternId")?.asString + " " + selectedId
-                        )
-                        if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                        if (json.get("vehiclePatternId")!=null && !json.get("vehiclePatternId")?.asString.equals("")){
                             Log.e(
                                 "getobjlf",
-                                "" + selectedId + " " + json.get("vehiclePatternId")?.asString
+                                "" + json.get("vehiclePatternId")?.asString + " " + selectedId
                             )
-                            Log.e("getobjlf", "" + json + " ")
-                            runOnUiThread {
+                            if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                                Log.e(
+                                    "getobjlf",
+                                    "" + selectedId + " " + json.get("vehiclePatternId")?.asString
+                                )
+                                Log.e("getobjlf", "" + json + " ")
+                                runOnUiThread {
 
-                                if (chkRF?.text?.toString().equals("LF")) {
-                                    chkRF?.isChecked = true
-                                }
-                                if (chkLR?.text?.toString().equals("LF")) {
-                                    chkLR?.isChecked = true
-                                }
-                                if (chkRR?.text?.toString().equals("LF")) {
-                                    chkRR?.isChecked = true
+                                    if (chkRF?.text?.toString().equals("LF")) {
+                                        chkRF?.isChecked = true
+                                    }
+                                    if (chkLR?.text?.toString().equals("LF")) {
+                                        chkLR?.isChecked = true
+                                    }
+                                    if (chkRR?.text?.toString().equals("LF")) {
+                                        chkRR?.isChecked = true
+                                    }
                                 }
                             }
+
                         }
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
@@ -318,22 +326,25 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        Log.e("getobjlr", "" + json.get("vehiclePatternId")?.asString + " ")
-                        if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
-                            Log.e("getobjlr", "" + selectedId + " ")
-                            Log.e("getobjlr", "" + json + " ")
-                            runOnUiThread {
+                        if (json.get("vehiclePatternId")!=null && !json.get("vehiclePatternId")?.asString.equals("")){
+                            Log.e("getobjlr", "" + json.get("vehiclePatternId")?.asString + " ")
+                            if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                                Log.e("getobjlr", "" + selectedId + " ")
+                                Log.e("getobjlr", "" + json + " ")
+                                runOnUiThread {
 
-                                if (chkRF?.text?.toString().equals("LR")) {
-                                    chkRF?.isChecked = true
-                                }
-                                if (chkLR?.text?.toString().equals("LR")) {
-                                    chkLR?.isChecked = true
-                                }
-                                if (chkRR?.text?.toString().equals("LR")) {
-                                    chkRR?.isChecked = true
+                                    if (chkRF?.text?.toString().equals("LR")) {
+                                        chkRF?.isChecked = true
+                                    }
+                                    if (chkLR?.text?.toString().equals("LR")) {
+                                        chkLR?.isChecked = true
+                                    }
+                                    if (chkRR?.text?.toString().equals("LR")) {
+                                        chkRR?.isChecked = true
+                                    }
                                 }
                             }
+
                         }
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
@@ -346,21 +357,24 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        Log.e("getobjrfpa", "" + json.get("vehiclePatternId")?.asString + " ")
-                        if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
-                            Log.e("getobjrfpa", "" + selectedId + " ")
-                            runOnUiThread {
+                        if (json.get("vehiclePatternId")!=null && !json.get("vehiclePatternId")?.asString.equals("")){
+                            Log.e("getobjrfpa", "" + json.get("vehiclePatternId")?.asString + " ")
+                            if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                                Log.e("getobjrfpa", "" + selectedId + " ")
+                                runOnUiThread {
 
-                                if (chkRF?.text?.toString().equals("RF")) {
-                                    chkRF?.isChecked = true
-                                }
-                                if (chkLR?.text?.toString().equals("RF")) {
-                                    chkLR?.isChecked = true
-                                }
-                                if (chkRR?.text?.toString().equals("RF")) {
-                                    chkRR?.isChecked = true
+                                    if (chkRF?.text?.toString().equals("RF")) {
+                                        chkRF?.isChecked = true
+                                    }
+                                    if (chkLR?.text?.toString().equals("RF")) {
+                                        chkLR?.isChecked = true
+                                    }
+                                    if (chkRR?.text?.toString().equals("RF")) {
+                                        chkRR?.isChecked = true
+                                    }
                                 }
                             }
+
                         }
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
@@ -374,22 +388,25 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         Log.e("getobjrr", "" + json.get("vehiclePatternId")?.asString + " ")
-                        if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
-                            Log.e("getobjrr", "" + selectedId + " ")
-                            Log.e("getobjrr", "" + json + " ")
-                            runOnUiThread {
+                        if (json.get("vehiclePatternId")!=null && !json.get("vehiclePatternId")?.asString.equals("")){
+                            if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                                Log.e("getobjrr", "" + selectedId + " ")
+                                Log.e("getobjrr", "" + json + " ")
+                                runOnUiThread {
 
-                                if (chkRF?.text?.toString().equals("RR")) {
-                                    chkRF?.isChecked = true
-                                }
-                                if (chkLR?.text?.toString().equals("RR")) {
-                                    chkLR?.isChecked = true
-                                }
-                                if (chkRR?.text?.toString().equals("RR")) {
-                                    chkRR?.isChecked = true
+                                    if (chkRF?.text?.toString().equals("RR")) {
+                                        chkRF?.isChecked = true
+                                    }
+                                    if (chkLR?.text?.toString().equals("RR")) {
+                                        chkLR?.isChecked = true
+                                    }
+                                    if (chkRR?.text?.toString().equals("RR")) {
+                                        chkRR?.isChecked = true
+                                    }
                                 }
                             }
                         }
+
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }

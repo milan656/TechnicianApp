@@ -48,6 +48,10 @@ import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialogDueDate
 import com.walkins.technician.model.login.IssueResolveModel
 import com.walkins.technician.viewmodel.ServiceViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
@@ -186,10 +190,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         requestPermissionForImage()
         init()
 
-
     }
 
-    fun getStoredObjects() {
+    suspend fun getStoredObjects() {
+
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
         ) {
@@ -205,12 +209,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if (TyreConfigClass.LFCompleted) {
-                    ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyre1?.setImageDrawable(this@AddServiceDetailsActivity.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
                     ivtyreLeftFront?.visibility = View.VISIBLE
                     ivInfoImgLF?.visibility = View.GONE
 
                     try {
-                        Glide.with(this)
+                        Glide.with(this@AddServiceDetailsActivity)
                             .load(jsonLF.get(TyreKey.vehicleMakeURL))
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.placeholder)
@@ -280,7 +284,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
                 if (TyreConfigClass.RFCompleted) {
-                    ivTyre3?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyre3?.setImageDrawable(this@AddServiceDetailsActivity.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
                     ivTyreRightFront?.visibility = View.VISIBLE
                     ivInfoImgRF?.visibility = View.GONE
                 }
@@ -331,7 +335,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 try {
-                    Glide.with(this)
+                    Glide.with(this@AddServiceDetailsActivity)
                         .load(jsonRF.get(TyreKey.vehicleMakeURL))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.placeholder)
@@ -359,7 +363,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
                 if (TyreConfigClass.LRCompleted) {
 
-                    ivTyre2?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyre2?.setImageDrawable(this@AddServiceDetailsActivity.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
                     ivtyreLeftRear?.visibility = View.VISIBLE
                     ivInfoImgLR?.visibility = View.GONE
                 }
@@ -407,7 +411,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 try {
-                    Glide.with(this)
+                    Glide.with(this@AddServiceDetailsActivity)
                         .load(jsonLR.get(TyreKey.vehicleMakeURL))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.placeholder)
@@ -433,7 +437,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
                 if (TyreConfigClass.RRCompleted) {
-                    ivTyre4?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                    ivTyre4?.setImageDrawable(this@AddServiceDetailsActivity.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
                     ivTyreRightRear?.visibility = View.VISIBLE
                     ivInfoImgRR?.visibility = View.GONE
                 }
@@ -480,7 +484,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("visualtrue4", "" + TyreConfigClass.RRVehicleVisualDetail)
                 }
                 try {
-                    Glide.with(this)
+                    Glide.with(this@AddServiceDetailsActivity)
                         .load(jsonRR.get(TyreKey.vehicleMakeURL))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.placeholder)
@@ -494,117 +498,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
-            !prefManager.getValue(TyreConfigClass.serviceDetailData).equals("")
-        ) {
-            var str = prefManager.getValue(TyreConfigClass.serviceDetailData)
 
-            try {
-                var jsonService: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                Log.e("serviceObj", "" + jsonService)
-
-                if (jsonService.get(TyreKey.nitrogenTopup) != null && jsonService.get(TyreKey.nitrogenTopup)?.asString
-                        .equals("true")
-                ) {
-                    Log.e("serviceObj", "" + true + "topup")
-                    chkNitrogenTopup?.isChecked = true
-                }
-                if (jsonService.get(TyreKey.nitrogenRefil) != null && jsonService.get(TyreKey.nitrogenRefil)?.asString
-                        .equals("true")
-                ) {
-                    Log.e("serviceObj", "" + true + "refil")
-                    chkNitrogenRefill?.isChecked = true
-                }
-                if (jsonService.get(TyreKey.tyreRotation) != null && jsonService.get(TyreKey.tyreRotation)?.asString
-                        .equals("true")
-                ) {
-                    Log.e("serviceObj", "" + true + "rotation")
-                    chkTyreRotation?.isChecked = true
-                }
-                if (jsonService.get(TyreKey.wheelBalancing) != null && jsonService.get(TyreKey.wheelBalancing)?.asString
-                        .equals("true")
-                ) {
-                    Log.e("serviceObj", "" + true + "wheel")
-                    chkWheelBalacing?.isChecked = true
-                }
-                if (jsonService.get(TyreKey.nextDueDate) != null && !jsonService.get(TyreKey.nextDueDate)?.asString
-                        .equals("")
-                ) {
-                    tvNextServiceDueDate?.setText(jsonService.get(TyreKey.nextDueDate)?.asString)
-                }
-                if (jsonService.get(TyreKey.moreSuggestion) != null && !jsonService.get(TyreKey.moreSuggestion)?.asString
-                        .equals("")
-                ) {
-                    edtMoreSuggestion?.setText(jsonService.get(TyreKey.moreSuggestion)?.asString)
-                }
-
-                if (jsonService.get(TyreKey.radioGroupLF) != null && !jsonService.get(TyreKey.radioGroupLF).asString.equals(
-                        ""
-                    )
-                ) {
-                    if (jsonService.get(TyreKey.radioGroupLF).asString.equals("RRLF")) {
-                        radioLF_RR?.isChecked = true
-                    } else {
-                        radioLF_LR?.isChecked = true
-                    }
-                }
-                if (jsonService.get(TyreKey.radioGroupLR) != null && !jsonService.get(TyreKey.radioGroupLR).asString.equals(
-                        ""
-                    )
-                ) {
-                    if (jsonService.get(TyreKey.radioGroupLR).asString.equals("RFLR")) {
-                        radioLR_RF?.isChecked = true
-                    } else {
-                        radioLR_LF?.isChecked = true
-                    }
-                }
-                if (jsonService.get(TyreKey.radioGroupRF) != null && !jsonService.get(TyreKey.radioGroupRF).asString.equals(
-                        ""
-                    )
-                ) {
-                    if (jsonService.get(TyreKey.radioGroupRF).asString.equals("RRRF")) {
-                        radioRF_RR?.isChecked = true
-                    } else {
-                        radioRF_LR?.isChecked = true
-                    }
-                }
-                if (jsonService.get(TyreKey.radioGroupRR) != null && !jsonService.get(TyreKey.radioGroupRR).asString.equals(
-                        ""
-                    )
-                ) {
-                    if (jsonService.get(TyreKey.radioGroupRR).asString.equals("LFRR")) {
-                        radioRR_LF?.isChecked = true
-                    } else {
-                        radioRR_RF?.isChecked = true
-                    }
-                }
-
-                if (jsonService.get(TyreKey.technicalSuggestionArr) != null) {
-
-                    var arr = jsonService.get(TyreKey.technicalSuggestionArr)?.asJsonArray
-                    Log.e("getvalues", "" + arr)
-                    val gson = Gson()
-                    val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
-                    val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
-                    Log.e("getvalues", "" + arrlist)
-                    for (i in suggestionArray?.indices!!) {
-
-                        for (j in arrlist.indices) {
-
-                            if (suggestionArray?.get(i)?.issueName.equals(arrlist.get(j))) {
-                                suggestionArray?.get(i)?.isSelected = true
-                                selectedSuggestionArr?.add(suggestionArray?.get(i)?.issueName!!)
-                            }
-                        }
-                    }
-
-                    tyreSuggestionAdapter?.notifyDataSetChanged()
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-
-            }
-        }
     }
 
     private fun requestPermissionForImage() {
@@ -753,9 +647,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         ivBack?.setOnClickListener(this)
 
-        getStoredObjects()
+
+        GlobalScope.launch(Dispatchers.Main) {
+            launch(Dispatchers.Main) {
+                getStoredObjects()
+            }
+        }
+
+
+        getServiceData()
 
         checkChangeListener()
+
 
         edtMoreSuggestion?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -801,6 +704,124 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         })
 
+    }
+
+    private fun getTyreImageData() {
+
+    }
+
+    private fun getServiceData() {
+        if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceDetailData).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.serviceDetailData)
+
+            try {
+                var jsonService: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                Log.e("serviceObj", "" + jsonService)
+
+                if (jsonService.get(TyreKey.nitrogenTopup) != null && jsonService.get(TyreKey.nitrogenTopup)?.asString
+                        .equals("true")
+                ) {
+                    Log.e("serviceObj", "" + true + "topup")
+                    chkNitrogenTopup?.isChecked = true
+                }
+                if (jsonService.get(TyreKey.nitrogenRefil) != null && jsonService.get(TyreKey.nitrogenRefil)?.asString
+                        .equals("true")
+                ) {
+                    Log.e("serviceObj", "" + true + "refil")
+                    chkNitrogenRefill?.isChecked = true
+                }
+                if (jsonService.get(TyreKey.tyreRotation) != null && jsonService.get(TyreKey.tyreRotation)?.asString
+                        .equals("true")
+                ) {
+                    Log.e("serviceObj", "" + true + "rotation")
+                    chkTyreRotation?.isChecked = true
+                }
+                if (jsonService.get(TyreKey.wheelBalancing) != null && jsonService.get(TyreKey.wheelBalancing)?.asString
+                        .equals("true")
+                ) {
+                    Log.e("serviceObj", "" + true + "wheel")
+                    chkWheelBalacing?.isChecked = true
+                }
+                if (jsonService.get(TyreKey.nextDueDate) != null && !jsonService.get(TyreKey.nextDueDate)?.asString
+                        .equals("")
+                ) {
+                    tvNextServiceDueDate?.setText(jsonService.get(TyreKey.nextDueDate)?.asString)
+                }
+                if (jsonService.get(TyreKey.moreSuggestion) != null && !jsonService.get(TyreKey.moreSuggestion)?.asString
+                        .equals("")
+                ) {
+                    edtMoreSuggestion?.setText(jsonService.get(TyreKey.moreSuggestion)?.asString)
+                }
+
+                if (jsonService.get(TyreKey.radioGroupLF) != null && !jsonService.get(TyreKey.radioGroupLF).asString.equals(
+                        ""
+                    )
+                ) {
+                    if (jsonService.get(TyreKey.radioGroupLF).asString.equals("RRLF")) {
+                        radioLF_RR?.isChecked = true
+                    } else {
+                        radioLF_LR?.isChecked = true
+                    }
+                }
+                if (jsonService.get(TyreKey.radioGroupLR) != null && !jsonService.get(TyreKey.radioGroupLR).asString.equals(
+                        ""
+                    )
+                ) {
+                    if (jsonService.get(TyreKey.radioGroupLR).asString.equals("RFLR")) {
+                        radioLR_RF?.isChecked = true
+                    } else {
+                        radioLR_LF?.isChecked = true
+                    }
+                }
+                if (jsonService.get(TyreKey.radioGroupRF) != null && !jsonService.get(TyreKey.radioGroupRF).asString.equals(
+                        ""
+                    )
+                ) {
+                    if (jsonService.get(TyreKey.radioGroupRF).asString.equals("RRRF")) {
+                        radioRF_RR?.isChecked = true
+                    } else {
+                        radioRF_LR?.isChecked = true
+                    }
+                }
+                if (jsonService.get(TyreKey.radioGroupRR) != null && !jsonService.get(TyreKey.radioGroupRR).asString.equals(
+                        ""
+                    )
+                ) {
+                    if (jsonService.get(TyreKey.radioGroupRR).asString.equals("LFRR")) {
+                        radioRR_LF?.isChecked = true
+                    } else {
+                        radioRR_RF?.isChecked = true
+                    }
+                }
+
+                if (jsonService.get(TyreKey.technicalSuggestionArr) != null) {
+
+                    var arr = jsonService.get(TyreKey.technicalSuggestionArr)?.asJsonArray
+                    Log.e("getvalues", "" + arr)
+                    val gson = Gson()
+                    val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                    val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                    Log.e("getvalues", "" + arrlist)
+                    for (i in suggestionArray?.indices!!) {
+
+                        for (j in arrlist.indices) {
+
+                            if (suggestionArray?.get(i)?.issueName.equals(arrlist.get(j))) {
+                                suggestionArray?.get(i)?.isSelected = true
+                                selectedSuggestionArr?.add(suggestionArray?.get(i)?.issueName!!)
+                            }
+                        }
+                    }
+
+                    tyreSuggestionAdapter?.notifyDataSetChanged()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+            }
+        }
     }
 
     private fun checkChangeListener() {
@@ -2125,262 +2146,236 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 Log.e("getcall", "call0" + TyreConfigClass.clickedTyre)
 
-                if (!TyreConfigClass.LFCompleted) {
-                    Log.e("getcall", "call1")
-                    if (TyreConfigClass.clickedTyre.equals("LF")) {
-                        Log.e("getcall", "call2")
-                        if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
-                            Log.e("getcall", "call3")
-                            ivTyre1?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                            ivtyreLeftFront?.visibility = View.VISIBLE
-                            ivInfoImgLF?.visibility = View.GONE
-                            TyreConfigClass.LFCompleted = true
+                GlobalScope.launch(Dispatchers.Main) {
+                    launch(Dispatchers.Main) {
+                        if (!TyreConfigClass.LFCompleted) {
+                            if (TyreConfigClass.clickedTyre.equals("LF")) {
+                                if (TyreConfigClass.selectedTyreConfigType.equals("LF")) {
+                                    ivTyre1?.setImageDrawable(this@AddServiceDetailsActivity.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                                    ivtyreLeftFront?.visibility = View.VISIBLE
+                                    ivInfoImgLF?.visibility = View.GONE
+                                    TyreConfigClass.LFCompleted = true
 
-                            try {
-                                Glide.with(this)
-                                    .load(TyreConfigClass.selectedMakeURL)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.placeholder)
-                                    .into(ivTyreRightFront!!)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
+                                    try {
+                                        Glide.with(this@AddServiceDetailsActivity)
+                                            .load(TyreConfigClass.selectedMakeURL)
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.placeholder)
+                                            .into(ivTyreRightFront!!)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                                } else {
+                                    ivInfoImgLF?.visibility = View.VISIBLE
+                                }
                             }
-                            Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                        } else {
-                            ivInfoImgLF?.visibility = View.VISIBLE
                         }
-                    }
-                }
-                if (!TyreConfigClass.RFCompleted) {
-                    Log.e("getcall", "call4")
-                    if (TyreConfigClass.clickedTyre.equals("RF")) {
-                        Log.e("getcall", "call5")
-                        if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
-                            Log.e("getcall", "call6")
-                            ivTyre3?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                            ivTyreRightFront?.visibility = View.VISIBLE
-                            TyreConfigClass.RFCompleted = true
-                            try {
-                                Glide.with(this)
-                                    .load(TyreConfigClass.selectedMakeURL)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.placeholder)
-                                    .into(ivTyreRightFront!!)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                            Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                            ivInfoImgRF?.visibility = View.GONE
-                        } else {
-                            ivInfoImgRF?.visibility = View.VISIBLE
+                        if (!TyreConfigClass.RFCompleted) {
+                            if (TyreConfigClass.clickedTyre.equals("RF")) {
+                                if (TyreConfigClass.selectedTyreConfigType.equals("RF")) {
+                                    ivTyre3?.setImageDrawable(this@AddServiceDetailsActivity.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                                    ivTyreRightFront?.visibility = View.VISIBLE
+                                    TyreConfigClass.RFCompleted = true
+                                    try {
+                                        Glide.with(this@AddServiceDetailsActivity)
+                                            .load(TyreConfigClass.selectedMakeURL)
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.placeholder)
+                                            .into(ivTyreRightFront!!)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                                    ivInfoImgRF?.visibility = View.GONE
+                                } else {
+                                    ivInfoImgRF?.visibility = View.VISIBLE
 
+                                }
+                            }
                         }
-                    }
-                }
-                if (!TyreConfigClass.LRCompleted) {
-                    Log.e("getcall", "call6")
-                    if (TyreConfigClass.clickedTyre.equals("LR")) {
-                        Log.e("getcall", "call7")
-                        if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
-                            Log.e("getcall", "call8")
-                            ivTyre2?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                            ivtyreLeftRear?.visibility = View.VISIBLE
-                            ivInfoImgLR?.visibility = View.GONE
-                            TyreConfigClass.LRCompleted = true
+                        if (!TyreConfigClass.LRCompleted) {
+                            if (TyreConfigClass.clickedTyre.equals("LR")) {
+                                if (TyreConfigClass.selectedTyreConfigType.equals("LR")) {
+                                    ivTyre2?.setImageDrawable(this@AddServiceDetailsActivity.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                                    ivtyreLeftRear?.visibility = View.VISIBLE
+                                    ivInfoImgLR?.visibility = View.GONE
+                                    TyreConfigClass.LRCompleted = true
 
-                            try {
-                                Glide.with(this)
-                                    .load(TyreConfigClass.selectedMakeURL)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.placeholder)
-                                    .into(ivTyreRightFront!!)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
+                                    try {
+                                        Glide.with(this@AddServiceDetailsActivity)
+                                            .load(TyreConfigClass.selectedMakeURL)
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.placeholder)
+                                            .into(ivTyreRightFront!!)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                                } else {
+                                    ivInfoImgLR?.visibility = View.VISIBLE
+
+                                }
                             }
-                            Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                        } else {
-                            ivInfoImgLR?.visibility = View.VISIBLE
-
                         }
-                    }
-                }
-                if (!TyreConfigClass.RRCompleted) {
-                    Log.e("getcall", "call9")
-                    if (TyreConfigClass.clickedTyre.equals("RR")) {
-                        Log.e("getcall", "call10")
+                        if (!TyreConfigClass.RRCompleted) {
+                            if (TyreConfigClass.clickedTyre.equals("RR")) {
+                                if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
+                                    ivTyre4?.setImageDrawable(this@AddServiceDetailsActivity.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
+                                    ivTyreRightRear?.visibility = View.VISIBLE
+                                    ivInfoImgRR?.visibility = View.GONE
+                                    TyreConfigClass.RRCompleted = true
 
-                        if (TyreConfigClass.selectedTyreConfigType.equals("RR")) {
-                            Log.e("getcall", "call11")
-                            ivTyre4?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_completed_tyre_config))
-                            ivTyreRightRear?.visibility = View.VISIBLE
-                            ivInfoImgRR?.visibility = View.GONE
-                            TyreConfigClass.RRCompleted = true
+                                    try {
+                                        Glide.with(this@AddServiceDetailsActivity)
+                                            .load(TyreConfigClass.selectedMakeURL)
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.placeholder)
+                                            .into(ivTyreRightFront!!)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                                } else {
+                                    ivInfoImgRR?.visibility = View.VISIBLE
 
-                            try {
-                                Glide.with(this)
-                                    .load(TyreConfigClass.selectedMakeURL)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.placeholder)
-                                    .into(ivTyreRightFront!!)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
+                                }
                             }
-                            Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
-                        } else {
-                            ivInfoImgRR?.visibility = View.VISIBLE
 
                         }
+                        Log.e("getvaluesss", "" + TyreConfigClass.selectedTyreConfigType)
+
+                        Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeId!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePattern!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePatternId!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSize!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSizeId!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.manufaturingDate!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.psiInTyreService!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.psiOutTyreService!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.weightTyreService!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.sidewell!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.shoulder!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.treadDepth!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.treadWear!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.rimDamage!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.bubble!!)
+                        Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
+
+                        Log.e("getvaluess_all--1 make", TyreDetailCommonClass.chk1Make!!)
+                        Log.e("getvaluess_all--2 make", TyreDetailCommonClass.chk2Make!!)
+                        Log.e("getvaluess_all--3 make", TyreDetailCommonClass.chk3Make!!)
+                        Log.e("getvaluess_all--1 patte", TyreDetailCommonClass.chk1Pattern!!)
+                        Log.e("getvaluess_all--2 patte", TyreDetailCommonClass.chk2Pattern!!)
+                        Log.e("getvaluess_all--3 patte", TyreDetailCommonClass.chk3Pattern!!)
+                        Log.e("getvaluess_all--1 size", TyreDetailCommonClass.chk1Size!!)
+                        Log.e("getvaluess_all--2 size", TyreDetailCommonClass.chk2Size!!)
+                        Log.e("getvaluess_all--3 size", TyreDetailCommonClass.chk3Size!!)
+
+                        var json = JsonObject()
+                        var jsonArr = JsonArray()
+                        json.addProperty(TyreKey.tyreType, TyreDetailCommonClass.tyreType)
+                        json.addProperty(TyreKey.vehicleMake, TyreDetailCommonClass.vehicleMake)
+                        json.addProperty(TyreKey.vehicleMakeId, TyreDetailCommonClass.vehicleMakeId)
+                        json.addProperty(TyreKey.vehicleMakeURL, TyreDetailCommonClass.vehicleMakeURL)
+                        json.addProperty(TyreKey.vehiclePattern, TyreDetailCommonClass.vehiclePattern)
+                        json.addProperty(TyreKey.vehiclePatternId, TyreDetailCommonClass.vehiclePatternId)
+                        json.addProperty(TyreKey.vehicleSize, TyreDetailCommonClass.vehicleSize)
+                        json.addProperty(TyreKey.vehicleSizeId, TyreDetailCommonClass.vehicleSizeId)
+                        json.addProperty(TyreKey.manufaturingDate, TyreDetailCommonClass.manufaturingDate)
+                        json.addProperty(TyreKey.psiInTyreService, TyreDetailCommonClass.psiInTyreService)
+                        json.addProperty(TyreKey.psiOutTyreService, TyreDetailCommonClass.psiOutTyreService)
+                        json.addProperty(TyreKey.weightTyreService, TyreDetailCommonClass.weightTyreService)
+                        json.addProperty(TyreKey.sidewell, TyreDetailCommonClass.sidewell)
+                        json.addProperty(TyreKey.shoulder, TyreDetailCommonClass.shoulder)
+                        json.addProperty(TyreKey.treadDepth, TyreDetailCommonClass.treadDepth)
+                        json.addProperty(TyreKey.treadWear, TyreDetailCommonClass.treadWear)
+                        json.addProperty(TyreKey.rimDamage, TyreDetailCommonClass.rimDamage)
+                        json.addProperty(TyreKey.bubble, TyreDetailCommonClass.bubble)
+
+                        json.addProperty(TyreKey.chk1Make, TyreDetailCommonClass.chk1Make)
+                        json.addProperty(TyreKey.chk2Make, TyreDetailCommonClass.chk2Make)
+                        json.addProperty(TyreKey.chk3Make, TyreDetailCommonClass.chk3Make)
+                        json.addProperty(TyreKey.chk1Pattern, TyreDetailCommonClass.chk1Pattern)
+                        json.addProperty(TyreKey.chk2Pattern, TyreDetailCommonClass.chk2Pattern)
+                        json.addProperty(TyreKey.chk3Pattern, TyreDetailCommonClass.chk3Pattern)
+                        json.addProperty(TyreKey.chk1Size, TyreDetailCommonClass.chk1Size)
+                        json.addProperty(TyreKey.chk2Size, TyreDetailCommonClass.chk2Size)
+                        json.addProperty(TyreKey.chk3Size, TyreDetailCommonClass.chk3Size)
+
+                        Log.e("iscompletedd0", "" + TyreConfigClass.LFCompleted)
+                        Log.e("iscompletedd1", "" + TyreConfigClass.LRCompleted)
+                        Log.e("iscompletedd11", "" + TyreConfigClass.RFCompleted)
+                        Log.e("iscompletedd2", "" + TyreConfigClass.RRCompleted)
+
+                        if (TyreDetailCommonClass.tyreType.equals("LF")) {
+                            if (TyreConfigClass.LFCompleted) {
+                                json.addProperty(TyreKey.isCompleted, "true")
+                            }
+                        }
+                        if (TyreDetailCommonClass.tyreType.equals("LR")) {
+                            if (TyreConfigClass.LRCompleted) {
+                                json.addProperty(TyreKey.isCompleted, "true")
+                            }
+                        }
+                        if (TyreDetailCommonClass.tyreType.equals("RF")) {
+                            if (TyreConfigClass.RFCompleted) {
+                                json.addProperty(TyreKey.isCompleted, "true")
+                            }
+                        }
+                        if (TyreDetailCommonClass.tyreType.equals("RR")) {
+                            if (TyreConfigClass.RRCompleted) {
+                                json.addProperty(TyreKey.isCompleted, "true")
+                            }
+                        }
+
+
+                        for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
+
+                            jsonArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i))
+                        }
+                        json.add(TyreKey.issueResolvedArr, jsonArr)
+                        json.addProperty(
+                            TyreKey.visualDetailPhotoUrl,
+                            TyreDetailCommonClass.visualDetailPhotoUrl
+                        )
+                        json.addProperty(
+                            TyreKey.isCameraSelectedVisualDetail,
+                            TyreDetailCommonClass.isCameraSelectedVisualDetail
+                        )
+
+                        storeMake()
+
+                        if (TyreDetailCommonClass.tyreType.equals("LF")) {
+                            prefManager.setValue(TyreConfigClass.TyreLFObject, json.toString())
+                        }
+                        if (TyreDetailCommonClass.tyreType.equals("LR")) {
+                            prefManager.setValue(TyreConfigClass.TyreLRObject, json.toString())
+                        }
+                        if (TyreDetailCommonClass.tyreType.equals("RF")) {
+                            prefManager.setValue(TyreConfigClass.TyreRFObject, json.toString())
+                        }
+                        if (TyreDetailCommonClass.tyreType.equals("RR")) {
+                            prefManager.setValue(TyreConfigClass.TyreRRObject, json.toString())
+                        }
+
+                        if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
+                            ivPickedImage?.setImageURI(Uri.parse(TyreConfigClass.CarPhoto_1))
+                        }
+                        if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
+                            ivPickedImage1?.setImageURI(Uri.parse(TyreConfigClass.CarPhoto_2))
+                        }
+
+                        getStoredObjects()
+
+                        checkSubmitBtn()
                     }
-
-                }
-                Log.e("getcall", "call13")
-
-                Log.e("getvaluesss", "" + TyreConfigClass.selectedTyreConfigType)
-
-
-                Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeId!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePattern!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePatternId!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSize!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSizeId!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.manufaturingDate!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.psiInTyreService!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.psiOutTyreService!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.weightTyreService!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.sidewell!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.shoulder!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.treadDepth!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.treadWear!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.rimDamage!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.bubble!!)
-                Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
-                Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
-
-                Log.e("getvaluess_all--1 make", TyreDetailCommonClass.chk1Make!!)
-                Log.e("getvaluess_all--2 make", TyreDetailCommonClass.chk2Make!!)
-                Log.e("getvaluess_all--3 make", TyreDetailCommonClass.chk3Make!!)
-                Log.e("getvaluess_all--1 patte", TyreDetailCommonClass.chk1Pattern!!)
-                Log.e("getvaluess_all--2 patte", TyreDetailCommonClass.chk2Pattern!!)
-                Log.e("getvaluess_all--3 patte", TyreDetailCommonClass.chk3Pattern!!)
-                Log.e("getvaluess_all--1 size", TyreDetailCommonClass.chk1Size!!)
-                Log.e("getvaluess_all--2 size", TyreDetailCommonClass.chk2Size!!)
-                Log.e("getvaluess_all--3 size", TyreDetailCommonClass.chk3Size!!)
-
-                var json = JsonObject()
-                var jsonArr = JsonArray()
-                json.addProperty(TyreKey.tyreType, TyreDetailCommonClass.tyreType)
-                json.addProperty(TyreKey.vehicleMake, TyreDetailCommonClass.vehicleMake)
-                json.addProperty(TyreKey.vehicleMakeId, TyreDetailCommonClass.vehicleMakeId)
-                json.addProperty(TyreKey.vehicleMakeURL, TyreDetailCommonClass.vehicleMakeURL)
-                json.addProperty(TyreKey.vehiclePattern, TyreDetailCommonClass.vehiclePattern)
-                json.addProperty(TyreKey.vehiclePatternId, TyreDetailCommonClass.vehiclePatternId)
-                json.addProperty(TyreKey.vehicleSize, TyreDetailCommonClass.vehicleSize)
-                json.addProperty(TyreKey.vehicleSizeId, TyreDetailCommonClass.vehicleSizeId)
-                json.addProperty(TyreKey.manufaturingDate, TyreDetailCommonClass.manufaturingDate)
-                json.addProperty(TyreKey.psiInTyreService, TyreDetailCommonClass.psiInTyreService)
-                json.addProperty(TyreKey.psiOutTyreService, TyreDetailCommonClass.psiOutTyreService)
-                json.addProperty(TyreKey.weightTyreService, TyreDetailCommonClass.weightTyreService)
-                json.addProperty(TyreKey.sidewell, TyreDetailCommonClass.sidewell)
-                json.addProperty(TyreKey.shoulder, TyreDetailCommonClass.shoulder)
-                json.addProperty(TyreKey.treadDepth, TyreDetailCommonClass.treadDepth)
-                json.addProperty(TyreKey.treadWear, TyreDetailCommonClass.treadWear)
-                json.addProperty(TyreKey.rimDamage, TyreDetailCommonClass.rimDamage)
-                json.addProperty(TyreKey.bubble, TyreDetailCommonClass.bubble)
-
-                json.addProperty(TyreKey.chk1Make, TyreDetailCommonClass.chk1Make)
-                json.addProperty(TyreKey.chk2Make, TyreDetailCommonClass.chk2Make)
-                json.addProperty(TyreKey.chk3Make, TyreDetailCommonClass.chk3Make)
-                json.addProperty(TyreKey.chk1Pattern, TyreDetailCommonClass.chk1Pattern)
-                json.addProperty(TyreKey.chk2Pattern, TyreDetailCommonClass.chk2Pattern)
-                json.addProperty(TyreKey.chk3Pattern, TyreDetailCommonClass.chk3Pattern)
-                json.addProperty(TyreKey.chk1Size, TyreDetailCommonClass.chk1Size)
-                json.addProperty(TyreKey.chk2Size, TyreDetailCommonClass.chk2Size)
-                json.addProperty(TyreKey.chk3Size, TyreDetailCommonClass.chk3Size)
-
-                Log.e("iscompletedd0", "" + TyreConfigClass.LFCompleted)
-                Log.e("iscompletedd1", "" + TyreConfigClass.LRCompleted)
-                Log.e("iscompletedd11", "" + TyreConfigClass.RFCompleted)
-                Log.e("iscompletedd2", "" + TyreConfigClass.RRCompleted)
-
-                if (TyreDetailCommonClass.tyreType.equals("LF")) {
-                    if (TyreConfigClass.LFCompleted) {
-                        json.addProperty(TyreKey.isCompleted, "true")
-                    }
-                }
-                if (TyreDetailCommonClass.tyreType.equals("LR")) {
-                    if (TyreConfigClass.LRCompleted) {
-                        json.addProperty(TyreKey.isCompleted, "true")
-                    }
-                }
-                if (TyreDetailCommonClass.tyreType.equals("RF")) {
-                    if (TyreConfigClass.RFCompleted) {
-                        json.addProperty(TyreKey.isCompleted, "true")
-                    }
-                }
-                if (TyreDetailCommonClass.tyreType.equals("RR")) {
-                    if (TyreConfigClass.RRCompleted) {
-                        json.addProperty(TyreKey.isCompleted, "true")
-                    }
                 }
 
 
-                for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
-
-                    jsonArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i))
-                }
-                json.add(TyreKey.issueResolvedArr, jsonArr)
-                json.addProperty(
-                    TyreKey.visualDetailPhotoUrl,
-                    TyreDetailCommonClass.visualDetailPhotoUrl
-                )
-                json.addProperty(
-                    TyreKey.isCameraSelectedVisualDetail,
-                    TyreDetailCommonClass.isCameraSelectedVisualDetail
-                )
-
-
-                storeMake()
-
-                if (TyreDetailCommonClass.tyreType.equals("LF")) {
-                    prefManager.setValue(TyreConfigClass.TyreLFObject, json.toString())
-                }
-                if (TyreDetailCommonClass.tyreType.equals("LR")) {
-                    prefManager.setValue(TyreConfigClass.TyreLRObject, json.toString())
-                }
-                if (TyreDetailCommonClass.tyreType.equals("RF")) {
-                    prefManager.setValue(TyreConfigClass.TyreRFObject, json.toString())
-                }
-                if (TyreDetailCommonClass.tyreType.equals("RR")) {
-                    prefManager.setValue(TyreConfigClass.TyreRRObject, json.toString())
-                }
-
-                Log.e(
-                    "getjsonobject--00--",
-                    "" + prefManager.getValue(TyreConfigClass.TyreLFObject)
-                )
-                Log.e(
-                    "getjsonobject--11--",
-                    "" + prefManager.getValue(TyreConfigClass.TyreLRObject)
-                )
-                Log.e(
-                    "getjsonobject--22--",
-                    "" + prefManager.getValue(TyreConfigClass.TyreRFObject)
-                )
-                Log.e(
-                    "getjsonobject--33--",
-                    "" + prefManager.getValue(TyreConfigClass.TyreRRObject)
-                )
-
-                if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
-                    ivPickedImage?.setImageURI(Uri.parse(TyreConfigClass.CarPhoto_1))
-                }
-                if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
-                    ivPickedImage1?.setImageURI(Uri.parse(TyreConfigClass.CarPhoto_2))
-                }
-                getStoredObjects()
-                checkSubmitBtn()
             }
         }
     }
@@ -2434,8 +2429,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         btnSubmitAndComplete?.isClickable = true
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.round_corner_button_yellow))
-
-
     }
 
 
@@ -2449,7 +2442,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                 var lfObject: JSONObject? = JSONObject(str)
                 Log.e("getobjlf", "" + lfObject.toString())
-                Log.e("getobjlf", "" + TyreDetailCommonClass.chk1Make)
 
                 if (TyreDetailCommonClass.chk1Make.equals("RF,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
@@ -2572,11 +2564,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
                 var lfObject: JSONObject = JSONObject(str)
                 Log.e("getobjlr", "" + lfObject.toString())
-                Log.e("getobjlr", "" + TyreDetailCommonClass.chk2Make)
-                Log.e("getobjlr", "" + TyreDetailCommonClass.chk2Pattern)
-                Log.e("getobjlr", "" + TyreDetailCommonClass.chk2Size)
-
-
 
                 if (TyreDetailCommonClass.chk2Make.equals("LR,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
@@ -2696,12 +2683,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
                 var lfObject: JSONObject = JSONObject(str)
 
-
-
                 Log.e("getobjrr", "" + lfObject.toString())
-                Log.e("getobjrr", "" + TyreDetailCommonClass.chk3Make)
-                Log.e("getobjrr", "" + TyreDetailCommonClass.chk3Pattern)
-                Log.e("getobjrr", "" + TyreDetailCommonClass.chk3Size)
                 if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
                         !TyreDetailCommonClass.vehicleMakeId.equals("")
@@ -2823,9 +2805,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 var lfObject: JSONObject = JSONObject(str)
 
                 Log.e("getobjlr23", "" + lfObject.toString())
-                Log.e("getobjlr23", "" + TyreDetailCommonClass.chk1Make)
-                Log.e("getobjlr23", "" + TyreDetailCommonClass.chk1Pattern)
-                Log.e("getobjlr23", "" + TyreDetailCommonClass.chk1Size)
                 if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
                         !TyreDetailCommonClass.vehicleMakeId.equals("")
@@ -3063,7 +3042,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 var lfObject: JSONObject = JSONObject(str)
 
 
-
                 if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
                         !TyreDetailCommonClass.vehicleMakeId.equals("")
@@ -3182,9 +3160,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                 var lfObject: JSONObject = JSONObject(str)
                 Log.e("getobjlf11", "" + lfObject.toString())
-                Log.e("getobjlf11", "" + TyreDetailCommonClass.chk1Pattern)
-                Log.e("getobjlf11", "" + TyreDetailCommonClass.vehiclePattern)
-                Log.e("getobjlf11", "" + TyreDetailCommonClass.vehiclePatternId)
                 if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
                         !TyreDetailCommonClass.vehicleMakeId.equals("")
@@ -3308,9 +3283,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 var lfObject: JSONObject = JSONObject(str)
 
                 Log.e("getobjlr0", "" + lfObject.toString())
-                Log.e("getobjlr0", "" + TyreDetailCommonClass.chk2Make)
-                Log.e("getobjlr0", "" + TyreDetailCommonClass.chk2Pattern)
-                Log.e("getobjlr0", "" + TyreDetailCommonClass.chk2Size)
                 if (TyreDetailCommonClass.chk2Make.equals("LR,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
                         !TyreDetailCommonClass.vehicleMakeId.equals("")
@@ -3548,11 +3520,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
                 !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
             ) {
-
                 val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                 var lfObject: JSONObject = JSONObject(str)
-
-
 
                 if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
@@ -3933,11 +3902,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (pictureIntent.resolveActivity(packageManager) != null) {
             var photoFile: File? = null
             photoFile = try {
-                createImageFile()
+                Common.createImageFile(this)
+
             } catch (e: IOException) {
                 e.printStackTrace()
                 return
             }
+            imageFilePath = photoFile?.absolutePath!!
             val photoUri: Uri =
                 FileProvider.getUriForFile(this, "$packageName.provider", photoFile!!)
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -3945,14 +3916,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
     }
 
-    private fun createImageFile(): File? {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "IMG_" + timeStamp + "_"
-        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
-        imageFilePath = image.absolutePath
-        return image
-    }
 
     private fun openGallery() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
