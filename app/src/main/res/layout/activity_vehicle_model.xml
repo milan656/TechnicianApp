@@ -67,9 +67,9 @@
                 android:layout_height="1dp"
                 android:background="#E0E0E0" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/gridviewRecycModel"
@@ -81,16 +81,17 @@
                     android:layout_marginBottom="@dimen/fourteen_dp"
                     android:visibility="visible" />
 
-                <com.walkins.technician.custom.NormalNoDataTextView
-                    android:id="@+id/tvNoDataFound"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:textColor="@color/text_color1"
-                    android:textSize="@dimen/twelve_sp"
-                    android:text="No Pattern found"/>
-            </RelativeLayout>
+<!--                <com.walkins.technician.custom.NormalNoDataTextView-->
+<!--                    android:id="@+id/tvNoDataFound"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:textColor="@color/text_color1"-->
+<!--                    android:textSize="@dimen/twelve_sp"-->
+<!--                    android:text="No Pattern found"/>-->
+<!--            </RelativeLayout>-->
 
             <LinearLayout
                 android:id="@+id/llVehicleMakeselectedView"

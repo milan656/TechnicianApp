@@ -219,19 +219,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
         btnDone?.setOnClickListener(this)
 
-        if (TyreConfigClass.nitrogenRefillChecked || TyreConfigClass.nitrogenTopupChecked
-        ) {
-            psiOutFrame?.visibility = View.VISIBLE
-            psiInFrame?.visibility = View.VISIBLE
-        } else {
-            psiOutFrame?.visibility = View.GONE
-            psiInFrame?.visibility = View.GONE
-        }
-        if (!TyreConfigClass.nitrogenWheelBalancingChecked) {
-            weightFrame?.visibility = View.GONE
-        } else {
-            weightFrame?.visibility = View.VISIBLE
-        }
+
 
         ivOkSideWell = findViewById(R.id.ivOkSideWell)
         ivSugSideWell = findViewById(R.id.ivSugSideWell)
@@ -327,9 +315,44 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         llSugBubble?.setOnClickListener(this)
         llReqBubble?.setOnClickListener(this)
 
-        psiInSlider()
-        psiOutSlider()
-        weightSlider()
+
+
+        if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
+            !prefManager?.getValue(TyreConfigClass.serviceDetailData).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.serviceDetailData)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                Log.e("getservice", "" + json)
+
+                if ((json.get(TyreKey.nitrogenTopup) != null && json.get(TyreKey.nitrogenTopup)?.asString.equals(
+                        "true"
+                    )) ||
+                    (json.get(TyreKey.nitrogenRefil) != null && json.get(TyreKey.nitrogenRefil)?.asString.equals(
+                        "true"
+                    ))
+                ) {
+                    psiOutFrame?.visibility = View.VISIBLE
+                    psiInFrame?.visibility = View.VISIBLE
+                } else {
+                    psiOutFrame?.visibility = View.GONE
+                    psiInFrame?.visibility = View.GONE
+                }
+
+                if (json.get(TyreKey.wheelBalancing) != null && json.get(TyreKey.wheelBalancing)?.asString.equals(
+                        "true"
+                    )
+                ) {
+                    weightFrame?.visibility = View.VISIBLE
+                } else {
+                    weightFrame?.visibility = View.GONE
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
+
+        }
 
         if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
@@ -389,6 +412,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 }
             }
         }
+
+        psiInSlider()
+        psiOutSlider()
+        weightSlider()
         /* var thread = Thread {
              if (selectedTyre.equals("LF")) {
 
@@ -882,7 +909,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         if (json.get("isCameraSelectedVisualDetail")?.asBoolean!!) {
 
 
-
                         } else {
 
                         }
@@ -1251,6 +1277,28 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     return
                 }
 
+                selectedIssueArr?.clear()
+
+                if (issueResolveArray != null) {
+                    Log.e("issuelist", "" + issueResolveAdapter)
+                    for (i in issueResolveArray?.indices!!) {
+                        Log.e("issuelist", "" + issueResolveArray?.get(i))
+                        if (issueResolveArray?.get(i)?.isSelected!!) {
+                            selectedIssueArr?.add(
+                                issueResolveArray?.get(i)?.issueName!!
+                            )
+                        }
+                    }
+                }
+
+                if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
+
+                } else {
+                    Toast.makeText(this, "Please select Issue resolve List", Toast.LENGTH_SHORT)
+                        .show()
+                    return
+                }
+
                 if (selectedTyre.equals("LF")) {
 
                     TyreConfigClass.LFVehicleVisualDetail = true
@@ -1287,19 +1335,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 TyreDetailCommonClass.rimDamage = rimDamage
                 TyreDetailCommonClass.bubble = bubble
 
-                selectedIssueArr?.clear()
-
-                if (issueResolveArray != null) {
-                    Log.e("issuelist", "" + issueResolveAdapter)
-                    for (i in issueResolveArray?.indices!!) {
-                        Log.e("issuelist", "" + issueResolveArray?.get(i))
-                        if (issueResolveArray?.get(i)?.isSelected!!) {
-                            selectedIssueArr?.add(
-                                issueResolveArray?.get(i)?.issueName!!
-                            )
-                        }
-                    }
-                }
                 TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
 
                 Log.e("getslider", "" + TyreDetailCommonClass.issueResolvedArr)

@@ -141,8 +141,12 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         setData(json)
 
-                        runOnUiThread {
 
+
+                        runOnUiThread {
+                            chkRF?.isChecked=false
+                            chkLR?.isChecked=false
+                            chkRR?.isChecked=false
                             if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString.equals("RF,true")) true else false
@@ -179,7 +183,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         setData(json)
 
                         runOnUiThread {
-
+                            chkRF?.isChecked=false
+                            chkLR?.isChecked=false
+                            chkRR?.isChecked=false
                             if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString
@@ -221,6 +227,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         Log.e("getval", "" + json.get(TyreKey.chk2Make)?.asString)
                         Log.e("getval", "" + json.get(TyreKey.chk3Make)?.asString)
                         runOnUiThread {
+                            chkRF?.isChecked=false
+                            chkLR?.isChecked=false
+                            chkRR?.isChecked=false
                             if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make)?.asString.equals("LF,true")) true else false
@@ -256,6 +265,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         setData(json)
 
                         runOnUiThread {
+                            chkRF?.isChecked=false
+                            chkLR?.isChecked=false
+                            chkRR?.isChecked=false
                             if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString
@@ -289,10 +301,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-
-                    chkRF?.isChecked = false
-                    chkLR?.isChecked = false
-                    chkRR?.isChecked = false
+                    Log.e("getobjjlf", "" + json + " " + selectedName)
                     if (selectedName != null && !selectedName.equals("") &&
                         selectedName.equals(json.get("vehicleMake")?.asString!!)
                     ) {
@@ -351,8 +360,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
-                    Log.e("getobj", "" + json + " ")
-                    Log.e("getobj", "" + selectedName + " ")
+                    Log.e("getobjrf", "" + json + " ")
+                    Log.e("getobjrf", "" + selectedName + " ")
+                    Log.e("getobjrf", "" + json.get("vehicleMake")?.asString + " ")
 
                     if (selectedName != null && !selectedName.equals("") &&
                         selectedName.equals(json.get("vehicleMake")?.asString!!)
@@ -362,12 +372,15 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                             if (chkRF?.text?.toString().equals("RF")) {
                                 chkRF?.isChecked = true
+                                Log.e("getobjrf", "0" + " ")
                             }
                             if (chkLR?.text?.toString().equals("RF")) {
                                 chkLR?.isChecked = true
+                                Log.e("getobjrf", "1" + " ")
                             }
                             if (chkRR?.text?.toString().equals("RF")) {
                                 chkRR?.isChecked = true
+                                Log.e("getobjrf", "2" + " ")
                             }
                         }
                     }
@@ -480,6 +493,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     chkRF?.isChecked = false
                     chkLR?.isChecked = false
                     chkRR?.isChecked = false
+                    Log.e("getobjrf", "5" + " ")
                     if (json.get(TyreKey.vehicleMake) != null) {
                         if (selectedName.equals(
                                 json.get(TyreKey.vehicleMake)?.asString,
@@ -655,7 +669,127 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
         }
         //=========================================================================================================
+        if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                Log.e("getobjjlf", "" + json + " " + selectedName)
+                if (selectedName != null && !selectedName.equals("") &&
+                    selectedName.equals(json.get("vehicleMake")?.asString!!)
+                ) {
+                    runOnUiThread {
 
+                        if (chkRF?.text?.toString().equals("LF")) {
+                            chkRF?.isChecked = true
+                        }
+                        if (chkLR?.text?.toString().equals("LF")) {
+                            chkLR?.isChecked = true
+                        }
+                        if (chkRR?.text?.toString().equals("LF")) {
+                            chkRR?.isChecked = true
+                        }
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                Log.e("getobjj", "" + json + " " + selectedName)
+                if (selectedName != null && !selectedName.equals("") &&
+                    selectedName.equals(json.get("vehicleMake")?.asString!!)
+                ) {
+                    Log.e("getobjj", "" + json.get("vehicleMake")?.asString)
+                    runOnUiThread {
+
+                        if (chkRF?.text?.toString().equals("LR")) {
+                            chkRF?.isChecked = true
+                        }
+                        if (chkLR?.text?.toString().equals("LR")) {
+                            chkLR?.isChecked = true
+                        }
+                        if (chkRR?.text?.toString().equals("LR")) {
+                            chkRR?.isChecked = true
+                        }
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                Log.e("getobjrf", "" + json + " ")
+                Log.e("getobjrf", "" + selectedName + " ")
+                Log.e("getobjrf", "" + json.get("vehicleMake")?.asString + " ")
+
+                if (selectedName != null && !selectedName.equals("") &&
+                    selectedName.equals(json.get("vehicleMake")?.asString!!)
+                ) {
+
+                    runOnUiThread {
+
+                        if (chkRF?.text?.toString().equals("RF")) {
+                            chkRF?.isChecked = true
+                            Log.e("getobjrf", "0" + " ")
+                        }
+                        if (chkLR?.text?.toString().equals("RF")) {
+                            chkLR?.isChecked = true
+                            Log.e("getobjrf", "1" + " ")
+                        }
+                        if (chkRR?.text?.toString().equals("RF")) {
+                            chkRR?.isChecked = true
+                            Log.e("getobjrf", "2" + " ")
+                        }
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                if (selectedName != null && !selectedName.equals("") &&
+                    selectedName.equals(json.get("vehicleMake")?.asString!!)
+                ) {
+                    runOnUiThread {
+
+                        if (chkRF?.text?.toString().equals("RR")) {
+                            chkRF?.isChecked = true
+                        }
+                        if (chkLR?.text?.toString().equals("RR")) {
+                            chkLR?.isChecked = true
+                        }
+                        if (chkRR?.text?.toString().equals("RR")) {
+                            chkRR?.isChecked = true
+                        }
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
 
     }
 

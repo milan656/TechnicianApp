@@ -79,7 +79,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
         tvSelectedModel = findViewById(R.id.tvSelectedModel)
         ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
-        tvNoDataFound = findViewById(R.id.tvNoDataFound)
+//        tvNoDataFound = findViewById(R.id.tvNoDataFound)
 
         ivBack?.setOnClickListener(this)
         btnNext?.setOnClickListener(this)
@@ -98,7 +98,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
 
 
-        getVehiclePattern()
+
 
         if (selectedTyre.equals("LF")) {
             chkRF?.text = "RF"
@@ -118,6 +118,27 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             chkRR?.text = "LR"
         }
 
+
+
+
+
+
+/*
+        var thread = Thread {
+
+            Log.e("getsizee", "" + mDb.patternDaoClass().getAllPattern().size)
+            if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass()
+                    .getAllPattern().size > 0
+            ) {
+                arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+
+
+
+            }
+
+        }
+        thread.start()
+*/
 
         if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
@@ -423,26 +444,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-/*
-        var thread = Thread {
-
-            Log.e("getsizee", "" + mDb.patternDaoClass().getAllPattern().size)
-            if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass()
-                    .getAllPattern().size > 0
-            ) {
-                arrList?.addAll(mDb.patternDaoClass().getAllPattern())
-
-
-
-            }
-
-        }
-        thread.start()
-*/
-
-
         Log.e("getid", "" + selectedId)
 
+        getVehiclePattern()
 
         Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
         Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
@@ -657,6 +661,149 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 }
             }
         }
+
+//        ==============================================================
+
+        if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
+                        ""
+                    )
+                ) {
+                    Log.e(
+                        "getobjlf",
+                        "" + json.get("vehiclePatternId")?.asString + " " + selectedId
+                    )
+                    if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                        Log.e(
+                            "getobjlf",
+                            "" + selectedId + " " + json.get("vehiclePatternId")?.asString
+                        )
+                        Log.e("getobjlf", "" + json + " ")
+                        runOnUiThread {
+
+                            if (chkRF?.text?.toString().equals("LF")) {
+                                chkRF?.isChecked = true
+                            }
+                            if (chkLR?.text?.toString().equals("LF")) {
+                                chkLR?.isChecked = true
+                            }
+                            if (chkRR?.text?.toString().equals("LF")) {
+                                chkRR?.isChecked = true
+                            }
+                        }
+                    }
+
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
+                        ""
+                    )
+                ) {
+                    Log.e("getobjlr", "" + json.get("vehiclePatternId")?.asString + " ")
+                    if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                        Log.e("getobjlr", "" + selectedId + " ")
+                        Log.e("getobjlr", "" + json + " ")
+                        runOnUiThread {
+
+                            if (chkRF?.text?.toString().equals("LR")) {
+                                chkRF?.isChecked = true
+                            }
+                            if (chkLR?.text?.toString().equals("LR")) {
+                                chkLR?.isChecked = true
+                            }
+                            if (chkRR?.text?.toString().equals("LR")) {
+                                chkRR?.isChecked = true
+                            }
+                        }
+                    }
+
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
+                        ""
+                    )
+                ) {
+                    Log.e("getobjrfpa", "" + json.get("vehiclePatternId")?.asString + " ")
+                    if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                        Log.e("getobjrfpa", "" + selectedId + " ")
+                        runOnUiThread {
+
+                            if (chkRF?.text?.toString().equals("RF")) {
+                                chkRF?.isChecked = true
+                            }
+                            if (chkLR?.text?.toString().equals("RF")) {
+                                chkLR?.isChecked = true
+                            }
+                            if (chkRR?.text?.toString().equals("RF")) {
+                                chkRR?.isChecked = true
+                            }
+                        }
+                    }
+
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                Log.e("getobjrr", "" + json.get("vehiclePatternId")?.asString + " ")
+                if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
+                        ""
+                    )
+                ) {
+                    if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
+                        Log.e("getobjrr", "" + selectedId + " ")
+                        Log.e("getobjrr", "" + json + " ")
+                        runOnUiThread {
+
+                            if (chkRF?.text?.toString().equals("RR")) {
+                                chkRF?.isChecked = true
+                            }
+                            if (chkLR?.text?.toString().equals("RR")) {
+                                chkLR?.isChecked = true
+                            }
+                            if (chkRR?.text?.toString().equals("RR")) {
+                                chkRR?.isChecked = true
+                            }
+                        }
+                    }
+                }
+
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -723,10 +870,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         gridviewRecycModel?.visibility = View.VISIBLE
 
                         if (arrList?.size!! > 0) {
-                            tvNoDataFound?.visibility = View.GONE
+//                            tvNoDataFound?.visibility = View.GONE
                             Common.savePatternData(patternModel!!, mDb)
                         } else {
-                            tvNoDataFound?.visibility = View.VISIBLE
+//                            tvNoDataFound?.visibility = View.VISIBLE
                         }
 
                     } else {
