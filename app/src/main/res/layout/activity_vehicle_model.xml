@@ -67,15 +67,30 @@
                 android:layout_height="1dp"
                 android:background="#E0E0E0" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/gridviewRecycModel"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten_dp"
-                android:layout_marginTop="@dimen/fourteen_dp"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:layout_marginBottom="@dimen/fourteen_dp"
-                android:visibility="visible" />
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/gridviewRecycModel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:layout_marginEnd="@dimen/ten_dp"
+                    android:layout_marginBottom="@dimen/fourteen_dp"
+                    android:visibility="visible" />
+
+                <com.walkins.technician.custom.NormalNoDataTextView
+                    android:id="@+id/tvNoDataFound"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/twelve_sp"
+                    android:text="No Pattern found"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/llVehicleMakeselectedView"

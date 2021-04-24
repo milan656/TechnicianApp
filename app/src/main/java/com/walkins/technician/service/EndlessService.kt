@@ -162,48 +162,48 @@ class EndlessService : Service() {
         GlobalScope.launch(Dispatchers.IO) {
             while (isServiceStarted) {
                 launch(Dispatchers.IO) {
-//                    fetchVehicleData()
+                    fetchVehicleData()
 //                    fetchPattern()
-//                    fetchSize()
+                    fetchSize()
 
-                    val sdfo = SimpleDateFormat("dd-MM-yyyy hh:mm")
+                    /* val sdfo = SimpleDateFormat("dd-MM-yyyy hh:mm")
 
-                    // Get the two dates to be compared
+                     // Get the two dates to be compared
 
-                    // Get the two dates to be compared
-                    var date = Date()
-                    val formatter = SimpleDateFormat("dd-MM-yyyy hh:mm")
-                    val answer = formatter.format(date)
-                    Log.d("answer", answer)
-                    val d1 = sdfo.parse(answer)
+                     // Get the two dates to be compared
+                     var date = Date()
+                     val formatter = SimpleDateFormat("dd-MM-yyyy hh:mm")
+                     val answer = formatter.format(date)
+                     Log.d("answer", answer)
+                     val d1 = sdfo.parse(answer)
 
-                    val d2 = sdfo.parse("22-04-2021 06:05")
+                     val d2 = sdfo.parse("22-04-2021 06:05")
 
-//                    prefManager?.setValue(TyreConfigClass.backgroundWebServiceCallTime,answer)
+ //                    prefManager?.setValue(TyreConfigClass.backgroundWebServiceCallTime,answer)
 
-                    // Print the dates
-                    println("Date1 : " + sdfo.format(d1))
-                    println("Date2 : " + sdfo.format(d2))
+                     // Print the dates
+                     println("Date1 : " + sdfo.format(d1))
+                     println("Date2 : " + sdfo.format(d2))
 
-                    // Compare the dates
-                    if (d1.after(d2)) {
+                     // Compare the dates
+                     if (d1.after(d2)) {
 
-                        // When Date d1 > Date d2
-                        println("Date1 is greater then Date2")
-                        Log.e("callapi", "call")
-                        saveStaticVehicleMake()
-                        saveStaticPatternData()
-                        saveStaticSize()
-                    } else if (d1.before(d2)) {
+                         // When Date d1 > Date d2
+                         println("Date1 is greater then Date2")
+                         Log.e("callapi", "call")
+                         saveStaticVehicleMake()
+                         saveStaticPatternData()
+                         saveStaticSize()
+                     } else if (d1.before(d2)) {
 
-                        // When Date d1 < Date d2
-                        println("Date1 is less then Date2")
+                         // When Date d1 < Date d2
+                         println("Date1 is less then Date2")
 
-                    } else if (d1.equals(d2)) {
+                     } else if (d1.equals(d2)) {
 
-                        // When Date d1 = Date d2
-                        println("Date1 is equal to Date2")
-                    }
+                         // When Date d1 = Date d2
+                         println("Date1 is equal to Date2")
+                     }*/
                     stopService()
                 }
                 delay(2 * 60 * 1000) // 5 min delay
@@ -217,7 +217,7 @@ class EndlessService : Service() {
 
         var call: Call<ResponseBody>? = null
         call = warrantyApi.getVehicleTyreSize(
-            460, 41
+            460, 41, prefManager?.getAccessToken()!!
 
         )
         call.enqueue(object : Callback<ResponseBody> {
@@ -274,7 +274,7 @@ class EndlessService : Service() {
 
         var call: Call<ResponseBody>? = null
         call = warrantyApi.getVehicleBrand(
-
+            prefManager?.getAccessToken()!!
         )
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -305,7 +305,7 @@ class EndlessService : Service() {
 
         var call: Call<ResponseBody>? = null
         call = warrantyApi.getTyrePattern(
-            3
+            3, prefManager?.getAccessToken()!!
 
         )
         call.enqueue(object : Callback<ResponseBody> {
@@ -442,19 +442,16 @@ class EndlessService : Service() {
                     var entity = VehicleMakeModelClass()
 
                     entity.name = if (model.name != null) model.name else ""
+                    entity.brand_id = model.id?.toString()
                     entity.short_number = if (model.short_number != null) model.short_number else ""
                     entity.concat = if (model.concat != null) model.concat else ""
                     entity.image_url = if (model.image_url != null) model.image_url else ""
-                    entity.brand_id = if (model.brand_id != null) model.brand_id else ""
                     entity.quality = if (model.quality != null) model.quality else ""
 
                     entity.isSelected = false
                     mDb.daoClass().saveVehicleType(entity)
                 }
 
-            } else {
-
-                saveStaticVehicleMake()
             }
             Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize().size)
         }

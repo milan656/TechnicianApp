@@ -78,6 +78,9 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                 if (s != null && s.length != 0 && s.length == 1) {
 
                     edtOtp2?.requestFocus()
+                    otp?.append(edtOtp1?.text?.toString()?.toInt())
+
+
                 }
 
             }
@@ -95,6 +98,8 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s.length != 0 && s.length == 1) {
                     edtOtp3?.requestFocus()
+                    otp?.append(edtOtp2?.text?.toString()?.toInt())
+
                 }
             }
 
@@ -111,6 +116,8 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s.length != 0 && s.length == 1) {
                     edtOtp4?.requestFocus()
+                    otp?.append(edtOtp3?.text?.toString()?.toInt())
+
                 }
 
             }
@@ -128,6 +135,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s.length != 0 && s.length == 1) {
                     edtOtp4?.clearFocus()
+                    otp?.append(edtOtp4?.text?.toString()?.toInt())
                     btnVerify?.performClick()
                 }
 
@@ -190,11 +198,6 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                 edtOtp3?.text?.toString()?.length == 1 &&
                 edtOtp4?.text?.toString()?.length == 1
             ) {
-
-                otp?.append(edtOtp1?.text?.toString()?.toInt())
-                    ?.append(edtOtp2?.text?.toString()?.toInt())
-                    ?.append(edtOtp3?.text?.toString()?.toInt())
-                    ?.append(edtOtp4?.text?.toString()?.toInt())
 
                 Log.e("verifyy", "" + otp)
                 if (otp?.toString()?.length == 4) {

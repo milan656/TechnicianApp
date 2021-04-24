@@ -1,7 +1,7 @@
 package com.jkadvantage.model.vehicleBrandModel
 
 data class Data(
-//    var id: Int,
+    val id:Int,
     val brand_id: String,
     val image_url: String,
     val name: String,

@@ -466,7 +466,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
         selectedPos = variable
         Log.e("getselected", "" + arrList?.get(selectedPos)?.name)
-        Log.e("getselected", "" + arrList?.get(selectedPos)?.concat)
+        Log.e("getselected", "" + arrList?.get(selectedPos)?.brand_id)
         selectedName = arrList?.get(selectedPos)?.name!!
 
         if (selectedTyre.equals("LF")) {
@@ -802,6 +802,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         var intent = Intent(this, VehiclePatternActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)
         intent.putExtra("selectedVehicleMake", "" + arrList?.get(selectedPos)?.Id)
+        intent.putExtra("selectedMakeId",arrList?.get(selectedPos)?.brand_id)
         startActivityForResult(intent, 1002)
 
     }

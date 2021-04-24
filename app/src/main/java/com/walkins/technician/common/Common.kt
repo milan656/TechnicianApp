@@ -40,6 +40,8 @@ import com.google.gson.GsonBuilder
 import com.jkadvantagandbadsha.model.login.UserModel
 import com.jkadvantage.model.customerIntraction.uploadimage.UploadImageModel
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
+import com.walkins.technician.DB.DBClass
+import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.common.TyreDetailCommonClass
@@ -68,6 +70,8 @@ class Common {
         //        var url: String? = "https://staging-backend.jkadvantage.co.in/api/"
         var url: String? = "https://stag-tyreservice-backend.trackwalkins.com/api/"
 
+//        https://stag-tyreservice-backend.trackwalkins.com/api/v1/tyrepushpull/get-tyre-brand
+//      https://stag-tyreservice-backend.trackwalkins.com/api/v1/auth/login
 //        var url: String? = "http://52.3.195.148:5015/api/"
 
         var urlStaging: String? = "http://qa-picture.jktyrecrm.in/#/sM1I8A"
@@ -1036,6 +1040,32 @@ class Common {
             }
             return null
         }
+
+        fun savePatternData(patternModel: PatternModel,mDb: DBClass) {
+
+            var thread: Thread = Thread {
+                if (mDb.patternDaoClass().getAllPattern().size > 0) {
+                    mDb.patternDaoClass().deleteAll()
+                }
+
+                for (i in patternModel.data.indices) {
+
+                    var entity = VehiclePatternModelClass()
+
+                    entity.name =
+                        if (patternModel.data?.get(i)?.name != null) patternModel.data?.get(i)?.name else ""
+                    entity.patternId = patternModel.data?.get(i)?.patternId
+                    entity.isSelected = false
+                    mDb.patternDaoClass().savePattern(entity)
+                }
+
+                Log.e("response+++", "++++" + mDb.patternDaoClass().getAllPattern())
+            }
+
+            thread.start()
+
+        }
+
     }
 
 

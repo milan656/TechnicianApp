@@ -55,6 +55,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
+import java.lang.NullPointerException
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
@@ -655,7 +656,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
 
 
-        getServiceData()
+
 
         checkChangeListener()
 
@@ -867,6 +868,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ) {
             if (llUpdatedPlacement?.visibility == View.GONE) {
                 Common.expand(llUpdatedPlacement!!)
+                if (llServiceExpanded?.visibility==View.GONE) {
+                    Common.expand(llServiceExpanded!!)
+                }
             }
         } else {
             if (llUpdatedPlacement?.visibility == View.VISIBLE) {
@@ -1197,29 +1201,34 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         )
         jsonObject.add(TyreKey.technicalSuggestionArr, jsonArray)
 
-        val radioGroup = findViewById<View>(R.id.rdGroupLF) as RadioGroup
-        val radioButtonIDLF = radioGroup.checkedRadioButtonId
-        val radioButtonLF = radioGroup.findViewById<View>(radioButtonIDLF) as RadioButton
-        val selectedText = radioButtonLF.text?.toString() + "LF"
-        jsonObject.addProperty(TyreKey.radioGroupLF, selectedText)
+        try{
+            val radioGroup = findViewById<View>(R.id.rdGroupLF) as RadioGroup
+            val radioButtonIDLF = radioGroup.checkedRadioButtonId
+            val radioButtonLF = radioGroup.findViewById<View>(radioButtonIDLF) as RadioButton
+            val selectedText = radioButtonLF.text?.toString() + "LF"
+            jsonObject.addProperty(TyreKey.radioGroupLF, selectedText)
 
-        val radioGroupRF = findViewById<View>(R.id.rdGroupRF) as RadioGroup
-        val radioButtonIDRF = radioGroupRF.checkedRadioButtonId
-        val radioButtonRF = radioGroupRF.findViewById<View>(radioButtonIDRF) as RadioButton
-        val selectedTextRF = radioButtonRF.text?.toString() + "RF"
-        jsonObject.addProperty(TyreKey.radioGroupRF, selectedTextRF)
+            val radioGroupRF = findViewById<View>(R.id.rdGroupRF) as RadioGroup
+            val radioButtonIDRF = radioGroupRF.checkedRadioButtonId
+            val radioButtonRF = radioGroupRF.findViewById<View>(radioButtonIDRF) as RadioButton
+            val selectedTextRF = radioButtonRF.text?.toString() + "RF"
+            jsonObject.addProperty(TyreKey.radioGroupRF, selectedTextRF)
 
-        val radioGroupLR = findViewById<View>(R.id.rdGroupLR) as RadioGroup
-        val radioButtonIDLR = radioGroupLR.checkedRadioButtonId
-        val radioButtonLR = radioGroupLR.findViewById<View>(radioButtonIDLR) as RadioButton
-        val selectedTextLR = radioButtonLR.text?.toString() + "LR"
-        jsonObject.addProperty(TyreKey.radioGroupLR, selectedTextLR)
+            val radioGroupLR = findViewById<View>(R.id.rdGroupLR) as RadioGroup
+            val radioButtonIDLR = radioGroupLR.checkedRadioButtonId
+            val radioButtonLR = radioGroupLR.findViewById<View>(radioButtonIDLR) as RadioButton
+            val selectedTextLR = radioButtonLR.text?.toString() + "LR"
+            jsonObject.addProperty(TyreKey.radioGroupLR, selectedTextLR)
 
-        val radioGroupRR = findViewById<View>(R.id.rdGroupRR) as RadioGroup
-        val radioButtonIDRR = radioGroupRR.checkedRadioButtonId
-        val radioButtonRR = radioGroupRR.findViewById<View>(radioButtonIDRR) as RadioButton
-        val selectedTextRR = radioButtonRR.text?.toString() + "RR"
-        jsonObject.addProperty(TyreKey.radioGroupRR, selectedTextRR)
+            val radioGroupRR = findViewById<View>(R.id.rdGroupRR) as RadioGroup
+            val radioButtonIDRR = radioGroupRR.checkedRadioButtonId
+            val radioButtonRR = radioGroupRR.findViewById<View>(radioButtonIDRR) as RadioButton
+            val selectedTextRR = radioButtonRR.text?.toString() + "RR"
+            jsonObject.addProperty(TyreKey.radioGroupRR, selectedTextRR)
+
+        }catch (e:NullPointerException){
+            e.printStackTrace()
+        }
 
         prefManager.setValue(TyreConfigClass.serviceDetailData, jsonObject.toString())
 
@@ -3943,8 +3952,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    override fun onBackPressed() {
+    override fun onPause() {
         storeServiceDetailData()
-        super.onBackPressed()
+        super.onPause()
     }
+
+    override fun onResume() {
+        super.onResume()
+        getServiceData()
+    }
+
+
+
 }

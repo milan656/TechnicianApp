@@ -42,7 +42,7 @@ class WarrantyRepository {
         access_token: String, context: Context
     ): MutableLiveData<VehicleBrandModel> {
         var otpData = MutableLiveData<VehicleBrandModel>()
-        otpApi.getVehicleBrand(/*vehicle_type_id, access_token*/)
+        otpApi.getVehicleBrand(access_token)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -80,10 +80,11 @@ class WarrantyRepository {
 
     fun getVehiclePattern(
         brand_id: Int,
+        access_token: String,
         context: Context
     ): MutableLiveData<PatternModel> {
         var otpData = MutableLiveData<PatternModel>()
-        otpApi.getTyrePattern(brand_id)
+        otpApi.getTyrePattern(brand_id,access_token)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -122,10 +123,11 @@ class WarrantyRepository {
     fun getVehicleSize(
         model_id: Int,
         make_id: Int,
+        access_token: String,
         context: Context
     ): MutableLiveData<SizeModel> {
         var otpData = MutableLiveData<SizeModel>()
-        otpApi.getVehicleTyreSize(/*vehicle_type_id, access_token*/model_id, make_id)
+        otpApi.getVehicleTyreSize(/*vehicle_type_id, access_token*/model_id, make_id,access_token)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
