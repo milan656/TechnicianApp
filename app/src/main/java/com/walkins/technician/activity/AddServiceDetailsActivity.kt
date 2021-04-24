@@ -87,11 +87,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private var selectImage1 = false
 
-    private var serviceExpanded = false
-    private var techicalSuggestionExpanded = false
-    private var tyreConfigExpanded = false
-    private var tyreConfig = false
-    private var technicalSuggestion = false
     private var llUpdatedPlacement: LinearLayout? = null
 
     private var chkNitrogenTopup: CheckBox? = null
