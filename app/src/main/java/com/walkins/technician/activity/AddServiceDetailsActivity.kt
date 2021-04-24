@@ -38,6 +38,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.google.gson.reflect.TypeToken
 import com.walkins.technician.DB.*
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
@@ -50,6 +51,7 @@ import com.walkins.technician.viewmodel.ServiceViewModel
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
+import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -158,6 +160,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var selectedDate: String? = null
     var singleBuilder: SingleDateAndTimePickerDialogDueDate.Builder? = null
     var lltransparent: LinearLayout? = null
+    var llTyreRotation: LinearLayout? = null
+    var llWheelbalancing: LinearLayout? = null
+    var llNitrogenRefil: LinearLayout? = null
+    var llNitrogenTopup: LinearLayout? = null
+
+    private var radioLF_LR: RadioButton? = null
+    private var radioLF_RR: RadioButton? = null
+    private var radioRR_RF: RadioButton? = null
+    private var radioRR_LF: RadioButton? = null
+    private var radioLR_LF: RadioButton? = null
+    private var radioLR_RF: RadioButton? = null
+    private var radioRF_LR: RadioButton? = null
+    private var radioRF_RR: RadioButton? = null
 
     // image picker code
     val REQUEST_IMAGE = 100
@@ -230,7 +245,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
                 if ((jsonLF.get(TyreKey.manufaturingDate) != null &&
                             !jsonLF.get(TyreKey.manufaturingDate)?.asString.equals("") &&
-                            (jsonLF.get(TyreKey.sidewell) != null && jsonLF.get(TyreKey.sidewell)?.asString.equals(
+                            (jsonLF.get(TyreKey.sidewell) != null && !jsonLF.get(TyreKey.sidewell)?.asString.equals(
                                 ""
                             )) &&
                             (jsonLF.get(TyreKey.shoulder) != null && !jsonLF.get(TyreKey.shoulder)?.asString.equals(
@@ -239,7 +254,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             (jsonLF.get(TyreKey.treadWear) != null && !jsonLF.get(TyreKey.treadWear)?.asString.equals(
                                 ""
                             )) &&
-                            (jsonLF.get(TyreKey.treadDepth)?.asString != null && !jsonLF.get(TyreKey.treadDepth)?.asString.equals(
+                            (jsonLF.get(TyreKey.treadDepth) != null && !jsonLF.get(TyreKey.treadDepth)?.asString.equals(
                                 ""
                             )) &&
                             (jsonLF.get(TyreKey.rimDamage) != null && !jsonLF.get(TyreKey.rimDamage)?.asString.equals(
@@ -279,22 +294,25 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             !jsonRF.get(TyreKey.vehicleMakeId)?.asString.equals(""))
                 ) {
                     TyreConfigClass.RFVehicleMake = true
+                    Log.e("rfstatus", "" + TyreConfigClass.RFVehicleMake)
                 }
                 if ((jsonRF.get(TyreKey.vehiclePattern) != null && jsonRF.get(TyreKey.vehiclePatternId) != null &&
                             !jsonRF.get(TyreKey.vehiclePattern)?.asString.equals("") &&
                             !jsonRF.get(TyreKey.vehiclePatternId)?.asString.equals(""))
                 ) {
                     TyreConfigClass.RFVehiclePattern = true
+                    Log.e("rfstatus0", "" + TyreConfigClass.RFVehiclePattern)
                 }
                 if ((jsonRF.get(TyreKey.vehicleSize) != null && jsonRF.get(TyreKey.vehicleSizeId) != null &&
                             !jsonRF.get(TyreKey.vehicleSize)?.asString.equals("") &&
                             !jsonRF.get(TyreKey.vehicleSizeId)?.asString.equals(""))
                 ) {
                     TyreConfigClass.RFVehicleSize = true
+                    Log.e("rfstatus2", "" + TyreConfigClass.RFVehicleSize)
                 }
                 if ((jsonRF.get(TyreKey.manufaturingDate) != null &&
                             !jsonRF.get(TyreKey.manufaturingDate)?.asString.equals("") &&
-                            (jsonRF.get(TyreKey.sidewell) != null && jsonRF.get(TyreKey.sidewell)?.asString.equals(
+                            (jsonRF.get(TyreKey.sidewell) != null && !jsonRF.get(TyreKey.sidewell)?.asString.equals(
                                 ""
                             )) &&
                             (jsonRF.get(TyreKey.shoulder) != null && !jsonRF.get(TyreKey.shoulder)?.asString.equals(
@@ -303,7 +321,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             (jsonRF.get(TyreKey.treadWear) != null && !jsonRF.get(TyreKey.treadWear)?.asString.equals(
                                 ""
                             )) &&
-                            (jsonRF.get(TyreKey.treadDepth)?.asString != null && !jsonRF.get(TyreKey.treadDepth)?.asString.equals(
+                            (jsonRF.get(TyreKey.treadDepth) != null && !jsonRF.get(TyreKey.treadDepth)?.asString.equals(
                                 ""
                             )) &&
                             (jsonRF.get(TyreKey.rimDamage) != null && !jsonRF.get(TyreKey.rimDamage)?.asString.equals(
@@ -314,6 +332,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             )))
                 ) {
                     TyreConfigClass.RFVehicleVisualDetail = true
+                    Log.e("rfstatus4", "" + TyreConfigClass.RFVehicleVisualDetail)
                 }
 
                 try {
@@ -370,7 +389,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
                 if ((jsonLR.get(TyreKey.manufaturingDate) != null &&
                             !jsonLR.get(TyreKey.manufaturingDate)?.asString.equals("") &&
-                            (jsonLR.get(TyreKey.sidewell) != null && jsonLR.get(TyreKey.sidewell)?.asString.equals(
+                            (jsonLR.get(TyreKey.sidewell) != null && !jsonLR.get(TyreKey.sidewell)?.asString.equals(
                                 ""
                             )) &&
                             (jsonLR.get(TyreKey.shoulder) != null && !jsonLR.get(TyreKey.shoulder)?.asString.equals(
@@ -379,7 +398,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             (jsonLR.get(TyreKey.treadWear) != null && !jsonLR.get(TyreKey.treadWear)?.asString.equals(
                                 ""
                             )) &&
-                            (jsonLR.get(TyreKey.treadDepth)?.asString != null && !jsonLR.get(TyreKey.treadDepth)?.asString.equals(
+                            (jsonLR.get(TyreKey.treadDepth) != null && !jsonLR.get(TyreKey.treadDepth)?.asString.equals(
                                 ""
                             )) &&
                             (jsonLR.get(TyreKey.rimDamage) != null && !jsonLR.get(TyreKey.rimDamage)?.asString.equals(
@@ -443,7 +462,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
                 if ((jsonRR.get(TyreKey.manufaturingDate) != null &&
                             !jsonRR.get(TyreKey.manufaturingDate)?.asString.equals("") &&
-                            (jsonRR.get(TyreKey.sidewell) != null && jsonRR.get(TyreKey.sidewell)?.asString.equals(
+                            (jsonRR.get(TyreKey.sidewell) != null && !jsonRR.get(TyreKey.sidewell)?.asString.equals(
                                 ""
                             )) &&
                             (jsonRR.get(TyreKey.shoulder) != null && !jsonRR.get(TyreKey.shoulder)?.asString.equals(
@@ -452,7 +471,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             (jsonRR.get(TyreKey.treadWear) != null && !jsonRR.get(TyreKey.treadWear)?.asString.equals(
                                 ""
                             )) &&
-                            (jsonRR.get(TyreKey.treadDepth)?.asString != null && !jsonRR.get(TyreKey.treadDepth)?.asString.equals(
+                            (jsonRR.get(TyreKey.treadDepth) != null && !jsonRR.get(TyreKey.treadDepth)?.asString.equals(
                                 ""
                             )) &&
                             (jsonRR.get(TyreKey.rimDamage) != null && !jsonRR.get(TyreKey.rimDamage)?.asString.equals(
@@ -475,86 +494,80 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
 
-                Log.e("rrStatus0", "" + TyreConfigClass.RRVehicleMake)
-                Log.e("rrStatus1", "" + TyreConfigClass.RRVehiclePattern)
-                Log.e("rrStatus2", "" + TyreConfigClass.RRVehicleSize)
-                Log.e("rrStatus3", "" + TyreConfigClass.RRVehicleVisualDetail)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
 
-        if (prefManager.getValue(TyreKey.nitrogenRefil) != null && prefManager.getValue(TyreKey.nitrogenRefil)
-                .equals("true")
+        if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceDetailData).equals("")
         ) {
-            chkNitrogenRefill?.isChecked = true
-        }
-        if (prefManager.getValue(TyreKey.nitrogenTopup) != null && prefManager.getValue(TyreKey.nitrogenTopup)
-                .equals("true")
-        ) {
-            chkNitrogenTopup?.isChecked = true
-        }
-        if (prefManager.getValue(TyreKey.wheelBalancing) != null && prefManager.getValue(TyreKey.wheelBalancing)
-                .equals("true")
-        ) {
-            chkWheelBalacing?.isChecked = true
-        }
-        if (prefManager.getValue(TyreKey.tyreRotation) != null && prefManager.getValue(TyreKey.tyreRotation)
-                .equals("true")
-        ) {
-            chkTyreRotation?.isChecked = true
-        }
+            var str = prefManager.getValue(TyreConfigClass.serviceDetailData)
 
-        if (prefManager.getValue(TyreKey.nextDueDate) != null && !prefManager.getValue(TyreKey.nextDueDate)
-                .equals("")
-        ) {
-            tvNextServiceDueDate?.text = prefManager.getValue(TyreKey.nextDueDate)
-        }
-        if (prefManager.getValue(TyreKey.moreSuggestion) != null && !prefManager.getValue(TyreKey.moreSuggestion)
-                .equals("")
-        ) {
-            edtMoreSuggestion?.setText(prefManager.getValue(TyreKey.moreSuggestion))
-        }
+            try {
+                var jsonService: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                Log.e("serviceObj", "" + jsonService)
 
-        if (prefManager?.getValue("AddServiceSuggestion") != null &&
-            !prefManager.getValue("AddServiceSuggestion").equals("")
-        ) {
+                if (jsonService.get(TyreKey.nitrogenTopup) != null && jsonService.get(TyreKey.nitrogenTopup)?.asString
+                        .equals("true")
+                ) {
+                    Log.e("serviceObj", "" + true + "topup")
+                    chkNitrogenTopup?.isChecked = true
+                }
+                if (jsonService.get(TyreKey.nitrogenRefil) != null && jsonService.get(TyreKey.nitrogenRefil)?.asString
+                        .equals("true")
+                ) {
+                    Log.e("serviceObj", "" + true + "refil")
+                    chkNitrogenRefill?.isChecked = true
+                }
+                if (jsonService.get(TyreKey.tyreRotation) != null && jsonService.get(TyreKey.tyreRotation)?.asString
+                        .equals("true")
+                ) {
+                    Log.e("serviceObj", "" + true + "rotation")
+                    chkTyreRotation?.isChecked = true
+                }
+                if (jsonService.get(TyreKey.wheelBalancing) != null && jsonService.get(TyreKey.wheelBalancing)?.asString
+                        .equals("true")
+                ) {
+                    Log.e("serviceObj", "" + true + "wheel")
+                    chkWheelBalacing?.isChecked = true
+                }
+                if (jsonService.get(TyreKey.nextDueDate) != null && !jsonService.get(TyreKey.nextDueDate)?.asString
+                        .equals("")
+                ) {
+                    tvNextServiceDueDate?.setText(jsonService.get(TyreKey.nextDueDate)?.asString)
+                }
+                if (jsonService.get(TyreKey.moreSuggestion) != null && !jsonService.get(TyreKey.moreSuggestion)?.asString
+                        .equals("")
+                ) {
+                    edtMoreSuggestion?.setText(jsonService.get(TyreKey.moreSuggestion)?.asString)
+                }
 
-            val gson = Gson()
-            val jsonText: String = prefManager.getValue("AddServiceSuggestion")
-            val text = gson.fromJson(
-                jsonText,
-                Array<String>::class.java
-            )
+                if (jsonService.get(TyreKey.technicalSuggestionArr) != null) {
 
-            for (i in text?.indices!!) {
-                Log.e("getarray", "" + text.get(i))
-            }
-            for (i in suggestionArray?.indices!!) {
-                Log.e("getarraysuggestion", "" + suggestionArray?.get(i))
-            }
+                    var arr = jsonService.get(TyreKey.technicalSuggestionArr)?.asJsonArray
+                    Log.e("getvalues", "" + arr)
+                    val gson = Gson()
+                    val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                    val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                    Log.e("getvalues", "" + arrlist)
+                    for (i in suggestionArray?.indices!!) {
 
-            if ((suggestionArray != null && suggestionArray?.size!! > 0) &&
-                (text != null && text.size > 0)
-            ) {
-                for (i in suggestionArray?.indices!!) {
+                        for (j in arrlist.indices) {
 
-                    for (j in text.indices) {
-                        if (suggestionArray?.get(i)?.issueName?.equals(text.get(j))!!) {
-                            Log.e("getobjj", "" + text.get(j))
-                            suggestionArray?.get(i)?.isSelected = true
-
+                            if (suggestionArray?.get(i)?.issueName.equals(arrlist.get(j))) {
+                                suggestionArray?.get(i)?.isSelected = true
+                                selectedSuggestionArr?.add(suggestionArray?.get(i)?.issueName!!)
+                            }
                         }
                     }
-                }
 
-                for (i in suggestionArray?.indices!!) {
-                    Log.e("getarraysuggestion", "" + suggestionArray?.get(i))
+                    tyreSuggestionAdapter?.notifyDataSetChanged()
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
 
-                tyreSuggestionAdapter?.notifyDataSetChanged()
             }
-
         }
     }
 
@@ -598,11 +611,24 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         edtMoreSuggestion = findViewById(R.id.edtMoreSuggestion)
         btnSubmitAndComplete = findViewById(R.id.btnSubmitAndComplete)
         lltransparent = findViewById(R.id.lltransparent)
+        llNitrogenRefil = findViewById(R.id.llNitrogenRefil)
+        llNitrogenTopup = findViewById(R.id.llNitrogenTopup)
+        llWheelbalancing = findViewById(R.id.llWheelbalancing)
+        llTyreRotation = findViewById(R.id.llTyreRotation)
 
         ivInfoImgLF = findViewById(R.id.ivInfoImgLF)
         ivInfoImgLR = findViewById(R.id.ivInfoImgLR)
         ivInfoImgRF = findViewById(R.id.ivInfoImgRF)
         ivInfoImgRR = findViewById(R.id.ivInfoImgRR)
+
+        radioLF_LR = findViewById(R.id.radioLF_LR)
+        radioLF_RR = findViewById(R.id.radioLF_RR)
+        radioRR_RF = findViewById(R.id.radioRR_RF)
+        radioRR_LF = findViewById(R.id.radioRR_LF)
+        radioLR_LF = findViewById(R.id.radioLR_LF)
+        radioLR_RF = findViewById(R.id.radioLR_RF)
+        radioRF_LR = findViewById(R.id.radioRF_LR)
+        radioRF_RR = findViewById(R.id.radioRF_RR)
 
         ivPhoneCall = findViewById(R.id.ivPhoneCall)
 
@@ -610,6 +636,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivInfoImgRF?.setOnClickListener(this)
         ivInfoImgLR?.setOnClickListener(this)
         ivInfoImgLF?.setOnClickListener(this)
+
+        llNitrogenTopup?.setOnClickListener(this)
+        llNitrogenRefil?.setOnClickListener(this)
+        llTyreRotation?.setOnClickListener(this)
+        llWheelbalancing?.setOnClickListener(this)
 
         ivDueDate?.setOnClickListener(this)
         btnSubmitAndComplete?.setOnClickListener(this)
@@ -651,15 +682,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         relCarPhotoAdd1?.setOnClickListener(this)
         relCarPhotoAdd2?.setOnClickListener(this)
         tvSkipService?.setOnClickListener(this)
-        cardtyreConfig?.setOnClickListener(this)
-        cardtechinicalSuggestion?.setOnClickListener(this)
-        cardservice?.setOnClickListener(this)
         ivAddServices?.setOnClickListener(this)
         ivAddTyreConfig?.setOnClickListener(this)
         ivAddTechnicalSuggestion?.setOnClickListener(this)
         ivEditImg1?.setOnClickListener(this)
         ivEditImg2?.setOnClickListener(this)
 
+        cardtyreConfig?.setOnTouchListener(this)
+        cardtechinicalSuggestion?.setOnTouchListener(this)
+        cardservice?.setOnTouchListener(this)
 
         ivTyre1?.setOnTouchListener(this)
         ivTyre2?.setOnTouchListener(this)
@@ -734,11 +765,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         })
 
-
-//        TyreConfigClass.LFCompleted = false
-//        TyreConfigClass.LRCompleted = false
-//        TyreConfigClass.RFCompleted = false
-//        TyreConfigClass.RRCompleted = false
     }
 
     private fun checkChangeListener() {
@@ -746,6 +772,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
 
+                chkWheelBalacing?.isChecked = isChecked
                 showHideUpdatedPlacement()
 
             }
@@ -754,6 +781,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         chkTyreRotation?.setOnCheckedChangeListener(object :
             CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                chkTyreRotation?.isChecked = isChecked
                 showHideUpdatedPlacement()
             }
 
@@ -761,6 +789,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         chkNitrogenTopup?.setOnCheckedChangeListener(object :
             CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                chkNitrogenTopup?.isChecked = isChecked
                 showHideUpdatedPlacement()
             }
 
@@ -768,6 +797,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         chkNitrogenRefill?.setOnCheckedChangeListener(object :
             CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                Log.e("chkbox", "" + isChecked + " " + chkNitrogenRefill?.isChecked)
+                chkNitrogenRefill?.isChecked = isChecked
                 showHideUpdatedPlacement()
             }
 
@@ -785,15 +816,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Common.collapse(llUpdatedPlacement!!)
             }
         }
-        TyreConfigClass.nitrogenTopupChecked = chkNitrogenTopup?.isChecked!!
-        TyreConfigClass.nitrogenRefillChecked = chkNitrogenRefill?.isChecked!!
-        TyreConfigClass.nitrogenTyreRotationChecked = chkTyreRotation?.isChecked!!
-        TyreConfigClass.nitrogenWheelBalancingChecked = chkWheelBalacing?.isChecked!!
 
-        prefManager.setValue(TyreKey.nitrogenTopup, "" + chkNitrogenTopup?.isChecked)
-        prefManager.setValue(TyreKey.nitrogenRefil, "" + chkNitrogenRefill?.isChecked)
-        prefManager.setValue(TyreKey.tyreRotation, "" + chkTyreRotation?.isChecked)
-        prefManager.setValue(TyreKey.wheelBalancing, "" + chkWheelBalacing?.isChecked)
     }
 
     override fun onClick(v: View?) {
@@ -812,6 +835,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 )
             }
             R.id.ivBack -> {
+
+
                 onBackPressed()
             }
             R.id.relCarPhotoAdd1, R.id.ivEditImg1 -> {
@@ -839,7 +864,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             R.id.ivInfoImgLR -> {
                 if (!checkService()) {
-                    Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
+
                     return
                 }
 
@@ -870,7 +895,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.ivInfoImgLF -> {
                 if (!checkService()) {
-                    Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
                     return
                 }
                 pendingArr = arrayListOf<String>()
@@ -900,7 +924,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.ivInfoImgRR -> {
                 if (!checkService()) {
-                    Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
                     return
                 }
 
@@ -930,7 +953,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.ivInfoImgRF -> {
                 if (!checkService()) {
-                    Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
                     return
                 }
 
@@ -1036,18 +1058,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tvTyreAddInfo?.isAllCaps = false
                 }
             }
-            R.id.cardservice -> {
-                Log.e("clickcall", "0")
-                ivAddServices?.performClick()
-            }
-            R.id.cardtyreConfig -> {
-                Log.e("clickcall", "1")
-                ivAddTyreConfig?.performClick()
-            }
-            R.id.cardtechinicalSuggestion -> {
-                Log.e("clickcall", "2")
-                ivAddTechnicalSuggestion?.performClick()
-            }
             R.id.ivDueDate -> {
                 openDatePicker()
             }
@@ -1055,7 +1065,109 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 addServiceApiCall()
             }
+            R.id.llNitrogenTopup -> {
+                if (chkNitrogenTopup?.isChecked!!) {
+
+                    chkNitrogenTopup?.isChecked = false
+                } else {
+                    chkNitrogenTopup?.isChecked = true
+                }
+            }
+            R.id.llNitrogenRefil -> {
+                if (chkNitrogenRefill?.isChecked!!) {
+
+                    chkNitrogenRefill?.isChecked = false
+                } else {
+                    chkNitrogenRefill?.isChecked = true
+                }
+
+            }
+            R.id.llWheelbalancing -> {
+                if (chkWheelBalacing?.isChecked!!) {
+
+                    chkWheelBalacing?.isChecked = false
+                } else {
+                    chkWheelBalacing?.isChecked = true
+                }
+
+            }
+            R.id.llTyreRotation -> {
+                if (chkTyreRotation?.isChecked!!) {
+
+                    chkTyreRotation?.isChecked = false
+                } else {
+                    chkTyreRotation?.isChecked = true
+                }
+
+            }
         }
+    }
+
+    private fun storeServiceDetailData() {
+        var jsonObject: JsonObject = JsonObject()
+
+        jsonObject.addProperty(TyreKey.nitrogenTopup, "" + chkNitrogenTopup?.isChecked)
+        jsonObject.addProperty(TyreKey.nitrogenRefil, "" + chkNitrogenRefill?.isChecked)
+        jsonObject.addProperty(TyreKey.tyreRotation, "" + chkTyreRotation?.isChecked)
+        jsonObject.addProperty(TyreKey.wheelBalancing, "" + chkWheelBalacing?.isChecked)
+
+        jsonObject.addProperty(TyreKey.moreSuggestion, edtMoreSuggestion?.text?.toString())
+        jsonObject.addProperty(TyreKey.nextDueDate, tvNextServiceDueDate?.text.toString())
+
+        var jsonArray: JsonArray = JsonArray()
+
+        selectedSuggestionArr?.clear()
+
+        if (suggestionArray != null) {
+            for (i in suggestionArray?.indices!!) {
+                Log.e("issuelist", "" + suggestionArray?.get(i))
+                if (suggestionArray?.get(i)?.isSelected!!) {
+                    selectedSuggestionArr?.add(
+                        suggestionArray?.get(i)?.issueName!!
+                    )
+                }
+            }
+        }
+
+        if (selectedSuggestionArr != null && selectedSuggestionArr?.size!! > 0) {
+            for (i in selectedSuggestionArr?.indices!!) {
+                jsonArray.add(selectedSuggestionArr?.get(i))
+            }
+        }
+        jsonObject.addProperty(
+            TyreKey.technicalSuggestionArr,
+            tvNextServiceDueDate?.text.toString()
+        )
+        jsonObject.add(TyreKey.technicalSuggestionArr, jsonArray)
+
+        val radioGroup = findViewById<View>(R.id.rdGroupLF) as RadioGroup
+        val radioButtonIDLF = radioGroup.checkedRadioButtonId
+        val radioButtonLF = radioGroup.findViewById<View>(radioButtonIDLF) as RadioButton
+        val selectedText = radioButtonLF.text?.toString() + "LF"
+        jsonObject.addProperty(TyreKey.radioGroupLF, selectedText)
+
+        val radioGroupRF = findViewById<View>(R.id.rdGroupRF) as RadioGroup
+        val radioButtonIDRF = radioGroupRF.checkedRadioButtonId
+        val radioButtonRF = radioGroupRF.findViewById<View>(radioButtonIDRF) as RadioButton
+        val selectedTextRF = radioButtonRF.text?.toString() + "RF"
+        jsonObject.addProperty(TyreKey.radioGroupRF, selectedTextRF)
+
+        val radioGroupLR = findViewById<View>(R.id.rdGroupLR) as RadioGroup
+        val radioButtonIDLR = radioGroupLR.checkedRadioButtonId
+        val radioButtonLR = radioGroupLR.findViewById<View>(radioButtonIDLR) as RadioButton
+        val selectedTextLR = radioButtonLR.text?.toString() + "LR"
+        jsonObject.addProperty(TyreKey.radioGroupLR, selectedTextLR)
+
+        val radioGroupRR = findViewById<View>(R.id.rdGroupRR) as RadioGroup
+        val radioButtonIDRR = radioGroupRR.checkedRadioButtonId
+        val radioButtonRR = radioGroupRR.findViewById<View>(radioButtonIDRR) as RadioButton
+        val selectedTextRR = radioButtonRR.text?.toString() + "RR"
+        jsonObject.addProperty(TyreKey.radioGroupRR, selectedTextRR)
+
+        prefManager.setValue(TyreConfigClass.serviceDetailData, jsonObject.toString())
+
+        Log.e("serviceObjStore", "" + jsonObject.toString())
+
     }
 
     private fun addServiceApiCall() {
@@ -1206,26 +1318,26 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
 
-               /* serviceViewModel?.callApiAddService(
-                    jsonObject,
-                    prefManager.getAccessToken()!!,
-                    this
-                )
+                /* serviceViewModel?.callApiAddService(
+                     jsonObject,
+                     prefManager.getAccessToken()!!,
+                     this
+                 )
 
-                serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
-                    if (it != null) {
-                        if (it.success) {
+                 serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
+                     if (it != null) {
+                         if (it.success) {
 
-                        } else {
+                         } else {
 
-                            if (it.error != null) {
-                                if (it.error.get(0)?.message != null) {
-                                    showShortToast(TyreKey.something_went_wrong, this)
-                                }
-                            }
-                        }
-                    }
-                })*/
+                             if (it.error != null) {
+                                 if (it.error.get(0)?.message != null) {
+                                     showShortToast(TyreKey.something_went_wrong, this)
+                                 }
+                             }
+                         }
+                     }
+                 })*/
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -1583,21 +1695,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     override fun onPositionClick(variable: Int, check: Int) {
 
         if (check == 5) {
-            suggestionArray?.clear()
 
-            if (suggestionArray != null) {
-//                Log.e("issuelist", "" + issueResolveAdapter)
-                for (i in suggestionArray?.indices!!) {
-                    if (suggestionArray?.get(i)?.isSelected!!) {
-                        selectedSuggestionArr?.add(
-                            suggestionArray?.get(i)?.issueName!!
-                        )
-                    }
-                }
-            }
-
-            Log.e("getsizee", "" + selectedSuggestionArr)
-            prefManager.saveArray("AddServiceSuggestion", selectedSuggestionArr!!)
         }
 
 
@@ -1696,7 +1794,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivTyre1 -> {
 
                 if (!checkService()) {
-                    Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
                     return false
                 }
 
@@ -1743,7 +1840,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.ivTyre3 -> {
                 if (!checkService()) {
-                    Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
                     return false
                 }
 
@@ -1791,7 +1887,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.ivTyre2 -> {
                 if (!checkService()) {
-                    Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
                     return false
                 }
 
@@ -1837,7 +1932,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.ivTyre4 -> {
                 if (!checkService()) {
-                    Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
                     return false
                 }
 
@@ -1895,6 +1989,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     startActivity(callIntent)
                 }
             }
+            R.id.cardservice -> {
+                ivAddServices?.performClick()
+            }
+            R.id.cardtyreConfig -> {
+                if (checkService()) {
+
+                    ivAddTyreConfig?.performClick()
+                }
+            }
+            R.id.cardtechinicalSuggestion -> {
+                ivAddTechnicalSuggestion?.performClick()
+            }
 
 
         }
@@ -1907,6 +2013,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ) {
             return true
         } else {
+            Toast.makeText(this, "Please Select Service", Toast.LENGTH_SHORT).show()
             return false
         }
     }
@@ -2230,36 +2337,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     "" + prefManager.getValue(TyreConfigClass.TyreRRObject)
                 )
 
-
-                chkNitrogenTopup?.isChecked = TyreConfigClass.nitrogenTopupChecked
-                chkNitrogenRefill?.isChecked = TyreConfigClass.nitrogenRefillChecked
-                chkTyreRotation?.isChecked = TyreConfigClass.nitrogenTyreRotationChecked
-                chkWheelBalacing?.isChecked = TyreConfigClass.nitrogenWheelBalancingChecked
-
                 if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
                     ivPickedImage?.setImageURI(Uri.parse(TyreConfigClass.CarPhoto_1))
                 }
                 if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
                     ivPickedImage1?.setImageURI(Uri.parse(TyreConfigClass.CarPhoto_2))
                 }
-                Log.e("getimagess", "" + TyreConfigClass.CarPhoto_1)
-                Log.e("getimagess", "" + TyreConfigClass.CarPhoto_2)
-                Log.e("getimagess", "" + TyreConfigClass.nitrogenRefillChecked)
-                Log.e("getimagess", "" + TyreConfigClass.nitrogenTopupChecked)
-                Log.e("getimagess", "" + TyreConfigClass.nitrogenTyreRotationChecked)
-                Log.e("getimagess", "" + TyreConfigClass.nitrogenWheelBalancingChecked)
-                Log.e("getimagess", "" + TyreConfigClass.nextDueDate)
-
                 getStoredObjects()
-                Log.e("whichcomple0", "" + TyreConfigClass.RRVehicleMake)
-                Log.e("whichcomple1", "" + TyreConfigClass.RRVehiclePattern)
-                Log.e("whichcomple2", "" + TyreConfigClass.RRVehicleSize)
-                Log.e("whichcomple3", "" + TyreConfigClass.RRVehicleVisualDetail)
                 checkSubmitBtn()
-
-//                setBlankAllValues()
-
-
             }
         }
     }
@@ -3859,4 +3944,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
+    override fun onBackPressed() {
+        storeServiceDetailData()
+        super.onBackPressed()
+    }
 }

@@ -44,6 +44,8 @@ class TyreConfigClass {
         var TyreRFObject = "TyreRFObject"
         var TyreRRObject = "TyreRRObject"
 
+        var serviceDetailData = "serviceDetailData"
+
         var nextDueDate = ""
         var moreSuggestions = ""
         var CarPhoto_1 = ""

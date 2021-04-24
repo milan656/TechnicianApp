@@ -316,6 +316,7 @@
                                         android:orientation="vertical">
 
                                         <LinearLayout
+                                            android:id="@+id/llNitrogenTopup"
                                             android:layout_width="105dp"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/service_layout_bg"
@@ -366,6 +367,7 @@
                                         android:orientation="vertical">
 
                                         <LinearLayout
+                                            android:id="@+id/llNitrogenRefil"
                                             android:layout_width="106dp"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/service_layout_bg"
@@ -429,6 +431,7 @@
                                         android:orientation="vertical">
 
                                         <LinearLayout
+                                            android:id="@+id/llWheelbalancing"
                                             android:layout_width="106dp"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/service_layout_bg"
@@ -478,6 +481,7 @@
                                         android:orientation="vertical">
 
                                         <LinearLayout
+                                            android:id="@+id/llTyreRotation"
                                             android:layout_width="106dp"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/service_layout_bg"
@@ -575,12 +579,14 @@
                                         android:textSize="@dimen/fourteen_sp" />
 
                                     <RadioGroup
+                                        android:id="@+id/rdGroupLF"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:orientation="horizontal">
 
                                         <RadioButton
+                                            android:id="@+id/radioLF_LR"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
@@ -593,6 +599,7 @@
                                             android:textSize="@dimen/fourteen_sp" />
 
                                         <RadioButton
+                                            android:id="@+id/radioLF_RR"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
@@ -640,12 +647,14 @@
                                         android:textSize="@dimen/fourteen_sp" />
 
                                     <RadioGroup
+                                        android:id="@+id/rdGroupRF"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:orientation="horizontal">
 
                                         <RadioButton
+                                            android:id="@+id/radioRF_LR"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
@@ -658,6 +667,7 @@
                                             android:textSize="@dimen/fourteen_sp" />
 
                                         <RadioButton
+                                            android:id="@+id/radioRF_RR"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
@@ -703,12 +713,14 @@
                                         android:textSize="@dimen/fourteen_sp" />
 
                                     <RadioGroup
+                                        android:id="@+id/rdGroupLR"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:orientation="horizontal">
 
                                         <RadioButton
+                                            android:id="@+id/radioLR_LF"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
@@ -721,6 +733,7 @@
                                             android:textSize="@dimen/fourteen_sp" />
 
                                         <RadioButton
+                                            android:id="@+id/radioLR_RF"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
@@ -764,15 +777,18 @@
                                         android:text="="
                                         android:textAllCaps="true"
                                         android:textColor="@color/text_color1"
-                                        android:textSize="@dimen/fourteen_sp" />
+                                        android:textSize="@dimen/fourteen_sp"
+                                        tools:ignore="TooManyViews" />
 
                                     <RadioGroup
+                                        android:id="@+id/rdGroupRR"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:orientation="horizontal">
 
                                         <RadioButton
+                                            android:id="@+id/radioRR_LF"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
@@ -785,6 +801,7 @@
                                             android:textSize="@dimen/fourteen_sp" />
 
                                         <RadioButton
+                                            android:id="@+id/radioRR_RF"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"

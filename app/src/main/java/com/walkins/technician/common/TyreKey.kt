@@ -42,6 +42,12 @@ class TyreKey {
 
         var nextDueDate = "nextDueDate"
         var moreSuggestion = "moreSuggestion"
+        var technicalSuggestionArr = "technicalSuggestionArr"
+
+        var radioGroupLF="radioGroupLF"
+        var radioGroupLR="radioGroupLR"
+        var radioGroupRF="radioGroupRF"
+        var radioGroupRR="radioGroupRR"
 
         var something_went_wrong="Something Went Wrong"
     }

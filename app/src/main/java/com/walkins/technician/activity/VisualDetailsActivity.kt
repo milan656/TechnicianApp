@@ -874,29 +874,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 TyreDetailCommonClass.isCameraSelectedVisualDetail =
                     json.get(TyreKey.isCameraSelectedVisualDetail)?.asBoolean!!
 
-                Log.e("getstoredValue", "" + TyreDetailCommonClass.isCameraSelectedVisualDetail)
-                Log.e("getstoredValue", "" + TyreDetailCommonClass.visualDetailPhotoUrl)
                 if (json.get("isCameraSelectedVisualDetail")?.asBoolean!!) {
 
-                    try {
-                        ivPickedImage1?.setImageURI(Uri.parse(json.get(TyreKey.visualDetailPhotoUrl)?.asString))
-                    } catch (e: java.lang.Exception) {
-                        Log.e("getstoredValue0", "" + e.cause + " " + e.message)
-                        e.printStackTrace()
-                    }
+
 
                 } else {
-                    Log.e("getstoredValue0", "" + json.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                    var file: File =
-                        Common.getFile(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                    try {
-
-                        ivPickedImage1?.setImageURI(Uri.parse(file.absolutePath))
-                        Log.e("getstoredValue0", "" + file.absolutePath)
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
-                        Log.e("getstoredValue0", "" + e.message + " " + e.cause)
-                    }
 
                 }
                 TyreDetailCommonClass.visualDetailPhotoUrl =

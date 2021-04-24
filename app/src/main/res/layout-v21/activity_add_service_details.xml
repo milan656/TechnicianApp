@@ -69,7 +69,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/sixteen_dp"
-                            android:layout_marginLeft="@dimen/sixteen_dp"
                             android:layout_marginTop="@dimen/fourteen_dp"
                             android:layout_marginBottom="@dimen/fourteen_dp"
                             android:layout_weight="1"
@@ -81,7 +80,8 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                tools:ignore="NestedWeights">
 
                                 <com.walkins.technician.custom.BoldHeavyTextView
                                     android:layout_width="0dp"
@@ -93,7 +93,8 @@
                                     android:textAllCaps="true"
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/eighteen_sp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    tools:ignore="NestedWeights" />
 
                                 <ImageView
                                     android:layout_width="100dp"
@@ -316,6 +317,7 @@
                                         android:orientation="vertical">
 
                                         <LinearLayout
+                                            android:id="@+id/llNitrogenTopup"
                                             android:layout_width="105dp"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/service_layout_bg"
@@ -366,6 +368,7 @@
                                         android:orientation="vertical">
 
                                         <LinearLayout
+                                            android:id="@+id/llNitrogenRefil"
                                             android:layout_width="106dp"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/service_layout_bg"
@@ -429,6 +432,7 @@
                                         android:orientation="vertical">
 
                                         <LinearLayout
+                                            android:id="@+id/llWheelbalancing"
                                             android:layout_width="106dp"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/service_layout_bg"
@@ -478,6 +482,7 @@
                                         android:orientation="vertical">
 
                                         <LinearLayout
+                                            android:id="@+id/llTyreRotation"
                                             android:layout_width="106dp"
                                             android:layout_height="match_parent"
                                             android:background="@drawable/service_layout_bg"
