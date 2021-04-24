@@ -543,6 +543,47 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     edtMoreSuggestion?.setText(jsonService.get(TyreKey.moreSuggestion)?.asString)
                 }
 
+                if (jsonService.get(TyreKey.radioGroupLF) != null && !jsonService.get(TyreKey.radioGroupLF).asString.equals(
+                        ""
+                    )
+                ) {
+                    if (jsonService.get(TyreKey.radioGroupLF).asString.equals("RRLF")) {
+                        radioLF_RR?.isChecked = true
+                    } else {
+                        radioLF_LR?.isChecked = true
+                    }
+                }
+                if (jsonService.get(TyreKey.radioGroupLR) != null && !jsonService.get(TyreKey.radioGroupLR).asString.equals(
+                        ""
+                    )
+                ) {
+                    if (jsonService.get(TyreKey.radioGroupLR).asString.equals("RFLR")) {
+                        radioLR_RF?.isChecked = true
+                    } else {
+                        radioLR_LF?.isChecked = true
+                    }
+                }
+                if (jsonService.get(TyreKey.radioGroupRF) != null && !jsonService.get(TyreKey.radioGroupRF).asString.equals(
+                        ""
+                    )
+                ) {
+                    if (jsonService.get(TyreKey.radioGroupRF).asString.equals("RRRF")) {
+                        radioRF_RR?.isChecked = true
+                    } else {
+                        radioRF_LR?.isChecked = true
+                    }
+                }
+                if (jsonService.get(TyreKey.radioGroupRR) != null && !jsonService.get(TyreKey.radioGroupRR).asString.equals(
+                        ""
+                    )
+                ) {
+                    if (jsonService.get(TyreKey.radioGroupRR).asString.equals("LFRR")) {
+                        radioRR_LF?.isChecked = true
+                    } else {
+                        radioRR_RF?.isChecked = true
+                    }
+                }
+
                 if (jsonService.get(TyreKey.technicalSuggestionArr) != null) {
 
                     var arr = jsonService.get(TyreKey.technicalSuggestionArr)?.asJsonArray
