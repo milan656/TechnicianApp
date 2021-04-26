@@ -73,10 +73,10 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
         tvResend?.text = Html.fromHtml("Didn't receive OTP? <font color='blue'>Resend<font/>")
 
-        edtOtp1?.setText(otpStr?.substring(0, 1))
-        edtOtp2?.setText(otpStr?.substring(0, 2))
-        edtOtp3?.setText(otpStr?.substring(0, 3))
-        edtOtp4?.setText(otpStr?.substring(0, 4))
+        edtOtp1?.setText("" + otpStr?.get(0))
+        edtOtp2?.setText("" + otpStr?.get(1))
+        edtOtp3?.setText("" + otpStr?.get(2))
+        edtOtp4?.setText("" + otpStr?.get(3))
 
 
 //        edtOtp1?.requestFocus()

@@ -1,7 +1,9 @@
 package com.walkins.technician.fragment
 
 import android.Manifest
+import android.annotation.TargetApi
 import android.app.Activity
+import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -10,6 +12,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,19 +27,27 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
+import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
+import com.walkins.technician.common.getDataColumn
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.viewmodel.LoginActivityViewModel
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -54,6 +65,8 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private var ivCamera: ImageView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
+    private var loginViewModel: LoginActivityViewModel? = null
+    private var prefManager: PrefManager? = null
 
     private var ivProfileImg: ImageView? = null
     private var imageDialog: BottomSheetDialog? = null
@@ -80,6 +93,8 @@ class ProfileFragment : Fragment(), onClickAdapter {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
+        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        prefManager = context?.let { PrefManager(it) }
         init(view)
 
         requestPermissionForImage()
@@ -272,16 +287,85 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE) {
-            if (resultCode == AppCompatActivity.RESULT_OK) {
-                ivProfileImg?.setImageURI(Uri.parse(imageFilePath))
-            } else if (resultCode == AppCompatActivity.RESULT_CANCELED) {
-                Toast.makeText(context, "You cancelled the operation", Toast.LENGTH_SHORT).show()
+        when (requestCode) {
+            REQUEST_IMAGE -> {
+                if (resultCode == AppCompatActivity.RESULT_OK) {
+                    ivProfileImg?.setImageURI(Uri.parse(imageFilePath))
+
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        context?.let { getFile(it, Uri.parse(imageFilePath)) }
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
+
+                    CropImage.activity(selectedImage)
+                        .start(this)
+    //                uploadImage(imagePath)
+                } else if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                    Toast.makeText(context, "You cancelled the operation", Toast.LENGTH_SHORT).show()
+                }
+            }
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //To get the File for further usage
+                    val selectedImage = result.uri
+
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        getFile(this@AddParticipantsBussinessDetailActivity, selectedImage)
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
+                    imagePath?.let { uploadCIPImage(it) }
+                }
+            }
+            IMAGE_PICK_CODE ->{
+                ivProfileImg?.setImageURI(data?.data)
+
+                var uri:Uri=data?.data!!
+
+                val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    context?.let { getFile(it, uri) }
+                } else {
+                    TODO("VERSION.SDK_INT < KITKAT")
+                }
+                CropImage.activity(selectedImage)
+                    .start(this)
+                Log.e("getfilename",""+imagePath?.name+" "+imagePath?.isFile)
             }
         }
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            ivProfileImg?.setImageURI(data?.data)
+
+
+    }
+
+    private fun uploadImage(imagePath: File?) {
+        context?.let { Common.showLoader(it) }
+
+        val requestFile = RequestBody.create(
+            MediaType.parse("image/*"),
+            imagePath
+        )
+
+        val body = MultipartBody.Part.createFormData("file", imagePath?.name, requestFile)
+
+        context?.let {
+            loginViewModel?.uploadImage(
+                body,
+                prefManager?.getAccessToken()!!, it,
+                "profile"
+            )
         }
+
+        loginViewModel?.getImageUpload()?.observe(this, androidx.lifecycle.Observer {
+
+            Common.hideLoader()
+            if (it != null) {
+                if (it.success) {
+                    Log.e("getfile", "" + it.data.imageUrl)
+                }
+            }
+        })
     }
 
     private fun openCamera() {
@@ -316,4 +400,105 @@ class ProfileFragment : Fragment(), onClickAdapter {
         return image
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun getFile(context: Context, uri: Uri?): File? {
+        if (uri != null) {
+            val path = getPath(context, uri)
+            if (path != null && isLocal(path)) {
+                return File(path)
+            }
+        }
+        return null
+    }
+
+
+    fun isLocal(url: String?): Boolean {
+        return url != null && !url.startsWith("http://") && !url.startsWith("https://")
+    }
+
+    fun isExternalStorageDocument(uri: Uri): Boolean {
+        return "com.android.externalstorage.documents" == uri.authority
+    }
+
+    fun isDownloadsDocument(uri: Uri): Boolean {
+        return "com.android.providers.downloads.documents" == uri.authority
+    }
+
+    fun isMediaDocument(uri: Uri): Boolean {
+        return "com.android.providers.media.documents" == uri.authority
+    }
+
+    fun isGooglePhotosUri(uri: Uri): Boolean {
+        return "com.google.android.apps.photos.content" == uri.authority
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun getPath(context: Context, uri: Uri): String? {
+
+
+        val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // LocalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split =
+                    docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val type = split[0]
+
+                if ("primary".equals(type, ignoreCase = true)) {
+                    return "" + Environment.getExternalStorageDirectory() + "/" + split[1]
+                }
+
+                // TODO handle non-primary volumes
+            } else if (isDownloadsDocument(uri)) {
+
+                val id = DocumentsContract.getDocumentId(uri)
+                val contentUri = ContentUris.withAppendedId(
+                    Uri.parse("content://downloads/public_downloads"),
+                    java.lang.Long.valueOf(id)
+                )
+
+                return getDataColumn(context, contentUri, null, null)
+            } else if (isMediaDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split =
+                    docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val type = split[0]
+
+                var contentUri: Uri? = null
+                if ("image" == type) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                } else if ("video" == type) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                } else if ("audio" == type) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                }
+
+                val selection = "_id=?"
+                val selectionArgs = arrayOf(split[1])
+
+                return getDataColumn(context, contentUri, selection, selectionArgs)
+            }// MediaProvider
+            // DownloadsProvider
+            // ExternalStorageProvider
+        } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
+
+            // Return the remote address
+            return if (isGooglePhotosUri(uri)) uri.lastPathSegment else getDataColumn(
+                context,
+                uri,
+                null,
+                null
+            )
+
+        } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
+            return uri.path
+        }// File
+        // MediaStore (and general)
+
+        return null
+    }
 }

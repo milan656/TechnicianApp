@@ -24,11 +24,10 @@ class LoginActivityViewModel : ViewModel() {
         return userModelData
     }
 
-    fun callApiSendOtp(jsonObject: JsonObject, accessToken: String, context: Context) {
+    fun callApiSendOtp(jsonObject: JsonObject, context: Context) {
 
         loginRepository = loginRepository?.getInstance()
-        otpModel = loginRepository?.callApiSendOTP(accessToken, jsonObject, context)
-        //otpVerifyModel  = warrantyRepository!!.verifyOtp(jsonObject,accessToken)
+        otpModel = loginRepository?.callApiSendOtp(jsonObject, context)
 
     }
 
@@ -60,7 +59,19 @@ class LoginActivityViewModel : ViewModel() {
 
     }
 
+    fun initCallSendOtp(
+        jsonObject: JsonObject, context: Context
+    ) {
+
+        loginRepository = LoginRepository().getInstance()
+        otpModel = loginRepository!!.callApiSendOtp(
+            jsonObject, context
+        )
+
+    }
+
     fun initTwo(
+        jsonObject: JsonObject,
         url: String,
         userId: String,
         password: String,
@@ -73,15 +84,15 @@ class LoginActivityViewModel : ViewModel() {
     ) {
 
         loginRepository = LoginRepository().getInstance()
-        userModelData = loginRepository!!.loginUserTwo(
-            url,
+        otpModel = loginRepository!!.loginUserTwo(
+            jsonObject/*,
             userId,
             password,
             grantType,
             authorizationToke,
             versionCode,
             deviceName,
-            androidOS
+            androidOS*/
         )
 
     }
@@ -108,7 +119,7 @@ class LoginActivityViewModel : ViewModel() {
     ) {
         loginRepository = LoginRepository().getInstance()
         uploadImageModel =
-            loginRepository?.uploadImage(multiPart, type, authorizationToke, context)
+            loginRepository?.uploadImage(multiPart, type, "application/json", authorizationToke, context)
     }
 
     fun getImageUpload(): LiveData<UploadImageModel>? {

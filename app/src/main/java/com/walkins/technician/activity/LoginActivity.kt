@@ -194,53 +194,76 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         Common.showLoader(this@LoginActivity)
 
-        val context = applicationContext
-        val manager = context.packageManager
+        /* val context = applicationContext
+         val manager = context.packageManager
 
-        var versionCode: Int = 0
-        var deviceName: String? = Common.getDeviceName()
-        var androidOS = Build.VERSION.RELEASE
+         var versionCode: Int = 0
+         var deviceName: String? = Common.getDeviceName()
+         var androidOS = Build.VERSION.RELEASE
 
-        try {
-            val info = manager.getPackageInfo(context.packageName, 0)
-            versionCode = PackageInfoCompat.getLongVersionCode(info).toInt()
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
+         try {
+             val info = manager.getPackageInfo(context.packageName, 0)
+             versionCode = PackageInfoCompat.getLongVersionCode(info).toInt()
+         } catch (e: PackageManager.NameNotFoundException) {
+             e.printStackTrace()
+         }
 
 
-        val fields = Build.VERSION_CODES::class.java.fields
-        for (field in fields) {
-            androidOS = field.name
-        }
+         val fields = Build.VERSION_CODES::class.java.fields
+         for (field in fields) {
+             androidOS = field.name
+         }
 
-        var dealerLogin = "9898987411"
-        var dealerPassword = "jktyre@12345"
-        var technicianLogin = "9978785623"
-        var technicianPassword = "9978785623"
+         var dealerLogin = "9898987411"
+         var dealerPassword = "jktyre@12345"
+         var technicianLogin = "9978785623"
+         var technicianPassword = "9978785623"*/
+
+//        val intent = Intent(this, VerifyOtpActivity::class.java)
+//        intent.putExtra("number", "9978785623")
+//        intent.putExtra("otp", "" + 1212)
+//        startActivity(intent)
         val jsonObject = JsonObject()
         jsonObject.addProperty("phone_number", edtLoginEmail.text.toString())
+        Log.e("getobject", "" + jsonObject)
 
-        loginViewModel.callApiSendOtp(jsonObject, "Basic ZG9vcnN0ZXA6MTIz", this)
+        loginViewModel.initTwo(jsonObject, edtLoginEmail.text?.toString()!!, "1212", "password", "", "", 0, "","","")
         loginViewModel.sendOtp()?.observe(this, Observer {
-            Common.hideLoader()
             if (it != null) {
                 if (it.success) {
                     val intent = Intent(this, VerifyOtpActivity::class.java)
                     intent.putExtra("number", edtLoginEmail.text?.toString())
                     intent.putExtra("otp", "" + it.data?.otp)
                     startActivity(intent)
-                } else {
-
                 }
             }
         })
 
+        /* loginViewModel.callApiSendOtp(jsonObject, this)
+         loginViewModel.sendOtp()?.observe(this@LoginActivity, Observer {
+             Common.hideLoader()
+             if (it != null) {
+                 if (it.success) {
+                     val intent = Intent(this, VerifyOtpActivity::class.java)
+                     intent.putExtra("number", edtLoginEmail.text?.toString())
+                     intent.putExtra("otp", "" + it.data?.otp)
+                     startActivity(intent)
+                 } else {
+                     try {
+                         loginFail(it.error.get(0).message, "Oops!")
+                     } catch (e: Exception) {
+                         e.printStackTrace()
+                     }
+                 }
+             }
+         })*/
+
+
 //        loginViewModel.init(
-//            technicianLogin.trim({ it <= ' ' }),
-//            technicianPassword.trim({ it <= ' ' }),
+//            "technicianLogin".trim({ it <= ' ' }),
+//            "technicianPassword".trim({ it <= ' ' }),
 //            "password",
-//            "Basic ZG9vcnN0ZXA6MTIz", versionCode, deviceName, androidOS, null
+//            "Basic ZG9vcnN0ZXA6MTIz", 0, "deviceName", "androidOS", null
 //        )
 /*
         loginViewModel.getLoginData()?.observe(this@LoginActivity, Observer {

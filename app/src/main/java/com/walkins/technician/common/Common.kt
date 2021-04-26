@@ -50,6 +50,7 @@ import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.makemodel.VehicleModel
+import com.walkins.technician.model.login.otp.OtpModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
@@ -316,6 +317,14 @@ class Common {
                             )
                         return IssueListModel
                     }
+                    "OtpModel" -> {
+                        val OtpModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                OtpModel::class.java
+                            )
+                        return OtpModel
+                    }
 
 
                     else -> {
@@ -436,6 +445,15 @@ class Common {
                                         IssueListModel::class.java
                                     )
                                 return IssueListModel
+                            }
+
+                            "OtpModel" -> {
+                                val OtpModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        OtpModel::class.java
+                                    )
+                                return OtpModel
                             }
 
 

@@ -23,10 +23,10 @@ class MakeModelRepository {
 
     var otpVerifyRepository: MakeModelRepository? = null
 
-    lateinit var otpApi: MakeModelApi
+    lateinit var makeModelApi: MakeModelApi
 
     constructor() {
-        otpApi = RetrofitCommonClass.createService(MakeModelApi::class.java)
+        makeModelApi = RetrofitCommonClass.createService(MakeModelApi::class.java)
     }
 
 
@@ -45,7 +45,7 @@ class MakeModelRepository {
         accessToken:String
     ): MutableLiveData<VehicleMakeModel> {
         var otpData = MutableLiveData<VehicleMakeModel>()
-        otpApi.getVehicleMake(accessToken)
+        makeModelApi.getVehicleMake(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -87,7 +87,7 @@ class MakeModelRepository {
         context: Context
     ): MutableLiveData<VehicleModel> {
         var otpData = MutableLiveData<VehicleModel>()
-        otpApi.getVehicleModel(makeId,accessToken)
+        makeModelApi.getVehicleModel(makeId,accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
