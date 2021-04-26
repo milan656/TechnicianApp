@@ -1182,7 +1182,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.llTyreRotation -> {
                 if (chkTyreRotation?.isChecked!!) {
-
                     chkTyreRotation?.isChecked = false
                 } else {
                     chkTyreRotation?.isChecked = true
