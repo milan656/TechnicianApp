@@ -214,7 +214,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             androidOS = field.name
         }
 
-
         var dealerLogin = "9898987411"
         var dealerPassword = "jktyre@12345"
         var technicianLogin = "9978785623"
