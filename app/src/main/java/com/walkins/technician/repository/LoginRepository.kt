@@ -45,8 +45,7 @@ class LoginRepository {
         context: Context
     ): MutableLiveData<OtpModel> {
         val loginData = MutableLiveData<OtpModel>()
-        loginApi.callApiSendOTP(jsonObject,
-            authorizationToke
+        loginApi.callApiSendOTP(jsonObject
         ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,

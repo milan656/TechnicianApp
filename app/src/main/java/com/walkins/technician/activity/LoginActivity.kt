@@ -228,6 +228,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             if (it != null) {
                 if (it.success) {
                     val intent = Intent(this, VerifyOtpActivity::class.java)
+                    intent.putExtra("number", edtLoginEmail.text?.toString())
                     intent.putExtra("otp", "" + it.data?.otp)
                     startActivity(intent)
                 } else {
@@ -236,13 +237,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
-        loginViewModel.init(
-            technicianLogin.trim({ it <= ' ' }),
-            technicianPassword.trim({ it <= ' ' }),
-            "password",
-            "Basic ZG9vcnN0ZXA6MTIz", versionCode, deviceName, androidOS, null
-        )
-
+//        loginViewModel.init(
+//            technicianLogin.trim({ it <= ' ' }),
+//            technicianPassword.trim({ it <= ' ' }),
+//            "password",
+//            "Basic ZG9vcnN0ZXA6MTIz", versionCode, deviceName, androidOS, null
+//        )
+/*
         loginViewModel.getLoginData()?.observe(this@LoginActivity, Observer {
 
             Common.hideLoader()
@@ -264,7 +265,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                     var arrayList: ArrayList<String>? = ArrayList()
 
-                    /* if (it.userDetailModel?.arrayListPermission != null) {
+                    *//* if (it.userDetailModel?.arrayListPermission != null) {
 
                          for (i in it.userDetailModel?.arrayListPermission?.indices!!) {
                              arrayList?.add(it.userDetailModel?.arrayListPermission?.get(i)!!)
@@ -306,7 +307,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                          startActivity(intent)
                          finish()
                          return@Observer
-                     }*/
+                     }*//*
 
 
                     Log.e("getType", "" + it.userDetailModel!!.type)
@@ -316,7 +317,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(intent)
                     finish()
 
-                    /*when {
+                    *//*when {
                         prefManager?.getValue("customerClass") != null && prefManager.getValue(
                             "customerClass"
                         )
@@ -397,7 +398,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 e.printStackTrace()
                             }
                         }
-                    }*/
+                    }*//*
 
 
                 } else {
@@ -408,7 +409,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             }
-        })
+        })*/
     }
 
 

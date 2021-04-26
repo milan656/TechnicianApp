@@ -18,8 +18,7 @@ interface LoginApi {
 
     @POST("v1/tyrepushpull/send-otp")
     fun callApiSendOTP(
-        @Body jsonObject: JsonObject,
-        @Header("Authorization") authorizationToke: String
+        @Body jsonObject: JsonObject
     ): Call<ResponseBody>
 
     @POST

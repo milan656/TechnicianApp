@@ -42,7 +42,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     private var edtOtp4: EditText? = null
     private var otp: StringBuilder? = StringBuilder()
     private var smsBroadcastReceiver: MySMSBroadcastReceiver? = null
-    private var otpStr:String?=""
+    private var otpStr: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +65,19 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         btnVerify?.setOnClickListener(this)
         ivBackIcon?.setOnClickListener(this)
 
+        if (intent != null) {
+            if (intent.getStringExtra("otp") != null) {
+                otpStr = intent.getStringExtra("otp")
+            }
+        }
+
         tvResend?.text = Html.fromHtml("Didn't receive OTP? <font color='blue'>Resend<font/>")
+
+        edtOtp1?.setText(otpStr?.substring(0, 1))
+        edtOtp2?.setText(otpStr?.substring(0, 2))
+        edtOtp3?.setText(otpStr?.substring(0, 3))
+        edtOtp4?.setText(otpStr?.substring(0, 4))
+
 
 //        edtOtp1?.requestFocus()
         edtOtp1?.addTextChangedListener(object : TextWatcher {
@@ -145,6 +157,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
         })
 
+
         val PERMISSIONS = arrayOf(
             Manifest.permission.RECEIVE_SMS,
             Manifest.permission.READ_SMS,
@@ -207,7 +220,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                 }
             }
             R.id.ivBackIcon -> {
-                Log.e("backclick","cal")
+                Log.e("backclick", "cal")
                 onBackPressed()
             }
         }
