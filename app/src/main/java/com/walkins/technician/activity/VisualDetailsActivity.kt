@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +41,7 @@ import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.TyreKey
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.IssueResolveModel
+import com.walkins.technician.viewmodel.CommonViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -54,7 +56,7 @@ import kotlin.collections.ArrayList
 
 
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
-
+    private var commonViewModel: CommonViewModel? = null
     private var sliderIn: FluidSlider? = null
     private var multiSliderPsiOut: FluidSlider? = null
     private var multiSliderWeight: FluidSlider? = null
@@ -159,7 +161,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         setContentView(R.layout.activity_visual_details)
         mDb = DBClass.getInstance(this)
         prefManager = PrefManager(this)
-
+        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
         requestPermissionForImage()
         init()
     }
@@ -193,9 +195,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
 
-        for (i in issueResolveArr.indices) {
-            issueResolveArray?.add(IssueResolveModel(issueResolveArr.get(i) + " " + i, false))
-        }
+//        for (i in issueResolveArr.indices) {
+//            issueResolveArray?.add(IssueResolveModel(issueResolveArr.get(i) + " " + i, false))
+//        }
         issueResolveAdapter = TyreSuggestionAdpater(issueResolveArray!!, this, this, false)
         issueResolvedRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -316,6 +318,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         llReqBubble?.setOnClickListener(this)
 
 
+        getIssueList()
 
         if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
             !prefManager?.getValue(TyreConfigClass.serviceDetailData).equals("")
@@ -354,64 +357,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
         }
 
-        if (selectedTyre.equals("LF")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
-            ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
-                try {
-                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
-                    getData(json)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-
-                }
-            }
-        }
-        if (selectedTyre.equals("LR")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
-            ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
-                try {
-                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-
-                    getData(json)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-
-                }
-            }
-        }
-        if (selectedTyre.equals("RF")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
-            ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
-                try {
-                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                    getData(json)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-
-                }
-            }
-        }
-        if (selectedTyre.equals("RR")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
-            ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
-                try {
-                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                    getData(json)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-
-                }
-            }
-        }
 
         psiInSlider()
         psiOutSlider()
@@ -772,6 +718,93 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
          thread.start()*/
     }
 
+
+    private fun getIssueList() {
+        commonViewModel?.callApiListOfIssue(prefManager.getAccessToken()!!, this)
+        commonViewModel?.getListOfIssue()?.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    issueResolveArray?.clear()
+                    if (it.data != null && it.data.size > 0) {
+                        for (i in it.data.indices) {
+                            issueResolveArray?.add(
+                                IssueResolveModel(
+                                    it.data.get(i).name, it.data.get(i).id, false
+                                )
+                            )
+                        }
+                    }
+                    issueResolveAdapter?.notifyDataSetChanged()
+                    getTyreWiseData()
+                } else {
+                    getTyreWiseData()
+                }
+            }
+        })
+    }
+
+    fun getTyreWiseData() {
+        if (selectedTyre.equals("LF")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                    getData(json)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                }
+            }
+        }
+        if (selectedTyre.equals("LR")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+
+                    getData(json)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                }
+            }
+        }
+        if (selectedTyre.equals("RF")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    getData(json)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                }
+            }
+        }
+        if (selectedTyre.equals("RR")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    getData(json)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                }
+            }
+        }
+    }
+
     private fun getData(json: JsonObject) {
         GlobalScope.launch(Dispatchers.Main) {
             launch(Dispatchers.Main) {
@@ -927,20 +960,23 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
                     val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
                     Log.e("getvalues", "" + arrlist)
-                    for (i in issueResolveArray?.indices!!) {
+                    if (issueResolveArray != null && issueResolveArray?.size!! > 0) {
+                        for (i in issueResolveArray?.indices!!) {
 
-                        for (j in arrlist.indices) {
+                            for (j in arrlist.indices) {
 
-                            if (issueResolveArray?.get(i)?.issueName.equals(arrlist.get(j))) {
-                                issueResolveArray?.get(i)?.isSelected = true
-                                selectedIssueArr?.add(issueResolveArray?.get(i)?.issueName!!)
+                                if (issueResolveArray?.get(i)?.issueName.equals(arrlist.get(j))) {
+                                    issueResolveArray?.get(i)?.isSelected = true
+                                    selectedIssueArr?.add(issueResolveArray?.get(i)?.issueName!!)
+                                }
                             }
+                            Log.e("getvalues", "" + issueResolveArray?.get(i)?.issueName)
+                            Log.e("getvalues", "" + issueResolveArray?.get(i)?.isSelected)
                         }
-                        Log.e("getvalues", "" + issueResolveArray?.get(i)?.issueName)
-                        Log.e("getvalues", "" + issueResolveArray?.get(i)?.isSelected)
-                    }
 
-                    issueResolveAdapter?.notifyDataSetChanged()
+                        issueResolveAdapter?.notifyDataSetChanged()
+
+                    }
                 }
 
                 setData(json)

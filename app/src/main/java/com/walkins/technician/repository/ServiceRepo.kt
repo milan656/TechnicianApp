@@ -6,12 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.JsonObject
-import com.jkadvantagandbadsha.model.login.UserModel
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
-import com.walkins.technician.networkApi.common.CommonApi
-import com.walkins.technician.networkApi.serviceApi
+import com.walkins.technician.networkApi.ServiceApi
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,10 +18,10 @@ class ServiceRepo {
 
     var serviceRepo: ServiceRepo? = null
 
-    lateinit var serviceApi: serviceApi
+    lateinit var serviceApi: ServiceApi
 
     constructor() {
-        serviceApi = RetrofitCommonClass.createService(serviceApi::class.java)
+        serviceApi = RetrofitCommonClass.createService(ServiceApi::class.java)
     }
 
     companion object

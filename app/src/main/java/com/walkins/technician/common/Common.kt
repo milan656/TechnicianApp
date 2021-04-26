@@ -44,8 +44,10 @@ import com.walkins.technician.DB.DBClass
 import com.walkins.technician.DB.VehiclePatternModelClass
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
+import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.custom.BoldButton
+import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.makemodel.VehicleModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
@@ -142,6 +144,7 @@ class Common {
                 capitalize(model)
             } else capitalize(manufacturer) + " " + model
         }
+
         private fun capitalize(str: String): String {
             if (TextUtils.isEmpty(str)) {
                 return str
@@ -183,7 +186,6 @@ class Common {
                 e.printStackTrace()
             }
         }
-
 
 
         fun getFile(filename: String?): File {
@@ -306,6 +308,14 @@ class Common {
                             )
                         return AddServiceModel
                     }
+                    "IssueListModel" -> {
+                        val IssueListModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                IssueListModel::class.java
+                            )
+                        return IssueListModel
+                    }
 
 
                     else -> {
@@ -418,6 +428,14 @@ class Common {
                                         AddServiceModel::class.java
                                     )
                                 return AddServiceModel
+                            }
+                            "IssueListModel" -> {
+                                val IssueListModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        IssueListModel::class.java
+                                    )
+                                return IssueListModel
                             }
 
 
@@ -601,6 +619,7 @@ class Common {
             }
         }
 
+
         fun capitalizeFirstLetter(str: String?): String {
             return if (str?.length == 0)
                 str
@@ -658,6 +677,22 @@ class Common {
 
         }
 
+        fun getCurrentDateTimeSimpleFormat(): String {
+            var dateStr: String = ""
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val current = LocalDateTime.now()
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss")
+                dateStr = current.format(formatter)
+                Log.d("answer", dateStr)
+            } else {
+                var date = Date()
+                val formatter = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
+                dateStr = formatter.format(date)
+                Log.d("answer", dateStr)
+            }
+            return dateStr
+        }
+
 
         fun dateTo(date: String): String {
             var displayDate = ""
@@ -676,7 +711,7 @@ class Common {
         }
 
 
-        fun showDialogue(activity: Activity, message: String) {
+        fun showDialogue(activity: Activity, message: String, isBackPressed: Boolean) {
             val builder = AlertDialog.Builder(activity).create()
             builder.setCancelable(false)
             val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -691,7 +726,13 @@ class Common {
             val tv_dialogTitle = root.findViewById<TextView>(R.id.tv_dialogTitle)
 
             tv_message.text = message
-            btnYes.setOnClickListener { builder.dismiss() }
+            btnYes.setOnClickListener {
+                builder.dismiss()
+                if (isBackPressed) {
+                    activity.finish()
+                }
+
+            }
             builder.setView(root)
 
             builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
@@ -1032,6 +1073,38 @@ class Common {
             TyreDetailCommonClass.chk3Make = ""
             TyreDetailCommonClass.chk3Pattern = ""
             TyreDetailCommonClass.chk3Size = ""
+
+
+        }
+
+        fun setFalseAllTyreStatus() {
+            TyreConfigClass.LFVehicleMake = false
+            TyreConfigClass.LFVehiclePattern = false
+            TyreConfigClass.LFVehicleSize = false
+            TyreConfigClass.LFVehicleVisualDetail = false
+            TyreConfigClass.LFCompleted = false
+
+            TyreConfigClass.LRVehicleMake = false
+            TyreConfigClass.LRVehiclePattern = false
+            TyreConfigClass.LRVehicleSize = false
+            TyreConfigClass.LRVehicleVisualDetail = false
+            TyreConfigClass.LRCompleted = false
+
+            TyreConfigClass.RFVehicleMake = false
+            TyreConfigClass.RFVehiclePattern = false
+            TyreConfigClass.RFVehicleSize = false
+            TyreConfigClass.RFVehicleVisualDetail = false
+            TyreConfigClass.RFCompleted = false
+
+            TyreConfigClass.RRVehicleMake = false
+            TyreConfigClass.RRVehiclePattern = false
+            TyreConfigClass.RRVehicleSize = false
+            TyreConfigClass.RRVehicleVisualDetail = false
+            TyreConfigClass.RRCompleted = false
+
+            TyreConfigClass.CarPhoto_2 = ""
+            TyreConfigClass.CarPhoto_1 = ""
+
         }
 
         fun getDataColumn(
@@ -1058,7 +1131,7 @@ class Common {
             return null
         }
 
-        fun savePatternData(patternModel: PatternModel,mDb: DBClass) {
+        fun savePatternData(patternModel: PatternModel, mDb: DBClass) {
 
             var thread: Thread = Thread {
                 if (mDb.patternDaoClass().getAllPattern().size > 0) {

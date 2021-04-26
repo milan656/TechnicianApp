@@ -34,10 +34,12 @@ class CommonRepo {
     }
 
     fun getListOfIssue(
-        context: Context
+        context: Context,
+        accessToken:String
+
     ): MutableLiveData<IssueListModel> {
         var otpData = MutableLiveData<IssueListModel>()
-        commonApi.getListOfIssue(/*vehicle_type_id, access_token*/)
+        commonApi.getListOfIssue(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,

@@ -34,6 +34,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var loginViewModel: LoginActivityViewModel
     private lateinit var prefManager: PrefManager
     private var tvResend: TextView? = null
+    private var ivBackIcon: ImageView? = null
     private var btnVerify: Button? = null
     private var edtOtp1: EditText? = null
     private var edtOtp2: EditText? = null
@@ -53,6 +54,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     private fun init() {
         tvResend = findViewById(R.id.tvResend)
         btnVerify = findViewById(R.id.btnVerify)
+        ivBackIcon = findViewById(R.id.ivBackIcon)
 
         edtOtp1 = findViewById(R.id.edtOtp1)
         edtOtp2 = findViewById(R.id.edtOtp2)
@@ -60,6 +62,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         edtOtp4 = findViewById(R.id.edtOtp4)
 
         btnVerify?.setOnClickListener(this)
+        ivBackIcon?.setOnClickListener(this)
 
         tvResend?.text = Html.fromHtml("Didn't receive OTP? <font color='blue'>Resend<font/>")
 
@@ -190,19 +193,24 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onClick(v: View?) {
-        var i = v?.id
-        if (i == R.id.btnVerify) {
-            if (edtOtp1?.text?.toString()?.length == 1 &&
-                edtOtp2?.text?.toString()?.length == 1 &&
-                edtOtp3?.text?.toString()?.length == 1 &&
-                edtOtp4?.text?.toString()?.length == 1
-            ) {
+        val i = v?.id
+        when (i) {
+            R.id.btnVerify -> {
+                if (edtOtp1?.text?.toString()?.length == 1 &&
+                    edtOtp2?.text?.toString()?.length == 1 &&
+                    edtOtp3?.text?.toString()?.length == 1 &&
+                    edtOtp4?.text?.toString()?.length == 1
+                ) {
 
-                userLogin()
-            } else {
-                Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show()
+                    userLogin()
+                } else {
+                    Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show()
+                }
             }
-
+            R.id.ivBackIcon -> {
+                Log.e("backclick","cal")
+                onBackPressed()
+            }
         }
     }
 
@@ -273,7 +281,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         var OTP =
             edtOtp1?.text?.toString() + edtOtp2?.text?.toString() + edtOtp3?.text?.toString() + edtOtp4?.text?.toString()
 
-        Log.e("getotp",""+OTP)
+        Log.e("getotp", "" + OTP)
         loginViewModel.init(
             intent?.getStringExtra("number")?.trim({ it <= ' ' })!!,
             OTP.trim({ it <= ' ' }),
