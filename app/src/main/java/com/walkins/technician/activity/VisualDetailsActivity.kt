@@ -317,6 +317,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         llSugBubble?.setOnClickListener(this)
         llReqBubble?.setOnClickListener(this)
 
+        psiInSlider()
+        psiOutSlider()
+        weightSlider()
 
         getIssueList()
 
@@ -358,10 +361,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
 
 
-
-        psiInSlider()
-        psiOutSlider()
-        weightSlider()
         /* var thread = Thread {
              if (selectedTyre.equals("LF")) {
 
@@ -720,6 +719,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
 
     private fun getIssueList() {
+        Common.showLoader(this)
         commonViewModel?.callApiListOfIssue(prefManager.getAccessToken()!!, this)
         commonViewModel?.getListOfIssue()?.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
@@ -737,9 +737,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     }
                     issueResolveAdapter?.notifyDataSetChanged()
                     getTyreWiseData()
+                    Common.hideLoader()
                 } else {
                     getTyreWiseData()
+                    Common.hideLoader()
                 }
+            } else {
+                Common.hideLoader()
             }
         })
     }
@@ -814,29 +818,23 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     edtManufaturingDate?.setText(json.get(TyreKey.manufaturingDate)?.asString!!)
                 }
                 if (json.get(TyreKey.psiInTyreService) != null) {
-
-                    sliderIn?.bubbleText = json.get(TyreKey.psiInTyreService)?.asString!!
-                }
-
-                if (json.get(TyreKey.weightTyreService) != null) {
-
-                    multiSliderWeight?.bubbleText =
-                        json.get(TyreKey.weightTyreService)?.asString!!
-                }
-                if (json.get(TyreKey.psiOutTyreService) != null) {
-
-                    multiSliderPsiOut?.bubbleText =
-                        json.get(TyreKey.psiOutTyreService)?.asString!!
-                }
-                if (json.get(TyreKey.psiInTyreService) != null) {
                     psiInTyreService = json.get(TyreKey.psiInTyreService)?.asString!!
+                    sliderIn?.bubbleText = psiInTyreService
+                    sliderIn?.animation?.start()
+                    Log.e("getvaluess0", "" + sliderIn?.bubbleText)
                 }
                 if (json.get(TyreKey.psiOutTyreService) != null) {
 
                     psiOutTyreService = json.get(TyreKey.psiOutTyreService)?.asString!!
+                    multiSliderPsiOut?.bubbleText = psiOutTyreService
+                    multiSliderPsiOut?.animation?.start()
+                    Log.e("getvaluess11", "" + multiSliderPsiOut?.bubbleText)
                 }
                 if (json.get(TyreKey.weightTyreService) != null) {
                     weightTyreService = json.get(TyreKey.weightTyreService)?.asString!!
+                    multiSliderWeight?.bubbleText = weightTyreService
+                    multiSliderWeight?.animation?.start()
+                    Log.e("getvaluess22", "" + multiSliderWeight?.bubbleText)
                 }
                 if (json.get(TyreKey.sidewell) != null) {
                     if (json.get(TyreKey.sidewell)?.asString!!.equals("Ok")) {
@@ -1124,6 +1122,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             TyreDetailCommonClass.isCompleted =
                 json.get(TyreKey.isCompleted)?.asString?.toBoolean()!!
         }
+
+
     }
 
     fun psiInSlider() {
@@ -1137,6 +1137,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         sliderIn?.startText = "$min"
         sliderIn?.endText = "$max"
         sliderIn?.animation?.cancel()
+
     }
 
     fun psiOutSlider() {

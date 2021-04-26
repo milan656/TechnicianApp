@@ -42,6 +42,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     private var edtOtp4: EditText? = null
     private var otp: StringBuilder? = StringBuilder()
     private var smsBroadcastReceiver: MySMSBroadcastReceiver? = null
+    private var otpStr:String?=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

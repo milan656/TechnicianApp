@@ -1,5 +1,6 @@
 package com.walkins.technician.networkApi.login
 
+import com.google.gson.JsonObject
 import com.jkadvantagandbadsha.model.login.UserModel
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
@@ -14,6 +15,12 @@ interface LoginApi {
         @Field("username") userId: String, @Field("password") password: String, @Field("grant_type") grantType: String,
         @Header("Authorization") authorizationToke: String
     ): Call<UserModel>
+
+    @POST("v1/tyrepushpull/send-otp")
+    fun callApiSendOTP(
+        @Body jsonObject: JsonObject,
+        @Header("Authorization") authorizationToke: String
+    ): Call<ResponseBody>
 
     @POST
     @FormUrlEncoded

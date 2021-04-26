@@ -25,6 +25,7 @@ import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.gson.JsonObject
 import com.walkins.technician.R
 import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.viewmodel.LoginActivityViewModel
@@ -143,7 +144,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            R.id.btnLoginToDashBoard -> login()
+            R.id.btnLoginToDashBoard -> userLogin()
         }
     }
 
@@ -160,7 +161,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val intent = Intent(this, VerifyOtpActivity::class.java)
-        intent.putExtra("number",edtLoginEmail.text?.toString())
+        intent.putExtra("number", edtLoginEmail.text?.toString())
 //        intent.putExtra("number", "9978785623")
         startActivity(intent)
 
@@ -190,14 +191,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
 
-        /* if (!isValidEmail(edtLoginEmail?.text.toString().trim())) {
-             Common.showShortToast("Please enter valid email address", this@LoginActivity)
-             return
-         }*/
-        /* val intent = Intent(this, MainActivity::class.java)
-         startActivity(intent)
-         finish()*/
-
 
         Common.showLoader(this@LoginActivity)
 
@@ -221,27 +214,27 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             androidOS = field.name
         }
 
-        /*  edtLoginEmail.text?.toString()?.toLowerCase()?.trim({ it <= ' ' })?.let {
-              loginViewModel.init(
-                  it,
-                  "jktyre@12345".trim({ it <= ' ' }),
-                  "password",
-                  "Basic ZG9vcnN0ZXA6MTIz=", versionCode, deviceName, androidOS, null
-              )
-          }*/
-        /*"222111"?.toLowerCase()?.trim({ it <= ' ' })?.let {
-            loginViewModel.init(
-                it,
-                "12345".trim({ it <= ' ' }),
-                "password",
-                "Basic ZG9vcnN0ZXA6MTIz==", versionCode, deviceName, androidOS, null
-            )
-        }*/
 
         var dealerLogin = "9898987411"
         var dealerPassword = "jktyre@12345"
         var technicianLogin = "9978785623"
         var technicianPassword = "9978785623"
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("phone_number", edtLoginEmail.text.toString())
+
+        loginViewModel.callApiSendOtp(jsonObject, "Basic ZG9vcnN0ZXA6MTIz", this)
+        loginViewModel.sendOtp()?.observe(this, Observer {
+            Common.hideLoader()
+            if (it != null) {
+                if (it.success) {
+                    val intent = Intent(this, VerifyOtpActivity::class.java)
+                    intent.putExtra("otp", "" + it.data?.otp)
+                    startActivity(intent)
+                } else {
+
+                }
+            }
+        })
 
         loginViewModel.init(
             technicianLogin.trim({ it <= ' ' }),

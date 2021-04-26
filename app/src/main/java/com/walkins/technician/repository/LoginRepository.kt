@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
+import com.google.gson.JsonObject
 import com.walkins.technician.networkApi.login.LoginApi
 import com.jkadvantagandbadsha.model.login.UserModel
 import com.jkadvantage.model.customerIntraction.uploadimage.UploadImageModel
+import com.walkins.technician.model.login.otp.OtpModel
+import com.walkins.technician.model.login.servicemodel.AddServiceModel
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -34,6 +37,50 @@ class LoginRepository {
             loginDataRespotitory = LoginRepository()
         }
         return loginDataRespotitory as LoginRepository
+    }
+
+    fun callApiSendOTP(
+        authorizationToke: String,
+        jsonObject: JsonObject,
+        context: Context
+    ): MutableLiveData<OtpModel> {
+        val loginData = MutableLiveData<OtpModel>()
+        loginApi.callApiSendOTP(jsonObject,
+            authorizationToke
+        ).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.isSuccessful) {
+                    loginData.value = Common.getModelreturn(
+                        "OtpModel",
+                        response,
+                        0,
+                        context
+                    ) as OtpModel?
+                } else {
+                    try {
+                        loginData.value = Common.getModelreturn(
+                            "OtpModel",
+                            response,
+                            1,
+                            context
+                        ) as OtpModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                t.printStackTrace()
+            }
+        })
+        return loginData
     }
 
     fun loginUser(

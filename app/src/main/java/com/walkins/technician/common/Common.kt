@@ -1102,8 +1102,7 @@ class Common {
             TyreConfigClass.RRVehicleVisualDetail = false
             TyreConfigClass.RRCompleted = false
 
-            TyreConfigClass.CarPhoto_2 = ""
-            TyreConfigClass.CarPhoto_1 = ""
+
 
         }
 

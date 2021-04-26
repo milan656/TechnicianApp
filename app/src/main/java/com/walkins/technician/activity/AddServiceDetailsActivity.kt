@@ -199,6 +199,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     suspend fun getStoredObjects() {
 
+        Common.setFalseAllTyreStatus()
+
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
         ) {
@@ -1234,28 +1236,44 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             val radioButtonLF = radioGroup.findViewById<View>(radioButtonIDLF) as RadioButton
             val selectedText = radioButtonLF.text?.toString() + "LF"
             jsonObject.addProperty(TyreKey.radioGroupLF, selectedText)
-
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
+        }
+        try {
             val radioGroupRF = findViewById<View>(R.id.rdGroupRF) as RadioGroup
             val radioButtonIDRF = radioGroupRF.checkedRadioButtonId
             val radioButtonRF = radioGroupRF.findViewById<View>(radioButtonIDRF) as RadioButton
             val selectedTextRF = radioButtonRF.text?.toString() + "RF"
             jsonObject.addProperty(TyreKey.radioGroupRF, selectedTextRF)
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
+        }
 
+        try {
             val radioGroupLR = findViewById<View>(R.id.rdGroupLR) as RadioGroup
             val radioButtonIDLR = radioGroupLR.checkedRadioButtonId
             val radioButtonLR = radioGroupLR.findViewById<View>(radioButtonIDLR) as RadioButton
             val selectedTextLR = radioButtonLR.text?.toString() + "LR"
             jsonObject.addProperty(TyreKey.radioGroupLR, selectedTextLR)
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
+        }
 
+
+        try {
             val radioGroupRR = findViewById<View>(R.id.rdGroupRR) as RadioGroup
             val radioButtonIDRR = radioGroupRR.checkedRadioButtonId
             val radioButtonRR = radioGroupRR.findViewById<View>(radioButtonIDRR) as RadioButton
             val selectedTextRR = radioButtonRR.text?.toString() + "RR"
             jsonObject.addProperty(TyreKey.radioGroupRR, selectedTextRR)
-
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
+
+
+
+
+
 
         prefManager.setValue(TyreConfigClass.serviceDetailData, jsonObject.toString())
 
@@ -4270,7 +4288,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 chkWheelBalacing?.isChecked = false
                 edtMoreSuggestion?.setText("")
                 tvNextServiceDueDate?.setText("")
-                Common.setFalseAllTyreStatus()
+                TyreConfigClass.CarPhoto_2 = ""
+                TyreConfigClass.CarPhoto_1 = ""
 
                 getStoredObjects()
             }
