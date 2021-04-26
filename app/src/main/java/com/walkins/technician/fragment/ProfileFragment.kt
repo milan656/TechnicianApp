@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
+import com.example.technician.common.RetrofitCommonClass.CommonRetrofit.context
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.R
@@ -59,6 +60,7 @@ private const val ARG_PARAM2 = "param2"
 
 class ProfileFragment : Fragment(), onClickAdapter {
     // TODO: Rename and change types of parameters
+    var image_uri: Uri? = null
     private var param1: String? = null
     private var param2: String? = null
     private var arrayList = arrayListOf("Gallery", "Camera")
@@ -72,11 +74,17 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private var imageDialog: BottomSheetDialog? = null
 
     // image picker code
-    val REQUEST_IMAGE = 100
-    val REQUEST_PERMISSION = 200
-    private var imageFilePath = ""
-    private var IMAGE_PICK_CODE = 1010;
-    private var PERMISSION_CODE = 1011;
+//    val REQUEST_IMAGE = 100
+//    val REQUEST_PERMISSION = 200
+//    private var imageFilePath = ""
+//    private var IMAGE_PICK_CODE = 1010;
+//    private var PERMISSION_CODE = 1011;
+
+    val REQUEST_IMAGE_CAPTURE = 1
+    val PICK_IMAGE_REQUEST = 100
+    private lateinit var mCurrentPhotoPath: String
+    private val PERMISSION_CODE = 1010;
+    private val IMAGE_CAPTURE_CODE = 1011
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,11 +105,11 @@ class ProfileFragment : Fragment(), onClickAdapter {
         prefManager = context?.let { PrefManager(it) }
         init(view)
 
-        requestPermissionForImage()
+//        requestPermissionForImage()
         return view
     }
 
-    private fun requestPermissionForImage() {
+   /* private fun requestPermissionForImage() {
         if (context?.let {
                 ContextCompat.checkSelfPermission(
                     it,
@@ -118,7 +126,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 REQUEST_PERMISSION
             )
         }
-    }
+    }*/
 
     private fun init(view: View?) {
         ivCamera = view?.findViewById(R.id.ivCamera)!!
@@ -239,7 +247,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
 
     private fun openGallery() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_DENIED
             ) {
@@ -254,16 +262,97 @@ class ProfileFragment : Fragment(), onClickAdapter {
         } else {
             //system OS is < Marshmallow
             pickImageFromGallery();
+        }*/
+
+        val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkPermissions((this))
+        } else {
+            try {
+                val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = "image/*"
+                startActivityForResult(intent, PICK_IMAGE_REQUEST)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (result == true) {
+            try {
+
+                val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = "image/*"
+                startActivityForResult(intent, PICK_IMAGE_REQUEST)
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+            }
+
+        } else {
+            //  Common.showShortToast("Permission Granted",requireActivity())
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun checkPermissions(profileFragment: ProfileFragment):Boolean {
+        val currentAPIVersion = Build.VERSION.SDK_INT
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
+            if (context?.let {
+                    ContextCompat.checkSelfPermission(
+                        it,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                } !== PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.CAMERA
+                ) !== PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        Manifest.permission.CAMERA
+                    )
+                ) {
+                    val alertBuilder = android.app.AlertDialog.Builder(context)
+                    alertBuilder.setCancelable(true)
+                    alertBuilder.setTitle("Permission necessary")
+                    alertBuilder.setMessage("External storage permission is necessary")
+                    alertBuilder.setPositiveButton(
+                        android.R.string.yes
+                    ) { dialog, which ->
+                        requestPermissions(
+                            arrayOf<String>(
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA
+                            ),
+                            123
+                        )
+                    }
+                    val alert = alertBuilder.create()
+                    alert.show()
+                } else {
+
+                    requestPermissions(
+                        arrayOf<String>(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.CAMERA
+                        )
+                        , 123
+                    );
+
+                }
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return true
         }
     }
 
 
-    private fun pickImageFromGallery() {
-        //Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -275,11 +364,56 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 if (grantResults.size > 0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED
                 ) {
-                    //permission from popup granted
-                    pickImageFromGallery()
+                    //permission from popup was granted
+                    openCamera()
                 } else {
-                    //permission from popup denied
+                    //permission from popup was denied
+                    Common.hideLoader()
                     Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+            123 -> {
+                if (grantResults?.get(1) != -1) {
+                    if (grantResults.size > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        val file: File = context?.let { Common.createFile(it) }!!
+
+                        val uri: Uri = context?.let {
+                            FileProvider.getUriForFile(
+                                it,
+                                "com.walkins.technician.android.fileprovider",
+                                file
+                            )
+                        }!!
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+
+
+                    }
+                } else {
+
+                }
+            }
+
+            124 -> {
+                if (grantResults?.get(1) != -1) {
+                    if (grantResults.size > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        try {
+                            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                            intent.type = "image/*"
+                            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+
+                        } catch (e: Exception) {
+
+                            e.printStackTrace()
+                        }
+                    }
+                } else {
+
                 }
             }
         }
@@ -288,55 +422,66 @@ class ProfileFragment : Fragment(), onClickAdapter {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            REQUEST_IMAGE -> {
-                if (resultCode == AppCompatActivity.RESULT_OK) {
-                    ivProfileImg?.setImageURI(Uri.parse(imageFilePath))
+            IMAGE_CAPTURE_CODE -> {
+//                image_view.setImageURI(image_uri)
+                CropImage.activity(image_uri)
+                    .start(context as Activity)
+            }
 
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        context?.let { getFile(it, Uri.parse(imageFilePath)) }
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
+            REQUEST_IMAGE_CAPTURE -> {
+                if (resultCode == Activity.RESULT_OK) {
 
-                    CropImage.activity(selectedImage)
-                        .start(this)
-    //                uploadImage(imagePath)
-                } else if (resultCode == AppCompatActivity.RESULT_CANCELED) {
-                    Toast.makeText(context, "You cancelled the operation", Toast.LENGTH_SHORT).show()
+                    //To get the File for further usage
+                    val auxFile = File(mCurrentPhotoPath)
+
+                    CropImage.activity(Uri.fromFile(auxFile))
+                        .start(context as Activity)
+
+                    /* uploadProfileImage(auxFile)
+                     Glide.with(this)
+                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
+                         .into(imgProfile)*/
                 }
             }
+
+            PICK_IMAGE_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //To get the File for further usage
+                    val selectedImage = data?.data
+
+                    /* val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                         getFile(this@ProfileActivity , selectedImage)
+                     } else {
+                         TODO("VERSION.SDK_INT < KITKAT")
+                     }
+
+                     Log.i("imagePath","++++"+imagePath)*/
+
+
+                    CropImage.activity(selectedImage)
+                        .start(context as Activity)
+                }
+            }
+
             CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                 val result = CropImage.getActivityResult(data)
+                Log.e("getdataa",""+result?.error+" "+result?.isSuccessful)
                 if (resultCode == Activity.RESULT_OK) {
 
                     //To get the File for further usage
                     val selectedImage = result.uri
+                    Log.e("getdataa",""+selectedImage)
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        getFile(this@AddParticipantsBussinessDetailActivity, selectedImage)
+                        context?.let { getFile(it, selectedImage) }
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
-                    imagePath?.let { uploadCIPImage(it) }
+                    imagePath?.let { uploadImage(it) }
                 }
-            }
-            IMAGE_PICK_CODE ->{
-                ivProfileImg?.setImageURI(data?.data)
-
-                var uri:Uri=data?.data!!
-
-                val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    context?.let { getFile(it, uri) }
-                } else {
-                    TODO("VERSION.SDK_INT < KITKAT")
-                }
-                CropImage.activity(selectedImage)
-                    .start(this)
-                Log.e("getfilename",""+imagePath?.name+" "+imagePath?.isFile)
             }
         }
-
-
     }
 
     private fun uploadImage(imagePath: File?) {
@@ -369,7 +514,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
     }
 
     private fun openCamera() {
-        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+       /* val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (pictureIntent.resolveActivity(context?.packageManager!!) != null) {
             var photoFile: File? = null
             photoFile = try {
@@ -382,23 +527,54 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 context?.let {
                     FileProvider.getUriForFile(
                         it,
+                        "com.jkadvantage.android.fileprovider",
+                        photoFile!!
+                    )
+                }!!
+*//*
+            val photoUri: Uri =
+                context?.let {
+                    FileProvider.getUriForFile(
+                        it,
                         "$context?.packageName.provider",
                         photoFile!!
                     )
                 }!!
+*//*
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-            startActivityForResult(pictureIntent, REQUEST_IMAGE)
+            startActivityForResult(pictureIntent, REQUEST_IMAGE)*/
+
+
+            val values = ContentValues()
+            values.put(MediaStore.Images.Media.TITLE, "New Picture")
+            values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
+            image_uri = context?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            //camera intent
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+            startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+
         }
+
+        /*val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "New Picture")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
+        image_uri = context?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        //camera intent
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+        startActivityForResult(cameraIntent, REQUEST_IMAGE)*/
+
     }
 
-    private fun createImageFile(): File? {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "IMG_" + timeStamp + "_"
-        val storageDir = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
-        imageFilePath = image.absolutePath
-        return image
-    }
+//    private fun createImageFile(): File? {
+//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+//        val imageFileName = "IMG_" + timeStamp + "_"
+//        val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+//        imageFilePath = image.absolutePath
+//        return image
+//    }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     fun getFile(context: Context, uri: Uri?): File? {
@@ -501,4 +677,4 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
         return null
     }
-}
+

@@ -235,11 +235,11 @@ class LoginRepository {
     fun uploadImage(
         jsonObject: MultipartBody.Part,
         type: String,
-        contentType: String,
+//        contentType: String,
         authorizationToke: String, context: Context
     ): MutableLiveData<UploadImageModel> {
         val loginData = MutableLiveData<UploadImageModel>()
-        loginApi.uploadFile(jsonObject, authorizationToke, contentType, type)
+        loginApi.uploadFile(jsonObject, authorizationToke,  type)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,

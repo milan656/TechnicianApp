@@ -119,7 +119,7 @@ class LoginActivityViewModel : ViewModel() {
     ) {
         loginRepository = LoginRepository().getInstance()
         uploadImageModel =
-            loginRepository?.uploadImage(multiPart, type, "application/json", authorizationToke, context)
+            loginRepository?.uploadImage(multiPart, type, authorizationToke, context)
     }
 
     fun getImageUpload(): LiveData<UploadImageModel>? {

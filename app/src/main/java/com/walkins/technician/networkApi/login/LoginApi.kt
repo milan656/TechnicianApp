@@ -47,7 +47,7 @@ interface LoginApi {
     fun uploadFile(
         @Part file: MultipartBody.Part,
         @Header("Authorization") authorizationToke: String,
-        @Header("Content-Type") content:String,
+//        @Header("Content-Type") content:String,
         @Query("type") type: String
     ): Call<ResponseBody>
 
