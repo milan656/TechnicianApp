@@ -83,8 +83,6 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
                     edtOtp2?.requestFocus()
                     otp?.append(edtOtp1?.text?.toString()?.toInt())
-
-
                 }
 
             }
