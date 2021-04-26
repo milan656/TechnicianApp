@@ -44,11 +44,14 @@ class TyreKey {
         var moreSuggestion = "moreSuggestion"
         var technicalSuggestionArr = "technicalSuggestionArr"
 
-        var radioGroupLF="radioGroupLF"
-        var radioGroupLR="radioGroupLR"
-        var radioGroupRF="radioGroupRF"
-        var radioGroupRR="radioGroupRR"
+        var radioGroupLF = "radioGroupLF"
+        var radioGroupLR = "radioGroupLR"
+        var radioGroupRF = "radioGroupRF"
+        var radioGroupRR = "radioGroupRR"
 
-        var something_went_wrong="Something Went Wrong"
+        var addServiceCarImage_1 = "addServiceCarImage_1"
+        var addServiceCarImage_2 = "addServiceCarImage_2"
+
+        var something_went_wrong = "Something Went Wrong"
     }
 }

@@ -15,34 +15,27 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
-import com.example.technician.common.RetrofitCommonClass.CommonRetrofit.context
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
-import com.walkins.technician.common.TyreConfigClass
-import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.getDataColumn
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.viewmodel.LoginActivityViewModel
@@ -50,10 +43,6 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -240,7 +229,27 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 openGallery()
             }
             if (Common.commonPhotoChooseArr.get(variable).equals("Camera")) {
-                openCamera()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (context?.checkSelfPermission(Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED ||
+                        context?.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED
+                    ) {
+                        //permission was not enabled
+                        val permission = arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                        //show popup to request permission
+                        requestPermissions(permission, PERMISSION_CODE)
+                    } else {
+                        //permission already granted
+                        openCamera()
+                    }
+                } else {
+                    //system os is < marshmallow
+                    openCamera()
+                }
             }
         }
     }
@@ -424,8 +433,10 @@ class ProfileFragment : Fragment(), onClickAdapter {
         when (requestCode) {
             IMAGE_CAPTURE_CODE -> {
 //                image_view.setImageURI(image_uri)
-                CropImage.activity(image_uri)
-                    .start(context as Activity)
+                activity?.let {
+                    CropImage.activity(image_uri)
+                        .start(it)
+                }
             }
 
             REQUEST_IMAGE_CAPTURE -> {
@@ -433,9 +444,13 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
                     //To get the File for further usage
                     val auxFile = File(mCurrentPhotoPath)
+                    Log.e("getdataa",""+auxFile.isFile)
+                    activity?.let {
+                        CropImage.activity(Uri.fromFile(auxFile))
+                            .start(it)
+                    }
 
-                    CropImage.activity(Uri.fromFile(auxFile))
-                        .start(context as Activity)
+
 
                     /* uploadProfileImage(auxFile)
                      Glide.with(this)
@@ -450,17 +465,19 @@ class ProfileFragment : Fragment(), onClickAdapter {
                     //To get the File for further usage
                     val selectedImage = data?.data
 
-                    /* val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                         getFile(this@ProfileActivity , selectedImage)
+                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                         context?.let { getFile(it, selectedImage) }
                      } else {
                          TODO("VERSION.SDK_INT < KITKAT")
                      }
 
-                     Log.i("imagePath","++++"+imagePath)*/
+                     Log.i("imagePath","++++"+imagePath)
 
 
-                    CropImage.activity(selectedImage)
-                        .start(context as Activity)
+                    activity?.let {
+                        CropImage.activity(selectedImage)
+                            .start(it)
+                    }
                 }
             }
 
@@ -484,7 +501,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
         }
     }
 
-    private fun uploadImage(imagePath: File?) {
+    private fun uploadImage(imagePath: File) {
         context?.let { Common.showLoader(it) }
 
         val requestFile = RequestBody.create(
@@ -502,8 +519,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
             )
         }
 
-        loginViewModel?.getImageUpload()?.observe(this, androidx.lifecycle.Observer {
-
+        loginViewModel?.getImageUpload()?.observe(this, Observer {
             Common.hideLoader()
             if (it != null) {
                 if (it.success) {
@@ -511,6 +527,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 }
             }
         })
+
     }
 
     private fun openCamera() {
