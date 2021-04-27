@@ -12,6 +12,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -38,7 +39,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -190,6 +195,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var radioRF_LR: RadioButton? = null
     private var radioRF_RR: RadioButton? = null
 
+    private var image_1_progress: ProgressBar? = null
+    private var image_2_progress: ProgressBar? = null
+
     // image picker code
 //    val REQUEST_IMAGE = 100
 //    val REQUEST_PERMISSION = 200
@@ -215,11 +223,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //        requestPermissionForImage()
         init()
 
+
     }
 
     suspend fun getStoredObjects() {
 
-        Common.setFalseAllTyreStatus()
 
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -595,6 +603,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         llWheelbalancing = findViewById(R.id.llWheelbalancing)
         llTyreRotation = findViewById(R.id.llTyreRotation)
 
+        image_1_progress = findViewById(R.id.image_1_progress)
+        image_2_progress = findViewById(R.id.image_2_progress)
+
         ivInfoImgLF = findViewById(R.id.ivInfoImgLF)
         ivInfoImgLR = findViewById(R.id.ivInfoImgLR)
         ivInfoImgRF = findViewById(R.id.ivInfoImgRF)
@@ -755,7 +766,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
 
         })
-
+        addServiceApiCall()
 
     }
 
@@ -4588,8 +4599,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
     fun removeAllTyreAndServiceDetails() {
-        GlobalScope.launch {
-            launch {
+        GlobalScope.launch(Dispatchers.Main) {
+            launch(Dispatchers.Main) {
 
                 prefManager.removeValue(TyreConfigClass.TyreLFObject)
                 prefManager.removeValue(TyreConfigClass.TyreRRObject)
@@ -4604,9 +4615,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 chkWheelBalacing?.isChecked = false
                 edtMoreSuggestion?.setText("")
                 tvNextServiceDueDate?.setText("")
+
                 TyreConfigClass.CarPhoto_2 = ""
                 TyreConfigClass.CarPhoto_1 = ""
-
+                Common.setFalseAllTyreStatus()
                 getStoredObjects()
             }
         }
@@ -4632,7 +4644,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getfile", "" + it.data.imageUrl)
                     if (selectImage1) {
                         try {
-                            Glide.with(this).load(it.data.imageUrl).into(ivPickedImage!!)
+                            image_1_progress?.visibility = View.VISIBLE
+//                            Glide.with(this).load(it.data.imageUrl).into(ivPickedImage!!)
+
+                            Glide.with(this).load(it.data.imageUrl)
+                                .listener(object : RequestListener<Drawable> {
+                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                        image_1_progress?.visibility = View.GONE
+                                        return false
+                                    }
+
+                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                        image_1_progress?.visibility = View.GONE
+                                        return false
+                                    }
+
+                                }).into(ivPickedImage!!)
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -4644,8 +4671,21 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.CarPhoto_1 = it.data.imageUrl
                         relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     } else {
+                        image_2_progress?.visibility = View.VISIBLE
                         try {
-                            Glide.with(this).load(it.data.imageUrl).into(ivPickedImage1!!)
+                            Glide.with(this).load(it.data.imageUrl)
+                                .listener(object : RequestListener<Drawable> {
+                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                        image_2_progress?.visibility = View.GONE
+                                        return false
+                                    }
+
+                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                        image_2_progress?.visibility = View.GONE
+                                        return false
+                                    }
+
+                                }).into(ivPickedImage1!!)
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
