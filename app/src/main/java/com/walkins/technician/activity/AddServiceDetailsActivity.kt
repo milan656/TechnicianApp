@@ -76,7 +76,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
     private lateinit var prefManager: PrefManager
@@ -222,8 +221,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //        requestPermissionForImage()
         init()
-
-
     }
 
     suspend fun getStoredObjects() {
@@ -558,20 +555,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
-//    private fun requestPermissionForImage() {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !==
-//            PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                this, arrayOf(
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
-//                ),
-//                REQUEST_PERMISSION
-//            )
-//        }
-//    }
-
     private fun init() {
 
         tvTitle = findViewById(R.id.tvTitle)
@@ -623,7 +606,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         radioGroupLR = findViewById(R.id.rdGroupLR)
         radioGroupRF = findViewById(R.id.rdGroupRF)
         radioGroupRR = findViewById(R.id.rdGroupRR)
-
 
         ivPhoneCall = findViewById(R.id.ivPhoneCall)
 
@@ -721,34 +703,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 getStoredObjects()
             }
         }
-
-
-
-
         checkChangeListener()
-
-
-        edtMoreSuggestion?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-                if (s != null && s?.toString().length > 0) {
-                    prefManager?.setValue(
-                        TyreKey.moreSuggestion,
-                        edtMoreSuggestion?.text?.toString()
-                    )
-                    checkSubmitBtn()
-                }
-            }
-
-        })
 
         tvNextServiceDueDate?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -760,12 +715,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s != null && s?.toString().length > 2) {
+                if (s != null && s.toString().length > 2) {
                     TyreConfigClass.nextDueDate = tvNextServiceDueDate?.text?.toString()!!
-                    prefManager?.setValue(
-                        TyreKey.nextDueDate,
-                        tvNextServiceDueDate?.text?.toString()
-                    )
                     checkSubmitBtn()
                 }
             }
@@ -977,9 +928,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Common.collapse(llUpdatedPlacement!!)
             }
         }
-
         checkSubmitBtn()
-
     }
 
     override fun onClick(v: View?) {
@@ -2554,11 +2503,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         .start(this)
 
                     setImage(Uri.parse(mCurrentPhotoPath), REQUEST_IMAGE_CAPTURE)
-
-                    /* uploadProfileImage(auxFile)
-                     Glide.with(this)
-                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
-                         .into(imgProfile)*/
                 }
             }
 
@@ -2590,93 +2534,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val selectedImage = result.uri
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        getFile(this, selectedImage)
+                        Common.getFile(this, selectedImage)
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
                     imagePath?.let { uploadImage(it) }
                 }
             }
-            /*REQUEST_IMAGE -> {
-                if (resultCode == RESULT_OK) {
-                    if (selectImage1) {
-                        ivPickedImage?.setImageURI(Uri.parse(imageFilePath))
-                        ivPickedImage?.visibility = View.VISIBLE
-                        ivEditImg1?.visibility = View.VISIBLE
-                        tvAddPhoto1?.visibility = View.GONE
-                        tvCarphoto1?.visibility = View.GONE
-                        TyreConfigClass.CarPhoto_1 = imageFilePath
-                        relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-                    } else {
-                        ivPickedImage1?.setImageURI(Uri.parse(imageFilePath))
-                        ivPickedImage1?.visibility = View.VISIBLE
-                        ivEditImg2?.visibility = View.VISIBLE
-                        tvAddPhoto2?.visibility = View.GONE
-                        tvCarphoto2?.visibility = View.GONE
-                        TyreConfigClass.CarPhoto_2 = imageFilePath
-                        relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-
-                    }
-
-                    var file = Uri.parse(imageFilePath)?.toFile()
-
-//                    var file = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//                        getFile(this, Uri.parse(imageFilePath))
-//                    } else {
-//                        TODO("VERSION.SDK_INT < KITKAT")
-//                    }
-
-                    uploadImage(file!!)
-                    checkSubmitBtn()
-                } else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(this, "You cancelled the operation", Toast.LENGTH_SHORT).show()
-                }
-            }
-            IMAGE_PICK_CODE -> {
-
-                if (selectImage1) {
-                    try {
-                        ivPickedImage?.setImageURI(data?.data)
-                        ivPickedImage?.visibility = View.VISIBLE
-                        ivEditImg1?.visibility = View.VISIBLE
-                        tvAddPhoto1?.visibility = View.GONE
-                        tvCarphoto1?.visibility = View.GONE
-                        TyreConfigClass.CarPhoto_1 = data?.data?.toString()!!
-                        relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-                    } catch (e: Exception) {
-                        Log.e("getexp", "" + e.message + " " + e.cause)
-                        e.printStackTrace()
-
-                    }
-
-                } else {
-                    try {
-                        ivPickedImage1?.setImageURI(data?.data)
-                        ivPickedImage1?.visibility = View.VISIBLE
-                        ivEditImg2?.visibility = View.VISIBLE
-                        tvAddPhoto2?.visibility = View.GONE
-                        tvCarphoto2?.visibility = View.GONE
-                        TyreConfigClass.CarPhoto_2 = data?.data?.toString()!!
-                        relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-                    } catch (e: Exception) {
-                        Log.e("getexp", "" + e.message + " " + e.cause)
-                        e.printStackTrace()
-
-                    }
-
-                }
-
-//                var file = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//                    getFile(this, data?.data)
-//                } else {
-//                    TODO("VERSION.SDK_INT < KITKAT")
-//                }
-
-                uploadImage(data?.data?.toFile()!!)
-
-                checkSubmitBtn()
-            }*/
-
 
             1000 -> {
 
@@ -4455,12 +4319,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 prefManager.setValue(TyreConfigClass.TyreLRObject, jsonlr.toString())
             }
-
-
         }
-
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -4497,8 +4357,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         )
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
                         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-
-
                     }
                 } else {
 
@@ -4542,25 +4400,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
     }
 
-
     private fun openCamera() {
-//        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (pictureIntent.resolveActivity(packageManager) != null) {
-//            var photoFile: File? = null
-//            photoFile = try {
-//                Common.createImageFile(this)
-//
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//                return
-//            }
-//            imageFilePath = photoFile?.absolutePath!!
-//            val photoUri: Uri =
-//                FileProvider.getUriForFile(this, "$packageName.provider", photoFile!!)
-//            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-//            startActivityForResult(pictureIntent, REQUEST_IMAGE)
-//        }
-
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
@@ -4571,33 +4411,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
     }
 
-
-//    private fun openGallery() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-//                PackageManager.PERMISSION_DENIED
-//            ) {
-//                //permission denied
-//                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
-//                //show popup to request runtime permission
-//                requestPermissions(permissions, PERMISSION_CODE);
-//            } else {
-//                //permission already granted
-//                pickImageFromGallery();
-//            }
-//        } else {
-//            //system OS is < Marshmallow
-//            pickImageFromGallery();
-//        }
-//    }
-
-//    private fun pickImageFromGallery() {
-//        //Intent to pick image
-//        val intent = Intent(Intent.ACTION_PICK)
-//        intent.type = "image/*"
-//        startActivityForResult(intent, IMAGE_PICK_CODE)
-//    }
-
     override fun onPause() {
         storeServiceDetailData()
         super.onPause()
@@ -4607,7 +4420,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         super.onResume()
         getServiceData()
     }
-
 
     fun removeAllTyreAndServiceDetails() {
         GlobalScope.launch(Dispatchers.Main) {
@@ -4658,166 +4470,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else {
                         TyreConfigClass.CarPhoto_2 = it.data.imageUrl
                     }
-//                    if (selectImage1) {
-//                        try {
-//                            image_1_progress?.visibility = View.VISIBLE
-//
-//                            Glide.with(this).load(it.data.imageUrl)
-//                                .listener(object : RequestListener<Drawable> {
-//                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-//                                        image_1_progress?.visibility = View.GONE
-//                                        return false
-//                                    }
-//
-//                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-//                                        image_1_progress?.visibility = View.GONE
-//                                        return false
-//                                    }
-//
-//                                }).into(ivPickedImage!!)
-//                        } catch (e: java.lang.Exception) {
-//                            e.printStackTrace()
-//                        }
-//
-//                        ivPickedImage?.visibility = View.VISIBLE
-//                        ivEditImg1?.visibility = View.VISIBLE
-//                        tvAddPhoto1?.visibility = View.GONE
-//                        tvCarphoto1?.visibility = View.GONE
-//                        TyreConfigClass.CarPhoto_1 = it.data.imageUrl
-//                        relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-//                    } else {
-//                        image_2_progress?.visibility = View.VISIBLE
-//                        try {
-//                            Glide.with(this).load(it.data.imageUrl)
-//                                .listener(object : RequestListener<Drawable> {
-//                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-//                                        image_2_progress?.visibility = View.GONE
-//                                        return false
-//                                    }
-//
-//                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-//                                        image_2_progress?.visibility = View.GONE
-//                                        return false
-//                                    }
-//
-//                                }).into(ivPickedImage1!!)
-//                        } catch (e: java.lang.Exception) {
-//                            e.printStackTrace()
-//                        }
-//                        ivPickedImage1?.visibility = View.VISIBLE
-//                        ivEditImg2?.visibility = View.VISIBLE
-//                        tvAddPhoto2?.visibility = View.GONE
-//                        tvCarphoto2?.visibility = View.GONE
-//                        TyreConfigClass.CarPhoto_2 = it.data.imageUrl
-//                        relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-//
-//                    }
                 }
             }
         })
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    fun getFile(context: Context, uri: Uri?): File? {
-        if (uri != null) {
-            val path = getPath(context, uri)
-            if (path != null && isLocal(path)) {
-                return File(path)
-            }
-        }
-        return null
-    }
-
-
-    fun isLocal(url: String?): Boolean {
-        return url != null && !url.startsWith("http://") && !url.startsWith("https://")
-    }
-
-    fun isExternalStorageDocument(uri: Uri): Boolean {
-        return "com.android.externalstorage.documents" == uri.authority
-    }
-
-    fun isDownloadsDocument(uri: Uri): Boolean {
-        return "com.android.providers.downloads.documents" == uri.authority
-    }
-
-    fun isMediaDocument(uri: Uri): Boolean {
-        return "com.android.providers.media.documents" == uri.authority
-    }
-
-    fun isGooglePhotosUri(uri: Uri): Boolean {
-        return "com.google.android.apps.photos.content" == uri.authority
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    fun getPath(context: Context, uri: Uri): String? {
-
-
-        val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-
-        // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // LocalStorageProvider
-            if (isExternalStorageDocument(uri)) {
-                val docId = DocumentsContract.getDocumentId(uri)
-                val split =
-                    docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val type = split[0]
-
-                if ("primary".equals(type, ignoreCase = true)) {
-                    return "" + Environment.getExternalStorageDirectory() + "/" + split[1]
-                }
-
-                // TODO handle non-primary volumes
-            } else if (isDownloadsDocument(uri)) {
-
-                val id = DocumentsContract.getDocumentId(uri)
-                val contentUri = ContentUris.withAppendedId(
-                    Uri.parse("content://downloads/public_downloads"),
-                    java.lang.Long.valueOf(id)
-                )
-
-                return getDataColumn(context, contentUri, null, null)
-            } else if (isMediaDocument(uri)) {
-                val docId = DocumentsContract.getDocumentId(uri)
-                val split =
-                    docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val type = split[0]
-
-                var contentUri: Uri? = null
-                if ("image" == type) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                } else if ("video" == type) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                } else if ("audio" == type) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-                }
-
-                val selection = "_id=?"
-                val selectionArgs = arrayOf(split[1])
-
-                return getDataColumn(context, contentUri, selection, selectionArgs)
-            }// MediaProvider
-            // DownloadsProvider
-            // ExternalStorageProvider
-        } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
-
-            // Return the remote address
-            return if (isGooglePhotosUri(uri)) uri.lastPathSegment else getDataColumn(
-                context,
-                uri,
-                null,
-                null
-            )
-
-        } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
-            return uri.path
-        }// File
-        // MediaStore (and general)
-
-        return null
-    }
 
     fun setImage(uri: Uri, requestCode: Int) {
         if (requestCode == IMAGE_CAPTURE_CODE) {
@@ -4828,14 +4485,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     ivEditImg1?.visibility = View.VISIBLE
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
-//                    TyreConfigClass.CarPhoto_1 = uri?.toString()!!
                     relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } catch (e: Exception) {
                     Log.e("getexp", "" + e.message + " " + e.cause)
                     e.printStackTrace()
-
                 }
-
             } else {
                 try {
                     ivPickedImage1?.setImageURI(uri)
@@ -4843,14 +4497,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     ivEditImg2?.visibility = View.VISIBLE
                     tvAddPhoto2?.visibility = View.GONE
                     tvCarphoto2?.visibility = View.GONE
-//                    TyreConfigClass.CarPhoto_2 = uri?.toString()!!
                     relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } catch (e: Exception) {
                     Log.e("getexp", "" + e.message + " " + e.cause)
                     e.printStackTrace()
-
                 }
-
             }
         } else {
             if (selectImage1) {
@@ -4859,7 +4510,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ivEditImg1?.visibility = View.VISIBLE
                 tvAddPhoto1?.visibility = View.GONE
                 tvCarphoto1?.visibility = View.GONE
-//                TyreConfigClass.CarPhoto_1 = imageFilePath
                 relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
             } else {
                 ivPickedImage1?.setImageURI(uri)
@@ -4867,11 +4517,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ivEditImg2?.visibility = View.VISIBLE
                 tvAddPhoto2?.visibility = View.GONE
                 tvCarphoto2?.visibility = View.GONE
-//                TyreConfigClass.CarPhoto_2 = uri.toString()
                 relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
             }
         }
-
     }
 }

@@ -847,75 +847,7 @@ class Common {
             return null
         }
 
-        @TargetApi(Build.VERSION_CODES.KITKAT)
-        @RequiresApi(Build.VERSION_CODES.KITKAT)
-        fun getPath(context: Context, uri: Uri): String? {
 
-
-            val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-
-            // DocumentProvider
-            if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-                // LocalStorageProvider
-                if (isExternalStorageDocument(uri)) {
-                    val docId = DocumentsContract.getDocumentId(uri)
-                    val split =
-                        docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    val type = split[0]
-
-                    if ("primary".equals(type, ignoreCase = true)) {
-                        return "" + Environment.getExternalStorageDirectory() + "/" + split[1]
-                    }
-
-                    // TODO handle non-primary volumes
-                } else if (isDownloadsDocument(uri)) {
-
-                    val id = DocumentsContract.getDocumentId(uri)
-                    val contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"),
-                        java.lang.Long.valueOf(id)
-                    )
-
-                    return getDataColumn(context, contentUri, null, null)
-                } else if (isMediaDocument(uri)) {
-                    val docId = DocumentsContract.getDocumentId(uri)
-                    val split =
-                        docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    val type = split[0]
-
-                    var contentUri: Uri? = null
-                    if ("image" == type) {
-                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    } else if ("video" == type) {
-                        contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                    } else if ("audio" == type) {
-                        contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-                    }
-
-                    val selection = "_id=?"
-                    val selectionArgs = arrayOf(split[1])
-
-                    return getDataColumn(context, contentUri, selection, selectionArgs)
-                }// MediaProvider
-                // DownloadsProvider
-                // ExternalStorageProvider
-            } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
-
-                // Return the remote address
-                return if (isGooglePhotosUri(uri)) uri.lastPathSegment else getDataColumn(
-                    context,
-                    uri,
-                    null,
-                    null
-                )
-
-            } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
-                return uri.path
-            }// File
-            // MediaStore (and general)
-
-            return null
-        }
 
         fun slideToBottom(view: View) {
             val animate = TranslateAnimation(0f, 0f, 0f, view.height.toFloat())
@@ -1034,6 +966,17 @@ class Common {
         }
 
 
+
+
+        fun checkCallPermission(context: Context): Boolean {
+            val permission = Manifest.permission.CALL_PHONE
+            val res: Int = checkSelfPermission(context, permission)
+            return res == PackageManager.PERMISSION_GRANTED
+        }
+
+
+
+
         fun isLocal(url: String?): Boolean {
             return url != null && !url.startsWith("http://") && !url.startsWith("https://")
         }
@@ -1054,10 +997,74 @@ class Common {
             return "com.google.android.apps.photos.content" == uri.authority
         }
 
-        fun checkCallPermission(context: Context): Boolean {
-            val permission = Manifest.permission.CALL_PHONE
-            val res: Int = checkSelfPermission(context, permission)
-            return res == PackageManager.PERMISSION_GRANTED
+        @TargetApi(Build.VERSION_CODES.KITKAT)
+        @RequiresApi(Build.VERSION_CODES.KITKAT)
+        fun getPath(context: Context, uri: Uri): String? {
+
+
+            val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+
+            // DocumentProvider
+            if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+                // LocalStorageProvider
+                if (isExternalStorageDocument(uri)) {
+                    val docId = DocumentsContract.getDocumentId(uri)
+                    val split =
+                        docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    val type = split[0]
+
+                    if ("primary".equals(type, ignoreCase = true)) {
+                        return "" + Environment.getExternalStorageDirectory() + "/" + split[1]
+                    }
+
+                    // TODO handle non-primary volumes
+                } else if (isDownloadsDocument(uri)) {
+
+                    val id = DocumentsContract.getDocumentId(uri)
+                    val contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"),
+                        java.lang.Long.valueOf(id)
+                    )
+
+                    return com.walkins.technician.common.getDataColumn(context, contentUri, null, null)
+                } else if (isMediaDocument(uri)) {
+                    val docId = DocumentsContract.getDocumentId(uri)
+                    val split =
+                        docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    val type = split[0]
+
+                    var contentUri: Uri? = null
+                    if ("image" == type) {
+                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    } else if ("video" == type) {
+                        contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                    } else if ("audio" == type) {
+                        contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                    }
+
+                    val selection = "_id=?"
+                    val selectionArgs = arrayOf(split[1])
+
+                    return com.walkins.technician.common.getDataColumn(context, contentUri, selection, selectionArgs)
+                }// MediaProvider
+                // DownloadsProvider
+                // ExternalStorageProvider
+            } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
+
+                // Return the remote address
+                return if (isGooglePhotosUri(uri)) uri.lastPathSegment else com.walkins.technician.common.getDataColumn(
+                    context,
+                    uri,
+                    null,
+                    null
+                )
+
+            } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
+                return uri.path
+            }// File
+            // MediaStore (and general)
+
+            return null
         }
 
         fun setClearAllValues() {
