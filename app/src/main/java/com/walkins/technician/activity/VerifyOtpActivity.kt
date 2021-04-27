@@ -73,10 +73,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
         tvResend?.text = Html.fromHtml("Didn't receive OTP? <font color='blue'>Resend<font/>")
 
-        edtOtp1?.setText("" + otpStr?.get(0))
-        edtOtp2?.setText("" + otpStr?.get(1))
-        edtOtp3?.setText("" + otpStr?.get(2))
-        edtOtp4?.setText("" + otpStr?.get(3))
+
 
 
 //        edtOtp1?.requestFocus()
@@ -95,6 +92,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
                     edtOtp2?.requestFocus()
                     otp?.append(edtOtp1?.text?.toString()?.toInt())
+                    Log.e("getcallbtn","call8585")
                 }
 
             }
@@ -113,6 +111,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                 if (s != null && s.length != 0 && s.length == 1) {
                     edtOtp3?.requestFocus()
                     otp?.append(edtOtp2?.text?.toString()?.toInt())
+                    Log.e("getcallbtn","call525")
 
                 }
             }
@@ -131,6 +130,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                 if (s != null && s.length != 0 && s.length == 1) {
                     edtOtp4?.requestFocus()
                     otp?.append(edtOtp3?.text?.toString()?.toInt())
+                    Log.e("getcallbtn","call00")
 
                 }
 
@@ -151,12 +151,16 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                     edtOtp4?.clearFocus()
                     otp?.append(edtOtp4?.text?.toString()?.toInt())
                     btnVerify?.performClick()
+                    Log.e("getcallbtn","call")
                 }
 
             }
 
         })
-
+        edtOtp1?.setText("" + otpStr?.get(0))
+        edtOtp2?.setText("" + otpStr?.get(1))
+        edtOtp3?.setText("" + otpStr?.get(2))
+        edtOtp4?.setText("" + otpStr?.get(3))
 
         val PERMISSIONS = arrayOf(
             Manifest.permission.RECEIVE_SMS,

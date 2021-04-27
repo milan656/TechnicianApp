@@ -157,6 +157,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var psiInFrame: FrameLayout? = null
     private var psiOutFrame: FrameLayout? = null
     private var edtManufaturingDate: EditText? = null
+    private var tvTyreService: TextView? = null
 
     // image picker code
 //    val REQUEST_IMAGE = 100
@@ -208,6 +209,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         psiInFrame = findViewById(R.id.psiInFrame)
         tvAddPhoto1 = findViewById(R.id.tvAddPhoto1)
         tvCarphoto1 = findViewById(R.id.tvCarphoto1)
+        tvTyreService = findViewById(R.id.tvTyreService)
 
         edtManufaturingDate = findViewById(R.id.edtManufaturingDate)
         relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
@@ -236,10 +238,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
 
         tvCarphoto1?.setText("" + selectedTyre + " " + "Photo")
+        tvTyreService?.setText("" + selectedTyre + " " + "Tyre Service")
 
         btnDone?.setOnClickListener(this)
-
-
 
         ivOkSideWell = findViewById(R.id.ivOkSideWell)
         ivSugSideWell = findViewById(R.id.ivSugSideWell)
@@ -1788,6 +1789,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         when (requestCode) {
             IMAGE_CAPTURE_CODE -> {
 //                image_view.setImageURI(image_uri)
+                Log.e("getfile0011", "call")
                 CropImage.activity(image_uri)
                     .start(this)
             }
@@ -1796,7 +1798,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                     //To get the File for further usage
                     val auxFile = File(mCurrentPhotoPath)
-
+                    Log.e("getfile00", "" + mCurrentPhotoPath + " " + Uri.parse(mCurrentPhotoPath))
+                    ivPickedImage1?.setImageURI(Uri.parse(mCurrentPhotoPath))
+                    ivPickedImage1?.visibility = View.VISIBLE
+                    ivEditImg2?.visibility = View.VISIBLE
+                    tvAddPhoto1?.visibility = View.GONE
+                    tvCarphoto1?.visibility = View.GONE
                     CropImage.activity(Uri.fromFile(auxFile))
                         .start(this)
 
@@ -1820,7 +1827,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                      }
 
                      Log.i("imagePath","++++"+imagePath)*/
-
+                    Log.e("getfile0022", "" + selectedImage)
+                    ivPickedImage1?.setImageURI(selectedImage)
+                    ivPickedImage1?.visibility = View.VISIBLE
+                    ivEditImg2?.visibility = View.VISIBLE
+                    tvAddPhoto1?.visibility = View.GONE
+                    tvCarphoto1?.visibility = View.GONE
 
                     CropImage.activity(selectedImage)
                         .start(this)
@@ -1833,7 +1845,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                     //To get the File for further usage
                     val selectedImage = result.uri
+                    Log.e("getfile0033", "" + selectedImage)
                     ivPickedImage1?.setImageURI(selectedImage)
+                    ivPickedImage1?.visibility = View.VISIBLE
+                    ivEditImg2?.visibility = View.VISIBLE
+                    tvAddPhoto1?.visibility = View.GONE
+                    tvCarphoto1?.visibility = View.GONE
+//                    TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage?.toString()
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         getFile(this, selectedImage)
@@ -1845,7 +1863,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
         }
     }
-
 
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)

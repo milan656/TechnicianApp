@@ -113,7 +113,7 @@ class EndlessService : Service() {
         val notificationBuilder: Notification.Builder =
             Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
         val notification: Notification = notificationBuilder.setOngoing(true)
-            .setSmallIcon(R.drawable.ic_add_icon)
+            .setSmallIcon(R.drawable.ic_launcher)
             .setContentTitle("App is running in background")
             .setPriority(NotificationManager.IMPORTANCE_MIN)
             .setCategory(Notification.CATEGORY_SERVICE)

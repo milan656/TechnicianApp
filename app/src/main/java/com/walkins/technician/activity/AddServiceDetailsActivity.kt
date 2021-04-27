@@ -32,7 +32,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toFile
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -61,20 +60,17 @@ import com.walkins.technician.common.*
 import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialogDueDate
 import com.walkins.technician.model.login.IssueResolveModel
-import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.LoginActivityViewModel
 import com.walkins.technician.viewmodel.ServiceViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
-import java.lang.NullPointerException
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
@@ -194,6 +190,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var radioLR_RF: RadioButton? = null
     private var radioRF_LR: RadioButton? = null
     private var radioRF_RR: RadioButton? = null
+    private var radioGroupLF: RadioGroup? = null
+    private var radioGroupLR: RadioGroup? = null
+    private var radioGroupRF: RadioGroup? = null
+    private var radioGroupRR: RadioGroup? = null
 
     private var image_1_progress: ProgressBar? = null
     private var image_2_progress: ProgressBar? = null
@@ -619,6 +619,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         radioLR_RF = findViewById(R.id.radioLR_RF)
         radioRF_LR = findViewById(R.id.radioRF_LR)
         radioRF_RR = findViewById(R.id.radioRF_RR)
+        radioGroupLF = findViewById(R.id.rdGroupLF)
+        radioGroupLR = findViewById(R.id.rdGroupLR)
+        radioGroupRF = findViewById(R.id.rdGroupRF)
+        radioGroupRR = findViewById(R.id.rdGroupRR)
+
 
         ivPhoneCall = findViewById(R.id.ivPhoneCall)
 
@@ -766,12 +771,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
 
         })
-        addServiceApiCall()
-
-    }
-
-
-    private fun getTyreImageData() {
 
     }
 
@@ -1306,41 +1305,51 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         jsonObject.add(TyreKey.technicalSuggestionArr, jsonArray)
 
         try {
-            val radioGroup = findViewById<View>(R.id.rdGroupLF) as RadioGroup
-            val radioButtonIDLF = radioGroup.checkedRadioButtonId
-            val radioButtonLF = radioGroup.findViewById<View>(radioButtonIDLF) as RadioButton
-            val selectedText = radioButtonLF.text?.toString() + "LF"
+            var selectedText: String? = ""
+            if (radioLF_LR?.isChecked!!) {
+                selectedText = radioLF_LR?.text?.toString() + "LF"
+            } else {
+                selectedText = radioLF_RR?.text?.toString() + "LF"
+            }
             jsonObject.addProperty(TyreKey.radioGroupLF, selectedText)
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
         try {
-            val radioGroupRF = findViewById<View>(R.id.rdGroupRF) as RadioGroup
-            val radioButtonIDRF = radioGroupRF.checkedRadioButtonId
-            val radioButtonRF = radioGroupRF.findViewById<View>(radioButtonIDRF) as RadioButton
-            val selectedTextRF = radioButtonRF.text?.toString() + "RF"
-            jsonObject.addProperty(TyreKey.radioGroupRF, selectedTextRF)
+            var selectedText: String? = ""
+            if (radioRF_LR?.isChecked!!) {
+                selectedText = radioRF_LR?.text?.toString() + "RF"
+            } else {
+                selectedText = radioRF_RR?.text?.toString() + "RF"
+            }
+
+            jsonObject.addProperty(TyreKey.radioGroupRF, selectedText)
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
 
         try {
-            val radioGroupLR = findViewById<View>(R.id.rdGroupLR) as RadioGroup
-            val radioButtonIDLR = radioGroupLR.checkedRadioButtonId
-            val radioButtonLR = radioGroupLR.findViewById<View>(radioButtonIDLR) as RadioButton
-            val selectedTextLR = radioButtonLR.text?.toString() + "LR"
-            jsonObject.addProperty(TyreKey.radioGroupLR, selectedTextLR)
+            var selectedText: String? = ""
+            if (radioLR_RF?.isChecked!!) {
+                selectedText = radioLR_RF?.text?.toString() + "LR"
+            } else {
+                selectedText = radioLR_LF?.text?.toString() + "LR"
+            }
+
+            jsonObject.addProperty(TyreKey.radioGroupLR, selectedText)
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
 
 
         try {
-            val radioGroupRR = findViewById<View>(R.id.rdGroupRR) as RadioGroup
-            val radioButtonIDRR = radioGroupRR.checkedRadioButtonId
-            val radioButtonRR = radioGroupRR.findViewById<View>(radioButtonIDRR) as RadioButton
-            val selectedTextRR = radioButtonRR.text?.toString() + "RR"
-            jsonObject.addProperty(TyreKey.radioGroupRR, selectedTextRR)
+            var selectedText: String? = ""
+            if (radioRR_LF?.isChecked!!) {
+                selectedText = radioRR_LF?.text?.toString() + "RR"
+            } else {
+                selectedText = radioRR_RF?.text?.toString() + "RR"
+            }
+            jsonObject.addProperty(TyreKey.radioGroupRR, selectedText)
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
@@ -2544,6 +2553,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     CropImage.activity(Uri.fromFile(auxFile))
                         .start(this)
 
+                    setImage(Uri.parse(mCurrentPhotoPath), REQUEST_IMAGE_CAPTURE)
+
                     /* uploadProfileImage(auxFile)
                      Glide.with(this)
                          .load(Uri.fromFile(File(mCurrentPhotoPath)))
@@ -2564,7 +2575,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                      }
 
                      Log.i("imagePath","++++"+imagePath)*/
-
+                    setImage(data?.data!!, PICK_IMAGE_REQUEST)
 
                     CropImage.activity(selectedImage)
                         .start(this)
@@ -2949,7 +2960,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
 
-    public fun checkSubmitBtn() {
+    private fun checkSubmitBtn() {
 
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_blue))
         btnSubmitAndComplete?.isClickable = false
@@ -2969,14 +2980,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ) {
 
         } else {
-            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (!chkWheelBalacing?.isChecked!! && !chkTyreRotation?.isChecked!! &&
             !chkNitrogenTopup?.isChecked!! && !chkNitrogenRefill?.isChecked!!
         ) {
-            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -2988,23 +2999,23 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (!TyreConfigClass.LFCompleted || !TyreConfigClass.RFCompleted || !TyreConfigClass.LRCompleted
             || !TyreConfigClass.RRCompleted
         ) {
-            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
 
         } else {
-            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
 
         } else {
-            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
         Log.e("iscpmpleted33", "button is clickable")
-        Toast.makeText(this, "button is clickable", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "button is clickable", Toast.LENGTH_SHORT).show()
         btnSubmitAndComplete?.isClickable = true
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.round_corner_button_yellow))
     }
@@ -4643,60 +4654,64 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (it.success) {
                     Log.e("getfile", "" + it.data.imageUrl)
                     if (selectImage1) {
-                        try {
-                            image_1_progress?.visibility = View.VISIBLE
-//                            Glide.with(this).load(it.data.imageUrl).into(ivPickedImage!!)
-
-                            Glide.with(this).load(it.data.imageUrl)
-                                .listener(object : RequestListener<Drawable> {
-                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                        image_1_progress?.visibility = View.GONE
-                                        return false
-                                    }
-
-                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                        image_1_progress?.visibility = View.GONE
-                                        return false
-                                    }
-
-                                }).into(ivPickedImage!!)
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
-
-                        ivPickedImage?.visibility = View.VISIBLE
-                        ivEditImg1?.visibility = View.VISIBLE
-                        tvAddPhoto1?.visibility = View.GONE
-                        tvCarphoto1?.visibility = View.GONE
                         TyreConfigClass.CarPhoto_1 = it.data.imageUrl
-                        relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     } else {
-                        image_2_progress?.visibility = View.VISIBLE
-                        try {
-                            Glide.with(this).load(it.data.imageUrl)
-                                .listener(object : RequestListener<Drawable> {
-                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                        image_2_progress?.visibility = View.GONE
-                                        return false
-                                    }
-
-                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                        image_2_progress?.visibility = View.GONE
-                                        return false
-                                    }
-
-                                }).into(ivPickedImage1!!)
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
-                        ivPickedImage1?.visibility = View.VISIBLE
-                        ivEditImg2?.visibility = View.VISIBLE
-                        tvAddPhoto2?.visibility = View.GONE
-                        tvCarphoto2?.visibility = View.GONE
                         TyreConfigClass.CarPhoto_2 = it.data.imageUrl
-                        relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-
                     }
+//                    if (selectImage1) {
+//                        try {
+//                            image_1_progress?.visibility = View.VISIBLE
+//
+//                            Glide.with(this).load(it.data.imageUrl)
+//                                .listener(object : RequestListener<Drawable> {
+//                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+//                                        image_1_progress?.visibility = View.GONE
+//                                        return false
+//                                    }
+//
+//                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+//                                        image_1_progress?.visibility = View.GONE
+//                                        return false
+//                                    }
+//
+//                                }).into(ivPickedImage!!)
+//                        } catch (e: java.lang.Exception) {
+//                            e.printStackTrace()
+//                        }
+//
+//                        ivPickedImage?.visibility = View.VISIBLE
+//                        ivEditImg1?.visibility = View.VISIBLE
+//                        tvAddPhoto1?.visibility = View.GONE
+//                        tvCarphoto1?.visibility = View.GONE
+//                        TyreConfigClass.CarPhoto_1 = it.data.imageUrl
+//                        relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//                    } else {
+//                        image_2_progress?.visibility = View.VISIBLE
+//                        try {
+//                            Glide.with(this).load(it.data.imageUrl)
+//                                .listener(object : RequestListener<Drawable> {
+//                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+//                                        image_2_progress?.visibility = View.GONE
+//                                        return false
+//                                    }
+//
+//                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+//                                        image_2_progress?.visibility = View.GONE
+//                                        return false
+//                                    }
+//
+//                                }).into(ivPickedImage1!!)
+//                        } catch (e: java.lang.Exception) {
+//                            e.printStackTrace()
+//                        }
+//                        ivPickedImage1?.visibility = View.VISIBLE
+//                        ivEditImg2?.visibility = View.VISIBLE
+//                        tvAddPhoto2?.visibility = View.GONE
+//                        tvCarphoto2?.visibility = View.GONE
+//                        TyreConfigClass.CarPhoto_2 = it.data.imageUrl
+//                        relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+//
+//                    }
                 }
             }
         })
@@ -4802,5 +4817,61 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         // MediaStore (and general)
 
         return null
+    }
+
+    fun setImage(uri: Uri, requestCode: Int) {
+        if (requestCode == IMAGE_CAPTURE_CODE) {
+            if (selectImage1) {
+                try {
+                    ivPickedImage?.setImageURI(uri)
+                    ivPickedImage?.visibility = View.VISIBLE
+                    ivEditImg1?.visibility = View.VISIBLE
+                    tvAddPhoto1?.visibility = View.GONE
+                    tvCarphoto1?.visibility = View.GONE
+//                    TyreConfigClass.CarPhoto_1 = uri?.toString()!!
+                    relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+                } catch (e: Exception) {
+                    Log.e("getexp", "" + e.message + " " + e.cause)
+                    e.printStackTrace()
+
+                }
+
+            } else {
+                try {
+                    ivPickedImage1?.setImageURI(uri)
+                    ivPickedImage1?.visibility = View.VISIBLE
+                    ivEditImg2?.visibility = View.VISIBLE
+                    tvAddPhoto2?.visibility = View.GONE
+                    tvCarphoto2?.visibility = View.GONE
+//                    TyreConfigClass.CarPhoto_2 = uri?.toString()!!
+                    relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+                } catch (e: Exception) {
+                    Log.e("getexp", "" + e.message + " " + e.cause)
+                    e.printStackTrace()
+
+                }
+
+            }
+        } else {
+            if (selectImage1) {
+                ivPickedImage?.setImageURI(uri)
+                ivPickedImage?.visibility = View.VISIBLE
+                ivEditImg1?.visibility = View.VISIBLE
+                tvAddPhoto1?.visibility = View.GONE
+                tvCarphoto1?.visibility = View.GONE
+//                TyreConfigClass.CarPhoto_1 = imageFilePath
+                relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+            } else {
+                ivPickedImage1?.setImageURI(uri)
+                ivPickedImage1?.visibility = View.VISIBLE
+                ivEditImg2?.visibility = View.VISIBLE
+                tvAddPhoto2?.visibility = View.GONE
+                tvCarphoto2?.visibility = View.GONE
+//                TyreConfigClass.CarPhoto_2 = uri.toString()
+                relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+
+            }
+        }
+
     }
 }

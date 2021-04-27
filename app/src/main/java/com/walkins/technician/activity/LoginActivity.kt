@@ -229,6 +229,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         loginViewModel.initTwo(jsonObject, edtLoginEmail.text?.toString()!!, "1212", "password", "", "", 0, "","","")
         loginViewModel.sendOtp()?.observe(this, Observer {
+            Common.hideLoader()
             if (it != null) {
                 if (it.success) {
                     val intent = Intent(this, VerifyOtpActivity::class.java)
