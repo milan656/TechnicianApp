@@ -57,6 +57,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
     private var selectedTyre = ""
     private var selectedId: Int = -1
     private var tvNoDataFound: TextView? = null
+    private var tvSelectTyre: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +80,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
         tvSelectedModel = findViewById(R.id.tvSelectedModel)
         ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
+        tvSelectTyre = findViewById(R.id.tvSelectTyre)
 //        tvNoDataFound = findViewById(R.id.tvNoDataFound)
 
         ivBack?.setOnClickListener(this)
@@ -94,7 +96,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     "Select Tyre Pattern - " + intent.getStringExtra("selectedTyre")
                 selectedTyre = intent.getStringExtra("selectedTyre")!!
             }
+            tvSelectTyre?.text = "Select tyre to apply tyre pattern"
         }
+
 
 
 
@@ -117,10 +121,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             chkLR?.text = "RF"
             chkRR?.text = "LR"
         }
-
-
-
-
 
 
 /*
@@ -832,10 +832,16 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
     fun getVehiclePattern() {
         Common.showLoader(this)
-        var selectedMakeId: String? = ""
+        var selectedMakeId: String? = null
         if (intent != null) {
             selectedMakeId = intent?.getStringExtra("selectedMakeId")
         }
+
+        if (selectedMakeId == null || selectedMakeId.equals("")) {
+            selectedMakeId = TyreDetailCommonClass.vehicleMakeId
+        }
+
+        Log.e("makeiddd", "" + TyreDetailCommonClass.vehicleMakeId + " " + selectedMakeId)
 
         warrantyViewModel.getVehiclePattern(
             if (!selectedMakeId.equals("")) selectedMakeId?.toInt()!! else 0,

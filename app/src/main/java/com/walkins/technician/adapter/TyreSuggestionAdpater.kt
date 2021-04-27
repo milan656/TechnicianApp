@@ -82,6 +82,29 @@ class TyreSuggestionAdpater(
                 e.printStackTrace()
             }
 
+            if (holder.chkTyreSuggestion.isChecked) {
+                holder.chkTyreSuggestion.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_blue_corner))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.chkTyreSuggestion.setButtonTintList(
+                        getColorStateList(
+                            context,
+                            R.color.colorPrimary
+                        )
+                    )
+                }
+            }else{
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.chkTyreSuggestion.setButtonTintList(
+                        getColorStateList(
+                            context,
+                            R.color.header_title
+                        )
+                    )
+                }
+                holder.chkTyreSuggestion.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_red_corner))
+
+            }
+
             if (!isFromDialog) {
                 if (onclick != null) {
                     onclick?.onPositionClick(position, 5)

@@ -729,7 +729,7 @@ class Common {
         }
 
 
-        fun showDialogue(activity: Activity, message: String, isBackPressed: Boolean) {
+        fun showDialogue(activity: Activity, title: String, message: String, isBackPressed: Boolean) {
             val builder = AlertDialog.Builder(activity).create()
             builder.setCancelable(false)
             val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -741,8 +741,8 @@ class Common {
 
             val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
             val tv_message = root.findViewById<TextView>(R.id.tv_message)
-            val tv_dialogTitle = root.findViewById<TextView>(R.id.tv_dialogTitle)
-
+            val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
+            tvTitleText?.text = title
             tv_message.text = message
             btnYes.setOnClickListener {
                 builder.dismiss()
@@ -1119,7 +1119,6 @@ class Common {
             TyreConfigClass.RRVehicleSize = false
             TyreConfigClass.RRVehicleVisualDetail = false
             TyreConfigClass.RRCompleted = false
-
 
 
         }

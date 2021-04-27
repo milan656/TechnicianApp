@@ -624,6 +624,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivDueDate?.setOnClickListener(this)
         btnSubmitAndComplete?.setOnClickListener(this)
 
+        btnSubmitAndComplete?.isClickable = false
+        btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_blue))
+
         ivTyre1 = findViewById(R.id.ivTyre1)
         ivTyre2 = findViewById(R.id.ivTyre2)
         ivTyre3 = findViewById(R.id.ivTyre3)
@@ -964,6 +967,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Common.collapse(llUpdatedPlacement!!)
             }
         }
+
+        checkSubmitBtn()
 
     }
 
@@ -1328,11 +1333,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
-
-
-
-
-
 
         prefManager.setValue(TyreConfigClass.serviceDetailData, jsonObject.toString())
 
@@ -1709,7 +1709,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             Common.hideLoader()
                             removeAllTyreAndServiceDetails()
 
-                            Common.showDialogue(this, "Your Service Added Successfully", true)
+                            Common.showDialogue(this, "Success", "Your Service Added Successfully", true)
 
                         } else {
                             Common.hideLoader()
@@ -2938,7 +2938,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
 
-    private fun checkSubmitBtn() {
+    public fun checkSubmitBtn() {
+
+        btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_blue))
+        btnSubmitAndComplete?.isClickable = false
+
         try {
             if (edtMoreSuggestion?.text?.toString() != null) {
                 TyreConfigClass.moreSuggestions = edtMoreSuggestion?.text?.toString()!!
@@ -2954,14 +2958,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ) {
 
         } else {
-//            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (!chkWheelBalacing?.isChecked!! && !chkTyreRotation?.isChecked!! &&
             !chkNitrogenTopup?.isChecked!! && !chkNitrogenRefill?.isChecked!!
         ) {
-//            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -2973,22 +2977,23 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (!TyreConfigClass.LFCompleted || !TyreConfigClass.RFCompleted || !TyreConfigClass.LRCompleted
             || !TyreConfigClass.RRCompleted
         ) {
-//            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
 
         } else {
-//            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
 
         } else {
-//            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
-
+        Log.e("iscpmpleted33", "button is clickable")
+        Toast.makeText(this, "button is clickable", Toast.LENGTH_SHORT).show()
         btnSubmitAndComplete?.isClickable = true
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.round_corner_button_yellow))
     }

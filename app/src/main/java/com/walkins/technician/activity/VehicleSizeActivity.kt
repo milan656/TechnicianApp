@@ -39,6 +39,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var llVehicleMakeselectedView: LinearLayout? = null
     private var btnNext: Button? = null
     private var tvSelectedModel: TextView? = null
+    private var tvSelectTyre: TextView? = null
     private var ivEditVehicleMake: ImageView? = null
     private var chkRR: CheckBox? = null
     private var chkRF: CheckBox? = null
@@ -66,6 +67,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         chkLR = findViewById(R.id.chkLR)
 
         gridviewRecycModel = findViewById(R.id.gridviewRecycModel)
+        tvSelectTyre = findViewById(R.id.tvSelectTyre)
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
         tvSelectedModel = findViewById(R.id.tvSelectedModel)
@@ -81,6 +83,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (intent.hasExtra("selectedId")) {
                 selectedPatternId = intent.getIntExtra("selectedId", 0)
             }
+            tvSelectTyre?.text="Select tyre to apply tyre size"
         }
 
         ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)

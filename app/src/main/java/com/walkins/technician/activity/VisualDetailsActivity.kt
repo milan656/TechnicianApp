@@ -1,7 +1,10 @@
 package com.walkins.technician.activity
 
 import android.Manifest
+import android.annotation.TargetApi
 import android.app.Activity
+import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,19 +14,23 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -32,19 +39,21 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import com.ramotion.fluidslider.FluidSlider
+import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.TyreSuggestionAdpater
-import com.walkins.technician.common.TyreConfigClass
-import com.walkins.technician.common.TyreDetailCommonClass
-import com.walkins.technician.common.TyreKey
-import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.common.*
 import com.walkins.technician.model.login.IssueResolveModel
 import com.walkins.technician.viewmodel.CommonViewModel
+import com.walkins.technician.viewmodel.LoginActivityViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -56,6 +65,7 @@ import kotlin.collections.ArrayList
 
 
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
+    private var loginViewModel: LoginActivityViewModel? = null
     private var commonViewModel: CommonViewModel? = null
     private var sliderIn: FluidSlider? = null
     private var multiSliderPsiOut: FluidSlider? = null
@@ -148,13 +158,20 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var psiOutFrame: FrameLayout? = null
     private var edtManufaturingDate: EditText? = null
 
-
     // image picker code
-    val REQUEST_IMAGE = 100
-    val REQUEST_PERMISSION = 200
-    private var imageFilePath = ""
-    private var IMAGE_PICK_CODE = 1010;
-    private var PERMISSION_CODE = 1011;
+//    val REQUEST_IMAGE = 100
+//    val REQUEST_PERMISSION = 200
+//    private var imageFilePath = ""
+//    private var IMAGE_PICK_CODE = 1010;
+//    private var PERMISSION_CODE = 1011;
+
+    val REQUEST_IMAGE_CAPTURE = 1
+    val PICK_IMAGE_REQUEST = 100
+    private lateinit var mCurrentPhotoPath: String
+    private val PERMISSION_CODE = 1010;
+    private val IMAGE_CAPTURE_CODE = 1011
+    var image_uri: Uri? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -162,23 +179,24 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         mDb = DBClass.getInstance(this)
         prefManager = PrefManager(this)
         commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
-        requestPermissionForImage()
+        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+//        requestPermissionForImage()
         init()
     }
 
-    private fun requestPermissionForImage() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !==
-            PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                REQUEST_PERMISSION
-            )
-        }
-    }
+//    private fun requestPermissionForImage() {
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !==
+//            PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(
+//                this, arrayOf(
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
+//                ),
+//                REQUEST_PERMISSION
+//            )
+//        }
+//    }
 
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
@@ -1175,59 +1193,175 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             if (cameraDialog != null && cameraDialog?.isShowing!!) {
                 cameraDialog?.dismiss()
             }
-            if (Common.commonPhotoChooseArr?.get(variable)?.equals("Gallery")) {
-                openGallery()
+            if (Common.commonPhotoChooseArr.get(variable)?.equals("Gallery")) {
+                val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    checkPermission((this@VisualDetailsActivity))
+                } else {
+                    try {
+                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                if (result == true) {
+                    try {
+
+                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                    } catch (e: Exception) {
+
+                        e.printStackTrace()
+                    }
+
+                } else {
+                    //  Common.showShortToast("Permission Granted",requireActivity())
+                }
             }
             if (Common.commonPhotoChooseArr?.get(variable)?.equals("Camera")) {
-                openCamera()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED ||
+                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED
+                    ) {
+                        //permission was not enabled
+                        val permission = arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                        //show popup to request permission
+                        requestPermissions(permission, PERMISSION_CODE)
+                    } else {
+                        //permission already granted
+                        openCamera()
+                    }
+                } else {
+                    //system os is < marshmallow
+                    openCamera()
+                }
             }
         }
     }
 
-    private fun openCamera() {
-        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (pictureIntent.resolveActivity(packageManager) != null) {
-            var photoFile: File? = null
-            photoFile = try {
-                createImageFile()
-            } catch (e: IOException) {
-                e.printStackTrace()
-                return
-            }
-            val photoUri: Uri =
-                FileProvider.getUriForFile(this, "$packageName.provider", photoFile!!)
-            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-            startActivityForResult(pictureIntent, REQUEST_IMAGE)
-        }
-    }
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun checkPermission(context: FragmentActivity?): Boolean {
+        val currentAPIVersion = Build.VERSION.SDK_INT
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
+            if (context?.let {
+                    ContextCompat.checkSelfPermission(
+                        it,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                } !== PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.CAMERA
+                ) !== PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        Manifest.permission.CAMERA
+                    )
+                ) {
+                    val alertBuilder = android.app.AlertDialog.Builder(context)
+                    alertBuilder.setCancelable(true)
+                    alertBuilder.setTitle("Permission necessary")
+                    alertBuilder.setMessage("External storage permission is necessary")
+                    alertBuilder.setPositiveButton(
+                        android.R.string.yes
+                    ) { dialog, which ->
+                        requestPermissions(
+                            arrayOf<String>(
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA
+                            ),
+                            123
+                        )
+                    }
+                    val alert = alertBuilder.create()
+                    alert.show()
+                } else {
 
-    private fun createImageFile(): File? {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "IMG_" + timeStamp + "_"
-        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
-        imageFilePath = image.absolutePath
-        return image
-    }
+                    requestPermissions(
+                        arrayOf<String>(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.CAMERA
+                        ), 123
+                    );
 
-    private fun openGallery() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_DENIED
-            ) {
-                //permission denied
-                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
-                //show popup to request runtime permission
-                requestPermissions(permissions, PERMISSION_CODE);
+                }
+                return false
             } else {
-                //permission already granted
-                pickImageFromGallery();
+                return true
             }
         } else {
-            //system OS is < Marshmallow
-            pickImageFromGallery();
+            return true
         }
+
     }
+
+
+    private fun openCamera() {
+//        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        if (pictureIntent.resolveActivity(packageManager) != null) {
+//            var photoFile: File? = null
+//            photoFile = try {
+//                Common.createImageFile(this)
+//
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//                return
+//            }
+//            imageFilePath = photoFile?.absolutePath!!
+//            val photoUri: Uri =
+//                FileProvider.getUriForFile(this, "$packageName.provider", photoFile!!)
+//            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+//            startActivityForResult(pictureIntent, REQUEST_IMAGE)
+//        }
+
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "New Picture")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
+        image_uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        //camera intent
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+    }
+
+//    private fun createImageFile(): File? {
+//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+//        val imageFileName = "IMG_" + timeStamp + "_"
+//        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+//        imageFilePath = image.absolutePath
+//        return image
+//    }
+
+//    private fun openGallery() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+//                PackageManager.PERMISSION_DENIED
+//            ) {
+//                //permission denied
+//                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+//                //show popup to request runtime permission
+//                requestPermissions(permissions, PERMISSION_CODE);
+//            } else {
+//                //permission already granted
+//                pickImageFromGallery();
+//            }
+//        } else {
+//            //system OS is < Marshmallow
+//            pickImageFromGallery();
+//        }
+//    }
 
     private fun showBottomSheetdialog(
         array: ArrayList<String>,
@@ -1531,36 +1665,96 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     }
 
 
-    private fun pickImageFromGallery() {
-        //Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
+//    private fun pickImageFromGallery() {
+//        //Intent to pick image
+//        val intent = Intent(Intent.ACTION_PICK)
+//        intent.type = "image/*"
+//        startActivityForResult(intent, IMAGE_PICK_CODE)
+//    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.size > 0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED
                 ) {
-                    //permission from popup granted
-                    pickImageFromGallery()
+                    //permission from popup was granted
+                    openCamera()
                 } else {
-                    //permission from popup denied
+                    //permission from popup was denied
+                    Common.hideLoader()
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+            123 -> {
+                if (grantResults?.get(1) != -1) {
+                    if (grantResults.size > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        val file: File = createFile()
+
+                        val uri: Uri = FileProvider.getUriForFile(
+                            this,
+                            "com.walkins.technician.android.fileprovider",
+                            file
+                        )
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+
+
+                    }
+                } else {
+
+                }
+            }
+
+            124 -> {
+                if (grantResults?.get(1) != -1) {
+                    if (grantResults.size > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        try {
+                            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                            intent.type = "image/*"
+                            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+
+                        } catch (e: Exception) {
+
+                            e.printStackTrace()
+                        }
+                    }
+                } else {
+
                 }
             }
         }
     }
 
+    @Throws(IOException::class)
+    private fun createFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            mCurrentPhotoPath = absolutePath
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE) {
+        /*if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
                 ivPickedImage1?.setImageURI(Uri.parse(imageFilePath))
                 ivPickedImage1?.visibility = View.VISIBLE
@@ -1589,34 +1783,203 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             TyreDetailCommonClass.visualDetailPhotoUrl = imageName + ".png"
             Log.e("getimageuri", "" + imageName)
             TyreDetailCommonClass.isCameraSelectedVisualDetail = false
-        }
-    }
+        }*/
 
-
-    fun loadBitmap(fileName: String): Bitmap {
-
-        var fileInputStream: FileInputStream? = null
-        var bitmap: Bitmap? = null;
-        try {
-            fileInputStream = this.openFileInput(fileName);
-            bitmap = BitmapFactory.decodeStream(fileInputStream);
-            fileInputStream.close();
-        } catch (e: Exception) {
-            e.printStackTrace();
-        }
-        return bitmap!!;
-    }
-
-    fun loadFromFile(filename: String?): Bitmap? {
-        return try {
-            val f = File(filename)
-            if (!f.exists()) {
-                return null
+        when (requestCode) {
+            IMAGE_CAPTURE_CODE -> {
+//                image_view.setImageURI(image_uri)
+                CropImage.activity(image_uri)
+                    .start(this)
             }
-            BitmapFactory.decodeFile(filename)
-        } catch (e: java.lang.Exception) {
-            null
+            REQUEST_IMAGE_CAPTURE -> {
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //To get the File for further usage
+                    val auxFile = File(mCurrentPhotoPath)
+
+                    CropImage.activity(Uri.fromFile(auxFile))
+                        .start(this)
+
+                    /* uploadProfileImage(auxFile)
+                     Glide.with(this)
+                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
+                         .into(imgProfile)*/
+                }
+            }
+
+            PICK_IMAGE_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //To get the File for further usage
+                    val selectedImage = data?.data
+
+                    /* val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                         getFile(this@ProfileActivity , selectedImage)
+                     } else {
+                         TODO("VERSION.SDK_INT < KITKAT")
+                     }
+
+                     Log.i("imagePath","++++"+imagePath)*/
+
+
+                    CropImage.activity(selectedImage)
+                        .start(this)
+                }
+            }
+
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if (resultCode == Activity.RESULT_OK) {
+
+                    //To get the File for further usage
+                    val selectedImage = result.uri
+                    ivPickedImage1?.setImageURI(selectedImage)
+
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        getFile(this, selectedImage)
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
+//                    imagePath?.let { uploadImage(it) }
+                }
+            }
         }
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun getFile(context: Context, uri: Uri?): File? {
+        if (uri != null) {
+            val path = getPath(context, uri)
+            if (path != null && isLocal(path)) {
+                return File(path)
+            }
+        }
+        return null
+    }
+
+
+    fun isLocal(url: String?): Boolean {
+        return url != null && !url.startsWith("http://") && !url.startsWith("https://")
+    }
+
+    fun isExternalStorageDocument(uri: Uri): Boolean {
+        return "com.android.externalstorage.documents" == uri.authority
+    }
+
+    fun isDownloadsDocument(uri: Uri): Boolean {
+        return "com.android.providers.downloads.documents" == uri.authority
+    }
+
+    fun isMediaDocument(uri: Uri): Boolean {
+        return "com.android.providers.media.documents" == uri.authority
+    }
+
+    fun isGooglePhotosUri(uri: Uri): Boolean {
+        return "com.google.android.apps.photos.content" == uri.authority
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun getPath(context: Context, uri: Uri): String? {
+
+
+        val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // LocalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split =
+                    docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val type = split[0]
+
+                if ("primary".equals(type, ignoreCase = true)) {
+                    return "" + Environment.getExternalStorageDirectory() + "/" + split[1]
+                }
+
+                // TODO handle non-primary volumes
+            } else if (isDownloadsDocument(uri)) {
+
+                val id = DocumentsContract.getDocumentId(uri)
+                val contentUri = ContentUris.withAppendedId(
+                    Uri.parse("content://downloads/public_downloads"),
+                    java.lang.Long.valueOf(id)
+                )
+
+                return getDataColumn(context, contentUri, null, null)
+            } else if (isMediaDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split =
+                    docId.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val type = split[0]
+
+                var contentUri: Uri? = null
+                if ("image" == type) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                } else if ("video" == type) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                } else if ("audio" == type) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                }
+
+                val selection = "_id=?"
+                val selectionArgs = arrayOf(split[1])
+
+                return getDataColumn(context, contentUri, selection, selectionArgs)
+            }// MediaProvider
+            // DownloadsProvider
+            // ExternalStorageProvider
+        } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
+
+            // Return the remote address
+            return if (isGooglePhotosUri(uri)) uri.lastPathSegment else getDataColumn(
+                context,
+                uri,
+                null,
+                null
+            )
+
+        } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
+            return uri.path
+        }// File
+        // MediaStore (and general)
+
+        return null
+    }
+
+    private fun uploadImage(imagePath: File, type: String) {
+        Common.showLoader(this)
+
+        val requestFile = RequestBody.create(
+            MediaType.parse("image/*"),
+            imagePath
+        )
+
+        val body = MultipartBody.Part.createFormData("file", imagePath.name, requestFile)
+
+        loginViewModel?.uploadImage(body, prefManager.getAccessToken()!!, this, type)
+
+        loginViewModel?.getImageUpload()?.observe(this, androidx.lifecycle.Observer {
+            Common.hideLoader()
+            if (it != null) {
+                if (it.success) {
+                    Log.e("getfile", "" + it.data.imageUrl)
+                    try {
+                        Glide.with(this).load(it.data.imageUrl).into(ivPickedImage1!!)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    ivPickedImage1?.visibility = View.VISIBLE
+                    ivEditImg2?.visibility = View.VISIBLE
+                    tvAddPhoto1?.visibility = View.GONE
+                    tvCarphoto1?.visibility = View.GONE
+                    TyreDetailCommonClass.visualDetailPhotoUrl = it.data.imageUrl
+                }
+            }
+        })
     }
 }
 

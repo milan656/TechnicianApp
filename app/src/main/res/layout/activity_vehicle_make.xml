@@ -163,7 +163,7 @@
                     android:layout_marginStart="@dimen/eighteen_dp"
                     android:layout_marginTop="@dimen/sixteen_dp"
                     android:layout_marginEnd="@dimen/eighteen_dp"
-                    android:text="Select tyre to apply tyre pattern"
+                    android:text="Select tyre to apply tyre make"
                     android:textColor="@color/text_color1"
                     android:textSize="@dimen/fourteen_sp" />
 
