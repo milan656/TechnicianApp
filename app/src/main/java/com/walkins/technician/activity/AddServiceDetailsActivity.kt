@@ -4465,6 +4465,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (it != null) {
                 if (it.success) {
                     Log.e("getfile", "" + it.data.imageUrl)
+                    Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
                     if (selectImage1) {
                         TyreConfigClass.CarPhoto_1 = it.data.imageUrl
                     } else {

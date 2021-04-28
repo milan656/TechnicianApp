@@ -1804,6 +1804,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     ivEditImg2?.visibility = View.VISIBLE
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
+                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     CropImage.activity(Uri.fromFile(auxFile))
                         .start(this)
 
@@ -1833,7 +1834,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     ivEditImg2?.visibility = View.VISIBLE
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
-
+                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     CropImage.activity(selectedImage)
                         .start(this)
                 }
@@ -1851,6 +1852,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     ivEditImg2?.visibility = View.VISIBLE
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
+                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 //                    TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage?.toString()
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
