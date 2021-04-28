@@ -1147,9 +1147,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 json.get(TyreKey.isCompleted)?.asString?.toBoolean()!!
         }
 
-        Log.e("getpatternchk0", "" + TyreDetailCommonClass.chk1Pattern)
-        Log.e("getpatternchk0", "" + TyreDetailCommonClass.chk2Pattern)
-        Log.e("getpatternchk0", "" + TyreDetailCommonClass.chk3Pattern)
     }
 
     fun psiInSlider() {
