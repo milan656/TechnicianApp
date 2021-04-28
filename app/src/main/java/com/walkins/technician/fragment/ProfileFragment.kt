@@ -98,24 +98,24 @@ class ProfileFragment : Fragment(), onClickAdapter {
         return view
     }
 
-   /* private fun requestPermissionForImage() {
-        if (context?.let {
-                ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-            } !==
-            PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                context as Activity, arrayOf(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                REQUEST_PERMISSION
-            )
-        }
-    }*/
+    /* private fun requestPermissionForImage() {
+         if (context?.let {
+                 ContextCompat.checkSelfPermission(
+                     it,
+                     Manifest.permission.WRITE_EXTERNAL_STORAGE
+                 )
+             } !==
+             PackageManager.PERMISSION_GRANTED
+         ) {
+             ActivityCompat.requestPermissions(
+                 context as Activity, arrayOf(
+                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                     Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
+                 ),
+                 REQUEST_PERMISSION
+             )
+         }
+     }*/
 
     private fun init(view: View?) {
         ivCamera = view?.findViewById(R.id.ivCamera)!!
@@ -301,7 +301,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun checkPermissions(profileFragment: ProfileFragment):Boolean {
+    private fun checkPermissions(profileFragment: ProfileFragment): Boolean {
         val currentAPIVersion = Build.VERSION.SDK_INT
         if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
             if (context?.let {
@@ -346,8 +346,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
                         arrayOf<String>(
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.CAMERA
-                        )
-                        , 123
+                        ), 123
                     );
 
                 }
@@ -359,8 +358,6 @@ class ProfileFragment : Fragment(), onClickAdapter {
             return true
         }
     }
-
-
 
 
     override fun onRequestPermissionsResult(
@@ -432,11 +429,22 @@ class ProfileFragment : Fragment(), onClickAdapter {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             IMAGE_CAPTURE_CODE -> {
-//                image_view.setImageURI(image_uri)
-                activity?.let {
-                    CropImage.activity(image_uri)
-                        .start(it)
+                ivProfileImg?.setImageURI(image_uri)
+
+                var imageFile = context?.let {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                        Common.getFile(it, image_uri)
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
                 }
+
+                Log.e("getimageFile",""+imageFile?.isFile+" "+imageFile?.name+" "+imageFile?.absolutePath)
+                uploadImage(imageFile!!)
+//                activity?.let {
+//                    CropImage.activity(image_uri)
+//                        .start(it)
+//                }
             }
 
             REQUEST_IMAGE_CAPTURE -> {
@@ -444,14 +452,24 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
                     //To get the File for further usage
                     val auxFile = File(mCurrentPhotoPath)
-                    Log.e("getdataa",""+auxFile.isFile)
-                    activity?.let {
-                        CropImage.activity(Uri.fromFile(auxFile))
-                            .start(it)
+                    Log.e("getdataa", "" + auxFile.isFile)
+//                    activity?.let {
+//                        CropImage.activity(Uri.fromFile(auxFile))
+//                            .start(it)
+//                    }
+
+                    ivProfileImg?.setImageURI(Uri.parse(mCurrentPhotoPath))
+                    var imageFile = context?.let {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                            Common.getFile(it, Uri.parse(mCurrentPhotoPath))
+                        } else {
+                            TODO("VERSION.SDK_INT < KITKAT")
+                        }
                     }
 
+                    Log.e("getimageFile00",""+imageFile?.isFile+" "+imageFile?.name+" "+imageFile?.absolutePath)
 
-
+                    uploadImage(imageFile!!)
                     /* uploadProfileImage(auxFile)
                      Glide.with(this)
                          .load(Uri.fromFile(File(mCurrentPhotoPath)))
@@ -465,30 +483,31 @@ class ProfileFragment : Fragment(), onClickAdapter {
                     //To get the File for further usage
                     val selectedImage = data?.data
 
-                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                         context?.let { Common.getFile(it, selectedImage) }
-                     } else {
-                         TODO("VERSION.SDK_INT < KITKAT")
-                     }
-
-                     Log.i("imagePath","++++"+imagePath)
-
-
-                    activity?.let {
-                        CropImage.activity(selectedImage)
-                            .start(it)
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        context?.let { Common.getFile(it, selectedImage) }
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
                     }
+                    ivProfileImg?.setImageURI(selectedImage)
+                    Log.i("imagePath", "++++" + imagePath)
+                    uploadImage(imagePath!!)
+
+
+//                    activity?.let {
+//                        CropImage.activity(selectedImage)
+//                            .start(it)
+//                    }
                 }
             }
 
             CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
                 val result = CropImage.getActivityResult(data)
-                Log.e("getdataa",""+result?.error+" "+result?.isSuccessful)
+                Log.e("getdataa", "" + result?.error + " " + result?.isSuccessful)
                 if (resultCode == Activity.RESULT_OK) {
 
                     //To get the File for further usage
                     val selectedImage = result.uri
-                    Log.e("getdataa",""+selectedImage)
+                    Log.e("getdataa", "" + selectedImage)
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         context?.let { Common.getFile(it, selectedImage) }
@@ -509,7 +528,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
             imagePath
         )
 
-        val body = MultipartBody.Part.createFormData("file", imagePath?.name, requestFile)
+        val body = MultipartBody.Part.createFormData("file", imagePath.name, requestFile)
 
         context?.let {
             loginViewModel?.uploadImage(
@@ -531,24 +550,24 @@ class ProfileFragment : Fragment(), onClickAdapter {
     }
 
     private fun openCamera() {
-       /* val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (pictureIntent.resolveActivity(context?.packageManager!!) != null) {
-            var photoFile: File? = null
-            photoFile = try {
-                createImageFile()
-            } catch (e: IOException) {
-                e.printStackTrace()
-                return
-            }
-            val photoUri: Uri =
-                context?.let {
-                    FileProvider.getUriForFile(
-                        it,
-                        "com.jkadvantage.android.fileprovider",
-                        photoFile!!
-                    )
-                }!!
-*//*
+        /* val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+         if (pictureIntent.resolveActivity(context?.packageManager!!) != null) {
+             var photoFile: File? = null
+             photoFile = try {
+                 createImageFile()
+             } catch (e: IOException) {
+                 e.printStackTrace()
+                 return
+             }
+             val photoUri: Uri =
+                 context?.let {
+                     FileProvider.getUriForFile(
+                         it,
+                         "com.jkadvantage.android.fileprovider",
+                         photoFile!!
+                     )
+                 }!!
+ *//*
             val photoUri: Uri =
                 context?.let {
                     FileProvider.getUriForFile(
@@ -562,26 +581,25 @@ class ProfileFragment : Fragment(), onClickAdapter {
             startActivityForResult(pictureIntent, REQUEST_IMAGE)*/
 
 
-            val values = ContentValues()
-            values.put(MediaStore.Images.Media.TITLE, "New Picture")
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-            image_uri = context?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            //camera intent
-            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
-            startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
-
-        }
-
-        /*val values = ContentValues()
+        val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
         image_uri = context?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         //camera intent
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
-        startActivityForResult(cameraIntent, REQUEST_IMAGE)*/
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
 
+    }
+
+    /*val values = ContentValues()
+    values.put(MediaStore.Images.Media.TITLE, "New Picture")
+    values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
+    image_uri = context?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+    //camera intent
+    val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+    startActivityForResult(cameraIntent, REQUEST_IMAGE)*/
 
 
 }
