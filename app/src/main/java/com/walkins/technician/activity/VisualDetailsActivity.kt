@@ -3,6 +3,7 @@ package com.walkins.technician.activity
 import android.Manifest
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
@@ -19,6 +20,10 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
+import com.github.mikephil.charting.formatter.IFillFormatter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -287,7 +293,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         ivReqbubble = findViewById(R.id.ivReqbubble)
         ivPickedImage1 = findViewById(R.id.ivPickedImage1)
         ivEditImg2 = findViewById(R.id.ivEditImg2)
-
+        ivEditImg2?.setOnClickListener(this)
+        ivPickedImage1?.setOnClickListener(this)
         ivOkSideWell?.setOnClickListener(this)
         ivSugSideWell?.setOnClickListener(this)
         ivReqSideWell?.setOnClickListener(this)
@@ -944,31 +951,23 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         bubble = "SUG"
                     }
                 }
-                if (json.get(TyreKey.isCameraSelectedVisualDetail) != null) {
+                if (json.get(TyreKey.visualDetailPhotoUrl) != null
+                    && !json.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                ) {
 
                     try {
-//            Glide.with(this)
-//                .load(json.get(TyreKey.visualDetailPhotoUrl)?.asString!!)
-//                .into(ivPickedImage1!!)
-                        TyreDetailCommonClass.visualDetailPhotoUrl =
-                            json.get(TyreKey.visualDetailPhotoUrl)?.asString
-
-                        TyreDetailCommonClass.isCameraSelectedVisualDetail =
-                            json.get(TyreKey.isCameraSelectedVisualDetail)?.asBoolean!!
-
-                        if (json.get("isCameraSelectedVisualDetail")?.asBoolean!!) {
-
-
-                        } else {
-
-                        }
-                        TyreDetailCommonClass.visualDetailPhotoUrl =
-                            json.get(TyreKey.visualDetailPhotoUrl)?.asString
-
-                    } catch (e: java.lang.Exception) {
+                        Glide.with(this@VisualDetailsActivity).load(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                            .into(ivPickedImage1!!)
+                        ivPickedImage1?.visibility = View.VISIBLE
+                        ivEditImg2?.visibility = View.VISIBLE
+                        tvAddPhoto1?.visibility = View.GONE
+                        tvCarphoto1?.visibility = View.GONE
+                        relTyrePhotoAdd?.setBackgroundDrawable(this@VisualDetailsActivity.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
+
                 if (json.get(TyreKey.issueResolvedArr) != null) {
 
                     var arr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
@@ -1019,6 +1018,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             )
         ) {
             TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
+        }
+        if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals(
+                ""
+            )
+        ) {
+            TyreDetailCommonClass.vehicleMakeURL = json.get(TyreKey.vehicleMakeURL)?.asString
         }
         if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(
                 ""
@@ -1101,7 +1106,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (json.get(TyreKey.issueResolvedArr) != null) {
 //            TyreDetailCommonClass.issueResolvedArr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
         }
-        if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
+       /* if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
             TyreDetailCommonClass.chk1Make = json.get(TyreKey.chk1Make)?.asString
         }
         if (json.get(TyreKey.chk1Pattern) != null && !json.get(TyreKey.chk1Pattern)?.asString.equals(
@@ -1136,13 +1141,15 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
         if (json.get(TyreKey.chk3Size) != null && !json.get(TyreKey.chk3Size)?.asString.equals("")) {
             TyreDetailCommonClass.chk3Size = json.get(TyreKey.chk3Size)?.asString
-        }
+        }*/
         if (json.get(TyreKey.isCompleted) != null) {
             TyreDetailCommonClass.isCompleted =
                 json.get(TyreKey.isCompleted)?.asString?.toBoolean()!!
         }
 
-
+        Log.e("getpatternchk0", "" + TyreDetailCommonClass.chk1Pattern)
+        Log.e("getpatternchk0", "" + TyreDetailCommonClass.chk2Pattern)
+        Log.e("getpatternchk0", "" + TyreDetailCommonClass.chk3Pattern)
     }
 
     fun psiInSlider() {
@@ -1432,6 +1439,19 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         val id = v?.id
         when (id) {
             R.id.relTyrePhotoAdd -> {
+                if (TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
+                    showBottomSheetdialog(
+                        Common.commonPhotoChooseArr,
+                        "Choose From",
+                        this,
+                        Common.btn_not_filled
+                    )
+                }
+            }
+            R.id.ivBack -> {
+                onBackPressed()
+            }
+            R.id.ivEditImg2 -> {
                 showBottomSheetdialog(
                     Common.commonPhotoChooseArr,
                     "Choose From",
@@ -1439,13 +1459,46 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     Common.btn_not_filled
                 )
             }
-            R.id.ivBack -> {
-                onBackPressed()
+            R.id.ivPickedImage1 -> {
+                showImage(TyreDetailCommonClass.visualDetailPhotoUrl!!)
             }
             R.id.btnDone -> {
                 Log.e("getslectedtyre", "" + selectedTyre)
 
-                if (checkValidation() == false) {
+                if (edtManufaturingDate?.text?.toString().equals("")) {
+                    Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
+                    return
+
+                }
+//        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
+//
+//        } else {
+//            Toast.makeText(this, "Please Select Issue Resolve List", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+                if (sidewell.equals("")
+                ) {
+                    Toast.makeText(this, "Please select side well condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (shoulder.equals("")) {
+                    Toast.makeText(this, "Please select shoulder condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (treadWear.equals("")) {
+                    Toast.makeText(this, "Please select Tread Wear condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (treadDepth.equals("")) {
+                    Toast.makeText(this, "Please select Tread Depth condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (rimDamage.equals("")) {
+                    Toast.makeText(this, "Please select Rim Damage condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (bubble.equals("")) {
+                    Toast.makeText(this, "Please select Bulge/Bubble condition", Toast.LENGTH_SHORT).show()
                     return
                 }
 
@@ -1519,6 +1572,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 Log.e("getslider", "" + TyreDetailCommonClass.vehiclePatternId)
                 Log.e("getslider", "" + TyreDetailCommonClass.vehicleSize)
                 Log.e("getslider", "" + TyreDetailCommonClass.vehicleSizeId)
+                Log.e("getslider", "" + TyreDetailCommonClass.vehicleMakeURL)
+                Log.e("getslider", "" + TyreDetailCommonClass.chk1Pattern)
+                Log.e("getslider", "" + TyreDetailCommonClass.chk2Pattern)
+                Log.e("getslider", "" + TyreDetailCommonClass.chk3Pattern)
 
                 setResult(1004)
                 finish()
@@ -1643,23 +1700,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
     private fun checkValidation(): Boolean {
         var isValid = true
-
-        if (edtManufaturingDate?.text?.toString().equals("")) {
-            Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
-            isValid = false
-        }
-//        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
-//
-//        } else {
-//            Toast.makeText(this, "Please Select Issue Resolve List", Toast.LENGTH_SHORT).show()
-//            isValid = false
-//        }
-        if (sidewell.equals("") || shoulder.equals("") || treadWear.equals("") ||
-            treadDepth.equals("") || rimDamage.equals("") || bubble.equals("")
-        ) {
-            Toast.makeText(this, "Please Select Icons", Toast.LENGTH_SHORT).show()
-            isValid = false
-        }
 
 
         return isValid
@@ -1788,10 +1828,21 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
         when (requestCode) {
             IMAGE_CAPTURE_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
 //                image_view.setImageURI(image_uri)
-                Log.e("getfile0011", "call")
-                CropImage.activity(image_uri)
-                    .start(this)
+                    Log.e("getfile0011", "call")
+                    CropImage.activity(image_uri)
+                        .start(this)
+
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        getFile(this@VisualDetailsActivity, image_uri)
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
+
+//                    uploadImage(imagePath!!, "service-image")
+                }
+
             }
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK) {
@@ -1808,6 +1859,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     CropImage.activity(Uri.fromFile(auxFile))
                         .start(this)
 
+//                    uploadImage(auxFile, "service-image")
+
                     /* uploadProfileImage(auxFile)
                      Glide.with(this)
                          .load(Uri.fromFile(File(mCurrentPhotoPath)))
@@ -1821,13 +1874,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     //To get the File for further usage
                     val selectedImage = data?.data
 
-                    /* val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                         getFile(this@ProfileActivity , selectedImage)
-                     } else {
-                         TODO("VERSION.SDK_INT < KITKAT")
-                     }
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        getFile(this@VisualDetailsActivity, selectedImage)
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
 
-                     Log.i("imagePath","++++"+imagePath)*/
+                    Log.i("imagePath", "++++" + imagePath)
                     Log.e("getfile0022", "" + selectedImage)
                     ivPickedImage1?.setImageURI(selectedImage)
                     ivPickedImage1?.visibility = View.VISIBLE
@@ -1837,6 +1890,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     CropImage.activity(selectedImage)
                         .start(this)
+
+//                    uploadImage(imagePath!!, "service-image")
                 }
             }
 
@@ -1860,7 +1915,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
-//                    imagePath?.let { uploadImage(it) }
+                    imagePath?.let { uploadImage(it, "service-image") }
                 }
             }
         }
@@ -1986,19 +2041,55 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             if (it != null) {
                 if (it.success) {
                     Log.e("getfile", "" + it.data.imageUrl)
-                    try {
-                        Glide.with(this).load(it.data.imageUrl).into(ivPickedImage1!!)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                    ivPickedImage1?.visibility = View.VISIBLE
-                    ivEditImg2?.visibility = View.VISIBLE
-                    tvAddPhoto1?.visibility = View.GONE
-                    tvCarphoto1?.visibility = View.GONE
+//                    try {
+//                        Glide.with(this).load(it.data.imageUrl).into(ivPickedImage1!!)
+//                    } catch (e: Exception) {
+//                        e.printStackTrace()
+//                    }
+//                    ivPickedImage1?.visibility = View.VISIBLE
+//                    ivEditImg2?.visibility = View.VISIBLE
+//                    tvAddPhoto1?.visibility = View.GONE
+//                    tvCarphoto1?.visibility = View.GONE
                     TyreDetailCommonClass.visualDetailPhotoUrl = it.data.imageUrl
                 }
             }
         })
+    }
+
+    private fun showImage(posterUrl: String?) {
+        val builder = AlertDialog.Builder(this@VisualDetailsActivity).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.MATCH_PARENT
+        builder.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+
+        val root = LayoutInflater.from(this@VisualDetailsActivity)
+            .inflate(R.layout.dialogue_image, null)
+
+        val tvTitleRemarks =
+            root.findViewById<TextView>(R.id.tvTitleRemarks)
+        val imgPoster =
+            root.findViewById<ImageView>(R.id.imgPoster)
+
+
+        Glide.with(this@VisualDetailsActivity)
+            .load(posterUrl)
+            .override(1600, 1600)
+
+            .placeholder(R.drawable.placeholder)
+            .into(imgPoster)
+
+        tvTitleRemarks?.text = "View Tyre Image"
+
+        val imgClose = root.findViewById<ImageView>(R.id.imgClose)
+
+
+        imgClose.setOnClickListener { builder.dismiss() }
+        builder.setView(root)
+
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
     }
 }
 

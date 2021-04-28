@@ -92,27 +92,27 @@ class VehicleSizeAdapter internal constructor(
             positionClick.onPositionClick(position, 0)
         }
 
-        var handler=android.os.Handler()
-        handler.postDelayed(Runnable {
-            if (selectedId != -1) {
-                if (selectedId == name?.get(position)?.sizeId) {
-                    if (name?.get(position)?.isSelected!!) {
-                        // name!!.get(position).isSelected = false;
-                    } else {
-                        for (date in name!!) {
-                            if (date.isSelected) {
-                                date.isSelected = false
-                            }
-                        }
-
-                        name?.get(position)?.isSelected = true
-                        holder.ivselectedVehicleModel.visibility = View.VISIBLE
-                    }
-                    positionClick.onPositionClick(position, 0)
-                }
-            }
-
-        },700)
+//        var handler=android.os.Handler()
+//        handler.postDelayed(Runnable {
+//            if (selectedId != -1) {
+//                if (selectedId == name?.get(position)?.sizeId) {
+//                    if (name?.get(position)?.isSelected!!) {
+//                        // name!!.get(position).isSelected = false;
+//                    } else {
+//                        for (date in name!!) {
+//                            if (date.isSelected) {
+//                                date.isSelected = false
+//                            }
+//                        }
+//
+//                        name?.get(position)?.isSelected = true
+//                        holder.ivselectedVehicleModel.visibility = View.VISIBLE
+//                    }
+//                    positionClick.onPositionClick(position, 0)
+//                }
+//            }
+//
+//        },700)
 
     }
 

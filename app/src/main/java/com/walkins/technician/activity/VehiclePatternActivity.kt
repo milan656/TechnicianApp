@@ -28,6 +28,9 @@ import com.walkins.technician.model.login.patternmodel.PatternData
 import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.networkApi.WarrantyApi
 import com.walkins.technician.viewmodel.WarrantyViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -98,11 +101,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
             tvSelectTyre?.text = "Select tyre to apply tyre pattern"
         }
-
-
-
-
-
 
         if (selectedTyre.equals("LF")) {
             chkRF?.text = "RF"
@@ -444,9 +442,38 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-        Log.e("getid", "" + selectedId)
+        var handler = Handler()
+        handler.postDelayed(Runnable {
+            Log.e("getid", "" + selectedId)
+            Log.e("selectedpatt00", "" + TyreDetailCommonClass.vehicleMakeId + " " + intent?.getStringExtra("selectedMakeId"))
 
-        getVehiclePattern()
+            if (selectedId != -1) {
+                if (!TyreDetailCommonClass.vehicleMakeId.equals("") && TyreDetailCommonClass.vehicleMakeId?.toInt() == intent?.getStringExtra("selectedMakeId")?.toInt()) {
+                    llVehicleMakeselectedView?.visibility = View.VISIBLE
+                    btnNext?.visibility = View.VISIBLE
+                    gridviewRecycModel?.visibility = View.GONE
+
+                    if (arrList != null && arrList?.size!! > 0) {
+                        for (i in arrList?.indices!!) {
+
+                            if (selectedId == arrList?.get(i)?.patternId) {
+                                arrList?.get(i)?.isSelected = true
+                            }
+                        }
+                    }
+
+                    tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern
+
+                    Common.hideLoader()
+                } else {
+
+                    getVehiclePattern(false)
+                }
+            } else {
+                getVehiclePattern(false)
+            }
+
+        }, 1000)
 
         Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
         Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
@@ -496,6 +523,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         selectedPosition = variable
         selectedPos = variable
         selectedId = arrList?.get(variable)?.patternId!!
+        Log.e("selectedpatt", "" + selectedId)
 
         if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
@@ -818,19 +846,33 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
             }
             R.id.ivEditVehicleMake -> {
-                gridviewRecycModel?.layoutManager =
-                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-                adapter = VehiclePatternAdapter(this, arrList, this, -1)
-                gridviewRecycModel?.adapter = adapter
+//                gridviewRecycModel?.layoutManager =
+//                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+//                adapter = VehiclePatternAdapter(this, arrList, this, -1)
+//                gridviewRecycModel?.adapter = adapter
 
-                Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
-                Common.slideDown(gridviewRecycModel!!, null)
+                GlobalScope.launch(Dispatchers.Main) {
+                    launch(Dispatchers.Main) {
+
+                        if (arrList?.size == 0) {
+                            getVehiclePattern(true)
+                        } else {
+                            gridviewRecycModel?.layoutManager =
+                                GridLayoutManager(this@VehiclePatternActivity, 3, RecyclerView.VERTICAL, false)
+                            adapter = VehiclePatternAdapter(this@VehiclePatternActivity, arrList, this@VehiclePatternActivity, -1)
+                            gridviewRecycModel?.adapter = adapter
+                            Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
+                            Common.slideDown(gridviewRecycModel!!, null)
+                        }
+
+                    }
+                }
             }
 
         }
     }
 
-    fun getVehiclePattern() {
+    fun getVehiclePattern(isExpand: Boolean) {
         Common.showLoader(this)
         var selectedMakeId: String? = null
         if (intent != null) {
@@ -880,6 +922,12 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                             Common.savePatternData(patternModel!!, mDb)
                         } else {
 //                            tvNoDataFound?.visibility = View.VISIBLE
+                        }
+
+                        if (isExpand) {
+                            Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
+                            Common.slideDown(gridviewRecycModel!!, null)
+
                         }
 
                     } else {
@@ -1014,9 +1062,12 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }
 
         TyreDetailCommonClass.tyreType = selectedTyre
-        TyreDetailCommonClass.vehiclePattern = arrList?.get(selectedPos)?.name
-        TyreDetailCommonClass.vehiclePatternId = arrList?.get(selectedPos)?.patternId?.toString()
-
+        if (selectedPos != -1) {
+            TyreDetailCommonClass.vehiclePattern = arrList?.get(selectedPos)?.name
+        }
+        if (selectedPos != -1) {
+            TyreDetailCommonClass.vehiclePatternId = arrList?.get(selectedPos)?.patternId?.toString()
+        }
         TyreDetailCommonClass.chk1Pattern = chkRF?.text.toString() + "," + chkRF?.isChecked
         TyreDetailCommonClass.chk2Pattern = chkLR?.text.toString() + "," + chkLR?.isChecked
         TyreDetailCommonClass.chk3Pattern = chkRR?.text.toString() + "," + chkRR?.isChecked
@@ -1150,7 +1201,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         if (json.get(TyreKey.issueResolvedArr) != null) {
 //            TyreDetailCommonClass.issueResolvedArr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
         }
-        if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
+        /*if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
             TyreDetailCommonClass.chk1Make = json.get(TyreKey.chk1Make)?.asString
         }
         if (json.get(TyreKey.chk1Pattern) != null && !json.get(TyreKey.chk1Pattern)?.asString.equals(
@@ -1185,7 +1236,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }
         if (json.get(TyreKey.chk3Size) != null && !json.get(TyreKey.chk3Size)?.asString.equals("")) {
             TyreDetailCommonClass.chk3Size = json.get(TyreKey.chk3Size)?.asString
-        }
+        }*/
         if (json.get(TyreKey.isCompleted) != null) {
             TyreDetailCommonClass.isCompleted =
                 json.get(TyreKey.isCompleted)?.asString?.toBoolean()!!

@@ -141,12 +141,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         setData(json)
 
-
-
                         runOnUiThread {
-                            chkRF?.isChecked=false
-                            chkLR?.isChecked=false
-                            chkRR?.isChecked=false
+                            chkRF?.isChecked = false
+                            chkLR?.isChecked = false
+                            chkRR?.isChecked = false
                             if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString.equals("RF,true")) true else false
@@ -183,9 +181,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         setData(json)
 
                         runOnUiThread {
-                            chkRF?.isChecked=false
-                            chkLR?.isChecked=false
-                            chkRR?.isChecked=false
+                            chkRF?.isChecked = false
+                            chkLR?.isChecked = false
+                            chkRR?.isChecked = false
                             if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString
@@ -227,9 +225,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         Log.e("getval", "" + json.get(TyreKey.chk2Make)?.asString)
                         Log.e("getval", "" + json.get(TyreKey.chk3Make)?.asString)
                         runOnUiThread {
-                            chkRF?.isChecked=false
-                            chkLR?.isChecked=false
-                            chkRR?.isChecked=false
+                            chkRF?.isChecked = false
+                            chkLR?.isChecked = false
+                            chkRR?.isChecked = false
                             if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make)?.asString.equals("LF,true")) true else false
@@ -265,9 +263,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         setData(json)
 
                         runOnUiThread {
-                            chkRF?.isChecked=false
-                            chkLR?.isChecked=false
-                            chkRR?.isChecked=false
+                            chkRF?.isChecked = false
+                            chkLR?.isChecked = false
+                            chkRR?.isChecked = false
                             if (json.get(TyreKey.chk1Make) != null) {
                                 chkRF?.isChecked =
                                     if (json.get(TyreKey.chk1Make).asString
@@ -416,18 +414,53 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     e.printStackTrace()
                 }
             }
+            runOnUiThread {
+                Log.e("selectedname", "" + selectedName)
+                if (!selectedName.equals("")) {
+                    llVehicleMakeselectedView?.visibility = View.VISIBLE
+                    btnNext?.visibility = View.VISIBLE
+                    gridviewRecycMake_?.visibility = View.GONE
+
+                    if (arrList != null && arrList?.size!! > 0) {
+                        for (i in arrList?.indices!!) {
+
+                            if (selectedName.equals(arrList?.get(i)?.name)) {
+                                arrList?.get(i)?.isSelected = true
+                            }
+                        }
+                    }
+                    try {
+                        Glide.with(this)
+                            .load(TyreDetailCommonClass.vehicleMakeURL)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder)
+                            .into(ivSelectedCar!!)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    Common.hideLoader()
+
+                } else {
+                    adapter = VehicleMakeAdapterNew(this, arrList, this, selectedName)
+                    gridviewRecycMake_?.adapter = adapter
+                    gridviewRecycMake_?.visibility = View.VISIBLE
+                    Common.hideLoader()
+                }
+            }
         }
         thread.start()
 
 
-        var handler = Handler()
-        handler.postDelayed(Runnable {
-            Log.e("getsizee00", "" + arrList?.size + " " + selectedName)
-            adapter = VehicleMakeAdapterNew(this, arrList, this, selectedName)
-            gridviewRecycMake_?.adapter = adapter
-            gridviewRecycMake_?.visibility = View.VISIBLE
-            Common.hideLoader()
-        }, 1000)
+        /* var handler = Handler()
+         handler.postDelayed(Runnable {
+             Log.e("getsizee00", "" + arrList?.size + " " + selectedName)
+             adapter = VehicleMakeAdapterNew(this, arrList, this, selectedName)
+             gridviewRecycMake_?.adapter = adapter
+             gridviewRecycMake_?.visibility = View.VISIBLE
+             Common.hideLoader()
+         }, 1000)*/
+
+
 
         Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
         Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
@@ -467,19 +500,33 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Common.slideUp(gridviewRecycMake_!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
-        try {
-            Glide.with(this)
-                .load(arrList?.get(variable)?.concat)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder)
-                .into(ivSelectedCar!!)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+            try {
+                Glide.with(this)
+                    .load(arrList?.get(variable)?.concat)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder)
+                    .into(ivSelectedCar!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } else {
+            try {
+                Glide.with(this)
+                    .load(TyreDetailCommonClass.vehicleMakeURL)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder)
+                    .into(ivSelectedCar!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
         selectedPos = variable
         Log.e("getselected", "" + arrList?.get(selectedPos)?.name)
         Log.e("getselected", "" + arrList?.get(selectedPos)?.brand_id)
+        Log.e("getselected", "" + arrList?.get(selectedPos)?.concat)
+        TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat
         selectedName = arrList?.get(selectedPos)?.name!!
 
         if (selectedTyre.equals("LF")) {
@@ -917,26 +964,32 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             if (chkRR?.isChecked!!) {
                 TyreConfigClass.LRVehicleMake = true
             }
-
-
         }
 
         TyreDetailCommonClass.tyreType = selectedTyre
-        TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.name
-        TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.Id?.toString()
-        TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
-        TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat!!
+        if (selectedPos != -1) {
+            TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.name
+        }
+        if (selectedPos != -1) {
+            TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.Id?.toString()
+        }
+//        TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
+//        TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat!!
 
         TyreDetailCommonClass.chk1Make = chkRF?.text.toString() + "," + chkRF?.isChecked
         TyreDetailCommonClass.chk2Make = chkLR?.text.toString() + "," + chkLR?.isChecked
         TyreDetailCommonClass.chk3Make = chkRR?.text.toString() + "," + chkRR?.isChecked
         Log.e("pendingArr54654", "" + TyreDetailCommonClass.vehicleMake)
         Log.e("pendingArr54654", "" + TyreDetailCommonClass.vehicleMakeId)
+        Log.e("pendingArr54654", "" + TyreDetailCommonClass.vehicleMakeURL)
         Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)
         var intent = Intent(this, VehiclePatternActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)
-        intent.putExtra("selectedVehicleMake", "" + arrList?.get(selectedPos)?.Id)
-        intent.putExtra("selectedMakeId",arrList?.get(selectedPos)?.brand_id)
+        if (TyreDetailCommonClass.vehicleMakeId.equals("")) {
+            intent.putExtra("selectedMakeId", arrList?.get(selectedPos)?.brand_id)
+        } else {
+            intent.putExtra("selectedMakeId", TyreDetailCommonClass.vehicleMakeId)
+        }
         startActivityForResult(intent, 1002)
 
     }

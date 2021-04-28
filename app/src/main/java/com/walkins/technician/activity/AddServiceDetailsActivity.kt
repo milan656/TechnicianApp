@@ -638,6 +638,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         tvAddPhoto1 = findViewById(R.id.tvAddPhoto1)
         tvAddPhoto2 = findViewById(R.id.tvAddPhoto2)
 
+        ivPickedImage?.setOnClickListener(this)
+        ivPickedImage1?.setOnClickListener(this)
+
         ivPickedImage?.visibility = View.GONE
         ivPickedImage1?.visibility = View.GONE
         ivEditImg1?.visibility = View.GONE
@@ -947,11 +950,27 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 )
             }
             R.id.ivBack -> {
-
-
                 onBackPressed()
             }
-            R.id.relCarPhotoAdd1, R.id.ivEditImg1 -> {
+            R.id.ivPickedImage -> {
+                showImage(TyreConfigClass.CarPhoto_1)
+            }
+            R.id.ivPickedImage1 -> {
+                showImage(TyreConfigClass.CarPhoto_2)
+            }
+            R.id.relCarPhotoAdd1 -> {
+                if (TyreConfigClass.CarPhoto_1.equals("")) {
+                    selectImage1 = true
+                    showBottomSheetdialog(
+                        Common.commonPhotoChooseArr,
+                        "Choose From",
+                        this,
+                        Common.btn_not_filled
+                    )
+                }
+            }
+            R.id.ivEditImg1 -> {
+
                 selectImage1 = true
                 showBottomSheetdialog(
                     Common.commonPhotoChooseArr,
@@ -959,8 +978,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     this,
                     Common.btn_not_filled
                 )
+
             }
-            R.id.relCarPhotoAdd2, R.id.ivEditImg2 -> {
+            R.id.relCarPhotoAdd2 -> {
+                if (TyreConfigClass.CarPhoto_2.equals("")) {
+
+                    selectImage1 = false
+                    showBottomSheetdialog(
+                        Common.commonPhotoChooseArr,
+                        "Choose From",
+                        this,
+                        Common.btn_not_filled
+                    )
+                }
+            }
+            R.id.ivEditImg2 -> {
+
                 selectImage1 = false
                 showBottomSheetdialog(
                     Common.commonPhotoChooseArr,
@@ -973,6 +1006,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.tvSkipService -> {
                 openSkipServiceDialogue()
             }
+
 
             R.id.ivInfoImgLR -> {
                 if (!checkService()) {
@@ -2562,14 +2596,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                                     try {
                                         Glide.with(this@AddServiceDetailsActivity)
-                                            .load(TyreConfigClass.selectedMakeURL)
+                                            .load(TyreDetailCommonClass.vehicleMakeURL)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                                             .placeholder(R.drawable.placeholder)
                                             .into(ivTyreRightFront!!)
                                     } catch (e: Exception) {
                                         e.printStackTrace()
                                     }
-                                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                                    Log.e("geturl", "" + TyreDetailCommonClass.vehicleMakeURL)
                                 } else {
                                     ivInfoImgLF?.visibility = View.VISIBLE
                                 }
@@ -2587,14 +2621,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                     TyreConfigClass.RFCompleted = true
                                     try {
                                         Glide.with(this@AddServiceDetailsActivity)
-                                            .load(TyreConfigClass.selectedMakeURL)
+                                            .load(TyreDetailCommonClass.vehicleMakeURL)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                                             .placeholder(R.drawable.placeholder)
                                             .into(ivTyreRightFront!!)
                                     } catch (e: Exception) {
                                         e.printStackTrace()
                                     }
-                                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                                    Log.e("geturl", "" + TyreDetailCommonClass.vehicleMakeURL)
                                     ivInfoImgRF?.visibility = View.GONE
                                 } else {
                                     ivInfoImgRF?.visibility = View.VISIBLE
@@ -2616,14 +2650,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                                     try {
                                         Glide.with(this@AddServiceDetailsActivity)
-                                            .load(TyreConfigClass.selectedMakeURL)
+                                            .load(TyreDetailCommonClass.vehicleMakeURL)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                                             .placeholder(R.drawable.placeholder)
                                             .into(ivTyreRightFront!!)
                                     } catch (e: Exception) {
                                         e.printStackTrace()
                                     }
-                                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                                    Log.e("geturl", "" + TyreDetailCommonClass.vehicleMakeURL)
                                 } else {
                                     ivInfoImgLR?.visibility = View.VISIBLE
 
@@ -2644,14 +2678,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                                     try {
                                         Glide.with(this@AddServiceDetailsActivity)
-                                            .load(TyreConfigClass.selectedMakeURL)
+                                            .load(TyreDetailCommonClass.vehicleMakeURL)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                                             .placeholder(R.drawable.placeholder)
                                             .into(ivTyreRightFront!!)
                                     } catch (e: Exception) {
                                         e.printStackTrace()
                                     }
-                                    Log.e("geturl", "" + TyreConfigClass.selectedMakeURL)
+                                    Log.e("geturl", "" + TyreDetailCommonClass.vehicleMakeURL)
                                 } else {
                                     ivInfoImgRR?.visibility = View.VISIBLE
 
@@ -2664,6 +2698,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
                         Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
                         Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeId!!)
+                        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeURL!!)
                         Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePattern!!)
                         Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePatternId!!)
                         Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSize!!)
@@ -2975,6 +3010,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonrf.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
                 if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) {
 
                     jsonrf.addProperty(
@@ -3094,6 +3135,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonlr.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) {
 
                     jsonlr.addProperty(
@@ -3215,6 +3263,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonrr.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
 
                     jsonrr.addProperty(
@@ -3336,6 +3391,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonlr.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
 
                     jsonlr.addProperty(
@@ -3453,6 +3515,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonrf.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) {
 
                     jsonrf.addProperty(
@@ -3571,6 +3640,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonrr.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
 
                     jsonrr.addProperty(
@@ -3689,6 +3765,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     jsonlf.addProperty(
                         TyreKey.vehicleMakeId,
                         TyreDetailCommonClass.vehicleMakeId
+                    )
+                }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonlf.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
                     )
                 }
                 if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
@@ -3813,6 +3895,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonlr.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) {
 
                     jsonlr.addProperty(
@@ -3934,6 +4023,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonrr.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
 
                     jsonrr.addProperty(
@@ -4052,6 +4148,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonlf.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
 
                     jsonlf.addProperty(
@@ -4171,6 +4274,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonrf.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) {
 
                     jsonrf.addProperty(
@@ -4288,6 +4398,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
+                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")){
+                    jsonlr.addProperty(
+                        TyreKey.vehicleMakeURL,
+                        TyreDetailCommonClass.vehicleMakeURL
+                    )
+                }
+
                 if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) {
 
                     jsonlr.addProperty(
@@ -4522,5 +4639,41 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             }
         }
+    }
+
+    private fun showImage(posterUrl: String?) {
+        val builder = AlertDialog.Builder(this@AddServiceDetailsActivity).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.MATCH_PARENT
+        builder.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+
+        val root = LayoutInflater.from(this@AddServiceDetailsActivity)
+            .inflate(R.layout.dialogue_image, null)
+
+        val tvTitleRemarks =
+            root.findViewById<TextView>(R.id.tvTitleRemarks)
+        val imgPoster =
+            root.findViewById<ImageView>(R.id.imgPoster)
+
+
+        Glide.with(this@AddServiceDetailsActivity)
+            .load(posterUrl)
+            .override(1600, 1600)
+
+            .placeholder(R.drawable.placeholder)
+            .into(imgPoster)
+
+        tvTitleRemarks?.text = "View Car Image"
+
+        val imgClose = root.findViewById<ImageView>(R.id.imgClose)
+
+
+        imgClose.setOnClickListener { builder.dismiss() }
+        builder.setView(root)
+
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
     }
 }
