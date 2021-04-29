@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.technician.common.Common
+import com.example.technician.common.Common.Companion.getFile
 import com.example.technician.common.Common.Companion.setTint
 import com.example.technician.common.PrefManager
 import com.theartofdev.edmodo.cropper.CropImage
@@ -44,6 +45,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.io.InputStream
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
@@ -224,59 +226,43 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     override fun onResume() {
         super.onResume()
         Log.e("selectedMenu", "" + selectedMenu)
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             IMAGE_CAPTURE_CODE -> {
-                /*ivProfileImg?.setImageURI(image_uri)
-
-                var imageFile = context?.let {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                        Common.getFile(it, image_uri)
+                if (resultCode == Activity.RESULT_OK) {
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        getFile(this@MainActivity, image_uri)
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
+
+                    var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
+//
+                    if (fragment is ProfileFragment) {
+                        fragment.ivProfileImg?.setImageURI(image_uri)
+                    }
+                    val inputStream: InputStream? =
+                        this.contentResolver?.openInputStream(image_uri!!)
+                    imagePath.let { uploadImage(it!!, inputStream!!) }
                 }
 
-                Log.e("getimageFile",""+imageFile?.isFile+" "+imageFile?.name+" "+imageFile?.absolutePath)
-                uploadImage(imageFile!!)*/
-                this.let {
-                    CropImage.activity(image_uri)
-                        .start(it)
-                }
             }
-
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
                     val auxFile = File(mCurrentPhotoPath)
-                    Log.e("getdataa", "" + auxFile.isFile)
-                    this.let {
-                        CropImage.activity(Uri.fromFile(auxFile))
-                            .start(it)
+                    Log.e("getfile00", "" + mCurrentPhotoPath + " " + Uri.parse(mCurrentPhotoPath))
+
+                    var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
+//
+                    if (fragment is ProfileFragment) {
+                        fragment.ivProfileImg?.setImageURI(Uri.parse(mCurrentPhotoPath))
                     }
-
-//                      ivProfileImg?.setImageURI(Uri.parse(mCurrentPhotoPath))
-//                      var imageFile = context?.let {
-//                          if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//                              Common.getFile(it, Uri.parse(mCurrentPhotoPath))
-//                          } else {
-//                              TODO("VERSION.SDK_INT < KITKAT")
-//                          }
-//                      }
-
-//                      Log.e("getimageFile00",""+imageFile?.isFile+" "+imageFile?.name+" "+imageFile?.absolutePath)
-
-//                      uploadImage(imageFile!!)
-                    /* uploadProfileImage(auxFile)
-                     Glide.with(this)
-                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
-                         .into(imgProfile)*/
+                    val inputStream: InputStream? =
+                        this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+                    auxFile.let { uploadImage(it, inputStream!!) }
                 }
             }
 
@@ -287,52 +273,58 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     val selectedImage = data?.data
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        this?.let { Common.getFile(it, selectedImage) }
+                        getFile(this@MainActivity, selectedImage)
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
-//                    ivProfileImg?.setImageURI(selectedImage)
-                    Log.i("imagePath", "++++" + imagePath)
-
-
-                    this.let {
-                        CropImage.activity(selectedImage)
-                            .start(it)
-                    }
-                }
-            }
-
-            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                val result = CropImage.getActivityResult(data)
-                Log.e("getdataa", "" + result?.error + " " + result?.isSuccessful)
-                if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
-                    val selectedImage = result.uri
-                    Log.e("getdataa", "" + selectedImage)
-
 
                     var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
-
+//
                     if (fragment is ProfileFragment) {
                         fragment.ivProfileImg?.setImageURI(selectedImage)
                     }
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        this?.let { Common.getFile(it, selectedImage) }
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    imagePath?.let { uploadImage(it) }
+
+                    Log.i("imagePath", "++++" + imagePath)
+                    Log.e("getfile0022", "" + selectedImage)
+
+                    val inputStream: InputStream? =
+                        this.contentResolver?.openInputStream(selectedImage!!)
+                    imagePath?.let { uploadImage(it, inputStream!!) }
+
                 }
             }
+
+//            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+//                val result = CropImage.getActivityResult(data)
+//                Log.e("getdataa", "" + result?.error + " " + result?.isSuccessful)
+//                if (resultCode == Activity.RESULT_OK) {
+//
+//                    //To get the File for further usage
+//                    val selectedImage = result.uri
+//                    Log.e("getdataa", "" + selectedImage)
+//
+//
+//                    var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
+//
+//                    if (fragment is ProfileFragment) {
+//                        fragment.ivProfileImg?.setImageURI(selectedImage)
+//                    }
+//                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                        this?.let { Common.getFile(it, selectedImage) }
+//                    } else {
+//                        TODO("VERSION.SDK_INT < KITKAT")
+//                    }
+//                    imagePath?.let { uploadImage(it) }
+//                }
+//            }
         }
     }
 
     fun openCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (this?.checkSelfPermission(Manifest.permission.CAMERA)
+            if (this.checkSelfPermission(Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED ||
-                this?.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_DENIED
             ) {
                 //permission was not enabled
@@ -469,14 +461,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 }
             }
             123 -> {
-                if (grantResults?.get(1) != -1) {
+                if (grantResults.get(1) != -1) {
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
                         val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        val file: File = this?.let { Common.createFile(it) }!!
+                        val file: File = this.let { Common.createFile(it) }
 
-                        val uri: Uri = this?.let {
+                        val uri: Uri = this.let {
                             FileProvider.getUriForFile(
                                 it,
                                 "com.walkins.technician.android.fileprovider",
@@ -485,11 +477,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                         }!!
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
                         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-
-
                     }
-                } else {
-
                 }
             }
 
@@ -504,30 +492,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                             startActivityForResult(intent, PICK_IMAGE_REQUEST)
 
                         } catch (e: Exception) {
-
                             e.printStackTrace()
                         }
                     }
-                } else {
-
                 }
             }
         }
     }
 
-    private fun uploadImage(imagePath: File) {
-        this?.let { Common.showLoader(it) }
+    private fun uploadImage(imagePath: File,inputStream: InputStream) {
+        this.let { Common.showLoader(it) }
 
-        val requestFile = RequestBody.create(
-            MediaType.parse("image/*"),
-            imagePath
+        val part = MultipartBody.Part.createFormData(
+            "file", imagePath.name, RequestBody.create(
+                MediaType.parse("image/*"),
+                inputStream.readBytes()
+            )
         )
-
-        val body = MultipartBody.Part.createFormData("file", imagePath.name, requestFile)
 
         this.let {
             loginViewModel?.uploadImage(
-                body,
+                part,
                 prefManager?.getAccessToken()!!, it,
                 "profile"
             )

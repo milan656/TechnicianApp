@@ -27,7 +27,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -38,14 +37,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.Common.Companion.getFile
 import com.example.technician.common.PrefManager
-import com.example.technician.common.RetrofitCommonClass.CommonRetrofit.context
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
-import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.DB.*
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
