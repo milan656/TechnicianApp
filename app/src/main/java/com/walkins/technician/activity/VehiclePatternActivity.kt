@@ -442,38 +442,37 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-        var handler = Handler()
-        handler.postDelayed(Runnable {
-            Log.e("getid", "" + selectedId)
-            Log.e("selectedpatt00", "" + TyreDetailCommonClass.vehicleMakeId + " " + intent?.getStringExtra("selectedMakeId"))
 
-            if (selectedId != -1) {
-                if (!TyreDetailCommonClass.vehicleMakeId.equals("") && TyreDetailCommonClass.vehicleMakeId?.toInt() == intent?.getStringExtra("selectedMakeId")?.toInt()) {
-                    llVehicleMakeselectedView?.visibility = View.VISIBLE
-                    btnNext?.visibility = View.VISIBLE
-                    gridviewRecycModel?.visibility = View.GONE
+        Log.e("getid", "" + selectedId)
+        Log.e("selectedpatt00", "" + TyreDetailCommonClass.vehicleMakeId + " " + intent?.getStringExtra("selectedMakeId"))
 
-                    if (arrList != null && arrList?.size!! > 0) {
-                        for (i in arrList?.indices!!) {
+        if (selectedId != -1) {
+            if (!TyreDetailCommonClass.vehicleMakeId.equals("") && TyreDetailCommonClass.vehicleMakeId?.toInt() == intent?.getStringExtra("selectedMakeId")?.toInt()) {
+                llVehicleMakeselectedView?.visibility = View.VISIBLE
+                btnNext?.visibility = View.VISIBLE
+                gridviewRecycModel?.visibility = View.GONE
 
-                            if (selectedId == arrList?.get(i)?.patternId) {
-                                arrList?.get(i)?.isSelected = true
-                            }
+                if (arrList != null && arrList?.size!! > 0) {
+                    for (i in arrList?.indices!!) {
+
+                        if (selectedId == arrList?.get(i)?.patternId) {
+                            arrList?.get(i)?.isSelected = true
                         }
                     }
-
-                    tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern
-
-                    Common.hideLoader()
-                } else {
-
-                    getVehiclePattern(false)
                 }
+
+                tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern
+
+                Common.hideLoader()
             } else {
+
                 getVehiclePattern(false)
             }
+        } else {
+            getVehiclePattern(false)
+        }
 
-        }, 1000)
+
 
         Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
         Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)

@@ -966,7 +966,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/fourteen_dp"
                                 android:orientation="vertical"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/suggestionsRecycView"
@@ -1073,12 +1073,7 @@
                                         android:scaleType="fitCenter"
                                         android:src="@drawable/ic_camera_icon" />
 
-                                    <ProgressBar
-                                        android:id="@+id/image_1_progress"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:visibility="gone"
-                                        android:layout_centerInParent="true"/>
+
 
                                     <ImageView
                                         android:id="@+id/ivEditImg1"
@@ -1128,12 +1123,6 @@
                                         android:scaleType="fitCenter"
                                         android:src="@drawable/ic_camera_icon" />
 
-                                    <ProgressBar
-                                        android:id="@+id/image_2_progress"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:visibility="gone"
-                                        android:layout_centerInParent="true"/>
 
 
                                     <ImageView

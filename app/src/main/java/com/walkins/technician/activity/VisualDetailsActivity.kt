@@ -9,7 +9,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
@@ -21,9 +21,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -38,7 +35,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
-import com.github.mikephil.charting.formatter.IFillFormatter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -61,14 +57,12 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileNotFoundException
 import java.io.IOException
+import java.io.InputStream
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
     private var loginViewModel: LoginActivityViewModel? = null
@@ -126,6 +120,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var llREQSideWell: LinearLayout? = null
     private var llOkShoulder: LinearLayout? = null
     private var llSugShoulder: LinearLayout? = null
+
     private var llReqShoulder: LinearLayout? = null
     private var llOkTreadDepth: LinearLayout? = null
     private var llSugTreadDepth: LinearLayout? = null
@@ -172,6 +167,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //    private var IMAGE_PICK_CODE = 1010;
 //    private var PERMISSION_CODE = 1011;
 
+    var mediaPath: String? = null
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGE_REQUEST = 100
     private lateinit var mCurrentPhotoPath: String
@@ -1106,42 +1102,42 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (json.get(TyreKey.issueResolvedArr) != null) {
 //            TyreDetailCommonClass.issueResolvedArr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
         }
-       /* if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
-            TyreDetailCommonClass.chk1Make = json.get(TyreKey.chk1Make)?.asString
-        }
-        if (json.get(TyreKey.chk1Pattern) != null && !json.get(TyreKey.chk1Pattern)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.chk1Pattern = json.get(TyreKey.chk1Pattern)?.asString
-        }
-        if (json.get(TyreKey.chk1Size) != null && !json.get(TyreKey.chk1Size)?.asString.equals("")) {
-            TyreDetailCommonClass.chk1Size = json.get(TyreKey.chk1Size)?.asString
-        }
-        if (json.get(TyreKey.chk2Make) != null && !json.get(TyreKey.chk2Make)?.asString.equals("")) {
-            TyreDetailCommonClass.chk2Make = json.get(TyreKey.chk2Make)?.asString
-        }
-        if (json.get(TyreKey.chk2Pattern) != null && !json.get(TyreKey.chk2Pattern)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.chk2Pattern = json.get(TyreKey.chk2Pattern)?.asString
-        }
-        if (json.get(TyreKey.chk2Size) != null && !json.get(TyreKey.chk2Size)?.asString.equals("")) {
-            TyreDetailCommonClass.chk2Size = json.get(TyreKey.chk2Size)?.asString
-        }
-        if (json.get(TyreKey.chk3Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
-            TyreDetailCommonClass.chk3Make = json.get(TyreKey.chk3Make)?.asString
-        }
-        if (json.get(TyreKey.chk3Pattern) != null && !json.get(TyreKey.chk3Pattern)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.chk3Pattern = json.get(TyreKey.chk3Pattern)?.asString
-        }
-        if (json.get(TyreKey.chk3Size) != null && !json.get(TyreKey.chk3Size)?.asString.equals("")) {
-            TyreDetailCommonClass.chk3Size = json.get(TyreKey.chk3Size)?.asString
-        }*/
+        /* if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
+             TyreDetailCommonClass.chk1Make = json.get(TyreKey.chk1Make)?.asString
+         }
+         if (json.get(TyreKey.chk1Pattern) != null && !json.get(TyreKey.chk1Pattern)?.asString.equals(
+                 ""
+             )
+         ) {
+             TyreDetailCommonClass.chk1Pattern = json.get(TyreKey.chk1Pattern)?.asString
+         }
+         if (json.get(TyreKey.chk1Size) != null && !json.get(TyreKey.chk1Size)?.asString.equals("")) {
+             TyreDetailCommonClass.chk1Size = json.get(TyreKey.chk1Size)?.asString
+         }
+         if (json.get(TyreKey.chk2Make) != null && !json.get(TyreKey.chk2Make)?.asString.equals("")) {
+             TyreDetailCommonClass.chk2Make = json.get(TyreKey.chk2Make)?.asString
+         }
+         if (json.get(TyreKey.chk2Pattern) != null && !json.get(TyreKey.chk2Pattern)?.asString.equals(
+                 ""
+             )
+         ) {
+             TyreDetailCommonClass.chk2Pattern = json.get(TyreKey.chk2Pattern)?.asString
+         }
+         if (json.get(TyreKey.chk2Size) != null && !json.get(TyreKey.chk2Size)?.asString.equals("")) {
+             TyreDetailCommonClass.chk2Size = json.get(TyreKey.chk2Size)?.asString
+         }
+         if (json.get(TyreKey.chk3Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
+             TyreDetailCommonClass.chk3Make = json.get(TyreKey.chk3Make)?.asString
+         }
+         if (json.get(TyreKey.chk3Pattern) != null && !json.get(TyreKey.chk3Pattern)?.asString.equals(
+                 ""
+             )
+         ) {
+             TyreDetailCommonClass.chk3Pattern = json.get(TyreKey.chk3Pattern)?.asString
+         }
+         if (json.get(TyreKey.chk3Size) != null && !json.get(TyreKey.chk3Size)?.asString.equals("")) {
+             TyreDetailCommonClass.chk3Size = json.get(TyreKey.chk3Size)?.asString
+         }*/
         if (json.get(TyreKey.isCompleted) != null) {
             TyreDetailCommonClass.isCompleted =
                 json.get(TyreKey.isCompleted)?.asString?.toBoolean()!!
@@ -1457,7 +1453,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 )
             }
             R.id.ivPickedImage1 -> {
-                showImage(TyreDetailCommonClass.visualDetailPhotoUrl!!)
+                if (!TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
+                    showImage(TyreDetailCommonClass.visualDetailPhotoUrl!!)
+                }
             }
             R.id.btnDone -> {
                 Log.e("getslectedtyre", "" + selectedTyre)
@@ -1792,59 +1790,31 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        /*if (requestCode == REQUEST_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                ivPickedImage1?.setImageURI(Uri.parse(imageFilePath))
-                ivPickedImage1?.visibility = View.VISIBLE
-                ivEditImg2?.visibility = View.VISIBLE
-                tvAddPhoto1?.visibility = View.GONE
-                tvCarphoto1?.visibility = View.GONE
-                TyreDetailCommonClass.visualDetailPhotoUrl = imageFilePath
-                Log.e("getimageuri", "" + imageFilePath)
-                TyreDetailCommonClass.isCameraSelectedVisualDetail = true
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "You cancelled the operation", Toast.LENGTH_SHORT).show()
-            }
-        }
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            ivPickedImage1?.setImageURI(data?.data)
-            ivPickedImage1?.visibility = View.VISIBLE
-            ivEditImg2?.visibility = View.VISIBLE
-            tvAddPhoto1?.visibility = View.GONE
-            tvCarphoto1?.visibility = View.GONE
-
-            val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, data?.data)
-
-            val imageName = "${System.currentTimeMillis()}"
-            Common.saveImage(this, bitmap, imageName, ".png")
-
-            TyreDetailCommonClass.visualDetailPhotoUrl = imageName + ".png"
-            Log.e("getimageuri", "" + imageName)
-            TyreDetailCommonClass.isCameraSelectedVisualDetail = false
-        }*/
 
         when (requestCode) {
             IMAGE_CAPTURE_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-//                image_view.setImageURI(image_uri)
-                    Log.e("getfile0011", "call")
-                    CropImage.activity(image_uri)
-                        .start(this)
-
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         getFile(this@VisualDetailsActivity, image_uri)
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
 
-//                    uploadImage(imagePath!!, "service-image")
+                    ivPickedImage1?.setImageURI(image_uri)
+                    ivPickedImage1?.visibility = View.VISIBLE
+                    ivEditImg2?.visibility = View.VISIBLE
+                    tvAddPhoto1?.visibility = View.GONE
+                    tvCarphoto1?.visibility = View.GONE
+                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+
+                    val inputStream: InputStream? =
+                        this.contentResolver?.openInputStream(image_uri!!)
+                    imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                 }
 
             }
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
                     val auxFile = File(mCurrentPhotoPath)
                     Log.e("getfile00", "" + mCurrentPhotoPath + " " + Uri.parse(mCurrentPhotoPath))
                     ivPickedImage1?.setImageURI(Uri.parse(mCurrentPhotoPath))
@@ -1853,15 +1823,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-                    CropImage.activity(Uri.fromFile(auxFile))
-                        .start(this)
 
-//                    uploadImage(auxFile, "service-image")
-
-                    /* uploadProfileImage(auxFile)
-                     Glide.with(this)
-                         .load(Uri.fromFile(File(mCurrentPhotoPath)))
-                         .into(imgProfile)*/
+                    val inputStream: InputStream? =
+                        this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+                    auxFile.let { uploadImage(it, inputStream!!, "service-image") }
                 }
             }
 
@@ -1885,34 +1850,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-                    CropImage.activity(selectedImage)
-                        .start(this)
+//                    CropImage.activity(selectedImage)
+//                        .start(this)
 
-//                    uploadImage(imagePath!!, "service-image")
-                }
-            }
+                    val inputStream: InputStream? =
+                        this.contentResolver?.openInputStream(selectedImage!!)
+                    imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
 
-            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                val result = CropImage.getActivityResult(data)
-                if (resultCode == Activity.RESULT_OK) {
-
-                    //To get the File for further usage
-                    val selectedImage = result.uri
-                    Log.e("getfile0033", "" + selectedImage)
-                    ivPickedImage1?.setImageURI(selectedImage)
-                    ivPickedImage1?.visibility = View.VISIBLE
-                    ivEditImg2?.visibility = View.VISIBLE
-                    tvAddPhoto1?.visibility = View.GONE
-                    tvCarphoto1?.visibility = View.GONE
-                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-//                    TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage?.toString()
-
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        getFile(this, selectedImage)
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    imagePath?.let { uploadImage(it, "service-image") }
                 }
             }
         }
@@ -2021,23 +1965,31 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         return null
     }
 
-    private fun uploadImage(imagePath: File, type: String) {
+    private fun uploadImage(imagePath: File, inputStream: InputStream, type: String) {
         Common.showLoader(this)
 
-        val requestFile = RequestBody.create(
-            MediaType.parse("image/*"),
-            imagePath
+//        val requestFile = RequestBody.create(
+//            MediaType.parse("image/*"),
+//            imagePath
+//        )
+//
+//        val body = MultipartBody.Part.createFormData("file", imagePath.name, requestFile)
+
+        val part = MultipartBody.Part.createFormData(
+            "file", imagePath.name, RequestBody.create(
+                MediaType.parse("image/*"),
+                inputStream.readBytes()
+            )
         )
 
-        val body = MultipartBody.Part.createFormData("file", imagePath.name, requestFile)
-
-        loginViewModel?.uploadImage(body, prefManager.getAccessToken()!!, this, type)
+        loginViewModel?.uploadImage(part, prefManager.getAccessToken()!!, this, type)
 
         loginViewModel?.getImageUpload()?.observe(this, androidx.lifecycle.Observer {
             Common.hideLoader()
             if (it != null) {
                 if (it.success) {
                     Log.e("getfile", "" + it.data.imageUrl)
+                    Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
 //                    try {
 //                        Glide.with(this).load(it.data.imageUrl).into(ivPickedImage1!!)
 //                    } catch (e: Exception) {
