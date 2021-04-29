@@ -9,4 +9,7 @@ interface CommonApi {
 
     @GET("v1/tyrepushpull/get-list-of-issue")
     fun getListOfIssue(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
+
+    @GET("v1/tyrepushpull/get-service")
+    fun getgetService(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
 }

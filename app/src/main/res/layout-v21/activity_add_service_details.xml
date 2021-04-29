@@ -299,6 +299,15 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/serviceRecycView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/ten_dp"
+                                    android:layout_marginEnd="@dimen/ten_dp"
+                                    android:layout_marginBottom="@dimen/fourteen_dp"/>
+
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="130dp"
@@ -306,6 +315,7 @@
                                     android:layout_marginStart="@dimen/ten_dp"
                                     android:layout_marginEnd="@dimen/ten_dp"
                                     android:gravity="center"
+                                    android:visibility="gone"
                                     android:orientation="horizontal">
 
                                     <LinearLayout
@@ -417,6 +427,7 @@
                                     android:layout_height="130dp"
                                     android:layout_gravity="center"
                                     android:layout_marginStart="@dimen/ten_dp"
+                                    android:visibility="gone"
                                     android:layout_marginTop="32dp"
                                     android:layout_marginEnd="@dimen/ten_dp"
                                     android:layout_marginBottom="32dp"

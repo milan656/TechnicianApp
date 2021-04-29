@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -46,11 +47,14 @@ import com.google.gson.reflect.TypeToken
 import com.walkins.technician.DB.*
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
+import com.walkins.technician.adapter.ServiceAdapter
 import com.walkins.technician.adapter.TyreSuggestionAdpater
 import com.walkins.technician.common.*
 import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialogDueDate
 import com.walkins.technician.model.login.IssueResolveModel
+import com.walkins.technician.model.login.service.ServiceModelData
+import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.LoginActivityViewModel
 import com.walkins.technician.viewmodel.ServiceViewModel
 import kotlinx.coroutines.Dispatchers
@@ -73,6 +77,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private lateinit var prefManager: PrefManager
     private lateinit var mDb: DBClass
     private var loginViewModel: LoginActivityViewModel? = null
+    private var commonViewModel: CommonViewModel? = null
 
     var pendingArr: ArrayList<String>? = null
     var dialog: BottomSheetDialog? = null
@@ -109,6 +114,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private var suggestionsRecycView: RecyclerView? = null
     private var selectedSuggestionArr: ArrayList<String>? = ArrayList()
+    private var selectedServiceArr: ArrayList<String>? = ArrayList()
     private var suggestionArr = arrayListOf(
         "Improve this for the tyre in alignment",
         "Improve this for the tyre in alignment",
@@ -186,6 +192,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var radioGroupRF: RadioGroup? = null
     private var radioGroupRR: RadioGroup? = null
 
+    private var serviceRecycView: RecyclerView? = null
+    private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
+    private var serviceAdapter: ServiceAdapter? = null
+
     // image picker code
 //    val REQUEST_IMAGE = 100
 //    val REQUEST_PERMISSION = 200
@@ -207,13 +217,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         prefManager = PrefManager(this)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
 
 //        requestPermissionForImage()
         init()
     }
 
     suspend fun getStoredObjects() {
-
 
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -598,6 +608,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         radioGroupRR = findViewById(R.id.rdGroupRR)
 
         ivPhoneCall = findViewById(R.id.ivPhoneCall)
+        serviceRecycView = findViewById(R.id.serviceRecycView)
 
         ivInfoImgRR?.setOnClickListener(this)
         ivInfoImgRF?.setOnClickListener(this)
@@ -688,6 +699,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         )
         suggestionsRecycView?.adapter = tyreSuggestionAdapter
 
+        serviceRecycView?.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        serviceAdapter = ServiceAdapter(serviceList!!, this, this)
+        serviceRecycView?.adapter = serviceAdapter
+        serviceAdapter?.onclick = this
+
         ivBack?.setOnClickListener(this)
 
 
@@ -697,8 +713,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
-        getServiceData()
-        checkChangeListener()
 
         tvNextServiceDueDate?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -718,6 +732,35 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         })
 
+        getServiceList()
+
+    }
+
+    private fun getServiceList() {
+
+        commonViewModel?.callApiGetService(prefManager.getAccessToken()!!, this)
+        commonViewModel?.getService()?.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    if (it.data != null && it.data.size > 0) {
+                        serviceList?.clear()
+                        serviceList?.addAll(it.data)
+                    }
+
+                    serviceAdapter?.notifyDataSetChanged()
+                    getServiceData()
+
+                } else {
+                    if (it.error != null && it.error?.get(0)?.message != null) {
+                        Toast.makeText(this, "" + it.error?.get(0)?.message, Toast.LENGTH_SHORT).show()
+                    }
+                    getServiceData()
+                }
+            } else {
+                getServiceData()
+            }
+        })
     }
 
     private fun getServiceData() {
@@ -828,6 +871,28 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tyreSuggestionAdapter?.notifyDataSetChanged()
                 }
 
+                if (jsonService.get(TyreKey.serviceArr) != null) {
+
+                    var arr = jsonService.get(TyreKey.serviceArr)?.asJsonArray
+                    Log.e("getvalues", "" + arr)
+                    val gson = Gson()
+                    val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                    val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                    Log.e("getvalues", "" + arrlist)
+                    for (i in serviceList?.indices!!) {
+
+                        for (j in arrlist.indices) {
+
+                            if (serviceList?.get(i)?.name.equals(arrlist.get(j))) {
+                                serviceList?.get(i)?.isSelected = true
+                                selectedServiceArr?.add(serviceList?.get(i)?.name!!)
+                            }
+                        }
+                    }
+
+                    serviceAdapter?.notifyDataSetChanged()
+                }
+
                 if (jsonService.get(TyreKey.addServiceCarImage_1) != null &&
                     !jsonService.get(TyreKey.addServiceCarImage_1)?.asString.equals("")
                 ) {
@@ -871,56 +936,21 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
     }
 
-    private fun checkChangeListener() {
-        chkWheelBalacing?.setOnCheckedChangeListener(object :
-            CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-
-                chkWheelBalacing?.isChecked = isChecked
-                showHideUpdatedPlacement()
-
-            }
-
-        })
-        chkTyreRotation?.setOnCheckedChangeListener(object :
-            CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                chkTyreRotation?.isChecked = isChecked
-                showHideUpdatedPlacement()
-            }
-
-        })
-        chkNitrogenTopup?.setOnCheckedChangeListener(object :
-            CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                chkNitrogenTopup?.isChecked = isChecked
-                showHideUpdatedPlacement()
-            }
-
-        })
-        chkNitrogenRefill?.setOnCheckedChangeListener(object :
-            CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                Log.e("chkbox", "" + isChecked + " " + chkNitrogenRefill?.isChecked)
-                chkNitrogenRefill?.isChecked = isChecked
-                showHideUpdatedPlacement()
-            }
-
-        })
-    }
-
-    fun showHideUpdatedPlacement() {
-        if (chkTyreRotation?.isChecked!!
-        ) {
-            if (llUpdatedPlacement?.visibility == View.GONE) {
-                Common.expand(llUpdatedPlacement!!)
-                if (llServiceExpanded?.visibility == View.GONE) {
-                    Common.expand(llServiceExpanded!!)
+    fun showHideUpdatedPlacement(type: String,ischecked:Boolean) {
+        Log.e("calltype",""+type+" "+ischecked)
+        if (type.equals("Type Rotation",ignoreCase = true)) {
+            if (ischecked
+            ) {
+                if (llUpdatedPlacement?.visibility == View.GONE) {
+                    Common.expand(llUpdatedPlacement!!)
+                    if (llServiceExpanded?.visibility == View.GONE) {
+                        Common.expand(llServiceExpanded!!)
+                    }
                 }
-            }
-        } else {
-            if (llUpdatedPlacement?.visibility == View.VISIBLE) {
-                Common.collapse(llUpdatedPlacement!!)
+            } else {
+                if (llUpdatedPlacement?.visibility == View.VISIBLE) {
+                    Common.collapse(llUpdatedPlacement!!)
+                }
             }
         }
         checkSubmitBtn()
@@ -1131,7 +1161,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tvServices?.isAllCaps = false
                     ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
                 } else {
-                    showHideUpdatedPlacement()
+//                    showHideUpdatedPlacement("")
                     ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = false
@@ -1257,6 +1287,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         jsonObject.addProperty(TyreKey.addServiceCarImage_1, TyreConfigClass.CarPhoto_1)
         jsonObject.addProperty(TyreKey.addServiceCarImage_2, TyreConfigClass.CarPhoto_2)
 
+        var jsonArrayService: JsonArray? = JsonArray()
+
+        selectedServiceArr?.clear()
+        if (serviceList != null && serviceList?.size!! > 0) {
+            for (i in serviceList?.indices!!) {
+                if (serviceList?.get(i)?.isSelected!!) {
+                    selectedServiceArr?.add(serviceList?.get(i)?.name!!)
+                    jsonArrayService?.add(serviceList?.get(i)?.name)
+                }
+            }
+        }
+
         var jsonArray: JsonArray = JsonArray()
 
         selectedSuggestionArr?.clear()
@@ -1282,6 +1324,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             tvNextServiceDueDate?.text.toString()
         )
         jsonObject.add(TyreKey.technicalSuggestionArr, jsonArray)
+        jsonObject.add(TyreKey.serviceArr, jsonArrayService)
 
         try {
             var selectedText: String? = ""
@@ -2078,6 +2121,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+        if (check == 11) {
+
+            showHideUpdatedPlacement(serviceList?.get(variable)?.name!!,serviceList?.get(variable)?.isSelected!!)
+
+
+
+        }
         if (check == 0) {
 
             Log.e("getposition0", "" + suggestionArr.get(variable))
@@ -2891,8 +2941,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         checkSubmitBtn()
                     }
                 }
-
-
             }
         }
     }
@@ -2922,8 +2970,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             return
         }
 
-        if (!chkWheelBalacing?.isChecked!! && !chkTyreRotation?.isChecked!! &&
-            !chkNitrogenTopup?.isChecked!! && !chkNitrogenRefill?.isChecked!!
+        var count = 0
+        for (i in serviceList?.indices!!) {
+            if (serviceList?.get(i)?.isSelected!!) {
+                count = count + 1
+            }
+        }
+        if (count > 0
         ) {
 //            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
             return

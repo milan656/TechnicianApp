@@ -52,6 +52,7 @@ import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.makemodel.VehicleModel
 import com.walkins.technician.model.login.otp.OtpModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
+import com.walkins.technician.model.login.service.ServiceModel
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import okhttp3.ResponseBody
@@ -325,6 +326,15 @@ class Common {
                             )
                         return OtpModel
                     }
+                    "ServiceModel" -> {
+                        val ServiceModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ServiceModel::class.java
+                            )
+                        return ServiceModel
+                    }
+
 
 
                     else -> {
@@ -454,6 +464,14 @@ class Common {
                                         OtpModel::class.java
                                     )
                                 return OtpModel
+                            }
+                            "ServiceModel" -> {
+                                val ServiceModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ServiceModel::class.java
+                                    )
+                                return ServiceModel
                             }
 
 

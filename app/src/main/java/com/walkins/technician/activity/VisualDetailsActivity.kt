@@ -353,7 +353,33 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getservice", "" + json)
 
-                if ((json.get(TyreKey.nitrogenTopup) != null && json.get(TyreKey.nitrogenTopup)?.asString.equals(
+                if (json.get(TyreKey.serviceArr) != null) {
+
+                    var arr = json.get(TyreKey.serviceArr)?.asJsonArray
+                    Log.e("getvalues", "" + arr)
+                    val gson = Gson()
+                    val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                    val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                    Log.e("getvalues", "" + arrlist)
+
+                    psiOutFrame?.visibility = View.GONE
+                    psiInFrame?.visibility = View.GONE
+                    weightFrame?.visibility = View.GONE
+                    for (j in arrlist.indices) {
+
+                        if (arrlist.get(j).equals("Nitrogen Refill") || arrlist.get(j).equals("Nitrogen Top Up")) {
+                            psiOutFrame?.visibility = View.VISIBLE
+                            psiInFrame?.visibility = View.VISIBLE
+                        }
+                        if (arrlist.get(j).equals("Wheel Balancing")){
+                            weightFrame?.visibility = View.VISIBLE
+                        }
+                    }
+
+
+                }
+
+                /*if ((json.get(TyreKey.nitrogenTopup) != null && json.get(TyreKey.nitrogenTopup)?.asString.equals(
                         "true"
                     )) ||
                     (json.get(TyreKey.nitrogenRefil) != null && json.get(TyreKey.nitrogenRefil)?.asString.equals(
@@ -374,7 +400,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     weightFrame?.visibility = View.VISIBLE
                 } else {
                     weightFrame?.visibility = View.GONE
-                }
+                }*/
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }

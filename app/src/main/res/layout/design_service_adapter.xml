@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/llSpacing"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:orientation="vertical"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llServiceLayout"
+            android:layout_width="105dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/service_layout_bg"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/chkNitrogenTopup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/text_color2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/eighteen_dp"
+                android:layout_marginEnd="@dimen/eighteen_dp"
+                android:layout_marginBottom="@dimen/fourteen_dp"
+
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivServiceImage"
+                    android:layout_width="50dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:src="@mipmap/ic_nitrogen_topup" />
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:id="@+id/tvServiceName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/three_dp"
+                    android:gravity="center"
+                    android:text="Nitrogen Top Up"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

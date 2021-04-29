@@ -6,6 +6,7 @@ import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
+import com.walkins.technician.model.login.service.ServiceModel
 import com.walkins.technician.networkApi.MakeModelApi
 import com.walkins.technician.networkApi.common.CommonApi
 import okhttp3.ResponseBody
@@ -59,6 +60,46 @@ class CommonRepo {
                             1,
                             context
                         ) as IssueListModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
+    fun getService(
+        context: Context,
+        accessToken:String
+
+    ): MutableLiveData<ServiceModel> {
+        var otpData = MutableLiveData<ServiceModel>()
+        commonApi.getgetService(accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "ServiceModel",
+                        response,
+                        0,
+                        context
+                    ) as ServiceModel?
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "ServiceModel",
+                            response,
+                            1,
+                            context
+                        ) as ServiceModel?
                     } catch (e: IOException) {
                         e.printStackTrace()
                     } catch (e: Exception) {
