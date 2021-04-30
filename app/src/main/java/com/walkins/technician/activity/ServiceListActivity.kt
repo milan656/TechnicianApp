@@ -146,6 +146,11 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                             arrayList.filter { it.status.equals(skipped) }
                             Log.e("getservicedata1", "" + arrayList.size)
                         }
+                        tvNoServiceData?.visibility = View.GONE
+                        if (arrayList.size == 0) {
+                            tvNoServiceData?.text = "There is no any Upcomming service to display"
+                            tvNoServiceData?.visibility = View.VISIBLE
+                        }
 
                         adapter?.notifyDataSetChanged()
 
