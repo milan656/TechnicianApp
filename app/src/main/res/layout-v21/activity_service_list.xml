@@ -143,6 +143,7 @@
     <!--    </androidx.cardview.widget.CardView>-->
 
     <com.walkins.technician.custom.BoldHeavyTextView
+        android:id="@+id/tvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/eighteen_dp"
@@ -153,11 +154,26 @@
         android:textSize="@dimen/fourteen_sp"
         android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/serviceRecycView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/sixteen_dp"
-        android:layout_marginTop="@dimen/ten_dp"
-        android:layout_marginEnd="@dimen/sixteen_dp" />
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/serviceRecycView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:layout_marginEnd="@dimen/sixteen_dp" />
+
+        <com.walkins.technician.custom.NormalNoDataTextView
+            android:id="@+id/tvNoServiceData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/twelve_sp"
+            android:textColor="@color/text_color1"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 </LinearLayout>

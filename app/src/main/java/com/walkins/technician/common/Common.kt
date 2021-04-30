@@ -13,7 +13,6 @@ import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.Bitmap.CompressFormat
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -58,7 +57,6 @@ import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateMode
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import okhttp3.ResponseBody
-import org.jetbrains.annotations.NotNull
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
@@ -172,6 +170,16 @@ class Common {
             return phrase.toString()
         }
 
+        fun getStringBuilder(str: String):StringBuilder{
+            val strBuilder:java.lang.StringBuilder=java.lang.StringBuilder()
+
+            val temp: Array<String> = str.split(",").toTypedArray()
+
+            for (i in temp.indices){
+                strBuilder?.append(temp.get(i))?.append(",")
+            }
+            return strBuilder!!
+        }
 
         fun saveImage(context: Context, bitmap: Bitmap, name: String, extension: String) {
             val folder =

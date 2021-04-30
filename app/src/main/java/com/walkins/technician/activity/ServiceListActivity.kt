@@ -25,8 +25,10 @@ import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showShortToast
 import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.technician.viewmodel.ServiceViewModel
+import java.lang.StringBuilder
 
 class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
+
     private var serviceViewModel: ServiceViewModel? = null
     private var prefManager: PrefManager? = null
     private var llSkipped: LinearLayout? = null
@@ -52,6 +54,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var selectedDate = ""
     private var selectedDateFormated = ""
     private var addressTitle = ""
+    private var fullAddress = ""
 
     companion object {
         var upcomming = "pending"
@@ -114,6 +117,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             }
             if (intent.hasExtra("addressTitle")) {
                 addressTitle = intent.getStringExtra("addressTitle")!!
+            }
+            if (intent.hasExtra("fullAddress")) {
+                fullAddress = intent.getStringExtra("fullAddress")!!
             }
         }
         tvDate?.text = selectedDateFormated
@@ -186,7 +192,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
 
-                serviceRecycView?.adapter=adapter
+                serviceRecycView?.adapter = adapter
 
             }
             R.id.llCompleted -> {
@@ -205,7 +211,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
 
-                serviceRecycView?.adapter=adapter
+                serviceRecycView?.adapter = adapter
 
 
             }
@@ -225,7 +231,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     tvNoServiceData?.text = "There is no any Skipped service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
-                serviceRecycView?.adapter=adapter
+                serviceRecycView?.adapter = adapter
 
             }
             R.id.ivBack -> {
@@ -238,10 +244,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     this,
                     Common.btn_filled,
                     false,
-                    "Palm Spring,",
-                    "Vastrapur Road,",
-                    "Opposite Siddhivinayak mandir,",
-                    "Ahmedabad - 123456"
+                    Common.getStringBuilder(fullAddress)
                 )
             }
         }
@@ -273,10 +276,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        msg: String,
-        msg1: String,
-        msg2: String,
-        msg3: String,
+        stringBuilder: StringBuilder
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
@@ -296,15 +296,15 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
+        val str = stringBuilder.toString().replace(",", "," + "\n")
+        tv_message?.text = str
 
-        tv_message?.text = msg + "\n" + msg1 + "\n" + msg2 + "\n" + msg3
-
-        if (msg.isNotEmpty()) {
+        if (str.isNotEmpty()) {
             tv_message.visibility = View.VISIBLE
         }
 
         ivClose?.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
         }
         if (isBtnVisible) {
             btnSend.visibility = View.VISIBLE

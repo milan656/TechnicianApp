@@ -31,6 +31,7 @@ import com.walkins.technician.model.login.DashboardModel
 import com.walkins.technician.model.login.LeadHistoryData
 import com.walkins.technician.model.login.SectionModel
 import com.walkins.technician.viewmodel.ServiceViewModel
+import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -143,7 +144,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 val startDate = date.time
                                 Log.e("getdatefromstart", "" + startDate)
                                 dashboardModel = DashboardModel(
-                                    it.data.get(i).building_name + "," + it.data.get(i).address, it.data.get(i).date, it.data.get(i).date_formated,
+                                    it.data.get(i).building_name, it.data.get(i).address, it.data.get(i).date, it.data.get(i).date_formated,
                                     it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), 45, startDate,
                                     startDate
                                 )
@@ -180,10 +181,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        msg: String,
-        msg1: String,
-        msg2: String,
-        msg3: String,
+        strBuilder: StringBuilder
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
@@ -204,9 +202,10 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         tvTitleText?.text = titleStr
 
-        tv_message?.text = msg + "\n" + msg1 + "\n" + msg2 + "\n" + msg3
+        val str = strBuilder.toString().replace(",", "," + "\n")
+        tv_message?.text = str
 
-        if (msg.isNotEmpty()) {
+        if (str.isNotEmpty()) {
             tv_message.visibility = View.VISIBLE
         }
 
@@ -255,8 +254,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 "Address Details",
                 context,
                 Common.btn_filled,
-                false, "Palm Spring,", "Vastrapur Road,", "Opposite Siddhivinayak mandir,",
-                "Ahmedabad - 123456"
+                false, Common.getStringBuilder(historyDataList.get(variable).fullAddress)
             )
 
         } else if (check == 0) {
@@ -265,6 +263,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             intent.putExtra("selectedDate", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
             intent.putExtra("selectedDateFormated", historyDataList.get(variable).dateFormated)
             intent.putExtra("addressTitle", historyDataList.get(variable).addressTitle)
+            intent.putExtra("fullAddress", historyDataList.get(variable).fullAddress)
             startActivity(intent)
         } else {
             Log.e("getsection", "" + sectionModelArrayList.get(variable).sectionLabel)

@@ -260,19 +260,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     LFVehicleURL = jsonLF.get(TyreKey.vehicleMakeURL)?.asString!!
                 }
 
-                runOnUiThread {
-                    Log.e("getmakeURL", "" + jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
-                    try {
-                        Glide.with(this@AddServiceDetailsActivity)
-                            .load(jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.placeholder)
-                            .into(ivtyreLeftFront!!)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-
+                Log.e("getmakeURL", "" + jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
+                try {
+                    Glide.with(this@AddServiceDetailsActivity)
+                        .load(jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder)
+                        .into(ivtyreLeftFront!!)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
+
 
                 if ((jsonLF.get(TyreKey.vehicleMake) != null &&
                             !jsonLF.get(TyreKey.vehicleMake)?.asString.equals("") &&
@@ -393,17 +391,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
                     RFVehicleURL = jsonRF.get(TyreKey.vehicleMakeURL)?.asString!!
                 }
-                runOnUiThread {
-                    try {
-                        Glide.with(this@AddServiceDetailsActivity)
-                            .load(jsonRF.get(TyreKey.vehicleMakeURL)?.asString)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.placeholder)
-                            .into(ivTyreRightFront!!)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+
+                try {
+                    Glide.with(this@AddServiceDetailsActivity)
+                        .load(jsonRF.get(TyreKey.vehicleMakeURL)?.asString)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder)
+                        .into(ivTyreRightFront!!)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
+
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -481,17 +479,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     LRVehicleURL = jsonLR.get(TyreKey.vehicleMakeURL)?.asString!!
                 }
 
-                runOnUiThread {
-
-                    try {
-                        Glide.with(this@AddServiceDetailsActivity)
-                            .load(jsonLR.get(TyreKey.vehicleMakeURL)?.asString)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.placeholder)
-                            .into(ivtyreLeftRear!!)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                try {
+                    Glide.with(this@AddServiceDetailsActivity)
+                        .load(jsonLR.get(TyreKey.vehicleMakeURL)?.asString)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder)
+                        .into(ivtyreLeftRear!!)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -568,19 +563,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     RRVehicleURL = jsonRR.get(TyreKey.vehicleMakeURL)?.asString!!
                 }
 
-                runOnUiThread {
-
-                    try {
-                        Glide.with(this@AddServiceDetailsActivity)
-                            .load(jsonRR.get(TyreKey.vehicleMakeURL)?.asString)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.placeholder)
-                            .into(ivTyreRightRear!!)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                try {
+                    Glide.with(this@AddServiceDetailsActivity)
+                        .load(jsonRR.get(TyreKey.vehicleMakeURL)?.asString)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder)
+                        .into(ivTyreRightRear!!)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
