@@ -118,9 +118,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     private fun getDashboardService() {
 
+
         activity?.let {
+            Common.showLoader(it)
             serviceViewModel?.callApiDashboardService("", prefManager?.getAccessToken()!!, it)
             serviceViewModel?.getDashboardService()?.observe(it, androidx.lifecycle.Observer {
+                Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
 

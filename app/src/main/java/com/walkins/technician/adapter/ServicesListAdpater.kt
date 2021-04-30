@@ -14,7 +14,7 @@ import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateData
 
 class ServicesListAdpater(
-    var array: ArrayList<ServiceListByDateData>,
+    var array: MutableList<ServiceListByDateData>,
     var context: Context,
     onPositionClick: onClickAdapter
 ) :

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -41,10 +42,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var serviceRecycView: RecyclerView? = null
     private var ivInfoService: ImageView? = null
 
-    private var arrayList: ArrayList<ServiceListByDateData> = ArrayList()
+//    private var arrayList: muta<ServiceListByDateData> = ArrayList()
+    private val arrayList = mutableListOf<ServiceListByDateData>()
     private var adapter: ServicesListAdpater? = null
     private var tvAddress: TextView? = null
     private var tvDate: TextView? = null
+    private var tvNoServiceData: TextView? = null
     private var serviceStatus = ""
     private var selectedDate = ""
     private var selectedDateFormated = ""
@@ -55,7 +58,6 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         var completed = "completed"
         var skipped = "skipped"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,12 +78,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         llCompleted = findViewById(R.id.llCompleted)
         ivInfoService = findViewById(R.id.ivInfoService)
 
-
         tvCompleted = findViewById(R.id.tvCompleted)
         tvUpcoming = findViewById(R.id.tvUpcoming)
         tvSkipped = findViewById(R.id.tvSkipped)
         tvAddress = findViewById(R.id.tvAddress)
         tvDate = findViewById(R.id.tvDate)
+        tvNoServiceData = findViewById(R.id.tvNoServiceData)
 
         llUpcoming?.setOnClickListener(this)
         llCompleted?.setOnClickListener(this)
@@ -134,11 +136,15 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                         if (serviceStatus.equals(upcomming)) {
                             arrayList.filter { it.status.equals(upcomming) }
+                            Log.e("getservicedata",""+arrayList.size)
                         } else if (serviceStatus.equals(completed)) {
                             arrayList.filter { it.status.equals(completed) }
+                            Log.e("getservicedata0",""+arrayList.size)
                         } else if (serviceStatus.equals(skipped)) {
                             arrayList.filter { it.status.equals(skipped) }
+                            Log.e("getservicedata1",""+arrayList.size)
                         }
+
                         adapter?.notifyDataSetChanged()
 
                     }
@@ -166,8 +172,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
 
                 serviceStatus = upcomming
-                arrayList.filter { it.status.equals(upcomming) }
-                adapter?.notifyDataSetChanged()
+                var filteredList=arrayList.filter { it.status.equals(upcomming) }
+                Log.e("getservicedataclick11",""+filteredList.size)
+
+                adapter = this.let { ServicesListAdpater(filteredList as MutableList<ServiceListByDateData>, it, this) }
+                serviceRecycView?.adapter = adapter
+
 
             }
             R.id.llCompleted -> {
@@ -179,8 +189,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.white))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
                 serviceStatus = completed
-                arrayList.filter { it.status.equals(completed) }
-                adapter?.notifyDataSetChanged()
+                val filteredList=arrayList.filter { it.status.equals(completed) }
+                Log.e("getservicedataclick11",""+filteredList.size)
+
+                adapter = this.let { ServicesListAdpater(filteredList as MutableList<ServiceListByDateData>, it, this) }
+                serviceRecycView?.adapter = adapter
+
 
             }
             R.id.llSkipped -> {
@@ -192,8 +206,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
                 serviceStatus = skipped
-                arrayList.filter { it.status.equals(skipped) }
-                adapter?.notifyDataSetChanged()
+                var filteredList=arrayList.filter { it.status.equals(skipped) }
+                Log.e("getservicedataclick11",""+filteredList.size)
+
+                adapter = this.let { ServicesListAdpater(filteredList as MutableList<ServiceListByDateData>, it, this) }
+                serviceRecycView?.adapter = adapter
+
 
             }
             R.id.ivBack -> {
@@ -236,7 +254,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     }
 
     private fun showBottomSheetdialogNormal(
-        array: ArrayList<ServiceListByDateData>,
+        array: MutableList<ServiceListByDateData>,
         titleStr: String,
         context: Context?,
         btnBg: String,
