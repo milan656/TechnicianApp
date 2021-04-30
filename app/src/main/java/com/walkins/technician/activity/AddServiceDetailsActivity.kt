@@ -196,6 +196,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
     private var serviceAdapter: ServiceAdapter? = null
 
+    private var tvRegNumber: TextView? = null
+    private var tvMakeModel: TextView? = null
+    private var tvcolor: TextView? = null
+    private var llbg: LinearLayout? = null
+    private var ivCarImage: ImageView? = null
+
     // image picker code
 //    val REQUEST_IMAGE = 100
 //    val REQUEST_PERMISSION = 200
@@ -209,6 +215,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private val PERMISSION_CODE = 1010;
     private val IMAGE_CAPTURE_CODE = 1011
     var image_uri: Uri? = null
+
+    private var color: String = ""
+    private var makeModel: String = ""
+    private var regNumber: String = ""
+    private var carImage: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -691,6 +702,71 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivPhoneCall = findViewById(R.id.ivPhoneCall)
         serviceRecycView = findViewById(R.id.serviceRecycView)
 
+        ivTyre1 = findViewById(R.id.ivTyre1)
+        ivTyre2 = findViewById(R.id.ivTyre2)
+        ivTyre3 = findViewById(R.id.ivTyre3)
+        ivTyre4 = findViewById(R.id.ivTyre4)
+        ivPickedImage = findViewById(R.id.ivPickedImage)
+        ivPickedImage1 = findViewById(R.id.ivPickedImage1)
+        ivEditImg1 = findViewById(R.id.ivEditImg1)
+        ivEditImg2 = findViewById(R.id.ivEditImg2)
+        tvCarphoto1 = findViewById(R.id.tvCarphoto1)
+        tvCarphoto2 = findViewById(R.id.tvCarphoto2)
+        tvAddPhoto1 = findViewById(R.id.tvAddPhoto1)
+        tvAddPhoto2 = findViewById(R.id.tvAddPhoto2)
+
+        ivtyreLeftFront = findViewById(R.id.ivtyreLeftFront)
+        ivtyreLeftRear = findViewById(R.id.ivtyreLeftRear)
+        ivTyreRightFront = findViewById(R.id.ivTyreRightFront)
+        ivTyreRightRear = findViewById(R.id.ivTyreRightRear)
+
+        chkNitrogenRefill = findViewById(R.id.chkNitrogenRefill)
+        chkNitrogenTopup = findViewById(R.id.chkNitrogenTopup)
+        chkTyreRotation = findViewById(R.id.chkTyreRotation)
+        chkWheelBalacing = findViewById(R.id.chkWheelBalacing)
+
+        relCarPhotoAdd2 = findViewById(R.id.relCarPhotoAdd2)
+        relCarPhotoAdd1 = findViewById(R.id.relCarPhotoAdd1)
+
+        tvcolor = findViewById(R.id.tvcolor)
+        tvMakeModel = findViewById(R.id.tvMakeModel)
+        llbg = findViewById(R.id.llbg)
+        tvRegNumber = findViewById(R.id.tvRegNumber)
+        ivCarImage = findViewById(R.id.ivCarImage)
+
+        if (intent != null) {
+            if (intent.getStringExtra("color") != null) {
+                color = intent.getStringExtra("color")!!
+            }
+            if (intent.getStringExtra("makeModel") != null) {
+                makeModel = intent.getStringExtra("makeModel")!!
+            }
+            if (intent.getStringExtra("regNumber") != null) {
+                regNumber = intent.getStringExtra("regNumber")!!
+            }
+            if (intent.getStringExtra("carImage") != null) {
+                carImage = intent.getStringExtra("carImage")!!
+            }
+        }
+
+        tvcolor?.text = color
+        tvMakeModel?.text = makeModel
+        tvRegNumber?.text = regNumber
+
+        if (color.equals("white", ignoreCase = true)) {
+            llbg?.setBackgroundColor(this.resources?.getColor(R.color.white)!!)
+        } else if (color.equals("blue", ignoreCase = true)) {
+            llbg?.setBackgroundColor(this.resources?.getColor(R.color.blue_color)!!)
+        } else if (color.equals("red", ignoreCase = true)) {
+            llbg?.setBackgroundColor(this.resources?.getColor(R.color.red_color)!!)
+        }
+
+        try {
+//            Glide.with(this).load(carImage).into(ivCarImage!!)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+
         ivInfoImgRR?.setOnClickListener(this)
         ivInfoImgRF?.setOnClickListener(this)
         ivInfoImgLR?.setOnClickListener(this)
@@ -707,18 +783,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         btnSubmitAndComplete?.isClickable = false
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_blue))
 
-        ivTyre1 = findViewById(R.id.ivTyre1)
-        ivTyre2 = findViewById(R.id.ivTyre2)
-        ivTyre3 = findViewById(R.id.ivTyre3)
-        ivTyre4 = findViewById(R.id.ivTyre4)
-        ivPickedImage = findViewById(R.id.ivPickedImage)
-        ivPickedImage1 = findViewById(R.id.ivPickedImage1)
-        ivEditImg1 = findViewById(R.id.ivEditImg1)
-        ivEditImg2 = findViewById(R.id.ivEditImg2)
-        tvCarphoto1 = findViewById(R.id.tvCarphoto1)
-        tvCarphoto2 = findViewById(R.id.tvCarphoto2)
-        tvAddPhoto1 = findViewById(R.id.tvAddPhoto1)
-        tvAddPhoto2 = findViewById(R.id.tvAddPhoto2)
 
         ivPickedImage?.setOnClickListener(this)
         ivPickedImage1?.setOnClickListener(this)
@@ -727,19 +791,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivPickedImage1?.visibility = View.GONE
         ivEditImg1?.visibility = View.GONE
         ivEditImg2?.visibility = View.GONE
-
-        ivtyreLeftFront = findViewById(R.id.ivtyreLeftFront)
-        ivtyreLeftRear = findViewById(R.id.ivtyreLeftRear)
-        ivTyreRightFront = findViewById(R.id.ivTyreRightFront)
-        ivTyreRightRear = findViewById(R.id.ivTyreRightRear)
-
-        chkNitrogenRefill = findViewById(R.id.chkNitrogenRefill)
-        chkNitrogenTopup = findViewById(R.id.chkNitrogenTopup)
-        chkTyreRotation = findViewById(R.id.chkTyreRotation)
-        chkWheelBalacing = findViewById(R.id.chkWheelBalacing)
-
-        relCarPhotoAdd2 = findViewById(R.id.relCarPhotoAdd2)
-        relCarPhotoAdd1 = findViewById(R.id.relCarPhotoAdd1)
 
         tvTitle?.text = "Add Service Details"
         ivInfoAddService?.setOnClickListener(this)

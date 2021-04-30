@@ -256,6 +256,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
             if (serviceStatus.equals(upcomming)) {
                 var intent = Intent(this, AddServiceDetailsActivity::class.java)
+                intent.putExtra("color", arrayList.get(variable).color)
+                intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
+                intent.putExtra("regNumber", arrayList.get(variable).regNumber)
+                intent.putExtra("carImage", arrayList.get(variable).image)
                 startActivity(intent)
 
             } else if (serviceStatus.equals(completed)) {
