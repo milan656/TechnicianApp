@@ -151,6 +151,14 @@ fun AppCompatActivity.dateForWebservice(date: String): String {
     return displayDate
 
 }
+fun AppCompatActivity.dateForWebservice_2(date: String): String {
+    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    val formatterDisplay = SimpleDateFormat("yyyy-MM-dd")
+    val dateInString = formatterDisplay.parse(date)
+    val displayDate = formatter.format(dateInString)
+    return displayDate
+
+}
 
 fun AppCompatActivity.datefrom(date: String): String {
     val formatter = SimpleDateFormat("yyyy-MM-dd'T'00:00:00.000'Z'")

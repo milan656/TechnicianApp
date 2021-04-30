@@ -47,12 +47,14 @@ import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.custom.BoldButton
+import com.walkins.technician.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.makemodel.VehicleModel
 import com.walkins.technician.model.login.otp.OtpModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.model.login.service.ServiceModel
+import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import okhttp3.ResponseBody
@@ -73,7 +75,8 @@ class Common {
 
     companion object {
         //        var url: String? = "https://staging-backend.jkadvantage.co.in/api/"
-        var url: String? = "https://stag-tyreservice-backend.trackwalkins.com/api/"
+//        var url: String? = "https://stag-tyreservice-backend.trackwalkins.com/api/"
+        var url: String? = "https://staging-backend.aapkedoorstep.com/api/"
 
 //        https://stag-tyreservice-backend.trackwalkins.com/api/v1/tyrepushpull/get-tyre-brand
 //      https://stag-tyreservice-backend.trackwalkins.com/api/v1/auth/login
@@ -334,7 +337,23 @@ class Common {
                             )
                         return ServiceModel
                     }
+                    "DashboardServiceListModel" -> {
+                        val DashboardServiceListModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                DashboardServiceListModel::class.java
+                            )
+                        return DashboardServiceListModel
+                    }
 
+                    "ServiceListByDateModel" -> {
+                        val ServiceListByDateModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ServiceListByDateModel::class.java
+                            )
+                        return ServiceListByDateModel
+                    }
 
 
                     else -> {
@@ -472,6 +491,23 @@ class Common {
                                         ServiceModel::class.java
                                     )
                                 return ServiceModel
+                            }
+                            "DashboardServiceListModel" -> {
+                                val DashboardServiceListModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        DashboardServiceListModel::class.java
+                                    )
+                                return DashboardServiceListModel
+                            }
+
+                            "ServiceListByDateModel" -> {
+                                val ServiceListByDateModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ServiceListByDateModel::class.java
+                                    )
+                                return ServiceListByDateModel
                             }
 
 

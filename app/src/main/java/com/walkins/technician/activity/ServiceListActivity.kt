@@ -10,17 +10,24 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
+import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
 import com.walkins.technician.adapter.HomeListAdpater
 import com.walkins.technician.adapter.ServicesListAdpater
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.common.showShortToast
+import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateData
+import com.walkins.technician.viewmodel.ServiceViewModel
 
 class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
-
+    private var serviceViewModel: ServiceViewModel? = null
+    private var prefManager: PrefManager? = null
     private var llSkipped: LinearLayout? = null
     private var llCompleted: LinearLayout? = null
     private var llUpcoming: LinearLayout? = null
@@ -34,14 +41,27 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var serviceRecycView: RecyclerView? = null
     private var ivInfoService: ImageView? = null
 
-    private var arrayList = arrayListOf("one", "two", "three")
+    private var arrayList: ArrayList<ServiceListByDateData> = ArrayList()
     private var adapter: ServicesListAdpater? = null
     private var tvAddress: TextView? = null
+    private var tvDate: TextView? = null
     private var serviceStatus = ""
+    private var selectedDate = ""
+    private var selectedDateFormated = ""
+    private var addressTitle = ""
+
+    companion object {
+        var upcomming = "pending"
+        var completed = "completed"
+        var skipped = "skipped"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_list)
+        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+        prefManager = PrefManager(this)
 
         init()
     }
@@ -61,6 +81,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         tvUpcoming = findViewById(R.id.tvUpcoming)
         tvSkipped = findViewById(R.id.tvSkipped)
         tvAddress = findViewById(R.id.tvAddress)
+        tvDate = findViewById(R.id.tvDate)
 
         llUpcoming?.setOnClickListener(this)
         llCompleted?.setOnClickListener(this)
@@ -81,6 +102,53 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         adapter?.onclick = this
 
         tvTitle?.text = "Service List"
+
+        if (intent != null) {
+            if (intent.hasExtra("selectedDate")) {
+                selectedDate = intent.getStringExtra("selectedDate")!!
+            }
+            if (intent.hasExtra("selectedDateFormated")) {
+                selectedDateFormated = intent.getStringExtra("selectedDateFormated")!!
+            }
+            if (intent.hasExtra("addressTitle")) {
+                addressTitle = intent.getStringExtra("addressTitle")!!
+            }
+        }
+        tvDate?.text = selectedDateFormated
+        tvAddress?.text = addressTitle
+
+        getServiceListByDate()
+    }
+
+    private fun getServiceListByDate() {
+
+        serviceViewModel?.callApiServiceByDate(selectedDate, prefManager?.getAccessToken()!!, this)
+        serviceViewModel?.getServiceByDate()?.observe(this, Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    if (it.data != null) {
+
+                        arrayList.clear()
+                        arrayList.addAll(it.data)
+
+                        if (serviceStatus.equals(upcomming)) {
+                            arrayList.filter { it.status.equals(upcomming) }
+                        } else if (serviceStatus.equals(completed)) {
+                            arrayList.filter { it.status.equals(completed) }
+                        } else if (serviceStatus.equals(skipped)) {
+                            arrayList.filter { it.status.equals(skipped) }
+                        }
+                        adapter?.notifyDataSetChanged()
+
+                    }
+                } else {
+                    if (it.error != null && it.error?.get(0).message != null) {
+                        showShortToast(it.error?.get(0).message, this)
+                    }
+                }
+            }
+        })
     }
 
     override fun onClick(v: View?) {
@@ -97,7 +165,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
 
-                serviceStatus = "upcoming"
+                serviceStatus = upcomming
+                arrayList.filter { it.status.equals(upcomming) }
+                adapter?.notifyDataSetChanged()
 
             }
             R.id.llCompleted -> {
@@ -108,7 +178,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvUpcoming?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.white))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
-                serviceStatus = "completed"
+                serviceStatus = completed
+                arrayList.filter { it.status.equals(completed) }
+                adapter?.notifyDataSetChanged()
+
             }
             R.id.llSkipped -> {
                 llUpcoming?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
@@ -118,7 +191,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvUpcoming?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
-                serviceStatus = "skipped"
+                serviceStatus = skipped
+                arrayList.filter { it.status.equals(skipped) }
+                adapter?.notifyDataSetChanged()
 
             }
             R.id.ivBack -> {
@@ -150,7 +225,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
             } else if (serviceStatus.equals("completed")) {
                 var intent = Intent(this, CompletedServiceDetailActivity::class.java)
-                intent.putExtra("title","Service Detail")
+                intent.putExtra("title", "Service Detail")
                 startActivity(intent)
             } else if (serviceStatus.equals("skipped")) {
                 var intent = Intent(this, SkippedServiceDetailActivity::class.java)
@@ -161,7 +236,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     }
 
     private fun showBottomSheetdialogNormal(
-        array: ArrayList<String>,
+        array: ArrayList<ServiceListByDateData>,
         titleStr: String,
         context: Context?,
         btnBg: String,

@@ -143,6 +143,7 @@
     <!--    </androidx.cardview.widget.CardView>-->
 
     <com.walkins.technician.custom.BoldHeavyTextView
+        android:id="@+id/tvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/eighteen_dp"

@@ -109,7 +109,11 @@ public class MySMSBroadcastReceiver extends BroadcastReceiver {
                     Intent myIntent = new Intent("otp");
                     myIntent.putExtra("message", message);
                     myIntent.putExtra("number", senderNum);
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(myIntent);
+                    context.sendBroadcast(myIntent);
+
+                    if (otpReceiveListener != null) {
+                        otpReceiveListener.onOTPReceived(message);
+                    }
                     // Show Alert
 
                 } // end for loop
@@ -132,6 +136,10 @@ public class MySMSBroadcastReceiver extends BroadcastReceiver {
         void onSuccess(Intent intent);
 
         void onOTPReceived(String otp);
+    }
+
+    public void onOTPReceived(OTPReceiveListener receiveListener) {
+        this.otpReceiveListener = receiveListener;
     }
 
 }

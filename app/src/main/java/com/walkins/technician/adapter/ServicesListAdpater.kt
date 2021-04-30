@@ -11,9 +11,10 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateData
 
 class ServicesListAdpater(
-    var array: ArrayList<String>,
+    var array: ArrayList<ServiceListByDateData>,
     var context: Context,
     onPositionClick: onClickAdapter
 ) :
@@ -28,6 +29,7 @@ class ServicesListAdpater(
         var lllineView: LinearLayout = itemView.findViewById(R.id.lllineView)
         var tvVehicleNumber: TextView = itemView.findViewById(R.id.tvVehicleNumber)
         var tvVehicleName: TextView = itemView.findViewById(R.id.tvVehicleName)
+        var tvColorName: TextView = itemView.findViewById(R.id.tvColorName)
     }
 
     override fun onCreateViewHolder(
@@ -55,21 +57,18 @@ class ServicesListAdpater(
             }
         }
 
-        if (position == 0) {
-            holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_car_image))
-            holder.lllineView?.setBackgroundColor(context.resources.getColor(R.color.red))
-            holder.tvVehicleName?.text = "Toyota Innova"
-            holder.tvVehicleNumber.text = "GJ01HV4521"
-        } else if (position == 1) {
-            holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_car_image1))
-            holder.lllineView?.setBackgroundColor(context.resources.getColor(R.color.green))
-            holder.tvVehicleName?.text = "Maruti"
-            holder.tvVehicleNumber.text = "GJ01HV0015"
-        } else if (position == 2) {
-            holder.ivCarimg?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_no_car_image))
-            holder.lllineView?.setBackgroundColor(context.resources.getColor(R.color.blue_color))
-            holder.tvVehicleName?.text = "Maruti Suzu..Dzire"
-            holder.tvVehicleNumber.text = "GJ01HV3578"
+        holder.ivCarimg.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_car_image1))
+        holder.tvVehicleName.text = "" + array.get(position).make + "," + array.get(position).model
+        holder.tvVehicleNumber.text = array.get(position).regNumber
+        holder.tvColorName.text = array.get(position).color
+        if (array.get(position).color.equals("white", ignoreCase = true)) {
+            holder.lllineView.setBackgroundColor(context.resources.getColor(R.color.white))
+        }
+        if (array.get(position).color.equals("blue", ignoreCase = true)) {
+            holder.lllineView.setBackgroundColor(context.resources.getColor(R.color.blue_color))
+        }
+        if (array.get(position).color.equals("red", ignoreCase = true)) {
+            holder.lllineView.setBackgroundColor(context.resources.getColor(R.color.red_color))
         }
 
 

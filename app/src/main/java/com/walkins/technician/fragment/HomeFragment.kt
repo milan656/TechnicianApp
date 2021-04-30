@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.walkins.technician.common.dateForWebservice_2
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
@@ -27,6 +30,7 @@ import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.technician.model.login.DashboardModel
 import com.walkins.technician.model.login.LeadHistoryData
 import com.walkins.technician.model.login.SectionModel
+import com.walkins.technician.viewmodel.ServiceViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,6 +45,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var prefManager: PrefManager? = null
     private var ivFilter: ImageView? = null
     private var selectedDate: String? = null
+    private var serviceViewModel: ServiceViewModel? = null
 
     var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()
     var historyDataList: ArrayList<DashboardModel> = ArrayList<DashboardModel>()
@@ -75,9 +80,17 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
+        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         activity = getActivity() as MainActivity?
 
+        prefManager = context?.let { PrefManager(it) }
+        init(view)
+
+        return view
+
+    }
+
+    private fun init(view: View?) {
         ivFilter = view?.findViewById(R.id.ivFilter)
 
         relmainContent = view?.findViewById(R.id.relmainContent)
@@ -85,36 +98,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         tvUsername?.text = "Hello, " + "Arun"
         ivFilter?.setOnClickListener(this)
 
-        homeRecycView = view.findViewById(R.id.recyclerView)
+        homeRecycView = view?.findViewById(R.id.recyclerView)
 
-        for (i in 0..5) {
-
-            var dashboardModel: DashboardModel? = null
-            when (i) {
-                0, 1 -> {
-                    dashboardModel = DashboardModel(
-                        "Titanium City Center,Anandnagar",
-                        24, 20, 21, 45, System.currentTimeMillis(),
-                        System.currentTimeMillis()
-                    )
-
-                }
-                2, 3, 4, 5 -> {
-                    val dateString = "30/09/2021"
-                    val sdf = SimpleDateFormat("dd/MM/yyyy")
-                    val date = sdf.parse(dateString)
-
-                    val startDate = date.time
-                    dashboardModel = DashboardModel(
-                        "Prahladnagar garden",
-                        34, 30, 4, 40, startDate,
-                        startDate
-                    )
-                }
-            }
-
-            historyDataList.add(dashboardModel!!)
-        }
 
 //        homeRecycView?.setHasFixedSize(true)
         mAdapter = context?.let { LeadHistoryAdapter(it, historyDataList, this) }
@@ -127,114 +112,92 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         homeRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
 
-        return view
 
+        getDashboardService()
     }
 
-    fun fillRecyclerView() {
-        val adapter = DiverseRecyclerAdapter()
-//        gamesRecyclerItems = generateGamesList().map { SimpleTextRecyclerItem(it, this) }
-        var model = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
-        gamesRecyclerItems.add(SimpleTextRecyclerItem("", model, this))
+    private fun getDashboardService() {
 
-        var modelsecond = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
-        gamesRecyclerItems.add(SimpleTextRecyclerItem("", modelsecond, this))
+        activity?.let {
+            serviceViewModel?.callApiDashboardService("", prefManager?.getAccessToken()!!, it)
+            serviceViewModel?.getDashboardService()?.observe(it, androidx.lifecycle.Observer {
+                if (it != null) {
+                    if (it.success) {
 
-        var modelThird = DashboardModel("Titanium City Center,Anandnagar", 34, 50, 15, 40)
-        gamesRecyclerItems.add(SimpleTextRecyclerItem("", modelThird, this))
+                        Log.e("getdataa", "" + it.data)
+                        /*if (it.data != null) {
+                            for (i in it.data.indices) {
+                                val dateString = it.data.get(i).date
+                                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                                val date = sdf.parse(dateString)
+                                val startDate = date.time
+                                var dashboardModel = DashboardModel(
+                                    it.data.get(i).building_name + "," + it.data.get(i).address,
+                                    it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), 45, System.currentTimeMillis(),
+                                    startDate
+                                )
 
-        adapter.addItem(
-            SimpleStickyTextRecyclerItem(
-                SimpleStickyTextRecyclerItem.StickyData(
-                    "Today",
-                    ++stickyIdsCounter
-                )
-            ), false
-        )
-        adapter.addItems(gamesRecyclerItems, false)
+                                historyDataList.add(dashboardModel)
 
-        adapter.addItem(
-            SimpleStickyTextRecyclerItem(
-                SimpleStickyTextRecyclerItem.StickyData(
-                    "29 April",
-                    ++stickyIdsCounter
-                )
-            ), false
-        )
-        adapter.addItems(gamesRecyclerItems, false)
+                            }
+                        }*/
 
-        adapter.addItem(
-            SimpleStickyTextRecyclerItem(
-                SimpleStickyTextRecyclerItem.StickyData(
-                    "15 May",
-                    ++stickyIdsCounter
-                )
-            ), false
-        )
-        adapter.addItems(gamesRecyclerItems, false)
+                        for (i in it.data.indices) {
+
+                            var dashboardModel: DashboardModel? = null
+                            val dateString = it.data.get(i).date
+                            Log.e("getdatefrom", "" + dateString)
+                            val sdf = SimpleDateFormat("yyyy-MM-dd")
+                            val date = sdf.parse(dateString)
+
+                            val startDate = date.time
+                            Log.e("getdatefromstart", "" + startDate)
+                            dashboardModel = DashboardModel(
+                                it.data.get(i).building_name + "," + it.data.get(i).address, it.data.get(i).date,it.data.get(i).date_formated,
+                                it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), 45, startDate,
+                                startDate
+                            )
+
+                            historyDataList.add(dashboardModel)
+                        }
+
+                        /*for (i in it.data.indices) {
+
+                            var dashboardModel: DashboardModel? = null
+                            val dateString = it.data.get(i).date
+                            Log.e("getdatefrom",""+dateString)
+                            val sdf = SimpleDateFormat("yyyy-MM-dd")
+                            val date = sdf.parse(dateString)
+                            when (i) {
+
+                                0, 1 -> {
+                                    dashboardModel = DashboardModel(
+                                        "Titanium City Center,Anandnagar",
+                                        24, 20, 21, 45, System.currentTimeMillis(),
+                                        System.currentTimeMillis()
+                                    )
+                                }
+                                2, 3, 4, 5 -> {
 
 
-//        stickyHeaderDecoration = StickyHeaderDecoration(mAdapter)
-//        homeRecycView?.addItemDecoration(stickyHeaderDecoration)
-
-        homeRecycView?.adapter = adapter
-
-        adapter.onItemActionListener = object : DiverseRecyclerAdapter.OnItemActionListener() {
-            override fun onItemClicked(v: View, position: Int) {
-
-                try {
-                    Log.e(
-                        "getclick",
-                        "" + gamesRecyclerItems.get(position)
-                    )
-                    Log.e(
-                        "getclick",
-                        "" + gamesRecyclerItems.get(position)
-                    )
-                    Log.e("getclick", "" + gamesRecyclerItems.get(position).type)
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Log.e("getclick", "" + e.cause + " " + e.message)
+                                    val startDate = date.time
+                                    dashboardModel = DashboardModel(
+                                        "Prahladnagar garden",
+                                        34, 30, 4, 40, startDate,
+                                        startDate
+                                    )
+                                }
+                            }
+                            historyDataList.add(dashboardModel!!)
+                        }*/
+                        mAdapter?.notifyDataSetChanged()
+                    }
                 }
-            }
-
-            override fun onItemLongClicked(v: View, position: Int): Boolean {
-
-                return super.onItemLongClicked(v, position)
-            }
+            })
         }
 
-        adapter.notifyDataSetChanged()
+
     }
-
-
-    fun generateGamesList() = listOf(
-        "Titanium City Center,Anandnagar",
-        "Titanium City Center,Anandnagar",
-        "Titanium City Center,Anandnagar"
-    )
-
-    fun generateList(): ArrayList<DashboardModel> {
-
-        var list = ArrayList<DashboardModel>()
-
-
-//        list.add(model)
-        return list
-    }
-
-    fun generateProgrammingLanguagesList() = listOf(
-        "Titanium City Center,Anandnagar",
-        "Titanium City Center,Anandnagar",
-        "Titanium City Center,Anandnagar"
-    )
-
-    fun generateSongsList() = listOf(
-        "Titanium City Center,Anandnagar",
-        "Titanium City Center,Anandnagar",
-        "Titanium City Center,Anandnagar"
-    )
 
 
     private fun showBottomSheetdialogNormal(
@@ -325,9 +288,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         } else if (check == 0) {
 
             var intent = Intent(context, ServiceListActivity::class.java)
+            intent.putExtra("selectedDate", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
+            intent.putExtra("selectedDateFormated", historyDataList.get(variable).dateFormated)
+            intent.putExtra("addressTitle",historyDataList.get(variable).addressTitle)
             startActivity(intent)
         } else {
-            Log.e("getsection", "" + sectionModelArrayList?.get(variable)?.sectionLabel)
+            Log.e("getsection", "" + sectionModelArrayList.get(variable).sectionLabel)
             Log.e("getsection", "" + check)
         }
 //        Log.e("getclickpos", arrayList.get(variable))

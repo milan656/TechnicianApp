@@ -2,6 +2,8 @@ package com.walkins.technician.model.login
 
 data class DashboardModel(
     var addressTitle: String,
+    var date: String,
+    var dateFormated: String,
     var upcomingCount: Int,
     var completedCount: Int,
     var skippedCount: Int,

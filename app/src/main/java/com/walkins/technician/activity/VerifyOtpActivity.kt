@@ -1,7 +1,7 @@
 package com.walkins.technician.activity
 
-import android.Manifest
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -42,6 +42,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     private var edtOtp4: EditText? = null
     private var otp: StringBuilder? = StringBuilder()
     private var smsBroadcastReceiver: MySMSBroadcastReceiver? = null
+    private var receiver: BroadcastReceiver? = null
     private var otpStr: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +93,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
                     edtOtp2?.requestFocus()
                     otp?.append(edtOtp1?.text?.toString()?.toInt())
-                    Log.e("getcallbtn","call8585")
+                    Log.e("getcallbtn", "call8585")
                 }
 
             }
@@ -111,7 +112,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                 if (s != null && s.length != 0 && s.length == 1) {
                     edtOtp3?.requestFocus()
                     otp?.append(edtOtp2?.text?.toString()?.toInt())
-                    Log.e("getcallbtn","call525")
+                    Log.e("getcallbtn", "call525")
 
                 }
             }
@@ -130,7 +131,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                 if (s != null && s.length != 0 && s.length == 1) {
                     edtOtp4?.requestFocus()
                     otp?.append(edtOtp3?.text?.toString()?.toInt())
-                    Log.e("getcallbtn","call00")
+                    Log.e("getcallbtn", "call00")
 
                 }
 
@@ -151,7 +152,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                     edtOtp4?.clearFocus()
                     otp?.append(edtOtp4?.text?.toString()?.toInt())
                     btnVerify?.performClick()
-                    Log.e("getcallbtn","call")
+                    Log.e("getcallbtn", "call")
                 }
 
             }
@@ -162,19 +163,13 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         edtOtp3?.setText("" + otpStr?.get(2))
         edtOtp4?.setText("" + otpStr?.get(3))
 
-        val PERMISSIONS = arrayOf(
-            Manifest.permission.RECEIVE_SMS,
-            Manifest.permission.READ_SMS,
-            Manifest.permission.SEND_SMS
-        )
-        if (hasPermissions(this, *PERMISSIONS)) {
-            startSMSListener()
 
-            smsBroadcastReceiver = MySMSBroadcastReceiver(this)
-            val intentFilter = IntentFilter()
-            intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION)
-            this.registerReceiver(smsBroadcastReceiver, intentFilter)
-        }
+        startSMSListener()
+
+        smsBroadcastReceiver = MySMSBroadcastReceiver(this)
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION)
+        registerReceiver(smsBroadcastReceiver, intentFilter)
 
     }
 
@@ -235,11 +230,10 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onOTPReceived(otp: String?) {
-
+        Log.e("getotppp", "" + otp)
     }
 
     private fun userLogin() {
-
 
         /* if (!isValidEmail(edtLoginEmail?.text.toString().trim())) {
              Common.showShortToast("Please enter valid email address", this@LoginActivity)

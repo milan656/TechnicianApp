@@ -253,6 +253,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         try {
                             Glide.with(this@AddServiceDetailsActivity)
                                 .load(jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.placeholder)
                                 .into(ivtyreLeftFront!!)
                         } catch (e: Exception) {
                             e.printStackTrace()
@@ -380,6 +382,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     try {
                         Glide.with(this@AddServiceDetailsActivity)
                             .load(jsonRF.get(TyreKey.vehicleMakeURL)?.asString)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder)
                             .into(ivTyreRightFront!!)
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -460,6 +464,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     try {
                         Glide.with(this@AddServiceDetailsActivity)
                             .load(jsonLR.get(TyreKey.vehicleMakeURL)?.asString)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder)
                             .into(ivtyreLeftRear!!)
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -538,6 +544,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     try {
                         Glide.with(this@AddServiceDetailsActivity)
                             .load(jsonRR.get(TyreKey.vehicleMakeURL)?.asString)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder)
                             .into(ivTyreRightRear!!)
                     } catch (e: Exception) {
                         e.printStackTrace()

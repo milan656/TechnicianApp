@@ -118,7 +118,7 @@ class LeadHistoryAdapter(
         mContext = mActivity
         mInflater = LayoutInflater.from(mContext)
         mDataset = dataset
-        mDateFormat = SimpleDateFormat("dd MMMM")
+        mDateFormat = SimpleDateFormat("dd MMMM yy")
         mDateFormatTime = SimpleDateFormat("hh:mm a")
         mToday = mDateFormat.format(Date())
     }
@@ -127,6 +127,7 @@ class LeadHistoryAdapter(
         val item: DashboardModel = mDataset[p1]
 
         p0?.timestamp?.text = mDateFormat.format(Date(item.createdAt)).toString()
+        Log.e("gettimedate",""+mDataset.get(p1))
         if (mToday == p0?.timestamp?.text) {
             p0.timestamp?.text = "Today"
         }

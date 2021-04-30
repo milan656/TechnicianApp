@@ -2,13 +2,15 @@ package com.walkins.technician.activity
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils
+import android.telephony.SmsMessage
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +20,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.technician.common.Common
@@ -27,6 +28,7 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.JsonObject
 import com.walkins.technician.R
+import com.walkins.technician.common.MySMSBroadcastReceiver
 import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.viewmodel.LoginActivityViewModel
 
@@ -40,7 +42,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var btnLoginToDashBoard: BoldButton
     var firebaseAnalytics: FirebaseAnalytics? = null;
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +88,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         )
         if (!hasPermissions(this, *PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, 1)
+
+
+        } else {
+
         }
     }
 
@@ -168,11 +173,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun userRecoverPassword() {
-//        val intent = Intent(this, RecoveryPasswordActivity::class.java)
-//        startActivity(intent)
-    }
-
 
     /*
     * User Login Function with validation
@@ -190,7 +190,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             return
         }
 
-
+        startSMSListener()
 
         Common.showLoader(this@LoginActivity)
 
@@ -227,7 +227,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         jsonObject.addProperty("phone_number", edtLoginEmail.text.toString())
         Log.e("getobject", "" + jsonObject)
 
-        loginViewModel.initTwo(jsonObject, edtLoginEmail.text?.toString()!!, "1212", "password", "", "", 0, "","","")
+        loginViewModel.initTwo(jsonObject, edtLoginEmail.text?.toString()!!, "1212", "password", "", "", 0, "", "", "")
         loginViewModel.sendOtp()?.observe(this, Observer {
             Common.hideLoader()
             if (it != null) {
@@ -236,203 +236,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     intent.putExtra("number", edtLoginEmail.text?.toString())
                     intent.putExtra("otp", "" + it.data?.otp)
                     startActivity(intent)
+                } else {
+                    if (it.error != null && it.error.get(0).message != null) {
+                        loginFail(it.error.get(0).message, "Oops!")
+                    }
                 }
             }
         })
-
-        /* loginViewModel.callApiSendOtp(jsonObject, this)
-         loginViewModel.sendOtp()?.observe(this@LoginActivity, Observer {
-             Common.hideLoader()
-             if (it != null) {
-                 if (it.success) {
-                     val intent = Intent(this, VerifyOtpActivity::class.java)
-                     intent.putExtra("number", edtLoginEmail.text?.toString())
-                     intent.putExtra("otp", "" + it.data?.otp)
-                     startActivity(intent)
-                 } else {
-                     try {
-                         loginFail(it.error.get(0).message, "Oops!")
-                     } catch (e: Exception) {
-                         e.printStackTrace()
-                     }
-                 }
-             }
-         })*/
-
-
-//        loginViewModel.init(
-//            "technicianLogin".trim({ it <= ' ' }),
-//            "technicianPassword".trim({ it <= ' ' }),
-//            "password",
-//            "Basic ZG9vcnN0ZXA6MTIz", 0, "deviceName", "androidOS", null
-//        )
-/*
-        loginViewModel.getLoginData()?.observe(this@LoginActivity, Observer {
-
-            Common.hideLoader()
-
-            //  Common.hideLoader()
-            if (it != null) {
-                if (it.accessToken != null && !it.accessToken.equals("")) {
-                    prefManager.setAccessToken("Bearer " + it.accessToken)
-                    prefManager.setRefreshToken(it.refreshToken)
-                    prefManager.setToken(it.token)
-                    prefManager.setUuid(it.userDetailModel!!.uuid)
-
-//                    firebaseAnalytics?.setUserId(it.userDetailModel?.sap_id!!);
-
-                    prefManager.setAccessTokenExpireDate(it.accessTokenExpiresAt)
-                    if (it.userDetailModel?.owner_name != null) {
-                        prefManager.setOwnerName(it.userDetailModel?.owner_name)
-                    }
-
-                    var arrayList: ArrayList<String>? = ArrayList()
-
-                    *//* if (it.userDetailModel?.arrayListPermission != null) {
-
-                         for (i in it.userDetailModel?.arrayListPermission?.indices!!) {
-                             arrayList?.add(it.userDetailModel?.arrayListPermission?.get(i)!!)
-
-                         }
-                         when {
-                             arrayList != null -> {
-                                 prefManager.setPermissionList(arrayList)
-                             }
-                         }
-                     } else if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
-                             "customerClass"
-                         )
-                             .equals("na", ignoreCase = true)
-                     ) {
-                         val intent = Intent(this, HomeSubDealerActivity::class.java)
-                         intent.putExtra("videoUrl", it.videoURL)
-                         startActivity(intent)
-                         finish()
-                         return@Observer
-                     }
-                     if (prefManager?.getValue("customerClass") != null && prefManager?.getValue(
-                             "customerClass"
-                         )
-                             .equals("na", ignoreCase = true)
-                     ) {
-                         val intent = Intent(this, HomeSubDealerActivity::class.java)
-                         intent.putExtra("videoUrl", it.videoURL)
-                         startActivity(intent)
-                         finish()
-                         return@Observer
-                     }
-
-                     if (prefManager?.getValue("customerClass") != null && prefManager?.getValue("customerClass")
-                             .equals("na", ignoreCase = true)
-                     ) {
-                         val intent = Intent(this, HomeSubDealerActivity::class.java)
-                         intent.putExtra("videoUrl", it.videoURL)
-                         startActivity(intent)
-                         finish()
-                         return@Observer
-                     }*//*
-
-
-                    Log.e("getType", "" + it.userDetailModel!!.type)
-                    prefManager.isLogin(true)
-                    val intent = Intent(this, VerifyOtpActivity::class.java)
-
-                    startActivity(intent)
-                    finish()
-
-                    *//*when {
-                        prefManager?.getValue("customerClass") != null && prefManager.getValue(
-                            "customerClass"
-                        )
-                            .equals("na", ignoreCase = true) -> {
-
-                            val intent = Intent(this, HomeSubDealerActivity::class.java)
-                            intent.putExtra("videoUrl", it.videoURL)
-                            startActivity(intent)
-                            finish()
-                            return@Observer
-
-                        }
-                        prefManager?.getValue("customerClass") != null && prefManager.getValue(
-                            "customerClass"
-                        )
-                            .equals("hy", ignoreCase = true) -> {
-
-                            val intent = Intent(this, HomeSubDealerActivity::class.java)
-                            intent.putExtra("videoUrl", it.videoURL)
-                            startActivity(intent)
-                            finish()
-                            return@Observer
-
-                        }
-                        it.userDetailModel?.type.equals("area_manager") || it.userDetailModel?.type.equals(
-                            "sales_officer"
-                        ) -> {
-
-                            val intent = Intent(this, HomeEmployeeActivity::class.java)
-                            intent.putExtra("videoUrl", it.videoURL)
-                            startActivity(intent)
-                            finish()
-                        }
-
-
-                        it.userDetailModel?.type.equals("head_office") -> {
-                            val intent = Intent(this, HomeEmployeeActivity::class.java)
-                            intent.putExtra("videoUrl", it.videoURL)
-                            startActivity(intent)
-                            finish()
-
-                        }
-                        it.userDetailModel?.type.equals("project_manager") -> {
-                            val intent = Intent(this, HomeEmployeeActivity::class.java)
-                            intent.putExtra("videoUrl", it.videoURL)
-                            startActivity(intent)
-                            finish()
-
-                        }
-                        it.userDetailModel?.type.equals("zone_manager") -> {
-                            val intent = Intent(this, HomeEmployeeActivity::class.java)
-                            intent.putExtra("videoUrl", it.videoURL)
-                            startActivity(intent)
-                            finish()
-
-                        }
-                        it.userDetailModel?.type.equals("ztm") -> {
-                            val intent = Intent(this, HomeEmployeeActivity::class.java)
-                            intent.putExtra("videoUrl", it.videoURL)
-                            startActivity(intent)
-                            finish()
-
-                        }
-                        it.userDetailModel?.type.equals("region_manager") -> {
-                            val intent = Intent(this, HomeEmployeeActivity::class.java)
-                            intent.putExtra("videoUrl", it.videoURL)
-                            startActivity(intent)
-                            finish()
-
-                        }
-
-
-
-                        else -> {
-                            try {
-                                prefManager.clearAll()
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                    }*//*
-
-
-                } else {
-                    try {
-                        loginFail(it.error.get(0).message, "Oops!")
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-        })*/
     }
 
 
@@ -451,7 +261,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val tv_message = root.findViewById<TextView>(R.id.tv_message)
         val tv_dialogTitle = root.findViewById<TextView>(R.id.tvTitleText)
 
-        tv_dialogTitle?.setText("Oops!")
+        tv_dialogTitle?.setText(title)
 
         tv_message.text = message
         btnYes.setOnClickListener { builder.dismiss() }
@@ -462,170 +272,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-/*
-    public override fun onStart() {
-        super.onStart()
-        if (!checkPermissions()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions()
+    private fun startSMSListener() {
+        try {
+            val client = SmsRetriever.getClient(this)
+            val task = client.startSmsRetriever()
+            task.addOnSuccessListener {
+                // API successfully started
             }
-        }
-        else {
-            getLastLocation()
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun getLastLocation() {
-
-        this?.let {
-            if (ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
+            task.addOnFailureListener {
+                // Fail to start API
             }
-
-        }
-
-        this?.let {
-            fusedLocationClient?.lastLocation?.addOnCompleteListener(it) { task ->
-                if (task.isSuccessful && task.result != null) {
-                    lastLocation = task.result
-
-                    Log.e("getlocdata", "" + lastLocation?.latitude)
-                    Log.e("getlocdata", "" + lastLocation?.longitude)
-
-                    if (lastLocation?.latitude != null && lastLocation?.longitude != null) {
-//                        val jsonObject = JsonObject()
-//                        jsonObject.addProperty("latitude", "" + lastLocation?.latitude)
-//                        jsonObject.addProperty("longitude", "" + lastLocation?.longitude)
-//                        userInfoViewModel?.callApiUpdateLocation(
-//                            jsonObject,
-//                            it,
-//                            prefManager?.getAccessToken()!!
-//                        )
-//
-//                        userInfoViewModel?.getUserInfo()?.observe(it, Observer {
-//
-//                            if (it != null) {
-//                                if (it.success) {
-//
-//                                }
-//                            }
-//                        })
-                    }
-                } else {
-                    Log.w("TAG", "getLastLocation:exception", task.exception)
-                    showMessage("No location detected. Make sure location is enabled on the device.")
-                }
-            }
-        }
-
-    }
-
-    private fun showMessage(string: String) {
-        //        val container = findViewById<View>(R.id.linearLayout)
-        //        if (container != null) {
-        //            Toast.makeText(this@MainActivity, string, Toast.LENGTH_LONG).show()
-        //        }
-
-        Log.e("getmsg", "" + string)
-    }
-
-    private fun showSnackbar(
-        mainTextStringId: String, actionStringId: String,
-        listener: View.OnClickListener
-    ) {
-        Toast.makeText(this, mainTextStringId, Toast.LENGTH_LONG).show()
-    }
-
-    private fun checkPermissions(): Boolean {
-
-        var permissionState: Int? = 0
-        this.let {
-            permissionState = ActivityCompat.checkSelfPermission(
-                it,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-
-        }
-        return permissionState == PackageManager.PERMISSION_GRANTED
-
-    }
-
-    private fun startLocationPermissionRequest() {
-        this.let {
-            ActivityCompat.requestPermissions(
-                it,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                REQUEST_PERMISSIONS_REQUEST_CODE
-            )
-        }
-
-    }
-
-    private fun requestPermissions() {
-
-        this.let {
-            val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(
-                it,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-            if (shouldProvideRationale) {
-                Log.i("TAG", "Displaying permission rationale to provide additional context.")
-                showSnackbar("Location permission is needed for core functionality", "Okay",
-                    View.OnClickListener {
-                        startLocationPermissionRequest()
-                    })
-            } else {
-                Log.i("TAG", "Requesting permission")
-                startLocationPermissionRequest()
-            }
-        }
-
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        Log.e("TAG", "onRequestPermissionResult")
-        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            when {
-                grantResults.isEmpty() -> {
-                    // If user interaction was interrupted, the permission request is cancelled and you
-                    // receive empty arrays.
-                    Log.i("TAG", "User interaction was cancelled.")
-                }
-                grantResults[0] == PackageManager.PERMISSION_GRANTED -> {
-                    // Permission granted.
-                    getLastLocation()
-                }
-                else -> {
-                    showSnackbar("Permission was denied", "Settings",
-                        View.OnClickListener {
-                            // Build intent that displays the App settings screen.
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                            val uri = Uri.fromParts(
-                                "package",
-                                Build.DISPLAY, null
-                            )
-                            intent.data = uri
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                        }
-                    )
-                }
-            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
         }
     }
-*/
-
 
 }

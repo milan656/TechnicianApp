@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.JsonObject
+import com.walkins.technician.model.login.dashboard_model.DashboardServiceListModel
+import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
 import com.walkins.technician.networkApi.ServiceApi
 import okhttp3.ResponseBody
@@ -13,6 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.util.*
 
 class ServiceRepo {
 
@@ -75,4 +78,91 @@ class ServiceRepo {
         })
         return servicedata
     }
+
+    fun getDashboardService(
+        date: String,
+        access_token: String, context: Context
+    ): MutableLiveData<DashboardServiceListModel> {
+        val servicedata = MutableLiveData<DashboardServiceListModel>()
+
+        val addEdit: Call<ResponseBody>?=serviceApi.getDashboardService(date, access_token)
+
+        addEdit?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>, response: Response<ResponseBody>
+            ) = if (response.isSuccessful) {
+                servicedata.value = Common.getModelreturn(
+                    "DashboardServiceListModel",
+                    response,
+                    0,
+                    context
+                ) as DashboardServiceListModel?
+
+            } else {
+                try {
+                    servicedata.value = Common.getModelreturn(
+                        "DashboardServiceListModel",
+                        response,
+                        1,
+                        context
+                    ) as DashboardServiceListModel?
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("getCipResponse", "" + t.cause + " " + t.message)
+//                servicedata.value = null
+            }
+        })
+        return servicedata
+    }
+
+    fun getServiceByDate(
+        date: String,
+        access_token: String, context: Context
+    ): MutableLiveData<ServiceListByDateModel> {
+        val servicedata = MutableLiveData<ServiceListByDateModel>()
+
+        val addEdit: Call<ResponseBody>?=serviceApi.getServiceByDate(date, access_token)
+
+        addEdit?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>, response: Response<ResponseBody>
+            ) = if (response.isSuccessful) {
+                servicedata.value = Common.getModelreturn(
+                    "ServiceListByDateModel",
+                    response,
+                    0,
+                    context
+                ) as ServiceListByDateModel?
+
+            } else {
+                try {
+                    servicedata.value = Common.getModelreturn(
+                        "ServiceListByDateModel",
+                        response,
+                        1,
+                        context
+                    ) as ServiceListByDateModel?
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("getCipResponse", "" + t.cause + " " + t.message)
+//                servicedata.value = null
+            }
+        })
+        return servicedata
+    }
+
 }
