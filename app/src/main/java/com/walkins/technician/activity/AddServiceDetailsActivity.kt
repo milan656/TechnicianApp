@@ -394,7 +394,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     RFVehicleURL = jsonRF.get(TyreKey.vehicleMakeURL)?.asString!!
                 }
                 runOnUiThread {
-
                     try {
                         Glide.with(this@AddServiceDetailsActivity)
                             .load(jsonRF.get(TyreKey.vehicleMakeURL)?.asString)
