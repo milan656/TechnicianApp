@@ -38,17 +38,28 @@
                 android:id="@+id/ivFilter"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_gravity="center"
                 android:layout_centerInParent="true"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_calender_icon" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/llheader"
+        android:visibility="visible">
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/llheader"
         android:layout_marginStart="@dimen/eight_dp"
         android:layout_marginTop="@dimen/ten_dp"
@@ -56,12 +67,51 @@
         android:orientation="vertical">
 
 
+        <LinearLayout
+            android:id="@+id/relNoData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eighteen_dp"
+            android:layout_marginTop="@dimen/sixty_dp"
+            android:layout_marginEnd="@dimen/eighteen_dp"
+            android:layout_marginBottom="@dimen/sixty_dp"
+            android:background="@drawable/ic_empty_circle"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_empty_icon" />
+
+                <com.walkins.technician.custom.NormalTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/fourteen_dp"
+                    android:alpha="0.5"
+                    android:gravity="center"
+                    android:text="Currently you do not have any services"
+                    android:textColor="#424242"
+                    android:textSize="@dimen/fourteen_sp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
 
 </RelativeLayout>

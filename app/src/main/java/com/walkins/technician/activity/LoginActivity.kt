@@ -234,7 +234,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 if (it.success) {
                     val intent = Intent(this, VerifyOtpActivity::class.java)
                     intent.putExtra("number", edtLoginEmail.text?.toString())
-                    intent.putExtra("otp", "" + it.data?.otp)
+
                     startActivity(intent)
                 } else {
                     if (it.error != null && it.error.get(0).message != null) {

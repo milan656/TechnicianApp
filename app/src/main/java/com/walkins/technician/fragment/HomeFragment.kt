@@ -60,6 +60,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var tvUsername: TextView? = null
     private var homeRecycView: RecyclerView? = null
     private var relmainContent: RelativeLayout? = null
+    private var relNoData: LinearLayout? = null
 
     var activity: MainActivity? = null
 
@@ -94,6 +95,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         ivFilter = view?.findViewById(R.id.ivFilter)
 
         relmainContent = view?.findViewById(R.id.relmainContent)
+        relNoData = view?.findViewById(R.id.relNoData)
         tvUsername = view?.findViewById(R.id.tvUsername)
         tvUsername?.text = "Hello, " + "Arun"
         ivFilter?.setOnClickListener(this)
@@ -112,7 +114,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         homeRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
 
-
         getDashboardService()
     }
 
@@ -128,73 +129,43 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     if (it.success) {
 
                         Log.e("getdataa", "" + it.data)
-                        /*if (it.data != null) {
+
+
+                        if (it.data != null && it.data.size > 0) {
                             for (i in it.data.indices) {
+
+                                var dashboardModel: DashboardModel? = null
                                 val dateString = it.data.get(i).date
+                                Log.e("getdatefrom", "" + dateString)
                                 val sdf = SimpleDateFormat("yyyy-MM-dd")
                                 val date = sdf.parse(dateString)
+
                                 val startDate = date.time
-                                var dashboardModel = DashboardModel(
-                                    it.data.get(i).building_name + "," + it.data.get(i).address,
-                                    it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), 45, System.currentTimeMillis(),
+                                Log.e("getdatefromstart", "" + startDate)
+                                dashboardModel = DashboardModel(
+                                    it.data.get(i).building_name + "," + it.data.get(i).address, it.data.get(i).date, it.data.get(i).date_formated,
+                                    it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), 45, startDate,
                                     startDate
                                 )
 
                                 historyDataList.add(dashboardModel)
-
                             }
-                        }*/
+                            relNoData?.visibility = View.GONE
+                            homeRecycView?.visibility = View.VISIBLE
+                        } else {
+                            relNoData?.visibility = View.VISIBLE
 
-                        for (i in it.data.indices) {
-
-                            var dashboardModel: DashboardModel? = null
-                            val dateString = it.data.get(i).date
-                            Log.e("getdatefrom", "" + dateString)
-                            val sdf = SimpleDateFormat("yyyy-MM-dd")
-                            val date = sdf.parse(dateString)
-
-                            val startDate = date.time
-                            Log.e("getdatefromstart", "" + startDate)
-                            dashboardModel = DashboardModel(
-                                it.data.get(i).building_name + "," + it.data.get(i).address, it.data.get(i).date,it.data.get(i).date_formated,
-                                it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), 45, startDate,
-                                startDate
-                            )
-
-                            historyDataList.add(dashboardModel)
+                            homeRecycView?.visibility = View.GONE
                         }
-
-                        /*for (i in it.data.indices) {
-
-                            var dashboardModel: DashboardModel? = null
-                            val dateString = it.data.get(i).date
-                            Log.e("getdatefrom",""+dateString)
-                            val sdf = SimpleDateFormat("yyyy-MM-dd")
-                            val date = sdf.parse(dateString)
-                            when (i) {
-
-                                0, 1 -> {
-                                    dashboardModel = DashboardModel(
-                                        "Titanium City Center,Anandnagar",
-                                        24, 20, 21, 45, System.currentTimeMillis(),
-                                        System.currentTimeMillis()
-                                    )
-                                }
-                                2, 3, 4, 5 -> {
-
-
-                                    val startDate = date.time
-                                    dashboardModel = DashboardModel(
-                                        "Prahladnagar garden",
-                                        34, 30, 4, 40, startDate,
-                                        startDate
-                                    )
-                                }
-                            }
-                            historyDataList.add(dashboardModel!!)
-                        }*/
                         mAdapter?.notifyDataSetChanged()
+
+                    } else {
+                        relNoData?.visibility = View.VISIBLE
+                        homeRecycView?.visibility = View.GONE
                     }
+                } else {
+                    relNoData?.visibility = View.VISIBLE
+                    homeRecycView?.visibility = View.GONE
                 }
             })
         }
@@ -293,7 +264,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             var intent = Intent(context, ServiceListActivity::class.java)
             intent.putExtra("selectedDate", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
             intent.putExtra("selectedDateFormated", historyDataList.get(variable).dateFormated)
-            intent.putExtra("addressTitle",historyDataList.get(variable).addressTitle)
+            intent.putExtra("addressTitle", historyDataList.get(variable).addressTitle)
             startActivity(intent)
         } else {
             Log.e("getsection", "" + sectionModelArrayList.get(variable).sectionLabel)

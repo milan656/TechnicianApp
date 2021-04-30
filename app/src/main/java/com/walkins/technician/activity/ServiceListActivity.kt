@@ -185,8 +185,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     tvNoServiceData?.text = "There is no any Upcomming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
-                adapter?.notifyDataSetChanged()
 
+                serviceRecycView?.adapter=adapter
 
             }
             R.id.llCompleted -> {
@@ -205,7 +205,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
 
-                adapter?.notifyDataSetChanged()
+                serviceRecycView?.adapter=adapter
 
 
             }
@@ -225,7 +225,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     tvNoServiceData?.text = "There is no any Skipped service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
-                adapter?.notifyDataSetChanged()
+                serviceRecycView?.adapter=adapter
 
             }
             R.id.ivBack -> {
@@ -251,15 +251,15 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
         if (check == 1) {
 
-            if (serviceStatus.equals("upcoming")) {
+            if (serviceStatus.equals(upcomming)) {
                 var intent = Intent(this, AddServiceDetailsActivity::class.java)
                 startActivity(intent)
 
-            } else if (serviceStatus.equals("completed")) {
+            } else if (serviceStatus.equals(completed)) {
                 var intent = Intent(this, CompletedServiceDetailActivity::class.java)
                 intent.putExtra("title", "Service Detail")
                 startActivity(intent)
-            } else if (serviceStatus.equals("skipped")) {
+            } else if (serviceStatus.equals(skipped)) {
                 var intent = Intent(this, SkippedServiceDetailActivity::class.java)
                 startActivity(intent)
             }

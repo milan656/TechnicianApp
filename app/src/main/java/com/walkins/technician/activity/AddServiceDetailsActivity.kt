@@ -225,6 +225,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     suspend fun getStoredObjects() {
 
+        var LFVehicleURL: String = ""
+        var LRVehicleURL: String = ""
+        var RFVehicleURL: String = ""
+        var RRVehicleURL: String = ""
+
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
         ) {
@@ -247,20 +252,26 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     )
                     ivtyreLeftFront?.visibility = View.VISIBLE
                     ivInfoImgLF?.visibility = View.GONE
+                }
 
-                    runOnUiThread {
-                        Log.e("getmakeURL", "" + jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
-                        try {
-                            Glide.with(this@AddServiceDetailsActivity)
-                                .load(jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.placeholder)
-                                .into(ivtyreLeftFront!!)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
+                if (jsonLF.get(TyreKey.vehicleMakeURL) != null &&
+                    !jsonLF.get(TyreKey.vehicleMakeURL)?.asString.equals("")
+                ) {
+                    LFVehicleURL = jsonLF.get(TyreKey.vehicleMakeURL)?.asString!!
+                }
 
+                runOnUiThread {
+                    Log.e("getmakeURL", "" + jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
+                    try {
+                        Glide.with(this@AddServiceDetailsActivity)
+                            .load(jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder)
+                            .into(ivtyreLeftFront!!)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
+
                 }
 
                 if ((jsonLF.get(TyreKey.vehicleMake) != null &&
@@ -377,6 +388,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("rfstatus4", "" + TyreConfigClass.RFVehicleVisualDetail)
                 }
 
+                if (jsonRF.get(TyreKey.vehicleMakeURL) != null &&
+                    !jsonRF.get(TyreKey.vehicleMakeURL).asString.equals("")
+                ) {
+                    RFVehicleURL = jsonRF.get(TyreKey.vehicleMakeURL)?.asString!!
+                }
                 runOnUiThread {
 
                     try {
@@ -459,6 +475,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
                     TyreConfigClass.LRVehicleVisualDetail = true
                 }
+
+                if (jsonLR.get(TyreKey.vehicleMakeURL) != null &&
+                    !jsonLR.get(TyreKey.vehicleMakeURL).asString.equals("")
+                ) {
+                    LRVehicleURL = jsonLR.get(TyreKey.vehicleMakeURL)?.asString!!
+                }
+
                 runOnUiThread {
 
                     try {
@@ -539,6 +562,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     TyreConfigClass.RRVehicleVisualDetail = true
                     Log.e("visualtrue4", "" + TyreConfigClass.RRVehicleVisualDetail)
                 }
+
+                if (jsonRR.get(TyreKey.vehicleMakeURL) != null &&
+                    !jsonRR.get(TyreKey.vehicleMakeURL).asString.equals("")
+                ) {
+                    RRVehicleURL = jsonRR.get(TyreKey.vehicleMakeURL)?.asString!!
+                }
+
                 runOnUiThread {
 
                     try {
@@ -557,10 +587,63 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
-        Log.e("iscpmpleted0", "" + TyreConfigClass.LFCompleted)
-        Log.e("iscpmpleted1", "" + TyreConfigClass.LRCompleted)
-        Log.e("iscpmpleted2", "" + TyreConfigClass.RRCompleted)
-        Log.e("iscpmpleted3", "" + TyreConfigClass.RFCompleted)
+        Log.e("iscpmpleted0", "" + LFVehicleURL)
+        Log.e("iscpmpleted1", "" + LRVehicleURL)
+        Log.e("iscpmpleted2", "" + RFVehicleURL)
+        Log.e("iscpmpleted3", "" + RRVehicleURL)
+
+        if (LFVehicleURL != null && !LFVehicleURL.equals("")) {
+            ivtyreLeftFront?.visibility = View.VISIBLE
+            Log.e("getmakeURL", "" + LFVehicleURL)
+            try {
+                Glide.with(this@AddServiceDetailsActivity)
+                    .load(LFVehicleURL)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder)
+                    .into(ivtyreLeftFront!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (RFVehicleURL != null && !RFVehicleURL.equals("")) {
+            ivTyreRightFront?.visibility = View.VISIBLE
+            Log.e("getmakeURL", "" + RFVehicleURL)
+            try {
+                Glide.with(this@AddServiceDetailsActivity)
+                    .load(RFVehicleURL)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder)
+                    .into(ivTyreRightFront!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (LRVehicleURL != null && !LRVehicleURL.equals("")) {
+            ivtyreLeftRear?.visibility = View.VISIBLE
+            Log.e("getmakeURL", "" + LRVehicleURL)
+            try {
+                Glide.with(this@AddServiceDetailsActivity)
+                    .load(LRVehicleURL)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder)
+                    .into(ivtyreLeftRear!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (RRVehicleURL != null && !RRVehicleURL.equals("")) {
+            ivTyreRightRear?.visibility = View.VISIBLE
+            Log.e("getmakeURL", "" + RRVehicleURL)
+            try {
+                Glide.with(this@AddServiceDetailsActivity)
+                    .load(RRVehicleURL)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder)
+                    .into(ivTyreRightRear!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
         checkSubmitBtn()
 
@@ -944,9 +1027,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
     }
 
-    fun showHideUpdatedPlacement(type: String,ischecked:Boolean) {
-        Log.e("calltype",""+type+" "+ischecked)
-        if (type.equals("Type Rotation",ignoreCase = true)) {
+    fun showHideUpdatedPlacement(type: String, ischecked: Boolean) {
+        Log.e("calltype", "" + type + " " + ischecked)
+        if (type.equals("Type Rotation", ignoreCase = true)) {
             if (ischecked
             ) {
                 if (llUpdatedPlacement?.visibility == View.GONE) {
@@ -2131,8 +2214,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         if (check == 11) {
 
-            showHideUpdatedPlacement(serviceList?.get(variable)?.name!!,serviceList?.get(variable)?.isSelected!!)
-
+            showHideUpdatedPlacement(serviceList?.get(variable)?.name!!, serviceList?.get(variable)?.isSelected!!)
 
 
         }
@@ -2545,8 +2627,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
     private fun checkService(): Boolean {
-        if (chkNitrogenTopup?.isChecked!! || chkWheelBalacing?.isChecked!! || chkTyreRotation?.isChecked!! ||
-            chkNitrogenRefill?.isChecked!!
+
+        selectedServiceArr?.clear()
+        if (serviceList != null && serviceList?.size!! > 0) {
+            for (i in serviceList?.indices!!) {
+                if (serviceList?.get(i)?.isSelected!!) {
+                    selectedServiceArr?.add(serviceList?.get(i)?.name!!)
+
+                }
+            }
+        }
+        if (selectedServiceArr?.size!! > 0
         ) {
             return true
         } else {

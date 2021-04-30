@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -73,9 +74,28 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         }
 
         tvResend?.text = Html.fromHtml("Didn't receive OTP? <font color='blue'>Resend<font/>")
+        startSMSListener()
 
+        smsBroadcastReceiver = MySMSBroadcastReceiver(this)
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION)
+        registerReceiver(smsBroadcastReceiver, intentFilter)
 
+        receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action.equals("otp", ignoreCase = true)) {
+                    val message = intent.getStringExtra("message")
+                    // message is the fetching OTP
+                    Log.e("getsmsotp0", "" + message)
+                    edtOtp1?.setText("" + message?.get(0))
+                    edtOtp2?.setText("" + message?.get(1))
+                    edtOtp3?.setText("" + message?.get(2))
+                    edtOtp4?.setText("" + message?.get(3))
 
+//                    mOtp_et.setText(message)
+                }
+            }
+        }
 
 //        edtOtp1?.requestFocus()
         edtOtp1?.addTextChangedListener(object : TextWatcher {
@@ -158,18 +178,9 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             }
 
         })
-        edtOtp1?.setText("" + otpStr?.get(0))
-        edtOtp2?.setText("" + otpStr?.get(1))
-        edtOtp3?.setText("" + otpStr?.get(2))
-        edtOtp4?.setText("" + otpStr?.get(3))
 
 
-        startSMSListener()
 
-        smsBroadcastReceiver = MySMSBroadcastReceiver(this)
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION)
-        registerReceiver(smsBroadcastReceiver, intentFilter)
 
     }
 
@@ -489,5 +500,15 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
         builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         builder.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver!!, IntentFilter("otp"))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver!!)
     }
 }
