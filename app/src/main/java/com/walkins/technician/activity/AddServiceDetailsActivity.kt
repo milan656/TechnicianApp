@@ -220,6 +220,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var makeModel: String = ""
     private var regNumber: String = ""
     private var carImage: String = ""
+    private var uuid: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -747,6 +748,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (intent.getStringExtra("carImage") != null) {
                 carImage = intent.getStringExtra("carImage")!!
             }
+            if (intent.getStringExtra("uuid") != null) {
+                uuid = intent.getStringExtra("uuid")!!
+            }
         }
 
         tvcolor?.text = color
@@ -782,7 +786,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         btnSubmitAndComplete?.isClickable = false
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_blue))
-
 
         ivPickedImage?.setOnClickListener(this)
         ivPickedImage1?.setOnClickListener(this)
@@ -1518,7 +1521,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         Common.showLoader(this)
         val jsonObject = JsonObject()
-        jsonObject.addProperty("date_of_service", Common.getCurrentDateTimeSimpleFormat())
+//        jsonObject.addProperty("date_of_service", Common.getCurrentDateTimeSimpleFormat())
+        jsonObject.addProperty("uuid", uuid)
 
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -1869,6 +1873,47 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     }
                 }
+
+                jsonObject.addProperty("service_suggestions", edtMoreSuggestion?.text?.toString())
+                jsonObject.addProperty("next_service_due", tvNextServiceDueDate?.text?.toString())
+                jsonObject.addProperty("car_photo_1", TyreConfigClass.CarPhoto_1)
+                jsonObject.addProperty("car_photo_2", TyreConfigClass.CarPhoto_2)
+
+                val jsonArrayService: JsonArray = JsonArray()
+
+                selectedServiceArr?.clear()
+                if (serviceList != null && serviceList?.size!! > 0) {
+                    for (i in serviceList?.indices!!) {
+                        if (serviceList?.get(i)?.isSelected!!) {
+                            selectedServiceArr?.add(serviceList?.get(i)?.name!!)
+                            jsonArrayService.add(serviceList?.get(i)?.id)
+                        }
+                    }
+                }
+
+                val jsonArraySuggestion: JsonArray = JsonArray()
+
+                selectedSuggestionArr?.clear()
+
+                if (suggestionArray != null) {
+                    for (i in suggestionArray?.indices!!) {
+                        if (suggestionArray?.get(i)?.isSelected!!) {
+                            selectedSuggestionArr?.add(
+                                suggestionArray?.get(i)?.issueName!!
+                            )
+                        }
+                    }
+                }
+
+                if (selectedSuggestionArr != null && selectedSuggestionArr?.size!! > 0) {
+                    for (i in selectedSuggestionArr?.indices!!) {
+                        jsonArraySuggestion.add(selectedSuggestionArr?.get(i))
+                    }
+                }
+
+                jsonObject.add("service", jsonArrayService)
+                jsonObject.add("technician_suggestions", jsonArrayService)
+
 
                 serviceViewModel?.callApiAddService(
                     jsonObject,

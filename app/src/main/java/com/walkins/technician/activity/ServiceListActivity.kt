@@ -260,6 +260,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
                 intent.putExtra("regNumber", arrayList.get(variable).regNumber)
                 intent.putExtra("carImage", arrayList.get(variable).image)
+                intent.putExtra("uuid", arrayList.get(variable).uuid)
                 startActivity(intent)
 
             } else if (serviceStatus.equals(completed)) {
