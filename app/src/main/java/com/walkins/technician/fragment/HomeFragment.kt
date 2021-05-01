@@ -110,21 +110,22 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         homeRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
 
-        getDashboardService()
+        getDashboardService(selectedDate!!)
     }
 
-    private fun getDashboardService() {
+    private fun getDashboardService(displayDate: String) {
 
 
         activity?.let {
             Common.showLoader(it)
-            serviceViewModel?.callApiDashboardService(selectedDate!!, prefManager?.getAccessToken()!!, it)
+            serviceViewModel?.callApiDashboardService(displayDate, prefManager?.getAccessToken()!!, it)
             serviceViewModel?.getDashboardService()?.observe(it, androidx.lifecycle.Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
 
                         Log.e("getdataa", "" + it.data)
+                        historyDataList.clear()
 
                         if (it.data != null && it.data.size > 0) {
                             for (i in it.data.indices) {
@@ -330,11 +331,18 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
                         }
                     }
-                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                    val formatterDisplay = SimpleDateFormat("dd MMMM yyyy")
-                    val dateInString = formatterDisplay.parse(date)
-                    val displayDate = formatter.format(dateInString)
-                    getDashboardService(displayDate)
+                    if (!selectedDate.equals("") && !str.equals("Close")) {
+                        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                        val formatterDisplay = SimpleDateFormat("dd MMMM yyyy")
+                        val dateInString = formatterDisplay.parse(selectedDate)
+                        val displayDate = formatter.format(dateInString)
+                        getDashboardService(displayDate)
+
+                    } else {
+                        if (!str.equals("Close")) {
+                            getDashboardService(selectedDate!!)
+                        }
+                    }
                 }
             })
 
