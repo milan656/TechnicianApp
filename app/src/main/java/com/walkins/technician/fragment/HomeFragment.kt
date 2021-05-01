@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import com.walkins.technician.common.dateForWebservice_2
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -18,8 +17,6 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.trading212.demo.item.SimpleStickyTextRecyclerItem
-import com.trading212.diverserecycleradapter.DiverseRecyclerAdapter
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.activity.ServiceListActivity
@@ -28,7 +25,6 @@ import com.walkins.technician.common.item.SimpleTextRecyclerItem
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.technician.model.login.DashboardModel
-import com.walkins.technician.model.login.LeadHistoryData
 import com.walkins.technician.model.login.SectionModel
 import com.walkins.technician.viewmodel.ServiceViewModel
 import java.lang.StringBuilder
@@ -45,7 +41,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     var calendar = Calendar.getInstance()
     private var prefManager: PrefManager? = null
     private var ivFilter: ImageView? = null
-    private var selectedDate: String? = null
+    private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
 
     var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()
@@ -56,7 +52,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     var sectionModelArrayList: ArrayList<SectionModel> = ArrayList()
 
     private var arrayList = arrayListOf("Gallery", "Camera")
-
 
     private var tvUsername: TextView? = null
     private var homeRecycView: RecyclerView? = null
@@ -123,14 +118,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         activity?.let {
             Common.showLoader(it)
-            serviceViewModel?.callApiDashboardService("", prefManager?.getAccessToken()!!, it)
+            serviceViewModel?.callApiDashboardService(selectedDate!!, prefManager?.getAccessToken()!!, it)
             serviceViewModel?.getDashboardService()?.observe(it, androidx.lifecycle.Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
 
                         Log.e("getdataa", "" + it.data)
-
 
                         if (it.data != null && it.data.size > 0) {
                             for (i in it.data.indices) {
@@ -336,6 +330,11 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
                         }
                     }
+                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                    val formatterDisplay = SimpleDateFormat("dd MMMM yyyy")
+                    val dateInString = formatterDisplay.parse(date)
+                    val displayDate = formatter.format(dateInString)
+                    getDashboardService(displayDate)
                 }
             })
 
