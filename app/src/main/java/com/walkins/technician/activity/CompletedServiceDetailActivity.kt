@@ -21,6 +21,7 @@ import androidx.core.content.PermissionChecker
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
@@ -29,9 +30,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.walkins.technician.R
+import com.walkins.technician.adapter.CompletedServiceAdapter
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.PendingTyreSuggestionAdpater
 import com.walkins.technician.common.*
+import com.walkins.technician.model.login.service.ServiceModelData
+import com.walkins.technician.model.login.servicemodel.servicedata.ServiceData
 import com.walkins.technician.model.login.servicemodel.servicedata.ServiceDataByIdData
 import com.walkins.technician.viewmodel.CommonViewModel
 
@@ -56,9 +60,13 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var tvtyreServiceInfo: TextView? = null
     private var selectedPending = ""
 
+    private var serviceAdapter: CompletedServiceAdapter? = null
+
     private var tvTechnicalSuggetion: TextView? = null
     private var tvTyreConfig: TextView? = null
     private var tvServices: TextView? = null
+
+    private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
 
     private var ivTyre4: ImageView? = null
     private var ivTyre1: ImageView? = null
@@ -139,6 +147,15 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         )
         pendingSuggestionsRecycView?.adapter = tyreSuggestionAdapter
 
+        serviceAdapter = CompletedServiceAdapter(serviceList!!, this, this)
+        serviceRecycView?.layoutManager = GridLayoutManager(
+            this, 2,
+            RecyclerView.VERTICAL,
+            false
+        )
+        serviceRecycView?.adapter = serviceAdapter
+        serviceAdapter?.onclick = this
+
         tvTitle?.text = "Report Details"
 
         if (intent != null) {
@@ -160,7 +177,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         lltechnical?.setOnClickListener(this)
 //        ivInfoImg?.setOnClickListener(this)
 
-
         ivTyre1?.setOnTouchListener(this)
         ivTyre2?.setOnTouchListener(this)
         ivTyre3?.setOnTouchListener(this)
@@ -169,7 +185,8 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
         tvCurrentDateTime?.text = Common.getCurrentDateTime()
 
-//        getServiceDataById()
+        getServiceDataById()
+
     }
 
     private fun getServiceDataById() {
@@ -181,8 +198,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             if (it != null) {
                 if (it.success) {
 
-                    setTyreServiceData(it.data?.get(0))
-
+                    if (it.data.size > 0) {
+                        setTyreServiceData(it.data.get(0))
+                    }
                 } else {
                     if (it.error != null) {
                         if (it.error?.get(0).message != null) {
@@ -319,6 +337,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         */
         var json = JsonObject()
         var jsonArr = JsonArray()
+        var jsonArrTechnicianSuggestion = JsonArray()
         json.addProperty(TyreKey.tyreType, "LF")
         json.addProperty(TyreKey.vehicleMake, data.frontLeftTyreMake)
         json.addProperty(TyreKey.vehicleMakeId, data.frontLeftTyreMake)
@@ -359,18 +378,36 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         json.addProperty(TyreKey.rimDamage, data.frontLeftTyreRimDemage)
         json.addProperty(TyreKey.bubble, data.frontLeftTyreBuldgeBubble)
         json.addProperty(TyreKey.visualDetailPhotoUrl, data.frontLeftTyreWheelImage)
+        json.addProperty(TyreConfigClass.CarPhoto_1,data.carPhoto1)
+        json.addProperty(TyreConfigClass.CarPhoto_2,data.carPhoto2)
+        json.addProperty("service_suggestions",data.serviceSuggestions)
+        json.addProperty("next_service_due",dateFotmat(data.nextServiceDue))
+
+        if (data.technicianSuggestions.size>0){
+            for (i in data.technicianSuggestions.indices) {
+
+                jsonArrTechnicianSuggestion.add(data.technicianSuggestions.get(i))
+            }
+        }
+        json.addProperty("technician_suggestions",dateFotmat(data.nextServiceDue))
+
 
         json.addProperty(TyreKey.isCompleted, "true")
 
-        if (data.frontLeftIssuesToBeResolved.size>0) {
+        if (data.frontLeftIssuesToBeResolved.size > 0) {
             for (i in data.frontLeftIssuesToBeResolved.indices) {
-
                 jsonArr.add(data.frontLeftIssuesToBeResolved.get(i))
             }
         }
         json.add(TyreKey.issueResolvedArr, jsonArr)
+        json.add(TyreKey.technicalSuggestionArr, jsonArrTechnicianSuggestion)
 
-        prefManager.setValue(TyreConfigClass.TyreLFObject, json.toString())
+        if (data?.service != null && data.service.size > 0) {
+            serviceList?.addAll(data.service)
+        }
+        serviceAdapter?.notifyDataSetChanged()
+
+//        prefManager.setValue(TyreConfigClass.TyreLFObject, json.toString())
 
 
     }

@@ -62,7 +62,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     companion object {
         var upcomming = "open"
         var completed = "complete"
-        var skipped = "skipped"
+        var skipped = "skip"
     }
 
     private var serviceStatus = upcomming

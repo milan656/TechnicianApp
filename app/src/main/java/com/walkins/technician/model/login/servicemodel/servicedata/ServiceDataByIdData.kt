@@ -2,6 +2,7 @@ package com.walkins.technician.model.login.servicemodel.servicedata
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.walkins.technician.model.login.service.ServiceModelData
 
 data class ServiceDataByIdData(
     @SerializedName("id")
@@ -273,7 +274,7 @@ data class ServiceDataByIdData(
     val frontRightTyreWheelImage: String,
     @SerializedName("service")
     @Expose
-    val service: List<ServiceData>,
+    val service: List<ServiceModelData>,
     @SerializedName("reg_number")
     @Expose
     val regNumber: String,
