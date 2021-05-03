@@ -336,6 +336,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         "technician_image": "https://tyreservice-images.s3.amazonaws.com/profile/file-7345-1619699524279.png"
         */
         var json = JsonObject()
+        var jsonService = JsonObject()
         var jsonArr = JsonArray()
         var jsonArrTechnicianSuggestion = JsonArray()
         json.addProperty(TyreKey.tyreType, "LF")
@@ -378,10 +379,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         json.addProperty(TyreKey.rimDamage, data.frontLeftTyreRimDemage)
         json.addProperty(TyreKey.bubble, data.frontLeftTyreBuldgeBubble)
         json.addProperty(TyreKey.visualDetailPhotoUrl, data.frontLeftTyreWheelImage)
-        json.addProperty(TyreConfigClass.CarPhoto_1,data.carPhoto1)
-        json.addProperty(TyreConfigClass.CarPhoto_2,data.carPhoto2)
-        json.addProperty("service_suggestions",data.serviceSuggestions)
-        json.addProperty("next_service_due",dateFotmat(data.nextServiceDue))
+
+        jsonService.addProperty(TyreConfigClass.CarPhoto_1,data.carPhoto1)
+        jsonService.addProperty(TyreConfigClass.CarPhoto_2,data.carPhoto2)
+        jsonService.addProperty("service_suggestions",data.serviceSuggestions)
+        jsonService.addProperty("next_service_due",dateFotmat(data.nextServiceDue))
 
         if (data.technicianSuggestions.size>0){
             for (i in data.technicianSuggestions.indices) {
@@ -389,8 +391,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 jsonArrTechnicianSuggestion.add(data.technicianSuggestions.get(i))
             }
         }
-        json.addProperty("technician_suggestions",dateFotmat(data.nextServiceDue))
-
+        jsonService.addProperty("technician_suggestions",dateFotmat(data.nextServiceDue))
 
         json.addProperty(TyreKey.isCompleted, "true")
 
