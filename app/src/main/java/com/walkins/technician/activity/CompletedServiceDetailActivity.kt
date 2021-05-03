@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,20 +18,29 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
+import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.walkins.technician.R
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.adapter.PendingTyreSuggestionAdpater
-import com.walkins.technician.common.onClickAdapter
+import com.walkins.technician.common.*
+import com.walkins.technician.model.login.servicemodel.servicedata.ServiceDataByIdData
+import com.walkins.technician.viewmodel.CommonViewModel
 
 
 class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener,
     View.OnTouchListener {
 
+    private var commonViewModel: CommonViewModel? = null
+    private lateinit var prefManager: PrefManager
     private var pendingSuggestionsRecycView: RecyclerView? = null
     private var suggestionArr = arrayListOf(
         "Improve this for the tyre in alignment",
@@ -73,17 +83,23 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var lltechnicalbg: LinearLayout? = null
     private var lltyreconfigbg: LinearLayout? = null
     private var llservicebg: LinearLayout? = null
+    private var serviceRecycView: RecyclerView? = null
+//    private var serviceAdapter:
+
+    private var uuid: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_service_detail)
-
+        prefManager = PrefManager(this)
+        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
         init()
     }
 
     private fun init() {
 
         lltyreconfigbg = findViewById(R.id.lltyreconfigbg)
+        serviceRecycView = findViewById(R.id.serviceRecycView)
         lltechnicalbg = findViewById(R.id.lltechnicalbg)
         llservicebg = findViewById(R.id.llservicebg)
         tvTechnicalSuggetion = findViewById(R.id.tvTechnicalSuggetion)
@@ -129,6 +145,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             if (intent.getStringExtra("title") != null) {
                 tvTitle?.text = intent.getStringExtra("title")
             }
+            if (intent.getStringExtra("uuid") != null) {
+                uuid = intent.getStringExtra("uuid")
+            }
         }
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
@@ -149,6 +168,209 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         ivPhoneCall?.setOnTouchListener(this)
 
         tvCurrentDateTime?.text = Common.getCurrentDateTime()
+
+        getServiceDataById()
+    }
+
+    private fun getServiceDataById() {
+
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("id", uuid)
+        commonViewModel?.callApiGetServiceById(jsonObject, prefManager.getAccessToken()!!, this)
+        commonViewModel?.getServiceById()?.observe(this, Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    setTyreServiceData(it.data?.get(0))
+
+                } else {
+                    if (it.error != null) {
+                        if (it.error?.get(0).message != null) {
+                            showShortToast(it.error?.get(0).message, this)
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setTyreServiceData(data: ServiceDataByIdData) {
+
+        /*"id": 4,
+        "uuid": "862247ba-77ad-4429-a39d-1e87e239eabe",
+        "vehicle_id": 1,
+        "dealer_id": 2,
+        "service_user_id": null,
+        "service_activity_history_id": null,
+        "date_of_service": "2021-05-03 06:22:47.467945+00",
+        "technician_name": "Dipak Bhoot",
+        "walkins_team_member": null,
+        "front_left_tyre_make": "jk tyre",
+        "front_right_tyre_make": "jk tyre",
+        "back_left_tyre_make": "jk tyre",
+        "back_right_tyre_make": "jk tyre",
+        "front_left_tyre_size": "165/80 R14",
+        "front_right_tyre_size": "165/80 R14",
+        "back_left_tyre_size": "165/80 R14",
+        "back_right_tyre_size": "165/80 R14",
+        "front_left_tyre_pattern": "Estate N6",
+        "front_right_tyre_pattern": "Estate N6",
+        "back_left_tyre_pattern": "Estate N6",
+        "back_right_tyre_pattern": "Estate N6",
+        "front_left_tyre_side_wall": "SUG",
+        "front_right_tyre_side_wall": "OK",
+        "back_left_tyre_side_wall": "REQ",
+        "back_right_tyre_side_wall": "OK",
+        "front_left_tyre_shoulder": "SUG",
+        "front_right_tyre_shoulder": "OK",
+        "back_left_tyre_shoulder": "REQ",
+        "back_right_tyre_shoulder": "OK",
+        "front_left_tyre_tread_wear": "REQ",
+        "front_right_tyre_tread_wear": "OK",
+        "back_left_tyre_tread_wear": "REQ",
+        "back_right_tyre_tread_wear": "OK",
+        "front_left_tyre_tread_depth": "OK",
+        "front_right_tyre_tread_depth": "OK",
+        "back_left_tyre_tread_depth": "REQ",
+        "back_right_tyre_tread_depth": "OK",
+        "front_left_tyre_rim_demage": "OK",
+        "front_right_tyre_rim_demage": "OK",
+        "back_left_tyre_rim_demage": "REQ",
+        "back_right_tyre_rim_demage": "OK",
+        "front_left_tyre_buldge_bubble": "OK",
+        "front_right_tyre_buldge_bubble": "OK",
+        "back_left_tyre_buldge_bubble": "REQ",
+        "back_right_tyre_buldge_bubble": "OK",
+        "front_left_tyre_psi_in": "35",
+        "front_right_tyre_psi_in": "25",
+        "back_left_tyre_psi_in": "33",
+        "back_right_tyre_psi_in": "30",
+        "front_left_tyre_psi_out": "30",
+        "front_right_tyre_psi_out": "28",
+        "back_left_tyre_psi_out": "32",
+        "back_right_tyre_psi_out": "30",
+        "front_left_tyre_weight": "33",
+        "back_left_tyre_weight": "30",
+        "back_right_tyre_weight": "36",
+        "front_left_tyre_wheel_rotation": null,
+        "back_left_tyre_wheel_rotation": null,
+        "back_right_tyre_wheel_rotation": null,
+        "front_left_tyre_wheel_image": "front_left_tyre_wheel_image",
+        "back_left_tyre_wheel_image": "back_left_tyre_wheel_image",
+        "back_right_tyre_wheel_image": "back_right_tyre_wheel_image",
+        "wheel_rotation_text": null,
+        "service_narration": null,
+        "technician_suggestion": null,
+        "front_left_manufacturing_date": "0620",
+        "front_right_manufacturing_date": "0620",
+        "back_left_manufacturing_date": "0620",
+        "back_right_manufacturing_date": "0620",
+        "front_left_issues_to_be_resolved": [
+        "issue"
+        ],
+        "front_right_issues_to_be_resolved": [
+        "issue"
+        ],
+        "back_left_issues_to_be_resolved": [
+        "issue"
+        ],
+        "back_right_issues_to_be_resolved": [
+        "issue"
+        ],
+        "additional_comments": null,
+        "summary_from_expert": null,
+        "service_suggestions": "more_suggestions",
+        "next_service_due": "2021-06-03T18:29:00.000Z",
+        "last_service_history": null,
+        "actual_service_date": "2021-05-03T06:22:47.467Z",
+        "future_service_date": null,
+        "services_to_do": [
+        12,
+        13
+        ],
+        "car_photo_1": "",
+        "car_photo_2": "",
+        "created_by": null,
+        "updated_by": null,
+        "created_at": "2021-04-27T11:48:12.508Z",
+        "updated_at": "2021-04-27T11:48:12.508Z",
+        "technician_suggestions": [
+        "suggestion"
+        ],
+        "front_right_tyre_wheel_image": "f",
+        "service": [
+        {
+            "id": 12,
+            "name": "Type Rotation",
+            "image": "https://tyreservice-images.s3.amazonaws.com/service/TyreRotation.png"
+        },
+        {
+            "id": 13,
+            "name": "Wheel Balancing",
+            "image": "https://tyreservice-images.s3.amazonaws.com/service/WheelBalancing.png"
+        }
+        ],
+        "reg_number": "123",
+        "make": "Fiat",
+        "make_image": "https://tyreservice-images.aapkedoorstep.com/Vehicle-Make/fiat.jpeg",
+        "model": "Palio",
+        "model_image": "https://tyreservice-images.aapkedoorstep.com/VehicleModelImages/palio.png",
+        "technician_image": "https://tyreservice-images.s3.amazonaws.com/profile/file-7345-1619699524279.png"
+        */
+        var json = JsonObject()
+        var jsonArr = JsonArray()
+        json.addProperty(TyreKey.tyreType, "LF")
+        json.addProperty(TyreKey.vehicleMake, data.frontLeftTyreMake)
+        json.addProperty(TyreKey.vehicleMakeId, data.frontLeftTyreMake)
+        json.addProperty(
+            TyreKey.vehicleMakeURL,
+            ""
+        )
+        json.addProperty(
+            TyreKey.vehiclePattern,
+            data.frontLeftTyrePattern
+        )
+        json.addProperty(
+            TyreKey.vehiclePatternId,
+            data.frontLeftTyrePattern
+        )
+        json.addProperty(TyreKey.vehicleSize, data.frontLeftTyreSize)
+        json.addProperty(TyreKey.vehicleSizeId, data.frontLeftTyreSize)
+        json.addProperty(
+            TyreKey.manufaturingDate,
+            data.frontLeftManufacturingDate
+        )
+        json.addProperty(
+            TyreKey.psiInTyreService,
+            data.frontLeftTyrePsiIn
+        )
+        json.addProperty(
+            TyreKey.psiOutTyreService,
+            data.frontLeftTyrePsiOut
+        )
+        json.addProperty(
+            TyreKey.weightTyreService,
+            data.frontLeftTyreWeight
+        )
+        json.addProperty(TyreKey.sidewell, data.frontLeftTyreSideWall)
+        json.addProperty(TyreKey.shoulder, data.frontLeftTyreShoulder)
+        json.addProperty(TyreKey.treadDepth, data.frontLeftTyreTreadDepth)
+        json.addProperty(TyreKey.treadWear, data.frontLeftTyreTreadWear)
+        json.addProperty(TyreKey.rimDamage, data.frontLeftTyreRimDemage)
+        json.addProperty(TyreKey.bubble, data.frontLeftTyreBuldgeBubble)
+        json.addProperty(TyreKey.visualDetailPhotoUrl, data.frontLeftTyreWheelImage)
+
+        json.addProperty(TyreKey.isCompleted, "true")
+
+        for (i in data.frontLeftIssuesToBeResolved.indices) {
+
+            jsonArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i))
+        }
+        json.add(TyreKey.issueResolvedArr, jsonArr)
+
+        prefManager.setValue(TyreConfigClass.TyreLFObject, json.toString())
+
+
     }
 
     override fun onPositionClick(variable: Int, check: Int) {

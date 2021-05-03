@@ -53,6 +53,8 @@ import com.walkins.technician.common.*
 import com.walkins.technician.custom.BoldButton
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialogDueDate
 import com.walkins.technician.model.login.IssueResolveModel
+import com.walkins.technician.model.login.comment.CommentListData
+import com.walkins.technician.model.login.comment.CommentListModel
 import com.walkins.technician.model.login.service.ServiceModelData
 import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.LoginActivityViewModel
@@ -172,6 +174,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     var simpleDateFormat: SimpleDateFormat? = null
     private var selectedDate: String? = null
+    private var selectedDateNextServiceDue: String? = null
     var singleBuilder: SingleDateAndTimePickerDialogDueDate.Builder? = null
     var lltransparent: LinearLayout? = null
     var llTyreRotation: LinearLayout? = null
@@ -194,7 +197,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private var serviceRecycView: RecyclerView? = null
     private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
+    private var commentList: ArrayList<CommentListData>? = ArrayList()
     private var serviceAdapter: ServiceAdapter? = null
+    private var commentModel: CommentListModel? = null
 
     private var tvRegNumber: TextView? = null
     private var tvMakeModel: TextView? = null
@@ -869,6 +874,26 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         getServiceList()
 
+        getCommentList()
+
+    }
+
+    private fun getCommentList() {
+        commonViewModel?.callApiGetComments(prefManager.getAccessToken()!!, this)
+        commonViewModel?.getCommentList()?.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    commentModel = it
+
+                } else {
+                    if (it.error != null && it.error?.get(0)?.message != null) {
+                        Toast.makeText(this, "" + it.error?.get(0)?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+            }
+        })
     }
 
     private fun getServiceList() {
@@ -1658,6 +1683,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     )
                 }
 
+                if (jsonLF.get(TyreKey.visualDetailPhotoUrl) != null
+                    && !jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                ) {
+
+                    jsonObject.addProperty("front_left_tyre_wheel_image", jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                }
+
                 if (jsonLF.get(TyreKey.issueResolvedArr) != null) {
 
                     var arr = jsonLF.get(TyreKey.issueResolvedArr).asJsonArray
@@ -1721,6 +1753,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (jsonRF.get(TyreKey.weightTyreService) != null && !jsonRF.get(TyreKey.weightTyreService)?.asString.equals("")) {
                             jsonObject.addProperty("front_right_tyre_weight", jsonRF.get(TyreKey.weightTyreService)?.asString)
                         }
+
+                        if (jsonRF.get(TyreKey.visualDetailPhotoUrl) != null
+                            && !jsonRF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                        ) {
+                            jsonObject.addProperty("front_right_tyre_wheel_image", jsonRF.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                        }
+
                         if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
 
                             var arr = jsonRF.get(TyreKey.issueResolvedArr).asJsonArray
@@ -1788,6 +1827,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (jsonLR.get(TyreKey.weightTyreService) != null && !jsonLR.get(TyreKey.weightTyreService)?.asString.equals("")) {
                             jsonObject.addProperty("back_left_tyre_weight", jsonLR.get(TyreKey.weightTyreService)?.asString)
                         }
+
+                        if (jsonLR.get(TyreKey.visualDetailPhotoUrl) != null
+                            && !jsonLR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                        ) {
+                            jsonObject.addProperty("back_left_tyre_wheel_image", jsonLR.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                        }
+
                         if (jsonLR.get(TyreKey.issueResolvedArr) != null) {
 
                             var arr = jsonLR.get(TyreKey.issueResolvedArr).asJsonArray
@@ -1855,6 +1901,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         if (jsonRR.get(TyreKey.weightTyreService) != null && !jsonRR.get(TyreKey.weightTyreService)?.asString.equals("")) {
                             jsonObject.addProperty("back_right_tyre_weight", jsonRR.get(TyreKey.weightTyreService)?.asString)
                         }
+
+                        if (jsonRR.get(TyreKey.visualDetailPhotoUrl) != null
+                            && !jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                        ) {
+                            jsonObject.addProperty("back_right_tyre_wheel_image", jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                        }
                         if (jsonRR.get(TyreKey.issueResolvedArr) != null) {
 
                             val arr = jsonRR.get(TyreKey.issueResolvedArr).asJsonArray
@@ -1875,9 +1927,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 jsonObject.addProperty("service_suggestions", edtMoreSuggestion?.text?.toString())
-                jsonObject.addProperty("next_service_due", tvNextServiceDueDate?.text?.toString())
+                jsonObject.addProperty("next_service_due", selectedDateNextServiceDue)
                 jsonObject.addProperty("car_photo_1", TyreConfigClass.CarPhoto_1)
                 jsonObject.addProperty("car_photo_2", TyreConfigClass.CarPhoto_2)
+                jsonObject.addProperty("status", "complete")
 
                 val jsonArrayService: JsonArray = JsonArray()
 
@@ -1912,8 +1965,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 jsonObject.add("service", jsonArrayService)
-                jsonObject.add("technician_suggestions", jsonArrayService)
-
+                jsonObject.add("technician_suggestions", jsonArraySuggestion)
 
                 serviceViewModel?.callApiAddService(
                     jsonObject,
@@ -2055,11 +2107,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         Log.e("getdatee00", "" + selectedDate)
                         tvNextServiceDueDate?.text = selectedDate
 
+                        selectedDateNextServiceDue = selectedDate
+                        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                        val formatterDisplay = SimpleDateFormat("dd MMMM yyyy")
+                        val dateInString = formatterDisplay.parse(selectedDate)
+                        val displayDate = formatter.format(dateInString)
+
+                        selectedDateNextServiceDue = displayDate
 
                     } else if (str.equals("Reset")) {
                         Log.e("getdatee2", "" + selectedDate)
 
                         selectedDate = ""
+                        selectedDateNextServiceDue = ""
                     } else if (str.equals("Close")) {
                         Log.e("getdatee1", "" + selectedDate)
                         if (selectedDate == null || selectedDate.equals("null") || selectedDate.equals(
@@ -2269,9 +2329,20 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val pendingReasonRecycView = root.findViewById<RecyclerView>(R.id.pendingReasonRecycView)
 
 
+        var list:ArrayList<IssueResolveModel>?=ArrayList<IssueResolveModel>()
+
+        commentList?.clear()
+        commentList?.addAll(commentModel?.data!!)
+        for (i in commentList?.indices!!){
+            list?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!,false))
+            Log.e("getdta",""+commentList?.get(i)?.name!!+" "+commentList?.get(i)?.id!!+" "+false)
+        }
+
+
+
         var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
-        tyreSuggestionAdapter = TyreSuggestionAdpater(reasonArrayList!!, this, this, true)
-        tyreSuggestionAdapter?.onclick = this
+        tyreSuggestionAdapter = TyreSuggestionAdpater(list!!, this, this, true)
+        tyreSuggestionAdapter.onclick = this
         pendingReasonRecycView?.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,
@@ -2287,6 +2358,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
         btnConfirm.setOnClickListener {
             builder.dismiss()
+
+            for (i in list.indices){
+                if (list.get(i).isSelected){
+                    Log.e("getselected",""+list.get(i).issueName)
+                }
+            }
             var intent = Intent(this, SkippedServiceDetailActivity::class.java)
             startActivityForResult(intent, 106)
         }
@@ -3151,7 +3228,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ) {
 
         } else {
-//            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -3163,7 +3240,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
         if (count > 0
         ) {
-//            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
+
+        } else {
+            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -3175,23 +3254,23 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (!TyreConfigClass.LFCompleted || !TyreConfigClass.RFCompleted || !TyreConfigClass.LRCompleted
             || !TyreConfigClass.RRCompleted
         ) {
-//            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
 
         } else {
-//            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
 
         } else {
-//            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
         Log.e("iscpmpleted33", "button is clickable")
-//        Toast.makeText(this, "button is clickable", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "button is clickable", Toast.LENGTH_SHORT).show()
         btnSubmitAndComplete?.isClickable = true
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.round_corner_button_yellow))
     }
@@ -4878,6 +4957,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else {
                         TyreConfigClass.CarPhoto_2 = it.data.imageUrl
                     }
+
+                    checkSubmitBtn()
                 }
             }
         })

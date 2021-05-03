@@ -5,8 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.facebook.AccessToken
+import com.google.gson.JsonObject
+import com.walkins.technician.model.login.comment.CommentListModel
 import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.service.ServiceModel
+import com.walkins.technician.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.technician.repository.CommonRepo
 import com.walkins.technician.repository.ServiceRepo
 
@@ -15,6 +18,8 @@ class CommonViewModel : ViewModel() {
     private var commonRepo: CommonRepo? = null
     private var issueListModel: MutableLiveData<IssueListModel>? = null
     private var serviceModel: MutableLiveData<ServiceModel>? = null
+    private var commentListModel: MutableLiveData<CommentListModel>? = null
+    private var serviceByIdModel: MutableLiveData<ServiceDataByIdModel>? = null
 
     fun callApiListOfIssue(
         accessToken: String,
@@ -38,6 +43,31 @@ class CommonViewModel : ViewModel() {
 
     fun getService(): LiveData<ServiceModel> {
         return serviceModel!!
+    }
+
+    fun callApiGetComments(
+        accessToken: String,
+        context: Context
+    ) {
+        commonRepo = CommonRepo().getInstance()
+        commentListModel = commonRepo?.getCommentList(context, accessToken)
+    }
+
+    fun getCommentList(): LiveData<CommentListModel> {
+        return commentListModel!!
+    }
+
+    fun callApiGetServiceById(
+        jsonObject: JsonObject,
+        accessToken: String,
+        context: Context
+    ) {
+        commonRepo = CommonRepo().getInstance()
+        serviceByIdModel = commonRepo?.getServiceById(jsonObject, context, accessToken)
+    }
+
+    fun getServiceById(): LiveData<ServiceDataByIdModel> {
+        return serviceByIdModel!!
     }
 
 }

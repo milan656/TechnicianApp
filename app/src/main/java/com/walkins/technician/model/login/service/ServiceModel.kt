@@ -4,7 +4,8 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.jkadvantage.model.error.ErrorModel
 
-data class ServiceModel(
+data class
+ServiceModel(
     @SerializedName("success")
     @Expose
     var success: Boolean,

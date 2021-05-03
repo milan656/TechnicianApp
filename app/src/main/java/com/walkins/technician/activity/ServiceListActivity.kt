@@ -61,6 +61,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         var completed = "complete"
         var skipped = "skipped"
     }
+
     private var serviceStatus = upcomming
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -143,22 +144,28 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                         arrayList.addAll(it.data)
 
                         if (serviceStatus.equals(upcomming)) {
-                            arrayList.filter { it.status.equals(upcomming) }
+//                            arrayList.filter { it.status.equals(upcomming) }
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this) }
                             Log.e("getservicedata", "" + arrayList.size)
                         } else if (serviceStatus.equals(completed)) {
-                            arrayList.filter { it.status.equals(completed) }
+//                            arrayList.filter { it.status.equals(completed) }
                             Log.e("getservicedata0", "" + arrayList.size)
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this) }
                         } else if (serviceStatus.equals(skipped)) {
-                            arrayList.filter { it.status.equals(skipped) }
+//                            arrayList.filter { it.status.equals(skipped) }
                             Log.e("getservicedata1", "" + arrayList.size)
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this) }
                         }
+
+
                         tvNoServiceData?.visibility = View.GONE
                         if (arrayList.size == 0) {
                             tvNoServiceData?.text = "There is no any Upcomming service to display"
                             tvNoServiceData?.visibility = View.VISIBLE
                         }
 
-                        adapter?.notifyDataSetChanged()
+                        serviceRecycView?.adapter = adapter
+                        adapter?.onclick = this
 
                     }
                 } else {
@@ -255,7 +262,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-        Log.e("checkva",""+check+" "+serviceStatus)
+        Log.e("checkva", "" + check + " " + serviceStatus)
         if (check == 1) {
 
             if (serviceStatus.equals(upcomming)) {
@@ -268,13 +275,15 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 startActivity(intent)
 
             } else if (serviceStatus.equals(completed)) {
-                Log.e("checkva",""+check)
+                Log.e("checkva", "" + check)
                 var intent = Intent(this, CompletedServiceDetailActivity::class.java)
                 intent.putExtra("title", "Service Detail")
+                intent.putExtra("uuid", arrayList.get(variable).uuid)
                 startActivity(intent)
             } else if (serviceStatus.equals(skipped)) {
-                Log.e("checkva",""+check)
+                Log.e("checkva", "" + check)
                 var intent = Intent(this, SkippedServiceDetailActivity::class.java)
+                intent.putExtra("uuid", arrayList.get(variable).uuid)
                 startActivity(intent)
             }
         }

@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
+import com.google.gson.JsonObject
+import com.walkins.technician.model.login.comment.CommentListModel
 import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.service.ServiceModel
+import com.walkins.technician.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.technician.networkApi.MakeModelApi
 import com.walkins.technician.networkApi.common.CommonApi
 import okhttp3.ResponseBody
@@ -100,6 +103,87 @@ class CommonRepo {
                             1,
                             context
                         ) as ServiceModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
+    fun getCommentList(
+        context: Context,
+        accessToken:String
+
+    ): MutableLiveData<CommentListModel> {
+        var otpData = MutableLiveData<CommentListModel>()
+        commonApi.getCommentList(accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "CommentListModel",
+                        response,
+                        0,
+                        context
+                    ) as CommentListModel?
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "CommentListModel",
+                            response,
+                            1,
+                            context
+                        ) as CommentListModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
+    fun getServiceById(
+        jsonObject: JsonObject,
+        context: Context,
+        accessToken:String
+
+    ): MutableLiveData<ServiceDataByIdModel> {
+        var otpData = MutableLiveData<ServiceDataByIdModel>()
+        commonApi.getgetServiceById(jsonObject,accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "ServiceDataByIdModel",
+                        response,
+                        0,
+                        context
+                    ) as ServiceDataByIdModel?
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "ServiceDataByIdModel",
+                            response,
+                            1,
+                            context
+                        ) as ServiceDataByIdModel?
                     } catch (e: IOException) {
                         e.printStackTrace()
                     } catch (e: Exception) {

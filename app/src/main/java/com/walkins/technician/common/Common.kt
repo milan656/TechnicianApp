@@ -46,6 +46,7 @@ import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.custom.BoldButton
+import com.walkins.technician.model.login.comment.CommentListModel
 import com.walkins.technician.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
@@ -55,6 +56,7 @@ import com.walkins.technician.model.login.patternmodel.PatternModel
 import com.walkins.technician.model.login.service.ServiceModel
 import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
+import com.walkins.technician.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.technician.model.login.sizemodel.SizeModel
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -170,12 +172,12 @@ class Common {
             return phrase.toString()
         }
 
-        fun getStringBuilder(str: String):StringBuilder{
-            val strBuilder:java.lang.StringBuilder=java.lang.StringBuilder()
+        fun getStringBuilder(str: String): StringBuilder {
+            val strBuilder: java.lang.StringBuilder = java.lang.StringBuilder()
 
             val temp: Array<String> = str.split(",").toTypedArray()
 
-            for (i in temp.indices){
+            for (i in temp.indices) {
                 strBuilder?.append(temp.get(i))?.append(",")
             }
             return strBuilder!!
@@ -363,6 +365,22 @@ class Common {
                         return ServiceListByDateModel
                     }
 
+                    "ServiceDataByIdModel" -> {
+                        val ServiceDataByIdModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ServiceDataByIdModel::class.java
+                            )
+                        return ServiceDataByIdModel
+                    }
+                    "CommentListModel" -> {
+                        val CommentListModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                CommentListModel::class.java
+                            )
+                        return CommentListModel
+                    }
 
                     else -> {
                         return null
@@ -516,6 +534,23 @@ class Common {
                                         ServiceListByDateModel::class.java
                                     )
                                 return ServiceListByDateModel
+                            }
+                            "ServiceDataByIdModel" -> {
+                                val ServiceDataByIdModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ServiceDataByIdModel::class.java
+                                    )
+                                return ServiceDataByIdModel
+                            }
+
+                            "CommentListModel" -> {
+                                val CommentListModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        CommentListModel::class.java
+                                    )
+                                return CommentListModel
                             }
 
 
@@ -910,7 +945,6 @@ class Common {
         }
 
 
-
         fun slideToBottom(view: View) {
             val animate = TranslateAnimation(0f, 0f, 0f, view.height.toFloat())
             animate.setDuration(500)
@@ -1028,15 +1062,11 @@ class Common {
         }
 
 
-
-
         fun checkCallPermission(context: Context): Boolean {
             val permission = Manifest.permission.CALL_PHONE
             val res: Int = checkSelfPermission(context, permission)
             return res == PackageManager.PERMISSION_GRANTED
         }
-
-
 
 
         fun isLocal(url: String?): Boolean {
