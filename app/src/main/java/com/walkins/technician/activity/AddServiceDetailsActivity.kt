@@ -886,8 +886,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     commentModel = it
 
                 } else {
-                    if (it.error != null && it.error?.get(0)?.message != null) {
-                        Toast.makeText(this, "" + it.error?.get(0)?.message, Toast.LENGTH_SHORT).show()
+                    if (it.error != null && it.error.get(0).message != null) {
+                        showShortToast(it.error.get(0).message, this)
                     }
                 }
             } else {
@@ -2328,15 +2328,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val pendingReasonRecycView = root.findViewById<RecyclerView>(R.id.pendingReasonRecycView)
 
 
-        var list:ArrayList<IssueResolveModel>?=ArrayList<IssueResolveModel>()
+        var list: ArrayList<IssueResolveModel>? = ArrayList<IssueResolveModel>()
 
         commentList?.clear()
         commentList?.addAll(commentModel?.data!!)
-        for (i in commentList?.indices!!){
-            list?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!,false))
-            Log.e("getdta",""+commentList?.get(i)?.name!!+" "+commentList?.get(i)?.id!!+" "+false)
+        for (i in commentList?.indices!!) {
+            list?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
+            Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
         }
-
 
 
         var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
@@ -2358,13 +2357,45 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         btnConfirm.setOnClickListener {
             builder.dismiss()
 
-            for (i in list.indices){
-                if (list.get(i).isSelected){
-                    Log.e("getselected",""+list.get(i).issueName)
+            Common.showLoader(this)
+            var jsonObject = JsonObject()
+            var jsonArr = JsonArray()
+
+            for (i in list.indices) {
+                if (list.get(i).isSelected) {
+                    Log.e("getselected", "" + list.get(i).issueName)
+                    jsonArr.add(list.get(i).id)
                 }
             }
-            var intent = Intent(this, SkippedServiceDetailActivity::class.java)
-            startActivityForResult(intent, 106)
+            jsonObject.addProperty("uuid", uuid)
+            jsonObject.add("comment_id", jsonArr)
+            jsonObject.addProperty("status", "skip")
+
+            serviceViewModel?.callApiAddService(
+                jsonObject,
+                prefManager.getAccessToken()!!,
+                this
+            )
+
+            serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
+                if (it != null) {
+                    if (it.success) {
+                        Common.hideLoader()
+                        var intent = Intent(this, SkippedServiceDetailActivity::class.java)
+                        intent.putExtra("color", color)
+                        intent.putExtra("makeModel", makeModel)
+                        intent.putExtra("regNumber", regNumber)
+                        intent.putExtra("carImage", carImage)
+                        intent.putExtra("uuid", uuid)
+                        startActivityForResult(intent,106)
+                    } else {
+                        Common.hideLoader()
+                    }
+                } else {
+                    Common.hideLoader()
+                }
+            })
+
         }
         builder.setView(root)
 
@@ -2813,6 +2844,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         super.onActivityResult(requestCode, resultCode, data)
         Log.e("getcall", "call0" + requestCode)
         when (requestCode) {
+            106 -> {
+                if (resultCode == RESULT_OK) {
+                    finish()
+                }
+            }
             IMAGE_CAPTURE_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

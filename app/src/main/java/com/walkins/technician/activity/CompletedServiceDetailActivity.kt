@@ -362,9 +362,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
         json.addProperty(TyreKey.isCompleted, "true")
 
-        for (i in data.frontLeftIssuesToBeResolved.indices) {
+        if (data.frontLeftIssuesToBeResolved?.size>0) {
+            for (i in data.frontLeftIssuesToBeResolved.indices) {
 
-            jsonArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i))
+                jsonArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i))
+            }
         }
         json.add(TyreKey.issueResolvedArr, jsonArr)
 

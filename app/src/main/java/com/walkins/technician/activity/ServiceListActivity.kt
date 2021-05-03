@@ -24,6 +24,7 @@ import com.walkins.technician.adapter.ServicesListAdpater
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showShortToast
 import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateData
+import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.technician.viewmodel.ServiceViewModel
 import java.lang.StringBuilder
 
@@ -35,6 +36,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var llCompleted: LinearLayout? = null
     private var llUpcoming: LinearLayout? = null
 
+    private var serviceListDataModel:ServiceListByDateModel?=null
+
     private var tvSkipped: TextView? = null
     private var tvUpcoming: TextView? = null
     private var tvCompleted: TextView? = null
@@ -45,7 +48,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var ivInfoService: ImageView? = null
 
     //    private var arrayList: muta<ServiceListByDateData> = ArrayList()
-    private val arrayList = mutableListOf<ServiceListByDateData>()
+    private var arrayList = mutableListOf<ServiceListByDateData>()
     private var adapter: ServicesListAdpater? = null
     private var tvAddress: TextView? = null
     private var tvDate: TextView? = null
@@ -138,6 +141,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             if (it != null) {
                 if (it.success) {
 
+                    serviceListDataModel=it
+
                     if (it.data != null) {
 
                         arrayList.clear()
@@ -145,17 +150,21 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                         if (serviceStatus.equals(upcomming)) {
 //                            arrayList.filter { it.status.equals(upcomming) }
+                            arrayList= arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
                             adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this) }
                             Log.e("getservicedata", "" + arrayList.size)
                         } else if (serviceStatus.equals(completed)) {
 //                            arrayList.filter { it.status.equals(completed) }
                             Log.e("getservicedata0", "" + arrayList.size)
+                            arrayList= arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
                             adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this) }
                         } else if (serviceStatus.equals(skipped)) {
 //                            arrayList.filter { it.status.equals(skipped) }
                             Log.e("getservicedata1", "" + arrayList.size)
+                            arrayList= arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
                             adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this) }
                         }
+
 
 
                         tvNoServiceData?.visibility = View.GONE
@@ -167,6 +176,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                         serviceRecycView?.adapter = adapter
                         adapter?.onclick = this
 
+                        llUpcoming?.performClick()
                     }
                 } else {
                     if (it.error != null && it.error?.get(0).message != null) {
@@ -193,6 +203,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                 serviceStatus = upcomming
                 tvNoServiceData?.visibility = View.GONE
+
+                arrayList?.clear()
+                arrayList?.addAll(serviceListDataModel?.data)
                 adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this) }
                 if (arrayList.filter { it.status.equals(upcomming) }.size == 0) {
                     tvNoServiceData?.text = "There is no any Upcomming service to display"
@@ -262,8 +275,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-        Log.e("checkva", "" + check + " " + serviceStatus)
         if (check == 1) {
+            Log.e("checkva", "" + arrayList.get(variable).status + " " + arrayList.get(variable).regNumber)
+            Log.e("checkva", "" +  " " + arrayList.get(variable).uuid)
 
             if (serviceStatus.equals(upcomming)) {
                 var intent = Intent(this, AddServiceDetailsActivity::class.java)
