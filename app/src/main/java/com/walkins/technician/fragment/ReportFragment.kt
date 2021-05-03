@@ -197,6 +197,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 )
 
                                 historyDataList.add(dashboardModel)
+
                             }
 //                            relNoData?.visibility = View.GONE
                             reportRecycView?.visibility = View.VISIBLE
