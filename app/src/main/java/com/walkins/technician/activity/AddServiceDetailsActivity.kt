@@ -875,7 +875,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         getServiceList()
 
         getCommentList()
-
     }
 
     private fun getCommentList() {
