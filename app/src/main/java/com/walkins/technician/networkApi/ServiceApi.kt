@@ -25,4 +25,10 @@ interface ServiceApi {
         @Header("Authorization") authorization: String
     ): Call<ResponseBody>
 
+    @POST("v1/user/get-technician-report-detail")
+    fun getReportService(
+        @Body jsonObject: JsonObject,
+        @Header("Authorization") authorization: String
+    ): Call<ResponseBody>
+
 }

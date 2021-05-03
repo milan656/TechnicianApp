@@ -18,6 +18,7 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonObject
 import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
 import com.walkins.technician.activity.ReportFilterActivity
@@ -26,9 +27,12 @@ import com.walkins.technician.adapter.*
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.DashboardModel
 import com.walkins.technician.model.login.ReportHistoryModel
+import com.walkins.technician.model.login.ReportServiceData
 import com.walkins.technician.model.login.makemodel.VehicleMakeData
 import com.walkins.technician.model.login.makemodel.VehicleModelData
+import com.walkins.technician.model.login.servicelistmodel.ServiceListData
 import com.walkins.technician.viewmodel.MakeModelViewModel
+import com.walkins.technician.viewmodel.ServiceViewModel
 import java.text.SimpleDateFormat
 
 private const val ARG_PARAM1 = "param1"
@@ -44,6 +48,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private val listClicked = ArrayList<String>()
     private val listClickedModel = ArrayList<String>()
     private var adapter: AutoSuggestProductAdapter? = null
+    private var serviceViewModel: ServiceViewModel? = null
 
     var historyDataList: ArrayList<ReportHistoryModel> = ArrayList<ReportHistoryModel>()
 
@@ -59,6 +64,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var actvehicleMake: AutoCompleteTextView? = null
     private var actvehicleModel: AutoCompleteTextView? = null
     private var actvehicleSociety: AutoCompleteTextView? = null
+    var mAdapter: ReportHistoryAdapter? = null
 
     private var makeSearchdata: ArrayList<VehicleMakeData>? = ArrayList()
     private var modelSearchdata: ArrayList<VehicleModelData>? = ArrayList()
@@ -79,6 +85,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_report, container, false)
         prefManager = context?.let { PrefManager(it) }!!
         makeModelViewModel = ViewModelProviders.of(this).get(MakeModelViewModel::class.java)
+        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         init(view)
         return view
     }
@@ -105,7 +112,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 //        setadapter(skipSelected)
 
-        for (i in 0..5) {
+        /*for (i in 0..5) {
 
             var dashboardModel: ReportHistoryModel? = null
             when (i) {
@@ -131,10 +138,10 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
 
             historyDataList.add(dashboardModel!!)
-        }
+        }*/
 
 //        homeRecycView?.setHasFixedSize(true)
-        var mAdapter = context?.let { ReportHistoryAdapter(it, historyDataList, this) }
+        mAdapter = context?.let { ReportHistoryAdapter(it, historyDataList, this) }
         var decor = StickyHeaderDecoration(mAdapter)
 
         // use a linear layout manager
@@ -145,11 +152,78 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         mAdapter?.onclick = this
 
 
+        getDashboardService("")
+    }
+
+
+    private fun getDashboardService(displayDate: String) {
+
+
+        activity?.let {
+            Common.showLoader(it)
+
+            var jsonObject = JsonObject()
+            serviceViewModel?.callApiReportList(jsonObject, prefManager.getAccessToken()!!, it)
+            serviceViewModel?.getReportservice()?.observe(it, androidx.lifecycle.Observer {
+                Common.hideLoader()
+                if (it != null) {
+                    if (it.success) {
+
+                        Log.e("getdataa", "" + it.data)
+                        historyDataList.clear()
+
+                        if (it.data != null && it.data.serviceData.size > 0) {
+                            for (i in it.data.serviceData.indices) {
+
+                                var dashboardModel: ReportHistoryModel? = null
+                                val dateString = it.data.serviceData.get(i).actualServiceDate
+                                var startDate: Long? = 0L
+                                if (dateString != null) {
+                                    Log.e("getdatefrom", "" + dateString)
+                                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                                    val date = sdf.parse(dateString)
+
+                                    startDate = date.time
+                                    Log.e("getdatefromstart", "" + startDate)
+                                }
+                                var list: ArrayList<ServiceListData>? = ArrayList()
+
+                                for (j in it.data.serviceData.get(i).service.indices) {
+                                    list?.add(it.data.serviceData.get(i).service.get(j))
+                                }
+                                dashboardModel = ReportHistoryModel(
+                                    it.data.serviceData.get(i).color, it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).status,
+                                    startDate!!, startDate, list!!, it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).actualServiceDate
+                                )
+
+                                historyDataList.add(dashboardModel)
+                            }
+//                            relNoData?.visibility = View.GONE
+                            reportRecycView?.visibility = View.VISIBLE
+                        } else {
+//                            relNoData?.visibility = View.VISIBLE
+
+                            reportRecycView?.visibility = View.GONE
+                        }
+                        mAdapter?.notifyDataSetChanged()
+
+                    } else {
+//                        relNoData?.visibility = View.VISIBLE
+                        reportRecycView?.visibility = View.GONE
+                    }
+                } else {
+//                    relNoData?.visibility = View.VISIBLE
+                    reportRecycView?.visibility = View.GONE
+                }
+            })
+        }
+
+
     }
 
     private fun setadapter(skipSelected: Boolean) {
         if (!skipSelected) {
-            val arrayAdapter = context?.let { ReportHistoryAdapter(it,historyDataList, this) }
+            val arrayAdapter = context?.let { ReportHistoryAdapter(it, historyDataList, this) }
             reportRecycView?.layoutManager = LinearLayoutManager(
                 context,
                 RecyclerView.VERTICAL,
@@ -165,7 +239,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             arrayAdapter?.onclick = this
         } else {
             val arrayAdapter =
-                context?.let { ReportHistorySkippedAdapter(it,historyDataList, this) }
+                context?.let { ReportHistorySkippedAdapter(it, historyDataList, this) }
             reportRecycView?.layoutManager = LinearLayoutManager(
                 context,
                 RecyclerView.VERTICAL,
@@ -386,7 +460,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun searchModel(toString: String) {
-        context?.let { makeModelViewModel?.getVehicleModel(it, selectedMakeId,prefManager.getAccessToken()!!) }
+        context?.let { makeModelViewModel?.getVehicleModel(it, selectedMakeId, prefManager.getAccessToken()!!) }
 
         makeModelViewModel?.getVehicleModelList()?.observe(this, Observer {
 
@@ -409,7 +483,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun searchMake(toString: String) {
-        context?.let { makeModelViewModel?.getVehicleMake(it,prefManager.getAccessToken()!!) }
+        context?.let { makeModelViewModel?.getVehicleMake(it, prefManager.getAccessToken()!!) }
 
         makeModelViewModel?.getVehicleMakeList()?.observe(this, Observer {
 

@@ -12,5 +12,5 @@ data class ReportserviceData(
     val skip: String,
     @SerializedName("service_data")
     @Expose
-    val serviceData: List<ReportServiceData>
+    val serviceData: ArrayList<ReportServiceData>
 )

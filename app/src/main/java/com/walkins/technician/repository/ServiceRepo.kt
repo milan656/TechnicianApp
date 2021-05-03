@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.JsonObject
+import com.walkins.technician.model.login.ReportServiceModel
 import com.walkins.technician.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.technician.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.technician.model.login.servicemodel.AddServiceModel
@@ -149,6 +150,48 @@ class ServiceRepo {
                         1,
                         context
                     ) as ServiceListByDateModel?
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("getCipResponse", "" + t.cause + " " + t.message)
+//                servicedata.value = null
+            }
+        })
+        return servicedata
+    }
+ fun callApiReportService(
+        jsonObject: JsonObject,
+        access_token: String, context: Context
+    ): MutableLiveData<ReportServiceModel> {
+        val servicedata = MutableLiveData<ReportServiceModel>()
+
+        val addEdit: Call<ResponseBody>?=serviceApi.getReportService(jsonObject, access_token)
+
+        addEdit?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>, response: Response<ResponseBody>
+            ) = if (response.isSuccessful) {
+                servicedata.value = Common.getModelreturn(
+                    "ReportServiceModel",
+                    response,
+                    0,
+                    context
+                ) as ReportServiceModel?
+
+            } else {
+                try {
+                    servicedata.value = Common.getModelreturn(
+                        "ReportServiceModel",
+                        response,
+                        1,
+                        context
+                    ) as ReportServiceModel?
                 } catch (e: IOException) {
                     e.printStackTrace()
                 } catch (e: Exception) {
