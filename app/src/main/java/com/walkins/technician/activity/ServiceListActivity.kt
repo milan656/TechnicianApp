@@ -98,8 +98,6 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         ivBack?.setOnClickListener(this)
         ivInfoService?.setOnClickListener(this)
 
-        llUpcoming?.performClick()
-
         tvAddress?.text = "Titanium City Centre,\nAnand Nagar"
         serviceRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -176,7 +174,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                         serviceRecycView?.adapter = adapter
                         adapter?.onclick = this
 
-                        llUpcoming?.performClick()
+//                        llUpcoming?.performClick()
                     }
                 } else {
                     if (it.error != null && it.error?.get(0).message != null) {
@@ -204,10 +202,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 serviceStatus = upcomming
                 tvNoServiceData?.visibility = View.GONE
 
-                arrayList?.clear()
-                arrayList?.addAll(serviceListDataModel?.data)
-                adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this) }
-                if (arrayList.filter { it.status.equals(upcomming) }.size == 0) {
+                arrayList.clear()
+                arrayList.addAll(serviceListDataModel?.data!!)
+
+                arrayList= arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+                adapter = ServicesListAdpater(arrayList, this,this)
+                if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Upcomming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
@@ -226,8 +226,14 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
                 serviceStatus = completed
                 tvNoServiceData?.visibility = View.GONE
-                adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this) }
-                if (arrayList.filter { it.status.equals(completed) }.size == 0) {
+
+                arrayList.clear()
+                arrayList.addAll(serviceListDataModel?.data!!)
+
+                arrayList= arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
+                adapter = ServicesListAdpater(arrayList, this,this)
+
+                if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Completed service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
@@ -247,9 +253,14 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
                 serviceStatus = skipped
                 tvNoServiceData?.visibility = View.GONE
-                adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this) }
 
-                if (arrayList.filter { it.status.equals(skipped) }.size == 0) {
+                arrayList.clear()
+                arrayList.addAll(serviceListDataModel?.data!!)
+
+                arrayList= arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
+                adapter = ServicesListAdpater(arrayList, this,this)
+
+                if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Skipped service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }

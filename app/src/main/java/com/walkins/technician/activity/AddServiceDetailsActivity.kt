@@ -2381,7 +2381,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (it != null) {
                     if (it.success) {
                         Common.hideLoader()
-                        var intent = Intent(this, SkippedServiceDetailActivity::class.java)
+                        val intent = Intent(this, SkippedServiceDetailActivity::class.java)
                         intent.putExtra("color", color)
                         intent.putExtra("makeModel", makeModel)
                         intent.putExtra("regNumber", regNumber)
@@ -2390,9 +2390,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         startActivityForResult(intent,106)
                     } else {
                         Common.hideLoader()
+                        showShortToast("Something Went Wrong",this)
                     }
                 } else {
                     Common.hideLoader()
+                    showShortToast("Something Went Wrong",this)
                 }
             })
 

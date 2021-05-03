@@ -7,7 +7,7 @@ import retrofit2.http.*
 
 interface ServiceApi {
 
-    @POST("v1/tyrepushpull/add-service-detail")
+    @POST("v1/user/add-service-detail")
     fun addService(
         @Body jsonObject: JsonObject,
         @Header("Authorization") authorization: String

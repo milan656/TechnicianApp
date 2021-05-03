@@ -169,7 +169,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
         tvCurrentDateTime?.text = Common.getCurrentDateTime()
 
-        getServiceDataById()
+//        getServiceDataById()
     }
 
     private fun getServiceDataById() {
@@ -362,10 +362,10 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
         json.addProperty(TyreKey.isCompleted, "true")
 
-        if (data.frontLeftIssuesToBeResolved?.size>0) {
+        if (data.frontLeftIssuesToBeResolved.size>0) {
             for (i in data.frontLeftIssuesToBeResolved.indices) {
 
-                jsonArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i))
+                jsonArr.add(data.frontLeftIssuesToBeResolved.get(i))
             }
         }
         json.add(TyreKey.issueResolvedArr, jsonArr)
