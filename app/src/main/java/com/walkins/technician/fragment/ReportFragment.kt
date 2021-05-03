@@ -115,7 +115,6 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         24, 20, 21, 45, System.currentTimeMillis(),
                         System.currentTimeMillis()
                     )
-
                 }
                 2, 3, 4, 5 -> {
                     val dateString = "30/09/2021"
