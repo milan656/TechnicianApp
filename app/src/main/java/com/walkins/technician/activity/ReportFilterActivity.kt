@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.technician.common.PrefManager
 import com.walkins.technician.R
 import com.walkins.technician.adapter.AutoSuggestProductAdapter
+import com.walkins.technician.model.login.building.BuildingListData
 import com.walkins.technician.model.login.makemodel.VehicleMakeData
 import com.walkins.technician.model.login.makemodel.VehicleModelData
 import com.walkins.technician.viewmodel.MakeModelViewModel
@@ -32,7 +33,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     private var actvehicleModel: AutoCompleteTextView? = null
     private var actvehicleSociety: AutoCompleteTextView? = null
 
-    private var makeSearchdata: ArrayList<VehicleMakeData>? = ArrayList()
+    private var makeSearchdata: ArrayList<BuildingListData>? = ArrayList()
     private var modelSearchdata: ArrayList<VehicleModelData>? = ArrayList()
     private var selectedMakeId: Int = -1
 
@@ -189,9 +190,9 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun searchMake(toString: String) {
-        makeModelViewModel.getVehicleMake(this, prefManager.getAccessToken()!!)
+        makeModelViewModel.callBuildingListApi(this, prefManager.getAccessToken()!!)
 
-        makeModelViewModel.getVehicleMakeList()?.observe(this, Observer {
+        makeModelViewModel.getBuildingModelList()?.observe(this, Observer {
 
             if (it != null) {
                 if (it.success) {
@@ -216,7 +217,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun makeDataForSearchApi(makeSearchdata: ArrayList<VehicleMakeData>) {
+    private fun makeDataForSearchApi(makeSearchdata: ArrayList<BuildingListData>) {
 
         listClicked.clear()
         try {

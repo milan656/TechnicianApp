@@ -344,7 +344,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         json.addProperty(TyreKey.vehicleMakeId, data.frontLeftTyreMake)
         json.addProperty(
             TyreKey.vehicleMakeURL,
-            ""
+            data.front_left_tyre_make_image
         )
         json.addProperty(
             TyreKey.vehiclePattern,
@@ -409,7 +409,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         serviceAdapter?.notifyDataSetChanged()
 
 //        prefManager.setValue(TyreConfigClass.TyreLFObject, json.toString())
-
 
     }
 

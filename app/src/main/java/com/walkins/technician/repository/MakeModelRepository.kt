@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
+import com.walkins.technician.model.login.building.BuildingListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.makemodel.VehicleModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
@@ -67,6 +68,46 @@ class MakeModelRepository {
                             1,
                             context
                         ) as VehicleMakeModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+ fun getBuilding(
+        context: Context,
+        accessToken:String
+    ): MutableLiveData<BuildingListModel> {
+        var otpData = MutableLiveData<BuildingListModel>()
+        makeModelApi.getVehicleMake(accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "BuildingListModel",
+                        response,
+                        0,
+                        context
+                    ) as BuildingListModel?
+
+
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "BuildingListModel",
+                            response,
+                            1,
+                            context
+                        ) as BuildingListModel?
                     } catch (e: IOException) {
                         e.printStackTrace()
                     } catch (e: Exception) {

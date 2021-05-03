@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.JsonObject
+import com.walkins.technician.model.login.UserInfoModel
+import com.walkins.technician.model.login.building.BuildingListModel
 import com.walkins.technician.model.login.comment.CommentListModel
 import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
@@ -143,6 +145,83 @@ class CommonRepo {
                             1,
                             context
                         ) as CommentListModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
+    fun getBuildingList(
+        context: Context,
+        accessToken:String
+    ): MutableLiveData<BuildingListModel> {
+        var otpData = MutableLiveData<BuildingListModel>()
+        commonApi.getBuildingList(accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "BuildingListModel",
+                        response,
+                        0,
+                        context
+                    ) as BuildingListModel?
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "BuildingListModel",
+                            response,
+                            1,
+                            context
+                        ) as BuildingListModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
+    fun getUserInfo(
+        context: Context,
+        accessToken:String
+
+    ): MutableLiveData<UserInfoModel> {
+        var otpData = MutableLiveData<UserInfoModel>()
+        commonApi.getUserInfo(accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "UserInfoModel",
+                        response,
+                        0,
+                        context
+                    ) as UserInfoModel?
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "UserInfoModel",
+                            response,
+                            1,
+                            context
+                        ) as UserInfoModel?
                     } catch (e: IOException) {
                         e.printStackTrace()
                     } catch (e: Exception) {

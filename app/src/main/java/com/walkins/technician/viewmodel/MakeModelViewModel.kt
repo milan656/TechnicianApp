@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.facebook.AccessToken
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
+import com.walkins.technician.model.login.building.BuildingListModel
 import com.walkins.technician.model.login.makemodel.VehicleMakeModel
 import com.walkins.technician.model.login.makemodel.VehicleModel
 import com.walkins.technician.model.login.patternmodel.PatternModel
@@ -17,6 +18,7 @@ class MakeModelViewModel : ViewModel() {
 
     private var makeModelRepository: MakeModelRepository? = null
     private var makeModelClass: MutableLiveData<VehicleMakeModel>? = null
+    private var buildingListModel: MutableLiveData<BuildingListModel>? = null
     private var modelclass: MutableLiveData<VehicleModel>? = null
 
 
@@ -34,6 +36,17 @@ class MakeModelViewModel : ViewModel() {
 
     fun getVehicleModelList(): LiveData<VehicleModel>? {
         return modelclass!!
+    }
+    fun callBuildingListApi(context: Context,accessToken: String) {
+
+        makeModelRepository = MakeModelRepository().getInstance()
+        buildingListModel =
+            makeModelRepository!!.getBuilding(context,accessToken)
+
+    }
+
+    fun getBuildingModelList(): LiveData<BuildingListModel>? {
+        return buildingListModel!!
     }
 
     fun getVehicleModel(context: Context, makeId: Int,accessToken: String) {

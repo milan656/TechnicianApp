@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.facebook.AccessToken
 import com.google.gson.JsonObject
+import com.walkins.technician.model.login.UserInfoModel
 import com.walkins.technician.model.login.comment.CommentListModel
 import com.walkins.technician.model.login.issue_list.IssueListModel
 import com.walkins.technician.model.login.service.ServiceModel
@@ -20,6 +21,7 @@ class CommonViewModel : ViewModel() {
     private var serviceModel: MutableLiveData<ServiceModel>? = null
     private var commentListModel: MutableLiveData<CommentListModel>? = null
     private var serviceByIdModel: MutableLiveData<ServiceDataByIdModel>? = null
+    private var userInfo: MutableLiveData<UserInfoModel>? = null
 
     fun callApiListOfIssue(
         accessToken: String,
@@ -68,6 +70,18 @@ class CommonViewModel : ViewModel() {
 
     fun getServiceById(): LiveData<ServiceDataByIdModel> {
         return serviceByIdModel!!
+    }
+
+    fun callApiGetUserInfo(
+        accessToken: String,
+        context: Context
+    ) {
+        commonRepo = CommonRepo().getInstance()
+        userInfo = commonRepo?.getUserInfo(context, accessToken)
+    }
+
+    fun getUserInfo(): LiveData<UserInfoModel> {
+        return userInfo!!
     }
 
 }

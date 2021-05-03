@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var llReport: LinearLayout? = null
     private var llNotification: LinearLayout? = null
     private var llProfile: LinearLayout? = null
-    private var tvUsername: TextView? = null
+    open var tvUsername: TextView? = null
 
     private var prefManager: PrefManager? = null
     private var loginViewModel: LoginActivityViewModel? = null

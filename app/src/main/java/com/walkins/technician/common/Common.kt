@@ -46,6 +46,8 @@ import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.custom.BoldButton
+import com.walkins.technician.model.login.UserInfoModel
+import com.walkins.technician.model.login.building.BuildingListModel
 import com.walkins.technician.model.login.comment.CommentListModel
 import com.walkins.technician.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.technician.model.login.issue_list.IssueListModel
@@ -381,6 +383,22 @@ class Common {
                             )
                         return CommentListModel
                     }
+                    "UserInfoModel" -> {
+                        val UserInfoModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                UserInfoModel::class.java
+                            )
+                        return UserInfoModel
+                    }
+                    "BuildingListModel" -> {
+                        val BuildingListModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                BuildingListModel::class.java
+                            )
+                        return BuildingListModel
+                    }
 
                     else -> {
                         return null
@@ -551,6 +569,22 @@ class Common {
                                         CommentListModel::class.java
                                     )
                                 return CommentListModel
+                            }
+                            "UserInfoModel" -> {
+                                val UserInfoModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        UserInfoModel::class.java
+                                    )
+                                return UserInfoModel
+                            }
+                            "BuildingListModel" -> {
+                                val BuildingListModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        BuildingListModel::class.java
+                                    )
+                                return BuildingListModel
                             }
 
 

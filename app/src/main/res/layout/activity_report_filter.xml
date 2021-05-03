@@ -190,7 +190,7 @@
                             <com.walkins.technician.custom.NormalTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Vehicle Make"
+                                android:text="Society"
                                 android:textColor="@color/text_color1"
                                 android:textSize="@dimen/fourteen_sp" />
 
@@ -213,6 +213,7 @@
                             android:layout_marginStart="@dimen/twenty_dp"
                             android:layout_marginTop="@dimen/sixteen_dp"
                             android:layout_marginEnd="@dimen/twenty_dp"
+                            android:visibility="gone"
                             android:orientation="vertical">
 
                             <com.walkins.technician.custom.NormalTextView
@@ -241,6 +242,7 @@
                             android:layout_marginStart="@dimen/twenty_dp"
                             android:layout_marginTop="@dimen/sixteen_dp"
                             android:layout_marginEnd="@dimen/twenty_dp"
+                            android:visibility="gone"
                             android:layout_marginBottom="@dimen/sixteen_dp"
                             android:orientation="vertical">
 

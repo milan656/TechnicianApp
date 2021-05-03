@@ -51,6 +51,7 @@
             </RelativeLayout>
 
             <com.walkins.technician.custom.BoldHeavyTextView
+                android:id="@+id/tvusername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -62,6 +63,7 @@
                 android:textStyle="bold" />
 
             <com.walkins.technician.custom.BoldTextView
+                android:id="@+id/tvMobilenumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

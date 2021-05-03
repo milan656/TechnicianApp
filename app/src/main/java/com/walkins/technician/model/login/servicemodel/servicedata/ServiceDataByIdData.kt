@@ -38,6 +38,18 @@ data class ServiceDataByIdData(
     @SerializedName("front_right_tyre_make")
     @Expose
     val frontRightTyreMake: String,
+    @SerializedName("front_left_tyre_make_image")
+    @Expose
+    val front_left_tyre_make_image: String,
+    @SerializedName("front_right_tyre_make_image")
+    @Expose
+    val front_right_tyre_make_image: String,
+    @SerializedName("back_left_tyre_make_image")
+    @Expose
+    val back_left_tyre_make_image: String,
+    @SerializedName("back_right_tyre_make_image")
+    @Expose
+    val back_right_tyre_make_image: String,
     @SerializedName("back_left_tyre_make")
     @Expose
     val backLeftTyreMake: String,
