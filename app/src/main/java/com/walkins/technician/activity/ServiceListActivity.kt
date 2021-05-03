@@ -68,7 +68,6 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         setContentView(R.layout.activity_service_list)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         prefManager = PrefManager(this)
-
         init()
     }
 
