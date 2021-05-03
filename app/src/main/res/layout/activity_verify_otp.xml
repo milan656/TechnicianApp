@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bg_color"
 
     android:orientation="vertical">
@@ -22,7 +22,6 @@
             android:orientation="vertical">
 
 
-
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -38,9 +37,8 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_alignParentTop="true"
-                        android:src="@drawable/ic_back_arrow"
                         android:padding="@dimen/fourteen_dp"
-                        />
+                        android:src="@drawable/ic_back_arrow" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -179,20 +177,38 @@
 
                                 </LinearLayout>
 
-
-                                <com.walkins.technician.custom.NormalTextView
-                                    android:id="@+id/tvResend"
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginStart="@dimen/twenty_four_dp"
-                                    android:layout_marginTop="@dimen/eight_dp"
-                                    android:layout_marginEnd="@dimen/twenty_four_dp"
-                                    android:gravity="start|center"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/fourteen_sp" />
+                                    android:orientation="horizontal">
 
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="@dimen/twenty_four_dp"
+                                        android:layout_marginTop="@dimen/eight_dp"
+                                        android:gravity="start|center"
+                                        android:text="Didn't receive OTP?"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/fourteen_sp"
+                                        android:layout_marginLeft="@dimen/twenty_four_dp" />
 
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:id="@+id/tvResend"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="@dimen/ten_dp"
+                                        android:layout_marginEnd="@dimen/ten_dp"
+                                        android:layout_marginTop="@dimen/eight_dp"
+                                        android:gravity="start|center"
+                                        android:text="Resend"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/blue_color"
+                                        android:textSize="@dimen/fourteen_sp" />
+
+                                </LinearLayout>
                             </LinearLayout>
 
                         </LinearLayout>

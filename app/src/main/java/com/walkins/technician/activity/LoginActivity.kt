@@ -88,10 +88,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         )
         if (!hasPermissions(this, *PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, 1)
-
-
-        } else {
-
         }
     }
 
@@ -227,14 +223,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         jsonObject.addProperty("phone_number", edtLoginEmail.text.toString())
         Log.e("getobject", "" + jsonObject)
 
-        loginViewModel.initTwo(jsonObject, edtLoginEmail.text?.toString()!!, "1212", "password", "", "", 0, "", "", "")
+        loginViewModel.initTwo(jsonObject)
         loginViewModel.sendOtp()?.observe(this, Observer {
             Common.hideLoader()
             if (it != null) {
                 if (it.success) {
                     val intent = Intent(this, VerifyOtpActivity::class.java)
                     intent.putExtra("number", edtLoginEmail.text?.toString())
-
                     startActivity(intent)
                 } else {
                     if (it.error != null && it.error.get(0).message != null) {

@@ -1,5 +1,6 @@
 package com.walkins.technician.activity
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -13,6 +14,7 @@ import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
@@ -25,6 +27,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.gson.JsonObject
 import com.walkins.technician.R
 import com.walkins.technician.common.MySMSBroadcastReceiver
 import com.walkins.technician.custom.BoldButton
@@ -52,7 +55,10 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
         prefManager = PrefManager(this@VerifyOtpActivity)
         init()
+
+
     }
+
 
     private fun init() {
         tvResend = findViewById(R.id.tvResend)
@@ -73,7 +79,16 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
 
-        tvResend?.text = Html.fromHtml("Didn't receive OTP? <font color='blue'>Resend<font/>")
+        tvResend?.setOnTouchListener(object :View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+
+                callSendOTPApi()
+                return false
+            }
+
+        })
+
+//        tvResend?.text = Html.fromHtml("Didn't receive OTP?")
         startSMSListener()
 
         smsBroadcastReceiver = MySMSBroadcastReceiver(this)
@@ -178,10 +193,26 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             }
 
         })
+    }
 
+    private fun callSendOTPApi() {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("phone_number", intent?.getStringExtra("number"))
+        Log.e("getobject", "" + jsonObject)
 
+        loginViewModel.initTwo(jsonObject)
+        loginViewModel.sendOtp()?.observe(this, Observer {
+            Common.hideLoader()
+            if (it != null) {
+                if (it.success) {
 
-
+                } else {
+                    if (it.error != null && it.error.get(0).message != null) {
+                        loginFail(it.error.get(0).message, "Oops!")
+                    }
+                }
+            }
+        })
     }
 
     fun hasPermissions(context: Context?, vararg permissions: String?): Boolean {

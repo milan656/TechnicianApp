@@ -72,27 +72,12 @@ class LoginActivityViewModel : ViewModel() {
 
     fun initTwo(
         jsonObject: JsonObject,
-        url: String,
-        userId: String,
-        password: String,
-        grantType: String,
-        authorizationToke: String,
-        versionCode: Int,
-        deviceName: String?,
-        androidOS: String,
-        deviceType: String?
+
     ) {
 
         loginRepository = LoginRepository().getInstance()
         otpModel = loginRepository!!.loginUserTwo(
-            jsonObject/*,
-            userId,
-            password,
-            grantType,
-            authorizationToke,
-            versionCode,
-            deviceName,
-            androidOS*/
+            jsonObject
         )
 
     }

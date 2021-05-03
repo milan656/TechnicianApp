@@ -57,8 +57,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var fullAddress = ""
 
     companion object {
-        var upcomming = "pending"
-        var completed = "completed"
+        var upcomming = "open"
+        var completed = "complete"
         var skipped = "skipped"
     }
 
@@ -252,6 +252,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
     override fun onPositionClick(variable: Int, check: Int) {
 
+        Log.e("checkva",""+check+" "+serviceStatus)
         if (check == 1) {
 
             if (serviceStatus.equals(upcomming)) {
@@ -264,10 +265,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 startActivity(intent)
 
             } else if (serviceStatus.equals(completed)) {
+                Log.e("checkva",""+check)
                 var intent = Intent(this, CompletedServiceDetailActivity::class.java)
                 intent.putExtra("title", "Service Detail")
                 startActivity(intent)
             } else if (serviceStatus.equals(skipped)) {
+                Log.e("checkva",""+check)
                 var intent = Intent(this, SkippedServiceDetailActivity::class.java)
                 startActivity(intent)
             }
