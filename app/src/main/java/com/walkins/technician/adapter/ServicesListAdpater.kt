@@ -1,6 +1,7 @@
 package com.walkins.technician.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,19 +45,6 @@ class ServicesListAdpater(
 
     override fun onBindViewHolder(holder: ServicesListAdpater.Viewholder, position: Int) {
 
-        holder.itemView.setOnClickListener {
-
-            if (onclick != null) {
-                onclick?.onPositionClick(position, 0)
-            }
-        }
-
-        holder.cardAddService.setOnClickListener {
-            if (onclick != null) {
-                onclick?.onPositionClick(position, 1)
-            }
-        }
-
         holder.ivCarimg.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_car_image1))
         holder.tvVehicleName.text = "" + array.get(position).make + "," + array.get(position).model
         holder.tvVehicleNumber.text = array.get(position).regNumber
@@ -69,6 +57,19 @@ class ServicesListAdpater(
         }
         if (array.get(position).color.equals("red", ignoreCase = true)) {
             holder.lllineView.setBackgroundColor(context.resources.getColor(R.color.red_color))
+        }
+        holder.itemView.setOnClickListener {
+            Log.e("getposs00", "" + position)
+            if (onclick != null) {
+                onclick?.onPositionClick(position, 0)
+            }
+        }
+
+        holder.cardAddService.setOnClickListener {
+            Log.e("getposs", "" + position)
+            if (onclick != null) {
+                onclick?.onPositionClick(position, 1)
+            }
         }
 
 

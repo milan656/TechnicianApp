@@ -50,7 +50,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var tvAddress: TextView? = null
     private var tvDate: TextView? = null
     private var tvNoServiceData: TextView? = null
-    private var serviceStatus = ""
+
     private var selectedDate = ""
     private var selectedDateFormated = ""
     private var addressTitle = ""
@@ -61,6 +61,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         var completed = "complete"
         var skipped = "skipped"
     }
+    private var serviceStatus = upcomming
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,6 +194,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 }
 
                 serviceRecycView?.adapter = adapter
+                adapter?.onclick = this
 
             }
             R.id.llCompleted -> {
@@ -212,6 +214,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 }
 
                 serviceRecycView?.adapter = adapter
+                adapter?.onclick = this
 
 
             }
@@ -232,6 +235,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
                 serviceRecycView?.adapter = adapter
+                adapter?.onclick = this
 
             }
             R.id.ivBack -> {
