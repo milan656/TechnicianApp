@@ -29,6 +29,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
     private var tyreSuggestionAdapter: PendingTyreSuggestionAdpater? = null
     private var tvTitle: TextView? = null
     private var ivBack: ImageView? = null
+    private var ivVisualDetailPhoto: ImageView? = null
     private var ivSelectedMake: ImageView? = null
     private var tvSelectedPattern: TextView? = null
     private var tvSelectedSize: TextView? = null
@@ -48,6 +49,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
+        ivVisualDetailPhoto = findViewById(R.id.ivVisualDetailPhoto)
 
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
         tyreSuggestionAdapter = PendingTyreSuggestionAdpater(suggestionArr, this, this)
@@ -90,6 +92,15 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        try {
+            Glide.with(this@CompletedVisualDetailActivity)
+                .load(TyreDetailCommonClass.visualDetailPhotoUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.placeholder)
+                .into(ivVisualDetailPhoto!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
         Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
@@ -114,7 +125,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
 
         suggestionArr.clear()
 
-        for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!){
+        for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
             suggestionArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i)!!)
         }
 
