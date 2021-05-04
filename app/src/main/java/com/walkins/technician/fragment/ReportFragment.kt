@@ -18,6 +18,7 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
@@ -112,13 +113,13 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 //        setadapter(skipSelected)
 
-        /*for (i in 0..5) {
+       /* for (i in 0..5) {
 
             var dashboardModel: ReportHistoryModel? = null
             when (i) {
                 0, 1 -> {
                     dashboardModel = ReportHistoryModel(
-                        "Titanium City Center,Anandnagar",
+                        "Titanium City Center,Anandnagar","","","",
                         24, 20, 21, 45, System.currentTimeMillis(),
                         System.currentTimeMillis()
                     )
@@ -130,7 +131,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                     val startDate = date.time
                     dashboardModel = ReportHistoryModel(
-                        "Prahladnagar garden",
+                        "Prahladnagar garden","","","",
                         34, 30, 4, 40, startDate,
                         startDate
                     )
@@ -162,7 +163,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         activity?.let {
             Common.showLoader(it)
 
-            var jsonObject = JsonObject()
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("building_id","")
+            jsonObject.add("service",JsonArray())
             serviceViewModel?.callApiReportList(jsonObject, prefManager.getAccessToken()!!, it)
             serviceViewModel?.getReportservice()?.observe(it, androidx.lifecycle.Observer {
                 Common.hideLoader()
@@ -172,33 +175,76 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         Log.e("getdataa", "" + it.data)
                         historyDataList.clear()
 
+                        for (i in it.data.serviceData.indices) {
+                            Log.e("getdataa", "" + i)
+                            var dashboardModel: ReportHistoryModel? = null
+                            when (i) {
+                                0, 1 -> {
+                                    dashboardModel = ReportHistoryModel(
+                                        "Titanium City Center,Anandnagar","","","",
+                                        24, 20, 21, 45, System.currentTimeMillis(),
+                                        System.currentTimeMillis()
+                                    )
+                                }
+                                2, 3, 4, 5 -> {
+                                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'00:00:00.000'Z'")
+                                    val formatterDisplay = SimpleDateFormat("dd-MM-yyyy")
+                                    val dateInString = formatterDisplay.parse(date)
+                                    displayDate = formatter.format(dateInString)
+
+                                    val dateString = "30/09/2021"
+                                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                                    val date_ = sdf.parse(dateString)
+
+                                    val startDate = date_.time
+                                    dashboardModel = ReportHistoryModel(
+                                        "Prahladnagar garden","","","",
+                                        34, 30, 4, 40, startDate,
+                                        startDate
+                                    )
+                                }
+                            }
+                            Log.e("getdataa", "" + dashboardModel)
+                            historyDataList.add(dashboardModel!!)
+                        }
+                        Log.e("getdataa", "" + historyDataList.size)
+                        mAdapter?.notifyDataSetChanged()
+
                         if (it.data != null && it.data.serviceData.size > 0) {
-                            for (i in it.data.serviceData.indices) {
+
+
+                            /*for (i in it.data.serviceData.indices) {
 
                                 var dashboardModel: ReportHistoryModel? = null
-                                val dateString = it.data.serviceData.get(i).actualServiceDate
-                                var startDate: Long? = 0L
-                                if (dateString != null) {
-                                    Log.e("getdatefrom", "" + dateString)
-                                    val sdf = SimpleDateFormat("yyyy-MM-dd")
-                                    val date = sdf.parse(dateString)
+                                when (i) {
+                                    0, 1 -> {
+                                        val dateString = "25/06/2021"
+                                        Log.e("getdatefrom", "" + dateString)
+                                        val sdf = SimpleDateFormat("yyyy-MM-dd")
+                                        val date = sdf.parse(dateString)
+                                        val startDate = date.time
+                                        dashboardModel = ReportHistoryModel(
+                                            "", "", "", "",
+                                            1, 2, 3, 45, startDate,
+                                            startDate
+                                        )
+                                    }
+                                    2, 3, 4, 5 -> {
+                                        val dateString = "30/09/2021"
+                                        val sdf = SimpleDateFormat("yyyy-MM-dd")
+                                        val date = sdf.parse(dateString)
 
-                                    startDate = date.time
-                                    Log.e("getdatefromstart", "" + startDate)
+                                        val startDate = date.time
+                                        dashboardModel = ReportHistoryModel(
+                                            "", "", "", "",
+                                            1, 2, 3, 45, startDate,
+                                            startDate
+                                        )
+                                    }
                                 }
-                                var list: ArrayList<ServiceListData>? = ArrayList()
 
-                                for (j in it.data.serviceData.get(i).service.indices) {
-                                    list?.add(it.data.serviceData.get(i).service.get(j))
-                                }
-                                dashboardModel = ReportHistoryModel(
-                                    it.data.serviceData.get(i).color, it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).status,
-                                    startDate!!, startDate, list!!, it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).actualServiceDate
-                                )
-
-                                historyDataList.add(dashboardModel)
-
-                            }
+                                historyDataList.add(dashboardModel!!)
+                            }*/
 //                            relNoData?.visibility = View.GONE
                             reportRecycView?.visibility = View.VISIBLE
                         } else {
@@ -206,7 +252,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                             reportRecycView?.visibility = View.GONE
                         }
-                        mAdapter?.notifyDataSetChanged()
+//                        mAdapter?.notifyDataSetChanged()
 
                     } else {
 //                        relNoData?.visibility = View.VISIBLE

@@ -35,5 +35,8 @@ data class ReportServiceData(
     val modelImage: String,
     @SerializedName("actual_service_date")
     @Expose
-    val actualServiceDate: String
+    val actualServiceDate: String,
+    @SerializedName("service_scheduled_date")
+    @Expose
+    val service_scheduled_date: String
 )

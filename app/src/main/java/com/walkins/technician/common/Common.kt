@@ -46,6 +46,7 @@ import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.common.TyreConfigClass
 import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.custom.BoldButton
+import com.walkins.technician.model.login.ReportServiceModel
 import com.walkins.technician.model.login.UserInfoModel
 import com.walkins.technician.model.login.building.BuildingListModel
 import com.walkins.technician.model.login.comment.CommentListModel
@@ -399,6 +400,15 @@ class Common {
                             )
                         return BuildingListModel
                     }
+                    "ReportServiceModel" -> {
+                        val ReportServiceModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ReportServiceModel::class.java
+                            )
+                        return ReportServiceModel
+                    }
+
 
                     else -> {
                         return null
@@ -585,6 +595,15 @@ class Common {
                                         BuildingListModel::class.java
                                     )
                                 return BuildingListModel
+                            }
+
+                            "ReportServiceModel" -> {
+                                val ReportServiceModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ReportServiceModel::class.java
+                                    )
+                                return ReportServiceModel
                             }
 
 
