@@ -8,7 +8,6 @@
     android:background="@color/bg_color"
     tools:context=".fragment.HomeFragment">
 
-
     <LinearLayout
         android:id="@+id/llheader"
         android:layout_width="match_parent"

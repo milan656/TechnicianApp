@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.walkins.technician.R
 import com.walkins.technician.common.OnBottomReachedListener
 import com.walkins.technician.common.onClickAdapter
@@ -47,6 +49,10 @@ class ReportHistorySkippedAdapter(
 
         Log.e("getdatee00", "" + mDataset.get(position))
         val item: ReportHistoryModel = mDataset[position]
+
+        if (position == mDataset.size - 1) {
+            onBottomReachedListener?.onBottomReached(position)
+        }
 //        if (item.getName().equals("") || item.getName() == null) {
 //            holder.name.visibility = View.GONE
 //        } else {
@@ -61,6 +67,18 @@ class ReportHistorySkippedAdapter(
             if (onclick != null) {
                 onclick?.onPositionClick(position, 0)
             }
+        }
+
+        holder.tvColor?.text = mDataset.get(position).carColor
+        holder.tvMakemodel?.text = mDataset.get(position).makeModel
+        holder.tvRegNumber?.text = mDataset.get(position).regNumber.toString()
+
+        try {
+            Glide.with(mContext).load(mDataset.get(position).carImageURL)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.ic_no_car_image).into(holder.ivCarImage)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -88,6 +106,10 @@ class ReportHistorySkippedAdapter(
         mRoot
     ) {
 
+        var tvRegNumber = itemView.findViewById<TextView>(R.id.tvRegNumber)
+        var tvMakemodel = itemView.findViewById<TextView>(R.id.tvMakemodel)
+        var ivCarImage = itemView.findViewById<ImageView>(R.id.ivCarImage)
+        var tvColor = itemView.findViewById<TextView>(R.id.tvColor)
 
     }
 
