@@ -2,6 +2,7 @@ package com.walkins.technician.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.adapter.PendingTyreSuggestionAdpater
+import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
 
 class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
@@ -52,6 +54,27 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
             }
         }
         ivBack?.setOnClickListener(this)
+
+        Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeId!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeURL!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePattern!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePatternId!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSize!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSizeId!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.manufaturingDate!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.psiInTyreService!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.psiOutTyreService!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.weightTyreService!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.sidewell!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.shoulder!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.treadDepth!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.treadWear!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.rimDamage!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.bubble!!)
+        Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
+        Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
 
     }
 

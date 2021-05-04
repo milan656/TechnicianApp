@@ -66,7 +66,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#F1F3F8"/>
+                android:background="#F1F3F8" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -103,20 +103,46 @@
                                 android:textColor="@color/text_color1"
                                 android:textSize="@dimen/twelve_sp" />
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/ten_dp"
-                                android:background="@drawable/selected">
+                                android:orientation="vertical">
 
-                                <ImageView
+                                <RelativeLayout
+                                    android:id="@+id/rl_item_view"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="@dimen/two_dp"
-                                    android:layout_marginBottom="@dimen/two_dp"
-                                    android:src="@mipmap/car" />
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/layout_bg_secondary_"
+                                    android:orientation="vertical">
 
-                            </RelativeLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:gravity="center"
+
+                                        android:orientation="vertical">
+
+
+                                        <ImageView
+                                            android:id="@+id/ivSelectedCar"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:padding="@dimen/ten_dp"
+                                            android:src="@mipmap/car" />
+                                    </LinearLayout>
+
+                                    <ImageView
+                                        android:id="@+id/ivselectedVehicleModel"
+                                        android:layout_width="12dp"
+                                        android:layout_height="10dp"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_margin="@dimen/six_dp"
+                                        android:src="@drawable/ic_selected_vehicle"
+                                        android:visibility="visible" />
+                                </RelativeLayout>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
@@ -138,16 +164,34 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="@dimen/ten_dp"
-                                android:background="@drawable/selected">
+                                android:background="@drawable/layout_bg_secondary_"
+                                android:orientation="vertical">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
                                     android:gravity="center"
-                                    android:text="ZVTV A2"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
 
+                                    android:orientation="vertical">
+
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/five_dp"
+                                        android:text="ZMHGGHGJ"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="10dp"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_margin="@dimen/six_dp"
+                                    android:src="@drawable/ic_selected_vehicle"
+                                    android:visibility="visible" />
                             </RelativeLayout>
                         </LinearLayout>
 
@@ -170,16 +214,33 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="@dimen/ten_dp"
-                                android:background="@drawable/selected">
+                                android:background="@drawable/layout_bg_secondary_"
+                                android:orientation="vertical">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
                                     android:gravity="center"
-                                    android:text="175/65 R14"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/fourteen_sp" />
 
+                                    android:orientation="vertical">
+
+                                    <com.walkins.technician.custom.NormalTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="175/65 R14"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/fourteen_sp" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="10dp"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_margin="@dimen/six_dp"
+                                    android:src="@drawable/ic_selected_vehicle"
+                                    android:visibility="visible" />
                             </RelativeLayout>
                         </LinearLayout>
 
@@ -568,23 +629,6 @@
                             android:layout_height="match_parent" />
 
 
-                        <com.walkins.technician.custom.NormalTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/twenty_dp"
-                            android:text="More Suggestions (optional)"
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/twelve_sp" />
-
-                        <com.walkins.technician.custom.BoldTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/five_dp"
-                            android:text="You need to take your car for servicing more offen. Your car is very old."
-                            android:textColor="@color/text_color1"
-                            android:textSize="@dimen/fourteen_sp" />
-
-
                         <RelativeLayout
                             android:id="@+id/relCarPhotoAdd2"
                             android:layout_width="match_parent"
@@ -594,7 +638,6 @@
                             android:background="@drawable/layout_bg_secondary_"
                             android:orientation="vertical"
                             android:padding="@dimen/two_dp">
-
 
                             <ImageView
                                 android:layout_width="match_parent"

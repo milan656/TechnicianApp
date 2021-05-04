@@ -30,7 +30,6 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class ProfileFragment : Fragment(), onClickAdapter {
-    // TODO: Rename and change types of parameters
     var image_uri: Uri? = null
     private var param1: String? = null
     private var param2: String? = null
@@ -47,6 +46,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
     private var tvusername: TextView? = null
     private var tvMobilenumber: TextView? = null
+    private var tvLogout: TextView? = null
 
     private var commonViewModel: CommonViewModel? = null
 
@@ -85,6 +85,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private fun init(view: View?) {
         tvMobilenumber = view?.findViewById(R.id.tvMobilenumber)!!
         tvusername = view?.findViewById(R.id.tvusername)!!
+        tvLogout = view.findViewById(R.id.tvLogout)!!
         ivCamera = view?.findViewById(R.id.ivCamera)!!
         ivProfileImg = view.findViewById(R.id.ivProfileImg)!!
         tvTitle = view.findViewById(R.id.tvTitle)
@@ -100,6 +101,11 @@ class ProfileFragment : Fragment(), onClickAdapter {
         }
         ivBack?.visibility = View.GONE
         tvTitle?.text = "Your Profile"
+
+        tvLogout?.setOnClickListener {
+
+//            callLogout api
+        }
 
         getUserInfo()
     }

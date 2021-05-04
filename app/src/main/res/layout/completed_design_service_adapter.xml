@@ -12,8 +12,8 @@
         android:orientation="vertical"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center"
@@ -21,7 +21,7 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eighteen_dp"
             android:layout_marginEnd="@dimen/eighteen_dp"
@@ -30,19 +30,17 @@
 
             <ImageView
                 android:id="@+id/ivServiceImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:src="@mipmap/ic_nitrogen_topup" />
 
             <com.walkins.technician.custom.NormalTextView
                 android:id="@+id/tvservice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginStart="@dimen/five_dp"
-                android:layout_marginLeft="@dimen/five_dp"
                 android:gravity="center"
                 android:text="Nitrogen Top Up"
                 android:textColor="@color/text_color1"
