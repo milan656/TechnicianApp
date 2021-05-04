@@ -198,17 +198,6 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         })
 
-
-        mAdapterSkipped = context?.let { ReportHistorySkippedAdapter(it, historyDataList, this) }
-        var decorSkip = StickyHeaderDecoration(mAdapterSkipped)
-
-        // use a linear layout manager
-        val layoutManagerSkip = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
-        reportRecycView?.setLayoutManager(layoutManagerSkip)
-        reportRecycView?.setAdapter(mAdapterSkipped)
-        reportRecycView?.addItemDecoration(decorSkip)
-        mAdapterSkipped?.onclick = this
-
         mAdapterSkipped?.setOnBottomReachedListener(object : OnBottomReachedListener {
             override fun onBottomReached(position: Int) {
                 if (position >= 9) {
@@ -234,11 +223,77 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
 
         })
+
+
+        /* mAdapterSkipped = context?.let { ReportHistorySkippedAdapter(it, historyDataList, this) }
+         var decorSkip = StickyHeaderDecoration(mAdapterSkipped)
+
+         // use a linear layout manager
+         val layoutManagerSkip = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+         reportRecycView?.setLayoutManager(layoutManagerSkip)
+         reportRecycView?.setAdapter(mAdapterSkipped)
+         reportRecycView?.addItemDecoration(decorSkip)
+         mAdapterSkipped?.onclick = this
+
+         mAdapterSkipped?.setOnBottomReachedListener(object : OnBottomReachedListener {
+             override fun onBottomReached(position: Int) {
+                 if (position >= 9) {
+
+                     if (!isDataFinish!!) {
+
+                         page = page + 1
+
+                         // fetchBlockList()
+                         val jsonObject = JsonObject()
+                         jsonObject.addProperty("building_id", selectedSocietyName)
+                         jsonObject.add("service", selectedServiceJson)
+                         jsonObject.addProperty("status", selectedTab)
+                         jsonObject.addProperty("pagesize", pagesize)
+                         jsonObject.addProperty("page", page)
+                         jsonObject.addProperty("q", edtSearch?.text?.toString())
+                         getDashboardService(jsonObject, false)
+
+ //                        callApiToGetAllCustomer("", false, 10, page!!, 1, groupId)
+
+                     }
+                 }
+             }
+
+         })*/
         getServiceList()
 
         llCompleted?.performClick()
 
-        edtSearch?.addTextChangedListener(object :TextWatcher{
+        edtSearch?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null && s.toString().length > 1) {
+                    val jsonObject = JsonObject()
+                    jsonObject.addProperty("building_id", selectedSocietyName)
+                    jsonObject.add("service", selectedServiceJson)
+                    jsonObject.addProperty("status", selectedTab)
+                    jsonObject.addProperty("pagesize", pagesize)
+                    jsonObject.addProperty("page", page)
+                    jsonObject.addProperty("q", edtSearch?.text?.toString())
+                    getDashboardService(jsonObject, true)
+                } else {
+                    val jsonObject = JsonObject()
+                    jsonObject.addProperty("building_id", selectedSocietyName)
+                    jsonObject.add("service", selectedServiceJson)
+                    jsonObject.addProperty("status", selectedTab)
+                    jsonObject.addProperty("pagesize", pagesize)
+                    jsonObject.addProperty("page", page)
+                    jsonObject.addProperty("q", "")
+                    getDashboardService(jsonObject, true)
+                }
+            }
 
         })
 
@@ -298,7 +353,21 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             var dashboardModel: ReportHistoryModel? = null
                             var list: ArrayList<ServiceListData>? = ArrayList()
                             list?.addAll(it.data.serviceData.get(i).service)
-                            when (i) {
+
+                            val dateString = it.data.serviceData.get(i).service_scheduled_date
+                            Log.e("getdatefrom", "" + dateString)
+                            val sdf = SimpleDateFormat("yyyy-MM-dd")
+                            val date = sdf.parse(dateString)
+
+                            val startDate = date.time
+
+                            dashboardModel = ReportHistoryModel(
+                                it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
+                                it.data.serviceData.get(i).modelImage, 30, 4, list!!, 40, startDate,
+                                startDate
+                            )
+                            historyDataList.add(dashboardModel)
+                            /*when (i) {
 
                                 0, 1 -> {
                                     dashboardModel = ReportHistoryModel(
@@ -309,11 +378,12 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 }
                                 2, 3 -> {
 
-                                    val dateString = "25/08/2021"
-                                    val sdf = SimpleDateFormat("dd/MM/yyyy")
-                                    val date_ = sdf.parse(dateString)
+                                    val dateString = it.data.serviceData.get(i).service_scheduled_date
+                                    Log.e("getdatefrom", "" + dateString)
+                                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                                    val date = sdf.parse(dateString)
 
-                                    val startDate = date_.time
+                                    val startDate = date.time
 
                                     dashboardModel = ReportHistoryModel(
                                         it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
@@ -336,7 +406,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 }
                             }
                             Log.e("getdataa", "" + dashboardModel)
-                            historyDataList.add(dashboardModel!!)
+                            historyDataList.add(dashboardModel!!)*/
                         }
                         Log.e("getdataa", "" + historyDataList.size)
 
@@ -429,9 +499,22 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                      DividerItemDecoration.VERTICAL
                  )
              )*/
+            mAdapter = arrayAdapter
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
             selectedTab = "complete"
+            page = 1
+            pagesize = 10
+
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("building_id", "")
+            jsonObject.add("service", JsonArray())
+            jsonObject.addProperty("status", selectedTab)
+            jsonObject.addProperty("pagesize", pagesize)
+            jsonObject.addProperty("page", page)
+            jsonObject.addProperty("q", edtSearch?.text?.toString())
+            getDashboardService(jsonObject, true)
+
         } else {
 
             val arrayAdapter =
@@ -447,9 +530,12 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                      DividerItemDecoration.VERTICAL
                  )
              )*/
+            mAdapterSkipped = arrayAdapter
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
             selectedTab = "skip"
+            page = 1
+            pagesize = 10
 
             val jsonObject = JsonObject()
             jsonObject.addProperty("building_id", "")
@@ -506,10 +592,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
                 skipSelected = false
 
-                selectedTab = "complete"
-                callReportApi()
-
-//                setadapter(skipSelected)
+                setadapter(skipSelected)
             }
             R.id.llSkippedReport -> {
                 llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
@@ -518,10 +601,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
                 skipSelected = true
-                selectedTab = "skip"
-                callReportApi()
-
-//                setadapter(skipSelected)
+                setadapter(skipSelected)
 
             }
 
