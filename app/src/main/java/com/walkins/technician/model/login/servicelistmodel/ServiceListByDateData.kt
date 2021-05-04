@@ -13,6 +13,9 @@ data class ServiceListByDateData(
     @SerializedName("color")
     @Expose
     val color: String,
+    @SerializedName("color_code")
+    @Expose
+    val color_code: String,
     @SerializedName("status")
     @Expose
     val status: String,
@@ -25,6 +28,9 @@ data class ServiceListByDateData(
     @SerializedName("model")
     @Expose
     val model: String,
+    @SerializedName("model_image")
+    @Expose
+    val model_image: String,
     @SerializedName("service")
     @Expose
     val service: List<ServiceListData>,

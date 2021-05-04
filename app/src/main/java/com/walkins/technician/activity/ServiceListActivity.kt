@@ -295,7 +295,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("color", arrayList.get(variable).color)
                 intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
                 intent.putExtra("regNumber", arrayList.get(variable).regNumber)
-                intent.putExtra("carImage", arrayList.get(variable).image)
+                intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
                 startActivity(intent)
 
@@ -303,6 +303,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 Log.e("checkva", "" + check)
                 var intent = Intent(this, CompletedServiceDetailActivity::class.java)
                 intent.putExtra("title", "Service Detail")
+                intent.putExtra("color", arrayList.get(variable).color)
+                intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
+                intent.putExtra("regNumber", arrayList.get(variable).regNumber)
+                intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
                 startActivity(intent)
             } else if (serviceStatus.equals(skipped)) {
@@ -312,7 +316,6 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 startActivity(intent)
             }
         }
-
     }
 
     private fun showBottomSheetdialogNormal(

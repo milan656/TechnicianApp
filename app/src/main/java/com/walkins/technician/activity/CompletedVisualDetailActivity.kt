@@ -31,13 +31,33 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
     private var ivBack: ImageView? = null
     private var ivVisualDetailPhoto: ImageView? = null
     private var ivSelectedMake: ImageView? = null
+
+    private var ivSideWell: ImageView? = null
+    private var ivTreadDepth: ImageView? = null
+    private var ivShoulder: ImageView? = null
+    private var ivTreadWear: ImageView? = null
+    private var ivRimDamage: ImageView? = null
+    private var ivBulgeBubble: ImageView? = null
+
     private var tvSelectedPattern: TextView? = null
     private var tvSelectedSize: TextView? = null
     private var tvManufacturingDate: TextView? = null
     private var tvPsiIn: TextView? = null
     private var tvPsiOut: TextView? = null
     private var tvWeight: TextView? = null
+    private var tvBubble: TextView? = null
+    private var tvsideWell: TextView? = null
+    private var tvShoulder: TextView? = null
+    private var tvTreadDepth: TextView? = null
+    private var tvTreadWear: TextView? = null
+    private var tvRimDamage: TextView? = null
     private var title: String? = null
+
+    companion object {
+        var okCondition_message = "Condition is acceptable"
+        var sugCondition_message = "Possible performance degredation"
+        var reqCondition_message = "Needs immediate attention"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +69,20 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
+        ivBulgeBubble = findViewById(R.id.ivBulgeBubble)
+        ivTreadDepth = findViewById(R.id.ivTreadDepth)
+        ivTreadWear = findViewById(R.id.ivTreadWear)
+        ivSideWell = findViewById(R.id.ivSideWell)
+        ivShoulder = findViewById(R.id.ivShoulder)
+        ivRimDamage = findViewById(R.id.ivRimDamage)
+
+        tvRimDamage = findViewById(R.id.tvRimDamage)
+        tvBubble = findViewById(R.id.tvBubble)
+        tvsideWell = findViewById(R.id.tvsideWell)
+        tvShoulder = findViewById(R.id.tvShoulder)
+        tvTreadDepth = findViewById(R.id.tvTreadDepth)
+        tvTreadWear = findViewById(R.id.tvTreadWear)
+
         ivVisualDetailPhoto = findViewById(R.id.ivVisualDetailPhoto)
 
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
@@ -101,28 +135,6 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-        Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeURL!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePattern!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePatternId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSize!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSizeId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.manufaturingDate!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.psiInTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.psiOutTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.weightTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.sidewell!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.shoulder!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.treadDepth!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.treadWear!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.rimDamage!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.bubble!!)
-        Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
-
         suggestionArr.clear()
 
         for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
@@ -130,6 +142,83 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         }
 
         tyreSuggestionAdapter?.notifyDataSetChanged()
+
+        if (TyreDetailCommonClass.sidewell.equals("OK", ignoreCase = true)) {
+            ivSideWell?.setImageResource(R.mipmap.ic_condition_ok)
+            tvsideWell?.text = TyreDetailCommonClass.sidewell + " - " + okCondition_message
+        } else if (TyreDetailCommonClass.sidewell.equals("SUG")) {
+            ivSideWell?.setImageResource(R.mipmap.ic_condition_degrade)
+            tvsideWell?.text = TyreDetailCommonClass.sidewell + " - " + sugCondition_message
+        } else if (TyreDetailCommonClass.sidewell.equals("REQ")) {
+            ivSideWell?.setImageResource(R.mipmap.ic_condition_down)
+            tvsideWell?.text = TyreDetailCommonClass.sidewell + " - " + reqCondition_message
+        }
+
+
+        if (TyreDetailCommonClass.shoulder.equals("OK", ignoreCase = true)) {
+            ivShoulder?.setImageResource(R.mipmap.ic_condition_ok)
+            tvShoulder?.text = TyreDetailCommonClass.shoulder + " - " + okCondition_message
+        } else if (TyreDetailCommonClass.shoulder.equals("SUG")) {
+            ivShoulder?.setImageResource(R.mipmap.ic_condition_degrade)
+            tvShoulder?.text = TyreDetailCommonClass.shoulder + " - " + sugCondition_message
+        } else if (TyreDetailCommonClass.shoulder.equals("REQ")) {
+            ivShoulder?.setImageResource(R.mipmap.ic_condition_down)
+            tvShoulder?.text = TyreDetailCommonClass.shoulder + " - " + reqCondition_message
+        }
+
+
+        if (TyreDetailCommonClass.treadDepth.equals("OK", ignoreCase = true)) {
+            ivTreadDepth?.setImageResource(R.mipmap.ic_condition_ok)
+            tvTreadDepth?.text = TyreDetailCommonClass.treadDepth + " - " + okCondition_message
+        } else if (TyreDetailCommonClass.treadDepth.equals("SUG")) {
+            ivTreadDepth?.setImageResource(R.mipmap.ic_condition_degrade)
+            tvTreadDepth?.text = TyreDetailCommonClass.treadDepth + " - " + sugCondition_message
+        } else if (TyreDetailCommonClass.treadDepth.equals("REQ")) {
+            ivTreadDepth?.setImageResource(R.mipmap.ic_condition_down)
+            tvTreadDepth?.text = TyreDetailCommonClass.treadDepth + " - " + reqCondition_message
+        }
+
+
+        if (TyreDetailCommonClass.treadWear.equals("OK", ignoreCase = true)) {
+            ivTreadWear?.setImageResource(R.mipmap.ic_condition_ok)
+            tvTreadWear?.text = TyreDetailCommonClass.treadWear + " - " + okCondition_message
+        } else if (TyreDetailCommonClass.treadWear.equals("SUG")) {
+            ivTreadWear?.setImageResource(R.mipmap.ic_condition_degrade)
+            tvTreadWear?.text = TyreDetailCommonClass.treadWear + " - " + sugCondition_message
+        } else if (TyreDetailCommonClass.treadWear.equals("REQ")) {
+            ivTreadWear?.setImageResource(R.mipmap.ic_condition_down)
+            tvTreadWear?.text = TyreDetailCommonClass.treadWear + " - " + reqCondition_message
+        }
+
+
+        if (TyreDetailCommonClass.rimDamage.equals("OK", ignoreCase = true)) {
+            ivRimDamage?.setImageResource(R.mipmap.ic_condition_ok)
+            tvRimDamage?.text = TyreDetailCommonClass.rimDamage + " - " + okCondition_message
+        } else if (TyreDetailCommonClass.rimDamage.equals("SUG")) {
+            ivRimDamage?.setImageResource(R.mipmap.ic_condition_degrade)
+            tvRimDamage?.text = TyreDetailCommonClass.rimDamage + " - " + sugCondition_message
+        } else if (TyreDetailCommonClass.rimDamage.equals("REQ")) {
+            ivRimDamage?.setImageResource(R.mipmap.ic_condition_down)
+            tvRimDamage?.text = TyreDetailCommonClass.rimDamage + " - " + reqCondition_message
+        }
+
+
+        if (TyreDetailCommonClass.bubble.equals("OK", ignoreCase = true)) {
+            ivBulgeBubble?.setImageResource(R.mipmap.ic_condition_ok)
+            tvBubble?.text = TyreDetailCommonClass.bubble + " - " + okCondition_message
+        } else if (TyreDetailCommonClass.bubble.equals("SUG")) {
+            ivBulgeBubble?.setImageResource(R.mipmap.ic_condition_degrade)
+            tvBubble?.text = TyreDetailCommonClass.bubble + " - " + sugCondition_message
+        } else if (TyreDetailCommonClass.bubble.equals("REQ")) {
+            ivBulgeBubble?.setImageResource(R.mipmap.ic_condition_down)
+            tvBubble?.text = TyreDetailCommonClass.bubble + " - " + reqCondition_message
+        }
+
+        tvPsiOut?.text = TyreDetailCommonClass.psiOutTyreService
+        tvPsiIn?.text = TyreDetailCommonClass.psiInTyreService
+        tvWeight?.text = TyreDetailCommonClass.weightTyreService
+
+
     }
 
     override fun onPositionClick(variable: Int, check: Int) {

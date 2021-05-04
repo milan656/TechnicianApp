@@ -771,8 +771,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
 
         try {
-//            Glide.with(this).load(carImage).into(ivCarImage!!)
-        } catch (e: java.lang.Exception) {
+            Glide.with(this)
+                .load(carImage)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.ic_no_car_image)
+                .into(ivCarImage!!)
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -2387,14 +2391,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         intent.putExtra("regNumber", regNumber)
                         intent.putExtra("carImage", carImage)
                         intent.putExtra("uuid", uuid)
-                        startActivityForResult(intent,106)
+                        startActivityForResult(intent, 106)
                     } else {
                         Common.hideLoader()
-                        showShortToast("Something Went Wrong",this)
+                        showShortToast("Something Went Wrong", this)
                     }
                 } else {
                     Common.hideLoader()
-                    showShortToast("Something Went Wrong",this)
+                    showShortToast("Something Went Wrong", this)
                 }
             })
 

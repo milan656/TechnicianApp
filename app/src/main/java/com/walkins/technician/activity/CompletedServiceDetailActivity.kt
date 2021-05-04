@@ -112,10 +112,15 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var tvMakeModel: TextView? = null
     private var tvRegNumber: TextView? = null
     private var llColor: LinearLayout? = null
+    private var ivCarImage: ImageView? = null
 //    private var serviceAdapter:
 
 
     private var uuid: String? = ""
+    private var color: String = ""
+    private var makeModel: String = ""
+    private var regNumber: String = ""
+    private var carImage: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,6 +153,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         tvMakeModel = findViewById(R.id.tvMakeModel)
         tvRegNumber = findViewById(R.id.tvRegNumber)
         llColor = findViewById(R.id.llColor)
+        ivCarImage = findViewById(R.id.ivCarImage)
 
         ivAddServices = findViewById(R.id.ivAddServices)
         ivAddTechnicalSuggestion = findViewById(R.id.ivAddTechnicalSuggestion)
@@ -204,6 +210,34 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             if (intent.getStringExtra("uuid") != null) {
                 uuid = intent.getStringExtra("uuid")
             }
+
+            if (intent.getStringExtra("makeModel") != null) {
+                makeModel = intent.getStringExtra("makeModel")!!
+            }
+            if (intent.getStringExtra("regNumber") != null) {
+                regNumber = intent.getStringExtra("regNumber")!!
+            }
+            if (intent.getStringExtra("carImage") != null) {
+                carImage = intent.getStringExtra("carImage")!!
+            }
+            if (intent.getStringExtra("color") != null) {
+                color = intent.getStringExtra("color")!!
+            }
+
+        }
+
+        tvColor?.text = color
+        tvRegNumber?.text = regNumber
+        tvMakeModel?.text = makeModel
+
+        try {
+            Glide.with(this)
+                .load(carImage)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.ic_no_car_image)
+                .into(ivCarImage!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
@@ -223,6 +257,10 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         ivPhoneCall?.setOnTouchListener(this)
 
 //        tvCurrentDateTime?.text = Common.getCurrentDateTime()
+
+        tvColor?.text = color
+        tvMakeModel?.text = makeModel
+        tvRegNumber?.text = regNumber
 
         getServiceDataById()
 
@@ -738,7 +776,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             var intent = Intent(this, CompletedVisualDetailActivity::class.java)
             intent.putExtra("title", "Detail - LF")
             startActivity(intent)
-        }else if (tyreType.equals("LR")){
+        } else if (tyreType.equals("LR")) {
             TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.backLeftTyreMake
             TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.backLeftTyrePattern
             TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.backLeftTyreSize
@@ -771,7 +809,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             startActivity(intent)
 
 
-        }else if (tyreType.equals("RF")){
+        } else if (tyreType.equals("RF")) {
             TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.frontRightTyreMake
             TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePattern
             TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.frontRightTyreSize
@@ -802,7 +840,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             intent.putExtra("title", "Detail - RF")
             startActivity(intent)
 
-        }else if (tyreType.equals("RR")){
+        } else if (tyreType.equals("RR")) {
             TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.backRightTyreMake
             TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.backRightTyrePattern
             TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.backRightTyreSize

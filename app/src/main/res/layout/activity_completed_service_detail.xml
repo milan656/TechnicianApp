@@ -98,6 +98,7 @@
                                     android:textStyle="bold" />
 
                                 <ImageView
+                                    android:id="@+id/ivCarImage"
                                     android:layout_width="100dp"
                                     android:layout_height="45dp"
                                     android:layout_gravity="center|bottom"

@@ -394,11 +394,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/ivSideWell"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_ok" />
 
                             <com.walkins.technician.custom.BoldTextView
+                                android:id="@+id/tvsideWell"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/five_dp"
@@ -432,11 +434,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/ivShoulder"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_degrade" />
 
                             <com.walkins.technician.custom.BoldTextView
+                                android:id="@+id/tvShoulder"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/five_dp"
@@ -470,11 +474,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/ivTreadDepth"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_degrade" />
 
                             <com.walkins.technician.custom.BoldTextView
+                                android:id="@+id/tvTreadDepth"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/five_dp"
@@ -508,11 +514,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/ivTreadWear"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_degrade" />
 
                             <com.walkins.technician.custom.BoldTextView
+                                android:id="@+id/tvTreadWear"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/five_dp"
@@ -546,11 +554,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/ivRimDamage"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_degrade" />
 
                             <com.walkins.technician.custom.BoldTextView
+                                android:id="@+id/tvRimDamage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/five_dp"
@@ -584,17 +594,19 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/ivBulgeBubble"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_down" />
 
                             <com.walkins.technician.custom.BoldTextView
+                                android:id="@+id/tvBubble"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/five_dp"
                                 android:layout_marginEnd="@dimen/five_dp"
                                 android:gravity="start|center"
-                                android:text="REQ - Needs immediate attention"
+                                android:text="REQ"
                                 android:textColor="@color/text_color1"
                                 android:textSize="@dimen/fourteen_sp"
                                 android:textStyle="bold" />
