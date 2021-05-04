@@ -27,6 +27,7 @@ class ReportHistoryAdapter(
 ) :
     RecyclerView.Adapter<ReportHistoryAdapter.ViewHolder>(),
     StickyHeaderAdapter<ReportHistoryAdapter.HeaderHolder?> {
+
     private val mContext: Context
     private val mInflater: LayoutInflater
     private val mDataset: List<ReportHistoryModel>
@@ -48,6 +49,11 @@ class ReportHistoryAdapter(
 
         Log.e("getdatee00", "" + mDataset.get(position))
         val item: ReportHistoryModel = mDataset[position]
+
+        if (position == mDataset.size - 1) {
+            onBottomReachedListener?.onBottomReached(position)
+
+        }
 //        if (item.getName().equals("") || item.getName() == null) {
 //            holder.name.visibility = View.GONE
 //        } else {

@@ -38,6 +38,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     private var makeSearchdata: ArrayList<BuildingListData>? = ArrayList()
     private var modelSearchdata: ArrayList<VehicleModelData>? = ArrayList()
     private var selectedMakeId: Int = -1
+    private var selectedSociety: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +90,8 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
                 override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                     selectedMakeId = makeSearchdata?.get(p2)?.id!!
+                    selectedSociety = makeSearchdata?.get(p2)?.uuid!!
+
                 }
             }
         actvehicleModel!!.addTextChangedListener(object : TextWatcher {
@@ -162,7 +165,6 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-
     private fun searchModel(toString: String) {
         this.let {
             makeModelViewModel.getVehicleModel(
@@ -179,7 +181,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
                     modelSearchdata?.clear()
                     modelSearchdata?.addAll(it.data)
                     try {
-                        Log.e("getmodelata",""+modelSearchdata?.size)
+                        Log.e("getmodelata", "" + modelSearchdata?.size)
                         modelDataForSearchApi(modelSearchdata!!)
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
@@ -316,6 +318,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnConfirm -> {
                 var intent = Intent()
                 intent.putExtra("action", "confirm")
+                intent.putExtra("","")
                 setResult(100, intent)
                 finish()
             }

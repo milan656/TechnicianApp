@@ -104,15 +104,7 @@ class TyreSuggestionAdpater(
 
             }
 
-            if (!isFromDialog) {
-                if (onclick != null) {
-                    onclick?.onPositionClick(position, 5)
-                }
-            } else {
-                if (onclick != null) {
-                    onclick?.onPositionClick(position, 6)
-                }
-            }
+
         }
     }
 

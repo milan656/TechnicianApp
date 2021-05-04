@@ -23,20 +23,16 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.walkins.technician.R
 import com.walkins.technician.activity.CompletedServiceDetailActivity
-import com.walkins.technician.activity.ReportFilterActivity
 import com.walkins.technician.activity.SkippedServiceDetailActivity
 import com.walkins.technician.adapter.*
+import com.walkins.technician.common.OnBottomReachedListener
 import com.walkins.technician.common.onClickAdapter
-import com.walkins.technician.model.login.DashboardModel
 import com.walkins.technician.model.login.IssueResolveModel
 import com.walkins.technician.model.login.ReportHistoryModel
-import com.walkins.technician.model.login.ReportServiceData
 import com.walkins.technician.model.login.building.BuildingListData
-import com.walkins.technician.model.login.makemodel.VehicleMakeData
 import com.walkins.technician.model.login.makemodel.VehicleModelData
 import com.walkins.technician.model.login.service.ServiceModel
 import com.walkins.technician.model.login.servicelistmodel.ServiceListData
-import com.walkins.technician.model.login.servicelistmodel.ServiceListData_2
 import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.MakeModelViewModel
 import com.walkins.technician.viewmodel.ServiceViewModel
@@ -59,6 +55,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var commonViewModel: CommonViewModel? = null
     private var serviceModel: ServiceModel? = null
     private var selectedSociety: String? = ""
+    private var selectedSocietyName: String? = ""
+    private var arrayService: ArrayList<Int>? = ArrayList()
 
     var historyDataList: ArrayList<ReportHistoryModel> = ArrayList<ReportHistoryModel>()
 
@@ -67,7 +65,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     private var llCompleted: LinearLayout? = null
     private var tvSkipped: TextView? = null
+    private var tvNoData: TextView? = null
     private var tvCompleted: TextView? = null
+    private var edtSearch: EditText? = null
     private var llSkipped: LinearLayout? = null
     private var skipSelected = false
 
@@ -79,6 +79,12 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var makeSearchdata: ArrayList<BuildingListData>? = ArrayList()
     private var modelSearchdata: ArrayList<VehicleModelData>? = ArrayList()
     private var selectedMakeId: Int = -1
+    private var pagesize = 10
+    private var page = 1
+    private var isDataFinish: Boolean? = false
+    private var selectedTab = "complete"
+    private var selectedServiceJson: JsonArray? = JsonArray()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +112,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         llCompleted = view?.findViewById(R.id.llCompletedReport)
         tvSkipped = view?.findViewById(R.id.tvSkipped)
         tvCompleted = view?.findViewById(R.id.tvCompleted)
+        tvNoData = view?.findViewById(R.id.tvNoData)
+        edtSearch = view?.findViewById(R.id.edtSearch)
+        tvNoData?.visibility = View.GONE
 
         reportRecycView = view?.findViewById(R.id.reportRecycView)
         tvTitle = view?.findViewById(R.id.tvTitle)
@@ -162,12 +171,40 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         reportRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
 
+        mAdapter?.setOnBottomReachedListener(object : OnBottomReachedListener {
+            override fun onBottomReached(position: Int) {
+                if (position >= 9) {
 
+                    if (!isDataFinish!!) {
+
+                        page = page + 1
+
+                        // fetchBlockList()
+                        val jsonObject = JsonObject()
+                        jsonObject.addProperty("building_id", selectedSocietyName)
+                        jsonObject.add("service", selectedServiceJson)
+                        jsonObject.addProperty("status", selectedTab)
+                        jsonObject.addProperty("pagesize", pagesize)
+                        jsonObject.addProperty("page", page)
+                        jsonObject.addProperty("q", edtSearch?.text?.toString())
+                        getDashboardService(jsonObject, false)
+
+//                        callApiToGetAllCustomer("", false, 10, page!!, 1, groupId)
+
+                    }
+                }
+            }
+
+        })
         getServiceList()
         val jsonObject = JsonObject()
         jsonObject.addProperty("building_id", "")
         jsonObject.add("service", JsonArray())
-        getDashboardService(jsonObject)
+        jsonObject.addProperty("status", selectedTab)
+        jsonObject.addProperty("pagesize", pagesize)
+        jsonObject.addProperty("page", page)
+        jsonObject.addProperty("q", edtSearch?.text?.toString())
+        getDashboardService(jsonObject,true)
     }
 
     private fun getServiceList() {
@@ -192,7 +229,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
     }
 
-    private fun getDashboardService(jsonObject_: JsonObject) {
+    private fun getDashboardService(jsonObject_: JsonObject, b: Boolean) {
 
 
         activity?.let {
@@ -205,8 +242,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     if (it.success) {
 
                         Log.e("getdataa", "" + it.data)
-                        historyDataList.clear()
-
+                        if (b) {
+                            historyDataList.clear()
+                        }
                         for (i in it.data.serviceData.indices) {
                             Log.e("getdataa", "" + i)
                             var dashboardModel: ReportHistoryModel? = null
@@ -253,6 +291,17 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             historyDataList.add(dashboardModel!!)
                         }
                         Log.e("getdataa", "" + historyDataList.size)
+
+                        if (historyDataList.size > 0) {
+                            tvNoData?.visibility = View.GONE
+                        } else {
+                            tvNoData?.visibility = View.VISIBLE
+                            if (selectedTab.equals("complete")) {
+                                tvNoData?.text = "There is no any completed report"
+                            } else {
+                                tvNoData?.text = "There is no any skip report"
+                            }
+                        }
                         mAdapter?.notifyDataSetChanged()
 
                         if (it.data != null && it.data.serviceData.size > 0) {
@@ -329,6 +378,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
              )*/
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
+            selectedTab = "complete"
         } else {
             val arrayAdapter =
                 context?.let { ReportHistorySkippedAdapter(it, historyDataList, this) }
@@ -345,6 +395,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
              )*/
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
+            selectedTab = "skip"
         }
     }
 
@@ -436,17 +487,38 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         var suggestionArray: ArrayList<IssueResolveModel>? = ArrayList()
         var jsonArray: JsonArray = JsonArray()
 
+        suggestionArray?.clear()
         for (i in serviceModel?.data?.indices!!) {
+
             suggestionArray?.add(
                 IssueResolveModel(
                     serviceModel?.data?.get(i)?.name!!, serviceModel?.data?.get(i)?.id!!,
                     false
                 )
             )
+
         }
+        Log.e("selectedarr", "" + arrayService)
+        for (i in suggestionArray?.indices!!) {
+            if (arrayService?.size!! > 0) {
+                for (j in arrayService?.indices!!) {
+                    if (suggestionArray.get(i).id == arrayService?.get(j)) {
+
+                        suggestionArray.set(
+                            i,
+                            IssueResolveModel(
+                                suggestionArray?.get(i)?.issueName!!, suggestionArray?.get(i)?.id!!,
+                                true
+                            )
+                        )
+                    }
+                }
+            }
+        }
+
+        Log.e("selectedarr00", "" + suggestionArray)
         var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
         tyreSuggestionAdapter = context?.let { TyreSuggestionAdpater(suggestionArray!!, it, this, false) }
-        tyreSuggestionAdapter?.onclick = this
         serviceRecycView?.layoutManager = GridLayoutManager(
             context, 2,
             RecyclerView.VERTICAL,
@@ -459,6 +531,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         actvehicleMake = view?.findViewById(R.id.actvehicleMake)
         actvehicleModel = view?.findViewById(R.id.actvehicleModel)
         actvehicleSociety = view?.findViewById(R.id.actvehicleSociety)
+
+        actvehicleMake?.setText("" + selectedSocietyName)
 
         actvehicleMake!!.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -492,6 +566,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                     selectedMakeId = makeSearchdata?.get(p2)?.id!!
                     selectedSociety = makeSearchdata?.get(p2)?.uuid
+                    selectedSocietyName = makeSearchdata?.get(p2)?.name
 
                 }
             }
@@ -568,22 +643,31 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         btnConfirm.setOnClickListener {
             dialog?.dismiss()
 
+            arrayService?.clear()
+
             for (i in suggestionArray?.indices!!) {
 
                 if (suggestionArray.get(i).isSelected) {
-                    jsonArray.add(suggestionArray.get(i).issueName)
+                    jsonArray.add(suggestionArray.get(i).id)
+                    arrayService?.add(suggestionArray.get(i).id)
+                    Log.e("selectedarr", "" + suggestionArray.get(i).id + " " + suggestionArray.get(i).issueName)
                 }
             }
-            Log.e("selectedarr", "" + jsonArray)
+
+            selectedServiceJson = jsonArray
             val jsonObject = JsonObject()
             jsonObject.addProperty("building_id", "" + selectedSociety)
-            jsonObject.add("service", jsonArray)
-            getDashboardService(jsonObject)
+            jsonObject.add("service", selectedServiceJson)
+            jsonObject.addProperty("status", selectedTab)
+            jsonObject.addProperty("pagesize", pagesize)
+            jsonObject.addProperty("page", page)
+            jsonObject.addProperty("q", edtSearch?.text?.toString())
+            getDashboardService(jsonObject, true)
         }
         btnCancel.setOnClickListener {
             dialog?.dismiss()
 
-            for (i in suggestionArray?.indices!!) {
+            for (i in suggestionArray.indices) {
 
                 suggestionArray.get(i).isSelected = false
             }
@@ -591,10 +675,15 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             tyreSuggestionAdapter?.notifyDataSetChanged()
             selectedSociety = ""
             actvehicleMake?.setText("")
+            selectedServiceJson = JsonArray()
             val jsonObject = JsonObject()
             jsonObject.addProperty("building_id", "")
-            jsonObject.add("service", JsonArray())
-            getDashboardService(jsonObject)
+            jsonObject.add("service", selectedServiceJson)
+            jsonObject.addProperty("status", selectedTab)
+            jsonObject.addProperty("pagesize", pagesize)
+            jsonObject.addProperty("page", page)
+            jsonObject.addProperty("q", edtSearch?.text?.toString())
+            getDashboardService(jsonObject, true)
         }
 
         dialog?.show()
