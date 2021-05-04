@@ -42,7 +42,6 @@ class TyreSuggestionAdpater(
         return Viewholder(view)
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
         holder.chkTyreSuggestion.text = array.get(position).issueName.capitalize(Locale.getDefault())

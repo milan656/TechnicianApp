@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.walkins.technician.R
 import com.walkins.technician.common.OnBottomReachedListener
 import com.walkins.technician.common.onClickAdapter
@@ -63,14 +64,62 @@ class ReportHistoryAdapter(
             }
         }
 
-        holder.tvReportVehicleNumber.setText(mDataset.get(position).regNumber)
+        holder.tvReportVehicleNumber.setText(""+mDataset.get(position).regNumber)
         holder.tvReportVehicleName.setText(mDataset.get(position).makeModel)
 
-        holder.tvCarColor?.setText(mDataset.get(position).carColor)
+        holder.tvCarColor.setText(mDataset.get(position).carColor)
         try {
-            Glide.with(mContext)
-        }catch (e:java.lang.Exception){
+            Glide.with(mContext).load(mDataset.get(position).carImageURL)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.ic_no_car_image).into(holder.ivCarImage)
+        } catch (e: java.lang.Exception) {
             e.printStackTrace()
+        }
+        holder.ivNitrogenRifil.visibility = View.GONE
+        holder.ivNitrogenTopup.visibility = View.GONE
+        holder.ivWheelBalancing.visibility = View.GONE
+        holder.ivTyreRotation.visibility = View.GONE
+        if (mDataset.get(position).serviceList != null && mDataset.get(position).serviceList.size > 0) {
+            for (i in mDataset.get(position).serviceList.indices) {
+                if (mDataset.get(position).serviceList.get(i).name.equals("Type Rotation")) {
+
+                    holder.ivTyreRotation.visibility=View.VISIBLE
+                    try {
+                        Glide.with(mContext).load(mDataset.get(position).serviceList.get(i).image)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder).into(holder.ivTyreRotation)
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                } else if (mDataset.get(position).serviceList.get(i).name.equals("Wheel Balancing")) {
+                    holder.ivWheelBalancing.visibility=View.VISIBLE
+                    try {
+                        Glide.with(mContext).load(mDataset.get(position).serviceList.get(i).image)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder).into(holder.ivWheelBalancing)
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                } else if (mDataset.get(position).serviceList.get(i).name.equals("Nitrogen Top Up")) {
+                    holder.ivNitrogenTopup.visibility=View.VISIBLE
+                    try {
+                        Glide.with(mContext).load(mDataset.get(position).serviceList.get(i).image)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder).into(holder.ivNitrogenTopup)
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                } else if (mDataset.get(position).serviceList.get(i).name.equals("Nitrogen Refill")) {
+                    holder.ivNitrogenRifil.visibility=View.VISIBLE
+                    try {
+                        Glide.with(mContext).load(mDataset.get(position).serviceList.get(i).image)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.placeholder).into(holder.ivNitrogenRifil)
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
         }
 
     }
@@ -102,6 +151,10 @@ class ReportHistoryAdapter(
         var tvReportVehicleName: TextView = itemView.findViewById(R.id.tvReportVehicleName)
         var tvReportVehicleNumber: TextView = itemView.findViewById(R.id.tvReportVehicleNumber)
         var ivCarImage: ImageView = itemView.findViewById(R.id.ivCarImage)
+        var ivTyreRotation: ImageView = itemView.findViewById(R.id.ivTyreRotation)
+        var ivWheelBalancing: ImageView = itemView.findViewById(R.id.ivWheelBalancing)
+        var ivNitrogenRifil: ImageView = itemView.findViewById(R.id.ivNitrogenRifil)
+        var ivNitrogenTopup: ImageView = itemView.findViewById(R.id.ivNitrogenTopup)
         var tvCarColor: TextView = itemView.findViewById(R.id.tvCarColor)
 
     }

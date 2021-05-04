@@ -86,7 +86,7 @@ class MakeModelRepository {
         accessToken:String
     ): MutableLiveData<BuildingListModel> {
         var otpData = MutableLiveData<BuildingListModel>()
-        makeModelApi.getVehicleMake(accessToken)
+        makeModelApi.getBuilding(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,

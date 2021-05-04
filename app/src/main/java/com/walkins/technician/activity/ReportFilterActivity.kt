@@ -16,6 +16,7 @@ import com.walkins.technician.adapter.AutoSuggestProductAdapter
 import com.walkins.technician.model.login.building.BuildingListData
 import com.walkins.technician.model.login.makemodel.VehicleMakeData
 import com.walkins.technician.model.login.makemodel.VehicleModelData
+import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.MakeModelViewModel
 
 class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
@@ -26,6 +27,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     private val listClicked = ArrayList<String>()
     private val listClickedModel = ArrayList<String>()
     private var adapter: AutoSuggestProductAdapter? = null
+    private var commonViewModel: CommonViewModel? = null
 
     private lateinit var prefManager: PrefManager
     private lateinit var makeModelViewModel: MakeModelViewModel
@@ -158,6 +160,8 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
         btnCancel?.setOnClickListener(this)
         btnConfirm?.setOnClickListener(this)
     }
+
+
 
     private fun searchModel(toString: String) {
         this.let {

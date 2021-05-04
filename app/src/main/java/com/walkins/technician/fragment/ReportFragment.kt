@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
@@ -27,12 +28,16 @@ import com.walkins.technician.activity.SkippedServiceDetailActivity
 import com.walkins.technician.adapter.*
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.model.login.DashboardModel
+import com.walkins.technician.model.login.IssueResolveModel
 import com.walkins.technician.model.login.ReportHistoryModel
 import com.walkins.technician.model.login.ReportServiceData
+import com.walkins.technician.model.login.building.BuildingListData
 import com.walkins.technician.model.login.makemodel.VehicleMakeData
 import com.walkins.technician.model.login.makemodel.VehicleModelData
+import com.walkins.technician.model.login.service.ServiceModel
 import com.walkins.technician.model.login.servicelistmodel.ServiceListData
 import com.walkins.technician.model.login.servicelistmodel.ServiceListData_2
+import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.MakeModelViewModel
 import com.walkins.technician.viewmodel.ServiceViewModel
 import java.text.SimpleDateFormat
@@ -51,6 +56,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private val listClickedModel = ArrayList<String>()
     private var adapter: AutoSuggestProductAdapter? = null
     private var serviceViewModel: ServiceViewModel? = null
+    private var commonViewModel: CommonViewModel? = null
+    private var serviceModel: ServiceModel? = null
+    private var selectedSociety: String? = ""
 
     var historyDataList: ArrayList<ReportHistoryModel> = ArrayList<ReportHistoryModel>()
 
@@ -68,7 +76,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var actvehicleSociety: AutoCompleteTextView? = null
     var mAdapter: ReportHistoryAdapter? = null
 
-    private var makeSearchdata: ArrayList<VehicleMakeData>? = ArrayList()
+    private var makeSearchdata: ArrayList<BuildingListData>? = ArrayList()
     private var modelSearchdata: ArrayList<VehicleModelData>? = ArrayList()
     private var selectedMakeId: Int = -1
 
@@ -88,6 +96,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         prefManager = context?.let { PrefManager(it) }!!
         makeModelViewModel = ViewModelProviders.of(this).get(MakeModelViewModel::class.java)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
         init(view)
         return view
     }
@@ -154,20 +163,42 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         mAdapter?.onclick = this
 
 
-        getDashboardService("")
+        getServiceList()
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("building_id", "")
+        jsonObject.add("service", JsonArray())
+        getDashboardService(jsonObject)
     }
 
+    private fun getServiceList() {
 
-    private fun getDashboardService(displayDate: String) {
+        activity?.let {
+            commonViewModel?.callApiGetService(prefManager.getAccessToken()!!, it)
+            commonViewModel?.getService()?.observe(it, androidx.lifecycle.Observer {
+                if (it != null) {
+                    if (it.success) {
+
+                        serviceModel = it
+
+                    } else {
+                        if (it.error != null && it.error?.get(0)?.message != null) {
+
+                        }
+                    }
+                } else {
+                }
+            })
+
+        }
+    }
+
+    private fun getDashboardService(jsonObject_: JsonObject) {
 
 
         activity?.let {
             Common.showLoader(it)
 
-            val jsonObject = JsonObject()
-            jsonObject.addProperty("building_id", "")
-            jsonObject.add("service", JsonArray())
-            serviceViewModel?.callApiReportList(jsonObject, prefManager.getAccessToken()!!, it)
+            serviceViewModel?.callApiReportList(jsonObject_, prefManager.getAccessToken()!!, it)
             serviceViewModel?.getReportservice()?.observe(it, androidx.lifecycle.Observer {
                 Common.hideLoader()
                 if (it != null) {
@@ -179,14 +210,14 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         for (i in it.data.serviceData.indices) {
                             Log.e("getdataa", "" + i)
                             var dashboardModel: ReportHistoryModel? = null
-                            var list:ArrayList<ServiceListData>?= ArrayList()
+                            var list: ArrayList<ServiceListData>? = ArrayList()
                             list?.addAll(it.data.serviceData.get(i).service)
                             when (i) {
 
                                 0, 1 -> {
                                     dashboardModel = ReportHistoryModel(
-                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make+" "+it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
-                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!,40, System.currentTimeMillis(),
+                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
+                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!, 40, System.currentTimeMillis(),
                                         System.currentTimeMillis()
                                     )
                                 }
@@ -199,8 +230,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                     val startDate = date_.time
 
                                     dashboardModel = ReportHistoryModel(
-                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make+" "+it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
-                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!,40, startDate,
+                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
+                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!, 40, startDate,
                                         startDate
                                     )
                                 }
@@ -212,8 +243,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                                     val startDate = date_.time
                                     dashboardModel = ReportHistoryModel(
-                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make+" "+it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
-                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!,40, startDate,
+                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
+                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!, 40, startDate,
                                         startDate
                                     )
                                 }
@@ -349,9 +380,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //                onBackPressed()
             }
             R.id.ivFilterImg -> {
-//                openReportFilterDialogue("Choose Filter")
-                var intent = Intent(context, ReportFilterActivity::class.java)
-                startActivityForResult(intent, 100)
+                openReportFilterDialogue("Choose Filter")
+//                var intent = Intent(context, ReportFilterActivity::class.java)
+//                startActivityForResult(intent, 100)
             }
             R.id.llCompletedReport -> {
                 llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_red_layout))
@@ -401,11 +432,33 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
         val btnConfirm = view.findViewById<Button>(R.id.btnConfirm)
         val btnCancel = view.findViewById<Button>(R.id.btnCancel)
+        val serviceRecycView = view.findViewById<RecyclerView>(R.id.serviceRecycView)
+        var suggestionArray: ArrayList<IssueResolveModel>? = ArrayList()
+        var jsonArray: JsonArray = JsonArray()
+
+        for (i in serviceModel?.data?.indices!!) {
+            suggestionArray?.add(
+                IssueResolveModel(
+                    serviceModel?.data?.get(i)?.name!!, serviceModel?.data?.get(i)?.id!!,
+                    false
+                )
+            )
+        }
+        var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
+        tyreSuggestionAdapter = context?.let { TyreSuggestionAdpater(suggestionArray!!, it, this, false) }
+        tyreSuggestionAdapter?.onclick = this
+        serviceRecycView?.layoutManager = GridLayoutManager(
+            context, 2,
+            RecyclerView.VERTICAL,
+            false
+        )
+        serviceRecycView?.adapter = tyreSuggestionAdapter
+
+        tvTitleText?.text = titleStr
 
         actvehicleMake = view?.findViewById(R.id.actvehicleMake)
         actvehicleModel = view?.findViewById(R.id.actvehicleModel)
         actvehicleSociety = view?.findViewById(R.id.actvehicleSociety)
-
 
         actvehicleMake!!.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -438,6 +491,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                     selectedMakeId = makeSearchdata?.get(p2)?.id!!
+                    selectedSociety = makeSearchdata?.get(p2)?.uuid
+
                 }
             }
         actvehicleModel!!.addTextChangedListener(object : TextWatcher {
@@ -512,9 +567,34 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         btnConfirm.setOnClickListener {
             dialog?.dismiss()
+
+            for (i in suggestionArray?.indices!!) {
+
+                if (suggestionArray.get(i).isSelected) {
+                    jsonArray.add(suggestionArray.get(i).issueName)
+                }
+            }
+            Log.e("selectedarr", "" + jsonArray)
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("building_id", "" + selectedSociety)
+            jsonObject.add("service", jsonArray)
+            getDashboardService(jsonObject)
         }
         btnCancel.setOnClickListener {
             dialog?.dismiss()
+
+            for (i in suggestionArray?.indices!!) {
+
+                suggestionArray.get(i).isSelected = false
+            }
+
+            tyreSuggestionAdapter?.notifyDataSetChanged()
+            selectedSociety = ""
+            actvehicleMake?.setText("")
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("building_id", "")
+            jsonObject.add("service", JsonArray())
+            getDashboardService(jsonObject)
         }
 
         dialog?.show()
@@ -544,9 +624,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun searchMake(toString: String) {
-        context?.let { makeModelViewModel?.getVehicleMake(it, prefManager.getAccessToken()!!) }
+        context?.let { makeModelViewModel.callBuildingListApi(it, prefManager.getAccessToken()!!) }
 
-        makeModelViewModel?.getVehicleMakeList()?.observe(this, Observer {
+        makeModelViewModel.getBuildingModelList()?.observe(this, Observer {
 
             if (it != null) {
                 if (it.success) {
@@ -570,7 +650,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     }
 
-    private fun makeDataForSearchApi(makeSearchdata: ArrayList<VehicleMakeData>) {
+    private fun makeDataForSearchApi(makeSearchdata: ArrayList<BuildingListData>) {
 
         listClicked.clear()
         try {

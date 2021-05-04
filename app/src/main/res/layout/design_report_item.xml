@@ -51,6 +51,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/ivNitrogenTopup"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="@dimen/five_dp"
@@ -58,6 +59,7 @@
                     android:src="@mipmap/ic_nitrogen_topup" />
 
                 <ImageView
+                    android:id="@+id/ivNitrogenRifil"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="@dimen/five_dp"
@@ -66,14 +68,16 @@
                     android:src="@mipmap/ic_nitrogen_refil" />
 
                 <ImageView
+                    android:id="@+id/ivWheelBalancing"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="@dimen/five_dp"
                     android:layout_marginEnd="@dimen/five_dp"
                     android:layout_marginRight="@dimen/five_dp"
-                    android:src="@mipmap/ic_nitrogen_topup" />
+                    android:src="@mipmap/ic_wheel_balacing" />
 
                 <ImageView
+                    android:id="@+id/ivTyreRotation"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="@dimen/five_dp"

@@ -14,6 +14,9 @@ interface MakeModelApi {
     @GET("v1/tyrepushpull/get-vehicle-make")
     fun getVehicleMake(@Header("Authorization") authorization: String): Call<ResponseBody>
 
+    @GET("v1/tyrepushpull/get-building")
+    fun getBuilding(@Header("Authorization") authorization: String): Call<ResponseBody>
+
     @GET("v1/tyrepushpull/get-vehicle-model")
     fun getVehicleModel(@Query("id") id: Int,
                         @Header("Authorization") authorization: String): Call<ResponseBody>
