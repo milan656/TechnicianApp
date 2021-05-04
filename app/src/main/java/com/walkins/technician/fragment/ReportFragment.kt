@@ -75,6 +75,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var actvehicleModel: AutoCompleteTextView? = null
     private var actvehicleSociety: AutoCompleteTextView? = null
     var mAdapter: ReportHistoryAdapter? = null
+    var mAdapterSkipped: ReportHistorySkippedAdapter? = null
 
     private var makeSearchdata: ArrayList<BuildingListData>? = ArrayList()
     private var modelSearchdata: ArrayList<VehicleModelData>? = ArrayList()
@@ -196,7 +197,54 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
 
         })
+
+
+        mAdapterSkipped = context?.let { ReportHistorySkippedAdapter(it, historyDataList, this) }
+        var decorSkip = StickyHeaderDecoration(mAdapterSkipped)
+
+        // use a linear layout manager
+        val layoutManagerSkip = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
+        reportRecycView?.setLayoutManager(layoutManagerSkip)
+        reportRecycView?.setAdapter(mAdapterSkipped)
+        reportRecycView?.addItemDecoration(decorSkip)
+        mAdapterSkipped?.onclick = this
+
+        mAdapterSkipped?.setOnBottomReachedListener(object : OnBottomReachedListener {
+            override fun onBottomReached(position: Int) {
+                if (position >= 9) {
+
+                    if (!isDataFinish!!) {
+
+                        page = page + 1
+
+                        // fetchBlockList()
+                        val jsonObject = JsonObject()
+                        jsonObject.addProperty("building_id", selectedSocietyName)
+                        jsonObject.add("service", selectedServiceJson)
+                        jsonObject.addProperty("status", selectedTab)
+                        jsonObject.addProperty("pagesize", pagesize)
+                        jsonObject.addProperty("page", page)
+                        jsonObject.addProperty("q", edtSearch?.text?.toString())
+                        getDashboardService(jsonObject, false)
+
+//                        callApiToGetAllCustomer("", false, 10, page!!, 1, groupId)
+
+                    }
+                }
+            }
+
+        })
         getServiceList()
+
+        llCompleted?.performClick()
+
+        edtSearch?.addTextChangedListener(object :TextWatcher{
+
+        })
+
+    }
+
+    private fun callReportApi() {
         val jsonObject = JsonObject()
         jsonObject.addProperty("building_id", "")
         jsonObject.add("service", JsonArray())
@@ -204,7 +252,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         jsonObject.addProperty("pagesize", pagesize)
         jsonObject.addProperty("page", page)
         jsonObject.addProperty("q", edtSearch?.text?.toString())
-        getDashboardService(jsonObject,true)
+        getDashboardService(jsonObject, true)
     }
 
     private fun getServiceList() {
@@ -302,7 +350,12 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 tvNoData?.text = "There is no any skip report"
                             }
                         }
-                        mAdapter?.notifyDataSetChanged()
+
+                        if (selectedTab.equals("complete")) {
+                            mAdapter?.notifyDataSetChanged()
+                        } else {
+                            mAdapterSkipped?.notifyDataSetChanged()
+                        }
 
                         if (it.data != null && it.data.serviceData.size > 0) {
 
@@ -380,6 +433,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             arrayAdapter?.onclick = this
             selectedTab = "complete"
         } else {
+
             val arrayAdapter =
                 context?.let { ReportHistorySkippedAdapter(it, historyDataList, this) }
             reportRecycView?.layoutManager = LinearLayoutManager(
@@ -396,6 +450,15 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
             selectedTab = "skip"
+
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("building_id", "")
+            jsonObject.add("service", JsonArray())
+            jsonObject.addProperty("status", selectedTab)
+            jsonObject.addProperty("pagesize", pagesize)
+            jsonObject.addProperty("page", page)
+            jsonObject.addProperty("q", edtSearch?.text?.toString())
+            getDashboardService(jsonObject, true)
         }
     }
 
@@ -443,7 +506,10 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
                 skipSelected = false
 
-                setadapter(skipSelected)
+                selectedTab = "complete"
+                callReportApi()
+
+//                setadapter(skipSelected)
             }
             R.id.llSkippedReport -> {
                 llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
@@ -452,7 +518,10 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
                 skipSelected = true
-                setadapter(skipSelected)
+                selectedTab = "skip"
+                callReportApi()
+
+//                setadapter(skipSelected)
 
             }
 
@@ -676,6 +745,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             selectedSociety = ""
             actvehicleMake?.setText("")
             selectedServiceJson = JsonArray()
+            arrayService?.clear()
             val jsonObject = JsonObject()
             jsonObject.addProperty("building_id", "")
             jsonObject.add("service", selectedServiceJson)
