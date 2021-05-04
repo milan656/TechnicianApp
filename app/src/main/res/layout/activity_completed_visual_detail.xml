@@ -126,7 +126,7 @@
 
 
                                         <ImageView
-                                            android:id="@+id/ivSelectedCar"
+                                            android:id="@+id/ivSelectedMake"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:padding="@dimen/ten_dp"
@@ -177,6 +177,7 @@
 
 
                                     <com.walkins.technician.custom.NormalTextView
+                                        android:id="@+id/tvSelectedPattern"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="@dimen/five_dp"
@@ -226,6 +227,7 @@
                                     android:orientation="vertical">
 
                                     <com.walkins.technician.custom.NormalTextView
+                                        android:id="@+id/tvSelectedSize"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
@@ -261,6 +263,7 @@
                             android:textSize="@dimen/fourteen_sp" />
 
                         <com.walkins.technician.custom.NormalEditText
+                            android:id="@+id/tvManufacturingDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/five_dp"
@@ -309,6 +312,7 @@
                                     android:textSize="@dimen/twelve_sp" />
 
                                 <com.walkins.technician.custom.BoldTextView
+                                    android:id="@+id/tvPsiIn"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
@@ -332,6 +336,7 @@
                                     android:textSize="@dimen/twelve_sp" />
 
                                 <com.walkins.technician.custom.BoldTextView
+                                    android:id="@+id/tvPsiOut"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
@@ -355,6 +360,7 @@
                                     android:textSize="@dimen/twelve_sp" />
 
                                 <com.walkins.technician.custom.BoldTextView
+                                    android:id="@+id/tvWeight"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
