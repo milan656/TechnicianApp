@@ -141,7 +141,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 Log.e("getdatefromstart", "" + startDate)
                                 dashboardModel = DashboardModel(
                                     it.data.get(i).building_name, it.data.get(i).address, it.data.get(i).date, it.data.get(i).date_formated,
-                                    it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), 45, startDate,
+                                    it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), it.data.get(i).total_jobs.toInt(), startDate,
                                     startDate
                                 )
 
@@ -256,6 +256,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         } else if (check == 0) {
 
             var intent = Intent(context, ServiceListActivity::class.java)
+            Log.e("getdateformat",""+activity?.dateForWebservice_2(historyDataList.get(variable).date))
             intent.putExtra("selectedDate", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
             intent.putExtra("selectedDateFormated", historyDataList.get(variable).dateFormated)
             intent.putExtra("addressTitle", historyDataList.get(variable).addressTitle)

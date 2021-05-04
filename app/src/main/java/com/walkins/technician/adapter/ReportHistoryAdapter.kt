@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter
+import com.bumptech.glide.Glide
 import com.walkins.technician.R
 import com.walkins.technician.common.OnBottomReachedListener
 import com.walkins.technician.common.onClickAdapter
@@ -61,6 +62,17 @@ class ReportHistoryAdapter(
                 onclick?.onPositionClick(position, 0)
             }
         }
+
+        holder.tvReportVehicleNumber.setText(mDataset.get(position).regNumber)
+        holder.tvReportVehicleName.setText(mDataset.get(position).makeModel)
+
+        holder.tvCarColor?.setText(mDataset.get(position).carColor)
+        try {
+            Glide.with(mContext)
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -89,6 +101,8 @@ class ReportHistoryAdapter(
 
         var tvReportVehicleName: TextView = itemView.findViewById(R.id.tvReportVehicleName)
         var tvReportVehicleNumber: TextView = itemView.findViewById(R.id.tvReportVehicleNumber)
+        var ivCarImage: ImageView = itemView.findViewById(R.id.ivCarImage)
+        var tvCarColor: TextView = itemView.findViewById(R.id.tvCarColor)
 
     }
 

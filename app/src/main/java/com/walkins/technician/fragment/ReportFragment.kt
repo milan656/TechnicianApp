@@ -32,6 +32,7 @@ import com.walkins.technician.model.login.ReportServiceData
 import com.walkins.technician.model.login.makemodel.VehicleMakeData
 import com.walkins.technician.model.login.makemodel.VehicleModelData
 import com.walkins.technician.model.login.servicelistmodel.ServiceListData
+import com.walkins.technician.model.login.servicelistmodel.ServiceListData_2
 import com.walkins.technician.viewmodel.MakeModelViewModel
 import com.walkins.technician.viewmodel.ServiceViewModel
 import java.text.SimpleDateFormat
@@ -113,33 +114,33 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 //        setadapter(skipSelected)
 
-       /* for (i in 0..5) {
+        /* for (i in 0..5) {
 
-            var dashboardModel: ReportHistoryModel? = null
-            when (i) {
-                0, 1 -> {
-                    dashboardModel = ReportHistoryModel(
-                        "Titanium City Center,Anandnagar","","","",
-                        24, 20, 21, 45, System.currentTimeMillis(),
-                        System.currentTimeMillis()
-                    )
-                }
-                2, 3, 4, 5 -> {
-                    val dateString = "30/09/2021"
-                    val sdf = SimpleDateFormat("dd/MM/yyyy")
-                    val date = sdf.parse(dateString)
+             var dashboardModel: ReportHistoryModel? = null
+             when (i) {
+                 0, 1 -> {
+                     dashboardModel = ReportHistoryModel(
+                         "Titanium City Center,Anandnagar","","","",
+                         24, 20, 21, 45, System.currentTimeMillis(),
+                         System.currentTimeMillis()
+                     )
+                 }
+                 2, 3, 4, 5 -> {
+                     val dateString = "30/09/2021"
+                     val sdf = SimpleDateFormat("dd/MM/yyyy")
+                     val date = sdf.parse(dateString)
 
-                    val startDate = date.time
-                    dashboardModel = ReportHistoryModel(
-                        "Prahladnagar garden","","","",
-                        34, 30, 4, 40, startDate,
-                        startDate
-                    )
-                }
-            }
+                     val startDate = date.time
+                     dashboardModel = ReportHistoryModel(
+                         "Prahladnagar garden","","","",
+                         34, 30, 4, 40, startDate,
+                         startDate
+                     )
+                 }
+             }
 
-            historyDataList.add(dashboardModel!!)
-        }*/
+             historyDataList.add(dashboardModel!!)
+         }*/
 
 //        homeRecycView?.setHasFixedSize(true)
         mAdapter = context?.let { ReportHistoryAdapter(it, historyDataList, this) }
@@ -164,8 +165,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             Common.showLoader(it)
 
             val jsonObject = JsonObject()
-            jsonObject.addProperty("building_id","")
-            jsonObject.add("service",JsonArray())
+            jsonObject.addProperty("building_id", "")
+            jsonObject.add("service", JsonArray())
             serviceViewModel?.callApiReportList(jsonObject, prefManager.getAccessToken()!!, it)
             serviceViewModel?.getReportservice()?.observe(it, androidx.lifecycle.Observer {
                 Common.hideLoader()
@@ -178,28 +179,41 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         for (i in it.data.serviceData.indices) {
                             Log.e("getdataa", "" + i)
                             var dashboardModel: ReportHistoryModel? = null
+                            var list:ArrayList<ServiceListData>?= ArrayList()
+                            list?.addAll(it.data.serviceData.get(i).service)
                             when (i) {
+
                                 0, 1 -> {
                                     dashboardModel = ReportHistoryModel(
-                                        "Titanium City Center,Anandnagar","","","",
-                                        24, 20, 21, 45, System.currentTimeMillis(),
+                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make+" "+it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
+                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!,40, System.currentTimeMillis(),
                                         System.currentTimeMillis()
                                     )
                                 }
-                                2, 3, 4, 5 -> {
-                                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'00:00:00.000'Z'")
-                                    val formatterDisplay = SimpleDateFormat("dd-MM-yyyy")
-                                    val dateInString = formatterDisplay.parse(date)
-                                    displayDate = formatter.format(dateInString)
+                                2, 3 -> {
 
-                                    val dateString = "30/09/2021"
+                                    val dateString = "25/08/2021"
+                                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                                    val date_ = sdf.parse(dateString)
+
+                                    val startDate = date_.time
+
+                                    dashboardModel = ReportHistoryModel(
+                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make+" "+it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
+                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!,40, startDate,
+                                        startDate
+                                    )
+                                }
+                                4, 5 -> {
+
+                                    val dateString = "24/10/2021"
                                     val sdf = SimpleDateFormat("dd/MM/yyyy")
                                     val date_ = sdf.parse(dateString)
 
                                     val startDate = date_.time
                                     dashboardModel = ReportHistoryModel(
-                                        "Prahladnagar garden","","","",
-                                        34, 30, 4, 40, startDate,
+                                        it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make+" "+it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
+                                        it.data.serviceData.get(i).modelImage, 30, 4, list!!,40, startDate,
                                         startDate
                                     )
                                 }

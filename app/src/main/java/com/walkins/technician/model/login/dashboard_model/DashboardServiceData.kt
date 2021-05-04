@@ -24,5 +24,8 @@ data class DashboardServiceData(
     var complete_jobs: String,
     @SerializedName("skip_jobs")
     @Expose
-    var skip_jobs: String
+    var skip_jobs: String,
+    @SerializedName("total_jobs")
+    @Expose
+    var total_jobs: String
 )

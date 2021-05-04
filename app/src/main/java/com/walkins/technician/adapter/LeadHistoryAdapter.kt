@@ -73,6 +73,7 @@ class LeadHistoryAdapter(
         holder.tvSkipped?.text = mDataset.get(position).skippedCount.toString()
         holder.tvCarCount?.text = mDataset.get(position).carCount.toString()
         holder.tvaddress?.text = mDataset.get(position).addressTitle
+        holder.tvCarCount?.text = mDataset.get(position).carCount.toString()
     }
 
     override fun getItemCount(): Int {
@@ -127,7 +128,7 @@ class LeadHistoryAdapter(
         val item: DashboardModel = mDataset[p1]
 
         p0?.timestamp?.text = mDateFormat.format(Date(item.createdAt)).toString()
-        Log.e("gettimedate",""+mDataset.get(p1))
+        Log.e("gettimedate", "" + mDataset.get(p1))
         if (mToday == p0?.timestamp?.text) {
             p0.timestamp?.text = "Today"
         }
