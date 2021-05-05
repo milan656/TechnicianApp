@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.adapter.DialogueAdpater
+import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.common.showShortToast
 import com.walkins.technician.viewmodel.CommonViewModel
@@ -128,9 +130,15 @@ class ProfileFragment : Fragment(), onClickAdapter {
                         if (it.data.lastName != null) {
                             lastName = it.data.lastName
                         }
-                        tvusername?.text = "Hello, " + firstName + " " + lastName
+                        tvusername?.text = "" + firstName + " " + lastName
                         try {
-                            Glide.with(mainAct?.baseContext!!).load(it.data.image).into(ivProfileImg!!)
+                            context?.let { it1 ->
+                                Glide.with(it1)
+                                    .load(it.data.image)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.placeholder)
+                                    .into(ivProfileImg!!)
+                            }
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

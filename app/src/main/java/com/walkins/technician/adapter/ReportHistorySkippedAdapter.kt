@@ -62,11 +62,18 @@ class ReportHistorySkippedAdapter(
 //        holder.number.setText(item.getPhoneNumber())
 //        holder.createAt.text = mDateFormatTime.format(Date(item.getCreatedAt()))
 
-        holder.itemView.setOnClickListener {
+        holder.ivInfoAddService.setOnClickListener {
 
+            if (onclick != null) {
+                onclick?.onPositionClick(position, 10)
+            }
+        }
+
+        holder.itemView.setOnClickListener {
             if (onclick != null) {
                 onclick?.onPositionClick(position, 0)
             }
+
         }
 
         holder.tvColor?.text = mDataset.get(position).carColor
@@ -80,6 +87,8 @@ class ReportHistorySkippedAdapter(
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -110,6 +119,7 @@ class ReportHistorySkippedAdapter(
         var tvMakemodel = itemView.findViewById<TextView>(R.id.tvMakemodel)
         var ivCarImage = itemView.findViewById<ImageView>(R.id.ivCarImage)
         var tvColor = itemView.findViewById<TextView>(R.id.tvColor)
+        var ivInfoAddService = itemView.findViewById<ImageView>(R.id.ivInfoAddService)
 
     }
 

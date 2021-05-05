@@ -20,7 +20,8 @@ class TyreSuggestionAdpater(
     var array: ArrayList<IssueResolveModel>,
     var context: Context,
     onPositionClick: onClickAdapter,
-    var isFromDialog: Boolean
+    var isFromDialog: Boolean,
+    var isMultipleSelect: Boolean
 ) :
     RecyclerView.Adapter<TyreSuggestionAdpater.Viewholder>() {
 
@@ -74,6 +75,8 @@ class TyreSuggestionAdpater(
         }
 
         holder.chkTyreSuggestion.setOnClickListener {
+
+
             val pos: Int = holder.chkTyreSuggestion.getTag() as Int
             try {
                 array.get(pos).isSelected = !array.get(pos).isSelected
@@ -91,7 +94,7 @@ class TyreSuggestionAdpater(
                         )
                     )
                 }
-            }else{
+            } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     holder.chkTyreSuggestion.setButtonTintList(
                         getColorStateList(

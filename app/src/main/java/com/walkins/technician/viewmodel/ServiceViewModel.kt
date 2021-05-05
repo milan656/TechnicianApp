@@ -33,6 +33,18 @@ class ServiceViewModel : ViewModel() {
             context
         )
     }
+    fun callApiUpdateService(
+        jsonObject: JsonObject,
+        access_token: String,
+        context: Context
+    ) {
+        serviceRepo = ServiceRepo().getInstance()
+        addServiceModel = serviceRepo?.UpdateService(
+            jsonObject,
+            access_token,
+            context
+        )
+    }
 
     fun getAddService(): LiveData<AddServiceModel>? {
         return addServiceModel

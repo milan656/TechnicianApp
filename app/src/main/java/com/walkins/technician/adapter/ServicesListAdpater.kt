@@ -85,11 +85,11 @@ class ServicesListAdpater(
             }
         }
 
-        if (array.get(position).status.equals("complete")) {
-            holder.ivServiceTyre.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), android.graphics.PorterDuff.Mode.MULTIPLY);
-        } else {
-            holder.ivServiceTyre.setColorFilter(ContextCompat.getColor(context, R.color.text_color2), android.graphics.PorterDuff.Mode.MULTIPLY);
-        }
+//        if (array.get(position).status.equals("complete")) {
+//            holder.ivServiceTyre.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), android.graphics.PorterDuff.Mode.MULTIPLY);
+//        } else {
+//            holder.ivServiceTyre.setColorFilter(ContextCompat.getColor(context, R.color.text_color2), android.graphics.PorterDuff.Mode.MULTIPLY);
+//        }
 
     }
 

@@ -13,6 +13,12 @@ interface ServiceApi {
         @Header("Authorization") authorization: String
     ): Call<ResponseBody>
 
+    @POST("v1/user/update-skip-service")
+    fun updateService(
+        @Body jsonObject: JsonObject,
+        @Header("Authorization") authorization: String
+    ): Call<ResponseBody>
+
     @GET("v1/user/get-service-count-by-date")
     fun getDashboardService(
         @Query("date") date: String,

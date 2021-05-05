@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -30,6 +31,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     private var carImage: String = ""
     private var uuid: String = ""
     private var address: String = ""
+    private var ischange: String = ""
 
     private var tvCurrentDateTime: TextView? = null
 
@@ -40,7 +42,6 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     private var llbg: LinearLayout? = null
     private var ivCarImage: ImageView? = null
     private var ivInfoAddService: ImageView? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +94,12 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 //                colorCode = intent.getStringExtra("reason")!!
                 address = intent.getStringExtra("address")!!
             }
+            if (intent.getStringExtra("ischange") != null) {
+                ischange = intent.getStringExtra("ischange")!!
+            }
         }
 
+        Log.e("getregno",""+regNumber)
         tvcolor?.text = color
         tvMakeModel?.text = makeModel
         tvRegNumber?.text = regNumber
@@ -112,6 +117,10 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
         }
         tvChange?.setOnClickListener(this)
 
+        if (ischange.equals("false")) {
+            tvChange?.visibility = View.GONE
+        }
+
         tvCurrentDateTime?.text = Common.getCurrentDateTime()
     }
 
@@ -124,8 +133,8 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.tvChange -> {
                 var intent = Intent()
-                intent.putExtra("reason", "")
-                setResult(106)
+                intent.putExtra("reason", "" + tvReason?.text?.toString())
+                setResult(RESULT_OK, intent)
                 finish()
             }
             R.id.ivInfoAddService -> {

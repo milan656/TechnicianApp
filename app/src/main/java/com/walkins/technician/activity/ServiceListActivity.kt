@@ -36,7 +36,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var llCompleted: LinearLayout? = null
     private var llUpcoming: LinearLayout? = null
 
-    private var serviceListDataModel:ServiceListByDateModel?=null
+    private var serviceListDataModel: ServiceListByDateModel? = null
 
     private var tvSkipped: TextView? = null
     private var tvUpcoming: TextView? = null
@@ -127,6 +127,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         tvDate?.text = selectedDateFormated
         tvAddress?.text = addressTitle
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         getServiceListByDate()
     }
 
@@ -139,7 +143,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             if (it != null) {
                 if (it.success) {
 
-                    serviceListDataModel=it
+                    serviceListDataModel = it
 
                     if (it.data != null) {
 
@@ -148,19 +152,23 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                         if (serviceStatus.equals(upcomming)) {
 //                            arrayList.filter { it.status.equals(upcomming) }
-                            arrayList= arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+                            arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
                             adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this) }
+
+                            tvUpcoming?.text = "Upcomming - ${arrayList.size}"
                             Log.e("getservicedata", "" + arrayList.size)
                         } else if (serviceStatus.equals(completed)) {
 //                            arrayList.filter { it.status.equals(completed) }
                             Log.e("getservicedata0", "" + arrayList.size)
-                            arrayList= arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
+                            arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
                             adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this) }
+                            tvCompleted?.text = "Completed - ${arrayList.size}"
                         } else if (serviceStatus.equals(skipped)) {
 //                            arrayList.filter { it.status.equals(skipped) }
                             Log.e("getservicedata1", "" + arrayList.size)
-                            arrayList= arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
+                            arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
                             adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this) }
+                            tvSkipped?.text = "Skipped - ${arrayList.size}"
                         }
 
 
@@ -205,13 +213,13 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.clear()
                 arrayList.addAll(serviceListDataModel?.data!!)
 
-                arrayList= arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this,this)
+                arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+                adapter = ServicesListAdpater(arrayList, this, this)
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Upcomming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
-
+                tvUpcoming?.text = "Upcomming - ${arrayList.size}"
                 serviceRecycView?.adapter = adapter
                 adapter?.onclick = this
 
@@ -230,14 +238,14 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.clear()
                 arrayList.addAll(serviceListDataModel?.data!!)
 
-                arrayList= arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this,this)
+                arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
+                adapter = ServicesListAdpater(arrayList, this, this)
 
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Completed service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
-
+                tvCompleted?.text = "Completed - ${arrayList.size}"
                 serviceRecycView?.adapter = adapter
                 adapter?.onclick = this
 
@@ -257,13 +265,14 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.clear()
                 arrayList.addAll(serviceListDataModel?.data!!)
 
-                arrayList= arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this,this)
+                arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
+                adapter = ServicesListAdpater(arrayList, this, this)
 
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Skipped service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
                 }
+                tvSkipped?.text = "Skipped - ${arrayList.size}"
                 serviceRecycView?.adapter = adapter
                 adapter?.onclick = this
 
@@ -288,7 +297,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
         if (check == 1) {
             Log.e("checkva", "" + arrayList.get(variable).status + " " + arrayList.get(variable).regNumber)
-            Log.e("checkva", "" +  " " + arrayList.get(variable).uuid)
+            Log.e("checkva", "" + " " + arrayList.get(variable).uuid)
 
             if (serviceStatus.equals(upcomming)) {
                 var intent = Intent(this, AddServiceDetailsActivity::class.java)
@@ -298,7 +307,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
                 intent.putExtra("colorcode", arrayList.get(variable).color_code)
-                intent.putExtra("address",""+fullAddress)
+                intent.putExtra("address", "" + fullAddress)
 
 
                 startActivity(intent)
@@ -312,12 +321,19 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("regNumber", arrayList.get(variable).regNumber)
                 intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
-                intent.putExtra("address",""+fullAddress)
+                intent.putExtra("address", "" + fullAddress)
+                intent.putExtra("colorcode",arrayList.get(variable).color_code)
                 startActivity(intent)
             } else if (serviceStatus.equals(skipped)) {
                 Log.e("checkva", "" + check)
                 var intent = Intent(this, SkippedServiceDetailActivity::class.java)
+                intent.putExtra("color", arrayList.get(variable).color)
+                intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
+                intent.putExtra("regNumber", arrayList.get(variable).regNumber)
+                intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
+                intent.putExtra("address", "" + fullAddress)
+                intent.putExtra("colorcode",arrayList.get(variable).color_code)
                 startActivity(intent)
             }
         }

@@ -51,12 +51,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var commonViewModel: CommonViewModel? = null
     private lateinit var prefManager: PrefManager
     private var pendingSuggestionsRecycView: RecyclerView? = null
-    private var suggestionArr = arrayListOf(
-        "Improve this for the tyre in alignment",
-        "Improve this for the tyre in alignment",
-        "Improve this for the tyre in alignment",
-        "Improve this for the tyre in alignment"
-    )
+    private var suggestionArr = arrayListOf<String>()
 
     private var serviceDateByIdModel: ServiceDataByIdModel? = null
     private var pendingArr = arrayListOf("Tyre Pattern", "Visual Detail - LF")
@@ -64,6 +59,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var tvTitle: TextView? = null
     private var ivBack: ImageView? = null
     private var tvCurrentDateTime: TextView? = null
+    private var llfooter: LinearLayout? = null
     private var tvtyreServiceInfo: TextView? = null
     private var selectedPending = ""
 
@@ -104,6 +100,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var ivtyreLeftFront: ImageView? = null
     private var ivtyreLeftRear: ImageView? = null
     private var ivTyreRightRear: ImageView? = null
+    private var ivInfoAddService: ImageView? = null
 
     private var tvMoreSuggestion: TextView? = null
     private var ivCarImage_1: ImageView? = null
@@ -121,6 +118,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var makeModel: String = ""
     private var regNumber: String = ""
     private var carImage: String = ""
+    private var address: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,12 +140,14 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         tvMoreSuggestion = findViewById(R.id.tvMoreSuggestion)
         ivCarImage_1 = findViewById(R.id.ivCarImage_1)
         ivCarImage_2 = findViewById(R.id.ivCarImage_2)
+        llfooter = findViewById(R.id.llfooter)
 
         llServiceExpanded = findViewById(R.id.llServiceExpanded)
         llTechnicalSuggestionExpanded = findViewById(R.id.llTechnicalSuggestionExpanded)
         llTyreConfigExpanded = findViewById(R.id.llTyreConfigExpanded)
         llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
         ivPhoneCall = findViewById(R.id.ivPhoneCall)
+        ivInfoAddService = findViewById(R.id.ivPhoneCall)
 
         tvColor = findViewById(R.id.tvColor)
         tvMakeModel = findViewById(R.id.tvMakeModel)
@@ -223,6 +223,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             if (intent.getStringExtra("color") != null) {
                 color = intent.getStringExtra("color")!!
             }
+            if (intent.getStringExtra("address") != null) {
+                address = intent.getStringExtra("address")!!
+            }
 
         }
 
@@ -241,6 +244,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         }
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
+        ivInfoAddService?.setOnClickListener(this)
 
         ivAddServices?.setOnClickListener(this)
         ivAddTyreConfig?.setOnClickListener(this)
@@ -418,84 +422,96 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         */
 
 
-
-        if (serviceDateByIdModel?.data?.get(0)?.service != null && serviceDateByIdModel?.data?.get(0)?.service?.size!! > 0) {
-            serviceList?.addAll(serviceDateByIdModel?.data?.get(0)?.service!!)
-        }
-        serviceAdapter?.notifyDataSetChanged()
-
-        TyreConfigClass.CarPhoto_1 = serviceDateByIdModel?.data?.get(0)?.carPhoto1!!
-        TyreConfigClass.CarPhoto_2 = serviceDateByIdModel?.data?.get(0)?.carPhoto2!!
-        tvMoreSuggestion?.text = serviceDateByIdModel?.data?.get(0)?.serviceSuggestions
-
-        tvColor?.text = ""
-        tvMakeModel?.text = serviceDateByIdModel?.data?.get(0)?.make + " " + serviceDateByIdModel?.data?.get(0)?.model
-        tvRegNumber?.text = serviceDateByIdModel?.data?.get(0)?.regNumber
-
-        try {
-            tvCurrentDateTime?.text = datefrom(serviceDateByIdModel?.data?.get(0)?.createdAt!!)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        try {
-            Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto1)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder).into(ivCarImage_1!!)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        try {
-            Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto2)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder).into(ivCarImage_2!!)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        try {
-            Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder).into(ivtyreLeftFront!!)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        try {
-            Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_right_tyre_make_image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder).into(ivTyreRightFront!!)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        try {
-            Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder).into(ivtyreLeftRear!!)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        try {
-            Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.back_right_tyre_make_image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder).into(ivTyreRightRear!!)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        suggestionArr.clear()
-        if (serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.size!! > 0) {
-            for (i in serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.indices!!) {
-                suggestionArr.add(serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.get(i)!!)
+        if (serviceDateByIdModel != null && serviceDateByIdModel?.data?.size!! > 0) {
+            if (serviceDateByIdModel?.data?.get(0)?.service != null && serviceDateByIdModel?.data?.get(0)?.service?.size!! > 0) {
+                serviceList?.addAll(serviceDateByIdModel?.data?.get(0)?.service!!)
             }
+            serviceAdapter?.notifyDataSetChanged()
+
+            TyreConfigClass.CarPhoto_1 = serviceDateByIdModel?.data?.get(0)?.carPhoto1!!
+            TyreConfigClass.CarPhoto_2 = serviceDateByIdModel?.data?.get(0)?.carPhoto2!!
+            tvMoreSuggestion?.text = serviceDateByIdModel?.data?.get(0)?.serviceSuggestions
+
+            tvColor?.text = ""
+            tvMakeModel?.text = serviceDateByIdModel?.data?.get(0)?.make + " " + serviceDateByIdModel?.data?.get(0)?.model
+            tvRegNumber?.text = serviceDateByIdModel?.data?.get(0)?.regNumber
+            try {
+                tvCurrentDateTime?.text = dateTFormatTo(serviceDateByIdModel?.data?.get(0)?.dateOfService!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            try {
+                tvCurrentDateTime?.text = datefrom(serviceDateByIdModel?.data?.get(0)?.createdAt!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            try {
+                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto1)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder).into(ivCarImage_1!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            try {
+                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto2)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder).into(ivCarImage_2!!)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            try {
+                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder).into(ivtyreLeftFront!!)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            try {
+                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_right_tyre_make_image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder).into(ivTyreRightFront!!)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            try {
+                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder).into(ivtyreLeftRear!!)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            try {
+                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.back_right_tyre_make_image)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.placeholder).into(ivTyreRightRear!!)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            suggestionArr.clear()
+            if (serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.size!! > 0) {
+                for (i in serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.indices!!) {
+                    suggestionArr.add(serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.get(i)!!)
+                }
+            }
+
+            tyreSuggestionAdapter?.notifyDataSetChanged()
+            llfooter?.visibility = View.VISIBLE
+            lltyreconfig?.isClickable = true
+            lltyreconfig?.isEnabled = true
+        } else {
+            llfooter?.visibility = View.GONE
+            lltyreconfig?.isClickable = false
+            lltyreconfig?.isEnabled = false
         }
-
-        tyreSuggestionAdapter?.notifyDataSetChanged()
-
 
         Common.hideLoader()
     }
@@ -620,10 +636,77 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             R.id.lltyreconfig -> {
                 ivAddTyreConfig?.performClick()
             }
+            R.id.ivInfoAddService -> {
+                showBottomSheetdialogNormal(
+                    Common.commonPhotoChooseArr,
+                    "Address Details",
+                    this,
+                    Common.btn_filled,
+                    false, Common.getStringBuilder(address)
+                )
+            }
 //            R.id.ivInfoImg -> {
 //                showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
 //            }
         }
+    }
+
+
+    private fun showBottomSheetdialogNormal(
+        array: ArrayList<String>,
+        titleStr: String,
+        context: Context?,
+        btnBg: String,
+        isBtnVisible: Boolean,
+        stringBuilder: StringBuilder
+    ) {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.common_dialogue_layout, null)
+        val dialog =
+            this?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+
+        dialog.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        dialog.window?.setLayout(width, height)
+        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(view)
+
+        val btnSend = view.findViewById<Button>(R.id.btnOk)
+        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
+        val tv_message = view.findViewById<TextView>(R.id.tv_message)
+        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
+
+        tvTitleText?.text = titleStr
+        val str = stringBuilder.toString().replace(",", "," + "\n")
+        tv_message?.text = str
+
+        if (str.isNotEmpty()) {
+            tv_message.visibility = View.VISIBLE
+        }
+
+        ivClose?.setOnClickListener {
+            dialog.dismiss()
+        }
+        if (isBtnVisible) {
+            btnSend.visibility = View.VISIBLE
+        } else {
+            btnSend.visibility = View.GONE
+        }
+        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
+            btnSend?.text = "Submit"
+        } else {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_white))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.header_title)!!)
+            btnSend?.text = "Cancel"
+        }
+
+        btnSend.setOnClickListener {
+            dialog?.dismiss()
+        }
+        dialog?.show()
     }
 
     private fun showBottomSheetdialog(

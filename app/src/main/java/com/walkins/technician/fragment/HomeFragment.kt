@@ -127,7 +127,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         relmainContent = view?.findViewById(R.id.relmainContent)
         relNoData = view?.findViewById(R.id.relNoData)
         tvUsername = view?.findViewById(R.id.tvUsername)
-        tvUsername?.text = "Hello, " + "Arun"
+        tvUsername?.text = "Hello, " + ""
         ivFilter?.setOnClickListener(this)
 
         homeRecycView = view?.findViewById(R.id.recyclerView)

@@ -126,6 +126,9 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        Log.e("geturl", "" + TyreDetailCommonClass.visualDetailPhotoUrl)
+        Log.e("geturl0", "" + TyreDetailCommonClass.vehicleMakeURL)
         try {
             Glide.with(this@CompletedVisualDetailActivity)
                 .load(TyreDetailCommonClass.visualDetailPhotoUrl)
@@ -137,8 +140,10 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         }
         suggestionArr.clear()
 
-        for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
-            suggestionArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i)!!)
+        if (TyreDetailCommonClass.issueResolvedArr?.size!!>0) {
+            for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
+                suggestionArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i)!!)
+            }
         }
 
         tyreSuggestionAdapter?.notifyDataSetChanged()
@@ -217,6 +222,10 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         tvPsiOut?.text = TyreDetailCommonClass.psiOutTyreService
         tvPsiIn?.text = TyreDetailCommonClass.psiInTyreService
         tvWeight?.text = TyreDetailCommonClass.weightTyreService
+
+        Log.e("getweight", "" + TyreDetailCommonClass.weightTyreService)
+        Log.e("getweight1", "" + TyreDetailCommonClass.psiOutTyreService)
+        Log.e("getweight0", "" + TyreDetailCommonClass.psiInTyreService)
 
 
     }

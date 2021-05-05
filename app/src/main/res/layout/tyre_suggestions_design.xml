@@ -12,6 +12,8 @@
         android:background="@drawable/layout_bg_red_corner"
         android:buttonTint="@color/header_title"
         android:paddingStart="@dimen/four_dp"
+        android:layout_marginStart="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/five_dp"
         android:layout_weight="1"
         android:paddingLeft="@dimen/four_dp" />
 </LinearLayout>

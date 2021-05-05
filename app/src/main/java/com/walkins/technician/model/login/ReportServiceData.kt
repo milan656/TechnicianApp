@@ -12,12 +12,21 @@ data class ReportServiceData(
     @SerializedName("make")
     @Expose
     val make: String,
+    @SerializedName("uuid")
+    @Expose
+    val uuid: String,
+    @SerializedName("address")
+    @Expose
+    val address: String,
     @SerializedName("color")
     @Expose
     val color: String,
     @SerializedName("model")
     @Expose
     val model: String,
+    @SerializedName("color_code")
+    @Expose
+    val color_code: String,
     @SerializedName("status")
     @Expose
     val status: String,

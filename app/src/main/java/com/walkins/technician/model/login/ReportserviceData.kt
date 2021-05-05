@@ -10,6 +10,9 @@ data class ReportserviceData(
     @SerializedName("skip")
     @Expose
     val skip: String,
+    @SerializedName("total_count")
+    @Expose
+    val total_count: Int,
     @SerializedName("elements")
     @Expose
     val serviceData: ArrayList<ReportServiceData>

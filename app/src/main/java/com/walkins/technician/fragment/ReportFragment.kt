@@ -38,11 +38,14 @@ import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.MakeModelViewModel
 import com.walkins.technician.viewmodel.ServiceViewModel
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
+    private var timer: Timer? = null
     private var param1: String? = null
     private var param2: String? = null
     private var ivBack: ImageView? = null
@@ -123,6 +126,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         ivBack = view?.findViewById(R.id.ivBack)
         ivFilterImg = view?.findViewById(R.id.ivFilterImg)
         ivFilterImg?.setOnClickListener(this)
+        ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_icon))
 
         ivBack?.setOnClickListener(this)
         llCompleted?.setOnClickListener(this)
@@ -271,44 +275,42 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (timer != null) {
+                    timer?.cancel()
+                }
 
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.toString().length > 1) {
-                    val jsonObject = JsonObject()
-                    jsonObject.addProperty("building_id", selectedSocietyName)
-                    jsonObject.add("service", selectedServiceJson)
-                    jsonObject.addProperty("status", selectedTab)
-                    jsonObject.addProperty("pagesize", pagesize)
-                    jsonObject.addProperty("page", page)
-                    jsonObject.addProperty("q", edtSearch?.text?.toString())
-                    getDashboardService(jsonObject, true)
-                } else {
-                    val jsonObject = JsonObject()
-                    jsonObject.addProperty("building_id", selectedSocietyName)
-                    jsonObject.add("service", selectedServiceJson)
-                    jsonObject.addProperty("status", selectedTab)
-                    jsonObject.addProperty("pagesize", pagesize)
-                    jsonObject.addProperty("page", page)
-                    jsonObject.addProperty("q", "")
-                    getDashboardService(jsonObject, true)
-                }
+
+
+                timer = Timer()
+                timer?.schedule(
+                    object : TimerTask() {
+                        override fun run() {
+                            activity?.runOnUiThread {
+                                val jsonObject = JsonObject()
+                                jsonObject.addProperty("building_id", selectedSocietyName)
+                                jsonObject.add("service", selectedServiceJson)
+                                jsonObject.addProperty("status", selectedTab)
+                                jsonObject.addProperty("pagesize", pagesize)
+                                jsonObject.addProperty("page", page)
+                                if (s != null && s.toString().length > 1) {
+                                    jsonObject.addProperty("q", edtSearch?.text?.toString())
+                                } else {
+
+                                    jsonObject.addProperty("q", "")
+                                }
+                                getDashboardService(jsonObject, true)
+
+                            }
+                        }
+                    }, 600
+                )
             }
 
         })
 
-    }
-
-    private fun callReportApi() {
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("building_id", "")
-        jsonObject.add("service", JsonArray())
-        jsonObject.addProperty("status", selectedTab)
-        jsonObject.addProperty("pagesize", pagesize)
-        jsonObject.addProperty("page", page)
-        jsonObject.addProperty("q", edtSearch?.text?.toString())
-        getDashboardService(jsonObject, true)
     }
 
     private fun getServiceList() {
@@ -323,7 +325,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                     } else {
                         if (it.error != null && it.error?.get(0)?.message != null) {
-
+                            Toast.makeText(context, "" + it.error.get(0).message, Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
@@ -334,7 +336,6 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun getDashboardService(jsonObject_: JsonObject, b: Boolean) {
-
 
         activity?.let {
             Common.showLoader(it)
@@ -363,8 +364,17 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             val startDate = date.time
 
                             dashboardModel = ReportHistoryModel(
-                                it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
-                                it.data.serviceData.get(i).modelImage,30, 4, list!!, 40, startDate,
+                                it.data.serviceData.get(i).uuid, it.data.serviceData.get(i).address,
+                                it.data.serviceData.get(i).regNumber.toInt(),
+                                it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model,
+                                it.data.serviceData.get(i).color, it.data.serviceData.get(i).color_code,
+                                "",
+                                it.data.serviceData.get(i).modelImage,
+                                30,
+                                4,
+                                list!!,
+                                40,
+                                startDate,
                                 startDate
                             )
                             historyDataList.add(dashboardModel)
@@ -413,12 +423,19 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                         if (historyDataList.size > 0) {
                             tvNoData?.visibility = View.GONE
+                            if (selectedTab.equals("complete")) {
+                                tvCompleted?.text = "Completed - ${historyDataList.size}"
+                            } else {
+                                tvSkipped?.text = "Skipped - ${historyDataList.size}"
+                            }
                         } else {
                             tvNoData?.visibility = View.VISIBLE
                             if (selectedTab.equals("complete")) {
                                 tvNoData?.text = "There is no any completed report"
+                                tvCompleted?.text = "Completed - ${historyDataList.size}"
                             } else {
                                 tvNoData?.text = "There is no any skip report"
+                                tvSkipped?.text = "Skipped - ${historyDataList.size}"
                             }
                         }
 
@@ -463,27 +480,18 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                                 historyDataList.add(dashboardModel!!)
                             }*/
-//                            relNoData?.visibility = View.GONE
                             reportRecycView?.visibility = View.VISIBLE
                         } else {
-//                            relNoData?.visibility = View.VISIBLE
-
                             reportRecycView?.visibility = View.GONE
                         }
-//                        mAdapter?.notifyDataSetChanged()
-
                     } else {
-//                        relNoData?.visibility = View.VISIBLE
                         reportRecycView?.visibility = View.GONE
                     }
                 } else {
-//                    relNoData?.visibility = View.VISIBLE
                     reportRecycView?.visibility = View.GONE
                 }
             })
         }
-
-
     }
 
     private fun setadapter(skipSelected: Boolean) {
@@ -494,30 +502,13 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 RecyclerView.VERTICAL,
                 false
             )
-            /* reportRecycView?.addItemDecoration(
-                 DividerItemDecoration(
-                     this,
-                     DividerItemDecoration.VERTICAL
-                 )
-             )*/
             mAdapter = arrayAdapter
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
             selectedTab = "complete"
             page = 1
             pagesize = 10
-
-            val jsonObject = JsonObject()
-            jsonObject.addProperty("building_id", "")
-            jsonObject.add("service", JsonArray())
-            jsonObject.addProperty("status", selectedTab)
-            jsonObject.addProperty("pagesize", pagesize)
-            jsonObject.addProperty("page", page)
-            jsonObject.addProperty("q", edtSearch?.text?.toString())
-            getDashboardService(jsonObject, true)
-
         } else {
-
             val arrayAdapter =
                 context?.let { ReportHistorySkippedAdapter(it, historyDataList, this) }
             reportRecycView?.layoutManager = LinearLayoutManager(
@@ -525,12 +516,6 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 RecyclerView.VERTICAL,
                 false
             )
-            /* reportRecycView?.addItemDecoration(
-                 DividerItemDecoration(
-                     this,
-                     DividerItemDecoration.VERTICAL
-                 )
-             )*/
             mAdapterSkipped = arrayAdapter
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
@@ -538,15 +523,15 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             page = 1
             pagesize = 10
 
-            val jsonObject = JsonObject()
-            jsonObject.addProperty("building_id", "")
-            jsonObject.add("service", JsonArray())
-            jsonObject.addProperty("status", selectedTab)
-            jsonObject.addProperty("pagesize", pagesize)
-            jsonObject.addProperty("page", page)
-            jsonObject.addProperty("q", edtSearch?.text?.toString())
-            getDashboardService(jsonObject, true)
         }
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("building_id", "")
+        jsonObject.add("service", JsonArray())
+        jsonObject.addProperty("status", selectedTab)
+        jsonObject.addProperty("pagesize", pagesize)
+        jsonObject.addProperty("page", page)
+        jsonObject.addProperty("q", edtSearch?.text?.toString())
+        getDashboardService(jsonObject, true)
     }
 
     companion object {
@@ -565,20 +550,36 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         if (check == 10) {
 
-//            showBottomSheetdialogNormal(
-//                Common.commonPhotoChooseArr,
-//                "Address Details",
-//                this,
-//                Common.btn_filled,
-//                false, Common.getStringBuilder(historyDataList?.get(variable)?.regNumber)
-//            )
+            showBottomSheetdialogNormal(
+                Common.commonPhotoChooseArr,
+                "Address Details",
+                context,
+                Common.btn_filled,
+                false, Common.getStringBuilder(historyDataList.get(variable).fullAddress)
+            )
         } else {
-            if (skipSelected) {
+            if (selectedTab.equals("skip")) {
+                Log.e("getregno", "" + historyDataList.get(variable).regNumber)
                 var intent = Intent(context, SkippedServiceDetailActivity::class.java)
+                intent.putExtra("color", historyDataList.get(variable).carColor)
+                intent.putExtra("makeModel", historyDataList.get(variable).makeModel)
+                intent.putExtra("regNumber", "" + historyDataList.get(variable).regNumber)
+                intent.putExtra("carImage", historyDataList.get(variable).carImageURL)
+                intent.putExtra("uuid", historyDataList.get(variable).uuid)
+                intent.putExtra("address", historyDataList.get(variable).fullAddress)
+                intent.putExtra("colorcode", historyDataList.get(variable).color_code)
+                intent.putExtra("ischange", "false")
                 startActivity(intent)
 
             } else {
                 var intent = Intent(context, CompletedServiceDetailActivity::class.java)
+                intent.putExtra("color", historyDataList.get(variable).carColor)
+                intent.putExtra("makeModel", historyDataList.get(variable).makeModel)
+                intent.putExtra("regNumber", historyDataList.get(variable).regNumber)
+                intent.putExtra("carImage", historyDataList.get(variable).carImageURL)
+                intent.putExtra("uuid", historyDataList.get(variable).uuid)
+                intent.putExtra("address", historyDataList.get(variable).fullAddress)
+                intent.putExtra("colorcode", historyDataList.get(variable).color_code)
                 startActivity(intent)
 
             }
@@ -679,7 +680,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         Log.e("selectedarr00", "" + suggestionArray)
         var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
-        tyreSuggestionAdapter = context?.let { TyreSuggestionAdpater(suggestionArray!!, it, this, false) }
+        tyreSuggestionAdapter = context?.let { TyreSuggestionAdpater(suggestionArray!!, it, this, false, true) }
         serviceRecycView?.layoutManager = GridLayoutManager(
             context, 2,
             RecyclerView.VERTICAL,

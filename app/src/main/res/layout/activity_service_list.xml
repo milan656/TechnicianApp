@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Upcoming - 3"
+                android:text="Upcoming - "
                 android:textColor="@color/white"
                 android:textSize="@dimen/fourteen_sp" />
 
@@ -59,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Completed - 3"
+                android:text="Completed - "
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
@@ -83,7 +83,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Skipped - 3"
+                android:text="Skipped - "
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 

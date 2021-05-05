@@ -80,6 +80,49 @@ class ServiceRepo {
         return servicedata
     }
 
+    fun UpdateService(
+        jsonObject: JsonObject,
+        access_token: String, context: Context
+    ): MutableLiveData<AddServiceModel> {
+        var servicedata = MutableLiveData<AddServiceModel>()
+
+        var addEdit: Call<ResponseBody>?=serviceApi.updateService(jsonObject, access_token)
+
+        addEdit?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>, response: Response<ResponseBody>
+            ) = if (response.isSuccessful) {
+                servicedata.value = Common?.getModelreturn(
+                    "AddServiceModel",
+                    response,
+                    0,
+                    context
+                ) as AddServiceModel?
+
+            } else {
+                try {
+                    servicedata.value = Common?.getModelreturn(
+                        "AddServiceModel",
+                        response,
+                        1,
+                        context
+                    ) as AddServiceModel?
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("getCipResponse", "" + t.cause + " " + t.message)
+//                servicedata.value = null
+            }
+        })
+        return servicedata
+    }
+
     fun getDashboardService(
         date: String,
         access_token: String, context: Context

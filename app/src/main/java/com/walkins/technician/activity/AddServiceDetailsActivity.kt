@@ -837,7 +837,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             reasonArrayList?.add(IssueResolveModel(reasonArray.get(i), 0, false))
         }
 
-        tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArray!!, this, this, false)
+        tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArray!!, this, this, false, true)
         tyreSuggestionAdapter?.onclick = this
         suggestionsRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -1199,7 +1199,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
 
             R.id.tvSkipService -> {
-                openSkipServiceDialogue()
+                openSkipServiceDialogue("", "")
             }
 
 
@@ -2154,7 +2154,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        stringBuilder:StringBuilder
+        stringBuilder: StringBuilder
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
@@ -2319,7 +2319,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
-    private fun openSkipServiceDialogue() {
+    private fun openSkipServiceDialogue(stringExtra: String?, s: String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -2335,28 +2335,35 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val pendingReasonRecycView = root.findViewById<RecyclerView>(R.id.pendingReasonRecycView)
 
         try {
-        skipList = ArrayList<IssueResolveModel>()
+            skipList = ArrayList<IssueResolveModel>()
 
-        commentList?.clear()
-        commentList?.addAll(commentModel?.data!!)
+            commentList?.clear()
+            commentList?.addAll(commentModel?.data!!)
 
-        if (commentList?.size!!>0) {
-            for (i in commentList?.indices!!) {
-                skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
-                Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
+            if (commentList?.size!! > 0) {
+                for (i in commentList?.indices!!) {
+                    skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
+                    Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
+                }
             }
-        }
-        var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
-        tyreSuggestionAdapter = TyreSuggestionAdpater(skipList!!, this, this, true)
-        tyreSuggestionAdapter.onclick = this
-        pendingReasonRecycView?.layoutManager = LinearLayoutManager(
-            this,
-            RecyclerView.VERTICAL,
-            false
-        )
-        pendingReasonRecycView?.adapter = tyreSuggestionAdapter
 
-        }catch (e:Exception){
+            for (i in skipList?.indices!!) {
+                if (stringExtra?.equals(skipList?.get(i)?.issueName, ignoreCase = true)!!) {
+                    skipList?.get(i)?.isSelected = true
+                }
+            }
+
+            var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
+            tyreSuggestionAdapter = TyreSuggestionAdpater(skipList!!, this, this, true, false)
+            tyreSuggestionAdapter.onclick = this
+            pendingReasonRecycView?.layoutManager = LinearLayoutManager(
+                this,
+                RecyclerView.VERTICAL,
+                false
+            )
+            pendingReasonRecycView?.adapter = tyreSuggestionAdapter
+
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -2368,6 +2375,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
         btnConfirm.setOnClickListener {
             builder.dismiss()
+
+
 
             Common.showLoader(this)
             var jsonObject = JsonObject()
@@ -2381,13 +2390,24 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             jsonObject.addProperty("uuid", uuid)
             jsonObject.add("comment_id", jsonArr)
-            jsonObject.addProperty("status", "skip")
 
-            serviceViewModel?.callApiAddService(
-                jsonObject,
-                prefManager.getAccessToken()!!,
-                this
-            )
+            if (s.equals("")) {
+                jsonObject.addProperty("status", "skip")
+            }
+
+            if (s.equals("update")) {
+                serviceViewModel?.callApiUpdateService(
+                    jsonObject,
+                    prefManager.getAccessToken()!!,
+                    this
+                )
+            } else {
+                serviceViewModel?.callApiAddService(
+                    jsonObject,
+                    prefManager.getAccessToken()!!,
+                    this
+                )
+            }
 
             serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
                 if (it != null) {
@@ -2400,7 +2420,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         intent.putExtra("carImage", carImage)
                         intent.putExtra("uuid", uuid)
                         intent.putExtra("colorcode", colorCode)
-                        intent.putExtra("address",address)
+                        intent.putExtra("address", address)
 
                         var reason: String? = ""
                         if (skipList?.size!! > 0) {
@@ -2872,8 +2892,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         Log.e("getcall", "call0" + requestCode)
         when (requestCode) {
             106 -> {
+                Log.e("get106", "" + requestCode + " " + resultCode)
                 if (resultCode == RESULT_OK) {
-                    openSkipServiceDialogue()
+                    openSkipServiceDialogue(data?.getStringExtra("reason"), "update")
                 }
             }
             IMAGE_CAPTURE_CODE -> {

@@ -220,7 +220,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //        for (i in issueResolveArr.indices) {
 //            issueResolveArray?.add(IssueResolveModel(issueResolveArr.get(i) + " " + i, false))
 //        }
-        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArray!!, this, this, false)
+        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArray!!, this, this, false,true)
         issueResolvedRecycView?.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,

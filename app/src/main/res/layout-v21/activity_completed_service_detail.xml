@@ -300,7 +300,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/serviceRecycView"
@@ -327,7 +327,7 @@
                                 android:layout_marginEnd="@dimen/twenty_dp"
                                 android:layout_marginBottom="@dimen/twenty_dp"
                                 android:orientation="vertical"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <com.walkins.technician.custom.BoldTextView
                                     android:layout_width="match_parent"
@@ -524,7 +524,7 @@
                                 android:layout_marginTop="@dimen/twelve_dp"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <com.walkins.technician.custom.NormalTextView
                                     android:id="@+id/tvtyreServiceInfo"
@@ -627,7 +627,7 @@
                                                 android:layout_marginTop="@dimen/five_dp"
                                                 android:background="@drawable/layout_bg_vehicle_border"
                                                 android:gravity="center"
-                                                android:src="@drawable/ic_mrf"
+
                                                 android:visibility="invisible" />
 
                                             <LinearLayout
@@ -675,7 +675,7 @@
                                                 android:layout_marginTop="@dimen/five_dp"
                                                 android:background="@drawable/layout_bg_vehicle_border"
                                                 android:gravity="center"
-                                                android:src="@drawable/ic_mrf"
+
                                                 android:visibility="invisible" />
 
                                         </LinearLayout>
@@ -705,7 +705,7 @@
                                                 android:layout_marginTop="@dimen/five_dp"
                                                 android:background="@drawable/layout_bg_vehicle_border"
                                                 android:gravity="start"
-                                                android:src="@drawable/ic_mrf"
+
                                                 android:visibility="invisible" />
 
 
@@ -760,7 +760,7 @@
                                                 android:layout_marginTop="@dimen/five_dp"
                                                 android:background="@drawable/layout_bg_vehicle_border"
                                                 android:gravity="start"
-                                                android:src="@drawable/ic_mrf"
+
                                                 android:visibility="invisible" />
 
                                         </LinearLayout>
@@ -895,7 +895,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/eight_dp"
                                 android:orientation="vertical"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/pendingSuggestionsRecycView"
@@ -916,7 +916,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five_dp"
-                                    android:text="You need to take your car for servicing more offen. Your car is very old."
+
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/fourteen_sp" />
 
@@ -936,7 +936,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
-                                        android:src="@mipmap/car" />
+                                        />
                                 </RelativeLayout>
 
 
@@ -955,7 +955,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
-                                        android:src="@mipmap/car" />
+                                        />
                                 </RelativeLayout>
 
 
