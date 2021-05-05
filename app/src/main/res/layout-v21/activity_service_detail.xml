@@ -22,8 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eighteen_dp"
             android:layout_marginEnd="@dimen/eighteen_dp"
-            android:layout_marginTop="@dimen/fourteen_dp"
             android:background="@drawable/common_rounded"
+            android:layout_marginTop="@dimen/fourteen_dp"
             android:elevation="@dimen/twenty_dp"
             android:orientation="horizontal">
 
@@ -157,6 +157,7 @@
             android:layout_marginEnd="@dimen/eighteen_dp"
             android:background="@drawable/common_rounded"
             android:elevation="@dimen/twenty_dp"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -261,6 +262,7 @@
             android:orientation="horizontal">
 
             <com.walkins.technician.custom.NormalTextView
+                android:id="@+id/tvReason"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -268,6 +270,18 @@
                 android:padding="@dimen/ten_dp"
                 android:text="The car was unavailable for servicing"
                 android:textColor="@color/text_color1"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <com.walkins.technician.custom.BoldTextView
+                android:id="@+id/tvChange"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:gravity="start|center"
+                android:padding="@dimen/ten_dp"
+                android:text="Change"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/fourteen_sp" />
 
 

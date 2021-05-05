@@ -297,6 +297,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("regNumber", arrayList.get(variable).regNumber)
                 intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
+                intent.putExtra("colorcode", arrayList.get(variable).color_code)
+                intent.putExtra("address",""+fullAddress)
+
+
                 startActivity(intent)
 
             } else if (serviceStatus.equals(completed)) {
@@ -308,6 +312,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("regNumber", arrayList.get(variable).regNumber)
                 intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
+                intent.putExtra("address",""+fullAddress)
                 startActivity(intent)
             } else if (serviceStatus.equals(skipped)) {
                 Log.e("checkva", "" + check)

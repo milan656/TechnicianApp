@@ -33,7 +33,8 @@
         <activity android:name=".activity.VisualDetailsActivity" />
         <activity android:name=".activity.AddServiceDetailsActivity" />
         <activity android:name=".activity.ServiceListActivity" />
-        <activity android:name=".activity.VerifyOtpActivity" />
+        <activity android:name=".activity.VerifyOtpActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -46,7 +47,8 @@
         <activity android:name=".activity.VehicleMakeActivity" />
         <activity android:name=".activity.HomeSubDealerActivity" />
         <activity android:name=".activity.HomeEmployeeActivity" />
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.VehiclePatternActivity" />
         <activity

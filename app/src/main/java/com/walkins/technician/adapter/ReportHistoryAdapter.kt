@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
@@ -70,7 +71,7 @@ class ReportHistoryAdapter(
             }
         }
 
-        holder.tvReportVehicleNumber.setText(""+mDataset.get(position).regNumber)
+        holder.tvReportVehicleNumber.setText("" + mDataset.get(position).regNumber)
         holder.tvReportVehicleName.setText(mDataset.get(position).makeModel)
 
         holder.tvCarColor.setText(mDataset.get(position).carColor)
@@ -89,7 +90,7 @@ class ReportHistoryAdapter(
             for (i in mDataset.get(position).serviceList.indices) {
                 if (mDataset.get(position).serviceList.get(i).name.equals("Type Rotation")) {
 
-                    holder.ivTyreRotation.visibility=View.VISIBLE
+                    holder.ivTyreRotation.visibility = View.VISIBLE
                     try {
                         Glide.with(mContext).load(mDataset.get(position).serviceList.get(i).image)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -98,7 +99,7 @@ class ReportHistoryAdapter(
                         e.printStackTrace()
                     }
                 } else if (mDataset.get(position).serviceList.get(i).name.equals("Wheel Balancing")) {
-                    holder.ivWheelBalancing.visibility=View.VISIBLE
+                    holder.ivWheelBalancing.visibility = View.VISIBLE
                     try {
                         Glide.with(mContext).load(mDataset.get(position).serviceList.get(i).image)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -107,7 +108,7 @@ class ReportHistoryAdapter(
                         e.printStackTrace()
                     }
                 } else if (mDataset.get(position).serviceList.get(i).name.equals("Nitrogen Top Up")) {
-                    holder.ivNitrogenTopup.visibility=View.VISIBLE
+                    holder.ivNitrogenTopup.visibility = View.VISIBLE
                     try {
                         Glide.with(mContext).load(mDataset.get(position).serviceList.get(i).image)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -116,7 +117,7 @@ class ReportHistoryAdapter(
                         e.printStackTrace()
                     }
                 } else if (mDataset.get(position).serviceList.get(i).name.equals("Nitrogen Refill")) {
-                    holder.ivNitrogenRifil.visibility=View.VISIBLE
+                    holder.ivNitrogenRifil.visibility = View.VISIBLE
                     try {
                         Glide.with(mContext).load(mDataset.get(position).serviceList.get(i).image)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -125,6 +126,13 @@ class ReportHistoryAdapter(
                         e.printStackTrace()
                     }
                 }
+            }
+        }
+
+        holder.llInfoReport.setOnClickListener {
+
+            if (onclick != null) {
+                onclick?.onPositionClick(position, 10)
             }
         }
 
@@ -162,6 +170,7 @@ class ReportHistoryAdapter(
         var ivNitrogenRifil: ImageView = itemView.findViewById(R.id.ivNitrogenRifil)
         var ivNitrogenTopup: ImageView = itemView.findViewById(R.id.ivNitrogenTopup)
         var tvCarColor: TextView = itemView.findViewById(R.id.tvCarColor)
+        var llInfoReport: LinearLayout = itemView.findViewById(R.id.llInfoReport)
 
     }
 

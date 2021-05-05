@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
+import com.bumptech.glide.Glide
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -26,7 +27,9 @@ import com.walkins.technician.common.onClickAdapter
 import com.walkins.technician.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.technician.model.login.DashboardModel
 import com.walkins.technician.model.login.SectionModel
+import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.ServiceViewModel
+import java.lang.Exception
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,6 +47,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var ivFilter: ImageView? = null
     private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
+    private var commonViewModel: CommonViewModel? = null
 
     var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()
     var historyDataList: ArrayList<DashboardModel> = ArrayList<DashboardModel>()
@@ -80,12 +84,41 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         activity = getActivity() as MainActivity?
+        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
 
         prefManager = context?.let { PrefManager(it) }
         init(view)
 
         return view
 
+    }
+
+    private fun getUserInfo() {
+        activity?.let {
+            commonViewModel?.callApiGetUserInfo(prefManager?.getAccessToken()!!, it)
+            commonViewModel?.getUserInfo()?.observe(it, androidx.lifecycle.Observer {
+                if (it != null) {
+                    if (it.success) {
+
+                        var firstName: String? = ""
+                        var lastName: String? = ""
+                        if (it.data.firstName != null) {
+                            firstName = it.data.firstName
+                        }
+                        if (it.data.lastName != null) {
+                            lastName = it.data.lastName
+                        }
+                        tvUsername?.text = "Hello, " + firstName + " " + lastName
+                    } else {
+                        if (it.error != null) {
+                            if (it.error?.get(0).message != null) {
+                                Toast.makeText(context, "" + it.error.get(0).message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            })
+        }
     }
 
     private fun init(view: View?) {
@@ -112,6 +145,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         mAdapter?.onclick = this
 
         getDashboardService(selectedDate!!)
+        getUserInfo()
     }
 
     private fun getDashboardService(displayDate: String) {
@@ -256,7 +290,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         } else if (check == 0) {
 
             var intent = Intent(context, ServiceListActivity::class.java)
-            Log.e("getdateformat",""+activity?.dateForWebservice_2(historyDataList.get(variable).date))
+            Log.e("getdateformat", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
             intent.putExtra("selectedDate", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
             intent.putExtra("selectedDateFormated", historyDataList.get(variable).dateFormated)
             intent.putExtra("addressTitle", historyDataList.get(variable).addressTitle)

@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -31,6 +32,7 @@ class ServicesListAdpater(
 
         var cardAddService: LinearLayout = itemView.findViewById(R.id.cardAddService)
         var ivCarimg: ImageView = itemView.findViewById(R.id.ivCarimg)
+        var ivServiceTyre: ImageView = itemView.findViewById(R.id.ivServiceTyre)
         var lllineView: LinearLayout = itemView.findViewById(R.id.lllineView)
         var tvVehicleNumber: TextView = itemView.findViewById(R.id.tvVehicleNumber)
         var tvVehicleName: TextView = itemView.findViewById(R.id.tvVehicleName)
@@ -83,6 +85,11 @@ class ServicesListAdpater(
             }
         }
 
+        if (array.get(position).status.equals("complete")) {
+            holder.ivServiceTyre.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), android.graphics.PorterDuff.Mode.MULTIPLY);
+        } else {
+            holder.ivServiceTyre.setColorFilter(ContextCompat.getColor(context, R.color.text_color2), android.graphics.PorterDuff.Mode.MULTIPLY);
+        }
 
     }
 

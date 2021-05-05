@@ -5,11 +5,25 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="115dp"
-        android:layout_height="40dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_app_splash_logo" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_app_splash_logo" />
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twelve_dp"
+            android:src="@drawable/ic_login_image" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llfooter"

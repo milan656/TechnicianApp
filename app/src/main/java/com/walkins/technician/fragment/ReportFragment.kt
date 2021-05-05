@@ -1,5 +1,6 @@
 package com.walkins.technician.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -363,7 +364,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                             dashboardModel = ReportHistoryModel(
                                 it.data.serviceData.get(i).regNumber.toInt(), it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model, it.data.serviceData.get(i).color, "",
-                                it.data.serviceData.get(i).modelImage, 30, 4, list!!, 40, startDate,
+                                it.data.serviceData.get(i).modelImage,30, 4, list!!, 40, startDate,
                                 startDate
                             )
                             historyDataList.add(dashboardModel)
@@ -562,14 +563,25 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     override fun onPositionClick(variable: Int, check: Int) {
 
-        if (skipSelected) {
-            var intent = Intent(context, SkippedServiceDetailActivity::class.java)
-            startActivity(intent)
+        if (check == 10) {
 
+//            showBottomSheetdialogNormal(
+//                Common.commonPhotoChooseArr,
+//                "Address Details",
+//                this,
+//                Common.btn_filled,
+//                false, Common.getStringBuilder(historyDataList?.get(variable)?.regNumber)
+//            )
         } else {
-            var intent = Intent(context, CompletedServiceDetailActivity::class.java)
-            startActivity(intent)
+            if (skipSelected) {
+                var intent = Intent(context, SkippedServiceDetailActivity::class.java)
+                startActivity(intent)
 
+            } else {
+                var intent = Intent(context, CompletedServiceDetailActivity::class.java)
+                startActivity(intent)
+
+            }
         }
     }
 
@@ -704,6 +716,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     searchMake(actvehicleMake?.text.toString())
                 } else {
 
+                    selectedSociety = ""
+                    selectedSocietyName = ""
                 }
             }
 
@@ -812,6 +826,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             jsonObject.addProperty("page", page)
             jsonObject.addProperty("q", edtSearch?.text?.toString())
             getDashboardService(jsonObject, true)
+
+            ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_filtered_icon))
         }
         btnCancel.setOnClickListener {
             dialog?.dismiss()
@@ -823,6 +839,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
             tyreSuggestionAdapter?.notifyDataSetChanged()
             selectedSociety = ""
+            selectedSocietyName = ""
             actvehicleMake?.setText("")
             selectedServiceJson = JsonArray()
             arrayService?.clear()
@@ -834,6 +851,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             jsonObject.addProperty("page", page)
             jsonObject.addProperty("q", edtSearch?.text?.toString())
             getDashboardService(jsonObject, true)
+            ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_icon))
         }
 
         dialog?.show()
@@ -914,7 +932,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             actvehicleMake?.threshold = 1
             actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
         } else {
-            var noValueList: ArrayList<String> = ArrayList()
+            val noValueList: ArrayList<String> = ArrayList()
             noValueList.add("No any dealer found")
             adapter =
                 context?.let {
@@ -985,4 +1003,60 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
     }
 
+    private fun showBottomSheetdialogNormal(
+        array: ArrayList<String>,
+        titleStr: String,
+        context: Context?,
+        btnBg: String,
+        isBtnVisible: Boolean,
+        stringBuilder: StringBuilder
+    ) {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.common_dialogue_layout, null)
+        val dialog =
+            context?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+
+        dialog?.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        dialog?.window?.setLayout(width, height)
+        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.setContentView(view)
+
+        val btnSend = view.findViewById<Button>(R.id.btnOk)
+        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
+        val tv_message = view.findViewById<TextView>(R.id.tv_message)
+        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
+
+        tvTitleText?.text = titleStr
+        val str = stringBuilder.toString().replace(",", "," + "\n")
+        tv_message?.text = str
+
+        if (str.isNotEmpty()) {
+            tv_message.visibility = View.VISIBLE
+        }
+
+        ivClose?.setOnClickListener {
+            dialog?.dismiss()
+        }
+        if (isBtnVisible) {
+            btnSend.visibility = View.VISIBLE
+        } else {
+            btnSend.visibility = View.GONE
+        }
+        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
+            btnSend?.text = "Submit"
+        } else {
+            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_white))
+            btnSend.setTextColor(context?.resources?.getColor(R.color.header_title)!!)
+            btnSend?.text = "Cancel"
+        }
+
+        btnSend.setOnClickListener {
+            dialog?.dismiss()
+        }
+        dialog?.show()
+    }
 }

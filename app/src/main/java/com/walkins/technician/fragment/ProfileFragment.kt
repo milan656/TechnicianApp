@@ -117,16 +117,24 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 if (it != null) {
                     if (it.success) {
 
-                        tvMobilenumber?.text = it.data.mobile
-                        tvusername?.text = it.data.firstName + " " + it.data.lastName
-
+                        if (it.data.mobile != null) {
+                            tvMobilenumber?.text = it.data.mobile
+                        }
+                        var firstName: String? = ""
+                        var lastName: String? = ""
+                        if (it.data.firstName != null) {
+                            firstName = it.data.firstName
+                        }
+                        if (it.data.lastName != null) {
+                            lastName = it.data.lastName
+                        }
+                        tvusername?.text = "Hello, " + firstName + " " + lastName
                         try {
                             Glide.with(mainAct?.baseContext!!).load(it.data.image).into(ivProfileImg!!)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
 
-                        mainAct?.tvUsername?.text = "Hello, " + it.data.firstName + " " + it.data.lastName
                     } else {
                         if (it.error != null) {
                             if (it.error?.get(0).message != null) {

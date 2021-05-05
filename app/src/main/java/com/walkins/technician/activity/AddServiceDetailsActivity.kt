@@ -83,6 +83,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     var pendingArr: ArrayList<String>? = null
     var dialog: BottomSheetDialog? = null
+    var skipList: ArrayList<IssueResolveModel>? = null
 
     var imagePickerDialog: BottomSheetDialog? = null
     var serviceViewModel: ServiceViewModel? = null
@@ -226,6 +227,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var regNumber: String = ""
     private var carImage: String = ""
     private var uuid: String = ""
+    private var colorCode: String = ""
+    private var address: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -756,19 +759,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (intent.getStringExtra("uuid") != null) {
                 uuid = intent.getStringExtra("uuid")!!
             }
+            if (intent.getStringExtra("colorcode") != null) {
+                colorCode = intent.getStringExtra("colorcode")!!
+            }
+            if (intent.getStringExtra("address") != null) {
+                address = intent.getStringExtra("address")!!
+            }
         }
 
         tvcolor?.text = color
         tvMakeModel?.text = makeModel
         tvRegNumber?.text = regNumber
 
-        if (color.equals("white", ignoreCase = true)) {
-            llbg?.setBackgroundColor(this.resources?.getColor(R.color.white)!!)
-        } else if (color.equals("blue", ignoreCase = true)) {
-            llbg?.setBackgroundColor(this.resources?.getColor(R.color.blue_color)!!)
-        } else if (color.equals("red", ignoreCase = true)) {
-            llbg?.setBackgroundColor(this.resources?.getColor(R.color.red_color)!!)
-        }
+        llbg?.setBackgroundColor(Color.parseColor(colorCode))
 
         try {
             Glide.with(this)
@@ -882,19 +885,23 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
     private fun getCommentList() {
+        Common.showLoader(this)
         commonViewModel?.callApiGetComments(prefManager.getAccessToken()!!, this)
         commonViewModel?.getCommentList()?.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 if (it.success) {
 
                     commentModel = it
+                    Common.hideLoader()
 
                 } else {
+                    Common.hideLoader()
                     if (it.error != null && it.error.get(0).message != null) {
                         showShortToast(it.error.get(0).message, this)
                     }
                 }
             } else {
+                Common.hideLoader()
             }
         })
     }
@@ -1130,8 +1137,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     "Address Details",
                     this,
                     Common.btn_filled,
-                    false, "Palm Spring,", "Vastrapur Road,", "Opposite Siddhivinayak mandir,",
-                    "Ahmedabad - 123456"
+                    false, Common.getStringBuilder(address)
                 )
             }
             R.id.ivBack -> {
@@ -2148,22 +2154,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        msg: String,
-        msg1: String,
-        msg2: String,
-        msg3: String,
+        stringBuilder:StringBuilder
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
         val dialog =
             this?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
-        dialog?.setCancelable(false)
+        dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog?.window?.setLayout(width, height)
-        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog?.setContentView(view)
+        dialog.window?.setLayout(width, height)
+        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btnOk)
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
@@ -2171,15 +2174,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
+        val str = stringBuilder.toString().replace(",", "," + "\n")
+        tv_message?.text = str
 
-        tv_message?.text = msg + "\n" + msg1 + "\n" + msg2 + "\n" + msg3
-
-        if (msg.isNotEmpty()) {
+        if (str.isNotEmpty()) {
             tv_message.visibility = View.VISIBLE
         }
 
         ivClose?.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
         }
         if (isBtnVisible) {
             btnSend.visibility = View.VISIBLE
@@ -2331,19 +2334,20 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val ivClose = root.findViewById<ImageView>(R.id.ivClose)
         val pendingReasonRecycView = root.findViewById<RecyclerView>(R.id.pendingReasonRecycView)
 
-
-        var list: ArrayList<IssueResolveModel>? = ArrayList<IssueResolveModel>()
+        try {
+        skipList = ArrayList<IssueResolveModel>()
 
         commentList?.clear()
         commentList?.addAll(commentModel?.data!!)
-        for (i in commentList?.indices!!) {
-            list?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
-            Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
+
+        if (commentList?.size!!>0) {
+            for (i in commentList?.indices!!) {
+                skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
+                Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
+            }
         }
-
-
         var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
-        tyreSuggestionAdapter = TyreSuggestionAdpater(list!!, this, this, true)
+        tyreSuggestionAdapter = TyreSuggestionAdpater(skipList!!, this, this, true)
         tyreSuggestionAdapter.onclick = this
         pendingReasonRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -2351,6 +2355,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             false
         )
         pendingReasonRecycView?.adapter = tyreSuggestionAdapter
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
         val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
 
@@ -2365,10 +2373,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             var jsonObject = JsonObject()
             var jsonArr = JsonArray()
 
-            for (i in list.indices) {
-                if (list.get(i).isSelected) {
-                    Log.e("getselected", "" + list.get(i).issueName)
-                    jsonArr.add(list.get(i).id)
+            for (i in skipList?.indices!!) {
+                if (skipList?.get(i)?.isSelected!!) {
+                    Log.e("getselected", "" + skipList?.get(i)?.issueName)
+                    jsonArr.add(skipList?.get(i)?.id)
                 }
             }
             jsonObject.addProperty("uuid", uuid)
@@ -2391,6 +2399,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         intent.putExtra("regNumber", regNumber)
                         intent.putExtra("carImage", carImage)
                         intent.putExtra("uuid", uuid)
+                        intent.putExtra("colorcode", colorCode)
+                        intent.putExtra("address",address)
+
+                        var reason: String? = ""
+                        if (skipList?.size!! > 0) {
+                            for (i in skipList?.indices!!) {
+                                if (skipList?.get(i)?.isSelected!!) {
+                                    reason = skipList?.get(i)?.issueName
+                                    Log.e("getreason", "" + reason)
+                                }
+                            }
+                        }
+                        intent.putExtra("reason", reason)
                         startActivityForResult(intent, 106)
                     } else {
                         Common.hideLoader()
@@ -2852,7 +2873,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         when (requestCode) {
             106 -> {
                 if (resultCode == RESULT_OK) {
-                    finish()
+                    openSkipServiceDialogue()
                 }
             }
             IMAGE_CAPTURE_CODE -> {
