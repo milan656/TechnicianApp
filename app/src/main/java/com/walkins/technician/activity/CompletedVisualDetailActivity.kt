@@ -1,10 +1,14 @@
 package com.walkins.technician.activity
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -84,6 +88,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         tvTreadWear = findViewById(R.id.tvTreadWear)
 
         ivVisualDetailPhoto = findViewById(R.id.ivVisualDetailPhoto)
+        ivVisualDetailPhoto?.setOnClickListener(this)
 
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
         tyreSuggestionAdapter = PendingTyreSuggestionAdpater(suggestionArr, this, this)
@@ -140,7 +145,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         }
         suggestionArr.clear()
 
-        if (TyreDetailCommonClass.issueResolvedArr?.size!!>0) {
+        if (TyreDetailCommonClass.issueResolvedArr?.size!! > 0) {
             for (i in TyreDetailCommonClass.issueResolvedArr?.indices!!) {
                 suggestionArr.add(TyreDetailCommonClass.issueResolvedArr?.get(i)!!)
             }
@@ -242,7 +247,47 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
             R.id.ivBack -> {
                 onBackPressed()
             }
+            R.id.ivVisualDetailPhoto -> {
+                if (!TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
+                    showImage(TyreDetailCommonClass.visualDetailPhotoUrl)
+                }
+            }
         }
     }
 
+    private fun showImage(posterUrl: String?) {
+        val builder = AlertDialog.Builder(this@CompletedVisualDetailActivity).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.MATCH_PARENT
+        builder.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+
+        val root = LayoutInflater.from(this@CompletedVisualDetailActivity)
+            .inflate(R.layout.dialogue_image, null)
+
+        val tvTitleRemarks =
+            root.findViewById<TextView>(R.id.tvTitleRemarks)
+        val imgPoster =
+            root.findViewById<ImageView>(R.id.imgPoster)
+
+
+        Glide.with(this@CompletedVisualDetailActivity)
+            .load(posterUrl)
+            .override(1600, 1600)
+
+            .placeholder(R.drawable.placeholder)
+            .into(imgPoster)
+
+        tvTitleRemarks?.text = "View Tyre Image"
+
+        val imgClose = root.findViewById<ImageView>(R.id.imgClose)
+
+
+        imgClose.setOnClickListener { builder.dismiss() }
+        builder.setView(root)
+
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
+    }
 }

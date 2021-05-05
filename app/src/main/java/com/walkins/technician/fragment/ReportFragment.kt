@@ -90,7 +90,6 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var selectedTab = "complete"
     private var selectedServiceJson: JsonArray? = JsonArray()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -575,7 +574,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 var intent = Intent(context, CompletedServiceDetailActivity::class.java)
                 intent.putExtra("color", historyDataList.get(variable).carColor)
                 intent.putExtra("makeModel", historyDataList.get(variable).makeModel)
-                intent.putExtra("regNumber", historyDataList.get(variable).regNumber)
+                intent.putExtra("regNumber", ""+historyDataList.get(variable).regNumber)
                 intent.putExtra("carImage", historyDataList.get(variable).carImageURL)
                 intent.putExtra("uuid", historyDataList.get(variable).uuid)
                 intent.putExtra("address", historyDataList.get(variable).fullAddress)
@@ -817,7 +816,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     Log.e("selectedarr", "" + suggestionArray.get(i).id + " " + suggestionArray.get(i).issueName)
                 }
             }
-
+            ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_filtered_icon))
             selectedServiceJson = jsonArray
             val jsonObject = JsonObject()
             jsonObject.addProperty("building_id", "" + selectedSociety)
@@ -828,7 +827,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             jsonObject.addProperty("q", edtSearch?.text?.toString())
             getDashboardService(jsonObject, true)
 
-            ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_filtered_icon))
+
         }
         btnCancel.setOnClickListener {
             dialog?.dismiss()
@@ -844,6 +843,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             actvehicleMake?.setText("")
             selectedServiceJson = JsonArray()
             arrayService?.clear()
+            ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_icon))
             val jsonObject = JsonObject()
             jsonObject.addProperty("building_id", "")
             jsonObject.add("service", selectedServiceJson)
@@ -852,7 +852,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             jsonObject.addProperty("page", page)
             jsonObject.addProperty("q", edtSearch?.text?.toString())
             getDashboardService(jsonObject, true)
-            ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_icon))
+
         }
 
         dialog?.show()

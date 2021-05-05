@@ -1,6 +1,7 @@
 package com.walkins.technician.activity
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -75,6 +77,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var ivTyre1: ImageView? = null
     private var ivTyre2: ImageView? = null
     private var ivTyre3: ImageView? = null
+
+    private var carPhoto_1 = "carPhoto_1"
+    private var carPhoto_2 = "carPhoto_2"
 
     private var ivPhoneCall: ImageView? = null
 
@@ -147,7 +152,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         llTyreConfigExpanded = findViewById(R.id.llTyreConfigExpanded)
         llUpdatedPlacement = findViewById(R.id.llUpdatedPlacement)
         ivPhoneCall = findViewById(R.id.ivPhoneCall)
-        ivInfoAddService = findViewById(R.id.ivPhoneCall)
+        ivInfoAddService = findViewById(R.id.ivInfoAddService)
 
         tvColor = findViewById(R.id.tvColor)
         tvMakeModel = findViewById(R.id.tvMakeModel)
@@ -245,6 +250,8 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         ivBack?.setOnClickListener(this)
         tvtyreServiceInfo?.setOnClickListener(this)
         ivInfoAddService?.setOnClickListener(this)
+        ivCarImage_1?.setOnClickListener(this)
+        ivCarImage_2?.setOnClickListener(this)
 
         ivAddServices?.setOnClickListener(this)
         ivAddTyreConfig?.setOnClickListener(this)
@@ -463,6 +470,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 e.printStackTrace()
             }
 
+            carPhoto_1 = serviceDateByIdModel?.data?.get(0)?.carPhoto1!!
+            carPhoto_2 = serviceDateByIdModel?.data?.get(0)?.carPhoto2!!
+
             try {
                 Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -644,6 +654,16 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     Common.btn_filled,
                     false, Common.getStringBuilder(address)
                 )
+            }
+            R.id.ivCarImage_1 -> {
+                if (!carPhoto_1.equals("")) {
+                    showImage(carPhoto_1)
+                }
+            }
+            R.id.ivCarImage_2 -> {
+                if (!carPhoto_2.equals("")) {
+                    showImage(carPhoto_2)
+                }
             }
 //            R.id.ivInfoImg -> {
 //                showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
@@ -957,4 +977,36 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         }
     }
 
+    private fun showImage(posterUrl: String?) {
+        val builder = AlertDialog.Builder(this@CompletedServiceDetailActivity).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.MATCH_PARENT
+        builder.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+
+        val root = LayoutInflater.from(this@CompletedServiceDetailActivity)
+            .inflate(R.layout.dialogue_image, null)
+
+        val tvTitleRemarks =
+            root.findViewById<TextView>(R.id.tvTitleRemarks)
+        val imgPoster =
+            root.findViewById<ImageView>(R.id.imgPoster)
+
+        Glide.with(this@CompletedServiceDetailActivity)
+            .load(posterUrl)
+            .override(1600, 1600)
+            .placeholder(R.drawable.placeholder)
+            .into(imgPoster)
+
+        tvTitleRemarks?.text = "View Car Image"
+
+        val imgClose = root.findViewById<ImageView>(R.id.imgClose)
+
+        imgClose.setOnClickListener { builder.dismiss() }
+        builder.setView(root)
+
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
+    }
 }
