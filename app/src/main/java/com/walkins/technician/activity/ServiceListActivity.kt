@@ -312,7 +312,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
                 intent.putExtra("colorcode", arrayList.get(variable).color_code)
                 intent.putExtra("address", "" + fullAddress)
-
+                intent.putExtra("make_id", "" + arrayList.get(variable).make_id)
+                intent.putExtra("model_id", "" + arrayList.get(variable).model_id)
 
                 startActivity(intent)
 
@@ -339,7 +340,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("address", "" + fullAddress)
                 intent.putExtra("colorcode", arrayList.get(variable).color_code)
                 intent.putExtra("ischange", "false")
-                intent.putExtra("comment_id", arrayList.get(variable).comment_id.get(0))
+//                intent.putExtra("comment_id", arrayList.get(variable).comment_id.get(0))
 
 //                intent.putExtra("formatedDate", arrayList.get(variable).)
                 startActivity(intent)

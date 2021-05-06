@@ -930,7 +930,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.frontRightManufacturingDate
             TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePsiIn
             TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePsiOut
-//            TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.wei
+            TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.front_right_tyre_weight
             TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.frontRightTyreSideWall
             TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.frontRightTyreShoulder
             TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.frontRightTyreTreadWear

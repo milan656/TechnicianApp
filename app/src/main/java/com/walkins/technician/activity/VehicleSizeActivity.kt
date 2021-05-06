@@ -121,10 +121,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         var thread = Thread {
 
             Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
-            if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass()
-                    .getAllSize().size > 0
-            ) {
-                arrList?.addAll(mDb.sizeDaoClass().getAllSize())
+
+//                arrList?.addAll(mDb.sizeDaoClass().getAllSize())
 
                 if (selectedTyre.equals("LF")) {
                     if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
@@ -391,6 +389,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 }
 
                 runOnUiThread {
+                    Log.e("getsizedata","getsize")
                     if (selectedId != -1) {
                         llVehicleMakeselectedView?.visibility = View.VISIBLE
                         btnNext?.visibility = View.VISIBLE
@@ -406,19 +405,23 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         }
                         Common.hideLoader()
                         tvSelectedModel?.text = TyreDetailCommonClass.vehicleSize
+                        adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
+                        gridviewRecycModel?.adapter = adapter
+                        Log.e("getsizedata","getsize11")
                     } else {
-                        gridviewRecycModel?.layoutManager =
+                        Log.e("getsizedata","else")
+                        fetchSizeData()
+                        /*gridviewRecycModel?.layoutManager =
                             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
 
                         adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
                         gridviewRecycModel?.adapter = adapter
-                        Common.hideLoader()
+                        Common.hideLoader()*/
                     }
                 }
-            }
-
         }
         thread.start()
+
 
 //        var handler = Handler()
 //        handler.postDelayed(Runnable {
@@ -466,12 +469,101 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     }
 
+    private fun fetchSizeData() {
+        Common.showLoader(this)
+        Log.e("getsizedata","call11")
+        var make_id: Int = -1
+        var model_id: Int = -1
+        if (TyreDetailCommonClass.make_id != -1) {
+            make_id = TyreDetailCommonClass.make_id
+        }
+        if (TyreDetailCommonClass.model_id != -1) {
+            model_id = TyreDetailCommonClass.model_id
+        }
+        Log.e("getsizedata",""+make_id+" "+model_id)
+        warrantyViewModel.getVehicleSize(
+            model_id, make_id,
+            prefManager.getAccessToken()!!,
+            this
+        )
+
+        warrantyViewModel.getVehicleSize()
+            ?.observe(this@VehicleSizeActivity, androidx.lifecycle.Observer {
+                Common.hideLoader()
+                if (it != null) {
+                    if (it.success) {
+                        if (it.data != null && it.data.size > 0) {
+                            arrList?.clear()
+                            for (i in it.data.indices) {
+                                var entity = VehicleSizeModelClass()
+
+                                entity.name =
+                                    if (it?.data?.get(i)?.name != null) it?.data.get(i).name else ""
+                                entity.sizeId = it.data.get(i).sizeId
+
+                                if (selectedId == entity.sizeId) {
+                                    entity.isSelected = true
+                                } else {
+                                    entity.isSelected = false
+                                }
+                                arrList?.add(entity)
+                            }
+                        }
+
+                        gridviewRecycModel?.layoutManager =
+                            GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+
+                        adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
+                        gridviewRecycModel?.adapter = adapter
+                        Common.hideLoader()
+                        /* runOnUiThread {
+                             if (selectedId != -1) {
+                                 llVehicleMakeselectedView?.visibility = View.VISIBLE
+                                 btnNext?.visibility = View.VISIBLE
+                                 gridviewRecycModel?.visibility = View.GONE
+
+                                 if (arrList != null && arrList?.size!! > 0) {
+                                     for (i in arrList?.indices!!) {
+
+                                         if (selectedId == arrList?.get(i)?.sizeId) {
+                                             arrList?.get(i)?.isSelected = true
+                                         }
+                                     }
+                                 }
+                                 Common.hideLoader()
+                                 tvSelectedModel?.text = TyreDetailCommonClass.vehicleSize
+                                 adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
+                                 gridviewRecycModel?.adapter = adapter
+                             } else {
+
+                             }
+                         }*/
+                    } else {
+                        if (it.error != null && it.error.size > 0) {
+                            if (it.error.get(0).statusCode != null) {
+
+                            } else {
+                                this@VehicleSizeActivity.let { it1 ->
+                                    Common.showShortToast(
+                                        it.error.get(0).message,
+                                        it1
+                                    )
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    showLongToast("Something Went Wrong", this@VehicleSizeActivity)
+                }
+            })
+    }
+
     private fun setData(json: JsonObject) {
         Log.e("getvalselected", "" + json)
         if (selectedTyre != null && !selectedTyre.equals("")) {
             TyreDetailCommonClass.tyreType = selectedTyre
         }
-        if (TyreDetailCommonClass.vehicleMake.equals("")){
+        if (TyreDetailCommonClass.vehicleMake.equals("")) {
 
             if (json.get(TyreKey.vehicleMake) != null && !json.get(TyreKey.vehicleMake)?.asString.equals(
                     ""
@@ -480,7 +572,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 TyreDetailCommonClass.vehicleMake = json.get(TyreKey.vehicleMake)?.asString
             }
         }
-        if (TyreDetailCommonClass.vehicleMakeId.equals("")){
+        if (TyreDetailCommonClass.vehicleMakeId.equals("")) {
 
             if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals(
                     ""
@@ -489,7 +581,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
             }
         }
-        if (TyreDetailCommonClass.vehiclePattern.equals("")){
+        if (TyreDetailCommonClass.vehiclePattern.equals("")) {
 
             if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(
                     ""
@@ -498,7 +590,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 TyreDetailCommonClass.vehiclePattern = json.get(TyreKey.vehiclePattern)?.asString
             }
         }
-        if (TyreDetailCommonClass.vehiclePatternId.equals("")){
+        if (TyreDetailCommonClass.vehiclePatternId.equals("")) {
 
             if (json.get(TyreKey.vehiclePatternId) != null && !json.get(TyreKey.vehiclePatternId)?.asString.equals(
                     ""
@@ -996,11 +1088,12 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
             }
             R.id.ivEditVehicleMake -> {
-                gridviewRecycModel?.layoutManager =
-                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-                adapter = VehicleSizeAdapter(this, arrList, this, -1)
-                gridviewRecycModel?.adapter = adapter
-                gridviewRecycModel?.visibility = View.VISIBLE
+                fetchSizeData()
+//                gridviewRecycModel?.layoutManager =
+//                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+//                adapter = VehicleSizeAdapter(this, arrList, this, -1)
+//                gridviewRecycModel?.adapter = adapter
+//                gridviewRecycModel?.visibility = View.VISIBLE
 
                 Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
                 Common.slideDown(gridviewRecycModel!!, null)

@@ -179,6 +179,9 @@ data class ServiceDataByIdData(
     @SerializedName("front_left_tyre_weight")
     @Expose
     val frontLeftTyreWeight: String,
+    @SerializedName("front_right_tyre_weight")
+    @Expose
+    val front_right_tyre_weight: String,
     @SerializedName("back_left_tyre_weight")
     @Expose
     val backLeftTyreWeight: String,

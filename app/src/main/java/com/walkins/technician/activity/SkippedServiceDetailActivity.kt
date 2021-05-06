@@ -42,7 +42,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     private var address: String = ""
     private var ischange: String = ""
     private var formatedDate: String = ""
-    private var comment_id: Int = -1
+    private var comment_id: String = ""
 
     private var tvCurrentDateTime: TextView? = null
 
@@ -113,6 +113,9 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             if (intent.getStringExtra("formatedDate") != null) {
                 formatedDate = intent.getStringExtra("formatedDate")!!
             }
+            if (intent.getStringExtra("comment_id") != null) {
+                comment_id = intent.getStringExtra("comment_id")!!
+            }
         }
 
         Log.e("getregno", "" + regNumber)
@@ -137,23 +140,28 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             tvChange?.visibility = View.GONE
             getCommentList()
         }
-        Log.e("getdated0", "" + formatedDate)
-        Log.e("getdated0", "" + Common.datefrom(formatedDate))
-        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        val output = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
 
-        var d: Date? = null
-        try {
-            d = input.parse(formatedDate)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        val formatted: String = output.format(d)
-        Log.e("DATE", "" + formatted)
-        try {
-            tvCurrentDateTime?.text = formatted
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (formatedDate != null && !formatedDate.equals("")) {
+            Log.e("getdated0", "" + formatedDate)
+            Log.e("getdated0", "" + Common.datefrom(formatedDate))
+            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            val output = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
+
+            var d: Date? = null
+            try {
+                d = input.parse(formatedDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            val formatted: String = output.format(d)
+            Log.e("DATE", "" + formatted)
+            try {
+                tvCurrentDateTime?.text = formatted
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } else {
+            tvCurrentDateTime?.text = Common.getCurrentDateTime()
         }
 
 
@@ -168,8 +176,11 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 
                     if (it.data != null && it.data.size > 0) {
                         for (i in it.data.indices) {
-                            if (comment_id == it.data.get(i).id) {
-                                tvReason?.text = it.data.get(i).name
+                            if (!comment_id.equals("")) {
+                                Log.e("getcomment", "" + comment_id + " " + it.data.get(i).id)
+                                if (comment_id.toInt() == it.data.get(i).id) {
+                                    tvReason?.text = it.data.get(i).name
+                                }
                             }
                         }
                     }

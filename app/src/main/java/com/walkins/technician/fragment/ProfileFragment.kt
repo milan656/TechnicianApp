@@ -1,11 +1,13 @@
 package com.walkins.technician.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -21,12 +23,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.adapter.DialogueAdpater
-import com.walkins.technician.common.TyreDetailCommonClass
 import com.walkins.technician.common.onClickAdapter
-import com.walkins.technician.common.showShortToast
 import com.walkins.technician.viewmodel.CommonViewModel
 import com.walkins.technician.viewmodel.LoginActivityViewModel
-import java.lang.Exception
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -86,9 +85,9 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
     private fun init(view: View?) {
         tvMobilenumber = view?.findViewById(R.id.tvMobilenumber)!!
-        tvusername = view?.findViewById(R.id.tvusername)!!
+        tvusername = view.findViewById(R.id.tvusername)!!
         tvLogout = view.findViewById(R.id.tvLogout)!!
-        ivCamera = view?.findViewById(R.id.ivCamera)!!
+        ivCamera = view.findViewById(R.id.ivCamera)!!
         ivProfileImg = view.findViewById(R.id.ivProfileImg)!!
         tvTitle = view.findViewById(R.id.tvTitle)
         ivBack = view.findViewById(R.id.ivBack)
@@ -105,6 +104,8 @@ class ProfileFragment : Fragment(), onClickAdapter {
         tvTitle?.text = "Your Profile"
 
         tvLogout?.setOnClickListener {
+
+            showLogOutDialogue()
 
 //            callLogout api
         }
@@ -246,5 +247,165 @@ class ProfileFragment : Fragment(), onClickAdapter {
             }
         }
     }
+
+    private fun showLogOutDialogue() {
+        val builder = AlertDialog.Builder(context).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        builder.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        val root = LayoutInflater.from(context)
+            .inflate(R.layout.common_dialogue_layout_two_button, null)
+
+        val btn_cancel = root.findViewById<Button>(R.id.btn_cancel)
+        val btn_save = root.findViewById<Button>(R.id.btn_save)
+        val tv_message = root.findViewById<TextView>(R.id.tv_message)
+        val chkLogOutFromAllDevice =
+            root.findViewById<CheckBox>(R.id.chkLogOutFromAllDevice)
+
+        btn_save.setOnClickListener {
+            builder.dismiss()
+
+            if (chkLogOutFromAllDevice.isChecked) {
+//                callLogoutFromAllDeviceWebService()
+            } else {
+//                RemoveOrAddTokenForApi("")
+                /*dbHelper = DbHelper(this)
+            dbHelper?.deleteAll()
+            prefManager.clearAll()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()*/
+            }
+        }
+
+        btn_cancel.setOnClickListener {
+            builder.dismiss()
+        }
+        builder.setView(root)
+
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
+    }
+
+    /*  private fun callLogoutFromAllDeviceWebService() {
+          context?.let { Common.showLoader(it) }
+          prefManager?.getAccessToken()?.let {
+              userInfoViewModel?.logOutFromAllDevice(
+                  it, context
+              )
+          }
+
+          userInfoViewModel?.logOut()?.observe(this, Observer {
+
+              Common.hideLoader()
+              prefManager?.clearAll()
+              val intent = Intent(context, LoginActivity::class.java)
+              intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+              intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+              startActivity(intent)
+              activity?.finish()
+
+              if (it != null) {
+                  if (it.success) {
+
+                  } else {
+
+                      Common.hideLoader()
+                      if (it.error != null && it.error.size > 0) {
+                          if (it.error.get(0).statusCode != null) {
+                              if (it.error.get(0).statusCode == 400) {
+                                  prefManager?.clearAll()
+                                  val intent = Intent(context, LoginActivity::class.java)
+                                  startActivity(intent)
+                                  activity?.finish()
+                              } else {
+                                  context?.let { it1 ->
+                                      Common.showShortToast(
+                                          it.error.get(0).message,
+                                          it1
+                                      )
+                                  }
+                              }
+
+                          } else {
+                              Common.hideLoader()
+                              context?.let { it1 ->
+                                  Common.showShortToast(
+                                      it.error.get(0).message,
+                                      it1
+                                  )
+                              }
+                          }
+                      }
+                  }
+              }
+          })
+      }
+
+      private fun RemoveOrAddTokenForApi(token: String) {
+
+          var jsonObject: JsonObject
+          jsonObject = JsonObject()
+          jsonObject.addProperty("token", token)
+          prefManager?.getAccessToken()?.let {
+              notificationViewModel.callApiToSaveToken(
+                  jsonObject,
+                  it, context
+              )
+          }
+
+          notificationViewModel.getTokenSavedModel()
+              ?.observe(context, Observer {
+                  if (it != null) {
+                      if (it.success) {
+                          if (token != null && !token.equals("")) {
+
+                          } else {
+  //                            MainActivity.dbHelper = DbHelper(this)
+  //                            MainActivity.dbHelper?.deleteAll()
+                              prefManager?.clearAll()
+                              val intent = Intent(context, LoginActivity::class.java)
+                              startActivity(intent)
+                              activity?.finish()
+
+                          }
+
+                      } else {
+                          if (it.error != null && it.error.size > 0) {
+                              if (it.error.get(0).statusCode != null) {
+                                  if (it.error.get(0).statusCode == 400) {
+                                      prefManager?.clearAll()
+                                      val intent = Intent(context, LoginActivity::class.java)
+                                      startActivity(intent)
+                                      activity?.finish()
+                                  } else {
+                                      context?.let { it1 ->
+                                          Common.showShortToast(
+                                              it.error.get(0).message,
+                                              it1
+                                          )
+                                      }
+                                  }
+
+                              } else {
+                                  context?.let { it1 ->
+                                      Common.showShortToast(
+                                          it.error.get(0).message,
+                                          it1
+                                      )
+                                  }
+                              }
+                          }
+                      }
+                  } else {
+                      context?.let { it1 -> showLongToast("Something Went Wrong", it1) }
+                  }
+              })
+
+      }*/
+
 }
 

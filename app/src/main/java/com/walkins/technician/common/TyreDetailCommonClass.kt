@@ -41,5 +41,8 @@ class TyreDetailCommonClass {
 
         var isCompleted = false
 
+        var make_id: Int = -1
+        var model_id: Int = -1
+
     }
 }

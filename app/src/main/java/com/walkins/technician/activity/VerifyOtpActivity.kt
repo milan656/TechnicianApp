@@ -79,7 +79,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
 
-        tvResend?.setOnTouchListener(object :View.OnTouchListener{
+        tvResend?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
 
                 callSendOTPApi()
@@ -196,6 +196,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun callSendOTPApi() {
+        Common.showLoader(this)
         val jsonObject = JsonObject()
         jsonObject.addProperty("phone_number", intent?.getStringExtra("number"))
         Log.e("getobject", "" + jsonObject)
@@ -205,6 +206,10 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             Common.hideLoader()
             if (it != null) {
                 if (it.success) {
+
+                    if (it.message != null && !it.message.equals("")) {
+                        Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
+                    }
 
                 } else {
                     if (it.error != null && it.error.get(0).message != null) {

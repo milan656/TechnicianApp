@@ -229,6 +229,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var uuid: String = ""
     private var colorCode: String = ""
     private var address: String = ""
+    private var make_id: String = ""
+    private var model_id: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -765,6 +767,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (intent.getStringExtra("address") != null) {
                 address = intent.getStringExtra("address")!!
             }
+            if (intent.getStringExtra("make_id") != null) {
+                make_id = intent.getStringExtra("make_id")!!
+                if (!make_id.equals("")) {
+                    TyreDetailCommonClass.make_id = make_id.toInt()
+                }
+            }
+            if (intent.getStringExtra("model_id") != null) {
+                model_id = intent.getStringExtra("model_id")!!
+                if (!model_id.equals("")) {
+                    TyreDetailCommonClass.model_id = model_id.toInt()
+                }
+            }
         }
 
         tvcolor?.text = color
@@ -853,6 +867,41 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         ivBack?.setOnClickListener(this)
 
+//        https://staging-backend.aapkedoorstep.com/api/v1/tyrepushpull/get-tyre-size?model_id=53&make_id=593
+
+       /* edtMoreSuggestion?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null && s.toString().length > 0) {
+                    storeServiceDetailData()
+                }
+            }
+
+        })
+
+        tvNextServiceDueDate?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null && s.toString().length > 0) {
+                    storeServiceDetailData()
+                }
+            }
+
+        })*/
 
         GlobalScope.launch(Dispatchers.Main) {
             launch(Dispatchers.Main) {
@@ -1398,6 +1447,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tvServices?.isAllCaps = false
                     tvTyreAddInfo?.isAllCaps = false
                 }
+
+                checkSubmitBtn()
             }
             R.id.ivDueDate -> {
                 openDatePicker()
@@ -1446,11 +1497,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private fun storeServiceDetailData() {
         var jsonObject: JsonObject = JsonObject()
 
-        jsonObject.addProperty(TyreKey.nitrogenTopup, "" + chkNitrogenTopup?.isChecked)
-        jsonObject.addProperty(TyreKey.nitrogenRefil, "" + chkNitrogenRefill?.isChecked)
-        jsonObject.addProperty(TyreKey.tyreRotation, "" + chkTyreRotation?.isChecked)
-        jsonObject.addProperty(TyreKey.wheelBalancing, "" + chkWheelBalacing?.isChecked)
-
+//        jsonObject.addProperty(TyreKey.nitrogenTopup, "" + chkNitrogenTopup?.isChecked)
+//        jsonObject.addProperty(TyreKey.nitrogenRefil, "" + chkNitrogenRefill?.isChecked)
+//        jsonObject.addProperty(TyreKey.tyreRotation, "" + chkTyreRotation?.isChecked)
+//        jsonObject.addProperty(TyreKey.wheelBalancing, "" + chkWheelBalacing?.isChecked)
+//
         jsonObject.addProperty(TyreKey.moreSuggestion, edtMoreSuggestion?.text?.toString())
         jsonObject.addProperty(TyreKey.nextDueDate, tvNextServiceDueDate?.text.toString())
         jsonObject.addProperty(TyreKey.addServiceCarImage_1, TyreConfigClass.CarPhoto_1)
@@ -3311,7 +3362,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ) {
 
         } else {
-            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -3325,7 +3376,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ) {
 
         } else {
-            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Service Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -3337,19 +3388,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (!TyreConfigClass.LFCompleted || !TyreConfigClass.RFCompleted || !TyreConfigClass.LRCompleted
             || !TyreConfigClass.RRCompleted
         ) {
-            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals("")) {
 
         } else {
-            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Photo 1 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
         if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals("")) {
 
         } else {
-            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Photo 2 Not Selected", Toast.LENGTH_SHORT).show()
             return
         }
         Log.e("iscpmpleted33", "button is clickable")
@@ -5048,6 +5099,20 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        removeDataExceptServiceData()
+    }
+
+    fun removeDataExceptServiceData(){
+        prefManager.removeValue(TyreConfigClass.TyreLFObject)
+        prefManager.removeValue(TyreConfigClass.TyreRRObject)
+        prefManager.removeValue(TyreConfigClass.TyreRFObject)
+        prefManager.removeValue(TyreConfigClass.TyreLRObject)
+        Common.setClearAllValues()
+        Common.setFalseAllTyreStatus()
+    }
+
     fun removeAllTyreAndServiceDetails() {
         GlobalScope.launch(Dispatchers.Main) {
             launch(Dispatchers.Main) {
@@ -5078,7 +5143,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
 
-                if (suggestionArray != null && suggestionArray?.size!!>0) {
+                if (suggestionArray != null && suggestionArray?.size!! > 0) {
                     for (i in suggestionArray?.indices!!) {
                         if (suggestionArray?.get(i)?.isSelected!!) {
                             suggestionArray?.get(i)?.isSelected = false
@@ -5121,6 +5186,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.CarPhoto_2 = it.data.imageUrl
                     }
 
+                    storeServiceDetailData()
                     checkSubmitBtn()
                 }
             }

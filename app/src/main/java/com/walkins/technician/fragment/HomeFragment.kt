@@ -144,8 +144,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         homeRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         getDashboardService(selectedDate!!)
         getUserInfo()
+
     }
 
     private fun getDashboardService(displayDate: String) {

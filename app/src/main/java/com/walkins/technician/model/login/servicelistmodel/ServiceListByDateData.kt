@@ -28,6 +28,12 @@ data class ServiceListByDateData(
     @SerializedName("model")
     @Expose
     val model: String,
+    @SerializedName("make_id")
+    @Expose
+    val make_id: Int,
+    @SerializedName("model_id")
+    @Expose
+    val model_id: Int,
     @SerializedName("model_image")
     @Expose
     val model_image: String,
