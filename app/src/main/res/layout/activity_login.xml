@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
+
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -16,105 +18,113 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_above="@+id/llfooter">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/thirty_dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_app_splash_logo" />
 
-                    <ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="172dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/twelve_dp"
-                        android:src="@drawable/ic_login_image" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/twenty_dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/seventy"
                         android:orientation="vertical">
 
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_app_splash_logo" />
+
+                        <ImageView
+                            android:layout_width="200dp"
+                            android:layout_height="172dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/twelve_dp"
+                            android:src="@drawable/ic_login_image" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/twenty_four_dp"
-                            android:layout_marginRight="@dimen/twenty_four_dp"
+                            android:layout_marginTop="@dimen/fourty_eight_dp"
                             android:orientation="vertical">
 
-                            <com.walkins.technician.custom.NormalTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/mobile_number"
-                                android:textColor="@color/text_color1"
-                                android:textSize="@dimen/sixteen_sp" />
-
-                            <com.walkins.technician.custom.NormalEditText
-                                android:id="@+id/edtLoginEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="45dp"
-                                android:layout_marginTop="@dimen/eight_dp"
-                                android:background="@drawable/layout_bg_corner"
-                                android:inputType="number"
-                                android:maxLength="10"
-                                android:padding="8dip"
-                                android:singleLine="true" />
-
-                            <com.walkins.technician.custom.NormalTextView
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/eight_dp"
-                                android:gravity="center"
-                                android:text="You will receive a 4 digit OTP code to log in"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/fourteen_sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/five_dp"
-                            android:layout_marginRight="@dimen/five_dp"
-                            android:orientation="vertical"
-                            android:weightSum="2">
-
-                            <com.walkins.technician.custom.BoldButton
-                                android:id="@+id/btnLoginToDashBoard"
-                                android:layout_width="match_parent"
-                                android:layout_height="56dp"
-                                android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/twenty_four_dp"
-                                android:layout_marginTop="@dimen/twenty_four_dp"
                                 android:layout_marginRight="@dimen/twenty_four_dp"
-                                android:layout_marginBottom="@dimen/twenty_four_dp"
-                                android:background="@drawable/round_corner_button_yellow"
-                                android:letterSpacing="0.06"
-                                android:lineHeight="21.6px"
-                                android:text="@string/login_dashboard"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/eighteen_sp" />
+                                android:orientation="vertical">
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/mobile_number"
+                                    android:textColor="@color/text_color1"
+                                    android:textSize="@dimen/sixteen_sp" />
+
+                                <com.walkins.technician.custom.NormalEditText
+                                    android:id="@+id/edtLoginEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:layout_marginTop="@dimen/eight_dp"
+                                    android:background="@drawable/layout_bg_corner"
+                                    android:inputType="number"
+                                    android:maxLength="10"
+                                    android:padding="8dip"
+                                    android:singleLine="true" />
+
+                                <com.walkins.technician.custom.NormalTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/eight_dp"
+                                    android:gravity="center"
+                                    android:text="You will receive a 4 digit OTP code to log in"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:weightSum="2">
+
+                                <com.walkins.technician.custom.BoldButton
+                                    android:id="@+id/btnLoginToDashBoard"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="56dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/twenty_four_dp"
+                                    android:layout_marginTop="@dimen/twenty_four_dp"
+                                    android:layout_marginRight="@dimen/twenty_four_dp"
+                                    android:layout_marginBottom="@dimen/twenty_four_dp"
+                                    android:background="@drawable/round_corner_button_yellow"
+                                    android:letterSpacing="0.06"
+                                    android:lineHeight="21.6px"
+                                    android:text="@string/login_dashboard"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/eighteen_sp" />
 
 
+                            </LinearLayout>
                         </LinearLayout>
+
+
                     </LinearLayout>
-
-
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 

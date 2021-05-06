@@ -220,7 +220,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //        for (i in issueResolveArr.indices) {
 //            issueResolveArray?.add(IssueResolveModel(issueResolveArr.get(i) + " " + i, false))
 //        }
-        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArray!!, this, this, false,true)
+        issueResolveAdapter = TyreSuggestionAdpater(issueResolveArray!!, this, this, false, true)
         issueResolvedRecycView?.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,
@@ -371,7 +371,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             psiOutFrame?.visibility = View.VISIBLE
                             psiInFrame?.visibility = View.VISIBLE
                         }
-                        if (arrlist.get(j).equals("Wheel Balancing")){
+                        if (arrlist.get(j).equals("Wheel Balancing")) {
                             weightFrame?.visibility = View.VISIBLE
                         }
                     }
@@ -1029,47 +1029,66 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (selectedTyre != null && !selectedTyre.equals("")) {
             TyreDetailCommonClass.tyreType = selectedTyre
         }
-        if (json.get(TyreKey.vehicleMake) != null && !json.get(TyreKey.vehicleMake)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehicleMake = json.get(TyreKey.vehicleMake)?.asString
+        if (TyreDetailCommonClass.vehicleMake.equals("")) {
+
+            if (json.get(TyreKey.vehicleMake) != null && !json.get(TyreKey.vehicleMake)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleMake = json.get(TyreKey.vehicleMake)?.asString
+            }
         }
-        if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
+        if (TyreDetailCommonClass.vehicleMakeId.equals("")) {
+
+            if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
+            }
         }
-        if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehicleMakeURL = json.get(TyreKey.vehicleMakeURL)?.asString
+        if (TyreDetailCommonClass.vehiclePattern.equals("")) {
+
+            if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehiclePattern = json.get(TyreKey.vehiclePattern)?.asString
+            }
         }
-        if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehiclePattern = json.get(TyreKey.vehiclePattern)?.asString
+        if (TyreDetailCommonClass.vehiclePatternId.equals("")) {
+
+            if (json.get(TyreKey.vehiclePatternId) != null && !json.get(TyreKey.vehiclePatternId)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehiclePatternId = json.get(TyreKey.vehiclePatternId)?.asString
+            }
         }
-        if (json.get(TyreKey.vehiclePatternId) != null && !json.get(TyreKey.vehiclePatternId)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehiclePatternId = json.get(TyreKey.vehiclePatternId)?.asString
+        if (TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+
+            if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleMakeURL = json.get(TyreKey.vehicleMakeURL)?.asString
+            }
         }
-        if (json.get(TyreKey.vehicleSize) != null && !json.get(TyreKey.vehicleSize)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehicleSize = json.get(TyreKey.vehicleSize)?.asString
+        if (TyreDetailCommonClass.vehicleSize.equals("")) {
+            if (json.get(TyreKey.vehicleSize) != null && !json.get(TyreKey.vehicleSize)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleSize = json.get(TyreKey.vehicleSize)?.asString
+            }
         }
-        if (json.get(TyreKey.vehicleSizeId) != null && !json.get(TyreKey.vehicleSizeId)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehicleSizeId = json.get(TyreKey.vehicleSizeId)?.asString
+        if (TyreDetailCommonClass.vehicleSizeId.equals("")) {
+            if (json.get(TyreKey.vehicleSizeId) != null && !json.get(TyreKey.vehicleSizeId)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleSizeId = json.get(TyreKey.vehicleSizeId)?.asString
+            }
         }
 
         if (json.get(TyreKey.manufaturingDate) != null && !json.get(TyreKey.manufaturingDate)?.asString.equals(

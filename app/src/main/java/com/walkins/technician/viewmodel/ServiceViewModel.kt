@@ -69,12 +69,14 @@ class ServiceViewModel : ViewModel() {
 
     fun callApiServiceByDate(
         date: String,
+        building_id: String,
         access_token: String,
         context: Context
     ) {
         serviceRepo = ServiceRepo().getInstance()
         serviceListByDateModel = serviceRepo?.getServiceByDate(
             date,
+            building_id,
             access_token,
             context
         )

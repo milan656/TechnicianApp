@@ -59,6 +59,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
     private var selectedPos = -1
     private var selectedTyre = ""
     private var selectedId: Int = -1
+    private var selectedIdMake: Int = -1
     private var tvNoDataFound: TextView? = null
     private var tvSelectTyre: TextView? = null
 
@@ -152,6 +153,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                         selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
                     }
+
+                    if (json.get(TyreKey.vehicleMakeId)!=null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")){
+                        selectedIdMake=json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
+                    }
                     Log.e("getpatterlf", "" + json + " " + selectedId)
                     setData(json)
                     runOnUiThread {
@@ -192,6 +197,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                         selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
                     }
+                    if (json.get(TyreKey.vehicleMakeId)!=null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")){
+                        selectedIdMake=json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
+                    }
                     Log.e("getpatterlr", "" + json + " " + selectedId)
                     setData(json)
                     runOnUiThread {
@@ -229,6 +237,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     ) {
 
                         selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                    }
+                    if (json.get(TyreKey.vehicleMakeId)!=null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")){
+                        selectedIdMake=json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
                     }
                     Log.e("getpatterrf", "" + json + " " + selectedId)
                     setData(json)
@@ -272,6 +283,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     ) {
 
                         selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
+                    }
+                    if (json.get(TyreKey.vehicleMakeId)!=null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")){
+                        selectedIdMake=json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
                     }
                     Log.e("getpatterrr", "" + json + " " + selectedId)
                     setData(json)
@@ -444,10 +458,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
 
         Log.e("getid", "" + selectedId)
-        Log.e("selectedpatt00", "" + TyreDetailCommonClass.vehicleMakeId + " " + intent?.getStringExtra("selectedMakeId"))
+        Log.e("selectedpatt00", "" + TyreDetailCommonClass.vehicleMakeId + " " + selectedIdMake)
 
-        if (selectedId != -1) {
-            if (!TyreDetailCommonClass.vehicleMakeId.equals("") && TyreDetailCommonClass.vehicleMakeId?.toInt() == intent?.getStringExtra("selectedMakeId")?.toInt()) {
+        if (selectedIdMake != -1) {
+            if (!TyreDetailCommonClass.vehicleMakeId.equals("") && TyreDetailCommonClass.vehicleMakeId?.toInt() == selectedIdMake) {
                 llVehicleMakeselectedView?.visibility = View.VISIBLE
                 btnNext?.visibility = View.VISIBLE
                 gridviewRecycModel?.visibility = View.GONE
@@ -1107,17 +1121,24 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         if (selectedTyre != null && !selectedTyre.equals("")) {
             TyreDetailCommonClass.tyreType = selectedTyre
         }
-        if (json.get(TyreKey.vehicleMake) != null && !json.get(TyreKey.vehicleMake)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehicleMake = json.get(TyreKey.vehicleMake)?.asString
+
+        if (TyreDetailCommonClass.vehicleMake.equals("")){
+
+            if (json.get(TyreKey.vehicleMake) != null && !json.get(TyreKey.vehicleMake)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleMake = json.get(TyreKey.vehicleMake)?.asString
+            }
         }
-        if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals(
-                ""
-            )
-        ) {
-            TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
+        if (TyreDetailCommonClass.vehicleMakeId.equals("")){
+
+            if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
+            }
         }
         if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(
                 ""

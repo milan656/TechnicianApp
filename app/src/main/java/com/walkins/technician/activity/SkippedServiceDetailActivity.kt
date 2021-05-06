@@ -3,7 +3,6 @@ package com.walkins.technician.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,18 +11,28 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
+import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
+import com.walkins.technician.common.*
+import com.walkins.technician.viewmodel.CommonViewModel
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private var tvChange: TextView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
-
+    private var commonViewModel: CommonViewModel? = null
+    private lateinit var prefManager: PrefManager
     private var color: String = ""
     private var colorCode: String = ""
     private var makeModel: String = ""
@@ -32,6 +41,8 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     private var uuid: String = ""
     private var address: String = ""
     private var ischange: String = ""
+    private var formatedDate: String = ""
+    private var comment_id: Int = -1
 
     private var tvCurrentDateTime: TextView? = null
 
@@ -46,6 +57,8 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_detail)
+        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        prefManager = PrefManager(this)
         init()
     }
 
@@ -97,9 +110,12 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             if (intent.getStringExtra("ischange") != null) {
                 ischange = intent.getStringExtra("ischange")!!
             }
+            if (intent.getStringExtra("formatedDate") != null) {
+                formatedDate = intent.getStringExtra("formatedDate")!!
+            }
         }
 
-        Log.e("getregno",""+regNumber)
+        Log.e("getregno", "" + regNumber)
         tvcolor?.text = color
         tvMakeModel?.text = makeModel
         tvRegNumber?.text = regNumber
@@ -119,9 +135,56 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         if (ischange.equals("false")) {
             tvChange?.visibility = View.GONE
+            getCommentList()
+        }
+        Log.e("getdated0", "" + formatedDate)
+        Log.e("getdated0", "" + Common.datefrom(formatedDate))
+        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val output = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
+
+        var d: Date? = null
+        try {
+            d = input.parse(formatedDate)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        val formatted: String = output.format(d)
+        Log.e("DATE", "" + formatted)
+        try {
+            tvCurrentDateTime?.text = formatted
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
-        tvCurrentDateTime?.text = Common.getCurrentDateTime()
+
+    }
+
+    private fun getCommentList() {
+        Common.showLoader(this)
+        commonViewModel?.callApiGetComments(prefManager.getAccessToken()!!, this)
+        commonViewModel?.getCommentList()?.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    if (it.data != null && it.data.size > 0) {
+                        for (i in it.data.indices) {
+                            if (comment_id == it.data.get(i).id) {
+                                tvReason?.text = it.data.get(i).name
+                            }
+                        }
+                    }
+                    Common.hideLoader()
+
+                } else {
+                    Common.hideLoader()
+                    if (it.error != null && it.error.get(0).message != null) {
+                        showShortToast(it.error.get(0).message, this)
+                    }
+                }
+            } else {
+                Common.hideLoader()
+            }
+        })
     }
 
     override fun onClick(v: View?) {

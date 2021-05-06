@@ -76,6 +76,14 @@ class TyreSuggestionAdpater(
 
         holder.chkTyreSuggestion.setOnClickListener {
 
+            if (!isMultipleSelect) {
+                for (data in array) {
+                    if (data.isSelected) {
+                        data.isSelected = false
+                    }
+                }
+                notifyDataSetChanged()
+            }
 
             val pos: Int = holder.chkTyreSuggestion.getTag() as Int
             try {

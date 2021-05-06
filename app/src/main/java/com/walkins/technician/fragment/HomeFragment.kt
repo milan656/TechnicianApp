@@ -174,7 +174,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 val startDate = date.time
                                 Log.e("getdatefromstart", "" + startDate)
                                 dashboardModel = DashboardModel(
-                                    it.data.get(i).building_name, it.data.get(i).address, it.data.get(i).date, it.data.get(i).date_formated,
+                                    it.data.get(i).building_name, it.data.get(i).address, it.data.get(i).date,it.data.get(i).building_uuid, it.data.get(i).date_formated,
                                     it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), it.data.get(i).total_jobs.toInt(), startDate,
                                     startDate
                                 )
@@ -295,6 +295,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             intent.putExtra("selectedDateFormated", historyDataList.get(variable).dateFormated)
             intent.putExtra("addressTitle", historyDataList.get(variable).addressTitle)
             intent.putExtra("fullAddress", historyDataList.get(variable).fullAddress)
+            intent.putExtra("building_uuid", historyDataList.get(variable).building_uuid)
             startActivity(intent)
         } else {
             Log.e("getsection", "" + sectionModelArrayList.get(variable).sectionLabel)

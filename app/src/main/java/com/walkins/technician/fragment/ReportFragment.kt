@@ -367,7 +367,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 it.data.serviceData.get(i).regNumber.toInt(),
                                 it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model,
                                 it.data.serviceData.get(i).color, it.data.serviceData.get(i).color_code,
-                                "",
+                                it.data.serviceData.get(i).service_scheduled_date, 0,
                                 it.data.serviceData.get(i).modelImage,
                                 30,
                                 4,
@@ -524,8 +524,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         }
         val jsonObject = JsonObject()
-        jsonObject.addProperty("building_id", "")
-        jsonObject.add("service", JsonArray())
+        jsonObject.addProperty("building_id", selectedSocietyName)
+        jsonObject.add("service", selectedServiceJson)
         jsonObject.addProperty("status", selectedTab)
         jsonObject.addProperty("pagesize", pagesize)
         jsonObject.addProperty("page", page)
@@ -568,17 +568,20 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 intent.putExtra("address", historyDataList.get(variable).fullAddress)
                 intent.putExtra("colorcode", historyDataList.get(variable).color_code)
                 intent.putExtra("ischange", "false")
+                intent.putExtra("formatedDate", historyDataList.get(variable).dateFormated)
+                intent.putExtra("comment_id", historyDataList.get(variable).comment_id)
                 startActivity(intent)
 
             } else {
                 var intent = Intent(context, CompletedServiceDetailActivity::class.java)
                 intent.putExtra("color", historyDataList.get(variable).carColor)
                 intent.putExtra("makeModel", historyDataList.get(variable).makeModel)
-                intent.putExtra("regNumber", ""+historyDataList.get(variable).regNumber)
+                intent.putExtra("regNumber", "" + historyDataList.get(variable).regNumber)
                 intent.putExtra("carImage", historyDataList.get(variable).carImageURL)
                 intent.putExtra("uuid", historyDataList.get(variable).uuid)
                 intent.putExtra("address", historyDataList.get(variable).fullAddress)
                 intent.putExtra("colorcode", historyDataList.get(variable).color_code)
+                intent.putExtra("formatedDate", historyDataList.get(variable).dateFormated)
                 startActivity(intent)
 
             }

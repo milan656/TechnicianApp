@@ -181,9 +181,9 @@ class Common {
             val temp: Array<String> = str.split(",").toTypedArray()
 
             for (i in temp.indices) {
-                strBuilder?.append(temp.get(i))?.append(",")
+                strBuilder.append(temp.get(i)).append(",")
             }
-            return strBuilder!!
+            return strBuilder
         }
 
         fun saveImage(context: Context, bitmap: Bitmap, name: String, extension: String) {

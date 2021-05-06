@@ -45,6 +45,10 @@ import com.walkins.technician.model.login.servicemodel.servicedata.ServiceDataBy
 import com.walkins.technician.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.technician.viewmodel.CommonViewModel
 import java.lang.Exception
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener,
@@ -124,6 +128,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var regNumber: String = ""
     private var carImage: String = ""
     private var address: String = ""
+    private var formatedDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -231,6 +236,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             if (intent.getStringExtra("address") != null) {
                 address = intent.getStringExtra("address")!!
             }
+            if (intent.getStringExtra("formatedDate") != null) {
+                formatedDate = intent.getStringExtra("formatedDate")!!
+            }
 
         }
 
@@ -269,9 +277,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
 //        tvCurrentDateTime?.text = Common.getCurrentDateTime()
 
-        tvColor?.text = color
-        tvMakeModel?.text = makeModel
-        tvRegNumber?.text = regNumber
 
         getServiceDataById()
 
@@ -442,14 +447,19 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             tvColor?.text = ""
             tvMakeModel?.text = serviceDateByIdModel?.data?.get(0)?.make + " " + serviceDateByIdModel?.data?.get(0)?.model
             tvRegNumber?.text = serviceDateByIdModel?.data?.get(0)?.regNumber
+            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            val output = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
+
+            var d: Date? = null
             try {
-                tvCurrentDateTime?.text = dateTFormatTo(serviceDateByIdModel?.data?.get(0)?.dateOfService!!)
-            } catch (e: Exception) {
+                d = input.parse(formatedDate)
+            } catch (e: ParseException) {
                 e.printStackTrace()
             }
-
+            val formatted: String = output.format(d)
+            Log.e("DATE", "" + formatted)
             try {
-                tvCurrentDateTime?.text = datefrom(serviceDateByIdModel?.data?.get(0)?.createdAt!!)
+                tvCurrentDateTime?.text = formatted
             } catch (e: Exception) {
                 e.printStackTrace()
             }

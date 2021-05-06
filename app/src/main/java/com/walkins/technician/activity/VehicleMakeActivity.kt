@@ -52,6 +52,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var selectedPos = -1
 
     private var selectedName: String = ""
+    private var selectedImage: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,6 +139,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
+                        if (json.get(TyreKey.vehicleMakeURL)!=null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+                            selectedImage = json.get(TyreKey.vehicleMakeURL)?.asString!!
+                            TyreDetailCommonClass.vehicleMakeURL=selectedImage
+                        }
 
                         setData(json)
 
@@ -177,7 +182,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
-
+                        if (json.get(TyreKey.vehicleMakeURL)!=null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+                            selectedImage = json.get(TyreKey.vehicleMakeURL)?.asString!!
+                            TyreDetailCommonClass.vehicleMakeURL=selectedImage
+                        }
                         setData(json)
 
                         runOnUiThread {
@@ -218,6 +226,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
+                        if (json.get(TyreKey.vehicleMakeURL)!=null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+                            selectedImage = json.get(TyreKey.vehicleMakeURL)?.asString!!
+                            TyreDetailCommonClass.vehicleMakeURL=selectedImage
+                        }
                         setData(json)
 
                         Log.e("getvalselected", "" + selectedName)
@@ -259,7 +271,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
-
+                        if (json.get(TyreKey.vehicleMakeURL)!=null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+                            selectedImage = json.get(TyreKey.vehicleMakeURL)?.asString!!
+                            TyreDetailCommonClass.vehicleMakeURL=selectedImage
+                        }
                         setData(json)
 
                         runOnUiThread {
@@ -431,7 +446,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     }
                     try {
                         Glide.with(this)
-                            .load(TyreDetailCommonClass.vehicleMakeURL)
+                            .load(selectedImage)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.placeholder)
                             .into(ivSelectedCar!!)
@@ -500,34 +515,23 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Common.slideUp(gridviewRecycMake_!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
-        if (TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-            try {
-                Glide.with(this)
-                    .load(arrList?.get(variable)?.concat)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.placeholder)
-                    .into(ivSelectedCar!!)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        } else {
-            try {
-                Glide.with(this)
-                    .load(TyreDetailCommonClass.vehicleMakeURL)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.placeholder)
-                    .into(ivSelectedCar!!)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-
         selectedPos = variable
         Log.e("getselected", "" + arrList?.get(selectedPos)?.name)
         Log.e("getselected", "" + arrList?.get(selectedPos)?.brand_id)
         Log.e("getselected", "" + arrList?.get(selectedPos)?.concat)
         TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat
         selectedName = arrList?.get(selectedPos)?.name!!
+
+        try {
+            Glide.with(this)
+                .load(arrList?.get(variable)?.concat)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.placeholder)
+                .into(ivSelectedCar!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
 
         if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
@@ -971,7 +975,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             TyreDetailCommonClass.vehicleMake = arrList?.get(selectedPos)?.name
         }
         if (selectedPos != -1) {
-            TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.Id?.toString()
+            TyreDetailCommonClass.vehicleMakeId = arrList?.get(selectedPos)?.brand_id
         }
 //        TyreConfigClass.selectedMakeURL = arrList?.get(selectedPos)?.concat!!
 //        TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat!!

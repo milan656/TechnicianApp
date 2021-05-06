@@ -168,11 +168,12 @@ class ServiceRepo {
 
     fun getServiceByDate(
         date: String,
+        building_id:String,
         access_token: String, context: Context
     ): MutableLiveData<ServiceListByDateModel> {
         val servicedata = MutableLiveData<ServiceListByDateModel>()
 
-        val addEdit: Call<ResponseBody>?=serviceApi.getServiceByDate(date, access_token)
+        val addEdit: Call<ResponseBody>?=serviceApi.getServiceByDate(date,building_id, access_token)
 
         addEdit?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(

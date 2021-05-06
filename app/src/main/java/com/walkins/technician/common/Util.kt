@@ -167,6 +167,14 @@ fun AppCompatActivity.dateTFormatTo(date: String): String {
     return displayDate
 
 }
+fun AppCompatActivity.dateTFormatTo_(date: String): String {
+    val formatter = SimpleDateFormat("yyyy-MM-dd'T'00:00:00.000'Z'")
+    val formatterDisplay = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
+    val dateInString = formatterDisplay.parse(date)
+    val displayDate = formatter.format(dateInString)
+    return displayDate
+
+}
 
 fun AppCompatActivity.datefrom(date: String): String {
     val formatter = SimpleDateFormat("yyyy-MM-dd'T'00:00:00.000'Z'")

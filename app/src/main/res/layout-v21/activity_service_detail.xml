@@ -248,7 +248,6 @@
             android:layout_marginTop="@dimen/four_dp"
             android:layout_marginEnd="@dimen/five_dp"
             android:gravity="center"
-            android:text="5:30 pm, 23 March 2021"
             android:textAllCaps="false"
             android:textColor="@color/header_title"
             android:textSize="@dimen/eighteen_sp"
@@ -268,7 +267,6 @@
                 android:layout_weight="1"
                 android:gravity="start|center"
                 android:padding="@dimen/ten_dp"
-                android:text="The car was unavailable for servicing"
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
@@ -283,7 +281,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/fourteen_sp" />
-
 
         </LinearLayout>
     </LinearLayout>

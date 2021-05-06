@@ -113,7 +113,9 @@ class ProfileFragment : Fragment(), onClickAdapter {
     }
 
     private fun getUserInfo() {
+
         mainAct?.let {
+            Common.showLoader(it)
             commonViewModel?.callApiGetUserInfo(prefManager?.getAccessToken()!!, it)
             commonViewModel?.getUserInfo()?.observe(it, Observer {
                 if (it != null) {
@@ -143,13 +145,17 @@ class ProfileFragment : Fragment(), onClickAdapter {
                             e.printStackTrace()
                         }
 
+                        Common.hideLoader()
                     } else {
+                        Common.hideLoader()
                         if (it.error != null) {
                             if (it.error?.get(0).message != null) {
                                 Toast.makeText(context, "" + it.error.get(0).message, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
+                } else {
+                    Common.hideLoader()
                 }
             })
         }

@@ -58,6 +58,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var selectedDateFormated = ""
     private var addressTitle = ""
     private var fullAddress = ""
+    private var building_uuid = ""
 
     companion object {
         var upcomming = "open"
@@ -123,6 +124,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             if (intent.hasExtra("fullAddress")) {
                 fullAddress = intent.getStringExtra("fullAddress")!!
             }
+            if (intent.hasExtra("building_uuid")) {
+                building_uuid = intent.getStringExtra("building_uuid")!!
+            }
         }
         tvDate?.text = selectedDateFormated
         tvAddress?.text = addressTitle
@@ -137,7 +141,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private fun getServiceListByDate() {
 
         Common.showLoader(this)
-        serviceViewModel?.callApiServiceByDate(selectedDate, prefManager?.getAccessToken()!!, this)
+        serviceViewModel?.callApiServiceByDate(selectedDate, building_uuid, prefManager?.getAccessToken()!!, this)
         serviceViewModel?.getServiceByDate()?.observe(this, Observer {
             Common.hideLoader()
             if (it != null) {
@@ -322,7 +326,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
                 intent.putExtra("address", "" + fullAddress)
-                intent.putExtra("colorcode",arrayList.get(variable).color_code)
+                intent.putExtra("colorcode", arrayList.get(variable).color_code)
                 startActivity(intent)
             } else if (serviceStatus.equals(skipped)) {
                 Log.e("checkva", "" + check)
@@ -333,7 +337,11 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("carImage", arrayList.get(variable).model_image)
                 intent.putExtra("uuid", arrayList.get(variable).uuid)
                 intent.putExtra("address", "" + fullAddress)
-                intent.putExtra("colorcode",arrayList.get(variable).color_code)
+                intent.putExtra("colorcode", arrayList.get(variable).color_code)
+                intent.putExtra("ischange", "false")
+                intent.putExtra("comment_id", arrayList.get(variable).comment_id.get(0))
+
+//                intent.putExtra("formatedDate", arrayList.get(variable).)
                 startActivity(intent)
             }
         }

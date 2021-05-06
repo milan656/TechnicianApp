@@ -42,5 +42,8 @@ data class ServiceListByDateData(
     val buildingName: String,
     @SerializedName("address")
     @Expose
-    val address: String
+    val address: String,
+    @SerializedName("comment_id")
+    @Expose
+    val comment_id: List<Int>
 )

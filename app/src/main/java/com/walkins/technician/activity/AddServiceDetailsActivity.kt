@@ -3441,6 +3441,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     jsonrf.addProperty(
                         TyreKey.vehicleMake, TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlRF", "" + TyreDetailCommonClass.chk1Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonrf.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk1Make.equals("RF,true")) {
 
@@ -3449,12 +3459,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonrf.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
                 if (TyreDetailCommonClass.chk1Pattern.equals("RF,true")) {
 
                     jsonrf.addProperty(
@@ -3566,6 +3571,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlLR", "" + TyreDetailCommonClass.chk2Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonlr.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk2Make.equals("LR,true")) {
 
@@ -3574,12 +3590,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonlr.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) {
 
@@ -3694,6 +3705,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlRR", "" + TyreDetailCommonClass.chk3Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonrr.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
 
@@ -3702,12 +3723,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonrr.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
 
@@ -3821,6 +3837,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlLF", "" + TyreDetailCommonClass.chk1Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonlr.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
 
                 if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
@@ -3830,12 +3856,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonlr.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
 
@@ -3946,6 +3967,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlRF", "" + TyreDetailCommonClass.chk2Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonrf.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk2Make.equals("RF,true")) {
 
@@ -3954,12 +3986,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonrf.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) {
 
@@ -4071,6 +4098,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+
+                    Log.e(
+                        "getmakeurlRR", "" + TyreDetailCommonClass.chk3Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonrr.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
 
@@ -4079,12 +4117,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonrr.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
 
@@ -4198,6 +4231,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlLF", "" + TyreDetailCommonClass.chk1Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonlf.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
 
@@ -4206,12 +4249,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonlf.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
                 if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
 
                     jsonlf.addProperty(
@@ -4326,6 +4364,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlLR", "" + TyreDetailCommonClass.chk2Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonlr.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk2Make.equals("LR,true")) {
 
@@ -4334,12 +4382,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonlr.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) {
 
@@ -4454,18 +4497,23 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlRR", "" + TyreDetailCommonClass.chk3Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonrr.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
+
                 }
                 if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
 
                     jsonrr.addProperty(
                         TyreKey.vehicleMakeId,
                         TyreDetailCommonClass.vehicleMakeId
-                    )
-                }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonrr.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
                     )
                 }
 
@@ -4579,6 +4627,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlLF", "" + TyreDetailCommonClass.chk1Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonlf.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
 
@@ -4587,12 +4645,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonlf.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
 
@@ -4705,6 +4758,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlRF", "" + TyreDetailCommonClass.chk2Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonrf.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk2Make.equals("RF,true")) {
 
@@ -4713,12 +4776,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonrf.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) {
 
@@ -4829,6 +4887,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreKey.vehicleMake,
                         TyreDetailCommonClass.vehicleMake
                     )
+                    Log.e(
+                        "getmakeurlLR", "" + TyreDetailCommonClass.chk3Make + " " +
+                                TyreDetailCommonClass.vehicleMakeURL
+                    )
+                    if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+                        jsonlr.addProperty(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
+                    }
                 }
                 if (TyreDetailCommonClass.chk3Make.equals("LR,true")) {
 
@@ -4837,12 +4905,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreDetailCommonClass.vehicleMakeId
                     )
                 }
-                if (!TyreDetailCommonClass.vehicleMakeURL.equals("")) {
-                    jsonlr.addProperty(
-                        TyreKey.vehicleMakeURL,
-                        TyreDetailCommonClass.vehicleMakeURL
-                    )
-                }
+
 
                 if (TyreDetailCommonClass.chk3Pattern.equals("LR,true")) {
 
@@ -5006,6 +5069,23 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 TyreConfigClass.CarPhoto_2 = ""
                 TyreConfigClass.CarPhoto_1 = ""
                 Common.setFalseAllTyreStatus()
+
+                if (serviceList != null && serviceList?.size!! > 0) {
+                    for (i in serviceList?.indices!!) {
+                        if (serviceList?.get(i)?.isSelected!!) {
+                            serviceList?.get(i)?.isSelected = false
+                        }
+                    }
+                }
+
+                if (suggestionArray != null && suggestionArray?.size!!>0) {
+                    for (i in suggestionArray?.indices!!) {
+                        if (suggestionArray?.get(i)?.isSelected!!) {
+                            suggestionArray?.get(i)?.isSelected = false
+                        }
+                    }
+                }
+
                 getStoredObjects()
             }
         }

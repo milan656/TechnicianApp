@@ -11,6 +11,7 @@ data class ReportHistoryModel(
     var carColor: String,
     var color_code: String,
     var dateFormated: String,
+    var comment_id: Int,
     var carImageURL: String,
     var completedCount: Int,
     var skippedCount: Int,

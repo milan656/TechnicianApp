@@ -123,13 +123,15 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:orientation="vertical"
-            android:layout_gravity="center|top"
-            android:gravity="center|top">
+            android:layout_gravity="end|top"
+            android:gravity="end|top">
 
             <ImageView
-
-                android:layout_width="20dp"
-                android:layout_height="24dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingStart="@dimen/five_dp"
+                android:paddingEnd="@dimen/five_dp"
+                android:paddingBottom="@dimen/five_dp"
                 android:src="@drawable/info_in_profile"
                 app:tint="@color/colorPrimary" />
 

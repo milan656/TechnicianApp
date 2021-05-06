@@ -48,7 +48,7 @@
                 <ImageView
                     android:id="@+id/ivCarImage"
                     android:layout_width="100dp"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center|bottom"
                     android:src="@drawable/ic_car_image" />
             </LinearLayout>

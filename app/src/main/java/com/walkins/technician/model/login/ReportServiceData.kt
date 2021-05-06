@@ -47,5 +47,9 @@ data class ReportServiceData(
     val actualServiceDate: String,
     @SerializedName("service_scheduled_date")
     @Expose
-    val service_scheduled_date: String
+    val service_scheduled_date: String,
+    @SerializedName("comment_id")
+    @Expose
+    val comment_id: List<Int>
+
 )

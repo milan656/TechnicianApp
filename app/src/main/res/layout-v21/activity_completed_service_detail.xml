@@ -999,7 +999,6 @@
             android:layout_marginEnd="@dimen/five_dp"
             android:layout_marginBottom="@dimen/eighteen_dp"
             android:gravity="center"
-            android:text="5:30 pm, 23 March 2021"
             android:textAllCaps="false"
             android:textColor="#1DAD9F"
             android:textSize="@dimen/eighteen_sp"
