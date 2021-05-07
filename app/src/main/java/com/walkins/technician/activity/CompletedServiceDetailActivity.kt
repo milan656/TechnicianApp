@@ -452,7 +452,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     val output = SimpleDateFormat("hh:mm aa, dd MMMM yyyy")
 
-                    var formatDate=Common.addHour(serviceDateByIdModel?.data?.get(0)?.actualServiceDate,5,30)
+                    var formatDate = Common.addHour(serviceDateByIdModel?.data?.get(0)?.actualServiceDate, 5, 30)
 
                     var d: Date? = null
                     try {
