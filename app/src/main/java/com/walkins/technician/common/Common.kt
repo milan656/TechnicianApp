@@ -7,7 +7,9 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.*
+import android.content.ContentUris
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -667,6 +669,21 @@ class Common {
             val image = File.createTempFile(imageFileName, ".jpg", storageDir)
 //            imageFilePath = image.absolutePath
             return image
+        }
+
+        fun addHour(myTime: String?, hour: Int,minute:Int): String? {
+            try {
+                val df = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                val d = df.parse(myTime)
+                val cal = Calendar.getInstance()
+                cal.time = d
+                cal.add(Calendar.HOUR, hour)
+                cal.add(Calendar.MINUTE, minute)
+                return df.format(cal.time)
+            } catch (e: ParseException) {
+                println(" Parsing Exception")
+            }
+            return null
         }
 
         private fun showDialogueForWarning(

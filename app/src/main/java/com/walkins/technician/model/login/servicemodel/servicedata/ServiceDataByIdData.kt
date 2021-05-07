@@ -308,4 +308,7 @@ data class ServiceDataByIdData(
     @SerializedName("technician_image")
     @Expose
     val technicianImage: String,
+    @SerializedName("comment_id")
+    @Expose
+    val comment_id: List<Int>
 )

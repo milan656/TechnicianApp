@@ -1020,6 +1020,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         .equals("")
                 ) {
                     tvNextServiceDueDate?.setText(jsonService.get(TyreKey.nextDueDate)?.asString)
+                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                    val formatterDisplay = SimpleDateFormat("dd MMMM yyyy")
+                    val dateInString = formatterDisplay.parse(tvNextServiceDueDate?.text?.toString())
+                    val displayDate = formatter.format(dateInString)
+
+                    selectedDateNextServiceDue = displayDate
+                    Log.e("getdatee",""+selectedDateNextServiceDue)
                 }
                 if (jsonService.get(TyreKey.moreSuggestion) != null && !jsonService.get(TyreKey.moreSuggestion)?.asString
                         .equals("")

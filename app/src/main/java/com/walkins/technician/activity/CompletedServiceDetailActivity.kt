@@ -448,13 +448,15 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             tvRegNumber?.text = serviceDateByIdModel?.data?.get(0)?.regNumber
 
             try {
-                if (formatedDate != null && !formatedDate.equals("")) {
+                if (serviceDateByIdModel?.data?.get(0)?.actualServiceDate != null && !serviceDateByIdModel?.data?.get(0)?.actualServiceDate.equals("")) {
                     val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     val output = SimpleDateFormat("hh:mm aa, dd MMMM yyyy")
 
+                    var formatDate=Common.addHour(serviceDateByIdModel?.data?.get(0)?.actualServiceDate,5,30)
+
                     var d: Date? = null
                     try {
-                        d = input.parse(formatedDate)
+                        d = input.parse(formatDate)
                     } catch (e: ParseException) {
                         e.printStackTrace()
                     }

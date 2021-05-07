@@ -18,9 +18,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonObject
 import com.walkins.technician.R
 import com.walkins.technician.common.*
+import com.walkins.technician.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.technician.viewmodel.CommonViewModel
+import org.w3c.dom.Comment
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,6 +31,7 @@ import kotlin.collections.ArrayList
 
 class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 
+    private var serviceDateByIdModel: ServiceDataByIdModel? = null
     private var tvChange: TextView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
@@ -43,7 +47,9 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     private var ischange: String = ""
     private var formatedDate: String = ""
     private var comment_id: String = ""
+    private var servicelist: String = ""
     private var reasonId: String = ""
+    private var comment_id_by_service = -1
 
     private var tvCurrentDateTime: TextView? = null
 
@@ -120,6 +126,9 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             if (intent.getStringExtra("comment_id") != null) {
                 comment_id = intent.getStringExtra("comment_id")!!
             }
+            if (intent.getStringExtra("servicelist") != null) {
+                servicelist = intent.getStringExtra("servicelist")!!
+            }
         }
 
         Log.e("getregno", "" + regNumber)
@@ -140,16 +149,13 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
         }
         tvChange?.setOnClickListener(this)
 
-        if (ischange.equals("false")) {
-            tvChange?.visibility = View.GONE
-            getCommentList()
-        }
-
         if (formatedDate != null && !formatedDate.equals("")) {
+
+            formatedDate= Common.addHour(formatedDate,5,30)!!
             Log.e("getdated0", "" + formatedDate)
             Log.e("getdated0", "" + Common.datefrom(formatedDate))
             val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-            val output = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
+            val output = SimpleDateFormat("HH:mm aa, dd MMMM yyyy")
 
             var d: Date? = null
             try {
@@ -168,10 +174,61 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             tvCurrentDateTime?.text = Common.getCurrentDateTime()
         }
 
+        if (!servicelist.equals("") && servicelist.equals("true")) {
+            getServiceDataById()
+        } else {
+            if (ischange.equals("false")) {
+                tvChange?.visibility = View.GONE
+                getCommentList(comment_id)
+            }
+        }
 
     }
 
-    private fun getCommentList() {
+    private fun getServiceDataById() {
+
+        Common.showLoader(this)
+
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("id", uuid)
+        commonViewModel?.callApiGetServiceById(jsonObject, prefManager.getAccessToken()!!, this)
+        commonViewModel?.getServiceById()?.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    serviceDateByIdModel = it
+
+                    try {
+                        comment_id_by_service = serviceDateByIdModel?.data?.get(0)?.comment_id?.get(0)!!
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    if (ischange.equals("false")) {
+                        tvChange?.visibility = View.GONE
+                        try {
+                            if (comment_id_by_service != -1) {
+                                getCommentList(comment_id_by_service.toString())
+                            }
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                } else {
+                    Common.hideLoader()
+                    if (it.error != null) {
+                        if (it.error?.get(0).message != null) {
+                            showShortToast(it.error?.get(0).message, this)
+                        }
+                    }
+                }
+            } else {
+                Common.hideLoader()
+            }
+        })
+    }
+
+    private fun getCommentList(comment: String) {
         Common.showLoader(this)
         commonViewModel?.callApiGetComments(prefManager.getAccessToken()!!, this)
         commonViewModel?.getCommentList()?.observe(this, androidx.lifecycle.Observer {
@@ -180,9 +237,9 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 
                     if (it.data != null && it.data.size > 0) {
                         for (i in it.data.indices) {
-                            if (!comment_id.equals("")) {
-                                Log.e("getcomment", "" + comment_id + " " + it.data.get(i).id)
-                                if (comment_id.toInt() == it.data.get(i).id) {
+                            if (!comment.equals("")) {
+                                Log.e("getcomment", "" + comment + " " + it.data.get(i).id)
+                                if (comment.toInt() == it.data.get(i).id) {
                                     tvReason?.text = it.data.get(i).name
                                 }
                             }

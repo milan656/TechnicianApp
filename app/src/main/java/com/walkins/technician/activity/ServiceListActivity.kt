@@ -340,6 +340,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("address", "" + fullAddress)
                 intent.putExtra("colorcode", arrayList.get(variable).color_code)
                 intent.putExtra("ischange", "false")
+                intent.putExtra("servicelist", "true")
+
 //                intent.putExtra("comment_id", arrayList.get(variable).comment_id.get(0))
 
 //                intent.putExtra("formatedDate", arrayList.get(variable).)
