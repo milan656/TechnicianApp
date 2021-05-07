@@ -175,6 +175,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private val IMAGE_CAPTURE_CODE = 1011
     var image_uri: Uri? = null
 
+    companion object {
+        var ok_status = "OK"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -885,9 +889,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     Log.e("getvaluess22", "" + multiSliderWeight?.bubbleText)
                 }
                 if (json.get(TyreKey.sidewell) != null) {
-                    if (json.get(TyreKey.sidewell)?.asString!!.equals("Ok")) {
+                    if (json.get(TyreKey.sidewell)?.asString!!.equals(ok_status)) {
                         ivOkSideWell?.performClick()
-                        sidewell = "Ok"
+                        sidewell = ok_status
                     }
                     if (json.get(TyreKey.sidewell)?.asString!!.equals("SUG")) {
                         ivSugSideWell?.performClick()
@@ -900,9 +904,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 }
                 if (json.get(TyreKey.shoulder) != null) {
 
-                    if (json.get(TyreKey.shoulder)?.asString!!.equals("Ok")) {
+                    if (json.get(TyreKey.shoulder)?.asString!!.equals(ok_status)) {
                         ivOkShoulder?.performClick()
-                        shoulder = "Ok"
+                        shoulder = ok_status
                     }
                     if (json.get(TyreKey.shoulder)?.asString!!.equals("SUG")) {
                         ivSugShoulder?.performClick()
@@ -919,9 +923,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         ivReqTreadDepth?.performClick()
                         treadDepth = "REQ"
                     }
-                    if (json.get(TyreKey.treadDepth)?.asString!!.equals("Ok")) {
+                    if (json.get(TyreKey.treadDepth)?.asString!!.equals(ok_status)) {
                         ivOkTreadDepth?.performClick()
-                        treadDepth = "Ok"
+                        treadDepth = ok_status
                     }
                     if (json.get(TyreKey.treadDepth)?.asString!!.equals("SUG")) {
                         ivSugTreadDepth?.performClick()
@@ -934,9 +938,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         ivReqTreadWear?.performClick()
                         treadWear = "REQ"
                     }
-                    if (json.get(TyreKey.treadWear)?.asString!!.equals("Ok")) {
+                    if (json.get(TyreKey.treadWear)?.asString!!.equals(ok_status)) {
                         ivOkTreadWear?.performClick()
-                        treadWear = "Ok"
+                        treadWear = ok_status
                     }
                     if (json.get(TyreKey.treadWear)?.asString!!.equals("SUG")) {
                         ivSugTreadWear?.performClick()
@@ -949,9 +953,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         ivReqRimDamage?.performClick()
                         rimDamage = "REQ"
                     }
-                    if (json.get(TyreKey.rimDamage)?.asString!!.equals("Ok")) {
+                    if (json.get(TyreKey.rimDamage)?.asString!!.equals(ok_status)) {
                         ivOkRimDamage?.performClick()
-                        rimDamage = "Ok"
+                        rimDamage = ok_status
                     }
                     if (json.get(TyreKey.rimDamage)?.asString!!.equals("SUG")) {
                         ivSugRimDamage?.performClick()
@@ -964,9 +968,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         ivReqbubble?.performClick()
                         rimDamage = "REQ"
                     }
-                    if (json.get(TyreKey.bubble)?.asString!!.equals("Ok")) {
+                    if (json.get(TyreKey.bubble)?.asString!!.equals(ok_status)) {
                         ivOkbubble?.performClick()
-                        bubble = "OK"
+                        bubble = ok_status
                     }
                     if (json.get(TyreKey.bubble)?.asString!!.equals("SUG")) {
                         ivSugbubble?.performClick()
@@ -1626,7 +1630,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 ivSugSideWell?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqSideWell?.setImageResource(R.mipmap.ic_blank_condition)
 
-                sidewell = "Ok"
+                sidewell = ok_status
             }
             R.id.ivSugSideWell, R.id.llSugSideWell -> {
 
@@ -1647,7 +1651,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 ivOkShoulder?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugShoulder?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqShoulder?.setImageResource(R.mipmap.ic_blank_condition)
-                shoulder = "Ok"
+                shoulder = ok_status
             }
             R.id.ivSugShoulder, R.id.llSugShoulder -> {
                 ivSugShoulder?.setImageResource(R.mipmap.ic_condition_degrade)
@@ -1665,7 +1669,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 ivOkTreadDepth?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugTreadDepth?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqTreadDepth?.setImageResource(R.mipmap.ic_blank_condition)
-                treadDepth = "Ok"
+                treadDepth = ok_status
             }
             R.id.ivSugTreadDepth, R.id.llSugTreadDepth -> {
                 ivSugTreadDepth?.setImageResource(R.mipmap.ic_condition_degrade)
@@ -1683,7 +1687,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 ivOkTreadWear?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugTreadWear?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqTreadWear?.setImageResource(R.mipmap.ic_blank_condition)
-                treadWear = "Ok"
+                treadWear = ok_status
             }
             R.id.ivSugTreadWear, R.id.llSugTreadWear -> {
                 ivSugTreadWear?.setImageResource(R.mipmap.ic_condition_degrade)
@@ -1701,7 +1705,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 ivOkRimDamage?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugRimDamage?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqRimDamage?.setImageResource(R.mipmap.ic_blank_condition)
-                rimDamage = "Ok"
+                rimDamage = ok_status
             }
             R.id.ivSugRimDamage, R.id.llSugRimDamage -> {
                 ivSugRimDamage?.setImageResource(R.mipmap.ic_condition_degrade)
@@ -1719,7 +1723,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 ivOkbubble?.setImageResource(R.mipmap.ic_condition_ok)
                 ivSugSideWell?.setImageResource(R.mipmap.ic_blank_condition)
                 ivReqSideWell?.setImageResource(R.mipmap.ic_blank_condition)
-                bubble = "Ok"
+                bubble = ok_status
             }
             R.id.ivSugbubble, R.id.llSugBubble -> {
                 ivSugbubble?.setImageResource(R.mipmap.ic_condition_degrade)

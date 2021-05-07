@@ -444,22 +444,29 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             TyreConfigClass.CarPhoto_2 = serviceDateByIdModel?.data?.get(0)?.carPhoto2!!
             tvMoreSuggestion?.text = serviceDateByIdModel?.data?.get(0)?.serviceSuggestions
 
-            tvColor?.text = ""
             tvMakeModel?.text = serviceDateByIdModel?.data?.get(0)?.make + " " + serviceDateByIdModel?.data?.get(0)?.model
             tvRegNumber?.text = serviceDateByIdModel?.data?.get(0)?.regNumber
-            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-            val output = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
 
-            var d: Date? = null
             try {
-                d = input.parse(formatedDate)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            val formatted: String = output.format(d)
-            Log.e("DATE", "" + formatted)
-            try {
-                tvCurrentDateTime?.text = formatted
+                if (formatedDate != null && !formatedDate.equals("")) {
+                    val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                    val output = SimpleDateFormat("hh:mm aa, dd MMMM yyyy")
+
+                    var d: Date? = null
+                    try {
+                        d = input.parse(formatedDate)
+                    } catch (e: ParseException) {
+                        e.printStackTrace()
+                    }
+                    val formatted: String = output.format(d)
+                    Log.e("DATE", "" + formatted)
+                    try {
+                        tvCurrentDateTime?.text = formatted
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }

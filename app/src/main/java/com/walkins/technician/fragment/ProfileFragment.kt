@@ -2,6 +2,7 @@ package com.walkins.technician.fragment
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.walkins.technician.R
+import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.activity.MainActivity
 import com.walkins.technician.adapter.DialogueAdpater
 import com.walkins.technician.common.onClickAdapter
@@ -266,6 +268,15 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
         btn_save.setOnClickListener {
             builder.dismiss()
+
+            try {
+                prefManager?.clearAll()
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
             if (chkLogOutFromAllDevice.isChecked) {
 //                callLogoutFromAllDeviceWebService()

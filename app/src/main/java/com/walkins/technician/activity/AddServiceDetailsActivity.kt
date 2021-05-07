@@ -869,39 +869,39 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //        https://staging-backend.aapkedoorstep.com/api/v1/tyrepushpull/get-tyre-size?model_id=53&make_id=593
 
-       /* edtMoreSuggestion?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        /* edtMoreSuggestion?.addTextChangedListener(object : TextWatcher {
+             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-            }
+             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-            }
+             }
 
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.toString().length > 0) {
-                    storeServiceDetailData()
-                }
-            }
+             override fun afterTextChanged(s: Editable?) {
+                 if (s != null && s.toString().length > 0) {
+                     storeServiceDetailData()
+                 }
+             }
 
-        })
+         })
 
-        tvNextServiceDueDate?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+         tvNextServiceDueDate?.addTextChangedListener(object : TextWatcher {
+             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-            }
+             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-            }
+             }
 
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.toString().length > 0) {
-                    storeServiceDetailData()
-                }
-            }
+             override fun afterTextChanged(s: Editable?) {
+                 if (s != null && s.toString().length > 0) {
+                     storeServiceDetailData()
+                 }
+             }
 
-        })*/
+         })*/
 
         GlobalScope.launch(Dispatchers.Main) {
             launch(Dispatchers.Main) {
@@ -2399,8 +2399,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
 
             for (i in skipList?.indices!!) {
-                if (stringExtra?.equals(skipList?.get(i)?.issueName, ignoreCase = true)!!) {
-                    skipList?.get(i)?.isSelected = true
+                if (!stringExtra.equals("")) {
+                    if (stringExtra?.toInt() == skipList?.get(i)?.id) {
+                        skipList?.get(i)?.isSelected = true
+                    }
                 }
             }
 
@@ -2474,15 +2476,18 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         intent.putExtra("address", address)
 
                         var reason: String? = ""
+                        var reasonId: Int? = -1
                         if (skipList?.size!! > 0) {
                             for (i in skipList?.indices!!) {
                                 if (skipList?.get(i)?.isSelected!!) {
                                     reason = skipList?.get(i)?.issueName
+                                    reasonId = skipList?.get(i)?.id
                                     Log.e("getreason", "" + reason)
                                 }
                             }
                         }
                         intent.putExtra("reason", reason)
+                        intent.putExtra("reasonId", "" + reasonId)
                         startActivityForResult(intent, 106)
                     } else {
                         Common.hideLoader()
@@ -2945,7 +2950,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             106 -> {
                 Log.e("get106", "" + requestCode + " " + resultCode)
                 if (resultCode == RESULT_OK) {
-                    openSkipServiceDialogue(data?.getStringExtra("reason"), "update")
+                    if (data?.hasExtra("back")!!) {
+                        if (data.getStringExtra("back").equals("true")) {
+                            finish()
+                        }
+                    } else {
+                        openSkipServiceDialogue(data.getStringExtra("reasonId"), "update")
+                    }
                 }
             }
             IMAGE_CAPTURE_CODE -> {
@@ -5104,7 +5115,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         removeDataExceptServiceData()
     }
 
-    fun removeDataExceptServiceData(){
+    fun removeDataExceptServiceData() {
         prefManager.removeValue(TyreConfigClass.TyreLFObject)
         prefManager.removeValue(TyreConfigClass.TyreRRObject)
         prefManager.removeValue(TyreConfigClass.TyreRFObject)

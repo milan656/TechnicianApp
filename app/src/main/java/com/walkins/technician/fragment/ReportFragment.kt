@@ -905,6 +905,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             if (it != null) {
                 if (it.success) {
 
+                    makeSearchdata?.clear()
                     makeSearchdata?.addAll(it.data)
                     try {
                         makeDataForSearchApi(makeSearchdata!!)

@@ -43,6 +43,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     private var ischange: String = ""
     private var formatedDate: String = ""
     private var comment_id: String = ""
+    private var reasonId: String = ""
 
     private var tvCurrentDateTime: TextView? = null
 
@@ -102,6 +103,9 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             if (intent.getStringExtra("reason") != null) {
 //                colorCode = intent.getStringExtra("reason")!!
                 tvReason?.text = intent.getStringExtra("reason")!!
+            }
+            if (intent.getStringExtra("reasonId") != null) {
+                reasonId = intent.getStringExtra("reasonId")!!
             }
             if (intent.getStringExtra("address") != null) {
 //                colorCode = intent.getStringExtra("reason")!!
@@ -202,12 +206,16 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
         val id = v?.id
         when (id) {
             R.id.ivBack -> {
-                setResult(0)
+                var intent = Intent()
+                intent.putExtra("back", "" + true)
+                setResult(RESULT_OK, intent)
+
                 onBackPressed()
             }
             R.id.tvChange -> {
                 var intent = Intent()
                 intent.putExtra("reason", "" + tvReason?.text?.toString())
+                intent.putExtra("reasonId", "" + reasonId)
                 setResult(RESULT_OK, intent)
                 finish()
             }
