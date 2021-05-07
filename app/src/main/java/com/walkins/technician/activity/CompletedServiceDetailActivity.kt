@@ -437,15 +437,14 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         if (serviceDateByIdModel != null && serviceDateByIdModel?.data?.size!! > 0) {
             if (serviceDateByIdModel?.data?.get(0)?.service != null && serviceDateByIdModel?.data?.get(0)?.service?.size!! > 0) {
                 serviceList?.addAll(serviceDateByIdModel?.data?.get(0)?.service!!)
+
+                serviceAdapter?.notifyDataSetChanged()
             }
-            serviceAdapter?.notifyDataSetChanged()
 
-            TyreConfigClass.CarPhoto_1 = serviceDateByIdModel?.data?.get(0)?.carPhoto1!!
-            TyreConfigClass.CarPhoto_2 = serviceDateByIdModel?.data?.get(0)?.carPhoto2!!
-            tvMoreSuggestion?.text = serviceDateByIdModel?.data?.get(0)?.serviceSuggestions
+            tvMoreSuggestion?.text = "" + serviceDateByIdModel?.data?.get(0)?.serviceSuggestions
 
-            tvMakeModel?.text = serviceDateByIdModel?.data?.get(0)?.make + " " + serviceDateByIdModel?.data?.get(0)?.model
-            tvRegNumber?.text = serviceDateByIdModel?.data?.get(0)?.regNumber
+            tvMakeModel?.text = "" + serviceDateByIdModel?.data?.get(0)?.make + " " + serviceDateByIdModel?.data?.get(0)?.model
+            tvRegNumber?.text = "" + serviceDateByIdModel?.data?.get(0)?.regNumber
 
             try {
                 if (serviceDateByIdModel?.data?.get(0)?.actualServiceDate != null && !serviceDateByIdModel?.data?.get(0)?.actualServiceDate.equals("")) {
@@ -471,67 +470,85 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
-            try {
-                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto1)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.placeholder).into(ivCarImage_1!!)
-            } catch (e: Exception) {
-                e.printStackTrace()
+            if (serviceDateByIdModel?.data?.get(0)?.carPhoto1 != null) {
+                try {
+                    Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto1)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder).into(ivCarImage_1!!)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                carPhoto_1 = serviceDateByIdModel?.data?.get(0)?.carPhoto1!!
+                TyreConfigClass.CarPhoto_1 = carPhoto_1
             }
-            try {
-                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto2)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.placeholder).into(ivCarImage_2!!)
+            if (serviceDateByIdModel?.data?.get(0)?.carPhoto2 != null) {
+                try {
+                    Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto2)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder).into(ivCarImage_2!!)
 
-            } catch (e: Exception) {
-                e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                carPhoto_2 = serviceDateByIdModel?.data?.get(0)?.carPhoto2!!
+                TyreConfigClass.CarPhoto_2 = carPhoto_2
             }
+            if (serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image != null) {
+                try {
+                    Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder).into(ivtyreLeftFront!!)
 
-            carPhoto_1 = serviceDateByIdModel?.data?.get(0)?.carPhoto1!!
-            carPhoto_2 = serviceDateByIdModel?.data?.get(0)?.carPhoto2!!
-
-            try {
-                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.placeholder).into(ivtyreLeftFront!!)
-
-            } catch (e: Exception) {
-                e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-            try {
-                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_right_tyre_make_image)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.placeholder).into(ivTyreRightFront!!)
+            if (serviceDateByIdModel?.data?.get(0)?.front_right_tyre_make_image != null) {
 
-            } catch (e: Exception) {
-                e.printStackTrace()
+                try {
+                    Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_right_tyre_make_image)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder).into(ivTyreRightFront!!)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-            try {
-                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.placeholder).into(ivtyreLeftRear!!)
+            if (serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image != null) {
 
-            } catch (e: Exception) {
-                e.printStackTrace()
+                try {
+                    Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder).into(ivtyreLeftRear!!)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-            try {
-                Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.back_right_tyre_make_image)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.placeholder).into(ivTyreRightRear!!)
+            if (serviceDateByIdModel?.data?.get(0)?.back_right_tyre_make_image != null) {
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+                try {
+                    Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.back_right_tyre_make_image)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.placeholder).into(ivTyreRightRear!!)
 
-            suggestionArr.clear()
-            if (serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.size!! > 0) {
-                for (i in serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.indices!!) {
-                    suggestionArr.add(serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.get(i)!!)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
 
-            tyreSuggestionAdapter?.notifyDataSetChanged()
+            if (serviceDateByIdModel?.data?.get(0)?.technicianSuggestions != null &&
+                serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.size!! > 0
+            ) {
+                suggestionArr.clear()
+                if (serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.size!! > 0) {
+                    for (i in serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.indices!!) {
+                        suggestionArr.add(serviceDateByIdModel?.data?.get(0)?.technicianSuggestions?.get(i)!!)
+                    }
+                }
+
+                tyreSuggestionAdapter?.notifyDataSetChanged()
+            }
             llfooter?.visibility = View.VISIBLE
             lltyreconfig?.isClickable = true
             lltyreconfig?.isEnabled = true
@@ -548,11 +565,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
         if (check == 0) {
 
-            if (pendingArr?.get(variable)?.equals("Tyre Pattern")) {
+            if (pendingArr.get(variable).equals("Tyre Pattern")) {
                 selectedPending = "pattern"
 //                val intent = Intent(this, VehiclePatternActivity::class.java)
 //                startActivity(intent)
-            } else if (pendingArr?.get(variable)?.equals("Visual Detail - LF", ignoreCase = true)) {
+            } else if (pendingArr.get(variable).equals("Visual Detail - LF", ignoreCase = true)) {
                 selectedPending = "visual"
 //                val intent = Intent(this, VisualDetailsActivity::class.java)
 //                startActivity(intent)
@@ -683,9 +700,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     showImage(carPhoto_2)
                 }
             }
-//            R.id.ivInfoImg -> {
-//                showBottomSheetdialog(pendingArr, "RR Pending", this, Common.btn_filled, "Proceed")
-//            }
         }
     }
 

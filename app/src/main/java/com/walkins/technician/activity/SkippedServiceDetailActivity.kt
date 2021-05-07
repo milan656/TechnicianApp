@@ -155,7 +155,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             Log.e("getdated0", "" + formatedDate)
             Log.e("getdated0", "" + Common.datefrom(formatedDate))
             val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-            val output = SimpleDateFormat("HH:mm aa, dd MMMM yyyy")
+            val output = SimpleDateFormat("hh:mm aa, dd MMMM yyyy")
 
             var d: Date? = null
             try {
@@ -197,6 +197,34 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
                 if (it.success) {
 
                     serviceDateByIdModel = it
+
+                    if (serviceDateByIdModel?.data?.get(0)?.service_scheduled_date!=null &&
+                            !serviceDateByIdModel?.data?.get(0)?.service_scheduled_date.equals("")){
+
+                        try {
+                            val formatedDate= Common.addHour(serviceDateByIdModel?.data?.get(0)?.service_scheduled_date,5,30)!!
+                            Log.e("getdated0", "" + formatedDate)
+                            Log.e("getdated0", "" + Common.datefrom(formatedDate))
+                            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                            val output = SimpleDateFormat("hh:mm aa, dd MMMM yyyy")
+
+                            var d: Date? = null
+                            try {
+                                d = input.parse(formatedDate)
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
+                            val formatted: String = output.format(d)
+                            Log.e("DATE", "" + formatted)
+                            try {
+                                tvCurrentDateTime?.text = formatted
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+                    }
 
                     try {
                         comment_id_by_service = serviceDateByIdModel?.data?.get(0)?.comment_id?.get(0)!!

@@ -125,7 +125,12 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         ivBack = view?.findViewById(R.id.ivBack)
         ivFilterImg = view?.findViewById(R.id.ivFilterImg)
         ivFilterImg?.setOnClickListener(this)
-        ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_icon))
+
+        try {
+            ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_icon))
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
 
         ivBack?.setOnClickListener(this)
         llCompleted?.setOnClickListener(this)
@@ -367,11 +372,11 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             try {
                                 if (it.data.serviceData.get(i).comment_id.get(0) != null
                                 ) {
-                                    Log.e("getcomment00", ""+it.data.serviceData.get(i).comment_id.get(0))
+                                    Log.e("getcomment00", "" + it.data.serviceData.get(i).comment_id.get(0))
                                     commentid = it.data.serviceData.get(i).comment_id.get(0)
                                 }
 
-                            }catch (e:Exception){
+                            } catch (e: Exception) {
                                 e.printStackTrace()
                             }
 
@@ -582,7 +587,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 intent.putExtra("colorcode", historyDataList.get(variable).color_code)
                 intent.putExtra("ischange", "false")
                 intent.putExtra("formatedDate", historyDataList.get(variable).dateFormated)
-                intent.putExtra("comment_id", ""+historyDataList.get(variable).comment_id)
+                intent.putExtra("comment_id", "" + historyDataList.get(variable).comment_id)
                 startActivity(intent)
 
             } else {

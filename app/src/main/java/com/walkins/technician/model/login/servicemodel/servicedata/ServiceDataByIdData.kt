@@ -260,6 +260,9 @@ data class ServiceDataByIdData(
     @SerializedName("future_service_date")
     @Expose
     val futureServiceDate: String,
+    @SerializedName("service_scheduled_date")
+    @Expose
+    val service_scheduled_date: String,
     @SerializedName("services_to_do")
     @Expose
     val servicesToDo: List<Int>,
