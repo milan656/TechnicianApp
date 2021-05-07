@@ -468,7 +468,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                         e.printStackTrace()
                     }
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
