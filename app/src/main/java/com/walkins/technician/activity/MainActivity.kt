@@ -27,6 +27,8 @@ import com.example.technician.common.Common
 import com.example.technician.common.Common.Companion.getFile
 import com.example.technician.common.Common.Companion.setTint
 import com.example.technician.common.PrefManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.technician.DB.DBClass
 import com.walkins.technician.R
@@ -82,6 +84,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         Log.e("getaccessToken", "" + prefManager?.getAccessToken())
         init()
 
+        callApiTogetToken()
+
         var thread = Thread {
             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
                     .getAllVehicleType().size > 0
@@ -94,6 +98,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         }
         thread.start()
+    }
+
+    private fun callApiTogetToken() {
+        try {
+            FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    Log.i("token", "+++" + task.result)
+
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+
+                    // Get new Instance ID token
+                    val token = task.result!!.token
+
+
+                    Log.i("token", "+++" + token)
+
+//                    RemoveOrAddTokenForApi(token)
+
+                })
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.i("token", "+++" + e.cause+" "+e.message)
+
+        }
     }
 
     private fun init() {

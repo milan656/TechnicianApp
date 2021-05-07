@@ -41,7 +41,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     var notification_data: String? = null
     var prefManager: PrefManager? = null
 
-
     override fun onNewToken(refreshedToken: String) {
         super.onNewToken(refreshedToken)
     }
