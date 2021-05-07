@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,6 +40,7 @@ import com.walkins.technician.viewmodel.ServiceViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -180,6 +181,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         reportRecycView?.setAdapter(mAdapter)
         reportRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
+
+
 
         mAdapter?.setOnBottomReachedListener(object : OnBottomReachedListener {
             override fun onBottomReached(position: Int) {
@@ -732,7 +735,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                if (s?.toString()?.length!! > 0) {
+                if (s?.toString()?.length!! > 1) {
 
                     searchMake(actvehicleMake?.text.toString())
                 } else {
@@ -912,6 +915,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                     makeSearchdata?.clear()
                     makeSearchdata?.addAll(it.data)
+
                     try {
                         makeDataForSearchApi(makeSearchdata!!)
                     } catch (e: java.lang.Exception) {
@@ -944,27 +948,29 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
         Log.e("listClicked", "" + listClicked)
         if (listClicked.size > 0) {
-            adapter =
-                context?.let {
-                    AutoSuggestProductAdapter(
-                        it,
-                        android.R.layout.simple_list_item_1,
-                        listClicked
-                    )
-                }
+            val adapter: ArrayAdapter<String>? = context?.let { ArrayAdapter<String>(it, android.R.layout.select_dialog_item, listClicked) }
+//            adapter =
+//                context?.let {
+//                    AutoSuggestProductAdapter(
+//                        it,
+//                        android.R.layout.simple_list_item_1,
+//                        listClicked
+//                    )
+//                }
             actvehicleMake?.threshold = 1
             actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
         } else {
             val noValueList: ArrayList<String> = ArrayList()
-            noValueList.add("No any dealer found")
-            adapter =
-                context?.let {
-                    AutoSuggestProductAdapter(
-                        it,
-                        android.R.layout.simple_list_item_1,
-                        noValueList
-                    )
-                }
+            noValueList.add("No any building found")
+            val adapter: ArrayAdapter<String>? = context?.let { ArrayAdapter<String>(it, android.R.layout.select_dialog_item, noValueList) }
+//            adapter =
+//                context?.let {
+//                    AutoSuggestProductAdapter(
+//                        it,
+//                        android.R.layout.simple_list_item_1,
+//                        noValueList
+//                    )
+//                }
             actvehicleMake?.threshold = 1
             actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
         }

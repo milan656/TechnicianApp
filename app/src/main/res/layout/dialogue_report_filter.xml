@@ -71,6 +71,7 @@
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Search here"
                 android:padding="@dimen/twelve_dp"
+                android:completionThreshold="1"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 

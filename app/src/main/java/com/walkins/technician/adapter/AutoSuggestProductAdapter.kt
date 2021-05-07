@@ -43,13 +43,14 @@ class AutoSuggestProductAdapter(
                     filterResults.values = mListData
                     filterResults.count = mListData.size
                 }
-
+                Log.e("getchar",""+filterResults.count)
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-
+                Log.e("getchar",""+constraint?.toString())
                 if(constraint != null){
+                    Log.e("getchar",""+results)
                     if (results != null && results.count > 0) {
                         notifyDataSetChanged()
                     } else {
