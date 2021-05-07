@@ -744,7 +744,6 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     selectedSocietyName = ""
                 }
             }
-
         })
 
         actvehicleMake!!.onItemClickListener =
