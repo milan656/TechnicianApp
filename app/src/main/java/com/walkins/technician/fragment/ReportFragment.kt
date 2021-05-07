@@ -776,8 +776,6 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 if (s?.toString()?.length!! > 0) {
 
                     searchModel(actvehicleModel?.text.toString())
-                } else {
-
                 }
             }
 
@@ -828,11 +826,10 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
 
         btnConfirm.setOnClickListener {
-            dialog?.dismiss()
 
             arrayService?.clear()
 
-            for (i in suggestionArray?.indices!!) {
+            for (i in suggestionArray.indices) {
 
                 if (suggestionArray.get(i).isSelected) {
                     jsonArray.add(suggestionArray.get(i).id)
@@ -840,17 +837,24 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     Log.e("selectedarr", "" + suggestionArray.get(i).id + " " + suggestionArray.get(i).issueName)
                 }
             }
-            ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_filtered_icon))
-            selectedServiceJson = jsonArray
-            val jsonObject = JsonObject()
-            jsonObject.addProperty("building_id", "" + selectedSociety)
-            jsonObject.add("service", selectedServiceJson)
-            jsonObject.addProperty("status", selectedTab)
-            jsonObject.addProperty("pagesize", pagesize)
-            jsonObject.addProperty("page", page)
-            jsonObject.addProperty("q", edtSearch?.text?.toString())
-            getDashboardService(jsonObject, true)
 
+            selectedServiceJson = jsonArray
+
+            if (!selectedSociety.equals("") || selectedServiceJson?.size()!! > 0) {
+                dialog?.dismiss()
+                ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_filtered_icon))
+                val jsonObject = JsonObject()
+                jsonObject.addProperty("building_id", "" + selectedSociety)
+                jsonObject.add("service", selectedServiceJson)
+                jsonObject.addProperty("status", selectedTab)
+                jsonObject.addProperty("pagesize", pagesize)
+                jsonObject.addProperty("page", page)
+                jsonObject.addProperty("q", edtSearch?.text?.toString())
+                getDashboardService(jsonObject, true)
+
+            } else {
+                Toast.makeText(context, "Please select service or society", Toast.LENGTH_SHORT).show()
+            }
 
         }
         btnCancel.setOnClickListener {
