@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,6 +80,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var actvehicleMake: AutoCompleteTextView? = null
     private var actvehicleModel: AutoCompleteTextView? = null
     private var actvehicleSociety: AutoCompleteTextView? = null
+    var societyList = java.util.ArrayList<String>()
+    private var autoSuggestProductAdapter: ArrayAdapter<String>? = null
+
     var mAdapter: ReportHistoryAdapter? = null
     var mAdapterSkipped: ReportHistorySkippedAdapter? = null
 
@@ -317,6 +321,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
 
         })
+
+        searchMake("", false)
 
     }
 
@@ -616,7 +622,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //                onBackPressed()
             }
             R.id.ivFilterImg -> {
-                openReportFilterDialogue("Choose Filter")
+
+                searchMake("Choose Filter", true)
 //                var intent = Intent(context, ReportFilterActivity::class.java)
 //                startActivityForResult(intent, 100)
             }
@@ -672,6 +679,28 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         var suggestionArray: ArrayList<IssueResolveModel>? = ArrayList()
         var jsonArray: JsonArray = JsonArray()
 
+        actvehicleMake = view.findViewById(R.id.actvehicleMake)
+        actvehicleMake?.setText("" + selectedSocietyName)
+
+        activity?.let {
+            autoSuggestProductAdapter =
+                object : ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, societyList) {
+
+                    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                        val v = super.getView(position, convertView, parent)
+
+//                        (v as TextView).textSize = 14f
+//                        v.gravity = Gravity.LEFT
+
+                        return v
+                    }
+                }
+
+        }
+
+        actvehicleMake?.threshold = 1
+        actvehicleMake?.setAdapter(autoSuggestProductAdapter)
+
         suggestionArray?.clear()
         for (i in serviceModel?.data?.indices!!) {
 
@@ -713,38 +742,48 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         tvTitleText?.text = titleStr
 
-        actvehicleMake = view?.findViewById(R.id.actvehicleMake)
+
         actvehicleModel = view?.findViewById(R.id.actvehicleModel)
         actvehicleSociety = view?.findViewById(R.id.actvehicleSociety)
 
-        actvehicleMake?.setText("" + selectedSocietyName)
 
-        actvehicleMake!!.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
+        /* actvehicleMake!!.addTextChangedListener(object : TextWatcher {
+             override fun afterTextChanged(s: Editable?) {
 
-            }
+             }
 
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
+             override fun beforeTextChanged(
+                 s: CharSequence?,
+                 start: Int,
+                 count: Int,
+                 after: Int
+             ) {
 
-            }
+             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                if (s?.toString()?.length!! > 1) {
+                 if (s?.toString()?.length!! > 1) {
 
-                    searchMake(actvehicleMake?.text.toString())
-                } else {
+                     searchMake(actvehicleMake?.text.toString())
+                 } else {
 
-                    selectedSociety = ""
-                    selectedSocietyName = ""
-                }
-            }
-        })
+                     selectedSociety = ""
+                     selectedSocietyName = ""
+                 }
+             }
+         })
+
+         actvehicleMake!!.onItemClickListener =
+             object : AdapterView.OnItemClickListener {
+                 override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                     selectedMakeId = makeSearchdata?.get(p2)?.id!!
+                     selectedSociety = makeSearchdata?.get(p2)?.uuid
+                     selectedSocietyName = makeSearchdata?.get(p2)?.name
+
+                 }
+             }*/
 
         actvehicleMake!!.onItemClickListener =
             object : AdapterView.OnItemClickListener {
@@ -908,49 +947,53 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         })
     }
 
-    private fun searchMake(toString: String) {
-        context?.let { makeModelViewModel.callBuildingListApi(it, prefManager.getAccessToken()!!) }
+    private fun searchMake(toString: String, isDialoguOpen: Boolean) {
+        if (makeSearchdata != null && makeSearchdata?.size!! > 0 && societyList.size > 0) {
 
-        makeModelViewModel.getBuildingModelList()?.observe(this, Observer {
+            openReportFilterDialogue(toString)
+        } else {
+            context?.let { makeModelViewModel.callBuildingListApi(it, prefManager.getAccessToken()!!) }
 
-            if (it != null) {
-                if (it.success) {
+            makeModelViewModel.getBuildingModelList()?.observe(this, Observer {
 
-                    makeSearchdata?.clear()
-                    makeSearchdata?.addAll(it.data)
+                if (it != null) {
+                    if (it.success) {
 
-                    try {
-                        makeDataForSearchApi(makeSearchdata!!)
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
+                        makeSearchdata?.clear()
+                        makeSearchdata?.addAll(it.data)
+
+                        try {
+                            makeDataForSearchApi(makeSearchdata!!, isDialoguOpen)
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
                     }
-                } else {
-
                 }
-            } else {
-
-            }
-        })
+            })
+        }
     }
 
     private fun searchSociety(toString: String) {
 
     }
 
-    private fun makeDataForSearchApi(makeSearchdata: ArrayList<BuildingListData>) {
-
-        listClicked.clear()
+    private fun makeDataForSearchApi(makeSearchdata: ArrayList<BuildingListData>, isDialoguOpen: Boolean) {
+        societyList.clear()
         try {
             for ((index, value) in makeSearchdata.withIndex()) {
                 val string =
                     makeSearchdata.get(index).name/* + " --> " + makeSearchdata.get(index).id*/
-                listClicked.add(string)
+                societyList.add(string)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        Log.e("listClicked", "" + listClicked)
-        if (listClicked.size > 0) {
+
+        if (isDialoguOpen) {
+            openReportFilterDialogue("Choose Filter")
+        }
+//        Log.e("listClicked", "" + listClicked)
+        /*if (listClicked.size > 0) {
             val adapter: ArrayAdapter<String>? = context?.let { ArrayAdapter<String>(it, android.R.layout.select_dialog_item, listClicked) }
 //            adapter =
 //                context?.let {
@@ -976,7 +1019,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //                }
             actvehicleMake?.threshold = 1
             actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
-        }
+        }*/
+
+
     }
 
     private fun modelDataForSearchApi(modelSearchData: ArrayList<VehicleModelData>) {
