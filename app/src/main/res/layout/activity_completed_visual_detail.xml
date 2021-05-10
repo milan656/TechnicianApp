@@ -47,7 +47,7 @@
                         android:layout_marginRight="@dimen/six_dp"
                         android:src="@drawable/ic_back_arrow" />
 
-                    <com.walkins.technician.custom.NormalTextView
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
                         android:id="@+id/tvTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -96,7 +96,7 @@
                             android:gravity="start|center"
                             android:orientation="vertical">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Tyre Make"
@@ -153,7 +153,7 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Tyre Pattern"
@@ -176,7 +176,7 @@
                                     android:orientation="vertical">
 
 
-                                    <com.walkins.technician.custom.NormalTextView
+                                    <com.walkins.aapkedoorstep.custom.NormalTextView
                                         android:id="@+id/tvSelectedPattern"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Tyre Size"
@@ -226,7 +226,7 @@
 
                                     android:orientation="vertical">
 
-                                    <com.walkins.technician.custom.NormalTextView
+                                    <com.walkins.aapkedoorstep.custom.NormalTextView
                                         android:id="@+id/tvSelectedSize"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
@@ -254,7 +254,7 @@
                         android:layout_marginTop="@dimen/twenty_four_dp"
                         android:orientation="vertical">
 
-                        <com.walkins.technician.custom.NormalTextView
+                        <com.walkins.aapkedoorstep.custom.NormalTextView
                             android:id="@+id/store_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -262,7 +262,7 @@
                             android:textColor="@color/text_color1"
                             android:textSize="@dimen/fourteen_sp" />
 
-                        <com.walkins.technician.custom.NormalEditText
+                        <com.walkins.aapkedoorstep.custom.NormalEditText
                             android:id="@+id/tvManufacturingDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -282,7 +282,7 @@
                         android:layout_marginTop="@dimen/twenty_four_dp"
                         android:orientation="vertical">
 
-                        <com.walkins.technician.custom.BoldHeavyTextView
+                        <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -304,14 +304,14 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="PSI In"
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/twelve_sp" />
 
-                                <com.walkins.technician.custom.BoldTextView
+                                <com.walkins.aapkedoorstep.custom.BoldTextView
                                     android:id="@+id/tvPsiIn"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -328,14 +328,14 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="PSI Out"
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/twelve_sp" />
 
-                                <com.walkins.technician.custom.BoldTextView
+                                <com.walkins.aapkedoorstep.custom.BoldTextView
                                     android:id="@+id/tvPsiOut"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -352,14 +352,14 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Weight"
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/twelve_sp" />
 
-                                <com.walkins.technician.custom.BoldTextView
+                                <com.walkins.aapkedoorstep.custom.BoldTextView
                                     android:id="@+id/tvWeight"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -380,7 +380,7 @@
                         android:layout_marginTop="@dimen/twenty_four_dp"
                         android:orientation="vertical">
 
-                        <com.walkins.technician.custom.NormalTextView
+                        <com.walkins.aapkedoorstep.custom.NormalTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Side Well"
@@ -399,7 +399,7 @@
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_ok" />
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.aapkedoorstep.custom.BoldTextView
                                 android:id="@+id/tvsideWell"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -420,7 +420,7 @@
                         android:layout_marginTop="@dimen/twenty_four_dp"
                         android:orientation="vertical">
 
-                        <com.walkins.technician.custom.NormalTextView
+                        <com.walkins.aapkedoorstep.custom.NormalTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Shoulder"
@@ -439,7 +439,7 @@
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_degrade" />
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.aapkedoorstep.custom.BoldTextView
                                 android:id="@+id/tvShoulder"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -460,7 +460,7 @@
                         android:layout_marginTop="@dimen/twenty_dp"
                         android:orientation="vertical">
 
-                        <com.walkins.technician.custom.NormalTextView
+                        <com.walkins.aapkedoorstep.custom.NormalTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Tread Depth"
@@ -479,7 +479,7 @@
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_degrade" />
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.aapkedoorstep.custom.BoldTextView
                                 android:id="@+id/tvTreadDepth"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -500,7 +500,7 @@
                         android:layout_marginTop="@dimen/twenty_dp"
                         android:orientation="vertical">
 
-                        <com.walkins.technician.custom.NormalTextView
+                        <com.walkins.aapkedoorstep.custom.NormalTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Tread Wear"
@@ -519,7 +519,7 @@
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_degrade" />
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.aapkedoorstep.custom.BoldTextView
                                 android:id="@+id/tvTreadWear"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -540,7 +540,7 @@
                         android:layout_marginTop="@dimen/twenty_dp"
                         android:orientation="vertical">
 
-                        <com.walkins.technician.custom.NormalTextView
+                        <com.walkins.aapkedoorstep.custom.NormalTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Rim Damage"
@@ -559,7 +559,7 @@
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_degrade" />
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.aapkedoorstep.custom.BoldTextView
                                 android:id="@+id/tvRimDamage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -580,7 +580,7 @@
                         android:layout_marginTop="@dimen/twenty_four_dp"
                         android:orientation="vertical">
 
-                        <com.walkins.technician.custom.NormalTextView
+                        <com.walkins.aapkedoorstep.custom.NormalTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Bulge/Bubble"
@@ -599,7 +599,7 @@
                                 android:layout_height="24dp"
                                 android:src="@mipmap/ic_condition_down" />
 
-                            <com.walkins.technician.custom.BoldTextView
+                            <com.walkins.aapkedoorstep.custom.BoldTextView
                                 android:id="@+id/tvBubble"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -620,7 +620,7 @@
                         android:layout_marginTop="@dimen/twenty_four_dp"
                         android:orientation="horizontal">
 
-                        <com.walkins.technician.custom.BoldHeavyTextView
+                        <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

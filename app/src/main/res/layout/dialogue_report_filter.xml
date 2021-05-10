@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/ten_dp"
@@ -9,182 +9,197 @@
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/ten_dp">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
-        <include layout="@layout/dialogue_header_design" />
+        <include
+            android:id="@+id/header"
+            layout="@layout/dialogue_header_design" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/twenty_four_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <com.walkins.technician.custom.NormalTextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Type of Services"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp" />
+                android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/serviceRecycView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_marginTop="@dimen/twenty_four_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:orientation="vertical">
 
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Type of Services"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp" />
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/twenty_four_dp"
-            android:background="#E0E0E0" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/twenty_four_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:orientation="vertical">
-
-            <com.walkins.technician.custom.NormalTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Society"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp" />
-
-            <AutoCompleteTextView
-                android:id="@+id/actvehicleMake"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten_dp"
-                android:background="@drawable/layout_bg_corner"
-                android:drawableRight="@drawable/search"
-                android:drawableTint="@color/colorPrimary"
-                android:hint="Search here"
-                android:padding="@dimen/twelve_dp"
-                android:completionThreshold="1"
-                android:textSize="@dimen/fourteen_sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/sixteen_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <com.walkins.technician.custom.NormalTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Vehicle Model"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp" />
-
-            <AutoCompleteTextView
-                android:id="@+id/actvehicleModel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten_dp"
-                android:background="@drawable/layout_bg_corner"
-                android:drawableRight="@drawable/search"
-                android:drawableTint="@color/colorPrimary"
-                android:hint="Search here"
-                android:padding="@dimen/twelve_dp"
-                android:textSize="@dimen/fourteen_sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/sixteen_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:layout_marginBottom="@dimen/sixteen_dp"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <com.walkins.technician.custom.NormalTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Society"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp" />
-
-            <AutoCompleteTextView
-                android:id="@+id/actvehicleSociety"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten_dp"
-                android:background="@drawable/layout_bg_corner"
-                android:drawableRight="@drawable/search"
-                android:drawableTint="@color/colorPrimary"
-                android:hint="Search here"
-                android:padding="@dimen/twelve_dp"
-                android:textSize="@dimen/fourteen_sp" />
-        </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/serviceRecycView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:layout_marginBottom="@dimen/twenty_dp"
-            android:background="#E0E0E0" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/twenty_four_dp"
+                    android:background="#E0E0E0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_marginTop="@dimen/twenty_four_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:orientation="vertical">
+
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Society"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvehicleMake"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:background="@drawable/layout_bg_corner"
+                        android:completionThreshold="1"
+                        android:drawableRight="@drawable/search"
+                        android:drawableTint="@color/colorPrimary"
+                        android:hint="Search here"
+                        android:padding="@dimen/twelve_dp"
+                        android:textSize="@dimen/fourteen_sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_marginTop="@dimen/sixteen_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Vehicle Model"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvehicleModel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:background="@drawable/layout_bg_corner"
+                        android:drawableRight="@drawable/search"
+                        android:drawableTint="@color/colorPrimary"
+                        android:hint="Search here"
+                        android:padding="@dimen/twelve_dp"
+                        android:textSize="@dimen/fourteen_sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_marginTop="@dimen/sixteen_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:layout_marginBottom="@dimen/sixteen_dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Society"
+                        android:textColor="@color/text_color1"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvehicleSociety"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:background="@drawable/layout_bg_corner"
+                        android:drawableRight="@drawable/search"
+                        android:drawableTint="@color/colorPrimary"
+                        android:hint="Search here"
+                        android:padding="@dimen/twelve_dp"
+                        android:textSize="@dimen/fourteen_sp" />
+                </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:layout_marginBottom="@dimen/sixteen_dp"
-            android:orientation="horizontal">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:layout_marginBottom="@dimen/twenty_dp"
+                    android:background="#E0E0E0" />
 
-            <com.walkins.technician.custom.BoldButton
-                android:id="@+id/btnCancel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/eight_dp"
-                android:layout_marginRight="@dimen/eight_dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_corner_button_white"
-                android:gravity="center"
-                android:letterSpacing="0.06"
-                android:text="Reset"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
 
-            <com.walkins.technician.custom.BoldButton
-                android:id="@+id/btnConfirm"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/eight_dp"
-                android:layout_marginEnd="@dimen/eight_dp"
-                android:layout_marginRight="@dimen/eight_dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_corner_button_yellow"
-                android:gravity="center"
-                android:letterSpacing="0.06"
-                android:text="Confirm"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:layout_marginBottom="@dimen/sixteen_dp"
+                    android:orientation="horizontal">
 
+                    <com.walkins.aapkedoorstep.custom.BoldButton
+                        android:id="@+id/btnCancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/eight_dp"
+                        android:layout_marginRight="@dimen/eight_dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_button_white"
+                        android:gravity="center"
+                        android:letterSpacing="0.06"
+                        android:text="Reset"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:textStyle="bold" />
+
+                    <com.walkins.aapkedoorstep.custom.BoldButton
+                        android:id="@+id/btnConfirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/eight_dp"
+                        android:layout_marginEnd="@dimen/eight_dp"
+                        android:layout_marginRight="@dimen/eight_dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_button_yellow"
+                        android:gravity="center"
+                        android:letterSpacing="0.06"
+                        android:text="Confirm"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

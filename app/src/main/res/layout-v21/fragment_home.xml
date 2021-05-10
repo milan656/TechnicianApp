@@ -15,7 +15,7 @@
         android:layout_marginEnd="@dimen/twenty_dp"
         android:orientation="horizontal">
 
-        <com.walkins.technician.custom.NormalTextView
+        <com.walkins.aapkedoorstep.custom.NormalTextView
             android:id="@+id/tvUsername"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -79,7 +79,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ic_empty_icon" />
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.aapkedoorstep.custom.NormalTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

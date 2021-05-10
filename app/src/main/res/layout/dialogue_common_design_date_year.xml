@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     >
 
-    <com.walkins.technician.custom.BoldTextView
+    <com.walkins.aapkedoorstep.custom.BoldTextView
         android:id="@+id/tvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
 
-        <com.walkins.technician.custom.BoldButton
+        <com.walkins.aapkedoorstep.custom.BoldButton
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:textSize="@dimen/fourteen_sp" />
 
 
-        <com.walkins.technician.custom.NormalTextView
+        <com.walkins.aapkedoorstep.custom.NormalTextView
             android:id="@+id/tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:weightSum="2">
 
 
-            <com.walkins.technician.custom.BoldButton
+            <com.walkins.aapkedoorstep.custom.BoldButton
                 android:id="@+id/btn_cancel"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                 android:letterSpacing="0.06"
                 android:textColor="@color/text_color" />
 
-            <com.walkins.technician.custom.BoldButton
+            <com.walkins.aapkedoorstep.custom.BoldButton
                 android:id="@+id/btn_update"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"

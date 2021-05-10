@@ -46,7 +46,7 @@
                         android:layout_marginRight="@dimen/six_dp"
                         android:src="@drawable/ic_back_arrow" />
 
-                    <com.walkins.technician.custom.NormalTextView
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
                         android:id="@+id/tvTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -81,7 +81,7 @@
                     android:layout_marginBottom="@dimen/fourteen_dp"
                     android:visibility="visible" />
 
-<!--                <com.walkins.technician.custom.NormalNoDataTextView-->
+<!--                <com.walkins.aapkedoorstep.custom.NormalNoDataTextView-->
 <!--                    android:id="@+id/tvNoDataFound"-->
 <!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="wrap_content"-->
@@ -133,7 +133,7 @@
                                 android:padding="@dimen/eight_dp">
 
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:id="@+id/tvSelectedModel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
@@ -175,7 +175,7 @@
                     android:layout_marginEnd="@dimen/sixteen_dp"
                     android:background="#BDBDBD" />
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.aapkedoorstep.custom.NormalTextView
                     android:id="@+id/tvSelectTyre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -293,7 +293,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <com.walkins.technician.custom.BoldButton
+    <com.walkins.aapkedoorstep.custom.BoldButton
         android:id="@+id/btnNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

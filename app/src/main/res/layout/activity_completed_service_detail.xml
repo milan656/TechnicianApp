@@ -84,7 +84,7 @@
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
-                                <com.walkins.technician.custom.BoldHeavyTextView
+                                <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                     android:id="@+id/tvRegNumber"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
@@ -115,7 +115,7 @@
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:id="@+id/tvMakeModel"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
 
                                     android:textSize="@dimen/twelve_sp" />
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:id="@+id/tvColor"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
                                 android:gravity="center"
                                 android:orientation="vertical">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -216,7 +216,7 @@
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/twelve_sp" />
 
-                                <com.walkins.technician.custom.BoldTextView
+                                <com.walkins.aapkedoorstep.custom.BoldTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -275,7 +275,7 @@
                             android:gravity="start|center"
                             android:orientation="horizontal">
 
-                            <com.walkins.technician.custom.BoldHeavyTextView
+                            <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                 android:id="@+id/tvServices"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -329,7 +329,7 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <com.walkins.technician.custom.BoldTextView
+                                <com.walkins.aapkedoorstep.custom.BoldTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="1"
@@ -361,7 +361,7 @@
                                             android:paddingStart="@dimen/five_dp"
                                             android:paddingEnd="@dimen/five_dp">
 
-                                            <com.walkins.technician.custom.NormalTextView
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
@@ -372,7 +372,7 @@
                                                 android:textColor="@color/text_color1"
                                                 android:textSize="@dimen/fourteen_sp" />
 
-                                            <com.walkins.technician.custom.NormalTextView
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
@@ -383,7 +383,7 @@
                                                 android:textColor="@color/text_color1"
                                                 android:textSize="@dimen/fourteen_sp" />
 
-                                            <com.walkins.technician.custom.NormalTextView
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
@@ -415,7 +415,7 @@
                                             android:paddingStart="@dimen/five_dp"
                                             android:paddingEnd="@dimen/five_dp">
 
-                                            <com.walkins.technician.custom.NormalTextView
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
@@ -426,7 +426,7 @@
                                                 android:textColor="@color/text_color1"
                                                 android:textSize="@dimen/fourteen_sp" />
 
-                                            <com.walkins.technician.custom.NormalTextView
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
@@ -437,7 +437,7 @@
                                                 android:textColor="@color/text_color1"
                                                 android:textSize="@dimen/fourteen_sp" />
 
-                                            <com.walkins.technician.custom.NormalTextView
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
@@ -497,7 +497,7 @@
                                 android:gravity="start|center"
                                 android:orientation="horizontal">
 
-                                <com.walkins.technician.custom.BoldHeavyTextView
+                                <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                     android:id="@+id/tvTyreConfig"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -526,7 +526,7 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:id="@+id/tvtyreServiceInfo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -869,7 +869,7 @@
                                 android:gravity="start|center"
                                 android:orientation="horizontal">
 
-                                <com.walkins.technician.custom.BoldHeavyTextView
+                                <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                     android:id="@+id/tvTechnicalSuggetion"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -903,7 +903,7 @@
                                     android:layout_height="match_parent" />
 
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/twenty_dp"
@@ -911,7 +911,7 @@
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/twelve_sp" />
 
-                                <com.walkins.technician.custom.BoldTextView
+                                <com.walkins.aapkedoorstep.custom.BoldTextView
                                     android:id="@+id/tvMoreSuggestion"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -981,7 +981,7 @@
         android:layout_marginBottom="@dimen/eighteen_dp"
         android:orientation="vertical">
 
-        <com.walkins.technician.custom.NormalTextView
+        <com.walkins.aapkedoorstep.custom.NormalTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -990,7 +990,7 @@
             android:textColor="#1DAD9F"
             android:textSize="@dimen/eighteen_sp" />
 
-        <com.walkins.technician.custom.BoldTextView
+        <com.walkins.aapkedoorstep.custom.BoldTextView
             android:id="@+id/tvCurrentDateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -66,14 +66,14 @@
                                 android:layout_marginRight="@dimen/twenty_four_dp"
                                 android:orientation="vertical">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/mobile_number"
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/sixteen_sp" />
 
-                                <com.walkins.technician.custom.NormalEditText
+                                <com.walkins.aapkedoorstep.custom.NormalEditText
                                     android:id="@+id/edtLoginEmail"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
@@ -84,7 +84,7 @@
                                     android:padding="8dip"
                                     android:singleLine="true" />
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -102,7 +102,7 @@
                                 android:orientation="vertical"
                                 android:weightSum="2">
 
-                                <com.walkins.technician.custom.BoldButton
+                                <com.walkins.aapkedoorstep.custom.BoldButton
                                     android:id="@+id/btnLoginToDashBoard"
                                     android:layout_width="match_parent"
                                     android:layout_height="56dp"
@@ -136,7 +136,7 @@
                 android:layout_margin="@dimen/twenty_dp"
                 android:orientation="vertical">
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.aapkedoorstep.custom.NormalTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

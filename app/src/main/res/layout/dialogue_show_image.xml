@@ -22,7 +22,7 @@
             android:layout_marginRight="@dimen/twenty_dp"
             android:orientation="horizontal">
 
-            <com.walkins.technician.custom.BoldTextView
+            <com.walkins.aapkedoorstep.custom.BoldTextView
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

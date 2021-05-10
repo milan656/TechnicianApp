@@ -23,7 +23,7 @@
             android:layout_marginEnd="@dimen/eighteen_dp"
             android:orientation="vertical">
 
-            <com.walkins.technician.custom.BoldHeavyTextView
+            <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Select the reason"
@@ -40,7 +40,7 @@
 
         </LinearLayout>
 
-        <com.walkins.technician.custom.BoldButton
+        <com.walkins.aapkedoorstep.custom.BoldButton
             android:id="@+id/btnConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

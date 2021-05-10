@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.walkins.technician.custom.NormalTextView
+            <com.walkins.aapkedoorstep.custom.NormalTextView
                 android:id="@+id/tvUpcomingServive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
-            <com.walkins.technician.custom.BoldTextView
+            <com.walkins.aapkedoorstep.custom.BoldTextView
                 android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
 
         </LinearLayout>
 
-        <com.walkins.technician.custom.NormalTextView
+        <com.walkins.aapkedoorstep.custom.NormalTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"

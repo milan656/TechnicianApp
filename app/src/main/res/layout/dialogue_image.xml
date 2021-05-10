@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/sixteen_dp"
             android:layout_marginRight="@dimen/sixteen_dp">
 
-            <com.walkins.technician.custom.BoldTextView
+            <com.walkins.aapkedoorstep.custom.BoldTextView
                 android:id="@+id/tvTitleRemarks"
                 android:layout_width="match_parent"
 

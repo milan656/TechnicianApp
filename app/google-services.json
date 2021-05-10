@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "914690132879",
-    "project_id": "technician-app-f4118",
-    "storage_bucket": "technician-app-f4118.appspot.com"
+    "project_number": "718144952031",
+    "project_id": "aapkedoorstep-test",
+    "storage_bucket": "aapkedoorstep-test.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:914690132879:android:be88542d2d308b4d6419fa",
+        "mobilesdk_app_id": "1:718144952031:android:af357e869527ef80ddfb6a",
         "android_client_info": {
-          "package_name": "com.walkins.technician"
+          "package_name": "com.walkins.aapkedoorstep"
         }
       },
       "oauth_client": [
         {
-          "client_id": "914690132879-jdelat7d0uos78d6aged6lk207av4ebv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.walkins.technician",
-            "certificate_hash": "ac413c4085fc44fb95c289f4f4ee0dbc05187fff"
-          }
-        },
-        {
-          "client_id": "914690132879-17rspv0brg29na888bl80kgdvsd579kd.apps.googleusercontent.com",
+          "client_id": "718144952031-cfji4jgkrel4v100t4l5n0c91utp7e3m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDWOocO-CwNdn7-AC1VfgiO5RXuGoAg2E4"
+          "current_key": "AIzaSyCjJyAQ6LfApODluteQ1u4j1EijJqH31uc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "914690132879-17rspv0brg29na888bl80kgdvsd579kd.apps.googleusercontent.com",
+              "client_id": "718144952031-cfji4jgkrel4v100t4l5n0c91utp7e3m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

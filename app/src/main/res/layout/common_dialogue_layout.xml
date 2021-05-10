@@ -21,7 +21,7 @@
             android:background="@drawable/dialog_background"
             android:orientation="vertical">
 
-            <com.walkins.technician.custom.BoldTextView
+            <com.walkins.aapkedoorstep.custom.BoldTextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                 android:layout_marginRight="@dimen/sixteen_dp"
                 android:layout_marginLeft="@dimen/thirtytwo_dp">
 
-                <com.walkins.technician.custom.BoldTextView
+                <com.walkins.aapkedoorstep.custom.BoldTextView
                     android:id="@+id/tvTitleText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -80,7 +80,7 @@
                 android:layout_marginBottom="@dimen/thirtytwo_dp"
                 android:orientation="vertical">
 
-                <com.walkins.technician.custom.BoldTextView
+                <com.walkins.aapkedoorstep.custom.BoldTextView
                     android:id="@+id/tv_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
 
             </LinearLayout>
 
-            <com.walkins.technician.custom.BoldButton
+            <com.walkins.aapkedoorstep.custom.BoldButton
                 android:id="@+id/btnOk"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"

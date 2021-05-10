@@ -38,7 +38,7 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <com.walkins.technician.custom.BoldButton
+            <com.walkins.aapkedoorstep.custom.BoldButton
                 android:id="@+id/btn_send"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

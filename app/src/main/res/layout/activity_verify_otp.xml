@@ -73,7 +73,7 @@
                                 android:layout_marginTop="@dimen/fourty_dp"
                                 android:orientation="vertical">
 
-                                <com.walkins.technician.custom.NormalTextView
+                                <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/twenty_four_dp"
@@ -91,7 +91,7 @@
                                     android:layout_marginEnd="@dimen/sixteen_dp"
                                     android:orientation="horizontal">
 
-                                    <com.walkins.technician.custom.NormalEditText
+                                    <com.walkins.aapkedoorstep.custom.NormalEditText
                                         android:id="@+id/edtOtp1"
                                         android:layout_width="match_parent"
                                         android:layout_height="50dp"
@@ -109,7 +109,7 @@
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/sixteen_sp" />
 
-                                    <com.walkins.technician.custom.NormalEditText
+                                    <com.walkins.aapkedoorstep.custom.NormalEditText
                                         android:id="@+id/edtOtp2"
                                         android:layout_width="match_parent"
                                         android:layout_height="50dp"
@@ -125,7 +125,7 @@
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/sixteen_sp" />
 
-                                    <com.walkins.technician.custom.NormalEditText
+                                    <com.walkins.aapkedoorstep.custom.NormalEditText
                                         android:id="@+id/edtOtp3"
                                         android:layout_width="match_parent"
                                         android:layout_height="50dp"
@@ -142,7 +142,7 @@
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/sixteen_sp" />
 
-                                    <com.walkins.technician.custom.NormalEditText
+                                    <com.walkins.aapkedoorstep.custom.NormalEditText
                                         android:id="@+id/edtOtp4"
                                         android:layout_width="match_parent"
                                         android:layout_height="50dp"
@@ -166,7 +166,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
 
-                                    <com.walkins.technician.custom.NormalTextView
+                                    <com.walkins.aapkedoorstep.custom.NormalTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -178,7 +178,7 @@
                                         android:textSize="@dimen/fourteen_sp"
                                         android:layout_marginLeft="@dimen/twenty_four_dp" />
 
-                                    <com.walkins.technician.custom.NormalTextView
+                                    <com.walkins.aapkedoorstep.custom.NormalTextView
                                         android:id="@+id/tvResend"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
                             android:layout_marginStart="@dimen/twenty_two_dp"
                             android:layout_marginEnd="@dimen/twenty_two_dp">
 
-                            <com.walkins.technician.custom.BoldButton
+                            <com.walkins.aapkedoorstep.custom.BoldButton
                                 android:id="@+id/btnVerify"
                                 android:layout_width="match_parent"
                                 android:layout_height="56dp"
@@ -237,7 +237,7 @@
                 android:layout_margin="@dimen/twenty_dp"
                 android:orientation="vertical">
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.aapkedoorstep.custom.NormalTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

@@ -11,7 +11,7 @@
         android:layout_margin="@dimen/six_dp"
         android:background="@drawable/unselected">
 
-        <com.walkins.technician.custom.NormalTextView
+        <com.walkins.aapkedoorstep.custom.NormalTextView
             android:id="@+id/ivVehicleImage"
             android:layout_width="110dp"
             android:layout_height="55dp"

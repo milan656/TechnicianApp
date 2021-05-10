@@ -41,7 +41,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <com.walkins.technician.custom.BoldTextView
+                        <com.walkins.aapkedoorstep.custom.BoldTextView
                             android:id="@+id/tvTitleText"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -71,7 +71,7 @@
                         android:background="#BDBDBD" />
                 </LinearLayout>
 
-                <com.walkins.technician.datepicker.SingleDateAndTimePicker
+                <com.walkins.aapkedoorstep.datepicker.SingleDateAndTimePicker
                     android:id="@+id/picker"
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
@@ -93,7 +93,7 @@
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-                    <com.walkins.technician.custom.BoldButton
+                    <com.walkins.aapkedoorstep.custom.BoldButton
                         android:id="@+id/btn_reset"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -109,7 +109,7 @@
                         android:textColor="@color/header_title"
                         android:textSize="@dimen/fourteen_sp" />
 
-                    <com.walkins.technician.custom.BoldButton
+                    <com.walkins.aapkedoorstep.custom.BoldButton
                         android:id="@+id/btn_confirm"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

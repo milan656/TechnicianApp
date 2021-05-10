@@ -36,7 +36,7 @@
 
         </FrameLayout>
 
-        <com.walkins.technician.datepicker.SingleDateAndTimePicker
+        <com.walkins.aapkedoorstep.datepicker.SingleDateAndTimePicker
             android:id="@+id/picker"
             android:layout_width="match_parent"
             android:layout_height="230dp"

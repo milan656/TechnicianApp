@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.walkins.technician.custom.BoldHeavyTextView
+            <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                 android:id="@+id/tvaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <com.walkins.technician.custom.BoldTextView
+                    <com.walkins.aapkedoorstep.custom.BoldTextView
                         android:id="@+id/tvUpcoming"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/fourteen_sp" />
 
-                    <com.walkins.technician.custom.BoldTextView
+                    <com.walkins.aapkedoorstep.custom.BoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Upcoming"
@@ -69,7 +69,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <com.walkins.technician.custom.NormalTextView
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
                         android:id="@+id/tvCompleted"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                         android:textColor="@color/text_color2"
                         android:textSize="@dimen/fourteen_sp" />
 
-                    <com.walkins.technician.custom.NormalTextView
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Completed"
@@ -91,7 +91,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <com.walkins.technician.custom.NormalTextView
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
                         android:id="@+id/tvSkipped"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                         android:textColor="@color/header_title"
                         android:textSize="@dimen/fourteen_sp" />
 
-                    <com.walkins.technician.custom.NormalTextView
+                    <com.walkins.aapkedoorstep.custom.NormalTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Skipped"
@@ -123,7 +123,7 @@
                     android:layout_gravity="center"
                     android:src="@mipmap/ic_small_car" />
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.aapkedoorstep.custom.NormalTextView
                     android:id="@+id/tvCarCount"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"

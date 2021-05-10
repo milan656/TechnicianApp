@@ -17,7 +17,7 @@
         android:layout_marginEnd="@dimen/eighteen_dp"
         android:orientation="horizontal">
 
-        <com.walkins.technician.custom.NormalEditText
+        <com.walkins.aapkedoorstep.custom.NormalEditText
             android:id="@+id/edtSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.walkins.technician.custom.NormalTextView
+            <com.walkins.aapkedoorstep.custom.NormalTextView
                 android:id="@+id/tvCompleted"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -94,7 +94,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.walkins.technician.custom.NormalTextView
+            <com.walkins.aapkedoorstep.custom.NormalTextView
                 android:id="@+id/tvSkipped"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -118,7 +118,7 @@
             android:orientation="vertical"
             android:visibility="invisible">
 
-            <com.walkins.technician.custom.NormalTextView
+            <com.walkins.aapkedoorstep.custom.NormalTextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -139,7 +139,7 @@
         android:layout_marginEnd="@dimen/sixteen_dp"
         android:layout_marginTop="@dimen/thirty_dp"/>
 
-    <com.walkins.technician.custom.NormalNoDataTextView
+    <com.walkins.aapkedoorstep.custom.NormalNoDataTextView
         android:id="@+id/tvNoData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

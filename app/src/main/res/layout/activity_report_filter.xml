@@ -50,7 +50,7 @@
                             android:layout_marginRight="@dimen/six_dp"
                             android:src="@drawable/ic_back_arrow" />
 
-                        <com.walkins.technician.custom.BoldTextView
+                        <com.walkins.aapkedoorstep.custom.BoldTextView
                             android:id="@+id/tvTitle"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -84,7 +84,7 @@
                             android:layout_marginEnd="@dimen/twenty_dp"
                             android:orientation="vertical">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Type of Services"
@@ -187,7 +187,7 @@
                             android:layout_marginEnd="@dimen/twenty_dp"
                             android:orientation="vertical">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Society"
@@ -216,7 +216,7 @@
                             android:visibility="gone"
                             android:orientation="vertical">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Vehicle Model"
@@ -246,7 +246,7 @@
                             android:layout_marginBottom="@dimen/sixteen_dp"
                             android:orientation="vertical">
 
-                            <com.walkins.technician.custom.NormalTextView
+                            <com.walkins.aapkedoorstep.custom.NormalTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Society"
@@ -293,7 +293,7 @@
                     android:layout_marginBottom="@dimen/sixteen_dp"
                     android:orientation="horizontal">
 
-                    <com.walkins.technician.custom.BoldButton
+                    <com.walkins.aapkedoorstep.custom.BoldButton
                         android:id="@+id/btnCancel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -309,7 +309,7 @@
                         android:textSize="@dimen/sixteen_sp"
                         android:textStyle="bold" />
 
-                    <com.walkins.technician.custom.BoldButton
+                    <com.walkins.aapkedoorstep.custom.BoldButton
                         android:id="@+id/btnConfirm"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

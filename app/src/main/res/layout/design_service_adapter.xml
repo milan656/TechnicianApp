@@ -49,7 +49,7 @@
                     android:gravity="center"
                     android:src="@mipmap/ic_nitrogen_topup" />
 
-                <com.walkins.technician.custom.NormalTextView
+                <com.walkins.aapkedoorstep.custom.NormalTextView
                     android:id="@+id/tvServiceName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -16,7 +16,7 @@
         android:src="@mipmap/ic_info_icon"
          />
 
-    <com.walkins.technician.custom.BoldTextView
+    <com.walkins.aapkedoorstep.custom.BoldTextView
         android:id="@+id/chkTyreSuggestion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
