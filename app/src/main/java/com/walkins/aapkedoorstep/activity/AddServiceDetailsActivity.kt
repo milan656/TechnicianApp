@@ -415,7 +415,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
         if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-            !prefManager?.getValue(TyreConfigClass.TyreLRObject).equals("")
+            !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
         ) {
             var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
             try {
