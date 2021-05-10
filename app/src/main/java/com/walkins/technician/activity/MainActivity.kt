@@ -2,9 +2,17 @@ package com.walkins.technician.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +26,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -48,9 +57,11 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.InputStream
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
+
 
     private var ivHome: ImageView? = null
     private var ivNotification: ImageView? = null
@@ -75,6 +86,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private val IMAGE_CAPTURE_CODE = 1011
     var image_uri: Uri? = null
 
+    private var isFromNotification: String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -98,7 +111,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         }
         thread.start()
+
+
     }
+
 
     private fun callApiTogetToken() {
         try {
@@ -123,7 +139,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.i("token", "+++" + e.cause+" "+e.message)
+            Log.i("token", "+++" + e.cause + " " + e.message)
 
         }
     }
@@ -140,6 +156,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         llNotification = findViewById(R.id.llNotification)
         tvUsername = findViewById(R.id.tvUsername)
 
+        if (intent != null) {
+            if (intent.hasExtra("isFromNotification")) {
+                if (intent.getStringExtra("isFromNotification") != null) {
+                    isFromNotification = intent.getStringExtra("isFromNotification")
+                }
+            }
+        }
+
         ivHome?.setOnClickListener(this)
         ivProfile?.setOnClickListener(this)
         ivReport?.setOnClickListener(this)
@@ -152,7 +176,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         ivNotification?.setOnClickListener(this)
 
         tvUsername?.text = "Hello, " + ""
-
         llhome?.performClick()
 
     }
@@ -196,6 +219,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivReport?.setTint(this, R.color.text_color1)
                 ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
                 ivProfile?.setTint(this, R.color.text_color1)
+
+                if (isFromNotification.equals("profile")) {
+                    llProfile?.performClick()
+                } else if (isFromNotification.equals("report")) {
+                    llReport?.performClick()
+                } else if (isFromNotification.equals("notification")) {
+                    llNotification?.performClick()
+                }
 
             }
             R.id.llReport, R.id.ivReport -> {
@@ -530,7 +561,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         }
     }
 
-    private fun uploadImage(imagePath: File,inputStream: InputStream) {
+    private fun uploadImage(imagePath: File, inputStream: InputStream) {
         this.let { Common.showLoader(it) }
 
         val part = MultipartBody.Part.createFormData(

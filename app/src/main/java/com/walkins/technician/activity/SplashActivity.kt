@@ -19,13 +19,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        /*  try {
-              Fabric.with(this, Crashlytics())
-          }catch (e : Exception){
-              e.printStackTrace()
-          }*/
         startWorking()
-
 
     }
 
@@ -54,11 +48,11 @@ class SplashActivity : AppCompatActivity() {
 
         try {
             if (prefManager?.getIsLogin()!!) {
-                var intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
-                var intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }

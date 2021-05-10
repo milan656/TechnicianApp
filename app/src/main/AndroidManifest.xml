@@ -24,7 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnicianApp">
-        <activity android:name=".activity.ReportFilterActivity"></activity>
+        <activity android:name=".activity.ReportFilterActivity"/>
         <activity android:name=".activity.CompletedVisualDetailActivity" />
         <activity android:name=".activity.VehicleMakeApplyTyreActivty" />
         <activity android:name=".activity.VehicleSizeActivity" />
