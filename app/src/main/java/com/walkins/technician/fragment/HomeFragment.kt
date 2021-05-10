@@ -150,7 +150,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         super.onResume()
         getDashboardService(selectedDate!!)
         getUserInfo()
-
     }
 
     private fun getDashboardService(displayDate: String) {

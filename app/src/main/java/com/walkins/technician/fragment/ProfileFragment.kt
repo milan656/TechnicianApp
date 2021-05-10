@@ -55,12 +55,6 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
     private var commonViewModel: CommonViewModel? = null
 
-    val REQUEST_IMAGE_CAPTURE = 1
-    val PICK_IMAGE_REQUEST = 100
-    private lateinit var mCurrentPhotoPath: String
-    private val PERMISSION_CODE = 1010;
-    private val IMAGE_CAPTURE_CODE = 1011
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

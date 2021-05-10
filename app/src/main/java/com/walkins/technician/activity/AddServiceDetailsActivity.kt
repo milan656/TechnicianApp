@@ -1,6 +1,7 @@
 package com.walkins.technician.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
@@ -74,6 +75,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+@SuppressLint("UseCompatLoadingForDrawables")
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
     private lateinit var prefManager: PrefManager
@@ -126,15 +128,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         "Improve this for the tyre in alignment"
     )
     private var suggestionArray: ArrayList<IssueResolveModel>? = ArrayList()
-    var reasonArray = arrayListOf(
-        "The car was unavailable",
-        "Need more time to resolve",
-        "The customer request a delay",
-        "Need more time to resolve",
-        "The customer request a delay"
-    )
-    private var reasonArrayList: ArrayList<IssueResolveModel>? = ArrayList()
-
 
     private var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
 
@@ -244,6 +237,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //        requestPermissionForImage()
         init()
     }
+
 
     suspend fun getStoredObjects() {
 
@@ -661,6 +655,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun init() {
 
         tvTitle = findViewById(R.id.tvTitle)
@@ -847,10 +842,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         for (i in suggestionArr.indices) {
             suggestionArray?.add(IssueResolveModel(suggestionArr.get(i) + " " + i, 0, false))
         }
-        for (i in reasonArray.indices) {
-            reasonArrayList?.add(IssueResolveModel(reasonArray.get(i), 0, false))
-        }
-
         tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArray!!, this, this, false, true)
         tyreSuggestionAdapter?.onclick = this
         suggestionsRecycView?.layoutManager = LinearLayoutManager(
@@ -867,48 +858,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         ivBack?.setOnClickListener(this)
 
-//        https://staging-backend.aapkedoorstep.com/api/v1/tyrepushpull/get-tyre-size?model_id=53&make_id=593
-
-        /* edtMoreSuggestion?.addTextChangedListener(object : TextWatcher {
-             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-             }
-
-             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-             }
-
-             override fun afterTextChanged(s: Editable?) {
-                 if (s != null && s.toString().length > 0) {
-                     storeServiceDetailData()
-                 }
-             }
-
-         })
-
-         tvNextServiceDueDate?.addTextChangedListener(object : TextWatcher {
-             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-             }
-
-             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-             }
-
-             override fun afterTextChanged(s: Editable?) {
-                 if (s != null && s.toString().length > 0) {
-                     storeServiceDetailData()
-                 }
-             }
-
-         })*/
-
         GlobalScope.launch(Dispatchers.Main) {
             launch(Dispatchers.Main) {
                 getStoredObjects()
             }
         }
-
 
         tvNextServiceDueDate?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -1258,13 +1212,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 openSkipServiceDialogue("", "")
             }
 
-
             R.id.ivInfoImgLR -> {
                 if (!checkService()) {
-
                     return
                 }
-
                 pendingArr = arrayListOf<String>()
 
                 if (TyreConfigClass.LRVehicleMake == false) {
@@ -1464,57 +1415,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 addServiceApiCall()
             }
-            R.id.llNitrogenTopup -> {
-                if (chkNitrogenTopup?.isChecked!!) {
 
-                    chkNitrogenTopup?.isChecked = false
-                } else {
-                    chkNitrogenTopup?.isChecked = true
-                }
-            }
-            R.id.llNitrogenRefil -> {
-                if (chkNitrogenRefill?.isChecked!!) {
-
-                    chkNitrogenRefill?.isChecked = false
-                } else {
-                    chkNitrogenRefill?.isChecked = true
-                }
-
-            }
-            R.id.llWheelbalancing -> {
-                if (chkWheelBalacing?.isChecked!!) {
-
-                    chkWheelBalacing?.isChecked = false
-                } else {
-                    chkWheelBalacing?.isChecked = true
-                }
-
-            }
-            R.id.llTyreRotation -> {
-                if (chkTyreRotation?.isChecked!!) {
-                    chkTyreRotation?.isChecked = false
-                } else {
-                    chkTyreRotation?.isChecked = true
-                }
-
-            }
         }
     }
 
     private fun storeServiceDetailData() {
-        var jsonObject: JsonObject = JsonObject()
+        val jsonObject = JsonObject()
 
-//        jsonObject.addProperty(TyreKey.nitrogenTopup, "" + chkNitrogenTopup?.isChecked)
-//        jsonObject.addProperty(TyreKey.nitrogenRefil, "" + chkNitrogenRefill?.isChecked)
-//        jsonObject.addProperty(TyreKey.tyreRotation, "" + chkTyreRotation?.isChecked)
-//        jsonObject.addProperty(TyreKey.wheelBalancing, "" + chkWheelBalacing?.isChecked)
-//
         jsonObject.addProperty(TyreKey.moreSuggestion, edtMoreSuggestion?.text?.toString())
         jsonObject.addProperty(TyreKey.nextDueDate, tvNextServiceDueDate?.text.toString())
         jsonObject.addProperty(TyreKey.addServiceCarImage_1, TyreConfigClass.CarPhoto_1)
         jsonObject.addProperty(TyreKey.addServiceCarImage_2, TyreConfigClass.CarPhoto_2)
 
-        var jsonArrayService: JsonArray? = JsonArray()
+        val jsonArrayService: JsonArray? = JsonArray()
 
         selectedServiceArr?.clear()
         if (serviceList != null && serviceList?.size!! > 0) {
@@ -1526,7 +1439,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
-        var jsonArray: JsonArray = JsonArray()
+        val jsonArray = JsonArray()
 
         selectedSuggestionArr?.clear()
 
@@ -1589,7 +1502,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
-
 
         try {
             var selectedText: String? = ""
@@ -2065,74 +1977,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 e.printStackTrace()
             }
         }
-        /*{
-                   "date_of_service": null,
-                   "vehicle_id": 2,
-                   "front_left_tyre_make": "jk tyre",
-                   "front_left_tyre_pattern": "Estate N6",
-                   "front_left_tyre_size": "165/80 R14",
-                   "front_left_manufacturing_date": "0620",
-                   "front_right_tyre_make": "jk tyre",
-                   "front_right_tyre_pattern": "Estate N6",
-                   "front_right_tyre_size": "165/80 R14",
-                   "front_right_manufacturing_date": "0620",
-                   "back_left_tyre_make": "jk tyre",
-                   "back_left_tyre_pattern": "Estate N6",
-                   "back_left_tyre_size": "165/80 R14",
-                   "back_left_manufacturing_date": "0620",
-                   "back_right_tyre_make": "jk tyre",
-                   "back_right_tyre_pattern": "Estate N6",
-                   "back_right_tyre_size": "165/80 R14",
-                   "back_right_manufacturing_date": "0620",
-                   "front_left_tyre_side_wall": "SUG",
-                   "front_left_tyre_shoulder": "SUG",
-                   "front_left_tyre_tread_depth": "OK",
-                   "front_left_tyre_tread_wear": "REQ",
-                   "front_left_tyre_rim_demage": "OK",
-                   "front_left_tyre_buldge_bubble": "OK",
-                   "front_right_tyre_side_wall": "OK",
-                   "front_right_tyre_shoulder": "OK",
-                   "front_right_tyre_tread_depth": "OK",
-                   "front_right_tyre_tread_wear": "OK",
-                   "front_right_tyre_rim_demage": "OK",
-                   "front_right_tyre_buldge_bubble": "OK",
-                   "back_left_tyre_side_wall": "REQ",
-                   "back_left_tyre_shoulder": "REQ",
-                   "back_left_tyre_tread_depth": "REQ",
-                   "back_left_tyre_tread_wear": "REQ",
-                   "back_left_tyre_rim_demage": "REQ",
-                   "back_left_tyre_buldge_bubble": "REQ",
-                   "back_right_tyre_side_wall": "OK",
-                   "back_right_tyre_shoulder": "OK",
-                   "back_right_tyre_tread_depth": "OK",
-                   "back_right_tyre_tread_wear": "OK",
-                   "back_right_tyre_rim_demage": "OK",
-                   "back_right_tyre_buldge_bubble": "OK",
-                   "front_left_tyre_psi_in": 35,
-                   "front_left_tyre_psi_out": 30,
-                   "front_left_tyre_weight": 33,
-                   "front_right_tyre_psi_in": 25,
-                   "front_right_tyre_psi_out": 28,
-                   "front_right_tyre_weight": 30,
-                   "back_left_tyre_psi_in": 33,
-                   "back_left_tyre_psi_out": 32,
-                   "back_left_tyre_weight": 30,
-                   "back_right_tyre_psi_in": 30,
-                   "back_right_tyre_psi_out": 30,
-                   "back_right_tyre_weight": 36,
-                   "front_left_issues_to_be_resolved": [
-                   1
-                   ],
-                   "front_right_issues_to_be_resolved": [
-                   1
-                   ],
-                   "back_left_issues_to_be_resolved": [
-                   1
-                   ],
-                   "back_right_issues_to_be_resolved": [
-                   1
-                   ]
-               }*/
+
     }
 
     private fun openDatePicker() {
@@ -2217,7 +2062,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
         val dialog =
-            this?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
         dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -2524,14 +2369,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (check == 0) {
 
             Log.e("getposition0", "" + suggestionArr.get(variable))
-        } else if (check == 1) {
-            Log.e("getposition1", "" + reasonArray.get(variable))
         } else if (check == 10) {
 
             if (imagePickerDialog != null && imagePickerDialog?.isShowing!!) {
                 imagePickerDialog?.dismiss()
             }
-            if (Common.commonPhotoChooseArr.get(variable)?.equals("Gallery")) {
+            if (Common.commonPhotoChooseArr.get(variable).equals("Gallery")) {
                 val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     checkPermission((this@AddServiceDetailsActivity))
                 } else {
@@ -2950,6 +2793,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.e("getcall", "call0" + requestCode)
@@ -5035,17 +4879,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
-                        /*val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        val file: File = createFile()
-
-                        val uri: Uri = FileProvider.getUriForFile(
-                            this,
-                            "com.walkins.technician.android.fileprovider",
-                            file
-                        )
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)*/
-
                         try {
                             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
@@ -5081,21 +4914,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
     }
 
-    @Throws(IOException::class)
-    private fun createFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            mCurrentPhotoPath = absolutePath
-        }
-    }
-
     private fun openCamera() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
@@ -5110,11 +4928,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     override fun onPause() {
         storeServiceDetailData()
         super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
     override fun onDestroy() {
@@ -5177,19 +4990,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private fun uploadImage(imagePath: File, inputStream: InputStream) {
         Common.showLoader(this)
-//        val requestFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-//        val requestFile = RequestBody.create(
-//            MediaType.parse("image/*"),
-//            imagePath
-//        )
         val part = MultipartBody.Part.createFormData(
             "file", imagePath.name, RequestBody.create(
                 MediaType.parse("image/*"),
                 inputStream.readBytes()
             )
         )
-//        val body = MultipartBody.Part.createFormData("file", imagePath.name, requestFile)
-
         loginViewModel?.uploadImage(part, prefManager.getAccessToken()!!, this, "service-image")
 
         loginViewModel?.getImageUpload()?.observe(this, androidx.lifecycle.Observer {
@@ -5228,7 +5034,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val imgPoster =
             root.findViewById<ImageView>(R.id.imgPoster)
 
-
         Glide.with(this@AddServiceDetailsActivity)
             .load(posterUrl)
             .override(1600, 1600)
@@ -5239,8 +5044,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         tvTitleRemarks?.text = "View Car Image"
 
         val imgClose = root.findViewById<ImageView>(R.id.imgClose)
-
-
         imgClose.setOnClickListener { builder.dismiss() }
         builder.setView(root)
 
