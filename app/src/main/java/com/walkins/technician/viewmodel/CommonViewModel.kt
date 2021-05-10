@@ -84,4 +84,9 @@ class CommonViewModel : ViewModel() {
         return userInfo!!
     }
 
+    fun callApiLogoutFromAll(accessToken: String, context: Context) {
+        commonRepo = CommonRepo().getInstance()
+        userInfo = commonRepo?.callApiLogoutFromAll(context, accessToken)
+    }
+
 }

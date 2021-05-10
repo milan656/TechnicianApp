@@ -1,7 +1,7 @@
 package com.example.technician.common
 
+import android.annotation.SuppressLint
 import android.os.Build
-import android.text.TextUtils
 import androidx.core.content.pm.PackageInfoCompat
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -9,11 +9,13 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class RetrofitCommonClass {
 
     companion object CommonRetrofit {
+        @SuppressLint("StaticFieldLeak")
         val context = MainApplication.applicationContext()
 
         val manager = context.packageManager
@@ -22,8 +24,8 @@ class RetrofitCommonClass {
             val manufacturer = Build.MANUFACTURER
             val model = Build.MODEL
             return if (model.startsWith(manufacturer)) {
-                model.capitalize()
-            } else manufacturer.capitalize() + " " + model
+                model.capitalize(Locale.getDefault())
+            } else manufacturer.capitalize(Locale.getDefault()) + " " + model
         }
 
         val info = manager.getPackageInfo(context.packageName, 0)
@@ -48,11 +50,11 @@ class RetrofitCommonClass {
                 override fun intercept(chain: Interceptor.Chain): Response {
                     val request =
                         chain.request().newBuilder()
-                        /*addHeader("app", "advantage")
+//                        .addHeader("app", "advantage")
                             .addHeader("device_type", "android")
-                            .addHeader("apk_version", "" + versionCode)
-                            .addHeader("mobile_model", "" + getDeviceName())
-                            .addHeader("mobile_os_version", "" + getOsName())*/
+//                            .addHeader("apk_version", "" + versionCode)
+//                            .addHeader("mobile_model", "" + getDeviceName())
+//                            .addHeader("mobile_os_version", "" + getOsName())
                             .addHeader("Content-Type", "application/json").build()
                     return chain.proceed(request)
 

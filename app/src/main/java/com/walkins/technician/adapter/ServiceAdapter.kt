@@ -46,7 +46,7 @@ class ServiceAdapter(
 
     override fun onBindViewHolder(holder: ServiceAdapter.Viewholder, position: Int) {
         holder.chkNitrogenTopup.setTag(position)
-        holder.tvServiceName.text = array.get(position).name.capitalize()
+        holder.tvServiceName.text = array.get(position).name.capitalize(Locale.getDefault())
 
         if (array.get(position).isSelected) {
             holder.chkNitrogenTopup.isChecked = true

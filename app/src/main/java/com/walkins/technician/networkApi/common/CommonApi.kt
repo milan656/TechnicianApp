@@ -25,6 +25,9 @@ interface CommonApi {
     @GET("v1/user/get-user-info")
     fun getUserInfo(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
 
+    @GET("/api/v1/user/logout-from-all")
+    fun callLogoutFromAll(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
+
     @POST("v1/user/get-vehicle-service-by-id")
     fun getgetServiceById(
         @Body jsonObject: JsonObject,

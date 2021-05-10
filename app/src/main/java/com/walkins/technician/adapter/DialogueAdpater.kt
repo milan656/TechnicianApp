@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DialogueAdpater(
     var array: ArrayList<String>,
@@ -31,7 +33,7 @@ class DialogueAdpater(
 
     override fun onBindViewHolder(holder: DialogueAdpater.Viewholder, position: Int) {
 
-        holder.tvContent.text = array.get(position).capitalize()
+        holder.tvContent.text = array.get(position).capitalize(Locale.getDefault())
 
         holder.itemView.setOnClickListener {
 

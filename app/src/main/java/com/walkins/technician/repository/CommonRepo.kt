@@ -41,7 +41,7 @@ class CommonRepo {
 
     fun getListOfIssue(
         context: Context,
-        accessToken:String
+        accessToken: String
 
     ): MutableLiveData<IssueListModel> {
         var otpData = MutableLiveData<IssueListModel>()
@@ -81,7 +81,7 @@ class CommonRepo {
 
     fun getService(
         context: Context,
-        accessToken:String
+        accessToken: String
 
     ): MutableLiveData<ServiceModel> {
         var otpData = MutableLiveData<ServiceModel>()
@@ -121,7 +121,7 @@ class CommonRepo {
 
     fun getCommentList(
         context: Context,
-        accessToken:String
+        accessToken: String
 
     ): MutableLiveData<CommentListModel> {
         var otpData = MutableLiveData<CommentListModel>()
@@ -161,7 +161,7 @@ class CommonRepo {
 
     fun getBuildingList(
         context: Context,
-        accessToken:String
+        accessToken: String
     ): MutableLiveData<BuildingListModel> {
         var otpData = MutableLiveData<BuildingListModel>()
         commonApi.getBuildingList(accessToken)
@@ -190,6 +190,7 @@ class CommonRepo {
                         e.printStackTrace()
                     }
                 }
+
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 }
             })
@@ -198,7 +199,7 @@ class CommonRepo {
 
     fun getUserInfo(
         context: Context,
-        accessToken:String
+        accessToken: String
 
     ): MutableLiveData<UserInfoModel> {
         var otpData = MutableLiveData<UserInfoModel>()
@@ -236,14 +237,54 @@ class CommonRepo {
         return otpData
     }
 
+    fun callApiLogoutFromAll(
+        context: Context,
+        accessToken: String
+
+    ): MutableLiveData<UserInfoModel> {
+        var otpData = MutableLiveData<UserInfoModel>()
+        commonApi.callLogoutFromAll(accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "UserInfoModel",
+                        response,
+                        0,
+                        context
+                    ) as UserInfoModel?
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "UserInfoModel",
+                            response,
+                            1,
+                            context
+                        ) as UserInfoModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
     fun getServiceById(
         jsonObject: JsonObject,
         context: Context,
-        accessToken:String
+        accessToken: String
 
     ): MutableLiveData<ServiceDataByIdModel> {
         var otpData = MutableLiveData<ServiceDataByIdModel>()
-        commonApi.getgetServiceById(jsonObject,accessToken)
+        commonApi.getgetServiceById(jsonObject, accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,

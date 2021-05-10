@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.technician.R
 import com.walkins.technician.common.onClickAdapter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PendingTyreSuggestionAdpater(
     var array: ArrayList<String>,
@@ -32,7 +34,7 @@ class PendingTyreSuggestionAdpater(
 
     override fun onBindViewHolder(holder: PendingTyreSuggestionAdpater.Viewholder, position: Int) {
 
-        holder.chkTyreSuggestion.text = array.get(position).capitalize()
+        holder.chkTyreSuggestion.text = array.get(position).capitalize(Locale.getDefault())
 
         holder.itemView.setOnClickListener {
 

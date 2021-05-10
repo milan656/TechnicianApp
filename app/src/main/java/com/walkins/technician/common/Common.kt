@@ -616,8 +616,8 @@ class Common {
                         }
                     } else {
 
+                        Log.e("getcalling",""+ isCalling)
                         try {
-
 
                             if (!isCalling!!) {
 

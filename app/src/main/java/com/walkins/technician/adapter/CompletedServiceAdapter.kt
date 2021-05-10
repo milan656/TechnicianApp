@@ -43,7 +43,7 @@ class CompletedServiceAdapter(
     }
 
     override fun onBindViewHolder(holder: CompletedServiceAdapter.Viewholder, position: Int) {
-        holder.tvServiceName.text = array.get(position).name.capitalize()
+        holder.tvServiceName.text = array.get(position).name.capitalize(Locale.getDefault())
 
         Log.e("getdataa", "" + array.get(position).name)
         Log.e("getdataa", "" + array.get(position).image)

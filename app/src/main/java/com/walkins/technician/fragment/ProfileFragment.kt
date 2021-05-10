@@ -19,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
+import com.example.technician.common.Common.Companion.showLongToast
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonObject
 import com.walkins.technician.R
 import com.walkins.technician.activity.LoginActivity
 import com.walkins.technician.activity.MainActivity
@@ -269,26 +271,12 @@ class ProfileFragment : Fragment(), onClickAdapter {
         btn_save.setOnClickListener {
             builder.dismiss()
 
-            try {
-                prefManager?.clearAll()
-                val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
-            } catch (e: Exception) {
-                e.printStackTrace()
+            if (chkLogOutFromAllDevice?.isChecked!!) {
+                callLogoutFromAllDeviceWebService()
+            } else {
+
             }
 
-            if (chkLogOutFromAllDevice.isChecked) {
-//                callLogoutFromAllDeviceWebService()
-            } else {
-//                RemoveOrAddTokenForApi("")
-                /*dbHelper = DbHelper(this)
-            dbHelper?.deleteAll()
-            prefManager.clearAll()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()*/
-            }
         }
 
         btn_cancel.setOnClickListener {
@@ -300,123 +288,101 @@ class ProfileFragment : Fragment(), onClickAdapter {
         builder.show()
     }
 
-    /*  private fun callLogoutFromAllDeviceWebService() {
-          context?.let { Common.showLoader(it) }
-          prefManager?.getAccessToken()?.let {
-              userInfoViewModel?.logOutFromAllDevice(
-                  it, context
-              )
-          }
+    private fun callLogoutFromAllDeviceWebService() {
+        activity?.let {
+            Common.showLoader(it)
+            commonViewModel?.callApiLogoutFromAll(prefManager?.getAccessToken()!!, it)
+            commonViewModel?.getUserInfo()?.observe(it, Observer {
+                Common.hideLoader()
+                if (it != null) {
+                    if (it.success) {
+                        try {
+                            prefManager?.clearAll()
+                            val intent = Intent(context, LoginActivity::class.java)
+                            startActivity(intent)
+                            activity?.finish()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
 
-          userInfoViewModel?.logOut()?.observe(this, Observer {
+                    } else {
+                        if (it.error != null) {
+                            if (it.error?.get(0).message != null) {
+                                if (it.error.get(0).statusCode == 400) {
+                                    prefManager?.clearAll()
+                                    val intent = Intent(context, LoginActivity::class.java)
+                                    startActivity(intent)
+                                    activity?.finish()
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    }
 
-              Common.hideLoader()
-              prefManager?.clearAll()
-              val intent = Intent(context, LoginActivity::class.java)
-              intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-              intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+    private fun RemoveOrAddTokenForApi(token: String) {
 
-              startActivity(intent)
-              activity?.finish()
+        /* var jsonObject: JsonObject
+         jsonObject = JsonObject()
+         jsonObject.addProperty("token", token)
+         prefManager?.getAccessToken()?.let {
+             notificationViewModel.callApiToSaveToken(
+                 jsonObject,
+                 it, context
+             )
+         }
 
-              if (it != null) {
-                  if (it.success) {
+         notificationViewModel.getTokenSavedModel()
+             ?.observe(context, Observer {
+                 if (it != null) {
+                     if (it.success) {
+                         if (token != null && !token.equals("")) {
 
-                  } else {
+                         } else {
+ //                            MainActivity.dbHelper = DbHelper(this)
+ //                            MainActivity.dbHelper?.deleteAll()
+                             prefManager?.clearAll()
+                             val intent = Intent(context, LoginActivity::class.java)
+                             startActivity(intent)
+                             activity?.finish()
 
-                      Common.hideLoader()
-                      if (it.error != null && it.error.size > 0) {
-                          if (it.error.get(0).statusCode != null) {
-                              if (it.error.get(0).statusCode == 400) {
-                                  prefManager?.clearAll()
-                                  val intent = Intent(context, LoginActivity::class.java)
-                                  startActivity(intent)
-                                  activity?.finish()
-                              } else {
-                                  context?.let { it1 ->
-                                      Common.showShortToast(
-                                          it.error.get(0).message,
-                                          it1
-                                      )
-                                  }
-                              }
+                         }
 
-                          } else {
-                              Common.hideLoader()
-                              context?.let { it1 ->
-                                  Common.showShortToast(
-                                      it.error.get(0).message,
-                                      it1
-                                  )
-                              }
-                          }
-                      }
-                  }
-              }
-          })
-      }
+                     } else {
+                         if (it.error != null && it.error.size > 0) {
+                             if (it.error.get(0).statusCode != null) {
+                                 if (it.error.get(0).statusCode == 400) {
+                                     prefManager?.clearAll()
+                                     val intent = Intent(context, LoginActivity::class.java)
+                                     startActivity(intent)
+                                     activity?.finish()
+                                 } else {
+                                     context?.let { it1 ->
+                                         Common.showShortToast(
+                                             it.error.get(0).message,
+                                             it1
+                                         )
+                                     }
+                                 }
 
-      private fun RemoveOrAddTokenForApi(token: String) {
+                             } else {
+                                 context?.let { it1 ->
+                                     Common.showShortToast(
+                                         it.error.get(0).message,
+                                         it1
+                                     )
+                                 }
+                             }
+                         }
+                     }
+                 } else {
+                     context?.let { it1 -> showLongToast("Something Went Wrong", it1) }
+                 }
+             })*/
 
-          var jsonObject: JsonObject
-          jsonObject = JsonObject()
-          jsonObject.addProperty("token", token)
-          prefManager?.getAccessToken()?.let {
-              notificationViewModel.callApiToSaveToken(
-                  jsonObject,
-                  it, context
-              )
-          }
-
-          notificationViewModel.getTokenSavedModel()
-              ?.observe(context, Observer {
-                  if (it != null) {
-                      if (it.success) {
-                          if (token != null && !token.equals("")) {
-
-                          } else {
-  //                            MainActivity.dbHelper = DbHelper(this)
-  //                            MainActivity.dbHelper?.deleteAll()
-                              prefManager?.clearAll()
-                              val intent = Intent(context, LoginActivity::class.java)
-                              startActivity(intent)
-                              activity?.finish()
-
-                          }
-
-                      } else {
-                          if (it.error != null && it.error.size > 0) {
-                              if (it.error.get(0).statusCode != null) {
-                                  if (it.error.get(0).statusCode == 400) {
-                                      prefManager?.clearAll()
-                                      val intent = Intent(context, LoginActivity::class.java)
-                                      startActivity(intent)
-                                      activity?.finish()
-                                  } else {
-                                      context?.let { it1 ->
-                                          Common.showShortToast(
-                                              it.error.get(0).message,
-                                              it1
-                                          )
-                                      }
-                                  }
-
-                              } else {
-                                  context?.let { it1 ->
-                                      Common.showShortToast(
-                                          it.error.get(0).message,
-                                          it1
-                                      )
-                                  }
-                              }
-                          }
-                      }
-                  } else {
-                      context?.let { it1 -> showLongToast("Something Went Wrong", it1) }
-                  }
-              })
-
-      }*/
+    }
 
 }
 
