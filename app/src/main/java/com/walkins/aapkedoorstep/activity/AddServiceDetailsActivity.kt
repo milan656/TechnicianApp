@@ -409,7 +409,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
 
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }

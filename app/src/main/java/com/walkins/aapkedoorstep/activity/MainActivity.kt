@@ -132,7 +132,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     // Get new Instance ID token
                     val token = task.result!!.token
 
-
                     Log.i("token", "+++" + token)
                     RemoveOrAddTokenForApi(token)
 

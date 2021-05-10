@@ -28,7 +28,7 @@ interface CommonApi {
     @GET("/api/v1/user/logout-from-all")
     fun callLogoutFromAll(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
 
-    @GET("/api/v1/notification/save-token")
+    @POST("/api/v1/notification/save-token")
     fun callApiSaveToken(
         @Body jsonObject: JsonObject,
         @Header("Authorization") authorizationToke: String): Call<ResponseBody>
