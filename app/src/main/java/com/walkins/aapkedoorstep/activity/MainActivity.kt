@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var llNotification: LinearLayout? = null
     private var llProfile: LinearLayout? = null
     var tvUsername: TextView? = null
+    private var notiCount = 0
 
     private var prefManager: PrefManager? = null
     private var loginViewModel: LoginActivityViewModel? = null
@@ -107,6 +108,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         getNotificationCount()
 
+
     }
 
     private fun getNotificationCount() {
@@ -116,21 +118,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             commonViewModel?.getNotiCount()?.observe(it, Observer {
                 if (it != null) {
                     if (it.success) {
-
+                        notiCount = it.data.count
                         if (it.data.count > 0) {
-                            ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_applied))
+                            ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
                         } else {
                             ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                         }
-                        ivNotification?.setTint(this, R.color.text_color1)
-
+                        llhome?.performClick()
                     } else {
                         if (it.error != null) {
                             if (it.error.get(0).message != null) {
 
                             }
                         }
+                        llhome?.performClick()
                     }
+                } else {
+                    llhome?.performClick()
                 }
             })
         }
@@ -238,11 +242,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         llReport?.setOnClickListener(this)
         llNotification?.setOnClickListener(this)
         llProfile?.setOnClickListener(this)
-        ivNotification?.setOnClickListener(this)
-        ivNotification?.setOnClickListener(this)
 
         tvUsername?.text = getString(R.string.str_hello) + ""
-        llhome?.performClick()
+
 
     }
 
@@ -283,8 +285,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 selectedMenu = "home"
                 ivHome?.setTint(this, R.color.header_title)
                 ivReport?.setTint(this, R.color.text_color1)
-                ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
-                ivNotification?.setTint(this, R.color.text_color1)
+                if (notiCount > 0) {
+                    ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
+                } else {
+                    ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
+                    ivNotification?.setTint(this, R.color.text_color1)
+                }
                 ivProfile?.setTint(this, R.color.text_color1)
 
                 if (isFromNotification.equals("profile")) {
@@ -307,10 +313,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 selectedMenu = "report"
                 ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.header_title)
-                ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
-                ivNotification?.setTint(this, R.color.text_color1)
+                if (notiCount > 0) {
+                    ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
+                } else {
+                    ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
+                    ivNotification?.setTint(this, R.color.text_color1)
+                }
                 ivProfile?.setTint(this, R.color.text_color1)
-
 
             }
             R.id.llNotification, R.id.ivNotification -> {
@@ -320,14 +329,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     fragment = NotificationFragment.newInstance("", ""),
                     allowStateLoss = true,
                     containerViewId = R.id.mainContent
-
                 )
                 ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.text_color1)
-                ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
+//                ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
+
+                ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
+
                 ivNotification?.setTint(this, R.color.red_color)
                 ivProfile?.setTint(this, R.color.text_color1)
-
+                notiCount = 0
 
             }
             R.id.llProfile, R.id.ivProfile -> {
@@ -340,8 +351,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
                 ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.text_color1)
-                ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
-                ivNotification?.setTint(this, R.color.text_color1)
+                if (notiCount > 0) {
+                    ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
+                } else {
+                    ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
+                    ivNotification?.setTint(this, R.color.text_color1)
+                }
+
                 ivProfile?.setTint(this, R.color.header_title)
 
 

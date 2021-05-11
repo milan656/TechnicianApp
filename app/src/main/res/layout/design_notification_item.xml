@@ -23,19 +23,17 @@
 
             <com.walkins.aapkedoorstep.custom.NormalTextView
 
-                android:id="@+id/tvUpcomingServive"
+                android:id="@+id/tvNotiTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You have 34 Upcoming Services on 23 march"
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/fourteen_sp" />
 
             <com.walkins.aapkedoorstep.custom.BoldTextView
-                android:id="@+id/tvAddress"
+                android:id="@+id/tvMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/twelve_dp"
-                android:text="Palm Spring, Vastrapur"
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/eighteen_sp"
                 android:textStyle="bold" />

@@ -13,11 +13,11 @@
         android:id="@+id/llheader"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginStart="@dimen/twenty_dp"
-        android:layout_marginEnd="@dimen/twenty_dp"
+        android:layout_marginStart="@dimen/eighteen_dp"
+        android:layout_marginEnd="@dimen/eighteen_dp"
         android:orientation="horizontal">
 
-        <com.walkins.aapkedoorstep.custom.NormalTextView
+        <com.walkins.aapkedoorstep.custom.BoldTextView
             android:id="@+id/tvUsername"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,7 +53,6 @@
         android:layout_below="@+id/llheader"
         android:visibility="visible">
 
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -64,7 +63,6 @@
         android:layout_marginTop="@dimen/ten_dp"
         android:layout_marginEnd="@dimen/eight_dp"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:id="@+id/relNoData"

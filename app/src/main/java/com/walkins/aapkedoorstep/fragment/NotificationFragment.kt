@@ -1,6 +1,7 @@
 package com.walkins.aapkedoorstep.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +13,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
+import com.walkins.aapkedoorstep.adapter.LeadHistoryAdapter
 import com.walkins.aapkedoorstep.adapter.NotificationAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
+import com.walkins.aapkedoorstep.model.login.DashboardModel
+import com.walkins.aapkedoorstep.model.login.NotificationModel
 import com.walkins.aapkedoorstep.model.login.notification.Notification
 import com.walkins.aapkedoorstep.model.login.notification.NotificationData
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +44,7 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param2: String? = null
     private var prefManager: PrefManager? = null
     private var commonViewModel: CommonViewModel? = null
-    private var notificationArr: ArrayList<Notification>? = ArrayList()
+    private var notificationArr: ArrayList<NotificationModel>? = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,13 +86,13 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
         notificationRecycView = view?.findViewById(R.id.notificationRecycView)
         notificationAdpater =
             context?.let { NotificationAdpater(notificationArr!!, it, this) }
-
+        val decor = StickyHeaderDecoration(notificationAdpater)
         notificationRecycView?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
             false
         )
-
+        notificationRecycView?.addItemDecoration(decor)
         notificationRecycView?.adapter = notificationAdpater
         notificationAdpater?.onclick = this
 
@@ -106,16 +112,39 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 if (it != null) {
                     if (it.success) {
 
-                        notificationArr?.clear()
-                        notificationArr?.addAll(it.data.notifications)
+//                        notificationArr?.clear()
+//                        notificationArr?.addAll(it.data.notifications)
 
-                        notificationAdpater?.notifyDataSetChanged()
+//                        notificationAdpater?.notifyDataSetChanged()
+
+                        if (it.data.notifications != null && it.data.notifications.size > 0) {
+                            for (i in it.data.notifications.indices) {
+
+                                var dashboardModel: NotificationModel? = null
+                                val dateString = Common.addHour(it.data.notifications.get(i).createdAt, 5, 30)
+                                Log.e("getdatefrom", "" + dateString)
+                                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                                val date = sdf.parse(dateString)
+
+                                val startDate = date.time
+                                Log.e("getdatefromstart", "" + startDate)
+                                dashboardModel = NotificationModel(
+                                    it.data.notifications.get(i).title, it.data.notifications.get(i).message, it.data.notifications.get(i).createdAt, "", "",
+                                    0, 0, 0, 0, startDate,
+                                    startDate
+                                )
+
+                                notificationArr?.add(dashboardModel)
+                            }
+                        }
 
                         if (notificationArr?.size!! > 0) {
                             tvNoNotiData?.visibility = View.GONE
                         } else {
                             tvNoNotiData?.visibility = View.VISIBLE
                         }
+
+                        notificationAdpater?.notifyDataSetChanged()
                     } else {
                         if (it.error != null) {
                             if (it.error.get(0).message != null) {
