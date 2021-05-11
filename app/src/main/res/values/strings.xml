@@ -1050,5 +1050,7 @@
     <string name="picker_today">Today</string>
     <string name="picker_am">AM</string>
     <string name="picker_pm">PM</string>
+    <string name="str_hello">\"Hello, \"</string>
+    <string name="str_view_car_image">View Car Image</string>
 
 </resources>

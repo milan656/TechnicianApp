@@ -41,16 +41,14 @@ class ReportHistorySkippedAdapter(
         return ViewHolder(view)
     }
 
-    fun setOnBottomReachedListener(onBottomReachedListener: OnBottomReachedListener?) {
-        this.onBottomReachedListener = onBottomReachedListener
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         Log.e("getdatee00", "" + mDataset.get(position))
+        Log.e("getdatee00", "" + mDataset.size)
         val item: ReportHistoryModel = mDataset[position]
 
         if (position == mDataset.size - 1) {
+            Log.e("getdatee00", "call")
             onBottomReachedListener?.onBottomReached(position)
         }
 //        if (item.getName().equals("") || item.getName() == null) {
@@ -145,5 +143,10 @@ class ReportHistorySkippedAdapter(
         if (mToday == p0?.timestamp?.text) {
             p0.timestamp?.text = "Today"
         }
+    }
+
+    fun setOnBottomReachedListener(onBottomReachedListener: OnBottomReachedListener) {
+
+        this.onBottomReachedListener = onBottomReachedListener
     }
 }

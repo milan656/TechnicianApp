@@ -13,10 +13,7 @@ data class ReportHistoryModel(
     var dateFormated: String,
     var comment_id: Int,
     var carImageURL: String,
-    var completedCount: Int,
-    var skippedCount: Int,
     var serviceList:ArrayList<ServiceListData>,
-    var carCount: Int,
     var createdAt: Long = 0,
     val updatedAt: Long = 0
 

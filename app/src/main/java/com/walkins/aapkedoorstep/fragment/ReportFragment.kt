@@ -178,7 +178,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 //        homeRecycView?.setHasFixedSize(true)
         mAdapter = context?.let { ReportHistoryAdapter(it, historyDataList, this) }
-        var decor = StickyHeaderDecoration(mAdapter)
+        val decor = StickyHeaderDecoration(mAdapter)
 
         // use a linear layout manager
         val layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
@@ -187,35 +187,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         reportRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
 
-
-
         mAdapter?.setOnBottomReachedListener(object : OnBottomReachedListener {
-            override fun onBottomReached(position: Int) {
-                if (position >= 9) {
-
-                    if (!isDataFinish!!) {
-
-                        page = page + 1
-
-                        // fetchBlockList()
-                        val jsonObject = JsonObject()
-                        jsonObject.addProperty("building_id", selectedSocietyName)
-                        jsonObject.add("service", selectedServiceJson)
-                        jsonObject.addProperty("status", selectedTab)
-                        jsonObject.addProperty("pagesize", pagesize)
-                        jsonObject.addProperty("page", page)
-                        jsonObject.addProperty("q", edtSearch?.text?.toString())
-                        getDashboardService(jsonObject, false)
-
-//                        callApiToGetAllCustomer("", false, 10, page!!, 1, groupId)
-
-                    }
-                }
-            }
-
-        })
-
-        mAdapterSkipped?.setOnBottomReachedListener(object : OnBottomReachedListener {
             override fun onBottomReached(position: Int) {
                 if (position >= 9) {
 
@@ -360,49 +332,38 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 if (it != null) {
                     if (it.success) {
 
-                        Log.e("getdataa", "" + it.data)
                         if (b) {
                             historyDataList.clear()
                         }
+
+                        isDataFinish = it.data.serviceData.size == 0
                         for (i in it.data.serviceData.indices) {
-                            Log.e("getdataa", "" + i)
-                            var dashboardModel: ReportHistoryModel? = null
-                            var list: ArrayList<ServiceListData>? = ArrayList()
-                            list?.addAll(it.data.serviceData.get(i).service)
+
+                            val list: ArrayList<ServiceListData> = ArrayList()
+                            list.addAll(it.data.serviceData.get(i).service)
 
                             val dateString = it.data.serviceData.get(i).service_scheduled_date
-                            Log.e("getdatefrom", "" + dateString)
                             val sdf = SimpleDateFormat("yyyy-MM-dd")
                             val date = sdf.parse(dateString)
-
-                            val startDate = date.time
+                            val startDate = date?.time!!
 
                             var commentid = -1
-
                             try {
                                 if (it.data.serviceData.get(i).comment_id.get(0) != null
                                 ) {
-                                    Log.e("getcomment00", "" + it.data.serviceData.get(i).comment_id.get(0))
                                     commentid = it.data.serviceData.get(i).comment_id.get(0)
                                 }
-
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
 
-                            dashboardModel = ReportHistoryModel(
+                            val dashboardModel = ReportHistoryModel(
                                 it.data.serviceData.get(i).uuid, it.data.serviceData.get(i).address,
                                 it.data.serviceData.get(i).regNumber,
                                 it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model,
                                 it.data.serviceData.get(i).color, it.data.serviceData.get(i).color_code,
                                 it.data.serviceData.get(i).service_scheduled_date, commentid,
-                                it.data.serviceData.get(i).modelImage,
-                                30,
-                                4,
-                                list!!,
-                                40,
-                                startDate,
-                                startDate
+                                it.data.serviceData.get(i).modelImage, list, startDate, startDate
                             )
                             historyDataList.add(dashboardModel)
                             /*when (i) {
@@ -466,47 +427,15 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             }
                         }
 
+                        Log.e("getsizee", "" + historyDataList.size + " " + selectedTab)
+
                         if (selectedTab.equals("complete")) {
                             mAdapter?.notifyDataSetChanged()
                         } else {
                             mAdapterSkipped?.notifyDataSetChanged()
                         }
 
-                        if (it.data != null && it.data.serviceData.size > 0) {
-
-
-                            /*for (i in it.data.serviceData.indices) {
-
-                                var dashboardModel: ReportHistoryModel? = null
-                                when (i) {
-                                    0, 1 -> {
-                                        val dateString = "25/06/2021"
-                                        Log.e("getdatefrom", "" + dateString)
-                                        val sdf = SimpleDateFormat("yyyy-MM-dd")
-                                        val date = sdf.parse(dateString)
-                                        val startDate = date.time
-                                        dashboardModel = ReportHistoryModel(
-                                            "", "", "", "",
-                                            1, 2, 3, 45, startDate,
-                                            startDate
-                                        )
-                                    }
-                                    2, 3, 4, 5 -> {
-                                        val dateString = "30/09/2021"
-                                        val sdf = SimpleDateFormat("yyyy-MM-dd")
-                                        val date = sdf.parse(dateString)
-
-                                        val startDate = date.time
-                                        dashboardModel = ReportHistoryModel(
-                                            "", "", "", "",
-                                            1, 2, 3, 45, startDate,
-                                            startDate
-                                        )
-                                    }
-                                }
-
-                                historyDataList.add(dashboardModel!!)
-                            }*/
+                        if (historyDataList.size > 0) {
                             reportRecycView?.visibility = View.VISIBLE
                         } else {
                             reportRecycView?.visibility = View.GONE
@@ -546,6 +475,34 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             mAdapterSkipped = arrayAdapter
             reportRecycView?.adapter = arrayAdapter
             arrayAdapter?.onclick = this
+
+            mAdapterSkipped?.setOnBottomReachedListener(object : OnBottomReachedListener {
+                override fun onBottomReached(position: Int) {
+                    Log.e("getCall", "" + position)
+                    if (position >= 9) {
+
+                        if (!isDataFinish!!) {
+
+                            page = page + 1
+
+                            // fetchBlockList()
+                            val jsonObject = JsonObject()
+                            jsonObject.addProperty("building_id", selectedSocietyName)
+                            jsonObject.add("service", selectedServiceJson)
+                            jsonObject.addProperty("status", selectedTab)
+                            jsonObject.addProperty("pagesize", pagesize)
+                            jsonObject.addProperty("page", page)
+                            jsonObject.addProperty("q", edtSearch?.text?.toString())
+                            getDashboardService(jsonObject, false)
+
+//                        callApiToGetAllCustomer("", false, 10, page!!, 1, groupId)
+
+                        }
+                    }
+                }
+
+            })
+
             selectedTab = "skip"
             page = 1
             pagesize = 10

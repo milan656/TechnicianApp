@@ -2,17 +2,9 @@ package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
 import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -26,7 +18,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -39,7 +30,6 @@ import com.example.technician.common.PrefManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.JsonObject
-import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.aapkedoorstep.DB.DBClass
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.onClickAdapter
@@ -73,7 +63,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var llReport: LinearLayout? = null
     private var llNotification: LinearLayout? = null
     private var llProfile: LinearLayout? = null
-    open var tvUsername: TextView? = null
+    var tvUsername: TextView? = null
 
     private var prefManager: PrefManager? = null
     private var loginViewModel: LoginActivityViewModel? = null
@@ -102,7 +92,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         callApiTogetToken()
 
-        var thread = Thread {
+        val thread = Thread {
             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
                     .getAllVehicleType().size > 0
             ) {
@@ -159,7 +149,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 if (it != null) {
                     if (it.success) {
 
-
+//
                     } else {
                         if (it.error != null && it.error.size > 0) {
                             if (it.error.get(0).statusCode != null) {
@@ -224,7 +214,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         ivNotification?.setOnClickListener(this)
         ivNotification?.setOnClickListener(this)
 
-        tvUsername?.text = "Hello, " + ""
+        tvUsername?.text = getString(R.string.str_hello) + ""
         llhome?.performClick()
 
     }
@@ -403,30 +393,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
                 }
             }
-
-//            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-//                val result = CropImage.getActivityResult(data)
-//                Log.e("getdataa", "" + result?.error + " " + result?.isSuccessful)
-//                if (resultCode == Activity.RESULT_OK) {
-//
-//                    //To get the File for further usage
-//                    val selectedImage = result.uri
-//                    Log.e("getdataa", "" + selectedImage)
-//
-//
-//                    var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
-//
-//                    if (fragment is ProfileFragment) {
-//                        fragment.ivProfileImg?.setImageURI(selectedImage)
-//                    }
-//                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                        this?.let { Common.getFile(it, selectedImage) }
-//                    } else {
-//                        TODO("VERSION.SDK_INT < KITKAT")
-//                    }
-//                    imagePath?.let { uploadImage(it) }
-//                }
-//            }
         }
     }
 
@@ -476,9 +442,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
-        } else {
-            //  Common.showShortToast("Permission Granted",requireActivity())
         }
     }
 
