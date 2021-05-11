@@ -144,22 +144,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         try {
             FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
-                    Log.i("token", "+++" + task.result)
 
                     if (!task.isSuccessful) {
                         return@OnCompleteListener
                     }
-
+                    Log.i("token", "+++" + task.result)
                     // Get new Instance ID token
-                    val token = task.result!!.token
+                    val token = task.result?.token
 
                     Log.i("token", "+++" + token)
-                    RemoveOrAddTokenForApi(token)
-
-//                    RemoveOrAddTokenForApi(token)
-
+                    RemoveOrAddTokenForApi(token!!)
                 })
-
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -170,7 +165,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private fun RemoveOrAddTokenForApi(token: String) {
 
-        var jsonObject: JsonObject
+        val jsonObject: JsonObject
         jsonObject = JsonObject()
         jsonObject.addProperty("token", token)
 
@@ -243,8 +238,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         llNotification?.setOnClickListener(this)
         llProfile?.setOnClickListener(this)
 
-        tvUsername?.text = getString(R.string.str_hello) + ""
-
+        tvUsername?.text = getString(R.string.str_hello)
 
     }
 
@@ -357,14 +351,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                     ivNotification?.setTint(this, R.color.text_color1)
                 }
-
                 ivProfile?.setTint(this, R.color.header_title)
-
-
             }
         }
     }
-
 
     override fun onPositionClick(variable: Int, check: Int) {
 

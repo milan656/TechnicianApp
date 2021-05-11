@@ -62,6 +62,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var homeRecycView: RecyclerView? = null
     private var relmainContent: RelativeLayout? = null
     private var relNoData: LinearLayout? = null
+    private var tvNoData: TextView? = null
 
     var activity: MainActivity? = null
 
@@ -126,6 +127,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         relmainContent = view?.findViewById(R.id.relmainContent)
         relNoData = view?.findViewById(R.id.relNoData)
+        tvNoData = view?.findViewById(R.id.tvNoData)
         tvUsername = view?.findViewById(R.id.tvUsername)
         tvUsername?.text = "Hello, " + ""
         ivFilter?.setOnClickListener(this)
@@ -178,7 +180,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 val startDate = date.time
                                 Log.e("getdatefromstart", "" + startDate)
                                 dashboardModel = DashboardModel(
-                                    it.data.get(i).building_name, it.data.get(i).address, it.data.get(i).date,it.data.get(i).building_uuid, it.data.get(i).date_formated,
+                                    it.data.get(i).building_name, it.data.get(i).address, it.data.get(i).date, it.data.get(i).building_uuid, it.data.get(i).date_formated,
                                     it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), it.data.get(i).total_jobs.toInt(), startDate,
                                     startDate
                                 )
@@ -191,16 +193,31 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             relNoData?.visibility = View.VISIBLE
 
                             homeRecycView?.visibility = View.GONE
+                            if (selectedDate.equals("")) {
+                                tvNoData?.text = "Currently you do not have any services"
+                            } else {
+                                tvNoData?.text = "There are no service on " + selectedDate
+                            }
                         }
                         mAdapter?.notifyDataSetChanged()
 
                     } else {
                         relNoData?.visibility = View.VISIBLE
                         homeRecycView?.visibility = View.GONE
+                        if (selectedDate.equals("")) {
+                            tvNoData?.text = "Currently you do not have any services"
+                        } else {
+                            tvNoData?.text = "There are no service on " + selectedDate
+                        }
                     }
                 } else {
                     relNoData?.visibility = View.VISIBLE
                     homeRecycView?.visibility = View.GONE
+                    if (selectedDate.equals("")) {
+                        tvNoData?.text = "Currently you do not have any services"
+                    } else {
+                        tvNoData?.text = "There are no service on " + selectedDate
+                    }
                 }
             })
         }
@@ -236,7 +253,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         tvTitleText?.text = titleStr
 
-        val str = strBuilder.toString().replace(",", "," + "\n")
+        val str = strBuilder.toString().replace(", ", "," + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

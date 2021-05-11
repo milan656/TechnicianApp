@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relmainContent"
     android:layout_width="match_parent"
@@ -7,12 +8,13 @@
     android:background="@color/bg_color"
     tools:context=".fragment.HomeFragment">
 
+
     <LinearLayout
         android:id="@+id/llheader"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginStart="@dimen/twenty_dp"
-        android:layout_marginEnd="@dimen/twenty_dp"
+        android:layout_marginStart="@dimen/eighteen_dp"
+        android:layout_marginEnd="@dimen/eighteen_dp"
         android:orientation="horizontal">
 
         <com.walkins.aapkedoorstep.custom.BoldTextView
@@ -43,6 +45,15 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llheader"
+        android:visibility="visible">
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -80,6 +91,7 @@
                     android:src="@drawable/ic_empty_icon" />
 
                 <com.walkins.aapkedoorstep.custom.NormalTextView
+                    android:id="@+id/tvNoData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -96,6 +108,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </RelativeLayout>
+
 
 </RelativeLayout>

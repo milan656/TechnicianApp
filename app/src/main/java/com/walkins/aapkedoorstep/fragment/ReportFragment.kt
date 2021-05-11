@@ -1068,7 +1068,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(",", "," + "\n")
+        val str = stringBuilder.toString().replace(", ", "," + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {
