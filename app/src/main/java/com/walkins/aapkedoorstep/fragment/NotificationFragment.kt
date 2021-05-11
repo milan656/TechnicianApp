@@ -8,12 +8,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
+import com.example.technician.common.PrefManager
 import com.walkins.aapkedoorstep.R
+import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.adapter.NotificationAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
+import com.walkins.aapkedoorstep.model.login.notification.Notification
+import com.walkins.aapkedoorstep.model.login.notification.NotificationData
+import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +36,10 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var prefManager: PrefManager? = null
+    private var commonViewModel: CommonViewModel? = null
+    private var notificationArr: ArrayList<Notification>? = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +53,20 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var notificationRecycView: RecyclerView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
-
+    private var tvNoNotiData: TextView? = null
+    var activity: MainActivity? = null
+    private var notificationAdpater: NotificationAdpater? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_notification, container, false)
+        val view = inflater.inflate(R.layout.fragment_notification, container, false)
+        activity = getActivity() as MainActivity?
+        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
 
+        prefManager = context?.let { PrefManager(it) }
         init(view)
         return view
     }
@@ -58,22 +74,58 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private fun init(view: View?) {
         notificationRecycView = view?.findViewById(R.id.notificationRecycView)
         tvTitle = view?.findViewById(R.id.tvTitle)
+        tvNoNotiData = view?.findViewById(R.id.tvNoNotiData)
         ivBack = view?.findViewById(R.id.ivBack)
         ivBack?.visibility = View.GONE
         notificationRecycView = view?.findViewById(R.id.notificationRecycView)
-        var arrayAdapter =
-            context?.let { NotificationAdpater(Common.commonPhotoChooseArr, it, this) }
+        notificationAdpater =
+            context?.let { NotificationAdpater(notificationArr!!, it, this) }
+
         notificationRecycView?.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.VERTICAL,
             false
         )
 
-        notificationRecycView?.adapter = arrayAdapter
-        arrayAdapter?.onclick = this
+        notificationRecycView?.adapter = notificationAdpater
+        notificationAdpater?.onclick = this
 
         ivBack?.setOnClickListener(this)
         tvTitle?.text = "Notification"
+
+        getNotificationList()
+    }
+
+    private fun getNotificationList() {
+
+        activity?.let {
+            Common.showLoader(it)
+            commonViewModel?.callApiGetNotificationList(prefManager?.getAccessToken()!!, it)
+            commonViewModel?.getNotiList()?.observe(it, Observer {
+                Common.hideLoader()
+                if (it != null) {
+                    if (it.success) {
+
+                        notificationArr?.clear()
+                        notificationArr?.addAll(it.data.notifications)
+
+                        notificationAdpater?.notifyDataSetChanged()
+
+                        if (notificationArr?.size!! > 0) {
+                            tvNoNotiData?.visibility = View.GONE
+                        } else {
+                            tvNoNotiData?.visibility = View.VISIBLE
+                        }
+                    } else {
+                        if (it.error != null) {
+                            if (it.error.get(0).message != null) {
+
+                            }
+                        }
+                    }
+                }
+            })
+        }
     }
 
     companion object {

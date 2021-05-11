@@ -57,6 +57,8 @@ import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceLis
 import com.walkins.aapkedoorstep.model.login.issue_list.IssueListModel
 import com.walkins.aapkedoorstep.model.login.makemodel.VehicleMakeModel
 import com.walkins.aapkedoorstep.model.login.makemodel.VehicleModel
+import com.walkins.aapkedoorstep.model.login.notification.NotificationCountModel
+import com.walkins.aapkedoorstep.model.login.notification.NotificationModel
 import com.walkins.aapkedoorstep.model.login.otp.OtpModel
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternModel
 import com.walkins.aapkedoorstep.model.login.service.ServiceModel
@@ -146,6 +148,109 @@ class Common {
             }
 
             return time
+        }
+
+        fun dateFotmatInDate(date: String): Date {
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+            val returnDate = formatter.parse(date)
+            return returnDate
+
+        }
+
+        fun findDifference(
+            start_date: String?,
+            end_date: String?
+        ): String {
+            var difference_In_Time = 0L
+            var difference_In_Seconds = 0L
+            var difference_In_Minutes = 0L
+            var difference_In_Hours = 0L
+            var difference_In_Years = 0L
+            var difference_In_Days = 0L
+            // SimpleDateFormat converts the
+            // string format to date object
+            val sdf = SimpleDateFormat(
+                "dd-MM-yyyy hh:mm:ss"
+            )
+
+            // Try Block
+            try {
+
+                // parse method is used to parse
+                // the text from a string to
+                // produce the date
+                val d1 = sdf.parse(start_date)
+                val d2 = sdf.parse(end_date)
+
+                // Calucalte time difference
+                // in milliseconds
+                difference_In_Time = d2.time - d1.time
+
+                // Calucalte time difference in
+                // seconds, minutes, hours, years,
+                // and days
+                difference_In_Seconds = ((difference_In_Time
+                        / 1000)
+                        % 60)
+                difference_In_Minutes = ((difference_In_Time
+                        / (1000 * 60))
+                        % 60)
+                difference_In_Hours = ((difference_In_Time
+                        / (1000 * 60 * 60))
+                        % 24)
+                difference_In_Years = (difference_In_Time
+                        / (1000L * 60 * 60 * 24 * 365))
+                difference_In_Days = ((difference_In_Time
+                        / (1000 * 60 * 60 * 24))
+                        % 365)
+
+                // Print the date difference in
+                // years, in days, in hours, in
+                // minutes, and in seconds
+                print(
+                    "Difference "
+                            + "between two dates is: "
+                )
+                println(
+                    difference_In_Years
+                        .toString() + " years, "
+                            + difference_In_Days
+                            + " days, "
+                            + difference_In_Hours
+                            + " hours, "
+                            + difference_In_Minutes
+                            + " minutes, "
+                            + difference_In_Seconds
+                            + " seconds"
+                )
+
+
+            } // Catch the Exception
+            catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            val str = difference_In_Years
+                .toString() + "," +
+                    difference_In_Days.toString() + "," + difference_In_Hours + "," + difference_In_Minutes + "," + difference_In_Seconds + "seconds"
+
+            return str
+        }
+
+        fun dateDifference(dateInPref: String): Long {
+
+            val dateAccessToken = dateFotmatInDate(dateInPref)
+            val date = Date()
+
+            val diff = dateAccessToken.time - date.time
+            val seconds = diff / 1000
+
+            val minutes = seconds / 60
+            val hours = minutes / 60
+
+            Log.i("hours", "++++" + hours)
+            val days = hours / 24
+            return days
         }
 
         fun getDeviceName(): String {
@@ -419,7 +524,22 @@ class Common {
                             )
                         return SaveTokenModel
                     }
-
+                    "NotificationModel" -> {
+                        val NotificationModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                NotificationModel::class.java
+                            )
+                        return NotificationModel
+                    }
+                    "NotificationCountModel" -> {
+                        val NotificationCountModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                NotificationCountModel::class.java
+                            )
+                        return NotificationCountModel
+                    }
 
 
                     else -> {
@@ -626,6 +746,22 @@ class Common {
                                     )
                                 return SaveTokenModel
                             }
+                            "NotificationModel" -> {
+                                val NotificationModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        NotificationModel::class.java
+                                    )
+                                return NotificationModel
+                            }
+                            "NotificationCountModel" -> {
+                                val NotificationCountModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        NotificationCountModel::class.java
+                                    )
+                                return NotificationCountModel
+                            }
 
 
                             else -> {
@@ -635,7 +771,7 @@ class Common {
                         }
                     } else {
 
-                        Log.e("getcalling",""+ isCalling)
+                        Log.e("getcalling", "" + isCalling)
                         try {
 
                             if (!isCalling!!) {
@@ -690,7 +826,7 @@ class Common {
             return image
         }
 
-        fun addHour(myTime: String?, hour: Int,minute:Int): String? {
+        fun addHour(myTime: String?, hour: Int, minute: Int): String? {
             try {
                 val df = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 val d = df.parse(myTime)

@@ -291,10 +291,10 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 if (it != null) {
                     if (it.success) {
                         try {
-//                            prefManager?.clearAll()
-//                            val intent = Intent(context, LoginActivity::class.java)
-//                            startActivity(intent)
-//                            activity?.finish()
+                            prefManager?.clearAll()
+                            val intent = Intent(context, LoginActivity::class.java)
+                            startActivity(intent)
+                            activity?.finish()
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

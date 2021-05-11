@@ -43,10 +43,10 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
     var calendar = Calendar.getInstance()
-    private var prefManager: PrefManager? = null
     private var ivFilter: ImageView? = null
     private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
+    private var prefManager: PrefManager? = null
     private var commonViewModel: CommonViewModel? = null
 
     var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()

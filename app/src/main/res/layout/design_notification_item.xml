@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             <com.walkins.aapkedoorstep.custom.NormalTextView
+
                 android:id="@+id/tvUpcomingServive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
         </LinearLayout>
 
         <com.walkins.aapkedoorstep.custom.NormalTextView
+            android:id="@+id/tvTime"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"

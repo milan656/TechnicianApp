@@ -16,6 +16,12 @@ interface CommonApi {
     @GET("v1/tyrepushpull/get-comment")
     fun getCommentList(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
 
+    @GET("v1/notification/get-notification")
+    fun getNotificationList(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
+
+    @GET("v1/notification/get-unread-notification-count")
+    fun getNotificationCount(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
+
     @GET("v1/tyrepushpull/get-building")
     fun getBuildingList(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
 

@@ -11,6 +11,8 @@ import com.walkins.aapkedoorstep.model.login.building.BuildingListModel
 import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
 import com.walkins.aapkedoorstep.model.login.issue_list.IssueListModel
 import com.walkins.aapkedoorstep.model.login.makemodel.VehicleMakeModel
+import com.walkins.aapkedoorstep.model.login.notification.NotificationCountModel
+import com.walkins.aapkedoorstep.model.login.notification.NotificationModel
 import com.walkins.aapkedoorstep.model.login.service.ServiceModel
 import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.aapkedoorstep.networkApi.MakeModelApi
@@ -160,6 +162,85 @@ class CommonRepo {
         return otpData
     }
 
+    fun getNotificationList(
+        context: Context,
+        accessToken: String
+
+    ): MutableLiveData<NotificationModel> {
+        val otpData = MutableLiveData<NotificationModel>()
+        commonApi.getNotificationList(accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "NotificationModel",
+                        response,
+                        0,
+                        context
+                    ) as NotificationModel?
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "NotificationModel",
+                            response,
+                            1,
+                            context
+                        ) as NotificationModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+ fun getNotificationCount(
+        context: Context,
+        accessToken: String
+
+    ): MutableLiveData<NotificationCountModel> {
+        var otpData = MutableLiveData<NotificationCountModel>()
+        commonApi.getNotificationCount(accessToken)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) = if (response.isSuccessful) {
+                    otpData.value = Common.getModelreturn(
+                        "NotificationCountModel",
+                        response,
+                        0,
+                        context
+                    ) as NotificationCountModel?
+                } else {
+                    try {
+                        otpData.value = Common.getModelreturn(
+                            "NotificationCountModel",
+                            response,
+                            1,
+                            context
+                        ) as NotificationCountModel?
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+            })
+        return otpData
+    }
+
     fun getBuildingList(
         context: Context,
         accessToken: String
@@ -280,10 +361,10 @@ class CommonRepo {
 
     fun saveTokenToDatabase(
         jsonObject: JsonObject,
-        access_token: String , context: Context
+        access_token: String, context: Context
     ): MutableLiveData<SaveTokenModel> {
         var recoveryData = MutableLiveData<SaveTokenModel>()
-        commonApi.callApiSaveToken(jsonObject,access_token).enqueue(object : Callback<ResponseBody> {
+        commonApi.callApiSaveToken(jsonObject, access_token).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>

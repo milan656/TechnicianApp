@@ -105,9 +105,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         }
         thread.start()
 
+        getNotificationCount()
 
     }
 
+    private fun getNotificationCount() {
+
+        this.let {
+            commonViewModel?.callApiGetNotificationCount(prefManager?.getAccessToken()!!, it)
+            commonViewModel?.getNotiCount()?.observe(it, Observer {
+                if (it != null) {
+                    if (it.success) {
+
+                        if (it.data.count > 0) {
+                            ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_applied))
+                        } else {
+                            ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
+                        }
+                        ivNotification?.setTint(this, R.color.text_color1)
+
+                    } else {
+                        if (it.error != null) {
+                            if (it.error.get(0).message != null) {
+
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    }
 
     private fun callApiTogetToken() {
         try {
@@ -257,6 +284,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivHome?.setTint(this, R.color.header_title)
                 ivReport?.setTint(this, R.color.text_color1)
                 ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
+                ivNotification?.setTint(this, R.color.text_color1)
                 ivProfile?.setTint(this, R.color.text_color1)
 
                 if (isFromNotification.equals("profile")) {
@@ -280,6 +308,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.header_title)
                 ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
+                ivNotification?.setTint(this, R.color.text_color1)
                 ivProfile?.setTint(this, R.color.text_color1)
 
 
@@ -295,7 +324,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 )
                 ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.text_color1)
-                ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_applied))
+                ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
+                ivNotification?.setTint(this, R.color.red_color)
                 ivProfile?.setTint(this, R.color.text_color1)
 
 
@@ -311,6 +341,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivHome?.setTint(this, R.color.text_color1)
                 ivReport?.setTint(this, R.color.text_color1)
                 ivNotification?.setImageDrawable(this.resources?.getDrawable(R.drawable.ic_notification_icon))
+                ivNotification?.setTint(this, R.color.text_color1)
                 ivProfile?.setTint(this, R.color.header_title)
 
 
