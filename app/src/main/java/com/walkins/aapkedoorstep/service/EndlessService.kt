@@ -9,23 +9,19 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.os.SystemClock
-import android.text.format.Time
 import android.util.Log
-import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.GsonBuilder
 import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
-import com.walkins.aapkedoorstep.DB.DBClass
-import com.walkins.aapkedoorstep.DB.VehicleMakeModelClass
-import com.walkins.aapkedoorstep.DB.VehiclePatternModelClass
-import com.walkins.aapkedoorstep.DB.VehicleSizeModelClass
+import com.walkins.aapkedoorstep.DB.*
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
-import com.walkins.aapkedoorstep.common.TyreConfigClass
+import com.walkins.aapkedoorstep.model.login.issue_list.IssueListModel
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternModel
 import com.walkins.aapkedoorstep.model.login.sizemodel.SizeModel
 import com.walkins.aapkedoorstep.networkApi.WarrantyApi
+import com.walkins.aapkedoorstep.networkApi.common.CommonApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -163,6 +159,7 @@ class EndlessService : Service() {
             while (isServiceStarted) {
                 launch(Dispatchers.IO) {
                     fetchVehicleData()
+                    fetchIssueList()
 //                    fetchPattern()
 //                    fetchSize()
 
@@ -210,6 +207,37 @@ class EndlessService : Service() {
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
+    }
+
+    private fun fetchIssueList() {
+        val commonApi = RetrofitCommonClass.createService(CommonApi::class.java)
+
+        var call: Call<ResponseBody>? = null
+        call = commonApi.getListOfIssue(
+            prefManager?.getAccessToken()!!
+        )
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    try {
+
+                        val gson = GsonBuilder().create()
+                        val issueListModel: IssueListModel = gson.fromJson(
+                            response.body()?.string(),
+                            IssueListModel::class.java
+                        )
+                        Log.e("getmodel00::", "" + issueListModel)
+//                        checkDateTime
+                        saveListOfIssue(issueListModel)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+        })
     }
 
     private fun fetchSize() {
@@ -454,6 +482,34 @@ class EndlessService : Service() {
 
             }
             Log.e("response+++", "++++" + mDb.sizeDaoClass().getAllSize().size)
+        }
+
+        thread.start()
+
+    }
+
+    private fun saveListOfIssue(issueListModel: IssueListModel) {
+
+        val thread: Thread = Thread {
+            if (mDb.issueListDaoClass().getAllIssue().size > 0) {
+                mDb.issueListDaoClass().deleteAll()
+            }
+
+            if (issueListModel.data != null && issueListModel.data.size > 0) {
+                for (i in issueListModel.data.indices) {
+
+                    val model = issueListModel.data.get(i)
+                    val entity = IssueListModelClass()
+
+                    entity.name = if (model.name != null) model.name else ""
+                    entity.issueId = model.id
+
+                    entity.isSelected = false
+                    mDb.issueListDaoClass().saveIssue(entity)
+                }
+
+            }
+            Log.e("response+++", "++++" + mDb.issueListDaoClass().getAllIssue().size)
         }
 
         thread.start()

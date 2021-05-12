@@ -34,6 +34,7 @@ import com.walkins.aapkedoorstep.DB.DBClass
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.common.replaceFragmenty
+import com.walkins.aapkedoorstep.common.showShortToast
 import com.walkins.aapkedoorstep.fragment.HomeFragment
 import com.walkins.aapkedoorstep.fragment.NotificationFragment
 import com.walkins.aapkedoorstep.fragment.ProfileFragment
@@ -110,7 +111,54 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
     }
+    private fun getCommentList() {
+        Common.showLoader(this)
+        commonViewModel?.callApiGetComments(prefManager.getAccessToken()!!, this)
+        commonViewModel?.getCommentList()?.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                if (it.success) {
 
+                    commentModel = it
+                    Common.hideLoader()
+
+                } else {
+                    Common.hideLoader()
+                    try {
+                        showShortToast(it.error.get(0).message, this)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+            } else {
+                Common.hideLoader()
+            }
+        })
+    }
+
+    private fun getServiceList() {
+
+        commonViewModel?.callApiGetService(prefManager.getAccessToken()!!, this)
+        commonViewModel?.getService()?.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    if (it.data.size > 0) {
+                        serviceList?.clear()
+                        serviceList?.addAll(it.data)
+                    }
+
+                } else {
+                    try {
+                        showShortToast(it.error.get(0).message, this)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            } else {
+            }
+        })
+    }
     private fun getNotificationCount() {
 
         this.let {

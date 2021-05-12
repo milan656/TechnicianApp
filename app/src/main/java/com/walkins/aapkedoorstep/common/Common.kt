@@ -15,6 +15,8 @@ import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -1443,8 +1445,37 @@ class Common {
             TyreConfigClass.RRVehicleSize = false
             TyreConfigClass.RRVehicleVisualDetail = false
             TyreConfigClass.RRCompleted = false
+        }
 
-
+        fun isConnectedToInternet(context: Context): Boolean {
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (connectivityManager != null) {
+                val capabilities =
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                    } else {
+                        TODO("VERSION.SDK_INT < LOLLIPOP")
+                    }
+                if (capabilities != null) {
+                    if (if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                        } else {
+                            TODO("VERSION.SDK_INT < LOLLIPOP")
+                        }
+                    ) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                        return true
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                        return true
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                        return true
+                    }
+                }
+            }
+            return false
         }
 
         fun getDataColumn(

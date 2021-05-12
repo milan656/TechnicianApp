@@ -154,8 +154,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
                     }
 
-                    if (json.get(TyreKey.vehicleMakeId)!=null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")){
-                        selectedIdMake=json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
+                    if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")) {
+                        selectedIdMake = json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
                     }
                     Log.e("getpatterlf", "" + json + " " + selectedId)
                     setData(json)
@@ -197,8 +197,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                         selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
                     }
-                    if (json.get(TyreKey.vehicleMakeId)!=null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")){
-                        selectedIdMake=json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
+                    if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")) {
+                        selectedIdMake = json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
                     }
                     Log.e("getpatterlr", "" + json + " " + selectedId)
                     setData(json)
@@ -238,8 +238,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                         selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
                     }
-                    if (json.get(TyreKey.vehicleMakeId)!=null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")){
-                        selectedIdMake=json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
+                    if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")) {
+                        selectedIdMake = json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
                     }
                     Log.e("getpatterrf", "" + json + " " + selectedId)
                     setData(json)
@@ -284,8 +284,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                         selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
                     }
-                    if (json.get(TyreKey.vehicleMakeId)!=null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")){
-                        selectedIdMake=json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
+                    if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")) {
+                        selectedIdMake = json.get(TyreKey.vehicleMakeId)?.asString?.toInt()!!
                     }
                     Log.e("getpatterrr", "" + json + " " + selectedId)
                     setData(json)
@@ -866,7 +866,23 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                 GlobalScope.launch(Dispatchers.Main) {
                     launch(Dispatchers.Main) {
+                        Log.e("getidpattern", "" + TyreDetailCommonClass.vehicleMakeId?.toInt() + "--" + selectedIdMake)
 
+                        /*val thread = Thread {
+
+                            if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
+                                arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                                gridviewRecycModel?.layoutManager =
+                                    GridLayoutManager(this@VehiclePatternActivity, 3, RecyclerView.VERTICAL, false)
+                                adapter = VehiclePatternAdapter(this@VehiclePatternActivity, arrList, this@VehiclePatternActivity, -1)
+                                gridviewRecycModel?.adapter = adapter
+                                Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
+                                Common.slideDown(gridviewRecycModel!!, null)
+                            } else {
+                                getVehiclePattern(true)
+                            }
+                        }
+                        thread.start()*/
                         if (arrList?.size == 0) {
                             getVehiclePattern(true)
                         } else {
@@ -924,24 +940,26 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                             arrList?.add(model)
                         }
 
-                        gridviewRecycModel?.layoutManager =
-                            GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-                        adapter = VehiclePatternAdapter(this, arrList, this, selectedId)
-                        gridviewRecycModel?.adapter = adapter
-                        gridviewRecycModel?.visibility = View.VISIBLE
+                        runOnUiThread {
+                            gridviewRecycModel?.layoutManager =
+                                GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+                            adapter = VehiclePatternAdapter(this, arrList, this, selectedId)
+                            gridviewRecycModel?.adapter = adapter
+                            gridviewRecycModel?.visibility = View.VISIBLE
+
+                            if (isExpand) {
+                                Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
+                                Common.slideDown(gridviewRecycModel!!, null)
+                            }
+                        }
 
                         if (arrList?.size!! > 0) {
 //                            tvNoDataFound?.visibility = View.GONE
-                            Common.savePatternData(patternModel!!, mDb)
+                            savePatternData(patternModel!!)
                         } else {
 //                            tvNoDataFound?.visibility = View.VISIBLE
                         }
 
-                        if (isExpand) {
-                            Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
-                            Common.slideDown(gridviewRecycModel!!, null)
-
-                        }
 
                     } else {
                         if (it.error != null && it.error.size > 0) {
@@ -1122,7 +1140,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             TyreDetailCommonClass.tyreType = selectedTyre
         }
 
-        if (TyreDetailCommonClass.vehicleMake.equals("")){
+        if (TyreDetailCommonClass.vehicleMake.equals("")) {
 
             if (json.get(TyreKey.vehicleMake) != null && !json.get(TyreKey.vehicleMake)?.asString.equals(
                     ""
@@ -1131,7 +1149,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 TyreDetailCommonClass.vehicleMake = json.get(TyreKey.vehicleMake)?.asString
             }
         }
-        if (TyreDetailCommonClass.vehicleMakeId.equals("")){
+        if (TyreDetailCommonClass.vehicleMakeId.equals("")) {
 
             if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals(
                     ""
@@ -1263,4 +1281,28 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }
     }
 
+    private fun savePatternData(patternModel: PatternModel) {
+
+        var thread: Thread = Thread {
+            if (mDb.patternDaoClass().getAllPattern().size > 0) {
+                mDb.patternDaoClass().deleteAll()
+            }
+
+            for (i in patternModel.data.indices) {
+
+                var entity = VehiclePatternModelClass()
+
+                entity.name =
+                    if (patternModel.data?.get(i)?.name != null) patternModel.data?.get(i)?.name else ""
+                entity.patternId = patternModel.data?.get(i)?.patternId
+                entity.isSelected = false
+                mDb.patternDaoClass().savePattern(entity)
+            }
+
+            Log.e("response+++", "++++" + mDb.patternDaoClass().getAllPattern())
+        }
+
+        thread.start()
+
+    }
 }

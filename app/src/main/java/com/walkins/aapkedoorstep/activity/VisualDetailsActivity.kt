@@ -1,6 +1,7 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
+import android.R.attr
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
@@ -9,8 +10,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -26,7 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
+import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -41,7 +40,6 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import com.ramotion.fluidslider.FluidSlider
-import com.theartofdev.edmodo.cropper.CropImage
 import com.walkins.aapkedoorstep.DB.DBClass
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.adapter.DialogueAdpater
@@ -63,6 +61,7 @@ import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
     private var loginViewModel: LoginActivityViewModel? = null
@@ -347,10 +346,28 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         psiOutSlider()
         weightSlider()
 
-        getIssueList()
+//        getIssueList()
+
+        val thread = Thread {
+            if (mDb.issueListDaoClass().getAllIssue() != null && mDb.issueListDaoClass().getAllIssue().size > 0) {
+                issueResolveArray?.clear()
+                for (i in mDb.issueListDaoClass().getAllIssue().indices) {
+                    issueResolveArray?.add(
+                        IssueResolveModel(
+                            mDb.issueListDaoClass().getAllIssue().get(i).name!!, mDb.issueListDaoClass().getAllIssue().get(i).issueId!!, false
+                        )
+                    )
+                }
+                issueResolveAdapter?.notifyDataSetChanged()
+                runOnUiThread {
+                    getTyreWiseData()
+                }
+            }
+        }
+        thread.start()
 
         if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
-            !prefManager?.getValue(TyreConfigClass.serviceDetailData).equals("")
+            !prefManager.getValue(TyreConfigClass.serviceDetailData).equals("")
         ) {
             var str = prefManager.getValue(TyreConfigClass.serviceDetailData)
             try {
@@ -410,6 +427,20 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
 
 
+        }
+
+        if (prefManager.getValue("image_" + selectedTyre) != null &&
+            !prefManager.getValue("image_" + selectedTyre).equals("")
+        ) {
+            Log.e("getimages1", "" + prefManager.getValue("image_" + selectedTyre))
+//            ivPickedImage1?.setImageURI(Uri.parse(prefManager.getValue("image_" + selectedTyre)))
+
+            Glide.with(this).load(prefManager.getValue("image_" + selectedTyre)).into(ivPickedImage1!!)
+            ivPickedImage1?.visibility = View.VISIBLE
+            ivEditImg2?.visibility = View.VISIBLE
+            tvAddPhoto1?.visibility = View.GONE
+            tvCarphoto1?.visibility = View.GONE
+            relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
         }
 
 
@@ -767,6 +798,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
          }
          thread.start()*/
+
+
     }
 
 
@@ -1270,17 +1303,20 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     //  Common.showShortToast("Permission Granted",requireActivity())
                 }
             }
-            if (Common.commonPhotoChooseArr?.get(variable)?.equals("Camera")) {
+            if (Common.commonPhotoChooseArr.get(variable).equals("Camera")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_DENIED ||
                         checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED ||
+                        checkSelfPermission(Manifest.permission.MANAGE_DOCUMENTS)
                         == PackageManager.PERMISSION_DENIED
                     ) {
                         //permission was not enabled
                         val permission = arrayOf(
                             Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.MANAGE_DOCUMENTS
                         )
                         //show popup to request permission
                         requestPermissions(permission, PERMISSION_CODE)
@@ -1309,6 +1345,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 || ContextCompat.checkSelfPermission(
                     context,
                     Manifest.permission.CAMERA
+                ) !== PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.MANAGE_DOCUMENTS
                 ) !== PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(
                         context as Activity,
@@ -1317,6 +1357,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     || ActivityCompat.shouldShowRequestPermissionRationale(
                         context as Activity,
                         Manifest.permission.CAMERA
+                    )
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        Manifest.permission.MANAGE_DOCUMENTS
                     )
                 ) {
                     val alertBuilder = android.app.AlertDialog.Builder(context)
@@ -1329,7 +1373,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         requestPermissions(
                             arrayOf<String>(
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.MANAGE_DOCUMENTS
                             ),
                             123
                         )
@@ -1341,7 +1386,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     requestPermissions(
                         arrayOf<String>(
                             Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.MANAGE_DOCUMENTS
                         ), 123
                     );
 
@@ -1782,7 +1828,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
-                        val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        /*val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                         val file: File = createFile()
 
                         val uri: Uri = FileProvider.getUriForFile(
@@ -1791,7 +1837,17 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             file
                         )
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)*/
+
+                        try {
+                            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                            intent.type = "image/*"
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            intent.action = Intent.ACTION_GET_CONTENT
+                            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
 
 
                     }
@@ -1808,6 +1864,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         try {
                             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
+                            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                             startActivityForResult(intent, PICK_IMAGE_REQUEST)
 
                         } catch (e: Exception) {
@@ -1849,6 +1907,14 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
 
+                    val inputStream_ = contentResolver.openInputStream(image_uri!!)
+                    val exifInterface = ExifInterface(inputStream_!!)
+
+                    Log.e(
+                        "TAG",
+                        "===${data?.dataString}"
+                    )
+
                     ivPickedImage1?.setImageURI(image_uri)
                     ivPickedImage1?.visibility = View.VISIBLE
                     ivEditImg2?.visibility = View.VISIBLE
@@ -1856,26 +1922,58 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     tvCarphoto1?.visibility = View.GONE
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(image_uri!!)
-                    imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
+                    Log.e("getimages", "" + prefManager.getValue("image_" + selectedTyre))
+                    if (Common.isConnectedToInternet(this)) {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(image_uri!!)
+                        prefManager.removeValue("image_" + selectedTyre)
+                        imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
+                    } else {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(image_uri!!)
+
+                        prefManager.setValue("image_stream_" + selectedTyre, inputStream?.readBytes()?.toString())
+                        prefManager.setValue("image_" + selectedTyre, image_uri.toString())
+                        TyreDetailCommonClass.visualDetailPhotoUrl = image_uri.toString()
+                    }
                 }
 
             }
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val auxFile = File(mCurrentPhotoPath)
+
+                    val inputStream_ = contentResolver.openInputStream(Uri.parse(mCurrentPhotoPath))
+                    val exifInterface = ExifInterface(inputStream_!!)
+
+                    Log.e(
+                        "TAG",
+                        "===${data?.dataString}"
+                    )
+
                     Log.e("getfile00", "" + mCurrentPhotoPath + " " + Uri.parse(mCurrentPhotoPath))
                     ivPickedImage1?.setImageURI(Uri.parse(mCurrentPhotoPath))
                     ivPickedImage1?.visibility = View.VISIBLE
                     ivEditImg2?.visibility = View.VISIBLE
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
+
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
-                    auxFile.let { uploadImage(it, inputStream!!, "service-image") }
+                    Log.e("getimages", "" + prefManager.getValue("image_" + selectedTyre))
+                    if (Common.isConnectedToInternet(this)) {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+                        prefManager.removeValue("image_" + selectedTyre)
+                        auxFile.let { uploadImage(it, inputStream!!, "service-image") }
+                    } else {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+
+                        prefManager.setValue("image_stream_" + selectedTyre, inputStream?.readBytes()?.toString())
+                        prefManager.setValue("image_" + selectedTyre, Uri.parse(mCurrentPhotoPath).toString())
+                        TyreDetailCommonClass.visualDetailPhotoUrl = Uri.parse(mCurrentPhotoPath).toString()
+                    }
                 }
             }
 
@@ -1885,26 +1983,50 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     //To get the File for further usage
                     val selectedImage = data?.data
 
+                    val inputStream_ = contentResolver.openInputStream(data?.data!!)
+                    val exifInterface = ExifInterface(inputStream_!!)
+
+                    Log.e(
+                        "TAG",
+                        "===${data.dataString}"
+                    )
+                    try {
+                        Glide.with(this)
+                            .load(data.dataString)
+                            .thumbnail(0.33f)
+                            .into(ivPickedImage1!!)
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         getFile(this@VisualDetailsActivity, selectedImage)
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
 
-                    Log.i("imagePath", "++++" + imagePath)
-                    Log.e("getfile0022", "" + selectedImage)
-                    ivPickedImage1?.setImageURI(selectedImage)
+//                    ivPickedImage1?.setImageURI(selectedImage)
                     ivPickedImage1?.visibility = View.VISIBLE
                     ivEditImg2?.visibility = View.VISIBLE
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-//                    CropImage.activity(selectedImage)
-//                        .start(this)
 
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(selectedImage!!)
-                    imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
+                    if (Common.isConnectedToInternet(this)) {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(selectedImage!!)
+                        prefManager.removeValue("image_" + selectedTyre)
+                        imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
+                    } else {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(selectedImage!!)
+
+                        prefManager.setValue("image_stream_" + selectedTyre, inputStream?.readBytes()?.toString())
+                        prefManager.setValue("image_" + selectedTyre, data.dataString)
+                        Log.e("getimages", "" + prefManager.getValue("image_" + selectedTyre))
+                        TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage.toString()
+                    }
 
                 }
             }

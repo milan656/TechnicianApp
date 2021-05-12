@@ -14,6 +14,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -63,6 +64,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
+import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
 import java.lang.reflect.Type
@@ -872,59 +874,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         getCommentList()
     }
 
-    private fun getCommentList() {
-        Common.showLoader(this)
-        commonViewModel?.callApiGetComments(prefManager.getAccessToken()!!, this)
-        commonViewModel?.getCommentList()?.observe(this, androidx.lifecycle.Observer {
-            if (it != null) {
-                if (it.success) {
 
-                    commentModel = it
-                    Common.hideLoader()
-
-                } else {
-                    Common.hideLoader()
-                    try {
-                        showShortToast(it.error.get(0).message, this)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-
-                }
-            } else {
-                Common.hideLoader()
-            }
-        })
-    }
-
-    private fun getServiceList() {
-
-        commonViewModel?.callApiGetService(prefManager.getAccessToken()!!, this)
-        commonViewModel?.getService()?.observe(this, androidx.lifecycle.Observer {
-            if (it != null) {
-                if (it.success) {
-
-                    if (it.data.size > 0) {
-                        serviceList?.clear()
-                        serviceList?.addAll(it.data)
-                    }
-
-                    serviceAdapter?.notifyDataSetChanged()
-                    getServiceData()
-
-                } else {
-                    try {
-                        showShortToast(it.error.get(0).message, this)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                    getServiceData()
-                }
-            } else {
-                getServiceData()
-            }
-        })
-    }
 
 
     private fun getServiceData() {
@@ -1513,463 +1463,551 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
     private fun addServiceApiCall() {
+        if (!Common.isConnectedToInternet(this)) {
+            Common.showDialogue(this, "Oops!", "Your Internet is not connected", false)
+            return
+        }
+
+        uploadImageIfExist()
+
+//        Common.showLoader(this)
+
+
+    }
+
+    private fun uploadImageIfExist() {
+
+        var counter = 0
+        if (prefManager.getValue("image_LF") != null && !prefManager.getValue("image_LF").equals("")) {
+            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_LF")))
+            } else {
+                TODO("VERSION.SDK_INT < KITKAT")
+            }
+            Log.e("getimagepath", "" + prefManager.getValue("image_LF"))
+            counter = counter + 1
+            val inputString = prefManager.getValue("image_stream_LF")
+            val byteArrray = inputString.toByteArray()
+            val myInputStream: InputStream = ByteArrayInputStream(byteArrray)
+            uploadImage(imagePath!!, myInputStream, "LF")
+        }
+        if (prefManager.getValue("image_RF") != null && !prefManager.getValue("image_RF").equals("")) {
+            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_RF")))
+            } else {
+                TODO("VERSION.SDK_INT < KITKAT")
+            }
+            Log.e("getimagepath0", "" + prefManager.getValue("image_RF"))
+            counter = counter + 1
+            val inputString = prefManager.getValue("image_stream_RF")
+            val byteArrray = inputString.toByteArray()
+            val myInputStream: InputStream = ByteArrayInputStream(byteArrray)
+            uploadImage(imagePath!!, myInputStream, "RF")
+        }
+        if (prefManager.getValue("image_LR") != null && !prefManager.getValue("image_LR").equals("")) {
+            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_LR")))
+            } else {
+                TODO("VERSION.SDK_INT < KITKAT")
+            }
+            Log.e("getimagepath1", "" + prefManager.getValue("image_LR"))
+            counter = counter + 1
+            val inputString = prefManager.getValue("image_stream_LR")
+            val byteArrray = inputString.toByteArray()
+            val myInputStream: InputStream = ByteArrayInputStream(byteArrray)
+            uploadImage(imagePath!!, myInputStream, "LR")
+        }
+        if (prefManager.getValue("image_RR") != null && !prefManager.getValue("image_RR").equals("")) {
+            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_RR")))
+            } else {
+                TODO("VERSION.SDK_INT < KITKAT")
+            }
+            Log.e("getimagepath2", "" + prefManager.getValue("image_RR"))
+            counter = counter + 1
+            val inputString = prefManager.getValue("image_stream_RR")
+            val byteArrray = inputString.toByteArray()
+            val myInputStream: InputStream = ByteArrayInputStream(byteArrray)
+
+            uploadImage(imagePath!!, myInputStream, "RR")
+        }
+
+        var WaitTime: Long = 0L
+        if (counter == 4) {
+            WaitTime = 12000L
+        } else if (counter == 3) {
+            WaitTime = 9000L
+        } else if (counter == 2) {
+            WaitTime = 6000L
+        } else if (counter == 1) {
+            WaitTime = 3000L
+        } else if (counter == 0) {
+            WaitTime = 300L
+        }
 
         Common.showLoader(this)
-        val jsonObject = JsonObject()
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            val jsonObject = JsonObject()
 //        jsonObject.addProperty("date_of_service", Common.getCurrentDateTimeSimpleFormat())
-        jsonObject.addProperty("uuid", uuid)
+            jsonObject.addProperty("uuid", uuid)
 
-        if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
-        ) {
-            try {
-                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
-                val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
+                try {
+                    val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
-                if (jsonLF.get(TyreKey.vehicleMake) != null && !jsonLF.get(TyreKey.vehicleMake)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_make",
-                        jsonLF.get(TyreKey.vehicleMake)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.vehiclePattern) != null && !jsonLF.get(TyreKey.vehiclePatternId)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_pattern",
-                        jsonLF.get(TyreKey.vehiclePattern)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.vehicleSize) != null && !jsonLF.get(TyreKey.vehicleSize)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_size",
-                        jsonLF.get(TyreKey.vehicleSize)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.manufaturingDate) != null && !jsonLF.get(TyreKey.manufaturingDate)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_manufacturing_date",
-                        jsonLF.get(TyreKey.manufaturingDate)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.sidewell) != null && !jsonLF.get(TyreKey.sidewell)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_side_wall",
-                        jsonLF.get(TyreKey.sidewell)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.shoulder) != null && !jsonLF.get(TyreKey.shoulder)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_shoulder",
-                        jsonLF.get(TyreKey.shoulder)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.treadDepth) != null && !jsonLF.get(TyreKey.treadDepth)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_tread_depth",
-                        jsonLF.get(TyreKey.treadDepth)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.treadWear) != null && !jsonLF.get(TyreKey.treadWear)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_tread_wear",
-                        jsonLF.get(TyreKey.treadWear)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.rimDamage) != null && !jsonLF.get(TyreKey.rimDamage)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_rim_demage",
-                        jsonLF.get(TyreKey.rimDamage)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.bubble) != null && !jsonLF.get(TyreKey.bubble)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_buldge_bubble",
-                        jsonLF.get(TyreKey.bubble)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_psi_in",
-                        jsonLF.get(TyreKey.psiInTyreService)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_psi_in",
-                        jsonLF.get(TyreKey.psiInTyreService)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.psiOutTyreService) != null && !jsonLF.get(TyreKey.psiOutTyreService)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_psi_out",
-                        jsonLF.get(TyreKey.psiOutTyreService)?.asString
-                    )
-                }
-                if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService)?.asString?.equals(
-                        ""
-                    )!!
-                ) {
-                    jsonObject.addProperty(
-                        "front_left_tyre_weight",
-                        jsonLF.get(TyreKey.weightTyreService)?.asString
-                    )
-                }
-
-                if (jsonLF.get(TyreKey.visualDetailPhotoUrl) != null
-                    && !jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
-                ) {
-
-                    jsonObject.addProperty("front_left_tyre_wheel_image", jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                }
-
-                if (jsonLF.get(TyreKey.issueResolvedArr) != null) {
-
-                    val arr = jsonLF.get(TyreKey.issueResolvedArr).asJsonArray
-                    Log.e("getValues", "" + arr)
-                    val gson = Gson()
-                    val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
-                    val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
-                    val jsonArr = JsonArray()
-                    for (i in arrlist.indices) {
-                        jsonArr.add(arrlist.get(i))
+                    if (jsonLF.get(TyreKey.vehicleMake) != null && !jsonLF.get(TyreKey.vehicleMake)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_make",
+                            jsonLF.get(TyreKey.vehicleMake)?.asString
+                        )
                     }
-                    jsonObject.add("front_left_issues_to_be_resolved", jsonArr)
-                }
+                    if (jsonLF.get(TyreKey.vehiclePattern) != null && !jsonLF.get(TyreKey.vehiclePatternId)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_pattern",
+                            jsonLF.get(TyreKey.vehiclePattern)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.vehicleSize) != null && !jsonLF.get(TyreKey.vehicleSize)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_size",
+                            jsonLF.get(TyreKey.vehicleSize)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.manufaturingDate) != null && !jsonLF.get(TyreKey.manufaturingDate)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_manufacturing_date",
+                            jsonLF.get(TyreKey.manufaturingDate)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.sidewell) != null && !jsonLF.get(TyreKey.sidewell)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_side_wall",
+                            jsonLF.get(TyreKey.sidewell)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.shoulder) != null && !jsonLF.get(TyreKey.shoulder)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_shoulder",
+                            jsonLF.get(TyreKey.shoulder)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.treadDepth) != null && !jsonLF.get(TyreKey.treadDepth)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_tread_depth",
+                            jsonLF.get(TyreKey.treadDepth)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.treadWear) != null && !jsonLF.get(TyreKey.treadWear)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_tread_wear",
+                            jsonLF.get(TyreKey.treadWear)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.rimDamage) != null && !jsonLF.get(TyreKey.rimDamage)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_rim_demage",
+                            jsonLF.get(TyreKey.rimDamage)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.bubble) != null && !jsonLF.get(TyreKey.bubble)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_buldge_bubble",
+                            jsonLF.get(TyreKey.bubble)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_psi_in",
+                            jsonLF.get(TyreKey.psiInTyreService)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_psi_in",
+                            jsonLF.get(TyreKey.psiInTyreService)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.psiOutTyreService) != null && !jsonLF.get(TyreKey.psiOutTyreService)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_psi_out",
+                            jsonLF.get(TyreKey.psiOutTyreService)?.asString
+                        )
+                    }
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService)?.asString?.equals(
+                            ""
+                        )!!
+                    ) {
+                        jsonObject.addProperty(
+                            "front_left_tyre_weight",
+                            jsonLF.get(TyreKey.weightTyreService)?.asString
+                        )
+                    }
+
+                    if (jsonLF.get(TyreKey.visualDetailPhotoUrl) != null
+                        && !jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                    ) {
+
+                        jsonObject.addProperty("front_left_tyre_wheel_image", jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                    }
+
+                    if (jsonLF.get(TyreKey.issueResolvedArr) != null) {
+
+                        val arr = jsonLF.get(TyreKey.issueResolvedArr).asJsonArray
+                        Log.e("getValues", "" + arr)
+                        val gson = Gson()
+                        val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                        val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                        val jsonArr = JsonArray()
+                        for (i in arrlist.indices) {
+                            jsonArr.add(arrlist.get(i))
+                        }
+                        jsonObject.add("front_left_issues_to_be_resolved", jsonArr)
+                    }
 
 
 //               front_right_tyre_make
 
-                if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
-                ) {
-                    try {
-                        val str_ = prefManager.getValue(TyreConfigClass.TyreRFObject)
-                        val jsonRF: JsonObject = JsonParser().parse(str_).getAsJsonObject()
+                    if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+                    ) {
+                        try {
+                            val str_ = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                            val jsonRF: JsonObject = JsonParser().parse(str_).getAsJsonObject()
 
-                        if (jsonRF.get(TyreKey.vehicleMake) != null && !jsonRF.get(TyreKey.vehicleMake)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_make", jsonRF.get(TyreKey.vehicleMake)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.vehiclePattern) != null && !jsonRF.get(TyreKey.vehiclePattern)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_pattern", jsonRF.get(TyreKey.vehiclePattern)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.vehicleSize) != null && !jsonRF.get(TyreKey.vehicleSize)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_size", jsonRF.get(TyreKey.vehicleSize)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.manufaturingDate) != null && !jsonRF.get(TyreKey.manufaturingDate)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_manufacturing_date", jsonRF.get(TyreKey.manufaturingDate)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.sidewell) != null && !jsonRF.get(TyreKey.sidewell)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_side_wall", jsonRF.get(TyreKey.sidewell)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.shoulder) != null && !jsonRF.get(TyreKey.shoulder)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_shoulder", jsonRF.get(TyreKey.shoulder)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.treadDepth) != null && !jsonRF.get(TyreKey.treadDepth)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_tread_depth", jsonRF.get(TyreKey.treadDepth)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.treadWear) != null && !jsonRF.get(TyreKey.treadWear)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_tread_wear", jsonRF.get(TyreKey.treadWear)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.rimDamage) != null && !jsonRF.get(TyreKey.rimDamage)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_rim_demage", jsonRF.get(TyreKey.rimDamage)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.bubble) != null && !jsonRF.get(TyreKey.bubble)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_buldge_bubble", jsonRF.get(TyreKey.bubble)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.psiInTyreService) != null && !jsonRF.get(TyreKey.psiInTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_psi_in", jsonRF.get(TyreKey.psiInTyreService)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.psiOutTyreService) != null && !jsonRF.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_psi_out", jsonRF.get(TyreKey.psiOutTyreService)?.asString)
-                        }
-                        if (jsonRF.get(TyreKey.weightTyreService) != null && !jsonRF.get(TyreKey.weightTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_weight", jsonRF.get(TyreKey.weightTyreService)?.asString)
-                        }
-
-                        if (jsonRF.get(TyreKey.visualDetailPhotoUrl) != null
-                            && !jsonRF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
-                        ) {
-                            jsonObject.addProperty("front_right_tyre_wheel_image", jsonRF.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                        }
-
-                        if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
-
-                            val arr = jsonRF.get(TyreKey.issueResolvedArr).asJsonArray
-                            Log.e("getValues", "" + arr)
-                            val gson = Gson()
-                            val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
-                            val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
-                            val jsonArr = JsonArray()
-                            for (i in arrlist.indices) {
-                                jsonArr.add(arrlist.get(i))
+                            if (jsonRF.get(TyreKey.vehicleMake) != null && !jsonRF.get(TyreKey.vehicleMake)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_make", jsonRF.get(TyreKey.vehicleMake)?.asString)
                             }
-                            jsonObject.add("front_right_issues_to_be_resolved", jsonArr)
-                        }
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
+                            if (jsonRF.get(TyreKey.vehiclePattern) != null && !jsonRF.get(TyreKey.vehiclePattern)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_pattern", jsonRF.get(TyreKey.vehiclePattern)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.vehicleSize) != null && !jsonRF.get(TyreKey.vehicleSize)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_size", jsonRF.get(TyreKey.vehicleSize)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.manufaturingDate) != null && !jsonRF.get(TyreKey.manufaturingDate)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_manufacturing_date", jsonRF.get(TyreKey.manufaturingDate)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.sidewell) != null && !jsonRF.get(TyreKey.sidewell)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_side_wall", jsonRF.get(TyreKey.sidewell)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.shoulder) != null && !jsonRF.get(TyreKey.shoulder)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_shoulder", jsonRF.get(TyreKey.shoulder)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.treadDepth) != null && !jsonRF.get(TyreKey.treadDepth)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_tread_depth", jsonRF.get(TyreKey.treadDepth)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.treadWear) != null && !jsonRF.get(TyreKey.treadWear)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_tread_wear", jsonRF.get(TyreKey.treadWear)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.rimDamage) != null && !jsonRF.get(TyreKey.rimDamage)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_rim_demage", jsonRF.get(TyreKey.rimDamage)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.bubble) != null && !jsonRF.get(TyreKey.bubble)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_buldge_bubble", jsonRF.get(TyreKey.bubble)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.psiInTyreService) != null && !jsonRF.get(TyreKey.psiInTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_psi_in", jsonRF.get(TyreKey.psiInTyreService)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.psiOutTyreService) != null && !jsonRF.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_psi_out", jsonRF.get(TyreKey.psiOutTyreService)?.asString)
+                            }
+                            if (jsonRF.get(TyreKey.weightTyreService) != null && !jsonRF.get(TyreKey.weightTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("front_right_tyre_weight", jsonRF.get(TyreKey.weightTyreService)?.asString)
+                            }
 
+                            if (jsonRF.get(TyreKey.visualDetailPhotoUrl) != null
+                                && !jsonRF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                            ) {
+                                jsonObject.addProperty("front_right_tyre_wheel_image", jsonRF.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                            }
+
+                            if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
+
+                                val arr = jsonRF.get(TyreKey.issueResolvedArr).asJsonArray
+                                Log.e("getValues", "" + arr)
+                                val gson = Gson()
+                                val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                                val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                                val jsonArr = JsonArray()
+                                for (i in arrlist.indices) {
+                                    jsonArr.add(arrlist.get(i))
+                                }
+                                jsonObject.add("front_right_issues_to_be_resolved", jsonArr)
+                            }
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+
+                        }
                     }
-                }
 
 //                back_left_tyre_make
 
-                if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
-                ) {
-                    try {
-                        val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
-                        val jsonLR: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+                    ) {
+                        try {
+                            val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                            val jsonLR: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
-                        if (jsonLR.get(TyreKey.vehicleMake) != null && !jsonLR.get(TyreKey.vehicleMake)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_make", jsonLR.get(TyreKey.vehicleMake)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.vehiclePattern) != null && !jsonLR.get(TyreKey.vehiclePattern)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_pattern", jsonLR.get(TyreKey.vehiclePattern)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.vehicleSize) != null && !jsonLR.get(TyreKey.vehicleSize)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_size", jsonLR.get(TyreKey.vehicleSize)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.manufaturingDate) != null && !jsonLR.get(TyreKey.manufaturingDate)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_manufacturing_date", jsonLR.get(TyreKey.manufaturingDate)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.sidewell) != null && !jsonLR.get(TyreKey.sidewell)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_side_wall", jsonLR.get(TyreKey.sidewell)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.shoulder) != null && !jsonLR.get(TyreKey.shoulder)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_shoulder", jsonLR.get(TyreKey.shoulder)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.treadDepth) != null && !jsonLR.get(TyreKey.treadDepth)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_tread_depth", jsonLR.get(TyreKey.treadDepth)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.treadWear) != null && !jsonLR.get(TyreKey.treadWear)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_tread_wear", jsonLR.get(TyreKey.treadWear)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.rimDamage) != null && !jsonLR.get(TyreKey.rimDamage)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_rim_demage", jsonLR.get(TyreKey.rimDamage)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.bubble) != null && !jsonLR.get(TyreKey.bubble)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_buldge_bubble", jsonLR.get(TyreKey.bubble)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.psiInTyreService) != null && !jsonLR.get(TyreKey.psiInTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_psi_in", jsonLR.get(TyreKey.psiInTyreService)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.psiOutTyreService) != null && !jsonLR.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_psi_out", jsonLR.get(TyreKey.psiOutTyreService)?.asString)
-                        }
-                        if (jsonLR.get(TyreKey.weightTyreService) != null && !jsonLR.get(TyreKey.weightTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_weight", jsonLR.get(TyreKey.weightTyreService)?.asString)
-                        }
-
-                        if (jsonLR.get(TyreKey.visualDetailPhotoUrl) != null
-                            && !jsonLR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
-                        ) {
-                            jsonObject.addProperty("back_left_tyre_wheel_image", jsonLR.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                        }
-
-                        if (jsonLR.get(TyreKey.issueResolvedArr) != null) {
-
-                            val arr = jsonLR.get(TyreKey.issueResolvedArr).asJsonArray
-                            Log.e("getValues", "" + arr)
-                            val gson = Gson()
-                            val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
-                            val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
-                            val jsonArr = JsonArray()
-                            for (i in arrlist.indices) {
-                                jsonArr.add(arrlist.get(i))
+                            if (jsonLR.get(TyreKey.vehicleMake) != null && !jsonLR.get(TyreKey.vehicleMake)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_make", jsonLR.get(TyreKey.vehicleMake)?.asString)
                             }
-                            jsonObject.add("back_left_issues_to_be_resolved", jsonArr)
-                        }
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
+                            if (jsonLR.get(TyreKey.vehiclePattern) != null && !jsonLR.get(TyreKey.vehiclePattern)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_pattern", jsonLR.get(TyreKey.vehiclePattern)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.vehicleSize) != null && !jsonLR.get(TyreKey.vehicleSize)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_size", jsonLR.get(TyreKey.vehicleSize)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.manufaturingDate) != null && !jsonLR.get(TyreKey.manufaturingDate)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_manufacturing_date", jsonLR.get(TyreKey.manufaturingDate)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.sidewell) != null && !jsonLR.get(TyreKey.sidewell)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_side_wall", jsonLR.get(TyreKey.sidewell)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.shoulder) != null && !jsonLR.get(TyreKey.shoulder)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_shoulder", jsonLR.get(TyreKey.shoulder)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.treadDepth) != null && !jsonLR.get(TyreKey.treadDepth)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_tread_depth", jsonLR.get(TyreKey.treadDepth)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.treadWear) != null && !jsonLR.get(TyreKey.treadWear)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_tread_wear", jsonLR.get(TyreKey.treadWear)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.rimDamage) != null && !jsonLR.get(TyreKey.rimDamage)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_rim_demage", jsonLR.get(TyreKey.rimDamage)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.bubble) != null && !jsonLR.get(TyreKey.bubble)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_buldge_bubble", jsonLR.get(TyreKey.bubble)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.psiInTyreService) != null && !jsonLR.get(TyreKey.psiInTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_psi_in", jsonLR.get(TyreKey.psiInTyreService)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.psiOutTyreService) != null && !jsonLR.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_psi_out", jsonLR.get(TyreKey.psiOutTyreService)?.asString)
+                            }
+                            if (jsonLR.get(TyreKey.weightTyreService) != null && !jsonLR.get(TyreKey.weightTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("back_left_tyre_weight", jsonLR.get(TyreKey.weightTyreService)?.asString)
+                            }
 
+                            if (jsonLR.get(TyreKey.visualDetailPhotoUrl) != null
+                                && !jsonLR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                            ) {
+                                jsonObject.addProperty("back_left_tyre_wheel_image", jsonLR.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                            }
+
+                            if (jsonLR.get(TyreKey.issueResolvedArr) != null) {
+
+                                val arr = jsonLR.get(TyreKey.issueResolvedArr).asJsonArray
+                                Log.e("getValues", "" + arr)
+                                val gson = Gson()
+                                val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                                val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                                val jsonArr = JsonArray()
+                                for (i in arrlist.indices) {
+                                    jsonArr.add(arrlist.get(i))
+                                }
+                                jsonObject.add("back_left_issues_to_be_resolved", jsonArr)
+                            }
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+
+                        }
                     }
-                }
 
 //                back_right_tyre_make
 
-                if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
-                ) {
-                    try {
-                        val str_ = prefManager.getValue(TyreConfigClass.TyreRRObject)
-                        val jsonRR: JsonObject = JsonParser().parse(str_).getAsJsonObject()
+                    if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+                    ) {
+                        try {
+                            val str_ = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                            val jsonRR: JsonObject = JsonParser().parse(str_).getAsJsonObject()
 
-                        if (jsonRR.get(TyreKey.vehicleMake) != null && !jsonRR.get(TyreKey.vehicleMake)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_make", jsonRR.get(TyreKey.vehicleMake)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.vehiclePattern) != null && !jsonRR.get(TyreKey.vehiclePattern)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_pattern", jsonRR.get(TyreKey.vehiclePattern)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.vehicleSize) != null && !jsonRR.get(TyreKey.vehicleSize)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_size", jsonRR.get(TyreKey.vehicleSize)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.manufaturingDate) != null && !jsonRR.get(TyreKey.manufaturingDate)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_manufacturing_date", jsonRR.get(TyreKey.manufaturingDate)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.sidewell) != null && !jsonRR.get(TyreKey.sidewell)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_side_wall", jsonRR.get(TyreKey.sidewell)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.shoulder) != null && !jsonRR.get(TyreKey.shoulder)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_shoulder", jsonRR.get(TyreKey.shoulder)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.treadDepth) != null && !jsonRR.get(TyreKey.treadDepth)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_tread_depth", jsonRR.get(TyreKey.treadDepth)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.treadWear) != null && !jsonRR.get(TyreKey.treadWear)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_tread_wear", jsonRR.get(TyreKey.treadWear)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.rimDamage) != null && !jsonRR.get(TyreKey.rimDamage)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_rim_demage", jsonRR.get(TyreKey.rimDamage)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.bubble) != null && !jsonRR.get(TyreKey.bubble)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_buldge_bubble", jsonRR.get(TyreKey.bubble)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.psiInTyreService) != null && !jsonRR.get(TyreKey.psiInTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_psi_in", jsonRR.get(TyreKey.psiInTyreService)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.psiOutTyreService) != null && !jsonRR.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_psi_out", jsonRR.get(TyreKey.psiOutTyreService)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.weightTyreService) != null && !jsonRR.get(TyreKey.weightTyreService)?.asString.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_weight", jsonRR.get(TyreKey.weightTyreService)?.asString)
-                        }
-
-                        if (jsonRR.get(TyreKey.visualDetailPhotoUrl) != null
-                            && !jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
-                        ) {
-                            jsonObject.addProperty("back_right_tyre_wheel_image", jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                        }
-                        if (jsonRR.get(TyreKey.issueResolvedArr) != null) {
-
-                            val arr = jsonRR.get(TyreKey.issueResolvedArr).asJsonArray
-                            Log.e("getValues", "" + arr)
-                            val gson = Gson()
-                            val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
-                            val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
-                            val jsonArr = JsonArray()
-                            for (i in arrlist.indices) {
-                                jsonArr.add(arrlist.get(i))
+                            if (jsonRR.get(TyreKey.vehicleMake) != null && !jsonRR.get(TyreKey.vehicleMake)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_make", jsonRR.get(TyreKey.vehicleMake)?.asString)
                             }
-                            jsonObject.add("back_right_issues_to_be_resolved", jsonArr)
+                            if (jsonRR.get(TyreKey.vehiclePattern) != null && !jsonRR.get(TyreKey.vehiclePattern)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_pattern", jsonRR.get(TyreKey.vehiclePattern)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.vehicleSize) != null && !jsonRR.get(TyreKey.vehicleSize)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_size", jsonRR.get(TyreKey.vehicleSize)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.manufaturingDate) != null && !jsonRR.get(TyreKey.manufaturingDate)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_manufacturing_date", jsonRR.get(TyreKey.manufaturingDate)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.sidewell) != null && !jsonRR.get(TyreKey.sidewell)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_side_wall", jsonRR.get(TyreKey.sidewell)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.shoulder) != null && !jsonRR.get(TyreKey.shoulder)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_shoulder", jsonRR.get(TyreKey.shoulder)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.treadDepth) != null && !jsonRR.get(TyreKey.treadDepth)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_tread_depth", jsonRR.get(TyreKey.treadDepth)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.treadWear) != null && !jsonRR.get(TyreKey.treadWear)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_tread_wear", jsonRR.get(TyreKey.treadWear)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.rimDamage) != null && !jsonRR.get(TyreKey.rimDamage)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_rim_demage", jsonRR.get(TyreKey.rimDamage)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.bubble) != null && !jsonRR.get(TyreKey.bubble)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_buldge_bubble", jsonRR.get(TyreKey.bubble)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.psiInTyreService) != null && !jsonRR.get(TyreKey.psiInTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_psi_in", jsonRR.get(TyreKey.psiInTyreService)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.psiOutTyreService) != null && !jsonRR.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_psi_out", jsonRR.get(TyreKey.psiOutTyreService)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.weightTyreService) != null && !jsonRR.get(TyreKey.weightTyreService)?.asString.equals("")) {
+                                jsonObject.addProperty("back_right_tyre_weight", jsonRR.get(TyreKey.weightTyreService)?.asString)
+                            }
+
+                            if (jsonRR.get(TyreKey.visualDetailPhotoUrl) != null
+                                && !jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                            ) {
+                                jsonObject.addProperty("back_right_tyre_wheel_image", jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                            }
+                            if (jsonRR.get(TyreKey.issueResolvedArr) != null) {
+
+                                val arr = jsonRR.get(TyreKey.issueResolvedArr).asJsonArray
+                                Log.e("getValues", "" + arr)
+                                val gson = Gson()
+                                val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                                val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                                val jsonArr = JsonArray()
+                                for (i in arrlist.indices) {
+                                    jsonArr.add(arrlist.get(i))
+                                }
+                                jsonObject.add("back_right_issues_to_be_resolved", jsonArr)
+                            }
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+
                         }
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-
                     }
-                }
 
-                jsonObject.addProperty("service_suggestions", edtMoreSuggestion?.text?.toString())
-                jsonObject.addProperty("next_service_due", selectedDateNextServiceDue)
-                jsonObject.addProperty("car_photo_1", TyreConfigClass.CarPhoto_1)
-                jsonObject.addProperty("car_photo_2", TyreConfigClass.CarPhoto_2)
-                jsonObject.addProperty("status", "complete")
+                    jsonObject.addProperty("service_suggestions", edtMoreSuggestion?.text?.toString())
+                    jsonObject.addProperty("next_service_due", selectedDateNextServiceDue)
+                    jsonObject.addProperty("car_photo_1", TyreConfigClass.CarPhoto_1)
+                    jsonObject.addProperty("car_photo_2", TyreConfigClass.CarPhoto_2)
+                    jsonObject.addProperty("status", "complete")
 
-                val jsonArrayService: JsonArray = JsonArray()
+                    val jsonArrayService: JsonArray = JsonArray()
 
-                selectedServiceArr?.clear()
-                if (serviceList != null && serviceList?.size!! > 0) {
-                    for (i in serviceList?.indices!!) {
-                        if (serviceList?.get(i)?.isSelected!!) {
-                            selectedServiceArr?.add(serviceList?.get(i)?.name!!)
-                            jsonArrayService.add(serviceList?.get(i)?.id)
+                    selectedServiceArr?.clear()
+                    if (serviceList != null && serviceList?.size!! > 0) {
+                        for (i in serviceList?.indices!!) {
+                            if (serviceList?.get(i)?.isSelected!!) {
+                                selectedServiceArr?.add(serviceList?.get(i)?.name!!)
+                                jsonArrayService.add(serviceList?.get(i)?.id)
+                            }
                         }
                     }
-                }
 
-                val jsonArraySuggestion: JsonArray = JsonArray()
+                    val jsonArraySuggestion: JsonArray = JsonArray()
 
-                selectedSuggestionArr?.clear()
+                    selectedSuggestionArr?.clear()
 
-                if (suggestionArray != null) {
-                    for (i in suggestionArray?.indices!!) {
-                        if (suggestionArray?.get(i)?.isSelected!!) {
-                            selectedSuggestionArr?.add(
-                                suggestionArray?.get(i)?.issueName!!
-                            )
+                    if (suggestionArray != null) {
+                        for (i in suggestionArray?.indices!!) {
+                            if (suggestionArray?.get(i)?.isSelected!!) {
+                                selectedSuggestionArr?.add(
+                                    suggestionArray?.get(i)?.issueName!!
+                                )
+                            }
                         }
                     }
-                }
 
-                if (selectedSuggestionArr != null && selectedSuggestionArr?.size!! > 0) {
-                    for (i in selectedSuggestionArr?.indices!!) {
-                        jsonArraySuggestion.add(selectedSuggestionArr?.get(i))
+                    if (selectedSuggestionArr != null && selectedSuggestionArr?.size!! > 0) {
+                        for (i in selectedSuggestionArr?.indices!!) {
+                            jsonArraySuggestion.add(selectedSuggestionArr?.get(i))
+                        }
                     }
-                }
 
-                jsonObject.add("service", jsonArrayService)
-                jsonObject.add("technician_suggestions", jsonArraySuggestion)
+                    jsonObject.add("service", jsonArrayService)
+                    jsonObject.add("technician_suggestions", jsonArraySuggestion)
 
-                serviceViewModel?.callApiAddService(
-                    jsonObject,
-                    prefManager.getAccessToken()!!,
-                    this
-                )
+                    Log.e("getfinalobject", "" + jsonObject)
+                    Log.e("getObjectT__", "" + jsonObject)
 
-                serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
-                    if (it != null) {
-                        if (it.success) {
+                    /*serviceViewModel?.callApiAddService(
+                        jsonObject,
+                        prefManager.getAccessToken()!!,
+                        this
+                    )
 
-                            Common.hideLoader()
-                            removeAllTyreAndServiceDetails()
+                    serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
+                        if (it != null) {
+                            if (it.success) {
 
-                            Common.showDialogue(this, "Success", "Your Service Added Successfully", true)
+                                Common.hideLoader()
+                                removeAllTyreAndServiceDetails()
 
+                                Common.showDialogue(this, "Success", "Your Service Added Successfully", true)
+
+                            } else {
+                                Common.hideLoader()
+
+                                try {
+                                    showShortToast(TyreKey.something_went_wrong, this)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+
+                            }
                         } else {
                             Common.hideLoader()
-
-                            try {
-                                showShortToast(TyreKey.something_went_wrong, this)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-
                         }
-                    } else {
-                        Common.hideLoader()
-                    }
-                })
-            } catch (e: Exception) {
-                e.printStackTrace()
+                    })*/
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-        }
+            Common.hideLoader()
+        }, WaitTime)
 
     }
 
@@ -2357,6 +2395,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     try {
                         val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                         intent.type = "image/*"
+                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                        intent.action = Intent.ACTION_GET_CONTENT
                         startActivityForResult(intent, PICK_IMAGE_REQUEST)
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
@@ -2381,12 +2421,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (checkSelfPermission(Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_DENIED ||
                         checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED ||
+                        checkSelfPermission(Manifest.permission.MANAGE_DOCUMENTS)
                         == PackageManager.PERMISSION_DENIED
                     ) {
                         //permission was not enabled
                         val permission = arrayOf(
                             Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.MANAGE_DOCUMENTS
                         )
                         //show popup to request permission
                         requestPermissions(permission, PERMISSION_CODE)
@@ -2416,6 +2459,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 || ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.CAMERA
+                ) !== PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.MANAGE_DOCUMENTS
                 ) !== PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(
                         context as Activity,
@@ -2424,6 +2471,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     || ActivityCompat.shouldShowRequestPermissionRationale(
                         context as Activity,
                         Manifest.permission.CAMERA
+                    )
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                        context as Activity,
+                        Manifest.permission.MANAGE_DOCUMENTS
                     )
                 ) {
                     val alertBuilder = android.app.AlertDialog.Builder(context)
@@ -2436,7 +2487,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         requestPermissions(
                             arrayOf<String>(
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.CAMERA
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.MANAGE_DOCUMENTS
                             ),
                             123
                         )
@@ -2448,7 +2500,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     requestPermissions(
                         arrayOf<String>(
                             Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.MANAGE_DOCUMENTS
+
                         ), 123
                     );
 
@@ -2820,7 +2874,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     val inputStream: InputStream? =
                         this.contentResolver?.openInputStream(image_uri!!)
-                    imagePath?.let { uploadImage(it, inputStream!!) }
+                    imagePath?.let { uploadImage(it, inputStream!!, "") }
                 }
 
             }
@@ -2849,7 +2903,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     val inputStream: InputStream? =
                         this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
-                    auxFile.let { uploadImage(it, inputStream!!) }
+                    auxFile.let { uploadImage(it, inputStream!!, "") }
                 }
             }
 
@@ -2885,7 +2939,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                     val inputStream: InputStream? =
                         this.contentResolver?.openInputStream(selectedImage!!)
-                    imagePath?.let { uploadImage(it, inputStream!!) }
+                    imagePath?.let { uploadImage(it, inputStream!!, "") }
 
                 }
             }
@@ -3186,7 +3240,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         Log.e("getImagess", "" + TyreConfigClass.moreSuggestions)
 
-        if (tvNextServiceDueDate?.text?.toString() != null && !tvNextServiceDueDate?.text?.toString()
+        if (selectedDateNextServiceDue != null && !selectedDateNextServiceDue
                 .equals("")
         ) {
 
@@ -4855,6 +4909,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         try {
                             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            intent.action = Intent.ACTION_GET_CONTENT
                             startActivityForResult(intent, PICK_IMAGE_REQUEST)
 
                         } catch (e: Exception) {
@@ -4908,6 +4964,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 prefManager.removeValue(TyreConfigClass.TyreRFObject)
                 prefManager.removeValue(TyreConfigClass.TyreLRObject)
                 prefManager.removeValue(TyreConfigClass.serviceDetailData)
+                prefManager.removeValue("image_LF")
+                prefManager.removeValue("image_LR")
+                prefManager.removeValue("image_RF")
+                prefManager.removeValue("image_RR")
                 Common.setClearAllValues()
 
                 chkNitrogenTopup?.isChecked = false
@@ -4943,7 +5003,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
-    private fun uploadImage(imagePath: File, inputStream: InputStream) {
+    private fun uploadImage(imagePath: File, inputStream: InputStream, type: String) {
         Common.showLoader(this)
         val part = MultipartBody.Part.createFormData(
             "file", imagePath.name, RequestBody.create(
@@ -4954,7 +5014,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         loginViewModel?.uploadImage(part, prefManager.getAccessToken()!!, this, "service-image")
 
         loginViewModel?.getImageUpload()?.observe(this, androidx.lifecycle.Observer {
-            Common.hideLoader()
+            if (type.equals("")) {
+                Common.hideLoader()
+            }
             if (it != null) {
                 if (it.success) {
                     Log.e("getFile", "" + it.data.imageUrl)
@@ -4963,6 +5025,104 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.CarPhoto_1 = it.data.imageUrl
                     } else {
                         TyreConfigClass.CarPhoto_2 = it.data.imageUrl
+                    }
+
+                    Log.e("getuploadType", "" + type)
+
+                    if (!type.equals("")) {
+                        if (type.equals("LF")) {
+                            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+                            ) {
+                                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                                try {
+                                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                                    if (jsonLF.get(TyreKey.visualDetailPhotoUrl) != null &&
+                                        !jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                                    ) {
+                                        jsonLF.remove(TyreKey.visualDetailPhotoUrl)
+                                        jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
+                                    } else {
+                                        jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
+                                    }
+                                    Log.e("getObjectT__" + type, "" + jsonLF)
+
+                                    prefManager.setValue(TyreConfigClass.TyreLFObject, jsonLF.toString())
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+                        if (type.equals("RR")) {
+                            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+                            ) {
+                                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                                try {
+                                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                                    Log.e("getobjectslf", "" + jsonLF)
+                                    if (jsonLF.get(TyreKey.visualDetailPhotoUrl) != null &&
+                                        !jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                                    ) {
+                                        jsonLF.remove(TyreKey.visualDetailPhotoUrl)
+                                        jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
+                                    } else {
+                                        jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
+                                    }
+                                    Log.e("getObjectT__" + type, "" + jsonLF)
+                                    prefManager.setValue(TyreConfigClass.TyreRRObject, jsonLF.toString())
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+                        if (type.equals("LR")) {
+                            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+                            ) {
+                                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                                try {
+                                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                                    Log.e("getobjectslf", "" + jsonLF)
+                                    if (jsonLF.get(TyreKey.visualDetailPhotoUrl) != null &&
+                                        !jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                                    ) {
+                                        jsonLF.remove(TyreKey.visualDetailPhotoUrl)
+                                        jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
+                                    } else {
+                                        jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
+                                    }
+                                    Log.e("getObjectT__" + type, "" + jsonLF)
+                                    prefManager.setValue(TyreConfigClass.TyreLRObject, jsonLF.toString())
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+                        if (type.equals("RF")) {
+                            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+                            ) {
+                                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                                try {
+                                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                                    Log.e("getobjectslf", "" + jsonLF)
+                                    if (jsonLF.get(TyreKey.visualDetailPhotoUrl) != null &&
+                                        !jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                                    ) {
+                                        jsonLF.remove(TyreKey.visualDetailPhotoUrl)
+                                        jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
+                                    } else {
+                                        jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
+                                    }
+                                    Log.e("getObjectT__" + type, "" + jsonLF)
+                                    prefManager.setValue(TyreConfigClass.TyreRFObject, jsonLF.toString())
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+
                     }
 
                     storeServiceDetailData()
