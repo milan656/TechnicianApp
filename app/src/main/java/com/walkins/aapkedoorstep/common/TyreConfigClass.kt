@@ -1,5 +1,8 @@
 package com.walkins.aapkedoorstep.common
 
+import java.io.File
+import java.io.InputStream
+
 class TyreConfigClass {
 
     companion object {
@@ -52,6 +55,12 @@ class TyreConfigClass {
         var serviceList = "serviceList"
         var commentList = "commentList"
         var issueList = "issueList"
+
+        var car_1_stream: InputStream? = null
+        var car_2_stream: InputStream? = null
+
+        var car_1_file:File?=null
+        var car_2_file:File?=null
 
     }
 }

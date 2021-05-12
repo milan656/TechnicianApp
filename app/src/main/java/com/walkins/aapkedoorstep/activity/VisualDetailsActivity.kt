@@ -1929,6 +1929,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         val inputStream: InputStream? =
                             this.contentResolver?.openInputStream(image_uri!!)
 
+                        TyreDetailCommonClass.inputStream = inputStream
                         prefManager.setValue("image_stream_" + selectedTyre, inputStream?.readBytes()?.toString())
                         prefManager.setValue("image_" + selectedTyre, image_uri.toString())
                         TyreDetailCommonClass.visualDetailPhotoUrl = image_uri.toString()

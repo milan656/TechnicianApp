@@ -1,5 +1,7 @@
 package com.walkins.aapkedoorstep.common
 
+import java.io.InputStream
+
 class TyreDetailCommonClass {
 
     companion object {
@@ -43,6 +45,8 @@ class TyreDetailCommonClass {
 
         var make_id: Int = -1
         var model_id: Int = -1
+
+        var inputStream: InputStream? = null
 
     }
 }

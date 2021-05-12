@@ -45,7 +45,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private var loginViewModel: LoginActivityViewModel? = null
     private var prefManager: PrefManager? = null
 
-    open var ivProfileImg: ImageView? = null
+    var ivProfileImg: ImageView? = null
     private var imageDialog: BottomSheetDialog? = null
     private var mainAct: MainActivity? = null
 

@@ -870,23 +870,23 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         if (prefManager.getServiceList(TyreConfigClass.serviceList) != null && prefManager.getServiceList(TyreConfigClass.serviceList)?.size!! > 0) {
             serviceList?.clear()
-            for (i in prefManager.getServiceList(TyreConfigClass.serviceList)?.indices!!) {
+            for (i in prefManager.getServiceList(TyreConfigClass.serviceList).indices) {
                 val model = ServiceModelData(
-                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.id!!,
-                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name!!,
-                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.image!!, false
+                    prefManager.getServiceList(TyreConfigClass.serviceList).get(i).id,
+                    prefManager.getServiceList(TyreConfigClass.serviceList).get(i).name,
+                    prefManager.getServiceList(TyreConfigClass.serviceList).get(i).image, false
                 )
                 serviceList?.add(model)
             }
             serviceAdapter?.notifyDataSetChanged()
         }
 
-        if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList)?.size!! > 0) {
+        if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList).size > 0) {
             commentList?.clear()
-            for (i in prefManager.getCommentList(TyreConfigClass.commentList)?.indices!!) {
+            for (i in prefManager.getCommentList(TyreConfigClass.commentList).indices) {
                 val model = CommentListData(
-                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.id!!,
-                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name!!
+                    prefManager.getServiceList(TyreConfigClass.commentList).get(i).id,
+                    prefManager.getServiceList(TyreConfigClass.commentList).get(i).name
                 )
                 commentList?.add(model)
             }
@@ -1547,9 +1547,50 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             uploadImage(imagePath!!, myInputStream, "RR")
         }
+//        prefManager.setValue("image_stream_Car_1", inputStream?.readBytes()?.toString())
+//        prefManager.setValue("image_Car_1", image_uri.toString())
+
+        if (prefManager.getValue("image_Car_1") != null &&
+            !prefManager.getValue("image_Car_1").equals("")
+        ) {
+            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_Car_1")))
+            } else {
+                TODO("VERSION.SDK_INT < KITKAT")
+            }
+            Log.e("getimagepath2", "" + "" + imagePath?.name + " " + TyreConfigClass.car_1_file?.name)
+            Log.e("getimagepath2", "" + TyreConfigClass.car_1_stream?.read())
+            counter = counter + 1
+//            val inputString = prefManager.getValue("image_stream_Car_1")
+//            val byteArrray = inputString.toByteArray()
+//            val myInputStream: InputStream = ByteArrayInputStream(byteArrray)
+
+            uploadImage(TyreConfigClass.car_1_file!!, TyreConfigClass.car_1_stream!!, "car_1")
+        }
+        if (prefManager.getValue("image_Car_2") != null &&
+            !prefManager.getValue("image_Car_2").equals("")
+        ) {
+            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_Car_2")))
+            } else {
+                TODO("VERSION.SDK_INT < KITKAT")
+            }
+            Log.e("getimagepath2", "" + "" + imagePath?.name + " " + TyreConfigClass.car_2_file?.name)
+            Log.e("getimagepath2", "" + TyreConfigClass.car_2_stream?.read())
+            counter = counter + 1
+//            val inputString = prefManager.getValue("image_stream_Car_2")
+//            val byteArrray = inputString.toByteArray()
+//            val myInputStream: InputStream = ByteArrayInputStream(byteArrray)
+
+            uploadImage(TyreConfigClass.car_2_file!!, TyreConfigClass.car_2_stream!!, "car_2")
+        }
 
         var WaitTime: Long = 0L
-        if (counter == 4) {
+        if (counter == 6) {
+            WaitTime = 18000L
+        } else if (counter == 5) {
+            WaitTime = 15000L
+        } else if (counter == 4) {
             WaitTime = 12000L
         } else if (counter == 3) {
             WaitTime = 9000L
@@ -2900,9 +2941,29 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //                    tvCarphoto1?.visibility = View.GONE
 //                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(image_uri!!)
-                    imagePath?.let { uploadImage(it, inputStream!!, "") }
+                    if (Common.isConnectedToInternet(this)) {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(image_uri!!)
+                        imagePath?.let { uploadImage(it, inputStream!!, "") }
+                    } else {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(image_uri!!)
+
+                        if (selectImage1) {
+                            prefManager.setValue("image_stream_Car_1", inputStream?.readBytes()?.toString())
+                            prefManager.setValue("image_Car_1", image_uri.toString())
+                            TyreConfigClass.CarPhoto_1 = image_uri.toString()
+                            TyreConfigClass.car_1_stream = inputStream
+                            TyreConfigClass.car_1_file = imagePath
+                        } else {
+                            prefManager.setValue("image_stream_Car_2", inputStream?.readBytes()?.toString())
+                            prefManager.setValue("image_Car_2", image_uri.toString())
+                            TyreConfigClass.CarPhoto_2 = image_uri.toString()
+                            TyreConfigClass.car_2_stream = inputStream
+                            TyreConfigClass.car_2_file = imagePath
+                        }
+
+                    }
                 }
 
             }
@@ -2929,9 +2990,26 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
 
 
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
-                    auxFile.let { uploadImage(it, inputStream!!, "") }
+                    if (Common.isConnectedToInternet(this)) {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+                        auxFile.let { uploadImage(it, inputStream!!, "") }
+                    } else {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+
+                        if (selectImage1) {
+                            prefManager.setValue("image_stream_Car_1", inputStream?.readBytes()?.toString())
+                            prefManager.setValue("image_Car_1", Uri.parse(mCurrentPhotoPath).toString())
+                            TyreConfigClass.CarPhoto_1 = Uri.parse(mCurrentPhotoPath).toString()
+                            TyreConfigClass.car_1_stream = inputStream
+                        } else {
+                            prefManager.setValue("image_stream_Car_2", inputStream?.readBytes()?.toString())
+                            prefManager.setValue("image_Car_2", Uri.parse(mCurrentPhotoPath).toString())
+                            TyreConfigClass.CarPhoto_2 = Uri.parse(mCurrentPhotoPath).toString()
+                            TyreConfigClass.car_2_stream = inputStream
+                        }
+                    }
                 }
             }
 
@@ -2965,9 +3043,27 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         tvCarphoto2?.visibility = View.GONE
                         relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                     }
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(selectedImage!!)
-                    imagePath?.let { uploadImage(it, inputStream!!, "") }
+
+                    if (Common.isConnectedToInternet(this)) {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(selectedImage!!)
+                        imagePath?.let { uploadImage(it, inputStream!!, "") }
+                    } else {
+                        val inputStream: InputStream? =
+                            this.contentResolver?.openInputStream(selectedImage!!)
+
+                        if (selectImage1) {
+                            prefManager.setValue("image_stream_Car_1", inputStream?.readBytes()?.toString())
+                            prefManager.setValue("image_Car_1", selectedImage.toString())
+                            TyreConfigClass.CarPhoto_1 = selectedImage.toString()
+                            TyreConfigClass.car_1_stream = inputStream
+                        } else {
+                            prefManager.setValue("image_stream_Car_2", inputStream?.readBytes()?.toString())
+                            prefManager.setValue("image_Car_2", selectedImage.toString())
+                            TyreConfigClass.CarPhoto_2 = selectedImage.toString()
+                            TyreConfigClass.car_2_stream = inputStream
+                        }
+                    }
 
                 }
             }
@@ -3256,7 +3352,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private fun checkSubmitBtn() {
 
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_blue))
-        btnSubmitAndComplete?.isClickable = false
+        btnSubmitAndComplete?.isClickable = true
 
         try {
             if (edtMoreSuggestion?.text?.toString() != null) {
@@ -5058,6 +5154,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getuploadType", "" + type)
 
                     if (!type.equals("")) {
+                        if (type.equals("car_1")) {
+                            TyreConfigClass.CarPhoto_1 = it.data.imageUrl
+                            prefManager.removeValue("image_Car_1")
+                        }
+                        if (type.equals("car_2")) {
+                            TyreConfigClass.CarPhoto_2 = it.data.imageUrl
+                            prefManager.removeValue("image_Car_2")
+                        }
                         if (type.equals("LF")) {
                             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
                                 !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -5074,7 +5178,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                         jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
                                     }
                                     Log.e("getObjectT__" + type, "" + jsonLF)
-
+                                    prefManager.removeValue("image_LF")
                                     prefManager.setValue(TyreConfigClass.TyreLFObject, jsonLF.toString())
                                 } catch (e: Exception) {
                                     e.printStackTrace()
@@ -5098,6 +5202,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                         jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
                                     }
                                     Log.e("getObjectT__" + type, "" + jsonLF)
+                                    prefManager.removeValue("image_RR")
                                     prefManager.setValue(TyreConfigClass.TyreRRObject, jsonLF.toString())
                                 } catch (e: Exception) {
                                     e.printStackTrace()
@@ -5121,6 +5226,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                         jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
                                     }
                                     Log.e("getObjectT__" + type, "" + jsonLF)
+                                    prefManager.removeValue("image_LR")
                                     prefManager.setValue(TyreConfigClass.TyreLRObject, jsonLF.toString())
                                 } catch (e: Exception) {
                                     e.printStackTrace()
@@ -5144,6 +5250,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                         jsonLF.addProperty(TyreKey.visualDetailPhotoUrl, it.data.imageUrl)
                                     }
                                     Log.e("getObjectT__" + type, "" + jsonLF)
+                                    prefManager.removeValue("image_RF")
                                     prefManager.setValue(TyreConfigClass.TyreRFObject, jsonLF.toString())
                                 } catch (e: Exception) {
                                     e.printStackTrace()

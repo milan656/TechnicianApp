@@ -23,6 +23,8 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.Common.Companion.getFile
 import com.example.technician.common.Common.Companion.setTint
@@ -32,10 +34,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.DB.DBClass
 import com.walkins.aapkedoorstep.R
-import com.walkins.aapkedoorstep.common.TyreConfigClass
-import com.walkins.aapkedoorstep.common.onClickAdapter
-import com.walkins.aapkedoorstep.common.replaceFragmenty
-import com.walkins.aapkedoorstep.common.showShortToast
+import com.walkins.aapkedoorstep.common.*
 import com.walkins.aapkedoorstep.fragment.HomeFragment
 import com.walkins.aapkedoorstep.fragment.NotificationFragment
 import com.walkins.aapkedoorstep.fragment.ProfileFragment
@@ -754,7 +753,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             if (it != null) {
                 if (it.success) {
                     Log.e("getfile", "" + it.data.imageUrl)
+                    val fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
+//
+                    if (fragment is ProfileFragment) {
+//                        fragment.ivProfileImg?.setImageURI(image_uri)
+                        try {
+                            Glide.with(this@MainActivity)
+                                .load(it.data.imageUrl)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.placeholder)
+                                .into(fragment.ivProfileImg!!)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
                     Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
+
                 }
             }
         })
