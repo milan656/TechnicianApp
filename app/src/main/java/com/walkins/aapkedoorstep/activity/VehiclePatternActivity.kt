@@ -121,24 +121,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             chkRR?.text = "LR"
         }
 
-
-/*
-        var thread = Thread {
-
-            Log.e("getsizee", "" + mDb.patternDaoClass().getAllPattern().size)
-            if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass()
-                    .getAllPattern().size > 0
-            ) {
-                arrList?.addAll(mDb.patternDaoClass().getAllPattern())
-
-
-
-            }
-
-        }
-        thread.start()
-*/
-
         if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
                 !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -466,6 +448,14 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 btnNext?.visibility = View.VISIBLE
                 gridviewRecycModel?.visibility = View.GONE
 
+                val thread=Thread{
+                    if (mDb.patternDaoClass().getAllPattern()!=null && mDb.patternDaoClass().getAllPattern().size>0){
+                        arrList?.clear()
+                        arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                    }
+                }
+                thread.start()
+
                 if (arrList != null && arrList?.size!! > 0) {
                     for (i in arrList?.indices!!) {
 
@@ -479,55 +469,41 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                 Common.hideLoader()
             } else {
+                val thread=Thread{
+                    if (mDb.patternDaoClass().getAllPattern()!=null && mDb.patternDaoClass().getAllPattern().size>0){
+                        arrList?.clear()
+                        arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                    }
 
-                getVehiclePattern(false)
+                    runOnUiThread {
+                        gridviewRecycModel?.layoutManager =
+                            GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+                        adapter = VehiclePatternAdapter(this, arrList, this, selectedId)
+                        gridviewRecycModel?.adapter = adapter
+                    }
+                }
+                thread.start()
             }
         } else {
-            getVehiclePattern(false)
+            val thread=Thread{
+                if (mDb.patternDaoClass().getAllPattern()!=null && mDb.patternDaoClass().getAllPattern().size>0){
+                    arrList?.clear()
+                    arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                }
+
+                runOnUiThread {
+                    gridviewRecycModel?.layoutManager =
+                        GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+                    adapter = VehiclePatternAdapter(this, arrList, this, selectedId)
+                    gridviewRecycModel?.adapter = adapter
+                }
+            }
+            thread.start()
         }
-
-
-
-        Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePattern!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePatternId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSize!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSizeId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.manufaturingDate!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.psiInTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.psiOutTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.weightTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.sidewell!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.shoulder!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.treadDepth!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.treadWear!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.rimDamage!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.bubble!!)
-        Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
-
-        Log.e("getvaluess_all--1 make", TyreDetailCommonClass.chk1Make!!)
-        Log.e("getvaluess_all--2 make", TyreDetailCommonClass.chk2Make!!)
-        Log.e("getvaluess_all--3 make", TyreDetailCommonClass.chk3Make!!)
-        Log.e("getvaluess_all--1 patte", TyreDetailCommonClass.chk1Pattern!!)
-        Log.e("getvaluess_all--2 patte", TyreDetailCommonClass.chk2Pattern!!)
-        Log.e("getvaluess_all--3 patte", TyreDetailCommonClass.chk3Pattern!!)
-        Log.e("getvaluess_all--1 size", TyreDetailCommonClass.chk1Size!!)
-        Log.e("getvaluess_all--2 size", TyreDetailCommonClass.chk2Size!!)
-        Log.e("getvaluess_all--3 size", TyreDetailCommonClass.chk3Size!!)
-
-
     }
 
 
     override fun onPositionClick(variable: Int, check: Int) {
-
-//        Log.e("getmake", "" + arrList?.get(variable)?.name)
-//        val intent = Intent(this, VehicleMakeApplyTyreActivty::class.java)
-//        intent.putExtra("which", "vehiclepattern")
-//        startActivityForResult(intent, 1006)
 
         Common.slideUp(gridviewRecycModel!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
@@ -859,40 +835,19 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
             }
             R.id.ivEditVehicleMake -> {
-//                gridviewRecycModel?.layoutManager =
-//                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-//                adapter = VehiclePatternAdapter(this, arrList, this, -1)
-//                gridviewRecycModel?.adapter = adapter
-
                 GlobalScope.launch(Dispatchers.Main) {
                     launch(Dispatchers.Main) {
-                        Log.e("getidpattern", "" + TyreDetailCommonClass.vehicleMakeId?.toInt() + "--" + selectedIdMake)
 
-                        /*val thread = Thread {
-
-                            if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
-                                arrList?.addAll(mDb.patternDaoClass().getAllPattern())
-                                gridviewRecycModel?.layoutManager =
-                                    GridLayoutManager(this@VehiclePatternActivity, 3, RecyclerView.VERTICAL, false)
-                                adapter = VehiclePatternAdapter(this@VehiclePatternActivity, arrList, this@VehiclePatternActivity, -1)
-                                gridviewRecycModel?.adapter = adapter
-                                Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
-                                Common.slideDown(gridviewRecycModel!!, null)
-                            } else {
-                                getVehiclePattern(true)
-                            }
-                        }
-                        thread.start()*/
-                        if (arrList?.size == 0) {
+                      /*  if (arrList?.size == 0) {
                             getVehiclePattern(true)
-                        } else {
+                        } else {*/
                             gridviewRecycModel?.layoutManager =
                                 GridLayoutManager(this@VehiclePatternActivity, 3, RecyclerView.VERTICAL, false)
                             adapter = VehiclePatternAdapter(this@VehiclePatternActivity, arrList, this@VehiclePatternActivity, -1)
                             gridviewRecycModel?.adapter = adapter
                             Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
                             Common.slideDown(gridviewRecycModel!!, null)
-                        }
+//                        }
 
                     }
                 }
@@ -901,7 +856,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }
     }
 
-    fun getVehiclePattern(isExpand: Boolean) {
+    /*fun getVehiclePattern(isExpand: Boolean) {
         Common.showLoader(this)
         var selectedMakeId: String? = null
         if (intent != null) {
@@ -993,23 +948,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 }
             })
     }
-
+*/
 
     private fun updateRecords() {
-        var thread = Thread {
-//            var entity = VehiclePatternModelClass()
-//            entity.Id = arrList?.get(selectedPos)?.Id!!
-//            entity.name = arrList?.get(selectedPos)?.name
-//            entity.isSelected = true
-//            entity.isLRSelected = chkLR?.isChecked!!
-//            entity.concat = arrList?.get(selectedPos)?.concat
-//            entity.image_url = arrList?.get(selectedPos)?.image_url
-//            entity.isRFSelected = chkRF?.isChecked!!
-//            entity.isRRSelected = chkRR?.isChecked!!
-//            mDb.patternDaoClass().update(entity)
-
-        }
-        thread.start()
 
         if (selectedTyre.equals("LF")) {
 
@@ -1021,7 +962,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         } else if (selectedTyre.equals("RR")) {
             TyreConfigClass.RRVehiclePattern = true
         }
-
 
         if (selectedTyre.equals("LF")) {
             chkRF?.text = "RF"
@@ -1281,28 +1221,5 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }
     }
 
-    private fun savePatternData(patternModel: PatternModel) {
 
-        var thread: Thread = Thread {
-            if (mDb.patternDaoClass().getAllPattern().size > 0) {
-                mDb.patternDaoClass().deleteAll()
-            }
-
-            for (i in patternModel.data.indices) {
-
-                var entity = VehiclePatternModelClass()
-
-                entity.name =
-                    if (patternModel.data?.get(i)?.name != null) patternModel.data?.get(i)?.name else ""
-                entity.patternId = patternModel.data?.get(i)?.patternId
-                entity.isSelected = false
-                mDb.patternDaoClass().savePattern(entity)
-            }
-
-            Log.e("response+++", "++++" + mDb.patternDaoClass().getAllPattern())
-        }
-
-        thread.start()
-
-    }
 }

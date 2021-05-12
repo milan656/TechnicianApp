@@ -160,8 +160,8 @@ class EndlessService : Service() {
                 launch(Dispatchers.IO) {
                     fetchVehicleData()
 //                    fetchIssueList()
-//                    fetchPattern()
-//                    fetchSize()
+                    fetchPattern()
+                    fetchSize()
 
                     /* val sdfo = SimpleDateFormat("dd-MM-yyyy hh:mm")
 

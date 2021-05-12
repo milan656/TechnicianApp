@@ -114,364 +114,322 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         }
 
 
+        if (selectedTyre.equals("LF")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
 
+                    setData(json)
 
-        Common.showLoader(this)
-        //        Common.setBlankAllValues()
-        var thread = Thread {
-
-            Log.e("getsizee", "" + mDb.daoClass().getAllVehicleType().size)
-
-//                arrList?.addAll(mDb.sizeDaoClass().getAllSize())
-
-                if (selectedTyre.equals("LF")) {
-                    if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                        !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
-                    ) {
-                        var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
-                        try {
-                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                            selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
-
-                            setData(json)
-
-                            runOnUiThread {
-                                chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Size) != null && json.get(TyreKey.chk1Size).asString.equals(
-                                            "RF,true"
-                                        )
-                                    ) true else false
-                                chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Size) != null && json.get(TyreKey.chk2Size).asString.equals(
-                                            "LR,true"
-                                        )
-                                    ) true else false
-                                chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Size) != null && json.get(TyreKey.chk3Size).asString.equals(
-                                            "RR,true"
-                                        )
-                                    ) true else false
-
-                            }
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-                }
-                if (selectedTyre.equals("LR")) {
-                    if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                        !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
-                    ) {
-                        var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
-                        try {
-                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                            selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
-
-                            setData(json)
-                            runOnUiThread {
-                                chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Size) != null && json.get(
-                                            TyreKey.chk1Size
-                                        ).asString.equals("LF,true")
-                                    ) true else false
-                                chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Size) != null && json.get(
-                                            TyreKey.chk2Size
-                                        ).asString.equals("RF,true")
-                                    ) true else false
-                                chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Size) != null && json.get(
-                                            TyreKey.chk3Size
-                                        ).asString.equals("RR,true")
-                                    ) true else false
-                            }
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-                }
-                if (selectedTyre.equals("RF")) {
-                    if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                        !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
-                    ) {
-                        var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
-                        try {
-                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                            selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
-                            Log.e("getobjrfche", "" + json + " " + selectedId)
-                            setData(json)
-                            runOnUiThread {
-                                chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Size) != null && json.get(
-                                            TyreKey.chk1Size
-                                        )?.asString.equals("LF,true")
-                                    ) true else false
-                                chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Size) != null && json.get(
-                                            TyreKey.chk2Size
-                                        )?.asString.equals("LR,true")
-                                    ) true else false
-                                chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Size) != null && json.get(
-                                            TyreKey.chk3Size
-                                        )?.asString.equals("RR,true")
-                                    ) true else false
-
-                                Log.e(
-                                    "getval0",
-                                    "" + chkRF?.isChecked + " " + chkLR?.isChecked + " " + chkRR?.isChecked
+                    runOnUiThread {
+                        chkRF?.isChecked =
+                            if (json.get(TyreKey.chk1Size) != null && json.get(TyreKey.chk1Size).asString.equals(
+                                    "RF,true"
                                 )
-                            }
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
+                            ) true else false
+                        chkLR?.isChecked =
+                            if (json.get(TyreKey.chk2Size) != null && json.get(TyreKey.chk2Size).asString.equals(
+                                    "LR,true"
+                                )
+                            ) true else false
+                        chkRR?.isChecked =
+                            if (json.get(TyreKey.chk3Size) != null && json.get(TyreKey.chk3Size).asString.equals(
+                                    "RR,true"
+                                )
+                            ) true else false
+
                     }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
                 }
-                if (selectedTyre.equals("RR")) {
-                    if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                        !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
-                    ) {
-                        var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
-                        try {
-                            var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                            selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+            }
+        }
+        if (selectedTyre.equals("LR")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
 
-                            setData(json)
-                            runOnUiThread {
-
-                                chkRF?.isChecked =
-                                    if (json.get(TyreKey.chk1Size) != null && json.get(TyreKey.chk1Size)?.asString
-                                            .equals("LF,true")
-                                    ) true else false
-                                chkLR?.isChecked =
-                                    if (json.get(TyreKey.chk2Size) != null && json.get(TyreKey.chk2Size)?.asString
-                                            .equals("RF,true")
-                                    ) true else false
-                                chkRR?.isChecked =
-                                    if (json.get(TyreKey.chk3Size) != null && json.get(
-                                            TyreKey.chk3Size
-                                        )?.asString.equals("LR,true")
-                                    ) true else false
-
-                            }
-                        } catch (e: java.lang.Exception) {
-                            e.printStackTrace()
-                        }
+                    setData(json)
+                    runOnUiThread {
+                        chkRF?.isChecked =
+                            if (json.get(TyreKey.chk1Size) != null && json.get(
+                                    TyreKey.chk1Size
+                                ).asString.equals("LF,true")
+                            ) true else false
+                        chkLR?.isChecked =
+                            if (json.get(TyreKey.chk2Size) != null && json.get(
+                                    TyreKey.chk2Size
+                                ).asString.equals("RF,true")
+                            ) true else false
+                        chkRR?.isChecked =
+                            if (json.get(TyreKey.chk3Size) != null && json.get(
+                                    TyreKey.chk3Size
+                                ).asString.equals("RR,true")
+                            ) true else false
                     }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
                 }
+            }
+        }
+        if (selectedTyre.equals("RF")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+                    Log.e("getobjrfche", "" + json + " " + selectedId)
+                    setData(json)
+                    runOnUiThread {
+                        chkRF?.isChecked =
+                            if (json.get(TyreKey.chk1Size) != null && json.get(
+                                    TyreKey.chk1Size
+                                )?.asString.equals("LF,true")
+                            ) true else false
+                        chkLR?.isChecked =
+                            if (json.get(TyreKey.chk2Size) != null && json.get(
+                                    TyreKey.chk2Size
+                                )?.asString.equals("LR,true")
+                            ) true else false
+                        chkRR?.isChecked =
+                            if (json.get(TyreKey.chk3Size) != null && json.get(
+                                    TyreKey.chk3Size
+                                )?.asString.equals("RR,true")
+                            ) true else false
+
+                        Log.e(
+                            "getval0",
+                            "" + chkRF?.isChecked + " " + chkLR?.isChecked + " " + chkRR?.isChecked
+                        )
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        if (selectedTyre.equals("RR")) {
+            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            ) {
+                var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                try {
+                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    selectedId = json.get("vehicleSizeId")?.asString?.toInt()!!
+
+                    setData(json)
+                    runOnUiThread {
+
+                        chkRF?.isChecked =
+                            if (json.get(TyreKey.chk1Size) != null && json.get(TyreKey.chk1Size)?.asString
+                                    .equals("LF,true")
+                            ) true else false
+                        chkLR?.isChecked =
+                            if (json.get(TyreKey.chk2Size) != null && json.get(TyreKey.chk2Size)?.asString
+                                    .equals("RF,true")
+                            ) true else false
+                        chkRR?.isChecked =
+                            if (json.get(TyreKey.chk3Size) != null && json.get(
+                                    TyreKey.chk3Size
+                                )?.asString.equals("LR,true")
+                            ) true else false
+
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
 
 //              ======================================================================
 
-                if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                Log.e("getobjrfche00", "" + json + " " + selectedId + " ")
+
+                if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.asString.equals(
+                        ""
+                    )
                 ) {
-                    var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
-                    try {
-                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        Log.e("getobjrfche00", "" + json + " " + selectedId + " ")
+                    if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
+                        runOnUiThread {
 
-                        if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.asString.equals(
-                                ""
-                            )
-                        ) {
-                            if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
-                                runOnUiThread {
-
-                                    if (chkRF?.text?.toString().equals("LF")) {
-                                        chkRF?.isChecked = true
-                                    }
-                                    if (chkLR?.text?.toString().equals("LF")) {
-                                        chkLR?.isChecked = true
-                                    }
-                                    if (chkRR?.text?.toString().equals("LF")) {
-                                        chkRR?.isChecked = true
-                                    }
-                                }
+                            if (chkRF?.text?.toString().equals("LF")) {
+                                chkRF?.isChecked = true
                             }
-
-                        }
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
-                ) {
-                    var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
-                    try {
-                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.asString.equals(
-                                ""
-                            )
-                        ) {
-
-                            if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
-                                runOnUiThread {
-
-                                    if (chkRF?.text?.toString().equals("LR")) {
-                                        chkRF?.isChecked = true
-                                    }
-                                    if (chkLR?.text?.toString().equals("LR")) {
-                                        chkLR?.isChecked = true
-                                    }
-                                    if (chkRR?.text?.toString().equals("LR")) {
-                                        chkRR?.isChecked = true
-                                    }
-                                }
+                            if (chkLR?.text?.toString().equals("LF")) {
+                                chkLR?.isChecked = true
+                            }
+                            if (chkRR?.text?.toString().equals("LF")) {
+                                chkRR?.isChecked = true
                             }
                         }
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
                     }
+
                 }
-
-                if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
-                ) {
-                    var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
-                    try {
-                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.asString.equals(
-                                ""
-                            )
-                        ) {
-
-                            if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
-                                runOnUiThread {
-
-                                    if (chkRF?.text?.toString().equals("RF")) {
-                                        chkRF?.isChecked = true
-                                    }
-                                    if (chkLR?.text?.toString().equals("RF")) {
-                                        chkLR?.isChecked = true
-                                    }
-                                    if (chkRR?.text?.toString().equals("RF")) {
-                                        chkRR?.isChecked = true
-                                    }
-                                }
-                            }
-                        }
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
-                ) {
-                    var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
-                    try {
-                        var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                        if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.asString.equals(
-                                ""
-                            )
-                        ) {
-
-                            if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
-                                runOnUiThread {
-
-                                    if (chkRF?.text?.toString().equals("RR")) {
-                                        chkRF?.isChecked = true
-                                    }
-                                    if (chkLR?.text?.toString().equals("RR")) {
-                                        chkLR?.isChecked = true
-                                    }
-                                    if (chkRR?.text?.toString().equals("RR")) {
-                                        chkRR?.isChecked = true
-                                    }
-                                }
-                            }
-                        }
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                runOnUiThread {
-                    Log.e("getsizedata","getsize")
-                    if (selectedId != -1) {
-                        llVehicleMakeselectedView?.visibility = View.VISIBLE
-                        btnNext?.visibility = View.VISIBLE
-                        gridviewRecycModel?.visibility = View.GONE
-
-                        if (arrList != null && arrList?.size!! > 0) {
-                            for (i in arrList?.indices!!) {
-
-                                if (selectedId == arrList?.get(i)?.sizeId) {
-                                    arrList?.get(i)?.isSelected = true
-                                }
-                            }
-                        }
-                        Common.hideLoader()
-                        tvSelectedModel?.text = TyreDetailCommonClass.vehicleSize
-                        adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
-                        gridviewRecycModel?.adapter = adapter
-                        Log.e("getsizedata","getsize11")
-                    } else {
-                        Log.e("getsizedata","else")
-                        fetchSizeData()
-                        /*gridviewRecycModel?.layoutManager =
-                            GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-
-                        adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
-                        gridviewRecycModel?.adapter = adapter
-                        Common.hideLoader()*/
-                    }
-                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
         }
-        thread.start()
 
+        if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.asString.equals(
+                        ""
+                    )
+                ) {
 
-//        var handler = Handler()
-//        handler.postDelayed(Runnable {
-//            gridviewRecycModel?.layoutManager =
-//                GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-//
-//            adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
-//            gridviewRecycModel?.adapter = adapter
-//            Common.hideLoader()
-//        }, 1000)
+                    if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
+                        runOnUiThread {
 
+                            if (chkRF?.text?.toString().equals("LR")) {
+                                chkRF?.isChecked = true
+                            }
+                            if (chkLR?.text?.toString().equals("LR")) {
+                                chkLR?.isChecked = true
+                            }
+                            if (chkRR?.text?.toString().equals("LR")) {
+                                chkRR?.isChecked = true
+                            }
+                        }
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
 
-        Log.e("getid", "" + selectedId)
+        if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.asString.equals(
+                        ""
+                    )
+                ) {
 
+                    if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
+                        runOnUiThread {
 
-        Log.e("getvaluess_all", TyreDetailCommonClass.tyreType!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMake!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleMakeId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePattern!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehiclePatternId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSize!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.vehicleSizeId!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.manufaturingDate!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.psiInTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.psiOutTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.weightTyreService!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.sidewell!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.shoulder!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.treadDepth!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.treadWear!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.rimDamage!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.bubble!!)
-        Log.e("getvaluess_all", "" + TyreDetailCommonClass.issueResolvedArr!!)
-        Log.e("getvaluess_all", TyreDetailCommonClass.visualDetailPhotoUrl!!)
+                            if (chkRF?.text?.toString().equals("RF")) {
+                                chkRF?.isChecked = true
+                            }
+                            if (chkLR?.text?.toString().equals("RF")) {
+                                chkLR?.isChecked = true
+                            }
+                            if (chkRR?.text?.toString().equals("RF")) {
+                                chkRR?.isChecked = true
+                            }
+                        }
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
 
-        Log.e("getvaluess_all--1 make", TyreDetailCommonClass.chk1Make!!)
-        Log.e("getvaluess_all--2 make", TyreDetailCommonClass.chk2Make!!)
-        Log.e("getvaluess_all--3 make", TyreDetailCommonClass.chk3Make!!)
-        Log.e("getvaluess_all--1 patte", TyreDetailCommonClass.chk1Pattern!!)
-        Log.e("getvaluess_all--2 patte", TyreDetailCommonClass.chk2Pattern!!)
-        Log.e("getvaluess_all--3 patte", TyreDetailCommonClass.chk3Pattern!!)
-        Log.e("getvaluess_all--1 size", TyreDetailCommonClass.chk1Size!!)
-        Log.e("getvaluess_all--2 size", TyreDetailCommonClass.chk2Size!!)
-        Log.e("getvaluess_all--3 size", TyreDetailCommonClass.chk3Size!!)
+        if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+        ) {
+            var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+            try {
+                var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.asString.equals(
+                        ""
+                    )
+                ) {
 
+                    if (selectedId == json.get("vehicleSizeId")?.asString?.toInt()) {
+                        runOnUiThread {
+
+                            if (chkRF?.text?.toString().equals("RR")) {
+                                chkRF?.isChecked = true
+                            }
+                            if (chkLR?.text?.toString().equals("RR")) {
+                                chkLR?.isChecked = true
+                            }
+                            if (chkRR?.text?.toString().equals("RR")) {
+                                chkRR?.isChecked = true
+                            }
+                        }
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        runOnUiThread {
+            Log.e("getsizedata", "getsize")
+            if (selectedId != -1) {
+                llVehicleMakeselectedView?.visibility = View.VISIBLE
+                btnNext?.visibility = View.VISIBLE
+                gridviewRecycModel?.visibility = View.GONE
+                val thread = Thread {
+                    if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass().getAllSize().size > 0) {
+                        arrList?.clear()
+                        arrList?.addAll(mDb.sizeDaoClass().getAllSize())
+                    }
+                }
+                thread.start()
+                if (arrList != null && arrList?.size!! > 0) {
+                    for (i in arrList?.indices!!) {
+
+                        if (selectedId == arrList?.get(i)?.sizeId) {
+                            arrList?.get(i)?.isSelected = true
+                        }
+                    }
+                }
+                Common.hideLoader()
+                tvSelectedModel?.text = TyreDetailCommonClass.vehicleSize
+                adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
+                gridviewRecycModel?.adapter = adapter
+            } else {
+                var thread = Thread {
+                    if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass().getAllSize().size > 0) {
+                        arrList?.clear()
+                        arrList?.addAll(mDb.sizeDaoClass().getAllSize())
+
+                        runOnUiThread {
+
+                            gridviewRecycModel?.layoutManager =
+                                GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+
+                            adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
+                            gridviewRecycModel?.adapter = adapter
+                        }
+
+                    }
+
+                }
+                thread.start()
+
+            }
+        }
     }
 
-    private fun fetchSizeData() {
+   /* private fun fetchSizeData() {
         Common.showLoader(this)
-        Log.e("getsizedata","call11")
+        Log.e("getsizedata", "call11")
         var make_id: Int = -1
         var model_id: Int = -1
         if (TyreDetailCommonClass.make_id != -1) {
@@ -480,7 +438,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         if (TyreDetailCommonClass.model_id != -1) {
             model_id = TyreDetailCommonClass.model_id
         }
-        Log.e("getsizedata",""+make_id+" "+model_id)
+        Log.e("getsizedata", "" + make_id + " " + model_id)
         warrantyViewModel.getVehicleSize(
             model_id, make_id,
             prefManager.getAccessToken()!!,
@@ -516,7 +474,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
                         gridviewRecycModel?.adapter = adapter
                         Common.hideLoader()
-                        /* runOnUiThread {
+                        *//* runOnUiThread {
                              if (selectedId != -1) {
                                  llVehicleMakeselectedView?.visibility = View.VISIBLE
                                  btnNext?.visibility = View.VISIBLE
@@ -537,7 +495,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                              } else {
 
                              }
-                         }*/
+                         }*//*
                     } else {
                         if (it.error != null && it.error.size > 0) {
                             if (it.error.get(0).statusCode != null) {
@@ -556,7 +514,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     showLongToast("Something Went Wrong", this@VehicleSizeActivity)
                 }
             })
-    }
+    }*/
 
     private fun setData(json: JsonObject) {
         Log.e("getvalselected", "" + json)
@@ -1088,11 +1046,13 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
             }
             R.id.ivEditVehicleMake -> {
-                fetchSizeData()
-//                gridviewRecycModel?.layoutManager =
-//                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
-//                adapter = VehicleSizeAdapter(this, arrList, this, -1)
-//                gridviewRecycModel?.adapter = adapter
+//                fetchSizeData()
+
+                Log.e("getarr", "" + arrList?.size)
+                gridviewRecycModel?.layoutManager =
+                    GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
+                adapter = VehicleSizeAdapter(this, arrList, this, -1)
+                gridviewRecycModel?.adapter = adapter
 //                gridviewRecycModel?.visibility = View.VISIBLE
 
                 Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
