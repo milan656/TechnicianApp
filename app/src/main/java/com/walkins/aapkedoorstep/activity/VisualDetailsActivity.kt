@@ -348,23 +348,20 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
 //        getIssueList()
 
-        val thread = Thread {
-            if (mDb.issueListDaoClass().getAllIssue() != null && mDb.issueListDaoClass().getAllIssue().size > 0) {
-                issueResolveArray?.clear()
-                for (i in mDb.issueListDaoClass().getAllIssue().indices) {
-                    issueResolveArray?.add(
-                        IssueResolveModel(
-                            mDb.issueListDaoClass().getAllIssue().get(i).name!!, mDb.issueListDaoClass().getAllIssue().get(i).issueId!!, false
-                        )
+        if (prefManager.getIssueList(TyreConfigClass.issueList) != null &&
+            prefManager.getIssueList(TyreConfigClass.issueList)?.size!! > 0
+        ) {
+            issueResolveArray?.clear()
+            for (i in prefManager.getIssueList(TyreConfigClass.issueList)?.indices!!) {
+                issueResolveArray?.add(
+                    IssueResolveModel(
+                        prefManager.getIssueList(TyreConfigClass.issueList)?.get(i)?.issueName!!, prefManager.getIssueList(TyreConfigClass.issueList)?.get(i)?.id!!, false
                     )
-                }
-                issueResolveAdapter?.notifyDataSetChanged()
-                runOnUiThread {
-                    getTyreWiseData()
-                }
+                )
             }
+            issueResolveAdapter?.notifyDataSetChanged()
+            getTyreWiseData()
         }
-        thread.start()
 
         if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
             !prefManager.getValue(TyreConfigClass.serviceDetailData).equals("")

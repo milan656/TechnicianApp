@@ -642,7 +642,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
-
     private fun init() {
 
         tvTitle = findViewById(R.id.tvTitle)
@@ -869,13 +868,30 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         })
 
-        getServiceList()
+        if (prefManager.getServiceList(TyreConfigClass.serviceList) != null && prefManager.getServiceList(TyreConfigClass.serviceList)?.size!! > 0) {
+            serviceList?.clear()
+            for (i in prefManager.getServiceList(TyreConfigClass.serviceList)?.indices!!) {
+                val model = ServiceModelData(
+                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.id!!,
+                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name!!,
+                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.image!!, false
+                )
+                serviceList?.add(model)
+            }
+            serviceAdapter?.notifyDataSetChanged()
+        }
 
-        getCommentList()
+        if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList)?.size!! > 0) {
+            commentList?.clear()
+            for (i in prefManager.getCommentList(TyreConfigClass.commentList)?.indices!!) {
+                val model = CommentListData(
+                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.id!!,
+                    prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name!!
+                )
+                commentList?.add(model)
+            }
+        }
     }
-
-
-
 
     private fun getServiceData() {
         if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
@@ -2255,10 +2271,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         try {
             skipList = ArrayList<IssueResolveModel>()
 
-            commentList?.clear()
-            commentList?.addAll(commentModel?.data!!)
-
             if (commentList?.size!! > 0) {
+                for (i in commentList?.indices!!) {
+                    skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
+                    Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
+                }
+            } else {
+                if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList)?.size!! > 0) {
+                    commentList?.clear()
+                    for (i in prefManager.getCommentList(TyreConfigClass.commentList)?.indices!!) {
+                        val model = CommentListData(
+                            prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.id!!,
+                            prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name!!
+                        )
+                        commentList?.add(model)
+                    }
+                }
                 for (i in commentList?.indices!!) {
                     skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
                     Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)

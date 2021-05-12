@@ -2,9 +2,14 @@ package com.example.technician.common
 
 import android.R.attr.data
 import android.content.Context
+import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.walkins.aapkedoorstep.model.login.IssueResolveModel
+import com.walkins.aapkedoorstep.model.login.comment.CommentListData
+import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
 import java.io.IOException
+import java.lang.reflect.Type
 
 
 class PrefManager(context: Context) {
@@ -372,14 +377,11 @@ class PrefManager(context: Context) {
     }
 
 
-
     fun remove(key: String) {
         val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.remove(key)
     }
-
-
 
 
     fun removeValue(key: String) {
@@ -393,6 +395,7 @@ class PrefManager(context: Context) {
         val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         return sharedPreferences.getString(key, "")!!
     }
+
     fun saveArrayList(key: String, vehicleList: ArrayList<String>?) {
         val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -408,7 +411,97 @@ class PrefManager(context: Context) {
         editor.commit()
     }
 
-    fun saveArray(key: String, list: ArrayList<String>){
+    fun saveServiceList(key: String, serviceList: java.util.ArrayList<ServiceModelData>?) {
+        val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val textList: MutableList<ServiceModelData> = ArrayList()
+        textList.addAll(serviceList!!)
+        val jsonText = gson.toJson(textList)
+        try {
+            editor.putString(key, jsonText)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        editor.commit()
+    }
+
+    fun getCommentList(key: String?): ArrayList<CommentListData> {
+        var arrlist: ArrayList<CommentListData>? = ArrayList()
+        try {
+            val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+            val gson = Gson()
+            val json: String = sharedPreferences.getString(key, null)!!
+            val type: Type = object : TypeToken<java.util.ArrayList<CommentListData?>?>() {}.getType()
+            arrlist = gson.fromJson(json, type)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+
+        return arrlist!!
+    }
+
+    fun getServiceList(key: String): ArrayList<ServiceModelData> {
+        var arrlist: ArrayList<ServiceModelData>? = ArrayList()
+        try {
+            val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+            val gson = Gson()
+            val json: String = sharedPreferences.getString(key, null)!!
+            val type: Type = object : TypeToken<java.util.ArrayList<ServiceModelData?>?>() {}.getType()
+            arrlist = gson.fromJson(json, type)
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return arrlist!!
+    }
+
+    fun getIssueList(key: String?): ArrayList<IssueResolveModel> {
+        var arrlist: ArrayList<IssueResolveModel>? = ArrayList()
+        try {
+            val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+            val gson = Gson()
+            val json: String = sharedPreferences.getString(key, null)!!
+            val type: Type = object : TypeToken<java.util.ArrayList<IssueResolveModel?>?>() {}.getType()
+            arrlist = gson.fromJson(json, type)
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return arrlist!!
+    }
+
+    fun saveCommentList(key: String, vehicleList: ArrayList<CommentListData>?) {
+        val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val textList: MutableList<CommentListData> = ArrayList()
+        textList.addAll(vehicleList!!)
+        val jsonText = gson.toJson(textList)
+        try {
+            editor.putString(key, jsonText)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        editor.commit()
+    }
+
+    fun saveIssueList(key: String, vehicleList: ArrayList<IssueResolveModel>?) {
+        val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val textList: MutableList<IssueResolveModel> = ArrayList()
+        textList.addAll(vehicleList!!)
+        val jsonText = gson.toJson(textList)
+        try {
+            editor.putString(key, jsonText)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        editor.commit()
+    }
+
+    fun saveArray(key: String, list: ArrayList<String>) {
         val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         val gson = Gson()
@@ -417,6 +510,7 @@ class PrefManager(context: Context) {
         editor.putString(key, jsonText)
         editor.apply()
     }
+
     fun setGoogleRatingLink(googleRating: String?) {
         val sharedPreferences = activity.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()

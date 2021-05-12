@@ -32,6 +32,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.DB.DBClass
 import com.walkins.aapkedoorstep.R
+import com.walkins.aapkedoorstep.common.TyreConfigClass
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.common.replaceFragmenty
 import com.walkins.aapkedoorstep.common.showShortToast
@@ -39,6 +40,10 @@ import com.walkins.aapkedoorstep.fragment.HomeFragment
 import com.walkins.aapkedoorstep.fragment.NotificationFragment
 import com.walkins.aapkedoorstep.fragment.ProfileFragment
 import com.walkins.aapkedoorstep.fragment.ReportFragment
+import com.walkins.aapkedoorstep.model.login.IssueResolveModel
+import com.walkins.aapkedoorstep.model.login.comment.CommentListData
+import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
+import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
 import com.walkins.aapkedoorstep.service.Actions
 import com.walkins.aapkedoorstep.service.EndlessService
 import com.walkins.aapkedoorstep.service.ServiceState
@@ -50,11 +55,15 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.InputStream
+import java.lang.NullPointerException
 import java.util.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
-
+    private var commentModel: CommentListModel? = null
+    private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
+    private var issueResolveArray: ArrayList<IssueResolveModel>? = ArrayList()
+    private var commentList: ArrayList<CommentListData>? = ArrayList()
     private var commonViewModel: CommonViewModel? = null
     private var ivHome: ImageView? = null
     private var ivNotification: ImageView? = null
@@ -107,18 +116,77 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         }
         thread.start()
 
+        llhome?.performClick()
+
+
+        if (prefManager?.getServiceList(TyreConfigClass.serviceList) != null &&
+            prefManager?.getServiceList(TyreConfigClass.serviceList)?.size!! > 0
+        ) {
+
+        } else {
+
+            getServiceList()
+        }
+        if (prefManager?.getCommentList(TyreConfigClass.commentList) != null &&
+            prefManager?.getCommentList(TyreConfigClass.commentList)?.size!! > 0
+        ) {
+
+        } else {
+
+            getCommentList()
+        }
+        if (prefManager?.getIssueList(TyreConfigClass.issueList) != null &&
+            prefManager?.getIssueList(TyreConfigClass.issueList)?.size!! > 0
+        ) {
+
+        } else {
+
+            getIssueList()
+        }
+
+
         getNotificationCount()
 
-
     }
+
+    private fun getIssueList() {
+        commonViewModel?.callApiListOfIssue(prefManager?.getAccessToken()!!, this)
+        commonViewModel?.getListOfIssue()?.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                if (it.success) {
+
+                    issueResolveArray?.clear()
+                    if (it.data != null && it.data.size > 0) {
+                        for (i in it.data.indices) {
+                            issueResolveArray?.add(
+                                IssueResolveModel(
+                                    it.data.get(i).name, it.data.get(i).id, false
+                                )
+                            )
+                        }
+                    }
+
+                    prefManager?.saveIssueList(TyreConfigClass.issueList, issueResolveArray!!)
+                    Common.hideLoader()
+                } else {
+                    Common.hideLoader()
+                }
+            } else {
+                Common.hideLoader()
+            }
+        })
+    }
+
     private fun getCommentList() {
-        Common.showLoader(this)
-        commonViewModel?.callApiGetComments(prefManager.getAccessToken()!!, this)
+        commonViewModel?.callApiGetComments(prefManager?.getAccessToken()!!, this)
         commonViewModel?.getCommentList()?.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 if (it.success) {
 
                     commentModel = it
+                    commentList?.clear()
+                    commentList?.addAll(it.data)
+                    prefManager?.saveCommentList(TyreConfigClass.commentList, commentList)
                     Common.hideLoader()
 
                 } else {
@@ -138,7 +206,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private fun getServiceList() {
 
-        commonViewModel?.callApiGetService(prefManager.getAccessToken()!!, this)
+        commonViewModel?.callApiGetService(prefManager?.getAccessToken()!!, this)
         commonViewModel?.getService()?.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 if (it.success) {
@@ -146,6 +214,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     if (it.data.size > 0) {
                         serviceList?.clear()
                         serviceList?.addAll(it.data)
+
+                        prefManager?.saveServiceList(TyreConfigClass.serviceList, serviceList)
                     }
 
                 } else {
@@ -159,11 +229,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             }
         })
     }
+
     private fun getNotificationCount() {
 
         this.let {
+            Common.showLoader(this)
             commonViewModel?.callApiGetNotificationCount(prefManager?.getAccessToken()!!, it)
             commonViewModel?.getNotiCount()?.observe(it, Observer {
+                Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
                         notiCount = it.data.count

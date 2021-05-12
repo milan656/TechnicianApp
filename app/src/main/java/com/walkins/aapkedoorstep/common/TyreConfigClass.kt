@@ -49,5 +49,9 @@ class TyreConfigClass {
 
         var backgroundWebServiceCallTime = "backgroundWebServiceCallTime"
 
+        var serviceList = "serviceList"
+        var commentList = "commentList"
+        var issueList = "issueList"
+
     }
 }

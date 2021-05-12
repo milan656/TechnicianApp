@@ -159,7 +159,7 @@ class EndlessService : Service() {
             while (isServiceStarted) {
                 launch(Dispatchers.IO) {
                     fetchVehicleData()
-                    fetchIssueList()
+//                    fetchIssueList()
 //                    fetchPattern()
 //                    fetchSize()
 
