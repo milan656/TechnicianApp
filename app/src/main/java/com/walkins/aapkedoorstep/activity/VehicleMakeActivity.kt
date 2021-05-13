@@ -129,6 +129,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     .getAllVehicleType().size > 0
             ) {
                 arrList?.addAll(mDb.daoClass().getAllVehicleType())
+                Log.e("getSizeVehicleBrand", ""+arrList?.size)
             }
 
             if (selectedTyre.equals("LF")) {
@@ -855,6 +856,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
             }
             R.id.ivEditVehicleMake -> {
+
+                Common.showLoader(this)
                 try {
                     gridviewRecycMake_?.layoutManager =
                         GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
@@ -865,6 +868,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                     Common.slideDown(gridviewRecycMake_!!, null)
 
+                    Common.hideLoader()
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }

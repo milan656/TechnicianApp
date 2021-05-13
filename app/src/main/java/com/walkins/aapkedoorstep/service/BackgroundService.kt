@@ -37,11 +37,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class EndlessService : Service() {
+class BackgroundService : Service() {
     private var prefManager: PrefManager? = null
     private lateinit var mDb: DBClass
     private var wakeLock: PowerManager.WakeLock? = null
-    private var isServiceStarted = false
+    companion object{
+        var isServiceStarted = false
+    }
+
+
     var context: Context? = null
     private var vehicleBrandModel: VehicleBrandModel? = null
 
@@ -94,7 +98,7 @@ class EndlessService : Service() {
     @SuppressLint("WrongConstant")
     private fun startMyOwnForeground() {
         val NOTIFICATION_CHANNEL_ID = "channal"
-        val channelName = "My Background Service"
+        val channelName = "Background Service"
         val chan = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel(
                 NOTIFICATION_CHANNEL_ID,
@@ -110,12 +114,13 @@ class EndlessService : Service() {
         manager.createNotificationChannel(chan)
         val notificationBuilder: Notification.Builder =
             Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
-        val notification: Notification = notificationBuilder.setOngoing(true)
-            .setSmallIcon(R.drawable.ic_launcher)
+        val notification: Notification = notificationBuilder.setOngoing(false)
+            .setSmallIcon(R.mipmap.ic_walkins_logo)
             .setContentTitle("App is running in background")
             .setPriority(NotificationManager.IMPORTANCE_MIN)
             .setCategory(Notification.CATEGORY_SERVICE)
             .build()
+
         startForeground(2, notification)
     }
 
@@ -126,7 +131,7 @@ class EndlessService : Service() {
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
-        val restartServiceIntent = Intent(applicationContext, EndlessService::class.java).also {
+        val restartServiceIntent = Intent(applicationContext, BackgroundService::class.java).also {
             it.setPackage(packageName)
         };
         val restartServicePendingIntent: PendingIntent =
@@ -164,7 +169,7 @@ class EndlessService : Service() {
                     fetchTime()
 
                 }
-                delay(15 * 60 * 1000) // 5 min delay
+                delay(1 * 60 * 1000) // 5 min delay
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
@@ -274,13 +279,14 @@ class EndlessService : Service() {
                         Log.e("getmodel00::", "" + apiUpdatedTimeModel)
 
                         Log.e("getmodel00::", "" + prefManager?.getValue(TyreKey.lastTyreBrandUpdatedDate))
-                        Log.e("getmodel00::", "" + prefManager?.getValue(TyreKey.lastPatternUpdatedDate))
                         Log.e("getmodel00::", "" + prefManager?.getValue(TyreKey.lastSizeUpdatedDate))
+                        Log.e("getmodel00::", "" + prefManager?.getValue(TyreKey.lastPatternUpdatedDate))
 
                         if (prefManager?.getValue(TyreKey.lastTyreBrandUpdatedDate) != null &&
                             !prefManager?.getValue(TyreKey.lastTyreBrandUpdatedDate).equals("")
                         ) {
                             if (!prefManager?.getValue(TyreKey.lastTyreBrandUpdatedDate).equals(apiUpdatedTimeModel.data.lastTyreBrandUpdatedDate)) {
+                                prefManager?.setValue(TyreKey.lastTyreBrandUpdatedDate, apiUpdatedTimeModel.data.lastTyreBrandUpdatedDate)
                                 fetchVehicleData()
                             }
                         } else {
@@ -291,6 +297,7 @@ class EndlessService : Service() {
                             !prefManager?.getValue(TyreKey.lastPatternUpdatedDate).equals("")
                         ) {
                             if (!prefManager?.getValue(TyreKey.lastPatternUpdatedDate).equals(apiUpdatedTimeModel.data.lastPatternUpdatedDate)) {
+                                prefManager?.setValue(TyreKey.lastPatternUpdatedDate, apiUpdatedTimeModel.data.lastPatternUpdatedDate)
                                 fetchPattern()
                             }
                         } else {
@@ -301,6 +308,7 @@ class EndlessService : Service() {
                             !prefManager?.getValue(TyreKey.lastSizeUpdatedDate).equals("")
                         ) {
                             if (!prefManager?.getValue(TyreKey.lastSizeUpdatedDate).equals(apiUpdatedTimeModel.data.lastSizeUpdatedDate)) {
+                                prefManager?.setValue(TyreKey.lastSizeUpdatedDate, apiUpdatedTimeModel.data.lastSizeUpdatedDate)
                                 fetchSize()
                             }
                         } else {

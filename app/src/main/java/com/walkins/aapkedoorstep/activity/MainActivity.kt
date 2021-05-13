@@ -23,8 +23,6 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.Common.Companion.getFile
 import com.example.technician.common.Common.Companion.setTint
@@ -44,7 +42,7 @@ import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
 import com.walkins.aapkedoorstep.service.Actions
-import com.walkins.aapkedoorstep.service.EndlessService
+import com.walkins.aapkedoorstep.service.BackgroundService
 import com.walkins.aapkedoorstep.service.ServiceState
 import com.walkins.aapkedoorstep.service.getServiceState
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
@@ -54,7 +52,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.InputStream
-import java.lang.NullPointerException
 import java.util.*
 
 
@@ -99,7 +96,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
         Log.e("getaccessToken", "" + prefManager?.getAccessToken())
         init()
-        actionOnService(Actions.START)
+
+
         callApiTogetToken()
 
        /* val thread = Thread {
@@ -363,7 +361,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private fun actionOnService(action: Actions) {
         if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
-        Intent(this, EndlessService::class.java).also {
+        Intent(this, BackgroundService::class.java).also {
             it.action = action.name
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Log.e("ENDLESS-SERVICE", "Starting the service in >=26 Mode")
@@ -481,7 +479,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     override fun onResume() {
         super.onResume()
-        Log.e("selectedMenu", "" + selectedMenu)
+        Log.e("selectedMenu", "" + BackgroundService.isServiceStarted)
+        if (!BackgroundService.isServiceStarted) {
+            actionOnService(Actions.START)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

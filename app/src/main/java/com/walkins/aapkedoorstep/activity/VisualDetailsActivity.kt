@@ -423,7 +423,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 e.printStackTrace()
             }
 
-
         }
 
         if (prefManager.getValue("image_" + selectedTyre) != null &&
@@ -432,6 +431,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getimages1", "" + prefManager.getValue("image_" + selectedTyre))
 //            ivPickedImage1?.setImageURI(Uri.parse(prefManager.getValue("image_" + selectedTyre)))
 
+            TyreDetailCommonClass.visualDetailPhotoUrl = prefManager.getValue("image_" + selectedTyre)
             Glide.with(this).load(prefManager.getValue("image_" + selectedTyre)).into(ivPickedImage1!!)
             ivPickedImage1?.visibility = View.VISIBLE
             ivEditImg2?.visibility = View.VISIBLE
@@ -1545,6 +1545,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 )
             }
             R.id.ivPickedImage1 -> {
+                Log.e("getimageurl", "" + TyreDetailCommonClass.visualDetailPhotoUrl)
                 if (!TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
                     showImage(TyreDetailCommonClass.visualDetailPhotoUrl!!)
                 }

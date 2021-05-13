@@ -58,5 +58,10 @@ class TyreKey {
         var lastTyreBrandUpdatedDate = "lastTyreBrandUpdatedDate"
         var lastSizeUpdatedDate = "lastSizeUpdatedDate"
         var lastPatternUpdatedDate = "lastPatternUpdatedDate"
+
+        var uri_LF = "uri_LF"
+        var uri_LR = "uri_LR"
+        var uri_RF = "uri_RF"
+        var uri_RR = "uri_RR"
     }
 }

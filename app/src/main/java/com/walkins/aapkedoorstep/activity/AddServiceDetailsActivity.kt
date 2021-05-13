@@ -2041,7 +2041,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getfinalobject", "" + jsonObject)
                     Log.e("getObjectT__", "" + jsonObject)
 
-                    /*serviceViewModel?.callApiAddService(
+                    serviceViewModel?.callApiAddService(
                         jsonObject,
                         prefManager.getAccessToken()!!,
                         this
@@ -2069,7 +2069,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         } else {
                             Common.hideLoader()
                         }
-                    })*/
+                    })
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -2956,6 +2956,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (Common.isConnectedToInternet(this)) {
                         val inputStream: InputStream? =
                             this.contentResolver?.openInputStream(image_uri!!)
+                        if (selectImage1) {
+                            prefManager.removeValue("image_Car_1")
+                        } else {
+                            prefManager.removeValue("image_Car_2")
+                        }
                         imagePath?.let { uploadImage(it, inputStream!!, "") }
                     } else {
 
@@ -3002,6 +3007,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (Common.isConnectedToInternet(this)) {
                         val inputStream: InputStream? =
                             this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+                        if (selectImage1) {
+                            prefManager.removeValue("image_Car_1")
+                        } else {
+                            prefManager.removeValue("image_Car_2")
+                        }
                         auxFile.let { uploadImage(it, inputStream!!, "") }
                     } else {
 
@@ -3055,6 +3065,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (Common.isConnectedToInternet(this)) {
                         val inputStream: InputStream? =
                             this.contentResolver?.openInputStream(selectedImage!!)
+                        if (selectImage1) {
+                            prefManager.removeValue("image_Car_1")
+                        } else {
+                            prefManager.removeValue("image_Car_2")
+                        }
                         imagePath?.let { uploadImage(it, inputStream!!, "") }
                     } else {
 
@@ -3069,7 +3084,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         }
                         storeServiceDetailData()
                         checkSubmitBtn()
-
                     }
 
                 }
@@ -3423,11 +3437,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             return
         }
         Log.e("isCpmpleted33", "button is clickable")
-        Toast.makeText(this, "button is clickable", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "button is clickable", Toast.LENGTH_SHORT).show()
         btnSubmitAndComplete?.isClickable = true
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.round_corner_button_yellow))
     }
-
 
     private fun storeMake() {
         if (TyreDetailCommonClass.tyreType.equals("LF")) {
@@ -5094,6 +5107,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         prefManager.removeValue(TyreConfigClass.TyreRRObject)
         prefManager.removeValue(TyreConfigClass.TyreRFObject)
         prefManager.removeValue(TyreConfigClass.TyreLRObject)
+        if (prefManager?.getValue("image_LF") != null) {
+            prefManager.removeValue("image_LF")
+        }
+        if (prefManager?.getValue("image_LR") != null) {
+            prefManager.removeValue("image_LR")
+        }
+        if (prefManager?.getValue("image_RF") != null) {
+            prefManager.removeValue("image_RF")
+        }
+        if (prefManager?.getValue("image_RR") != null) {
+            prefManager.removeValue("image_RR")
+        }
+
         Common.setClearAllValues()
         Common.setFalseAllTyreStatus()
     }
@@ -5166,18 +5192,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         loginViewModel?.uploadImage(part, prefManager.getAccessToken()!!, this, "service-image")
 
         loginViewModel?.getImageUpload()?.observe(this, androidx.lifecycle.Observer {
-            if (type.equals("")) {
-                Common.hideLoader()
-            }
+
             if (it != null) {
                 if (it.success) {
                     Log.e("getFile", "" + it.data.imageUrl)
-                    Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
-                    if (selectImage1) {
-                        TyreConfigClass.CarPhoto_1 = it.data.imageUrl
-                    } else {
-                        TyreConfigClass.CarPhoto_2 = it.data.imageUrl
-                    }
+//                    Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
 
                     Log.e("getuploadType", "" + type)
 
@@ -5285,12 +5304,24 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                 }
                             }
                         }
-
+                    } else {
+                        if (selectImage1) {
+                            TyreConfigClass.CarPhoto_1 = it.data.imageUrl
+                        } else {
+                            TyreConfigClass.CarPhoto_2 = it.data.imageUrl
+                        }
                     }
 
                     storeServiceDetailData()
                     checkSubmitBtn()
+                    if (type.equals("")) {
+                        Common.hideLoader()
+                    }
+                } else {
+                    Common.hideLoader()
                 }
+            } else {
+                Common.hideLoader()
             }
         })
     }

@@ -448,10 +448,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 btnNext?.visibility = View.VISIBLE
                 gridviewRecycModel?.visibility = View.GONE
 
-                val thread=Thread{
-                    if (mDb.patternDaoClass().getAllPattern()!=null && mDb.patternDaoClass().getAllPattern().size>0){
+                val thread = Thread {
+                    if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                         arrList?.clear()
                         arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                        Log.e("getSizeVehiclePattern", "" + arrList?.size)
                     }
                 }
                 thread.start()
@@ -469,10 +470,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
                 Common.hideLoader()
             } else {
-                val thread=Thread{
-                    if (mDb.patternDaoClass().getAllPattern()!=null && mDb.patternDaoClass().getAllPattern().size>0){
+                val thread = Thread {
+                    if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                         arrList?.clear()
                         arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                        Log.e("getSizeVehiclePattern", "" + arrList?.size)
                     }
 
                     runOnUiThread {
@@ -485,10 +487,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 thread.start()
             }
         } else {
-            val thread=Thread{
-                if (mDb.patternDaoClass().getAllPattern()!=null && mDb.patternDaoClass().getAllPattern().size>0){
+            val thread = Thread {
+                if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                     arrList?.clear()
                     arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                    Log.e("getSizeVehiclePattern", "" + arrList?.size)
                 }
 
                 runOnUiThread {
@@ -835,22 +838,23 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
             }
             R.id.ivEditVehicleMake -> {
+                Common.showLoader(this)
                 GlobalScope.launch(Dispatchers.Main) {
                     launch(Dispatchers.Main) {
-
-                      /*  if (arrList?.size == 0) {
-                            getVehiclePattern(true)
-                        } else {*/
+                        try {
                             gridviewRecycModel?.layoutManager =
                                 GridLayoutManager(this@VehiclePatternActivity, 3, RecyclerView.VERTICAL, false)
                             adapter = VehiclePatternAdapter(this@VehiclePatternActivity, arrList, this@VehiclePatternActivity, -1)
                             gridviewRecycModel?.adapter = adapter
+
                             Common.slideUp(llVehicleMakeselectedView!!, btnNext!!)
                             Common.slideDown(gridviewRecycModel!!, null)
-//                        }
-
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 }
+                Common.hideLoader()
             }
 
         }
