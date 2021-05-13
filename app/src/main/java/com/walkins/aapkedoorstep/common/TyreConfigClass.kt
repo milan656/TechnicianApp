@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.common
 
+import android.net.Uri
 import java.io.File
 import java.io.InputStream
 
@@ -56,11 +57,9 @@ class TyreConfigClass {
         var commentList = "commentList"
         var issueList = "issueList"
 
-        var car_1_stream: InputStream? = null
-        var car_2_stream: InputStream? = null
+        var car_1_uri: Uri? = null
+        var car_2_uri: Uri? = null
 
-        var car_1_file:File?=null
-        var car_2_file:File?=null
 
     }
 }

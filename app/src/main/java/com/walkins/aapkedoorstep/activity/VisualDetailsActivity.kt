@@ -1664,6 +1664,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 Log.e("getslider", "" + TyreDetailCommonClass.chk2Pattern)
                 Log.e("getslider", "" + TyreDetailCommonClass.chk3Pattern)
 
+
                 setResult(1004)
                 finish()
             }
@@ -1926,13 +1927,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         prefManager.removeValue("image_" + selectedTyre)
                         imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(image_uri!!)
-
-                        TyreDetailCommonClass.inputStream = inputStream
-                        prefManager.setValue("image_stream_" + selectedTyre, inputStream?.readBytes()?.toString())
                         prefManager.setValue("image_" + selectedTyre, image_uri.toString())
                         TyreDetailCommonClass.visualDetailPhotoUrl = image_uri.toString()
+
+                        setUriTyreWise(image_uri!!)
                     }
                 }
 
@@ -1965,12 +1963,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         prefManager.removeValue("image_" + selectedTyre)
                         auxFile.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
 
-                        prefManager.setValue("image_stream_" + selectedTyre, inputStream?.readBytes()?.toString())
                         prefManager.setValue("image_" + selectedTyre, Uri.parse(mCurrentPhotoPath).toString())
                         TyreDetailCommonClass.visualDetailPhotoUrl = Uri.parse(mCurrentPhotoPath).toString()
+                        setUriTyreWise(Uri.parse(mCurrentPhotoPath)!!)
                     }
                 }
             }
@@ -2017,13 +2013,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         prefManager.removeValue("image_" + selectedTyre)
                         imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(selectedImage!!)
-
-                        prefManager.setValue("image_stream_" + selectedTyre, inputStream?.readBytes()?.toString())
                         prefManager.setValue("image_" + selectedTyre, data.dataString)
-                        Log.e("getimages", "" + prefManager.getValue("image_" + selectedTyre))
                         TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage.toString()
+                        setUriTyreWise(selectedImage!!)
                     }
 
                 }
@@ -2208,6 +2200,21 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
         builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         builder.show()
+    }
+
+    fun setUriTyreWise(uri: Uri) {
+        if (selectedTyre.equals("LF")) {
+            TyreDetailCommonClass.tyre_Uri_LF = uri
+        }
+        if (selectedTyre.equals("LR")) {
+            TyreDetailCommonClass.tyre_Uri_LR = uri
+        }
+        if (selectedTyre.equals("RF")) {
+            TyreDetailCommonClass.tyre_Uri_RF = uri
+        }
+        if (selectedTyre.equals("RR")) {
+            TyreDetailCommonClass.tyre_Uri_RR = uri
+        }
     }
 }
 

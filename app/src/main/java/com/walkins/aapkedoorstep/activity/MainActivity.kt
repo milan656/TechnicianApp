@@ -757,15 +757,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 //
                     if (fragment is ProfileFragment) {
 //                        fragment.ivProfileImg?.setImageURI(image_uri)
-                        try {
-                            Glide.with(this@MainActivity)
-                                .load(it.data.imageUrl)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.placeholder)
-                                .into(fragment.ivProfileImg!!)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
+//                        try {
+//                            Glide.with(this@MainActivity)
+//                                .load(it.data.imageUrl)
+//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                .placeholder(R.drawable.placeholder)
+//                                .into(fragment.ivProfileImg!!)
+//                        } catch (e: Exception) {
+//                            e.printStackTrace()
+//                        }
                     }
                     Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
 

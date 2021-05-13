@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.common
 
+import android.net.Uri
 import java.io.InputStream
 
 class TyreDetailCommonClass {
@@ -47,6 +48,11 @@ class TyreDetailCommonClass {
         var model_id: Int = -1
 
         var inputStream: InputStream? = null
+
+        var tyre_Uri_LF: Uri? = null
+        var tyre_Uri_LR: Uri? = null
+        var tyre_Uri_RF: Uri? = null
+        var tyre_Uri_RR: Uri? = null
 
     }
 }
