@@ -3469,6 +3469,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             TyreKey.vehicleMakeId,
                             TyreDetailCommonClass.vehicleMakeId
                         )
+                        lfObject?.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
                     }
                 }
 
@@ -3596,6 +3600,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         lfObject.put(
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                        )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
                         )
                     }
                 }
@@ -3729,6 +3737,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                         )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
                     }
                 }
                 if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
@@ -3846,7 +3858,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
                 var lfObject: JSONObject = JSONObject(str)
 
-                Log.e("getObjlr23", "" + lfObject.toString())
+                Log.e("getObjLF", "" + lfObject.toString())
                 if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
                         !TyreDetailCommonClass.vehicleMakeId.equals("")
@@ -3861,6 +3873,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         lfObject.put(
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                        )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
                         )
                     }
                 }
@@ -3977,7 +3993,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                 var lfObject: JSONObject = JSONObject(str)
-
+                Log.e("getObjRF", "" + lfObject.toString())
                 if (TyreDetailCommonClass.chk2Make.equals("RF,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
                         !TyreDetailCommonClass.vehicleMakeId.equals("")
@@ -3993,6 +4009,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
                         )
+
+                        lfObject.put(TyreKey.vehicleMakeURL,TyreDetailCommonClass.vehicleMakeURL)
                     }
                 }
                 if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) {
@@ -4037,6 +4055,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
                 prefManager.setValue(TyreConfigClass.TyreRFObject, jsonlf.toString())
+                Log.e("getObjRF111", "" + prefManager.getValue(TyreConfigClass.TyreRFObject))
             } else {
                 val jsonrf = JsonObject()
                 jsonrf.addProperty(TyreKey.tyreType, "RF")
@@ -4097,6 +4116,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
+                Log.e("getObjRF222", "" + prefManager.getValue(TyreConfigClass.TyreRFObject))
             }
 
 //                    ======================================================================
@@ -4123,6 +4143,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         lfObject.put(
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                        )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
                         )
                     }
                 }
@@ -4254,6 +4278,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         lfObject.put(
                             TyreKey.vehicleMakeId,
                             TyreDetailCommonClass.vehicleMakeId
+                        )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
                         )
                     }
                 }
@@ -4389,6 +4417,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk2Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                         )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
                     }
                 }
                 if (TyreDetailCommonClass.chk2Pattern.equals("LR,true")) {
@@ -4523,6 +4555,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk3Make.equals("RR,true")) TyreDetailCommonClass.vehicleMakeId else ""
                         )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
                     }
                 }
                 if (TyreDetailCommonClass.chk3Pattern.equals("RR,true")) {
@@ -4654,6 +4690,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk1Make.equals("LF,true")) TyreDetailCommonClass.vehicleMakeId else ""
                         )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
+                        )
                     }
                 }
                 if (TyreDetailCommonClass.chk1Pattern.equals("LF,true")) {
@@ -4768,8 +4808,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
                 var lfObject: JSONObject = JSONObject(str)
 
-
-
                 if (TyreDetailCommonClass.chk2Make.equals("RF,true")) {
                     if (!TyreDetailCommonClass.vehicleMake.equals("") &&
                         !TyreDetailCommonClass.vehicleMakeId.equals("")
@@ -4784,6 +4822,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         lfObject.put(
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                        )
+
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
                         )
                     }
                 }
@@ -4913,6 +4956,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         lfObject.put(
                             TyreKey.vehicleMakeId,
                             if (TyreDetailCommonClass.chk3Make.equals("LR,true")) TyreDetailCommonClass.vehicleMakeId else ""
+                        )
+                        lfObject.put(
+                            TyreKey.vehicleMakeURL,
+                            TyreDetailCommonClass.vehicleMakeURL
                         )
                     }
                 }

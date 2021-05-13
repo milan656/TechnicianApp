@@ -114,7 +114,7 @@ class BackgroundService : Service() {
         manager.createNotificationChannel(chan)
         val notificationBuilder: Notification.Builder =
             Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
-        val notification: Notification = notificationBuilder.setOngoing(false)
+        val notification: Notification = notificationBuilder/*.setOngoing(false)*/
             .setSmallIcon(R.mipmap.ic_walkins_logo)
             .setContentTitle("App is running in background")
             .setPriority(NotificationManager.IMPORTANCE_MIN)

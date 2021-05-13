@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -431,8 +432,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getimages1", "" + prefManager.getValue("image_" + selectedTyre))
 //            ivPickedImage1?.setImageURI(Uri.parse(prefManager.getValue("image_" + selectedTyre)))
 
+
+            try {
+                Glide.with(this).load(prefManager.getValue("image_" + selectedTyre)).into(ivPickedImage1!!)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             TyreDetailCommonClass.visualDetailPhotoUrl = prefManager.getValue("image_" + selectedTyre)
-            Glide.with(this).load(prefManager.getValue("image_" + selectedTyre)).into(ivPickedImage1!!)
             ivPickedImage1?.visibility = View.VISIBLE
             ivEditImg2?.visibility = View.VISIBLE
             tvAddPhoto1?.visibility = View.GONE
@@ -2187,10 +2193,19 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         Glide.with(this@VisualDetailsActivity)
             .load(posterUrl)
             .override(1600, 1600)
-
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.drawable.placeholder)
             .into(imgPoster)
 
+        /*if (prefManager.getValue("image_" + selectedTyre)!=null &&
+                !prefManager.getValue("image_" + selectedTyre).equals("")) {
+            try {
+                Glide.with(this).load(prefManager.getValue("image_" + selectedTyre))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL).into(imgPoster)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }*/
         tvTitleRemarks?.text = "View Tyre Image"
 
         val imgClose = root.findViewById<ImageView>(R.id.imgClose)
