@@ -17,6 +17,8 @@ import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.aapkedoorstep.DB.*
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
+import com.walkins.aapkedoorstep.common.TyreKey
+import com.walkins.aapkedoorstep.model.login.ApiUpdatedTimeModel
 import com.walkins.aapkedoorstep.model.login.issue_list.IssueListModel
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternModel
 import com.walkins.aapkedoorstep.model.login.sizemodel.SizeModel
@@ -158,52 +160,11 @@ class EndlessService : Service() {
         GlobalScope.launch(Dispatchers.IO) {
             while (isServiceStarted) {
                 launch(Dispatchers.IO) {
-                    fetchVehicleData()
-//                    fetchIssueList()
-                    fetchPattern()
-                    fetchSize()
 
-                    /* val sdfo = SimpleDateFormat("dd-MM-yyyy hh:mm")
+                    fetchTime()
 
-                     // Get the two dates to be compared
-
-                     // Get the two dates to be compared
-                     var date = Date()
-                     val formatter = SimpleDateFormat("dd-MM-yyyy hh:mm")
-                     val answer = formatter.format(date)
-                     Log.d("answer", answer)
-                     val d1 = sdfo.parse(answer)
-
-                     val d2 = sdfo.parse("22-04-2021 06:05")
-
- //                    prefManager?.setValue(TyreConfigClass.backgroundWebServiceCallTime,answer)
-
-                     // Print the dates
-                     println("Date1 : " + sdfo.format(d1))
-                     println("Date2 : " + sdfo.format(d2))
-
-                     // Compare the dates
-                     if (d1.after(d2)) {
-
-                         // When Date d1 > Date d2
-                         println("Date1 is greater then Date2")
-                         Log.e("callapi", "call")
-                         saveStaticVehicleMake()
-                         saveStaticPatternData()
-                         saveStaticSize()
-                     } else if (d1.before(d2)) {
-
-                         // When Date d1 < Date d2
-                         println("Date1 is less then Date2")
-
-                     } else if (d1.equals(d2)) {
-
-                         // When Date d1 = Date d2
-                         println("Date1 is equal to Date2")
-                     }*/
-                    stopService()
                 }
-                delay(2 * 60 * 1000) // 5 min delay
+                delay(15 * 60 * 1000) // 5 min delay
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
@@ -245,7 +206,7 @@ class EndlessService : Service() {
 
         var call: Call<ResponseBody>? = null
         call = warrantyApi.getVehicleTyreSize(
-            460, 41, prefManager?.getAccessToken()!!
+            prefManager?.getAccessToken()!!
 
         )
         call.enqueue(object : Callback<ResponseBody> {
@@ -291,6 +252,73 @@ class EndlessService : Service() {
         setServiceState(this, ServiceState.STOPPED)
     }
 
+    private fun fetchTime() {
+        val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)
+
+        var call: Call<ResponseBody>? = null
+        call = warrantyApi.getUpdatedTime(
+            prefManager?.getAccessToken()!!
+
+        )
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    try {
+
+                        val gson = GsonBuilder().create()
+                        val apiUpdatedTimeModel: ApiUpdatedTimeModel = gson.fromJson(
+                            response.body()?.string(),
+                            ApiUpdatedTimeModel::class.java
+                        )
+
+                        Log.e("getmodel00::", "" + apiUpdatedTimeModel)
+
+                        Log.e("getmodel00::", "" + prefManager?.getValue(TyreKey.lastTyreBrandUpdatedDate))
+                        Log.e("getmodel00::", "" + prefManager?.getValue(TyreKey.lastPatternUpdatedDate))
+                        Log.e("getmodel00::", "" + prefManager?.getValue(TyreKey.lastSizeUpdatedDate))
+
+                        if (prefManager?.getValue(TyreKey.lastTyreBrandUpdatedDate) != null &&
+                            !prefManager?.getValue(TyreKey.lastTyreBrandUpdatedDate).equals("")
+                        ) {
+                            if (!prefManager?.getValue(TyreKey.lastTyreBrandUpdatedDate).equals(apiUpdatedTimeModel.data.lastTyreBrandUpdatedDate)) {
+                                fetchVehicleData()
+                            }
+                        } else {
+                            prefManager?.setValue(TyreKey.lastTyreBrandUpdatedDate, apiUpdatedTimeModel.data.lastTyreBrandUpdatedDate)
+                            fetchVehicleData()
+                        }
+                        if (prefManager?.getValue(TyreKey.lastPatternUpdatedDate) != null &&
+                            !prefManager?.getValue(TyreKey.lastPatternUpdatedDate).equals("")
+                        ) {
+                            if (!prefManager?.getValue(TyreKey.lastPatternUpdatedDate).equals(apiUpdatedTimeModel.data.lastPatternUpdatedDate)) {
+                                fetchPattern()
+                            }
+                        } else {
+                            prefManager?.setValue(TyreKey.lastPatternUpdatedDate, apiUpdatedTimeModel.data.lastPatternUpdatedDate)
+                            fetchPattern()
+                        }
+                        if (prefManager?.getValue(TyreKey.lastSizeUpdatedDate) != null &&
+                            !prefManager?.getValue(TyreKey.lastSizeUpdatedDate).equals("")
+                        ) {
+                            if (!prefManager?.getValue(TyreKey.lastSizeUpdatedDate).equals(apiUpdatedTimeModel.data.lastSizeUpdatedDate)) {
+                                fetchSize()
+                            }
+                        } else {
+                            prefManager?.setValue(TyreKey.lastSizeUpdatedDate, apiUpdatedTimeModel.data.lastSizeUpdatedDate)
+                            fetchSize()
+                        }
+
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+        })
+
+    }
+
     private fun fetchVehicleData() {
         val df = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.mmmZ")
         val dfNew = SimpleDateFormat("dd-MM-yyyy HH:mm")
@@ -333,7 +361,7 @@ class EndlessService : Service() {
 
         var call: Call<ResponseBody>? = null
         call = warrantyApi.getTyrePattern(
-            3, prefManager?.getAccessToken()!!
+            prefManager?.getAccessToken()!!
 
         )
         call.enqueue(object : Callback<ResponseBody> {
@@ -342,8 +370,8 @@ class EndlessService : Service() {
                     try {
 
                         val gson = GsonBuilder().create()
-                        var patternModel: PatternModel = gson.fromJson(
-                            response?.body()?.string(),
+                        val patternModel: PatternModel = gson.fromJson(
+                            response.body()?.string(),
                             PatternModel::class.java
                         )
                         Log.e("getmodel00::", "" + patternModel)

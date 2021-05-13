@@ -8,6 +8,9 @@ import retrofit2.http.*
 
 interface WarrantyApi {
 
+    @GET("v1/tyrepushpull/get-data-sync-status")
+    fun getUpdatedTime(@Header("Authorization") authorization: String): Call<ResponseBody>
+
     @POST("v2/warranty/secondary-points/send-otp")
     fun sendOtp(
         @Body jsonObject: JsonObject, @Header("Authorization") authorization: String
@@ -30,14 +33,15 @@ interface WarrantyApi {
 
     @GET("v1/tyrepushpull/get-tyre-size")
     fun getVehicleTyreSize(
-        @Query("model_id") model_id: Int, @Query("make_id") make_id: Int,
+
         @Header("Authorization") authorization: String
     ): Call<ResponseBody>
 
     //    https://stag-tyreservice-backend.trackwalkins.com/get-tyre-pattern?id=2
     @GET("v1/tyrepushpull/get-tyre-pattern")
-    fun getTyrePattern(@Query("brand_id") id: Int,
-                       @Header("Authorization") authorization: String): Call<ResponseBody>
+    fun getTyrePattern(
+        @Header("Authorization") authorization: String
+    ): Call<ResponseBody>
 
     @GET("v1/warranty/vehicle/get-vehicle-type-brand-model")
     fun getVehicleTypeBrand(

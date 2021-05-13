@@ -51,6 +51,7 @@ import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.common.TyreConfigClass
 import com.walkins.aapkedoorstep.common.TyreDetailCommonClass
 import com.walkins.aapkedoorstep.custom.BoldButton
+import com.walkins.aapkedoorstep.model.login.ApiUpdatedTimeModel
 import com.walkins.aapkedoorstep.model.login.ReportServiceModel
 import com.walkins.aapkedoorstep.model.login.UserInfoModel
 import com.walkins.aapkedoorstep.model.login.building.BuildingListModel
@@ -542,6 +543,14 @@ class Common {
                             )
                         return NotificationCountModel
                     }
+                    "ApiUpdatedTimeModel" -> {
+                        val ApiUpdatedTimeModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ApiUpdatedTimeModel::class.java
+                            )
+                        return ApiUpdatedTimeModel
+                    }
 
 
                     else -> {
@@ -763,6 +772,14 @@ class Common {
                                         NotificationCountModel::class.java
                                     )
                                 return NotificationCountModel
+                            }
+                            "ApiUpdatedTimeModel" -> {
+                                val ApiUpdatedTimeModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ApiUpdatedTimeModel::class.java
+                                    )
+                                return ApiUpdatedTimeModel
                             }
 
 

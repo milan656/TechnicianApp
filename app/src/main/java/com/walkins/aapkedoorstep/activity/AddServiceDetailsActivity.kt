@@ -1496,39 +1496,34 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         var counter = 0
         if (prefManager.getValue("image_LF") != null && !prefManager.getValue("image_LF").equals("")) {
-            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_LF")))
-            } else {
-                TODO("VERSION.SDK_INT < KITKAT")
-            }
+
             Log.e("getimagepath", "" + prefManager.getValue("image_LF"))
             if (TyreDetailCommonClass.tyre_Uri_LF != null) {
-                counter = counter + 1
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
-                    putExtra(DocumentsContract.EXTRA_INITIAL_URI, TyreDetailCommonClass.tyre_Uri_LF!!)
+                val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    getFile(this@AddServiceDetailsActivity, TyreDetailCommonClass.tyre_Uri_LF!!)
+                } else {
+                    TODO("VERSION.SDK_INT < KITKAT")
                 }
-                startActivityForResult(intent, 503)
-//                val inputStream: InputStream? =
-//                    this.contentResolver?.openInputStream(TyreDetailCommonClass.tyre_Uri_LF!!)
-//                uploadImage(imagePath!!, inputStream!!, "LF")
+                counter = counter + 1
+                val inputStream = imagePath?.inputStream()
+                uploadImage(imagePath!!, inputStream!!, "LF")
             }
         }
         if (prefManager.getValue("image_RF") != null && !prefManager.getValue("image_RF").equals("")) {
-            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_RF")))
-            } else {
-                TODO("VERSION.SDK_INT < KITKAT")
-            }
+
             Log.e("getimagepath0", "" + prefManager.getValue("image_RF"))
             if (TyreDetailCommonClass.tyre_Uri_RF != null) {
+                val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    getFile(this@AddServiceDetailsActivity, TyreDetailCommonClass.tyre_Uri_RF!!)
+                } else {
+                    TODO("VERSION.SDK_INT < KITKAT")
+                }
                 counter = counter + 1
+                val inputStream = imagePath?.inputStream()
 //                val inputStream: InputStream? =
 //                    this.contentResolver?.openInputStream(TyreDetailCommonClass.tyre_Uri_RF!!)
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
-                    putExtra(DocumentsContract.EXTRA_INITIAL_URI, TyreDetailCommonClass.tyre_Uri_RF!!)
-                }
-                startActivityForResult(intent, 502)
-//                uploadImage(imagePath!!, inputStream!!, "RF")
+
+                uploadImage(imagePath!!, inputStream!!, "RF")
             }
         }
         if (prefManager.getValue("image_LR") != null && !prefManager.getValue("image_LR").equals("")) {
@@ -1536,43 +1531,43 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             Log.e("getimagepath1", "" + prefManager.getValue("image_LR"))
             if (TyreDetailCommonClass.tyre_Uri_LR != null) {
                 counter = counter + 1
+                val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    getFile(this@AddServiceDetailsActivity, TyreDetailCommonClass.tyre_Uri_LR!!)
+                } else {
+                    TODO("VERSION.SDK_INT < KITKAT")
+                }
+                val inputStream = imagePath?.inputStream()
 //                val inputStream: InputStream? =
 //                    this.contentResolver?.openInputStream(TyreDetailCommonClass.tyre_Uri_LR!!)
 
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
-                    putExtra(DocumentsContract.EXTRA_INITIAL_URI, TyreDetailCommonClass.tyre_Uri_LR!!)
-                }
-                startActivityForResult(intent, 500)
 
-//                uploadImage(imagePath!!, inputStream!!, "LR")
+                uploadImage(imagePath!!, inputStream!!, "LR")
             }
         }
         if (prefManager.getValue("image_RR") != null && !prefManager.getValue("image_RR").equals("")) {
-            val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_RR")))
-            } else {
-                TODO("VERSION.SDK_INT < KITKAT")
-            }
+
             if (TyreDetailCommonClass.tyre_Uri_RR != null) {
+                val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    getFile(this@AddServiceDetailsActivity, TyreDetailCommonClass.tyre_Uri_RR!!)
+                } else {
+                    TODO("VERSION.SDK_INT < KITKAT")
+                }
                 Log.e("getimagepath2", "" + prefManager.getValue("image_RR"))
                 counter = counter + 1
+
+                val inputStream = imagePath?.inputStream()
 //                val inputStream: InputStream? =
 //                    this.contentResolver?.openInputStream(TyreDetailCommonClass.tyre_Uri_RR!!)
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
-                    putExtra(DocumentsContract.EXTRA_INITIAL_URI, TyreDetailCommonClass.tyre_Uri_RR!!)
-                }
-                startActivityForResult(intent, 501)
-//                uploadImage(imagePath!!, inputStream!!, "RR")
+
+                uploadImage(imagePath!!, inputStream!!, "RR")
             }
         }
-//        prefManager.setValue("image_stream_Car_1", inputStream?.readBytes()?.toString())
-//        prefManager.setValue("image_Car_1", image_uri.toString())
 
         if (prefManager.getValue("image_Car_1") != null &&
             !prefManager.getValue("image_Car_1").equals("")
         ) {
             val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_Car_1")))
+                getFile(this@AddServiceDetailsActivity, TyreConfigClass.car_1_uri!!)
             } else {
                 TODO("VERSION.SDK_INT < KITKAT")
             }
@@ -1588,7 +1583,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             !prefManager.getValue("image_Car_2").equals("")
         ) {
             val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getFile(this@AddServiceDetailsActivity, Uri.parse(prefManager.getValue("image_Car_2")))
+                getFile(this@AddServiceDetailsActivity, TyreConfigClass.car_2_uri!!)
             } else {
                 TODO("VERSION.SDK_INT < KITKAT")
             }
@@ -2913,66 +2908,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         super.onActivityResult(requestCode, resultCode, data)
         Log.e("getcall", "call0" + requestCode)
         when (requestCode) {
-            500 -> {
-                data?.data?.also {
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        getFile(this@AddServiceDetailsActivity, it)
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    if (TyreDetailCommonClass.tyre_Uri_LR != null) {
-                        // Perform operations on the document using its URI.
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(TyreDetailCommonClass.tyre_Uri_LR!!)
-                        uploadImage(imagePath!!, inputStream!!, "LF")
-                    }
-                }
-            }
-            501 -> {
-                data?.data?.also {
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        getFile(this@AddServiceDetailsActivity, it)
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    if (TyreDetailCommonClass.tyre_Uri_RR != null) {
-                        // Perform operations on the document using its URI.
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(TyreDetailCommonClass.tyre_Uri_RR!!)
-                        uploadImage(imagePath!!, inputStream!!, "RR")
-                    }
-                }
-            }
-            502 -> {
-                data?.data?.also {
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        getFile(this@AddServiceDetailsActivity, it)
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    // Perform operations on the document using its URI.
-                    if (TyreDetailCommonClass.tyre_Uri_RF != null) {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(TyreDetailCommonClass.tyre_Uri_RF!!)
-                        uploadImage(imagePath!!, inputStream!!, "LF")
-                    }
-                }
-            }
-            503 -> {
-                data?.data?.also {
-                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        getFile(this@AddServiceDetailsActivity, it)
-                    } else {
-                        TODO("VERSION.SDK_INT < KITKAT")
-                    }
-                    if (TyreDetailCommonClass.tyre_Uri_LF != null) {
-                        // Perform operations on the document using its URI.
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(TyreDetailCommonClass.tyre_Uri_LF!!)
-                        uploadImage(imagePath!!, inputStream!!, "LF")
-                    }
-                }
-            }
+
             106 -> {
                 Log.e("get106", "" + requestCode + " " + resultCode)
                 if (resultCode == RESULT_OK) {
@@ -5171,10 +5107,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 prefManager.removeValue(TyreConfigClass.TyreRFObject)
                 prefManager.removeValue(TyreConfigClass.TyreLRObject)
                 prefManager.removeValue(TyreConfigClass.serviceDetailData)
-                prefManager.removeValue("image_LF")
-                prefManager.removeValue("image_LR")
-                prefManager.removeValue("image_RF")
-                prefManager.removeValue("image_RR")
+
+                if (prefManager?.getValue("image_LF") != null) {
+                    prefManager.removeValue("image_LF")
+                }
+                if (prefManager?.getValue("image_LR") != null) {
+                    prefManager.removeValue("image_LR")
+                }
+                if (prefManager?.getValue("image_RF") != null) {
+                    prefManager.removeValue("image_RF")
+                }
+                if (prefManager?.getValue("image_RR") != null) {
+                    prefManager.removeValue("image_RR")
+                }
                 Common.setClearAllValues()
 
                 chkNitrogenTopup?.isChecked = false
@@ -5384,7 +5329,4 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         builder.show()
     }
 
-    fun openDirectory(pickerInitialUri: Uri) {
-        // Choose a directory using the system's file picker.
-    }
 }

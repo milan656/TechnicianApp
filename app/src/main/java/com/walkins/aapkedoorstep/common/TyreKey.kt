@@ -54,5 +54,9 @@ class TyreKey {
         var addServiceCarImage_2 = "addServiceCarImage_2"
 
         var something_went_wrong = "Something Went Wrong"
+
+        var lastTyreBrandUpdatedDate = "lastTyreBrandUpdatedDate"
+        var lastSizeUpdatedDate = "lastSizeUpdatedDate"
+        var lastPatternUpdatedDate = "lastPatternUpdatedDate"
     }
 }

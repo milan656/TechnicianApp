@@ -99,24 +99,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
         Log.e("getaccessToken", "" + prefManager?.getAccessToken())
         init()
-
+        actionOnService(Actions.START)
         callApiTogetToken()
 
-        val thread = Thread {
+       /* val thread = Thread {
             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
                     .getAllVehicleType().size > 0
             ) {
 //                actionOnService(Actions.START)
 
             } else {
-                actionOnService(Actions.START)
+
             }
 
         }
-        thread.start()
+        thread.start()*/
 
         llhome?.performClick()
-
 
         if (prefManager?.getServiceList(TyreConfigClass.serviceList) != null &&
             prefManager?.getServiceList(TyreConfigClass.serviceList)?.size!! > 0

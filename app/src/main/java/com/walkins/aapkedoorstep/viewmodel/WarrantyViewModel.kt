@@ -28,11 +28,11 @@ class WarrantyViewModel : ViewModel() {
 
     }
 
-    fun getVehiclePattern(brand_id: Int,accessToken: String, context: Context) {
+    fun getVehiclePattern(accessToken: String, context: Context) {
 
         warrantyRepository = WarrantyRepository().getInstance()
         PatternModel =
-            warrantyRepository!!.getVehiclePattern(brand_id,accessToken, context)
+            warrantyRepository!!.getVehiclePattern(accessToken, context)
 
     }
 
@@ -40,11 +40,11 @@ class WarrantyViewModel : ViewModel() {
         return PatternModel!!
     }
 
-    fun getVehicleSize(model_id: Int, make_id: Int,accessToken: String,  context: Context) {
+    fun getVehicleSize(accessToken: String,  context: Context) {
 
         warrantyRepository = WarrantyRepository().getInstance()
         sizeModel =
-            warrantyRepository!!.getVehicleSize(model_id, make_id,accessToken, context)
+            warrantyRepository!!.getVehicleSize(accessToken, context)
 
     }
 
