@@ -1089,7 +1089,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (ischecked
             ) {
                 if (llUpdatedPlacement?.visibility == View.GONE) {
-                    Common.expand(llUpdatedPlacement!!)
+                    if (type.equals("Type Rotation",ignoreCase = true)) {
+                        Common.expand(llUpdatedPlacement!!)
+                    }
                     if (llServiceExpanded?.visibility == View.GONE) {
                         Common.expand(llServiceExpanded!!)
                     }
@@ -1309,6 +1311,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = false
                     Common.expand(llServiceExpanded!!)
+                    selectedServiceArr?.clear()
+                    if (serviceList != null && serviceList?.size!! > 0) {
+                        for (i in serviceList?.indices!!) {
+                            if (serviceList?.get(i)?.isSelected!!) {
+                                selectedServiceArr?.add(serviceList?.get(i)?.name!!)
+                            }
+                        }
+                    }
+                    Log.e("calltype11", "" + selectedServiceArr?.contains("Type Rotation"))
 
                     if (selectedServiceArr?.contains("Type Rotation")!!) {
                         Common.expand(llUpdatedPlacement!!)
@@ -2062,7 +2073,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     var selectedTextLR: String? = ""
                     var selectedTextRR: String? = ""
                     try {
-                        if (radioGroupLF?.checkedRadioButtonId!=-1) {
+                        if (radioGroupLF?.checkedRadioButtonId != -1) {
                             if (radioLF_LR?.isChecked!!) {
                                 selectedTextLF = "LR"
                             } else {
@@ -2074,7 +2085,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
 
                     try {
-                        if (radioGroupRF?.checkedRadioButtonId!=-1) {
+                        if (radioGroupRF?.checkedRadioButtonId != -1) {
                             if (radioRF_LR?.isChecked!!) {
                                 selectedTextRF = "LR"
                             } else {
@@ -2088,7 +2099,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
                     try {
-                        if (radioGroupLR?.checkedRadioButtonId!=-1) {
+                        if (radioGroupLR?.checkedRadioButtonId != -1) {
                             if (radioLR_RF?.isChecked!!) {
                                 selectedTextLR = "RF"
                             } else {
@@ -2100,7 +2111,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
 
                     try {
-                        if (radioGroupRR?.checkedRadioButtonId!=-1) {
+                        if (radioGroupRR?.checkedRadioButtonId != -1) {
                             if (radioRR_LF?.isChecked!!) {
                                 selectedTextRR = "LF"
                             } else {

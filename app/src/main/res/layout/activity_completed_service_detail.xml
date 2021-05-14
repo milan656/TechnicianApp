@@ -301,7 +301,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/serviceRecycView"
@@ -341,11 +341,13 @@
                                     android:textStyle="bold" />
 
                                 <LinearLayout
+                                    android:id="@+id/llFrontRotation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
 
                                     <LinearLayout
+                                        android:id="@+id/llRotationLF"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -400,6 +402,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/llRotationRF"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -457,11 +460,13 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/llBackRotation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
 
                                     <LinearLayout
+                                        android:id="@+id/llRotationLR"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
@@ -643,7 +648,7 @@
                                 android:layout_marginTop="@dimen/twelve_dp"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:id="@+id/tvtyreServiceInfo"
