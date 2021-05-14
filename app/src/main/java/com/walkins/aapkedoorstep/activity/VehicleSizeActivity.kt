@@ -388,7 +388,10 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 val thread = Thread {
                     if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass().getAllSize().size > 0) {
                         arrList?.clear()
-                        arrList?.addAll(mDb.sizeDaoClass().getAllSize())
+                        val arrayList = mDb.sizeDaoClass().getAllSize().filter { it.make_id==TyreDetailCommonClass.make_id && it.model_id==TyreDetailCommonClass.model_id } as MutableList<VehicleSizeModelClass>
+
+                        arrList?.addAll(arrayList)
+
                         Log.e("getSizeVehicleSize", "" + arrList?.size)
                     }
                 }
@@ -409,7 +412,10 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 var thread = Thread {
                     if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass().getAllSize().size > 0) {
                         arrList?.clear()
-                        arrList?.addAll(mDb.sizeDaoClass().getAllSize())
+                        val arrayList = mDb.sizeDaoClass().getAllSize().filter { it.make_id==TyreDetailCommonClass.make_id && it.model_id==TyreDetailCommonClass.model_id } as MutableList<VehicleSizeModelClass>
+
+                        arrList?.addAll(arrayList)
+
                         Log.e("getSizeVehicleSize", "" + arrList?.size)
                         runOnUiThread {
 

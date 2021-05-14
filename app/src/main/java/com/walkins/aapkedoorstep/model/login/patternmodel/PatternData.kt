@@ -11,6 +11,9 @@ data class PatternData(
     @SerializedName("name")
     @Expose
     var name: String,
+    @SerializedName("brand_id")
+    @Expose
+    var brand_id: String,
     var isSelected: Boolean = false,
     var isRFSelected: Boolean = false,
     var isLRSelected: Boolean = false,

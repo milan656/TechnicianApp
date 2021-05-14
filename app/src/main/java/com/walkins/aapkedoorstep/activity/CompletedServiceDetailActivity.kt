@@ -129,6 +129,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var address: String = ""
     private var formatedDate: String = ""
 
+    private var tvUpdatePlacementLF: TextView? = null
+    private var tvUpdatePlacementLR: TextView? = null
+    private var tvUpdatePlacementRF: TextView? = null
+    private var tvUpdatePlacementRR: TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_service_detail)
@@ -150,6 +155,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         ivCarImage_1 = findViewById(R.id.ivCarImage_1)
         ivCarImage_2 = findViewById(R.id.ivCarImage_2)
         llfooter = findViewById(R.id.llfooter)
+
+        tvUpdatePlacementRR = findViewById(R.id.tvUpdatePlacementRR)
+        tvUpdatePlacementRF = findViewById(R.id.tvUpdatePlacementRF)
+        tvUpdatePlacementLF = findViewById(R.id.tvUpdatePlacementLF)
+        tvUpdatePlacementLR = findViewById(R.id.tvUpdatePlacementLR)
 
         llServiceExpanded = findViewById(R.id.llServiceExpanded)
         llTechnicalSuggestionExpanded = findViewById(R.id.llTechnicalSuggestionExpanded)
@@ -289,9 +299,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         jsonObject.addProperty("id", uuid)
         commonViewModel?.callApiGetServiceById(jsonObject, prefManager.getAccessToken()!!, this)
         commonViewModel?.getServiceById()?.observe(this, Observer {
+            Log.e("modelget",""+it.data)
             if (it != null) {
                 if (it.success) {
-
                     serviceDateByIdModel = it
                     setTyreServiceData("")
                 } else {
@@ -433,10 +443,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         */
 
 
+        Log.e("modelget",""+serviceDateByIdModel?.data)
         if (serviceDateByIdModel != null && serviceDateByIdModel?.data?.size!! > 0) {
             if (serviceDateByIdModel?.data?.get(0)?.service != null && serviceDateByIdModel?.data?.get(0)?.service?.size!! > 0) {
                 serviceList?.addAll(serviceDateByIdModel?.data?.get(0)?.service!!)
-
+                Log.e("modelget",""+serviceList?.size)
                 serviceAdapter?.notifyDataSetChanged()
             }
 
@@ -445,7 +456,31 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             tvMakeModel?.text = "" + serviceDateByIdModel?.data?.get(0)?.make + " " + serviceDateByIdModel?.data?.get(0)?.model
             tvRegNumber?.text = "" + serviceDateByIdModel?.data?.get(0)?.regNumber
 
+            Log.e("modelget",""+tvRegNumber?.text+" "+serviceDateByIdModel?.data?.get(0)?.make)
+
+            if (serviceDateByIdModel?.data?.get(0)?.front_left_tyre_wheel_rotation != null &&
+                !serviceDateByIdModel?.data?.get(0)?.front_left_tyre_wheel_rotation.equals("")
+            ) {
+                tvUpdatePlacementLF?.text = serviceDateByIdModel?.data?.get(0)?.front_left_tyre_wheel_rotation
+            }
+            if (serviceDateByIdModel?.data?.get(0)?.front_right_tyre_wheel_rotation != null &&
+                !serviceDateByIdModel?.data?.get(0)?.front_right_tyre_wheel_rotation.equals("")
+            ) {
+                tvUpdatePlacementRF?.text = serviceDateByIdModel?.data?.get(0)?.front_right_tyre_wheel_rotation
+            }
+            if (serviceDateByIdModel?.data?.get(0)?.back_left_tyre_wheel_rotation != null &&
+                !serviceDateByIdModel?.data?.get(0)?.back_left_tyre_wheel_rotation.equals("")
+            ) {
+                tvUpdatePlacementLR?.text = serviceDateByIdModel?.data?.get(0)?.back_left_tyre_wheel_rotation
+            }
+            if (serviceDateByIdModel?.data?.get(0)?.back_right_tyre_wheel_rotation != null &&
+                !serviceDateByIdModel?.data?.get(0)?.back_right_tyre_wheel_rotation.equals("")
+            ) {
+                tvUpdatePlacementRR?.text = serviceDateByIdModel?.data?.get(0)?.back_right_tyre_wheel_rotation
+            }
+
             try {
+                Log.e("modelget",""+serviceDateByIdModel?.data?.get(0)?.actualServiceDate)
                 if (serviceDateByIdModel?.data?.get(0)?.actualServiceDate != null && !serviceDateByIdModel?.data?.get(0)?.actualServiceDate.equals("")) {
                     val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     val output = SimpleDateFormat("hh:mm aa, dd MMMM yyyy")
@@ -480,6 +515,8 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 carPhoto_1 = serviceDateByIdModel?.data?.get(0)?.carPhoto1!!
                 TyreConfigClass.CarPhoto_1 = carPhoto_1
             }
+            Log.e("modelget",""+serviceDateByIdModel?.data?.get(0)?.carPhoto1)
+            Log.e("modelget",""+serviceDateByIdModel?.data?.get(0)?.carPhoto2)
             if (serviceDateByIdModel?.data?.get(0)?.carPhoto2 != null) {
                 try {
                     Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.carPhoto2)
@@ -492,6 +529,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 carPhoto_2 = serviceDateByIdModel?.data?.get(0)?.carPhoto2!!
                 TyreConfigClass.CarPhoto_2 = carPhoto_2
             }
+            Log.e("modelget",""+serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image)
             if (serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image != null) {
                 try {
                     Glide.with(this).load(serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image)

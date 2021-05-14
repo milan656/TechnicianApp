@@ -116,7 +116,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             RecyclerView.VERTICAL,
             false
         )
-        adapter = this.let { ServicesListAdpater(arrayList, it, this,serviceStatus) }
+        adapter = this.let { ServicesListAdpater(arrayList, it, this, serviceStatus) }
         serviceRecycView?.adapter = adapter
         adapter?.onclick = this
 
@@ -165,10 +165,23 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                         arrayList.clear()
                         arrayList.addAll(it.data)
 
+                        if (it.data.size > 0) {
+
+                            val arrayList = it.data.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+
+                            tvUpcoming?.text = "Upcoming - " + arrayList.size
+                            val arrayskipList = it.data.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
+
+                            tvSkipped?.text = "Skipped - " + arrayskipList.size
+                            val arrayCompleteList = it.data.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
+
+                            tvCompleted?.text = "Completed - " + arrayCompleteList.size
+                        }
+
                         if (serviceStatus.equals(upcomming)) {
 //                            arrayList.filter { it.status.equals(upcomming) }
                             arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this,serviceStatus) }
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this, serviceStatus) }
 
                             tvUpcoming?.text = "Upcoming - ${arrayList.size}"
                             Log.e("getservicedata", "" + arrayList.size)
@@ -176,13 +189,13 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 //                            arrayList.filter { it.status.equals(completed) }
                             Log.e("getservicedata0", "" + arrayList.size)
                             arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this,serviceStatus) }
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this, serviceStatus) }
                             tvCompleted?.text = "Completed - ${arrayList.size}"
                         } else if (serviceStatus.equals(skipped)) {
 //                            arrayList.filter { it.status.equals(skipped) }
                             Log.e("getservicedata1", "" + arrayList.size)
                             arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this,serviceStatus) }
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this, serviceStatus) }
                             tvSkipped?.text = "Skipped - ${arrayList.size}"
                         }
 
@@ -235,7 +248,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this,serviceStatus)
+                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus)
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Upcoming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
@@ -266,7 +279,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this,serviceStatus)
+                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus)
 
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Completed service to display"
@@ -299,7 +312,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this,serviceStatus)
+                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus)
 
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Skipped service to display"

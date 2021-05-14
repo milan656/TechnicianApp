@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TechnicianApp</string>
+    <string name="app_name">AppKeDoorStep</string>
 
     <string name="str_welcome">Welcome</string>
     <string name="login_text">Please sign in to your account</string>

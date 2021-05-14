@@ -41,7 +41,8 @@ class BackgroundService : Service() {
     private var prefManager: PrefManager? = null
     private lateinit var mDb: DBClass
     private var wakeLock: PowerManager.WakeLock? = null
-    companion object{
+
+    companion object {
         var isServiceStarted = false
     }
 
@@ -415,6 +416,11 @@ class BackgroundService : Service() {
                 entity.name =
                     if (patternModel.data?.get(i)?.name != null) patternModel.data?.get(i)?.name else ""
                 entity.patternId = patternModel.data?.get(i)?.patternId
+                if (patternModel.data.get(i).brand_id != null && !patternModel.data.get(i).brand_id.equals("")) {
+                    entity.brand_id = patternModel.data.get(i).brand_id.toInt()
+                } else {
+                    entity.brand_id = -1
+                }
                 entity.isSelected = false
                 mDb.patternDaoClass().savePattern(entity)
             }
@@ -465,6 +471,8 @@ class BackgroundService : Service() {
                 entity.name =
                     if (sizeModel.data?.get(i)?.name != null) sizeModel.data.get(i).name else ""
                 entity.sizeId = sizeModel.data.get(i).sizeId
+                entity.make_id = sizeModel.data.get(i).make_id
+                entity.model_id = sizeModel.data.get(i).model_id
                 entity.isSelected = false
                 mDb.sizeDaoClass().saveSize(entity)
             }

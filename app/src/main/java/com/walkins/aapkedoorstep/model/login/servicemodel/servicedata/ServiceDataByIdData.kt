@@ -188,15 +188,8 @@ data class ServiceDataByIdData(
     @SerializedName("back_right_tyre_weight")
     @Expose
     val backRightTyreWeight: String,
-    @SerializedName("front_left_tyre_wheel_rotation")
-    @Expose
-    val frontLeftTyreWheelRotation: String,
-    @SerializedName("back_left_tyre_wheel_rotation")
-    @Expose
-    val backLeftTyreWheelRotation: String,
-    @SerializedName("back_right_tyre_wheel_rotation")
-    @Expose
-    val backRightTyreWheelRotation: String,
+
+
     @SerializedName("front_left_tyre_wheel_image")
     @Expose
     val frontLeftTyreWheelImage: String,

@@ -26,6 +26,7 @@ import com.walkins.aapkedoorstep.adapter.VehiclePatternAdapter
 import com.walkins.aapkedoorstep.common.*
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternData
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternModel
+import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.aapkedoorstep.networkApi.WarrantyApi
 import com.walkins.aapkedoorstep.viewmodel.WarrantyViewModel
 import kotlinx.coroutines.Dispatchers
@@ -451,7 +452,20 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 val thread = Thread {
                     if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                         arrList?.clear()
-                        arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                        val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id==TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
+
+                        arrList?.addAll(arrayList)
+
+                        /*if (mDb.patternDaoClass().getAllPattern().size>0){
+                            for (i in mDb.patternDaoClass().getAllPattern().indices){
+                                if (!TyreDetailCommonClass.vehicleMakeId.equals("")) {
+                                    if (mDb.patternDaoClass().getAllPattern().get(i).brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt()) {
+                                        arrList?.add(mDb.patternDaoClass().getAllPattern().get(i))
+                                    }
+                                }
+                            }
+                        }*/
+
                         Log.e("getSizeVehiclePattern", "" + arrList?.size)
                     }
                 }
@@ -473,7 +487,19 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 val thread = Thread {
                     if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                         arrList?.clear()
-                        arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+                        /*if (mDb.patternDaoClass().getAllPattern().size>0){
+                            for (i in mDb.patternDaoClass().getAllPattern().indices){
+                                if (!TyreDetailCommonClass.vehicleMakeId.equals("")) {
+                                    if (mDb.patternDaoClass().getAllPattern().get(i).brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt()) {
+                                        arrList?.add(mDb.patternDaoClass().getAllPattern().get(i))
+                                    }
+                                }
+                            }
+                        }*/
+                        val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id==TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
+
+                        arrList?.addAll(arrayList)
+
                         Log.e("getSizeVehiclePattern", "" + arrList?.size)
                     }
 
@@ -490,7 +516,20 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             val thread = Thread {
                 if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                     arrList?.clear()
-                    arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+//                    arrList?.addAll(mDb.patternDaoClass().getAllPattern())
+
+                    val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id==TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
+
+                    arrList?.addAll(arrayList)
+                    /*if (mDb.patternDaoClass().getAllPattern().size>0){
+                        for (i in mDb.patternDaoClass().getAllPattern().indices){
+                            if (!TyreDetailCommonClass.vehicleMakeId.equals("")) {
+                                if (mDb.patternDaoClass().getAllPattern().get(i).brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt()) {
+                                    arrList?.add(mDb.patternDaoClass().getAllPattern().get(i))
+                                }
+                            }
+                        }
+                    }*/
                     Log.e("getSizeVehiclePattern", "" + arrList?.size)
                 }
 
@@ -515,7 +554,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         selectedPosition = variable
         selectedPos = variable
         selectedId = arrList?.get(variable)?.patternId!!
-        Log.e("selectedpatt", "" + selectedId)
 
         if (selectedTyre.equals("LF")) {
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&

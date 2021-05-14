@@ -1310,6 +1310,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tvServices?.isAllCaps = false
                     Common.expand(llServiceExpanded!!)
 
+                    if (selectedServiceArr?.contains("Type Rotation")!!) {
+                        Common.expand(llUpdatedPlacement!!)
+                    }
+
                     if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                         Common.collapse(llTyreConfigExpanded!!)
                         ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
@@ -2053,68 +2057,64 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //                    "back_right_tyre_wheel_rotation": "RF",
 
 
-                    if (selectedServiceArr?.contains("Type Rotation")!!) {
-                        var selectedTextLF: String? = ""
-                        var selectedTextRF: String? = ""
-                        var selectedTextLR: String? = ""
-                        var selectedTextRR: String? = ""
-                        try {
+                    var selectedTextLF: String? = ""
+                    var selectedTextRF: String? = ""
+                    var selectedTextLR: String? = ""
+                    var selectedTextRR: String? = ""
+                    try {
+                        if (radioGroupLF?.checkedRadioButtonId!=-1) {
                             if (radioLF_LR?.isChecked!!) {
                                 selectedTextLF = "LR"
                             } else {
                                 selectedTextLF = "RR"
                             }
-                        } catch (e: NullPointerException) {
-                            e.printStackTrace()
                         }
+                    } catch (e: NullPointerException) {
+                        e.printStackTrace()
+                    }
 
-                        try {
+                    try {
+                        if (radioGroupRF?.checkedRadioButtonId!=-1) {
                             if (radioRF_LR?.isChecked!!) {
                                 selectedTextRF = "LR"
                             } else {
                                 selectedTextRF = "RR"
                             }
-
-                        } catch (e: NullPointerException) {
-                            e.printStackTrace()
                         }
 
+                    } catch (e: NullPointerException) {
+                        e.printStackTrace()
+                    }
 
-                        try {
+
+                    try {
+                        if (radioGroupLR?.checkedRadioButtonId!=-1) {
                             if (radioLR_RF?.isChecked!!) {
                                 selectedTextLR = "RF"
                             } else {
                                 selectedTextLR = "LF"
                             }
-
-                        } catch (e: NullPointerException) {
-                            e.printStackTrace()
                         }
+                    } catch (e: NullPointerException) {
+                        e.printStackTrace()
+                    }
 
-
-                        try {
+                    try {
+                        if (radioGroupRR?.checkedRadioButtonId!=-1) {
                             if (radioRR_LF?.isChecked!!) {
                                 selectedTextRR = "LF"
                             } else {
                                 selectedTextRR = "RF"
                             }
-                        } catch (e: NullPointerException) {
-                            e.printStackTrace()
                         }
-
-                        if (!selectedTextLF.equals("")) {
-                            jsonObject.addProperty("front_left_tyre_wheel_rotation", selectedTextLF)
-                        }
-                        if (!selectedTextLR.equals("")) {
-                            jsonObject.addProperty("back_left_tyre_wheel_rotation", selectedTextLR)
-                        }
-                        if (!selectedTextRF.equals("")) {
-                            jsonObject.addProperty("front_right_tyre_wheel_rotation", selectedTextRF)
-                        }
-                        if (!selectedTextRR.equals("")) {
-                            jsonObject.addProperty("back_right_tyre_wheel_rotation", selectedTextRR)
-                        }
+                    } catch (e: NullPointerException) {
+                        e.printStackTrace()
                     }
+
+                    jsonObject.addProperty("front_left_tyre_wheel_rotation", selectedTextLF)
+                    jsonObject.addProperty("back_left_tyre_wheel_rotation", selectedTextLR)
+                    jsonObject.addProperty("front_right_tyre_wheel_rotation", selectedTextRF)
+                    jsonObject.addProperty("back_right_tyre_wheel_rotation", selectedTextRR)
 
                     Log.e("getfinalobject", "" + jsonObject)
                     Log.e("getObjectT__", "" + jsonObject)
@@ -3479,14 +3479,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         Log.e("getImagess", "" + TyreConfigClass.moreSuggestions)
 
-
-
         if (selectedDateNextServiceDue != null && !selectedDateNextServiceDue
                 .equals("")
         ) {
 
         } else {
-            Toast.makeText(this, "Please Select Next Due Date", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Please Select Next Due Date", Toast.LENGTH_SHORT).show()
             return
         }
 

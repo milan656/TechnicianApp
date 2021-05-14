@@ -301,7 +301,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/serviceRecycView"
@@ -328,7 +328,7 @@
                                 android:layout_marginEnd="@dimen/twenty_dp"
                                 android:layout_marginBottom="@dimen/twenty_dp"
                                 android:orientation="vertical"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <com.walkins.aapkedoorstep.custom.BoldTextView
                                     android:layout_width="match_parent"
@@ -385,6 +385,7 @@
                                                 android:textSize="@dimen/fourteen_sp" />
 
                                             <com.walkins.aapkedoorstep.custom.NormalTextView
+                                                android:id="@+id/tvUpdatePlacementLF"
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
@@ -422,7 +423,7 @@
                                                 android:layout_gravity="center"
                                                 android:layout_weight="0.7"
                                                 android:gravity="center"
-                                                android:text="LF"
+                                                android:text="RF"
                                                 android:textAllCaps="true"
                                                 android:textColor="@color/text_color1"
                                                 android:textSize="@dimen/fourteen_sp" />
@@ -439,12 +440,131 @@
                                                 android:textSize="@dimen/fourteen_sp" />
 
                                             <com.walkins.aapkedoorstep.custom.NormalTextView
+                                                android:id="@+id/tvUpdatePlacementRF"
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
                                                 android:layout_weight="0.7"
                                                 android:gravity="center"
-                                                android:text="LF"
+                                                android:text="RF"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="start"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="100dp"
+                                            android:layout_height="42dp"
+                                            android:layout_marginTop="@dimen/sixteen_dp"
+                                            android:background="@drawable/layout_bg_secondary_"
+                                            android:orientation="horizontal"
+                                            android:paddingStart="@dimen/five_dp"
+                                            android:paddingEnd="@dimen/five_dp">
+
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="0.7"
+                                                android:gravity="center"
+                                                android:text="LR"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="0.7"
+                                                android:gravity="center"
+                                                android:text="="
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
+                                                android:id="@+id/tvUpdatePlacementLR"
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="0.7"
+                                                android:gravity="center"
+                                                android:text="LR"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="100dp"
+                                            android:layout_height="42dp"
+                                            android:layout_marginTop="@dimen/sixteen_dp"
+                                            android:background="@drawable/layout_bg_secondary_"
+                                            android:orientation="horizontal"
+                                            android:paddingStart="@dimen/five_dp"
+                                            android:paddingEnd="@dimen/five_dp">
+
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="0.7"
+                                                android:gravity="center"
+                                                android:text="RR"
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="0.7"
+                                                android:gravity="center"
+                                                android:text="="
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/text_color1"
+                                                android:textSize="@dimen/fourteen_sp" />
+
+                                            <com.walkins.aapkedoorstep.custom.NormalTextView
+                                                android:id="@+id/tvUpdatePlacementRR"
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_weight="0.7"
+                                                android:gravity="center"
+                                                android:text="RR"
                                                 android:textAllCaps="true"
                                                 android:textColor="@color/text_color1"
                                                 android:textSize="@dimen/fourteen_sp" />
