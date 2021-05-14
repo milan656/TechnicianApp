@@ -168,6 +168,7 @@
                     android:layout_marginEnd="@dimen/eighteen_dp"
                     android:background="@drawable/common_rounded"
                     android:elevation="@dimen/twenty_dp"
+                    android:visibility="gone"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -300,7 +301,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/serviceRecycView"
@@ -327,7 +328,7 @@
                                 android:layout_marginEnd="@dimen/twenty_dp"
                                 android:layout_marginBottom="@dimen/twenty_dp"
                                 android:orientation="vertical"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <com.walkins.aapkedoorstep.custom.BoldTextView
                                     android:layout_width="match_parent"

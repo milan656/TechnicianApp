@@ -51,4 +51,5 @@ interface LoginApi {
         @Query("type") type: String
     ): Call<ResponseBody>
 
+
 }

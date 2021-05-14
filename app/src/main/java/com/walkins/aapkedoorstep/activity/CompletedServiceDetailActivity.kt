@@ -121,7 +121,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var ivCarImage: ImageView? = null
 //    private var serviceAdapter:
 
-
     private var uuid: String? = ""
     private var color: String = ""
     private var makeModel: String = ""
@@ -939,16 +938,15 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
             TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
 
-            var intent = Intent(this, CompletedVisualDetailActivity::class.java)
+            val intent = Intent(this, CompletedVisualDetailActivity::class.java)
             intent.putExtra("title", "Detail - LR")
             startActivity(intent)
-
 
         } else if (tyreType.equals("RF")) {
             TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.frontRightTyreMake
             TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePattern
             TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.frontRightTyreSize
-            TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image
+            TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.front_right_tyre_make_image
             TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.frontRightManufacturingDate
             TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePsiIn
             TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePsiOut
@@ -971,7 +969,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             }
 
             TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
-            var intent = Intent(this, CompletedVisualDetailActivity::class.java)
+            val intent = Intent(this, CompletedVisualDetailActivity::class.java)
             intent.putExtra("title", "Detail - RF")
             startActivity(intent)
 
@@ -979,7 +977,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.backRightTyreMake
             TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.backRightTyrePattern
             TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.backRightTyreSize
-            TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image
+            TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.back_right_tyre_make_image
             TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.backRightManufacturingDate
             TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.backRightTyrePsiIn
             TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.backRightTyrePsiOut
@@ -1003,7 +1001,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
             TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
 
-            var intent = Intent(this, CompletedVisualDetailActivity::class.java)
+            val intent = Intent(this, CompletedVisualDetailActivity::class.java)
             intent.putExtra("title", "Detail - RR")
             startActivity(intent)
         }

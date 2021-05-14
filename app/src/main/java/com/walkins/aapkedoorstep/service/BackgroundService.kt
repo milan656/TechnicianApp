@@ -87,6 +87,8 @@ class BackgroundService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startMyOwnForeground()
+//            val notif: Notification = Notification()
+//            startForeground(2, notif)
         } else {
             val notif: Notification = Notification()
             startForeground(1, notif)
@@ -114,8 +116,11 @@ class BackgroundService : Service() {
         manager.createNotificationChannel(chan)
         val notificationBuilder: Notification.Builder =
             Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
-        val notification: Notification = notificationBuilder/*.setOngoing(false)*/
+        val notification: Notification = notificationBuilder.setOngoing(false)
             .setSmallIcon(R.mipmap.ic_walkins_logo)
+            .setAutoCancel(true)
+            .setOnlyAlertOnce(true)
+
             .setContentTitle("App is running in background")
             .setPriority(NotificationManager.IMPORTANCE_MIN)
             .setCategory(Notification.CATEGORY_SERVICE)

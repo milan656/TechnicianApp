@@ -165,6 +165,7 @@
                     android:layout_marginStart="@dimen/eighteen_dp"
                     android:layout_marginTop="@dimen/fourteen_dp"
                     android:layout_marginEnd="@dimen/eighteen_dp"
+                    android:visibility="gone"
                     android:background="@drawable/common_rounded"
                     android:elevation="@dimen/twenty_dp"
                     android:orientation="horizontal">

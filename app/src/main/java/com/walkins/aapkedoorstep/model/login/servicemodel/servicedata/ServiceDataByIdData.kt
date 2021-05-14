@@ -229,16 +229,16 @@ data class ServiceDataByIdData(
     val backRightManufacturingDate: String,
     @SerializedName("front_left_issues_to_be_resolved")
     @Expose
-    val  frontLeftIssuesToBeResolved :List<String>,
+    val frontLeftIssuesToBeResolved: List<String>,
     @SerializedName("front_right_issues_to_be_resolved")
     @Expose
-    val frontRightIssuesToBeResolved :List<String>,
+    val frontRightIssuesToBeResolved: List<String>,
     @SerializedName("back_left_issues_to_be_resolved")
     @Expose
-    val backLeftIssuesToBeResolved :List<String>,
+    val backLeftIssuesToBeResolved: List<String>,
     @SerializedName("back_right_issues_to_be_resolved")
     @Expose
-    val backRightIssuesToBeResolved :List<String>,
+    val backRightIssuesToBeResolved: List<String>,
     @SerializedName("additional_comments")
     @Expose
     val additionalComments: String,
@@ -313,5 +313,18 @@ data class ServiceDataByIdData(
     val technicianImage: String,
     @SerializedName("comment_id")
     @Expose
-    val comment_id: List<Int>
+    val comment_id: List<Int>,
+    @SerializedName("front_left_tyre_wheel_rotation")
+    @Expose
+    val front_left_tyre_wheel_rotation: String,
+    @SerializedName("back_left_tyre_wheel_rotation")
+    @Expose
+    val back_left_tyre_wheel_rotation: String,
+    @SerializedName("front_right_tyre_wheel_rotation")
+    @Expose
+    val front_right_tyre_wheel_rotation: String,
+    @SerializedName("back_right_tyre_wheel_rotation")
+    @Expose
+    val back_right_tyre_wheel_rotation: String
+
 )

@@ -271,6 +271,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Glide.with(this@AddServiceDetailsActivity)
                         .load(jsonLF.get(TyreKey.vehicleMakeURL)?.asString)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .thumbnail(0.33f)
                         .placeholder(R.drawable.placeholder)
                         .into(ivtyreLeftFront!!)
                 } catch (e: Exception) {
@@ -401,6 +402,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Glide.with(this@AddServiceDetailsActivity)
                         .load(jsonRF.get(TyreKey.vehicleMakeURL)?.asString)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .thumbnail(0.33f)
                         .placeholder(R.drawable.placeholder)
                         .into(ivTyreRightFront!!)
                 } catch (e: Exception) {
@@ -487,6 +489,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Glide.with(this@AddServiceDetailsActivity)
                         .load(jsonLR.get(TyreKey.vehicleMakeURL)?.asString)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .thumbnail(0.33f)
                         .placeholder(R.drawable.placeholder)
                         .into(ivtyreLeftRear!!)
                 } catch (e: Exception) {
@@ -571,6 +574,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Glide.with(this@AddServiceDetailsActivity)
                         .load(jsonRR.get(TyreKey.vehicleMakeURL)?.asString)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .thumbnail(0.33f)
                         .placeholder(R.drawable.placeholder)
                         .into(ivTyreRightRear!!)
                 } catch (e: Exception) {
@@ -593,6 +597,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Glide.with(this@AddServiceDetailsActivity)
                     .load(LFVehicleURL)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .thumbnail(0.33f)
                     .placeholder(R.drawable.placeholder)
                     .into(ivtyreLeftFront!!)
             } catch (e: Exception) {
@@ -606,6 +611,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Glide.with(this@AddServiceDetailsActivity)
                     .load(RFVehicleURL)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .thumbnail(0.33f)
                     .placeholder(R.drawable.placeholder)
                     .into(ivTyreRightFront!!)
             } catch (e: Exception) {
@@ -619,6 +625,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Glide.with(this@AddServiceDetailsActivity)
                     .load(LRVehicleURL)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .thumbnail(0.33f)
                     .placeholder(R.drawable.placeholder)
                     .into(ivtyreLeftRear!!)
             } catch (e: Exception) {
@@ -632,6 +639,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Glide.with(this@AddServiceDetailsActivity)
                     .load(RRVehicleURL)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .thumbnail(0.33f)
                     .placeholder(R.drawable.placeholder)
                     .into(ivTyreRightRear!!)
             } catch (e: Exception) {
@@ -773,6 +781,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             Glide.with(this)
                 .load(carImage)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .thumbnail(0.33f)
                 .placeholder(R.drawable.ic_no_car_image)
                 .into(ivCarImage!!)
         } catch (e: Exception) {
@@ -1036,7 +1045,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
 
                     try {
-                        Glide.with(this).load(jsonService.get(TyreKey.addServiceCarImage_1)?.asString)
+                        Glide.with(this).load(jsonService.get(TyreKey.addServiceCarImage_1)?.asString).thumbnail(0.33f)
                             .into(ivPickedImage!!)
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
@@ -1053,7 +1062,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     !jsonService.get(TyreKey.addServiceCarImage_2)?.asString.equals("")
                 ) {
                     try {
-                        Glide.with(this).load(jsonService.get(TyreKey.addServiceCarImage_2)?.asString)
+                        Glide.with(this).load(jsonService.get(TyreKey.addServiceCarImage_2)?.asString).thumbnail(0.33f)
                             .into(ivPickedImage1!!)
 
                     } catch (e: java.lang.Exception) {
@@ -2038,6 +2047,75 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     jsonObject.add("service", jsonArrayService)
                     jsonObject.add("technician_suggestions", jsonArraySuggestion)
 
+//                    "front_left_tyre_wheel_rotation": "LR",
+//                    "back_left_tyre_wheel_rotation": "LF",
+//                    "front_right_tyre_wheel_rotation": "RR",
+//                    "back_right_tyre_wheel_rotation": "RF",
+
+
+                    if (selectedServiceArr?.contains("Type Rotation")!!) {
+                        var selectedTextLF: String? = ""
+                        var selectedTextRF: String? = ""
+                        var selectedTextLR: String? = ""
+                        var selectedTextRR: String? = ""
+                        try {
+                            if (radioLF_LR?.isChecked!!) {
+                                selectedTextLF = "LR"
+                            } else {
+                                selectedTextLF = "RR"
+                            }
+                        } catch (e: NullPointerException) {
+                            e.printStackTrace()
+                        }
+
+                        try {
+                            if (radioRF_LR?.isChecked!!) {
+                                selectedTextRF = "LR"
+                            } else {
+                                selectedTextRF = "RR"
+                            }
+
+                        } catch (e: NullPointerException) {
+                            e.printStackTrace()
+                        }
+
+
+                        try {
+                            if (radioLR_RF?.isChecked!!) {
+                                selectedTextLR = "RF"
+                            } else {
+                                selectedTextLR = "LF"
+                            }
+
+                        } catch (e: NullPointerException) {
+                            e.printStackTrace()
+                        }
+
+
+                        try {
+                            if (radioRR_LF?.isChecked!!) {
+                                selectedTextRR = "LF"
+                            } else {
+                                selectedTextRR = "RF"
+                            }
+                        } catch (e: NullPointerException) {
+                            e.printStackTrace()
+                        }
+
+                        if (!selectedTextLF.equals("")) {
+                            jsonObject.addProperty("front_left_tyre_wheel_rotation", selectedTextLF)
+                        }
+                        if (!selectedTextLR.equals("")) {
+                            jsonObject.addProperty("back_left_tyre_wheel_rotation", selectedTextLR)
+                        }
+                        if (!selectedTextRF.equals("")) {
+                            jsonObject.addProperty("front_right_tyre_wheel_rotation", selectedTextRF)
+                        }
+                        if (!selectedTextRR.equals("")) {
+                            jsonObject.addProperty("back_right_tyre_wheel_rotation", selectedTextRR)
+                        }
+                    }
+
                     Log.e("getfinalobject", "" + jsonObject)
                     Log.e("getObjectT__", "" + jsonObject)
 
@@ -2954,8 +3032,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
                     if (Common.isConnectedToInternet(this)) {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(image_uri!!)
+                        val inputStream: InputStream? = imagePath?.inputStream()
+
                         if (selectImage1) {
                             prefManager.removeValue("image_Car_1")
                         } else {
@@ -3005,8 +3083,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 
                     if (Common.isConnectedToInternet(this)) {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+                        val inputStream: InputStream? = auxFile.inputStream()
+//                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
                         if (selectImage1) {
                             prefManager.removeValue("image_Car_1")
                         } else {
@@ -3063,8 +3141,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
 
                     if (Common.isConnectedToInternet(this)) {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(selectedImage!!)
+                        val inputStream: InputStream? = imagePath?.inputStream()
+//                            this.contentResolver?.openInputStream(selectedImage!!)
                         if (selectImage1) {
                             prefManager.removeValue("image_Car_1")
                         } else {
@@ -3111,6 +3189,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                         Glide.with(this@AddServiceDetailsActivity)
                                             .load(TyreDetailCommonClass.vehicleMakeURL)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .thumbnail(0.33f)
                                             .placeholder(R.drawable.placeholder)
                                             .into(ivTyreRightFront!!)
                                     } catch (e: Exception) {
@@ -3136,6 +3215,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                         Glide.with(this@AddServiceDetailsActivity)
                                             .load(TyreDetailCommonClass.vehicleMakeURL)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .thumbnail(0.33f)
                                             .placeholder(R.drawable.placeholder)
                                             .into(ivTyreRightFront!!)
                                     } catch (e: Exception) {
@@ -3164,6 +3244,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                     try {
                                         Glide.with(this@AddServiceDetailsActivity)
                                             .load(TyreDetailCommonClass.vehicleMakeURL)
+                                            .thumbnail(0.33f)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                                             .placeholder(R.drawable.placeholder)
                                             .into(ivTyreRightFront!!)
@@ -3193,6 +3274,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                         Glide.with(this@AddServiceDetailsActivity)
                                             .load(TyreDetailCommonClass.vehicleMakeURL)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .thumbnail(0.33f)
                                             .placeholder(R.drawable.placeholder)
                                             .into(ivTyreRightFront!!)
                                     } catch (e: Exception) {
@@ -3397,24 +3479,50 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         Log.e("getImagess", "" + TyreConfigClass.moreSuggestions)
 
+
+
         if (selectedDateNextServiceDue != null && !selectedDateNextServiceDue
                 .equals("")
         ) {
 
         } else {
-//            Toast.makeText(this, "Next Due Date Not Selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please Select Next Due Date", Toast.LENGTH_SHORT).show()
             return
         }
 
         var count = 0
+        var tyreRotation = false
         for (i in serviceList?.indices!!) {
             if (serviceList?.get(i)?.isSelected!!) {
                 count = count + 1
+                if (serviceList?.get(i)?.name.equals("Type Rotation", ignoreCase = true)) {
+                    tyreRotation = true
+                }
             }
         }
         if (count == 0
         ) {
             return
+        }
+
+        if (tyreRotation) {
+
+            if (radioGroupLF?.checkedRadioButtonId == -1) {
+                Toast.makeText(this, "Please Select Left Front Update Placement", Toast.LENGTH_SHORT).show()
+                return
+            }
+            if (radioGroupLR?.checkedRadioButtonId == -1) {
+                Toast.makeText(this, "Please Select Left Right Update Placement", Toast.LENGTH_SHORT).show()
+                return
+            }
+            if (radioGroupRF?.checkedRadioButtonId == -1) {
+                Toast.makeText(this, "Please Select Right Front Update Placement", Toast.LENGTH_SHORT).show()
+                return
+            }
+            if (radioGroupRR?.checkedRadioButtonId == -1) {
+                Toast.makeText(this, "Please Select Right Rear Update Placement", Toast.LENGTH_SHORT).show()
+                return
+            }
         }
 
         Log.e("isCpmpleted00", "" + TyreConfigClass.LFCompleted)
@@ -4010,7 +4118,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             if (TyreDetailCommonClass.chk2Make.equals("RF,true")) TyreDetailCommonClass.vehicleMakeId else ""
                         )
 
-                        lfObject.put(TyreKey.vehicleMakeURL,TyreDetailCommonClass.vehicleMakeURL)
+                        lfObject.put(TyreKey.vehicleMakeURL, TyreDetailCommonClass.vehicleMakeURL)
                     }
                 }
                 if (TyreDetailCommonClass.chk2Pattern.equals("RF,true")) {
@@ -5357,6 +5465,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         } else {
                             TyreConfigClass.CarPhoto_2 = it.data.imageUrl
                         }
+                        Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
                     }
 
                     storeServiceDetailData()
@@ -5393,7 +5502,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         Glide.with(this@AddServiceDetailsActivity)
             .load(posterUrl)
             .override(1600, 1600)
-
+            .thumbnail(0.33f)
             .placeholder(R.drawable.placeholder)
             .into(imgPoster)
 

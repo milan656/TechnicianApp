@@ -97,21 +97,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         Log.e("getaccessToken", "" + prefManager?.getAccessToken())
         init()
 
+        val diff = Common.dateDifference(prefManager?.getAccessTokenExpireDate()!!)
+        if (diff <= 1) {
+            refreshToken()
+        }
 
         callApiTogetToken()
 
-       /* val thread = Thread {
-            if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
-                    .getAllVehicleType().size > 0
-            ) {
-//                actionOnService(Actions.START)
+        /* val thread = Thread {
+             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
+                     .getAllVehicleType().size > 0
+             ) {
+ //                actionOnService(Actions.START)
 
-            } else {
+             } else {
 
-            }
+             }
 
-        }
-        thread.start()*/
+         }
+         thread.start()*/
 
         llhome?.performClick()
 
@@ -142,6 +146,33 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
         getNotificationCount()
+
+    }
+
+    private fun refreshToken() {
+        loginViewModel?.refreshToken(
+            "Basic ZG9vcnN0ZXA6MTIz", "refresh_token", prefManager?.getRefreshToken()
+        )
+
+        loginViewModel?.getLoginData()?.observe(this, Observer {
+            if (it != null) {
+                if (it.success) {
+                    if (it.accessToken != null && !it.accessToken.equals("")) {
+                        prefManager?.setAccessToken("Bearer " + it.accessToken)
+                        prefManager?.setRefreshToken(it.refreshToken)
+                        prefManager?.setToken(it.token)
+                        prefManager?.setUuid(it.userDetailModel!!.uuid)
+
+//                    firebaseAnalytics?.setUserId(it.userDetailModel?.sap_id!!);
+
+                        prefManager?.setAccessTokenExpireDate(it.accessTokenExpiresAt)
+                        if (it.userDetailModel?.owner_name != null) {
+                            prefManager?.setOwnerName(it.userDetailModel?.owner_name)
+                        }
+                    }
+                }
+            }
+        })
 
     }
 

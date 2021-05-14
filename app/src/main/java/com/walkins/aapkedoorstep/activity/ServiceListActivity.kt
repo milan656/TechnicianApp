@@ -25,11 +25,12 @@ import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.common.showShortToast
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
+import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import java.lang.StringBuilder
 
 class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
-
+    private var loginViewModel: LoginActivityViewModel? = null
     private var serviceViewModel: ServiceViewModel? = null
     private var prefManager: PrefManager? = null
     private var llSkipped: LinearLayout? = null
@@ -53,6 +54,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var tvAddress: TextView? = null
     private var tvDate: TextView? = null
     private var tvNoServiceData: TextView? = null
+    private var llAddressView: LinearLayout? = null
+    private var relNoData: LinearLayout? = null
 
     private var selectedDate = ""
     private var selectedDateFormated = ""
@@ -73,11 +76,19 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         setContentView(R.layout.activity_service_list)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         prefManager = PrefManager(this)
+        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
         init()
+
+        val diff = Common.dateDifference(prefManager?.getAccessTokenExpireDate()!!)
+        if (diff <= 1) {
+            refreshToken()
+        }
     }
 
     private fun init() {
         serviceRecycView = findViewById(R.id.serviceRecycView)
+        relNoData = findViewById(R.id.relNoData)
+        llAddressView = findViewById(R.id.llAddressView)
 
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
@@ -105,7 +116,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             RecyclerView.VERTICAL,
             false
         )
-        adapter = this.let { ServicesListAdpater(arrayList, it, this) }
+        adapter = this.let { ServicesListAdpater(arrayList, it, this,serviceStatus) }
         serviceRecycView?.adapter = adapter
         adapter?.onclick = this
 
@@ -157,21 +168,21 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                         if (serviceStatus.equals(upcomming)) {
 //                            arrayList.filter { it.status.equals(upcomming) }
                             arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this) }
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this,serviceStatus) }
 
-                            tvUpcoming?.text = "Upcomming - ${arrayList.size}"
+                            tvUpcoming?.text = "Upcoming - ${arrayList.size}"
                             Log.e("getservicedata", "" + arrayList.size)
                         } else if (serviceStatus.equals(completed)) {
 //                            arrayList.filter { it.status.equals(completed) }
                             Log.e("getservicedata0", "" + arrayList.size)
                             arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this) }
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this,serviceStatus) }
                             tvCompleted?.text = "Completed - ${arrayList.size}"
                         } else if (serviceStatus.equals(skipped)) {
 //                            arrayList.filter { it.status.equals(skipped) }
                             Log.e("getservicedata1", "" + arrayList.size)
                             arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this) }
+                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this,serviceStatus) }
                             tvSkipped?.text = "Skipped - ${arrayList.size}"
                         }
 
@@ -181,6 +192,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                         if (arrayList.size == 0) {
                             tvNoServiceData?.text = "There is no any Upcomming service to display"
                             tvNoServiceData?.visibility = View.VISIBLE
+                            relNoData?.visibility = View.VISIBLE
+                            llAddressView?.visibility = View.GONE
+                            tvNoServiceData?.visibility = View.GONE
+                        } else {
+                            llAddressView?.visibility = View.VISIBLE
+                            relNoData?.visibility = View.GONE
                         }
 
                         serviceRecycView?.adapter = adapter
@@ -218,12 +235,18 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this)
+                adapter = ServicesListAdpater(arrayList, this, this,serviceStatus)
                 if (arrayList.size == 0) {
-                    tvNoServiceData?.text = "There is no any Upcomming service to display"
+                    tvNoServiceData?.text = "There is no any Upcoming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
+                    llAddressView?.visibility = View.GONE
+                    tvNoServiceData?.visibility = View.GONE
+                    relNoData?.visibility = View.VISIBLE
+                } else {
+                    llAddressView?.visibility = View.VISIBLE
+                    relNoData?.visibility = View.GONE
                 }
-                tvUpcoming?.text = "Upcomming - ${arrayList.size}"
+                tvUpcoming?.text = "Upcoming - ${arrayList.size}"
                 serviceRecycView?.adapter = adapter
                 adapter?.onclick = this
 
@@ -243,11 +266,17 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this)
+                adapter = ServicesListAdpater(arrayList, this, this,serviceStatus)
 
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Completed service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
+                    llAddressView?.visibility = View.GONE
+                    relNoData?.visibility = View.VISIBLE
+                    tvNoServiceData?.visibility = View.GONE
+                } else {
+                    llAddressView?.visibility = View.VISIBLE
+                    relNoData?.visibility = View.GONE
                 }
                 tvCompleted?.text = "Completed - ${arrayList.size}"
                 serviceRecycView?.adapter = adapter
@@ -270,11 +299,17 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this)
+                adapter = ServicesListAdpater(arrayList, this, this,serviceStatus)
 
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Skipped service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
+                    llAddressView?.visibility = View.GONE
+                    relNoData?.visibility = View.VISIBLE
+                    tvNoServiceData?.visibility = View.GONE
+                } else {
+                    llAddressView?.visibility = View.VISIBLE
+                    relNoData?.visibility = View.GONE
                 }
                 tvSkipped?.text = "Skipped - ${arrayList.size}"
                 serviceRecycView?.adapter = adapter
@@ -402,9 +437,35 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         }
 
         btnSend.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
         }
-        dialog?.show()
+        dialog.show()
     }
 
+    private fun refreshToken() {
+        loginViewModel?.refreshToken(
+            "Basic ZG9vcnN0ZXA6MTIz", "refresh_token", prefManager?.getRefreshToken()
+        )
+
+        loginViewModel?.getLoginData()?.observe(this, Observer {
+            if (it != null) {
+                if (it.success) {
+                    if (it.accessToken != null && !it.accessToken.equals("")) {
+                        prefManager?.setAccessToken("Bearer " + it.accessToken)
+                        prefManager?.setRefreshToken(it.refreshToken)
+                        prefManager?.setToken(it.token)
+                        prefManager?.setUuid(it.userDetailModel!!.uuid)
+
+//                    firebaseAnalytics?.setUserId(it.userDetailModel?.sap_id!!);
+
+                        prefManager?.setAccessTokenExpireDate(it.accessTokenExpiresAt)
+                        if (it.userDetailModel?.owner_name != null) {
+                            prefManager?.setOwnerName(it.userDetailModel?.owner_name)
+                        }
+                    }
+                }
+            }
+        })
+
+    }
 }

@@ -432,10 +432,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getimages1", "" + prefManager.getValue("image_" + selectedTyre))
 //            ivPickedImage1?.setImageURI(Uri.parse(prefManager.getValue("image_" + selectedTyre)))
 
-
             try {
-                Glide.with(this).load(prefManager.getValue("image_" + selectedTyre)).into(ivPickedImage1!!)
-            }catch (e:Exception){
+                Glide.with(this).load(prefManager.getValue("image_" + selectedTyre)).thumbnail(0.33f).into(ivPickedImage1!!)
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
             TyreDetailCommonClass.visualDetailPhotoUrl = prefManager.getValue("image_" + selectedTyre)
@@ -1912,8 +1911,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
 
-                    val inputStream_ = contentResolver.openInputStream(image_uri!!)
-                    val exifInterface = ExifInterface(inputStream_!!)
+//                    val inputStream_ = contentResolver.openInputStream(image_uri!!)
+//                    val exifInterface = ExifInterface(inputStream_!!)
 
                     Log.e(
                         "TAG",
@@ -1929,8 +1928,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                     Log.e("getimages", "" + prefManager.getValue("image_" + selectedTyre))
                     if (Common.isConnectedToInternet(this)) {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(image_uri!!)
+                        val inputStream: InputStream? = imagePath?.inputStream()
+//                            this.contentResolver?.openInputStream(image_uri!!)
                         prefManager.removeValue("image_" + selectedTyre)
                         imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
@@ -1946,8 +1945,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 if (resultCode == Activity.RESULT_OK) {
                     val auxFile = File(mCurrentPhotoPath)
 
-                    val inputStream_ = contentResolver.openInputStream(Uri.parse(mCurrentPhotoPath))
-                    val exifInterface = ExifInterface(inputStream_!!)
+//                    val inputStream_ = contentResolver.openInputStream(Uri.parse(mCurrentPhotoPath))
+//                    val exifInterface = ExifInterface(inputStream_!!)
 
                     Log.e(
                         "TAG",
@@ -1965,8 +1964,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                     Log.e("getimages", "" + prefManager.getValue("image_" + selectedTyre))
                     if (Common.isConnectedToInternet(this)) {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+                        val inputStream: InputStream? = auxFile.inputStream()
+//                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
                         prefManager.removeValue("image_" + selectedTyre)
                         auxFile.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
@@ -1984,16 +1983,16 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     //To get the File for further usage
                     val selectedImage = data?.data
 
-                    val inputStream_ = contentResolver.openInputStream(data?.data!!)
-                    val exifInterface = ExifInterface(inputStream_!!)
+//                    val inputStream_ = contentResolver.openInputStream(data?.data!!)
+//                    val exifInterface = ExifInterface(inputStream_!!)
 
                     Log.e(
                         "TAG",
-                        "===${data.dataString}"
+                        "===${data?.dataString}"
                     )
                     try {
                         Glide.with(this)
-                            .load(data.dataString)
+                            .load(data?.dataString)
                             .thumbnail(0.33f)
                             .into(ivPickedImage1!!)
 
@@ -2015,12 +2014,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
                     if (Common.isConnectedToInternet(this)) {
-                        val inputStream: InputStream? =
-                            this.contentResolver?.openInputStream(selectedImage!!)
+                        val inputStream: InputStream? = imagePath?.inputStream()
+//                            this.contentResolver?.openInputStream(selectedImage!!)
                         prefManager.removeValue("image_" + selectedTyre)
                         imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
-                        prefManager.setValue("image_" + selectedTyre, data.dataString)
+                        prefManager.setValue("image_" + selectedTyre, data?.dataString)
                         TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage.toString()
                         setUriTyreWise(selectedImage!!)
                     }
@@ -2194,6 +2193,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             .load(posterUrl)
             .override(1600, 1600)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .thumbnail(0.33f)
             .placeholder(R.drawable.placeholder)
             .into(imgPoster)
 

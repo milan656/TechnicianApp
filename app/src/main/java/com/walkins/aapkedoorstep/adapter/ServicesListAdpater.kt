@@ -22,7 +22,8 @@ import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateD
 class ServicesListAdpater(
     var array: MutableList<ServiceListByDateData>,
     var context: Context,
-    onPositionClick: onClickAdapter
+    onPositionClick: onClickAdapter,
+    var servicestatus: String
 ) :
     RecyclerView.Adapter<ServicesListAdpater.Viewholder>() {
 
@@ -85,11 +86,11 @@ class ServicesListAdpater(
             }
         }
 
-//        if (array.get(position).status.equals("complete")) {
-//            holder.ivServiceTyre.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), android.graphics.PorterDuff.Mode.MULTIPLY);
-//        } else {
-//            holder.ivServiceTyre.setColorFilter(ContextCompat.getColor(context, R.color.text_color2), android.graphics.PorterDuff.Mode.MULTIPLY);
-//        }
+        if (array.get(position).status.equals("completed",ignoreCase = true)) {
+            holder.ivServiceTyre.setImageResource(R.mipmap.ic_completed_service)
+        } else {
+            holder.ivServiceTyre.setImageResource(R.mipmap.ic_service_icon)
+        }
 
     }
 

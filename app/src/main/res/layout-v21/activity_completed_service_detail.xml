@@ -168,6 +168,7 @@
                     android:layout_marginEnd="@dimen/eighteen_dp"
                     android:background="@drawable/common_rounded"
                     android:elevation="@dimen/twenty_dp"
+                    android:visibility="gone"
                     android:gravity="center"
                     android:orientation="horizontal">
 
