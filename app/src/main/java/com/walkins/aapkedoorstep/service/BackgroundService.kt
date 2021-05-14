@@ -175,7 +175,7 @@ class BackgroundService : Service() {
                     fetchTime()
 
                 }
-                delay(1 * 60 * 1000) // 5 min delay
+                delay(4 * 60 * 1000) // 5 min delay
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
