@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
@@ -46,16 +47,18 @@ class CompletedServiceAdapter(
         holder.tvServiceName.text = array.get(position).name.capitalize(Locale.getDefault())
 
         Log.e("getdataa", "" + array.get(position).name)
-        Log.e("getdataa", "" + array.get(position).image)
 
-        if (position != 0 && position != 1) {
+        if (position == 0 && position == 1) {
             holder.llSpacing.visibility = View.VISIBLE
         } else {
             holder.llSpacing.visibility = View.GONE
         }
 
         try {
-            Glide.with(context).load(array.get(position).image).into(holder.ivServiceImage)
+            Glide.with(context).load(array.get(position).image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .thumbnail(0.33f)
+                .into(holder.ivServiceImage)
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -110,6 +110,7 @@
                                 android:background="@drawable/layout_bg_corner"
                                 android:gravity="start|center"
                                 android:padding="@dimen/ten_dp"
+                                android:maxLength="4"
                                 android:inputType="number"
                                 android:textColor="@color/text_color1"
                                 android:textSize="@dimen/fourteen_sp" />

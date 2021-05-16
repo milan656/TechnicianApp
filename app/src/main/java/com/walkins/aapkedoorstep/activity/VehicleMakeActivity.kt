@@ -1029,6 +1029,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         if (json.get(TyreKey.vehicleMakeId) != null && !json.get(TyreKey.vehicleMakeId)?.asString.equals("")) {
             TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
         }
+        if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+            TyreDetailCommonClass.vehicleMakeURL = json.get(TyreKey.vehicleMakeURL)?.asString
+        }
+
         if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals("")) {
             TyreDetailCommonClass.vehiclePattern = json.get(TyreKey.vehiclePattern)?.asString
         }

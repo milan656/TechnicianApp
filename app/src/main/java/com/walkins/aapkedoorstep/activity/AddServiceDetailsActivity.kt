@@ -1089,7 +1089,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (ischecked
             ) {
                 if (llUpdatedPlacement?.visibility == View.GONE) {
-                    if (type.equals("Type Rotation",ignoreCase = true)) {
+                    if (type.equals("Type Rotation", ignoreCase = true)) {
                         Common.expand(llUpdatedPlacement!!)
                     }
                     if (llServiceExpanded?.visibility == View.GONE) {
@@ -1741,6 +1741,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             jsonLF.get(TyreKey.bubble)?.asString
                         )
                     }
+
                     if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals(
                             ""
                         )!!
@@ -1749,15 +1750,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             "front_left_tyre_psi_in",
                             jsonLF.get(TyreKey.psiInTyreService)?.asString
                         )
-                    }
-                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals(
-                            ""
-                        )!!
-                    ) {
+                    } else {
                         jsonObject.addProperty(
                             "front_left_tyre_psi_in",
-                            jsonLF.get(TyreKey.psiInTyreService)?.asString
+                            ""
                         )
+
                     }
                     if (jsonLF.get(TyreKey.psiOutTyreService) != null && !jsonLF.get(TyreKey.psiOutTyreService)?.asString?.equals(
                             ""
@@ -1766,6 +1764,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         jsonObject.addProperty(
                             "front_left_tyre_psi_out",
                             jsonLF.get(TyreKey.psiOutTyreService)?.asString
+                        )
+                    } else {
+                        jsonObject.addProperty(
+                            "front_left_tyre_psi_out",
+                            ""
                         )
                     }
                     if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService)?.asString?.equals(
@@ -1776,6 +1779,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             "front_left_tyre_weight",
                             jsonLF.get(TyreKey.weightTyreService)?.asString
                         )
+                    } else {
+                        jsonObject.addProperty(
+                            "front_left_tyre_weight",
+                            ""
+                        )
                     }
 
                     if (jsonLF.get(TyreKey.visualDetailPhotoUrl) != null
@@ -1783,7 +1791,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     ) {
 
                         jsonObject.addProperty("front_left_tyre_wheel_image", jsonLF.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                    } else {
+                        jsonObject.addProperty("front_left_tyre_wheel_image", "")
                     }
+
 
                     if (jsonLF.get(TyreKey.issueResolvedArr) != null) {
 
@@ -1841,18 +1852,26 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
                             if (jsonRF.get(TyreKey.psiInTyreService) != null && !jsonRF.get(TyreKey.psiInTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("front_right_tyre_psi_in", jsonRF.get(TyreKey.psiInTyreService)?.asString)
+                            } else {
+                                jsonObject.addProperty("front_right_tyre_psi_in", "")
                             }
                             if (jsonRF.get(TyreKey.psiOutTyreService) != null && !jsonRF.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("front_right_tyre_psi_out", jsonRF.get(TyreKey.psiOutTyreService)?.asString)
+                            } else {
+                                jsonObject.addProperty("front_right_tyre_psi_out", "")
                             }
                             if (jsonRF.get(TyreKey.weightTyreService) != null && !jsonRF.get(TyreKey.weightTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("front_right_tyre_weight", jsonRF.get(TyreKey.weightTyreService)?.asString)
+                            } else {
+                                jsonObject.addProperty("front_right_tyre_weight", "")
                             }
 
                             if (jsonRF.get(TyreKey.visualDetailPhotoUrl) != null
                                 && !jsonRF.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
                             ) {
                                 jsonObject.addProperty("front_right_tyre_wheel_image", jsonRF.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                            } else {
+                                jsonObject.addProperty("front_right_tyre_wheel_image", "")
                             }
 
                             if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
@@ -1915,18 +1934,26 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
                             if (jsonLR.get(TyreKey.psiInTyreService) != null && !jsonLR.get(TyreKey.psiInTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_left_tyre_psi_in", jsonLR.get(TyreKey.psiInTyreService)?.asString)
+                            } else {
+                                jsonObject.addProperty("back_left_tyre_psi_in", "")
                             }
                             if (jsonLR.get(TyreKey.psiOutTyreService) != null && !jsonLR.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_left_tyre_psi_out", jsonLR.get(TyreKey.psiOutTyreService)?.asString)
+                            } else {
+                                jsonObject.addProperty("back_left_tyre_psi_out", "")
                             }
                             if (jsonLR.get(TyreKey.weightTyreService) != null && !jsonLR.get(TyreKey.weightTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_left_tyre_weight", jsonLR.get(TyreKey.weightTyreService)?.asString)
+                            } else {
+                                jsonObject.addProperty("back_left_tyre_weight", "")
                             }
 
                             if (jsonLR.get(TyreKey.visualDetailPhotoUrl) != null
                                 && !jsonLR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
                             ) {
                                 jsonObject.addProperty("back_left_tyre_wheel_image", jsonLR.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                            } else {
+                                jsonObject.addProperty("back_left_tyre_wheel_image", "")
                             }
 
                             if (jsonLR.get(TyreKey.issueResolvedArr) != null) {
@@ -1989,18 +2016,26 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
                             if (jsonRR.get(TyreKey.psiInTyreService) != null && !jsonRR.get(TyreKey.psiInTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_right_tyre_psi_in", jsonRR.get(TyreKey.psiInTyreService)?.asString)
+                            }else{
+                                jsonObject.addProperty("back_right_tyre_psi_in", "")
                             }
                             if (jsonRR.get(TyreKey.psiOutTyreService) != null && !jsonRR.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_right_tyre_psi_out", jsonRR.get(TyreKey.psiOutTyreService)?.asString)
+                            }else{
+                                jsonObject.addProperty("back_right_tyre_psi_out", "")
                             }
                             if (jsonRR.get(TyreKey.weightTyreService) != null && !jsonRR.get(TyreKey.weightTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_right_tyre_weight", jsonRR.get(TyreKey.weightTyreService)?.asString)
+                            }else{
+                                jsonObject.addProperty("back_right_tyre_weight", "")
                             }
 
                             if (jsonRR.get(TyreKey.visualDetailPhotoUrl) != null
                                 && !jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
                             ) {
                                 jsonObject.addProperty("back_right_tyre_wheel_image", jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                            }else{
+                                jsonObject.addProperty("back_right_tyre_wheel_image", "")
                             }
                             if (jsonRR.get(TyreKey.issueResolvedArr) != null) {
 
@@ -3516,10 +3551,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         if (tyreRotation) {
 
-            if (radioGroupLF?.checkedRadioButtonId == -1) {
-                Toast.makeText(this, "Please Select Left Front Update Placement", Toast.LENGTH_SHORT).show()
+            if (radioGroupLF?.checkedRadioButtonId == -1 && radioGroupLR?.checkedRadioButtonId == -1 &&
+                radioGroupRF?.checkedRadioButtonId == -1 && radioGroupRR?.checkedRadioButtonId == -1
+            ) {
+                Toast.makeText(this, "Please Select Update Placement", Toast.LENGTH_SHORT).show()
                 return
             }
+/*
             if (radioGroupLR?.checkedRadioButtonId == -1) {
                 Toast.makeText(this, "Please Select Left Right Update Placement", Toast.LENGTH_SHORT).show()
                 return
@@ -3532,6 +3570,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Toast.makeText(this, "Please Select Right Rear Update Placement", Toast.LENGTH_SHORT).show()
                 return
             }
+*/
         }
 
         Log.e("isCpmpleted00", "" + TyreConfigClass.LFCompleted)

@@ -439,11 +439,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-
         Log.e("getid", "" + selectedId)
         Log.e("selectedpatt00", "" + TyreDetailCommonClass.vehicleMakeId + " " + selectedIdMake)
 
-        if (selectedIdMake != -1) {
+        if (selectedId != -1) {
             if (!TyreDetailCommonClass.vehicleMakeId.equals("") && TyreDetailCommonClass.vehicleMakeId?.toInt() == selectedIdMake) {
                 llVehicleMakeselectedView?.visibility = View.VISIBLE
                 btnNext?.visibility = View.VISIBLE
@@ -1138,6 +1137,15 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 )
             ) {
                 TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
+            }
+        }
+        if (TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+
+            if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleMakeURL = json.get(TyreKey.vehicleMakeURL)?.asString
             }
         }
         if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(

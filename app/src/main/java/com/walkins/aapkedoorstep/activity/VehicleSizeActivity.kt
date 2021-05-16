@@ -547,6 +547,15 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
             }
         }
+        if (TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+
+            if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleMakeURL = json.get(TyreKey.vehicleMakeURL)?.asString
+            }
+        }
         if (TyreDetailCommonClass.vehiclePattern.equals("")) {
 
             if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(

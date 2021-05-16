@@ -1086,6 +1086,15 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 TyreDetailCommonClass.vehicleMakeId = json.get(TyreKey.vehicleMakeId)?.asString
             }
         }
+        if (TyreDetailCommonClass.vehicleMakeURL.equals("")) {
+
+            if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals(
+                    ""
+                )
+            ) {
+                TyreDetailCommonClass.vehicleMakeURL = json.get(TyreKey.vehicleMakeURL)?.asString
+            }
+        }
         if (TyreDetailCommonClass.vehiclePattern.equals("")) {
 
             if (json.get(TyreKey.vehiclePattern) != null && !json.get(TyreKey.vehiclePattern)?.asString.equals(
@@ -1669,6 +1678,22 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 Log.e("getslider", "" + TyreDetailCommonClass.chk1Pattern)
                 Log.e("getslider", "" + TyreDetailCommonClass.chk2Pattern)
                 Log.e("getslider", "" + TyreDetailCommonClass.chk3Pattern)
+
+                if (weightFrame?.visibility == View.VISIBLE) {
+                    TyreDetailCommonClass.weightTyreService = weightTyreService
+                } else {
+                    TyreDetailCommonClass.weightTyreService = ""
+                }
+                if (psiInFrame?.visibility == View.VISIBLE) {
+                    TyreDetailCommonClass.psiInTyreService = psiInTyreService
+                } else {
+                    TyreDetailCommonClass.psiInTyreService = ""
+                }
+                if (psiOutFrame?.visibility == View.VISIBLE) {
+                    TyreDetailCommonClass.psiOutTyreService = psiOutTyreService
+                } else {
+                    TyreDetailCommonClass.psiOutTyreService = ""
+                }
 
 
                 setResult(1004)
