@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -123,6 +124,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
     private var uuid: String? = ""
     private var color: String = ""
+    private var colorcode: String = ""
     private var makeModel: String = ""
     private var regNumber: String = ""
     private var carImage: String = ""
@@ -242,6 +244,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             if (intent.getStringExtra("uuid") != null) {
                 uuid = intent.getStringExtra("uuid")
             }
+            if (intent.getStringExtra("colorcode") != null) {
+                colorcode = intent.getStringExtra("colorcode")!!
+            }
 
             if (intent.getStringExtra("makeModel") != null) {
                 makeModel = intent.getStringExtra("makeModel")!!
@@ -267,6 +272,8 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         tvColor?.text = color
         tvRegNumber?.text = regNumber
         tvMakeModel?.text = makeModel
+
+        llColor?.setBackgroundColor(Color.parseColor(colorcode))
 
         try {
             Glide.with(this)
@@ -491,17 +498,17 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 tvUpdatePlacementRR?.text = serviceDateByIdModel?.data?.get(0)?.back_right_tyre_wheel_rotation
             }
 
-            if (tvUpdatePlacementLF?.text?.toString()?.isEmpty()!!){
-                llRotationLF?.visibility=View.GONE
+            if (tvUpdatePlacementLF?.text?.toString()?.isEmpty()!!) {
+                llRotationLF?.visibility = View.GONE
             }
-            if (tvUpdatePlacementRR?.text?.toString()?.isEmpty()!!){
-                llRotationRR?.visibility=View.GONE
+            if (tvUpdatePlacementRR?.text?.toString()?.isEmpty()!!) {
+                llRotationRR?.visibility = View.GONE
             }
-            if (tvUpdatePlacementRF?.text?.toString()?.isEmpty()!!){
-                llRotationRF?.visibility=View.GONE
+            if (tvUpdatePlacementRF?.text?.toString()?.isEmpty()!!) {
+                llRotationRF?.visibility = View.GONE
             }
-            if (tvUpdatePlacementLR?.text?.toString()?.isEmpty()!!){
-                llRotationLR?.visibility=View.GONE
+            if (tvUpdatePlacementLR?.text?.toString()?.isEmpty()!!) {
+                llRotationLR?.visibility = View.GONE
             }
 
             if (tvUpdatePlacementLF?.text?.toString()?.isEmpty()!! && tvUpdatePlacementRF?.text?.toString()?.isEmpty()!!) {
@@ -759,7 +766,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             R.id.ivInfoAddService -> {
                 showBottomSheetdialogNormal(
                     Common.commonPhotoChooseArr,
-                    "Address Details",
+                    "Address Detail",
                     this,
                     Common.btn_filled,
                     false, Common.getStringBuilder(address)
@@ -805,7 +812,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "" + "\n")
+        val str = stringBuilder.toString().replace(",", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

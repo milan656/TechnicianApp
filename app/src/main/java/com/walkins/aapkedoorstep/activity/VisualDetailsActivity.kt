@@ -174,11 +174,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private val PERMISSION_CODE = 1010;
     private val IMAGE_CAPTURE_CODE = 1011
     var image_uri: Uri? = null
+    var year: Int = -1
 
     companion object {
         var ok_status = "OK"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -189,6 +189,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
 //        requestPermissionForImage()
         init()
+
+        year = Calendar.getInstance().get(Calendar.YEAR)
+        Log.e("getyear", "" + year)
     }
 
 //    private fun requestPermissionForImage() {
@@ -1565,11 +1568,19 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 }
             }
             R.id.btnDone -> {
-                Log.e("getslectedtyre", "" + selectedTyre)
+
 
                 if (edtManufaturingDate?.text?.toString().equals("")) {
                     Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
                     return
+
+                }
+                if (!edtManufaturingDate?.text?.toString().equals("")) {
+                    Log.e("getslectedtyre", "" + year+" "+edtManufaturingDate?.text?.toString()?.toInt()!!)
+                    if (edtManufaturingDate?.text?.toString()?.toInt()!! > year) {
+                        Toast.makeText(this, "Manufaturing Date must be Less-than equal To current Year.", Toast.LENGTH_SHORT).show()
+                        return
+                    }
 
                 }
 //        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {

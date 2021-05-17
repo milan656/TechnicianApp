@@ -1115,7 +1115,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivInfoAddService -> {
                 showBottomSheetdialogNormal(
                     Common.commonPhotoChooseArr,
-                    "Address Details",
+                    "Address Detail",
                     this,
                     Common.btn_filled,
                     false, Common.getStringBuilder(address)
@@ -1180,7 +1180,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
 
             R.id.tvSkipService -> {
-                openSkipServiceDialogue("", "")
+                openSkipServiceDialogue("Provide Pending Reason", "", "")
             }
 
             R.id.ivInfoImgLR -> {
@@ -2182,9 +2182,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             if (it.success) {
 
                                 Common.hideLoader()
-                                removeAllTyreAndServiceDetails()
 
-                                Common.showDialogue(this, "Success", "Your Service Added Successfully", true)
+                                showDialogue("Success", "Your Service Added Successfully", true)
 
                             } else {
                                 Common.hideLoader()
@@ -2194,7 +2193,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                 }
-
                             }
                         } else {
                             Common.hideLoader()
@@ -2302,7 +2300,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "" + "\n")
+        val str = stringBuilder.toString().replace(",", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {
@@ -2439,7 +2437,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
-    private fun openSkipServiceDialogue(stringExtra: String?, s: String) {
+    private fun openSkipServiceDialogue(titleStr: String,stringExtra: String?, s: String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -2502,7 +2500,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
 
-        tvTitleText?.text = "Provide Pending Reason"
+        tvTitleText?.text = titleStr
         ivClose?.setOnClickListener {
             builder.dismiss()
         }
@@ -3037,7 +3035,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
     }
 
-
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -3052,7 +3049,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             finish()
                         }
                     } else {
-                        openSkipServiceDialogue(data.getStringExtra("reasonId"), "update")
+                        openSkipServiceDialogue("Change Pending Reason",data.getStringExtra("reasonId"), "update")
                     }
                 }
             }
@@ -5569,6 +5566,41 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         val imgClose = root.findViewById<ImageView>(R.id.imgClose)
         imgClose.setOnClickListener { builder.dismiss() }
+        builder.setView(root)
+
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
+    }
+
+
+    fun showDialogue(title: String, message: String, isBackPressed: Boolean) {
+        val builder = AlertDialog.Builder(this).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        builder?.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout, null)
+
+        val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
+        val ivClose = root.findViewById<BoldButton>(R.id.ivClose)
+        val tv_message = root.findViewById<TextView>(R.id.tv_message)
+        val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
+        tvTitleText?.text = title
+        tv_message.text = message
+        btnYes.setOnClickListener {
+            builder.dismiss()
+            removeAllTyreAndServiceDetails()
+            if (isBackPressed) {
+                this.finish()
+            }
+
+        }
+
+        ivClose.setOnClickListener {
+            builder?.dismiss()
+        }
         builder.setView(root)
 
         builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)

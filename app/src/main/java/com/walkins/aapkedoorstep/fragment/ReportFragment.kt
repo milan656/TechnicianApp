@@ -540,7 +540,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
             showBottomSheetdialogNormal(
                 Common.commonPhotoChooseArr,
-                "Address Details",
+                "Address Detail",
                 context,
                 Common.btn_filled,
                 false, Common.getStringBuilder(historyDataList.get(variable).fullAddress)
@@ -1073,7 +1073,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "" + "\n")
+        val str = stringBuilder.toString().replace(",", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

@@ -224,7 +224,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         return commentList!!
     }
 
-    private fun openSkipServiceDialogue(stringExtra: String?, s: String) {
+    private fun openSkipServiceDialogue(titleStr: String,stringExtra: String?, s: String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -245,7 +245,6 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
             if (commentList?.size!! > 0) {
                 for (i in commentList?.indices!!) {
                     skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
-                    Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
                 }
             } else {
                 if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList)?.size!! > 0) {
@@ -264,7 +263,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
                 }
             }
 
-            Log.e("getreasonid",""+stringExtra)
+            Log.e("getreasonid", "" + stringExtra)
 
             for (i in skipList?.indices!!) {
                 if (!stringExtra.equals("")) {
@@ -289,7 +288,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
 
         val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
 
-        tvTitleText?.text = "Provide Pending Reason"
+        tvTitleText?.text = titleStr
         ivClose?.setOnClickListener {
             builder.dismiss()
         }
@@ -337,12 +336,14 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
                             for (i in skipList?.indices!!) {
                                 if (skipList?.get(i)?.isSelected!!) {
                                     reason = skipList?.get(i)?.issueName
+                                    reasonId = skipList?.get(i)?.id.toString()
                                     Log.e("getreason", "" + reason)
                                 }
                             }
                         }
 
                         tvReason?.text = reason
+
                     } else {
                         Common.hideLoader()
                         showShortToast("Something Went Wrong", this)
@@ -446,6 +447,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
                                 Log.e("getcomment", "" + comment + " " + it.data.get(i).id)
                                 if (comment.toInt() == it.data.get(i).id) {
                                     tvReason?.text = it.data.get(i).name
+                                    reasonId = it.data.get(i).id.toString()
                                 }
                             }
                         }
@@ -478,11 +480,11 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
                 if (which.equals("skip_screen") || which.equals("report_screen")) {
 
                     if (getCommentList().size > 0) {
-                        Log.e("getreasonid",""+reasonId)
-                        openSkipServiceDialogue(reasonId, "update")
+                        Log.e("getreasonid", "" + reasonId)
+                        openSkipServiceDialogue("Change Pending Reason",reasonId, "update")
                     }
                 } else {
-                    var intent = Intent()
+                    val intent = Intent()
                     intent.putExtra("reason", "" + tvReason?.text?.toString())
                     intent.putExtra("reasonId", "" + reasonId)
                     setResult(RESULT_OK, intent)
@@ -492,7 +494,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
             R.id.ivInfoAddService -> {
                 showBottomSheetdialogNormal(
                     Common.commonPhotoChooseArr,
-                    "Address Details",
+                    "Address Detail",
                     this,
                     Common.btn_filled,
                     false, Common.getStringBuilder(address)
@@ -529,7 +531,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace( ", ", "" + "\n")
+        val str = stringBuilder.toString().replace(",", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

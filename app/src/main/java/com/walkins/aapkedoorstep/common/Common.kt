@@ -1081,6 +1081,7 @@ class Common {
             val root = LayoutInflater.from(activity).inflate(R.layout.common_dialogue_layout, null)
 
             val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
+            val ivClose = root.findViewById<BoldButton>(R.id.ivClose)
             val tv_message = root.findViewById<TextView>(R.id.tv_message)
             val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
             tvTitleText?.text = title
@@ -1091,6 +1092,10 @@ class Common {
                     activity.finish()
                 }
 
+            }
+
+            ivClose.setOnClickListener {
+                builder?.dismiss()
             }
             builder.setView(root)
 
