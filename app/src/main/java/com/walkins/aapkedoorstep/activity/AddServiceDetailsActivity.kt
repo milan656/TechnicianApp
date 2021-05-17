@@ -1397,6 +1397,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             R.id.btnSubmitAndComplete -> {
 
+
                 addServiceApiCall()
             }
 
@@ -1511,19 +1512,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             return
         }
 
-        uploadImageIfExist()
+        showDialogueTwo("Add Service Detail", "Are you sure? You want to Submit Your service ?")
 
 //        Common.showLoader(this)
 
-
     }
-
 
     private fun uploadImageIfExist() {
 
         var counter = 0
-
-
 
         if (prefManager.getValue("image_LF") != null && !prefManager.getValue("image_LF").equals("")) {
 
@@ -2437,7 +2434,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
-    private fun openSkipServiceDialogue(titleStr: String,stringExtra: String?, s: String) {
+    private fun openSkipServiceDialogue(titleStr: String, stringExtra: String?, s: String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -3049,7 +3046,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             finish()
                         }
                     } else {
-                        openSkipServiceDialogue("Change Pending Reason",data.getStringExtra("reasonId"), "update")
+                        openSkipServiceDialogue("Change Pending Reason", data.getStringExtra("reasonId"), "update")
                     }
                 }
             }
@@ -5591,16 +5588,48 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         tv_message.text = message
         btnYes.setOnClickListener {
             builder.dismiss()
-            removeAllTyreAndServiceDetails()
-            if (isBackPressed) {
-                this.finish()
+            try {
+                removeAllTyreAndServiceDetails()
+                if (isBackPressed) {
+                    this.finish()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+        }
+        builder.setView(root)
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
+    }
 
+    fun showDialogueTwo(title: String, message: String) {
+        val builder = AlertDialog.Builder(this).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        builder?.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout_option, null)
+
+        val btn_ok = root.findViewById<BoldButton>(R.id.btn_ok)
+        val btn_cancel = root.findViewById<BoldButton>(R.id.btn_cancel)
+        val ivClose = root.findViewById<BoldButton>(R.id.ivClose)
+        val tv_message = root.findViewById<TextView>(R.id.tv_message)
+        val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
+        tvTitleText?.text = title
+        tv_message.text = message
+        btn_ok.setOnClickListener {
+            builder.dismiss()
+            uploadImageIfExist()
+        }
+        btn_cancel?.setOnClickListener {
+            builder.dismiss()
+        }
+        ivClose?.setOnClickListener {
+            builder.dismiss()
         }
 
-        ivClose.setOnClickListener {
-            builder?.dismiss()
-        }
         builder.setView(root)
 
         builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)

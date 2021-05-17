@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/ten_dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/ten_dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_background"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/sixteen_dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/dialogue_header_design"/>
+
+                <com.walkins.aapkedoorstep.custom.NormalTextView
+                    android:id="@+id/tvAnotherMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten_sp"
+                    android:gravity="center"
+                    android:padding="@dimen/five_dp"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/ivInfo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/fourty_dp"
+                    android:rotation="180"
+                    android:src="@drawable/info_in_profile"
+
+                    android:visibility="gone" />
+
+                <com.walkins.aapkedoorstep.custom.NormalTextView
+                    android:id="@+id/tv_messageTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/six_dp"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:layout_marginEnd="@dimen/six_dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="@dimen/five_dp"
+                    android:padding="@dimen/five_dp"
+                    android:text="As per the system your current address is"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:visibility="visible" />
+
+
+
+                <com.walkins.aapkedoorstep.custom.NormalTextView
+                    android:id="@+id/tv_messagethird"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="@dimen/five_dp"
+                    android:paddingStart="@dimen/thirty_dp"
+                    android:paddingEnd="@dimen/thirty_dp"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/sixteen_dp"
+                    android:layout_marginTop="@dimen/twenty_four_dp"
+                    android:layout_marginRight="@dimen/sixteen_dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.walkins.aapkedoorstep.custom.BoldButton
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:letterSpacing="0.06"
+                        android:layout_marginEnd="@dimen/twelve_dp"
+                        android:layout_marginRight="@dimen/eight_dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_button_white"
+                        android:text="@string/str_cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold" />
+
+                    <com.walkins.aapkedoorstep.custom.BoldButton
+                        android:id="@+id/btn_ok"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/twelve_dp"
+                        android:layout_marginLeft="@dimen/ten_dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_button_yellow"
+                        android:text="@string/str_ok"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/fourteen_sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.06"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
