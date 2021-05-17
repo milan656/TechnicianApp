@@ -1182,6 +1182,16 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/eighteen_sp" />
 
+        <com.walkins.aapkedoorstep.custom.NormalNoDataTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Note : Once all mandatory details are added then Submit button will be enable"
+            android:textSize="@dimen/twelve_sp"
+            android:textColor="@color/gray"
+            android:layout_marginStart="@dimen/ten_dp"
+            android:layout_marginEnd="@dimen/ten_dp"
+            android:layout_marginBottom="@dimen/ten_dp"/>
+
         <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
             android:id="@+id/btnSubmitAndComplete"
             android:layout_width="match_parent"

@@ -617,23 +617,23 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private fun openReportFilterDialogue(titleStr: String) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_report_filter, null)
-        val dialog =
-            context.let {
-                it?.let { it1 ->
-                    BottomSheetDialog(
-                        it1,
-                        R.style.CustomBottomSheetDialogTheme
-                    )
-                }
-            }
-//        val dialog = AlertDialog.Builder(context).create()
+//        val dialog =
+//            context.let {
+//                it?.let { it1 ->
+//                    BottomSheetDialog(
+//                        it1,
+//                        R.style.CustomBottomSheetDialogTheme
+//                    )
+//                }
+//            }
+        val dialog = AlertDialog.Builder(context).create()
         dialog?.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         dialog?.window?.setLayout(width, height)
-//        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog?.setContentView(view)
-//        dialog?.setView(view)
+        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+//        dialog?.setContentView(view)
+        dialog?.setView(view)
 
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
@@ -644,6 +644,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val jsonArray: JsonArray = JsonArray()
 
         actvehicleMake = view.findViewById(R.id.actvehicleMake)
+        Log.e("getsociety11",""+selectedSocietyName)
         actvehicleMake?.setText("" + selectedSocietyName)
 
         activity?.let {
@@ -752,10 +753,24 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         actvehicleMake!!.onItemClickListener =
             object : AdapterView.OnItemClickListener {
                 override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    val selection = p0?.getItemAtPosition(p2) as String
+                    var pos = -1
 
-                    selectedMakeId = makeSearchdata?.get(p2)?.id!!
-                    selectedSociety = makeSearchdata?.get(p2)?.uuid
-                    selectedSocietyName = makeSearchdata?.get(p2)?.name
+                    for (i in 0 until makeSearchdata?.size!!) {
+                        if (makeSearchdata?.get(i)?.name.equals(selection)) {
+                            pos = i
+                            break
+                        }
+                    }
+//                    actv_rear_tyre.setText(rearSkuModel.data.get(this.actv_sec_tyre_pos!!).name)
+//                    tvSelectedSkuRear?.setText(rearSkuModel.data.get(this.actv_sec_tyre_pos!!).name)
+//                    sku_id_back = rearSkuModel.data.get(this.actv_sec_tyre_pos!!).sku_id
+//                    sku_id_backname = rearSkuModel.data.get(this.actv_sec_tyre_pos!!).name
+                    selectedMakeId = makeSearchdata?.get(pos)?.id!!
+                    selectedSociety = makeSearchdata?.get(pos)?.uuid
+                    selectedSocietyName = makeSearchdata?.get(pos)?.name
+
+                    Log.e("getsociety",""+selectedSocietyName+" "+makeSearchdata?.get(p2)?.name+" "+makeSearchdata?.get(p2)?.id)
 
                 }
             }

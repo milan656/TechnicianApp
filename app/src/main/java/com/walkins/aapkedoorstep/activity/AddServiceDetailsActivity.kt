@@ -5581,7 +5581,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout, null)
 
         val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
-        val ivClose = root.findViewById<BoldButton>(R.id.ivClose)
         val tv_message = root.findViewById<TextView>(R.id.tv_message)
         val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
         tvTitleText?.text = title
@@ -5614,8 +5613,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         val btn_ok = root.findViewById<BoldButton>(R.id.btn_ok)
         val btn_cancel = root.findViewById<BoldButton>(R.id.btn_cancel)
-        val ivClose = root.findViewById<BoldButton>(R.id.ivClose)
-        val tv_message = root.findViewById<TextView>(R.id.tv_message)
+        val ivClose = root.findViewById<ImageView>(R.id.ivClose)
+        val tv_message = root.findViewById<TextView>(R.id.tv_messageTitle)
         val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
         tvTitleText?.text = title
         tv_message.text = message

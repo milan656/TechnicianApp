@@ -1475,7 +1475,11 @@ class Common {
             if (connectivityManager != null) {
                 val capabilities =
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                        } else {
+                            TODO("VERSION.SDK_INT < M")
+                        }
                     } else {
                         TODO("VERSION.SDK_INT < LOLLIPOP")
                     }
