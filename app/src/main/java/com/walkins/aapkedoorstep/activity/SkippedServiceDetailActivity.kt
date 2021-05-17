@@ -1,36 +1,52 @@
 package com.walkins.aapkedoorstep.activity
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.R
+import com.walkins.aapkedoorstep.adapter.TyreSuggestionAdpater
 import com.walkins.aapkedoorstep.common.*
+import com.walkins.aapkedoorstep.custom.BoldButton
+import com.walkins.aapkedoorstep.model.login.IssueResolveModel
+import com.walkins.aapkedoorstep.model.login.comment.CommentListData
+import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
 import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import org.w3c.dom.Comment
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
+class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
+    private var commentModel: CommentListModel? = null
+    var skipList: ArrayList<IssueResolveModel>? = null
+    private var commentList: java.util.ArrayList<CommentListData>? = java.util.ArrayList()
+    var serviceViewModel: ServiceViewModel? = null
     private var serviceDateByIdModel: ServiceDataByIdModel? = null
     private var tvChange: TextView? = null
     private var ivBack: ImageView? = null
@@ -48,6 +64,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
     private var formatedDate: String = ""
     private var comment_id: String = ""
     private var servicelist: String = ""
+    private var which: String = ""
     private var reasonId: String = ""
     private var comment_id_by_service = -1
 
@@ -65,6 +82,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_detail)
         commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         prefManager = PrefManager(this)
         init()
     }
@@ -129,9 +147,14 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             if (intent.getStringExtra("servicelist") != null) {
                 servicelist = intent.getStringExtra("servicelist")!!
             }
+            if (intent.getStringExtra("which") != null) {
+                which = intent.getStringExtra("which")!!
+            }
+
         }
 
         Log.e("getregno", "" + regNumber)
+        Log.e("getregno", "" + which)
         tvcolor?.text = color
         tvMakeModel?.text = makeModel
         tvRegNumber?.text = regNumber
@@ -151,7 +174,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         if (formatedDate != null && !formatedDate.equals("")) {
 
-            formatedDate= Common.addHour(formatedDate,5,30)!!
+            formatedDate = Common.addHour(formatedDate, 5, 30)!!
             Log.e("getdated0", "" + formatedDate)
             Log.e("getdated0", "" + Common.datefrom(formatedDate))
             val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -183,7 +206,160 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
+        tvChange?.visibility = View.VISIBLE
+
     }
+
+    private fun getCommentList(): java.util.ArrayList<CommentListData> {
+        if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList).size > 0) {
+            commentList?.clear()
+            for (i in prefManager.getCommentList(TyreConfigClass.commentList).indices) {
+                val model = CommentListData(
+                    prefManager.getServiceList(TyreConfigClass.commentList).get(i).id,
+                    prefManager.getServiceList(TyreConfigClass.commentList).get(i).name
+                )
+                commentList?.add(model)
+            }
+        }
+        return commentList!!
+    }
+
+    private fun openSkipServiceDialogue(stringExtra: String?, s: String) {
+        val builder = AlertDialog.Builder(this).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        builder.window?.setLayout(width, height)
+        builder?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val root =
+            LayoutInflater.from(this).inflate(R.layout.dialogue_service_skip, null)
+
+        val btnConfirm = root.findViewById<BoldButton>(R.id.btnConfirm)
+        val ivClose = root.findViewById<ImageView>(R.id.ivClose)
+        val pendingReasonRecycView = root.findViewById<RecyclerView>(R.id.pendingReasonRecycView)
+
+        try {
+            skipList = ArrayList<IssueResolveModel>()
+
+            if (commentList?.size!! > 0) {
+                for (i in commentList?.indices!!) {
+                    skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
+                    Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
+                }
+            } else {
+                if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList)?.size!! > 0) {
+                    commentList?.clear()
+                    for (i in prefManager.getCommentList(TyreConfigClass.commentList)?.indices!!) {
+                        val model = CommentListData(
+                            prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.id!!,
+                            prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name!!
+                        )
+                        commentList?.add(model)
+                    }
+                }
+                for (i in commentList?.indices!!) {
+                    skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
+                    Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
+                }
+            }
+
+            Log.e("getreasonid",""+stringExtra)
+
+            for (i in skipList?.indices!!) {
+                if (!stringExtra.equals("")) {
+                    if (stringExtra?.toInt() == skipList?.get(i)?.id) {
+                        skipList?.get(i)?.isSelected = true
+                    }
+                }
+            }
+
+            val tyreSuggestionAdapter = TyreSuggestionAdpater(skipList!!, this, this, true, false)
+            tyreSuggestionAdapter.onclick = this
+            pendingReasonRecycView?.layoutManager = LinearLayoutManager(
+                this,
+                RecyclerView.VERTICAL,
+                false
+            )
+            pendingReasonRecycView?.adapter = tyreSuggestionAdapter
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
+
+        tvTitleText?.text = "Provide Pending Reason"
+        ivClose?.setOnClickListener {
+            builder.dismiss()
+        }
+        btnConfirm.setOnClickListener {
+            builder.dismiss()
+
+            Common.showLoader(this)
+            val jsonObject = JsonObject()
+            val jsonArr = JsonArray()
+
+            for (i in skipList?.indices!!) {
+                if (skipList?.get(i)?.isSelected!!) {
+                    Log.e("getselected", "" + skipList?.get(i)?.issueName)
+                    jsonArr.add(skipList?.get(i)?.id)
+                }
+            }
+            jsonObject.addProperty("uuid", uuid)
+            jsonObject.add("comment_id", jsonArr)
+
+            if (s.equals("")) {
+                jsonObject.addProperty("status", "skip")
+            }
+
+            if (s.equals("update")) {
+                serviceViewModel?.callApiUpdateService(
+                    jsonObject,
+                    prefManager.getAccessToken()!!,
+                    this
+                )
+            } else {
+                serviceViewModel?.callApiAddService(
+                    jsonObject,
+                    prefManager.getAccessToken()!!,
+                    this
+                )
+            }
+
+            serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
+                if (it != null) {
+                    if (it.success) {
+                        Common.hideLoader()
+
+                        var reason: String? = ""
+                        if (skipList?.size!! > 0) {
+                            for (i in skipList?.indices!!) {
+                                if (skipList?.get(i)?.isSelected!!) {
+                                    reason = skipList?.get(i)?.issueName
+                                    Log.e("getreason", "" + reason)
+                                }
+                            }
+                        }
+
+                        tvReason?.text = reason
+                    } else {
+                        Common.hideLoader()
+                        showShortToast("Something Went Wrong", this)
+                    }
+                } else {
+                    Common.hideLoader()
+                    showShortToast("Something Went Wrong", this)
+                }
+            })
+
+        }
+        builder.setView(root)
+
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
+    }
+
 
     private fun getServiceDataById() {
 
@@ -198,11 +374,12 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
 
                     serviceDateByIdModel = it
 
-                    if (serviceDateByIdModel?.data?.get(0)?.service_scheduled_date!=null &&
-                            !serviceDateByIdModel?.data?.get(0)?.service_scheduled_date.equals("")){
+                    if (serviceDateByIdModel?.data?.get(0)?.service_scheduled_date != null &&
+                        !serviceDateByIdModel?.data?.get(0)?.service_scheduled_date.equals("")
+                    ) {
 
                         try {
-                            val formatedDate= Common.addHour(serviceDateByIdModel?.data?.get(0)?.service_scheduled_date,5,30)!!
+                            val formatedDate = Common.addHour(serviceDateByIdModel?.data?.get(0)?.service_scheduled_date, 5, 30)!!
                             Log.e("getdated0", "" + formatedDate)
                             Log.e("getdated0", "" + Common.datefrom(formatedDate))
                             val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -221,7 +398,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
                     }
@@ -241,7 +418,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
                             e.printStackTrace()
                         }
                     }
-
+                    tvChange?.visibility = View.VISIBLE
                 } else {
                     Common.hideLoader()
                     if (it.error != null) {
@@ -298,11 +475,19 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
             R.id.tvChange -> {
-                var intent = Intent()
-                intent.putExtra("reason", "" + tvReason?.text?.toString())
-                intent.putExtra("reasonId", "" + reasonId)
-                setResult(RESULT_OK, intent)
-                finish()
+                if (which.equals("skip_screen") || which.equals("report_screen")) {
+
+                    if (getCommentList().size > 0) {
+                        Log.e("getreasonid",""+reasonId)
+                        openSkipServiceDialogue(reasonId, "update")
+                    }
+                } else {
+                    var intent = Intent()
+                    intent.putExtra("reason", "" + tvReason?.text?.toString())
+                    intent.putExtra("reasonId", "" + reasonId)
+                    setResult(RESULT_OK, intent)
+                    finish()
+                }
             }
             R.id.ivInfoAddService -> {
                 showBottomSheetdialogNormal(
@@ -344,7 +529,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "," + "\n")
+        val str = stringBuilder.toString().replace( ", ", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {
@@ -370,9 +555,13 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         btnSend.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
         }
-        dialog?.show()
+        dialog.show()
+    }
+
+    override fun onPositionClick(variable: Int, check: Int) {
+
     }
 
 }

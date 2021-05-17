@@ -548,7 +548,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         } else {
             if (selectedTab.equals("skip")) {
                 Log.e("getregno", "" + historyDataList.get(variable).comment_id)
-                var intent = Intent(context, SkippedServiceDetailActivity::class.java)
+                val intent = Intent(context, SkippedServiceDetailActivity::class.java)
                 intent.putExtra("color", historyDataList.get(variable).carColor)
                 intent.putExtra("makeModel", historyDataList.get(variable).makeModel)
                 intent.putExtra("regNumber", "" + historyDataList.get(variable).regNumber)
@@ -559,10 +559,11 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 intent.putExtra("ischange", "false")
                 intent.putExtra("formatedDate", historyDataList.get(variable).dateFormated)
                 intent.putExtra("comment_id", "" + historyDataList.get(variable).comment_id)
+                intent.putExtra("which", "report_screen")
                 startActivity(intent)
 
             } else {
-                var intent = Intent(context, CompletedServiceDetailActivity::class.java)
+                val intent = Intent(context, CompletedServiceDetailActivity::class.java)
                 intent.putExtra("color", historyDataList.get(variable).carColor)
                 intent.putExtra("makeModel", historyDataList.get(variable).makeModel)
                 intent.putExtra("regNumber", "" + historyDataList.get(variable).regNumber)
@@ -1072,7 +1073,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "," + "\n")
+        val str = stringBuilder.toString().replace(", ", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

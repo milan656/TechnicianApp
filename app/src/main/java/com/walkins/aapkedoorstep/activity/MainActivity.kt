@@ -56,9 +56,9 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
-    private var commentModel: CommentListModel? = null
     private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
     private var issueResolveArray: ArrayList<IssueResolveModel>? = ArrayList()
+    private var commentModel: CommentListModel? = null
     private var commentList: ArrayList<CommentListData>? = ArrayList()
     private var commonViewModel: CommonViewModel? = null
     private var ivHome: ImageView? = null
@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         }
 
         callApiTogetToken()
+
 
         /* val thread = Thread {
              if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()

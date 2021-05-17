@@ -15,7 +15,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -28,6 +27,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,11 +61,11 @@ import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
-import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
 import java.lang.reflect.Type
@@ -227,6 +227,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //        requestPermissionForImage()
         init()
+
+
     }
 
     suspend fun getStoredObjects() {
@@ -1516,9 +1518,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
+
     private fun uploadImageIfExist() {
 
         var counter = 0
+
+
+
         if (prefManager.getValue("image_LF") != null && !prefManager.getValue("image_LF").equals("")) {
 
             Log.e("getimagepath", "" + prefManager.getValue("image_LF"))
@@ -2016,17 +2022,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
                             if (jsonRR.get(TyreKey.psiInTyreService) != null && !jsonRR.get(TyreKey.psiInTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_right_tyre_psi_in", jsonRR.get(TyreKey.psiInTyreService)?.asString)
-                            }else{
+                            } else {
                                 jsonObject.addProperty("back_right_tyre_psi_in", "")
                             }
                             if (jsonRR.get(TyreKey.psiOutTyreService) != null && !jsonRR.get(TyreKey.psiOutTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_right_tyre_psi_out", jsonRR.get(TyreKey.psiOutTyreService)?.asString)
-                            }else{
+                            } else {
                                 jsonObject.addProperty("back_right_tyre_psi_out", "")
                             }
                             if (jsonRR.get(TyreKey.weightTyreService) != null && !jsonRR.get(TyreKey.weightTyreService)?.asString.equals("")) {
                                 jsonObject.addProperty("back_right_tyre_weight", jsonRR.get(TyreKey.weightTyreService)?.asString)
-                            }else{
+                            } else {
                                 jsonObject.addProperty("back_right_tyre_weight", "")
                             }
 
@@ -2034,7 +2040,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                 && !jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
                             ) {
                                 jsonObject.addProperty("back_right_tyre_wheel_image", jsonRR.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                            }else{
+                            } else {
                                 jsonObject.addProperty("back_right_tyre_wheel_image", "")
                             }
                             if (jsonRR.get(TyreKey.issueResolvedArr) != null) {
@@ -2203,6 +2209,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
+    private suspend fun bgWrok() {
+
+    }
+
     private fun openDatePicker() {
         val calendar = Calendar.getInstance()
 
@@ -2292,7 +2302,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "," + "\n")
+        val str = stringBuilder.toString().replace(", ", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {
@@ -2544,6 +2554,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         intent.putExtra("uuid", uuid)
                         intent.putExtra("colorcode", colorCode)
                         intent.putExtra("address", address)
+                        intent.putExtra("which", "skip_dialogue")
 
                         var reason: String? = ""
                         var reasonId: Int? = -1

@@ -104,13 +104,16 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         tvDate = findViewById(R.id.tvDate)
         tvNoServiceData = findViewById(R.id.tvNoServiceData)
 
+        tvUpcoming?.text = "Upcoming - 0"
+        tvCompleted?.text = "Completed - 0"
+        tvSkipped?.text = "Skipped - 0"
+
         llUpcoming?.setOnClickListener(this)
         llCompleted?.setOnClickListener(this)
         llSkipped?.setOnClickListener(this)
         ivBack?.setOnClickListener(this)
         ivInfoService?.setOnClickListener(this)
 
-        tvAddress?.text = "Titanium City Centre,\nAnand Nagar"
         serviceRecycView?.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,
@@ -389,6 +392,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("colorcode", arrayList.get(variable).color_code)
                 intent.putExtra("ischange", "false")
                 intent.putExtra("servicelist", "true")
+                intent.putExtra("which", "skip_screen")
 
 //                intent.putExtra("comment_id", arrayList.get(variable).comment_id.get(0))
 
@@ -424,7 +428,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "," + "\n")
+        val str = stringBuilder.toString().replace(", ", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

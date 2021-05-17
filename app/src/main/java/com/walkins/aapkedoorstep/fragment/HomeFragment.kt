@@ -253,7 +253,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         tvTitleText?.text = titleStr
 
-        val str = strBuilder.toString().replace(", ", "," + "\n")
+        val str = strBuilder.toString().replace(", ", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {
