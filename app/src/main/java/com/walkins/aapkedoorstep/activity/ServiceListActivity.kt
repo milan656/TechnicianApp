@@ -2,6 +2,7 @@ package com.walkins.aapkedoorstep.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -56,6 +58,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var tvNoServiceData: TextView? = null
     private var llAddressView: LinearLayout? = null
     private var relNoData: LinearLayout? = null
+    private var serviceListSwipe: SwipeRefreshLayout? = null
 
     private var selectedDate = ""
     private var selectedDateFormated = ""
@@ -83,10 +86,13 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         if (diff <= 1) {
             refreshToken()
         }
+
+
     }
 
     private fun init() {
         serviceRecycView = findViewById(R.id.serviceRecycView)
+        serviceListSwipe = findViewById(R.id.serviceListSwipe)
         relNoData = findViewById(R.id.relNoData)
         llAddressView = findViewById(R.id.llAddressView)
 
@@ -145,6 +151,26 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         tvDate?.text = selectedDateFormated
         tvAddress?.text = addressTitle
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            serviceListSwipe?.setColorSchemeColors(
+                resources.getColor(android.R.color.holo_green_dark, null),
+                resources.getColor(android.R.color.holo_red_dark, null),
+                resources.getColor(android.R.color.holo_blue_dark, null),
+                resources.getColor(android.R.color.holo_orange_dark, null)
+            )
+        }
+
+        serviceListSwipe?.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                this@ServiceListActivity.onRefresh()
+            }
+        })
+
+    }
+
+    fun onRefresh() {
+        getServiceListByDate()
+        serviceListSwipe?.post { serviceListSwipe?.isRefreshing = false }
     }
 
     override fun onResume() {

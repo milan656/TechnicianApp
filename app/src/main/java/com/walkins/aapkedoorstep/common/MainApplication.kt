@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 
@@ -61,6 +62,10 @@ class MainApplication : MultiDexApplication() {
             }
 
             override fun onActivityDestroyed(activity: Activity) {
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    Log.e("getaction",""+activity.isDestroyed)
+                }
 
             }
 

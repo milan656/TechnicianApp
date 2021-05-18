@@ -33,7 +33,7 @@ class HomeSubDealerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_sub_dealer)
 
-        sendNotification(title, body, action, notification_data)
+//        sendNotification(title, body, action, notification_data)
     }
 
     private fun sendNotification(

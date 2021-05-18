@@ -217,15 +217,15 @@ class Common {
                 )
                 println(
                     difference_In_Years
-                        .toString() + " years, "
+                        .toString() + ", "
                             + difference_In_Days
-                            + " days, "
+                            + ", "
                             + difference_In_Hours
-                            + " hours, "
+                            + ", "
                             + difference_In_Minutes
-                            + " minutes, "
+                            + ", "
                             + difference_In_Seconds
-                            + " seconds"
+                            + ""
                 )
 
 
@@ -235,7 +235,7 @@ class Common {
             }
             val str = difference_In_Years
                 .toString() + "," +
-                    difference_In_Days.toString() + "," + difference_In_Hours + "," + difference_In_Minutes + "," + difference_In_Seconds + "seconds"
+                    difference_In_Days.toString() + "," + difference_In_Hours + "," + difference_In_Minutes + "," + difference_In_Seconds + ""
 
             return str
         }
@@ -251,7 +251,7 @@ class Common {
             val minutes = seconds / 60
             val hours = minutes / 60
 
-            Log.i("hours", "++++" + hours)
+            Log.i("hours_", "++++" + hours + " " + minutes + " " + seconds)
             val days = hours / 24
             return days
         }

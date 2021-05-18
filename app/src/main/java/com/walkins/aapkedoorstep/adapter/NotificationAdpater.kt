@@ -64,13 +64,13 @@ class NotificationAdpater(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NotificationAdpater.Viewholder {
-        var view =
+    ): Viewholder {
+        val view =
             LayoutInflater.from(context).inflate(R.layout.design_notification_item, parent, false)
         return Viewholder(view)
     }
 
-    override fun onBindViewHolder(holder: NotificationAdpater.Viewholder, position: Int) {
+    override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
         holder.itemView.setOnClickListener {
 
@@ -84,39 +84,41 @@ class NotificationAdpater(
 
         val formatedDate = Common.addHour(array.get(position).date, 5, 30)!!
         try {
-            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-            val output = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
 
-            var d: Date? = null
-            d = input.parse(formatedDate)
-            val formatted: String = output.format(d)
+            val dateAccessToken = Common.dateFotmatInDate(formatedDate)
+            val diff: Long = Date().time - dateAccessToken.getTime()
+            val seconds = diff / 1000
+            val minutes = seconds / 60
+            val hours = minutes / 60
+            val days = hours / 24
+            Log.e("gettimees", "" + days + " " + hours + " " + minutes + " " + seconds)
 
-            val startDate: String = formatted
-            val enddate: String = Common.getCurrentDateTimeSimpleFormat()
-
-            val dif = findDifference(startDate, enddate)
-            val temp: Array<String> = dif.split(",").toTypedArray()
-
-            var time = "0"
-            if (temp.get(1) != null && !temp.get(1).equals("") && temp.get(1).toInt() > 0) {
-                time = temp.get(1) + " day"
-            }
-            if (temp.get(2) != null && !temp.get(2).equals("") && temp.get(2).toInt() > 0) {
-                if (!time.equals("") && !time.equals("0")) {
-                    time = time + "," + temp.get(2) + " hours"
+            if (hours > 0L) {
+                if (hours > 1L) {
+                    holder.tvTime?.text = "" + hours + " " + "hours ago"
                 } else {
-                    time = temp.get(2) + " hours"
+                    holder.tvTime?.text = "" + hours + " " + "hour ago"
                 }
             }
-            if (temp.get(3) != null && !temp.get(3).equals("") && temp.get(3).toInt() > 0) {
-                if (!time.equals("") && !time.equals("0")) {
-                    time = time + "," + temp.get(3) + " mins"
-                } else {
-                    time = temp.get(3) + " mins"
+            if (hours <= 0L) {
+                if (minutes > 0L) {
+                    if (minutes > 1L) {
+                        holder.tvTime?.text = "" + minutes + " " + "minutes ago"
+                    } else {
+                        holder.tvTime?.text = "" + minutes + " " + "minute ago"
+                    }
                 }
             }
-            Log.e("getmin00", "" + time)
-            holder.tvTime?.text = time
+            if (minutes <= 0L) {
+                if (seconds > 0L) {
+                    if (seconds > 1L) {
+                        holder.tvTime?.text = "" + seconds + " " + "seconds ago"
+                    } else {
+                        holder.tvTime?.text = "" + seconds + " " + "second ago"
+                    }
+                }
+            }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

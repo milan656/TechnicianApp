@@ -23,6 +23,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.technician.common.Common
 import com.example.technician.common.Common.Companion.getFile
 import com.example.technician.common.Common.Companion.setTint
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var loginViewModel: LoginActivityViewModel? = null
     private var selectedMenu: String? = null
     public var lltransparent: LinearLayout? = null
+    public var homeSwipeRefresh: SwipeRefreshLayout? = null
     private lateinit var mDb: DBClass
 
     val REQUEST_IMAGE_CAPTURE = 1
@@ -124,6 +126,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
          thread.start()*/
 
         llhome?.performClick()
+        getNotificationCount()
 
         if (prefManager?.getServiceList(TyreConfigClass.serviceList) != null &&
             prefManager?.getServiceList(TyreConfigClass.serviceList)?.size!! > 0
@@ -362,6 +365,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     }
 
     private fun init() {
+        homeSwipeRefresh = findViewById(R.id.homeSwipeRefresh)
         lltransparent = findViewById(R.id.lltransparent)
         ivHome = findViewById(R.id.ivHome)
         ivReport = findViewById(R.id.ivReport)
@@ -393,6 +397,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         tvUsername?.text = getString(R.string.str_hello)
 
     }
+
+
 
     private fun actionOnService(action: Actions) {
         if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
@@ -514,7 +520,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             actionOnService(Actions.START)
         }
 
-        getNotificationCount()
+//        getNotificationCount()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

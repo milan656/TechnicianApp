@@ -63,6 +63,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
     private var selectedIdMake: Int = -1
     private var tvNoDataFound: TextView? = null
     private var tvSelectTyre: TextView? = null
+    private var llRFView: LinearLayout? = null
+    private var llLRView: LinearLayout? = null
+    private var llRRView: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +77,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
     }
 
     private fun init() {
+        llRRView = findViewById(R.id.llRRView)
+        llRFView = findViewById(R.id.llRFView)
+        llLRView = findViewById(R.id.llLRView)
         gridviewRecycModel = findViewById(R.id.gridviewRecycModel)
         tvTitle = findViewById(R.id.tvTitle)
         ivBack = findViewById(R.id.ivBack)
@@ -319,15 +325,36 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         )
                         Log.e("getobjlf", "" + json + " ")
                         runOnUiThread {
-
-                            if (chkRF?.text?.toString().equals("LF")) {
-                                chkRF?.isChecked = true
+                            if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("LF")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
-                            if (chkLR?.text?.toString().equals("LF")) {
-                                chkLR?.isChecked = true
-                            }
-                            if (chkRR?.text?.toString().equals("LF")) {
-                                chkRR?.isChecked = true
+                        }
+                    } else {
+                        runOnUiThread {
+                            if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("LF")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
@@ -353,15 +380,36 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         Log.e("getobjlr", "" + selectedId + " ")
                         Log.e("getobjlr", "" + json + " ")
                         runOnUiThread {
-
-                            if (chkRF?.text?.toString().equals("LR")) {
-                                chkRF?.isChecked = true
+                            if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("LR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
-                            if (chkLR?.text?.toString().equals("LR")) {
-                                chkLR?.isChecked = true
-                            }
-                            if (chkRR?.text?.toString().equals("LR")) {
-                                chkRR?.isChecked = true
+                        }
+                    } else {
+                        runOnUiThread {
+                            if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("LR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
@@ -386,15 +434,36 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
                         Log.e("getobjrfpa", "" + selectedId + " ")
                         runOnUiThread {
-
-                            if (chkRF?.text?.toString().equals("RF")) {
-                                chkRF?.isChecked = true
+                            if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("RF")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("RF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
-                            if (chkLR?.text?.toString().equals("RF")) {
-                                chkLR?.isChecked = true
-                            }
-                            if (chkRR?.text?.toString().equals("RF")) {
-                                chkRR?.isChecked = true
+                        }
+                    } else {
+                        runOnUiThread {
+                            if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("RF")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("RF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
@@ -420,15 +489,36 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         Log.e("getobjrr", "" + selectedId + " ")
                         Log.e("getobjrr", "" + json + " ")
                         runOnUiThread {
-
-                            if (chkRF?.text?.toString().equals("RR")) {
-                                chkRF?.isChecked = true
+                            if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("RR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("RR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
-                            if (chkLR?.text?.toString().equals("RR")) {
-                                chkLR?.isChecked = true
-                            }
-                            if (chkRR?.text?.toString().equals("RR")) {
-                                chkRR?.isChecked = true
+                        }
+                    } else {
+                        runOnUiThread {
+                            if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("RR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("RR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
@@ -436,6 +526,12 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
+            }
+        }
+
+        runOnUiThread {
+            if (llRFView?.visibility == View.GONE && llLRView?.visibility == View.GONE && llRRView?.visibility == View.GONE) {
+                tvSelectTyre?.visibility = View.GONE
             }
         }
 
@@ -451,19 +547,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 val thread = Thread {
                     if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                         arrList?.clear()
-                        val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id==TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
+                        val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
 
                         arrList?.addAll(arrayList)
-
-                        /*if (mDb.patternDaoClass().getAllPattern().size>0){
-                            for (i in mDb.patternDaoClass().getAllPattern().indices){
-                                if (!TyreDetailCommonClass.vehicleMakeId.equals("")) {
-                                    if (mDb.patternDaoClass().getAllPattern().get(i).brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt()) {
-                                        arrList?.add(mDb.patternDaoClass().getAllPattern().get(i))
-                                    }
-                                }
-                            }
-                        }*/
 
                         Log.e("getSizeVehiclePattern", "" + arrList?.size)
                     }
@@ -486,16 +572,8 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 val thread = Thread {
                     if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                         arrList?.clear()
-                        /*if (mDb.patternDaoClass().getAllPattern().size>0){
-                            for (i in mDb.patternDaoClass().getAllPattern().indices){
-                                if (!TyreDetailCommonClass.vehicleMakeId.equals("")) {
-                                    if (mDb.patternDaoClass().getAllPattern().get(i).brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt()) {
-                                        arrList?.add(mDb.patternDaoClass().getAllPattern().get(i))
-                                    }
-                                }
-                            }
-                        }*/
-                        val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id==TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
+
+                        val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
 
                         arrList?.addAll(arrayList)
 
@@ -515,20 +593,11 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             val thread = Thread {
                 if (mDb.patternDaoClass().getAllPattern() != null && mDb.patternDaoClass().getAllPattern().size > 0) {
                     arrList?.clear()
-//                    arrList?.addAll(mDb.patternDaoClass().getAllPattern())
 
-                    val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id==TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
+                    val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
 
                     arrList?.addAll(arrayList)
-                    /*if (mDb.patternDaoClass().getAllPattern().size>0){
-                        for (i in mDb.patternDaoClass().getAllPattern().indices){
-                            if (!TyreDetailCommonClass.vehicleMakeId.equals("")) {
-                                if (mDb.patternDaoClass().getAllPattern().get(i).brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt()) {
-                                    arrList?.add(mDb.patternDaoClass().getAllPattern().get(i))
-                                }
-                            }
-                        }
-                    }*/
+
                     Log.e("getSizeVehiclePattern", "" + arrList?.size)
                 }
 

@@ -2,6 +2,7 @@ package com.walkins.aapkedoorstep.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
@@ -60,6 +62,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var relmainContent: RelativeLayout? = null
     private var relNoData: LinearLayout? = null
     private var tvNoData: TextView? = null
+    private var homeSwipeRefresh: SwipeRefreshLayout? = null
 
     var activity: MainActivity? = null
 
@@ -122,6 +125,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private fun init(view: View?) {
         ivFilter = view?.findViewById(R.id.ivFilter)
 
+        homeSwipeRefresh = view?.findViewById(R.id.homeSwipeRefresh)
         relmainContent = view?.findViewById(R.id.relmainContent)
         relNoData = view?.findViewById(R.id.relNoData)
         tvNoData = view?.findViewById(R.id.tvNoData)
@@ -143,6 +147,29 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         homeRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            homeSwipeRefresh?.setColorSchemeColors(
+                resources.getColor(android.R.color.holo_green_dark, null),
+                resources.getColor(android.R.color.holo_red_dark, null),
+                resources.getColor(android.R.color.holo_blue_dark, null),
+                resources.getColor(android.R.color.holo_orange_dark, null)
+            )
+        }
+
+
+        homeSwipeRefresh?.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                this@HomeFragment.onRefresh()
+            }
+
+        })
+
+    }
+
+    fun onRefresh() {
+        getDashboardService(selectedDate!!)
+        getUserInfo()
+        homeSwipeRefresh?.post { homeSwipeRefresh?.isRefreshing = false }
     }
 
     override fun onResume() {
@@ -356,7 +383,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
             future = date_
         }
-        Log.e("getfuturedate", "" + future+" "+selectedDate)
+        Log.e("getfuturedate", "" + future + " " + selectedDate)
         singleBuilder = SingleDateAndTimePickerDialog.Builder(context)
             .setTimeZone(TimeZone.getDefault())
             .bottomSheet()

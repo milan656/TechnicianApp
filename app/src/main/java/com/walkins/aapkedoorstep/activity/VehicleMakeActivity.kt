@@ -48,6 +48,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var chkRR: CheckBox? = null
     private var chkRF: CheckBox? = null
     private var chkLR: CheckBox? = null
+    private var llRFView: LinearLayout? = null
+    private var tvSelectTyre: TextView? = null
+    private var llLRView: LinearLayout? = null
+    private var llRRView: LinearLayout? = null
 
     private var selectedPos = -1
 
@@ -69,6 +73,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         ivBack = findViewById(R.id.ivBack)
 
         ivSelectedCar = findViewById(R.id.ivSelectedCar)
+        llRRView = findViewById(R.id.llRRView)
+        llRFView = findViewById(R.id.llRFView)
+        llLRView = findViewById(R.id.llLRView)
+        tvSelectTyre = findViewById(R.id.tvSelectTyre)
         ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
         gridviewRecycMake_ = findViewById(R.id.gridviewRecycMake_)
         btnNext = findViewById(R.id.btnNext)
@@ -129,7 +137,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     .getAllVehicleType().size > 0
             ) {
                 arrList?.addAll(mDb.daoClass().getAllVehicleType())
-                Log.e("getSizeVehicleBrand", ""+arrList?.size)
+                Log.e("getSizeVehicleBrand", "" + arrList?.size)
             }
 
             if (selectedTyre.equals("LF")) {
@@ -140,9 +148,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
-                        if (json.get(TyreKey.vehicleMakeURL)!=null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+                        if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
                             selectedImage = json.get(TyreKey.vehicleMakeURL)?.asString!!
-                            TyreDetailCommonClass.vehicleMakeURL=selectedImage
+                            TyreDetailCommonClass.vehicleMakeURL = selectedImage
                         }
 
                         setData(json)
@@ -183,9 +191,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
-                        if (json.get(TyreKey.vehicleMakeURL)!=null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+                        if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
                             selectedImage = json.get(TyreKey.vehicleMakeURL)?.asString!!
-                            TyreDetailCommonClass.vehicleMakeURL=selectedImage
+                            TyreDetailCommonClass.vehicleMakeURL = selectedImage
                         }
                         setData(json)
 
@@ -227,9 +235,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
-                        if (json.get(TyreKey.vehicleMakeURL)!=null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+                        if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
                             selectedImage = json.get(TyreKey.vehicleMakeURL)?.asString!!
-                            TyreDetailCommonClass.vehicleMakeURL=selectedImage
+                            TyreDetailCommonClass.vehicleMakeURL = selectedImage
                         }
                         setData(json)
 
@@ -272,9 +280,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
-                        if (json.get(TyreKey.vehicleMakeURL)!=null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
+                        if (json.get(TyreKey.vehicleMakeURL) != null && !json.get(TyreKey.vehicleMakeURL)?.asString.equals("")) {
                             selectedImage = json.get(TyreKey.vehicleMakeURL)?.asString!!
-                            TyreDetailCommonClass.vehicleMakeURL=selectedImage
+                            TyreDetailCommonClass.vehicleMakeURL = selectedImage
                         }
                         setData(json)
 
@@ -320,18 +328,45 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         selectedName.equals(json.get("vehicleMake")?.asString!!)
                     ) {
                         runOnUiThread {
+                            if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
+                                if (chkRF?.text?.toString().equals("LF")) {
+                                    chkRF?.isChecked = true
 
-                            if (chkRF?.text?.toString().equals("LF")) {
-                                chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
-                            if (chkLR?.text?.toString().equals("LF")) {
-                                chkLR?.isChecked = true
+
+                        }
+                    }else{
+                        runOnUiThread {
+                            if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
+                                if (chkRF?.text?.toString().equals("LF")) {
+                                    chkRF?.isChecked = true
+
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
-                            if (chkRR?.text?.toString().equals("LF")) {
-                                chkRR?.isChecked = true
-                            }
+
                         }
                     }
+
+
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }
@@ -350,15 +385,36 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     ) {
                         Log.e("getobjj", "" + json.get("vehicleMake")?.asString)
                         runOnUiThread {
-
-                            if (chkRF?.text?.toString().equals("LR")) {
-                                chkRF?.isChecked = true
+                            if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
+                                if (chkRF?.text?.toString().equals("LR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
-                            if (chkLR?.text?.toString().equals("LR")) {
-                                chkLR?.isChecked = true
-                            }
-                            if (chkRR?.text?.toString().equals("LR")) {
-                                chkRR?.isChecked = true
+                        }
+                    }else{
+                        runOnUiThread {
+                            if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
+                                if (chkRF?.text?.toString().equals("LR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
@@ -383,21 +439,47 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     ) {
 
                         runOnUiThread {
-
-                            if (chkRF?.text?.toString().equals("RF")) {
-                                chkRF?.isChecked = true
-                                Log.e("getobjrf", "0" + " ")
+                            if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
+                                if (chkRF?.text?.toString().equals("RF")) {
+                                    chkRF?.isChecked = true
+                                    Log.e("getobjrf", "0" + " ")
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                    Log.e("getobjrf", "1" + " ")
+                                }
+                                if (chkRR?.text?.toString().equals("RF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                    Log.e("getobjrf", "2" + " ")
+                                }
                             }
-                            if (chkLR?.text?.toString().equals("RF")) {
-                                chkLR?.isChecked = true
-                                Log.e("getobjrf", "1" + " ")
-                            }
-                            if (chkRR?.text?.toString().equals("RF")) {
-                                chkRR?.isChecked = true
-                                Log.e("getobjrf", "2" + " ")
+                        }
+                    }else{
+                        runOnUiThread {
+                            if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
+                                if (chkRF?.text?.toString().equals("RF")) {
+                                    chkRF?.isChecked = true
+                                    Log.e("getobjrf", "0" + " ")
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                    Log.e("getobjrf", "1" + " ")
+                                }
+                                if (chkRR?.text?.toString().equals("RF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                    Log.e("getobjrf", "2" + " ")
+                                }
                             }
                         }
                     }
+
+
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }
@@ -414,20 +496,47 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         selectedName.equals(json.get("vehicleMake")?.asString!!)
                     ) {
                         runOnUiThread {
-
-                            if (chkRF?.text?.toString().equals("RR")) {
-                                chkRF?.isChecked = true
+                            if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
+                                if (chkRF?.text?.toString().equals("RR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("RR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
-                            if (chkLR?.text?.toString().equals("RR")) {
-                                chkLR?.isChecked = true
-                            }
-                            if (chkRR?.text?.toString().equals("RR")) {
-                                chkRR?.isChecked = true
+                        }
+                    }else{
+                        runOnUiThread {
+                            if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
+                                if (chkRF?.text?.toString().equals("RR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("RR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
+                }
+            }
+
+            runOnUiThread {
+                if (llRFView?.visibility == View.GONE && llLRView?.visibility == View.GONE && llRRView?.visibility == View.GONE) {
+                    tvSelectTyre?.visibility = View.GONE
                 }
             }
             runOnUiThread {

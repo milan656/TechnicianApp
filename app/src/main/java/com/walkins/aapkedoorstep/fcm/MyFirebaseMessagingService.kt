@@ -40,7 +40,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     var body: String? = null
     var notification_data: String? = null
     var prefManager: PrefManager? = null
-    var technician_channel: String? = "technician_channel"
+    var technician_channel: String? = "fcm_default_channel"
 
     override fun onNewToken(refreshedToken: String) {
         super.onNewToken(refreshedToken)
@@ -97,7 +97,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         )
         val defaultSoundUri =
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val color = resources.getColor(R.color.yellow)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val options = BitmapFactory.Options()
@@ -107,9 +106,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val notificationBuilder =
             NotificationCompat.Builder(this, technician_channel!!)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            notificationBuilder.setSmallIcon(R.mipmap.ic_walkins_logo)
+            notificationBuilder.setSmallIcon(R.drawable.ic_app_icon_transparent)
         } else {
-            notificationBuilder.setSmallIcon(R.mipmap.ic_walkins_logo)
+            notificationBuilder.setSmallIcon(R.drawable.ic_app_icon_transparent)
         }
 
         Log.e("noti", "" + body)
@@ -118,7 +117,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 NotificationCompat.BigTextStyle()
             bigText.bigText(body)
 
-            notificationBuilder.setColor(color)
+            notificationBuilder
                 .setContentTitle(title)
                 .setContentText(body)
                 .setAutoCancel(true)
@@ -132,7 +131,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 NotificationCompat.BigTextStyle()
             bigText.bigText(body)
 
-            notificationBuilder.setColor(color)
+            notificationBuilder
                 .setContentTitle(title)
                 .setContentText(body)
                 .setLargeIcon(source)
@@ -149,7 +148,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mChannel = NotificationChannel(
                 technician_channel!!,
-                "technician",
+                technician_channel,
                 NotificationManager.IMPORTANCE_HIGH
             )
             // Configure the notification channel.

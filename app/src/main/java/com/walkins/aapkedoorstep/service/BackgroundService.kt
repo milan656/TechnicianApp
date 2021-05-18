@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
@@ -76,7 +77,7 @@ class BackgroundService : Service() {
             )
         }
         // by returning this we make sure the service is restarted if the system kills the service
-        return START_STICKY
+        return START_NOT_STICKY
     }
 
     override fun onCreate() {
@@ -84,12 +85,49 @@ class BackgroundService : Service() {
         prefManager = PrefManager(applicationContext)
         mDb = DBClass.getInstance(applicationContext)
         Log.e("ENDLESS-SERVICE", "The service has been created".toUpperCase())
-        val notification = createNotification()
+//        val notification = createNotification()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startMyOwnForeground()
+//            startMyOwnForeground()
+            /*createNotificationChannel()
+            val notificationIntent = Intent(this, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(
+                this,
+                0, notificationIntent, 0
+            )
+            val notification: Notification = Builder(this, CHANNEL_ID)
+                .setContentTitle("Foreground Service")
+                .setContentText(input)
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setContentIntent(pendingIntent)
+                .build()
+            startForeground(1, notification)*/
 //            val notif: Notification = Notification()
 //            startForeground(2, notif)
+//            val notif: Notification = createNotification()
+//            startForeground(2, notif)
+
+            lateinit var notificationChannel: NotificationChannel
+            val notificationManager: NotificationManager=getSystemService(Context.NOTIFICATION_SERVICE) as
+                    NotificationManager
+            lateinit var builder: Notification.Builder
+             val channelId = "channel_"
+             val description = "Background Notification"
+            val intent = Intent(this, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationChannel = NotificationChannel(channelId, description, NotificationManager .IMPORTANCE_HIGH)
+                notificationChannel.lightColor = Color.BLUE
+                notificationChannel.enableVibration(true)
+                notificationManager.createNotificationChannel(notificationChannel)
+                builder = Notification.Builder(this, channelId)/*.setContentTitle("NOTIFICATION USING " +
+                        "KOTLIN")*/.setContentText("App is running in background").setSmallIcon(R.drawable.ic_app_icon_transparent).setLargeIcon(
+                    BitmapFactory.decodeResource(this.resources, R.drawable
+                    .ic_launcher_background)).setContentIntent(pendingIntent)
+            }
+            val noti=builder.build()
+            startForeground(2,noti)
+//            notificationManager.notify(12345, builder.build())
         } else {
             val notif: Notification = Notification()
             startForeground(1, notif)
@@ -118,7 +156,7 @@ class BackgroundService : Service() {
         val notificationBuilder: Notification.Builder =
             Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
         val notification: Notification = notificationBuilder.setOngoing(false)
-            .setSmallIcon(R.mipmap.ic_walkins_logo)
+            .setSmallIcon(R.mipmap.ic_app_icon)
             .setAutoCancel(true)
             .setOnlyAlertOnce(true)
 
@@ -594,7 +632,7 @@ class BackgroundService : Service() {
     }
 
     private fun createNotification(): Notification {
-        val notificationChannelId = "ENDLESS SERVICE CHANNEL"
+        val notificationChannelId = "SERVICE CHANNEL"
 
         // depending on the Android API that we're dealing with we will have
         // to use a specific method to create the notification
@@ -603,7 +641,7 @@ class BackgroundService : Service() {
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val channel = NotificationChannel(
                 notificationChannelId,
-                "Endless Service notifications channel",
+                "Service notifications channel",
                 NotificationManager.IMPORTANCE_HIGH
             ).let {
                 it.description = "Endless Service channel"
@@ -627,11 +665,11 @@ class BackgroundService : Service() {
                 notificationChannelId
             ) else Notification.Builder(this)
         val noti = builder
-            .setContentTitle("Endless Service")
-            .setContentText("This is your favorite endless service working")
+//            .setContentTitle("Endless Service")
+            .setContentText("App is Running in Background")
             .setContentIntent(pendingIntent)
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setTicker("Ticker text")
+            .setSmallIcon(R.drawable.ic_app_logo)
+//            .setTicker("Ticker text")
             .setPriority(Notification.PRIORITY_HIGH) // for under android 26 compatibility
             .build()
 

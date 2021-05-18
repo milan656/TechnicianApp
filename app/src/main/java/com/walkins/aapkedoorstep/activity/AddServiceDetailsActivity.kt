@@ -166,7 +166,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var edtMoreSuggestion: EditText? = null
 
     var simpleDateFormat: SimpleDateFormat? = null
-    private var selectedDate: String? = null
+    private var selectedDate: String? = ""
     private var selectedDateNextServiceDue: String? = null
     var singleBuilder: SingleDateAndTimePickerDialogDueDate.Builder? = null
     var lltransparent: LinearLayout? = null
@@ -229,6 +229,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //        requestPermissionForImage()
         init()
 
+        removeDataExceptServiceData()
 
     }
 
@@ -904,6 +905,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 commentList?.add(model)
             }
         }
+
+        getServiceData()
     }
 
     private fun getServiceData() {
@@ -1136,7 +1139,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
             R.id.relCarPhotoAdd1 -> {
-                if (TyreConfigClass.CarPhoto_1.equals("")) {
                     selectImage1 = true
                     showBottomSheetdialog(
                         Common.commonPhotoChooseArr,
@@ -1145,7 +1147,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         Common.btn_not_filled
                     )
                 }
-            }
+
             R.id.ivEditImg1 -> {
 
                 selectImage1 = true
@@ -1158,8 +1160,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
             }
             R.id.relCarPhotoAdd2 -> {
-                if (TyreConfigClass.CarPhoto_2.equals("")) {
-
                     selectImage1 = false
                     showBottomSheetdialog(
                         Common.commonPhotoChooseArr,
@@ -1167,7 +1167,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         this,
                         Common.btn_not_filled
                     )
-                }
             }
             R.id.ivEditImg2 -> {
 
@@ -2520,12 +2519,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             builder.dismiss()
         }
         btnConfirm.setOnClickListener {
-            builder.dismiss()
 
 
-
-            Common.showLoader(this)
-            val jsonObject = JsonObject()
             val jsonArr = JsonArray()
 
             for (i in skipList?.indices!!) {
@@ -2534,6 +2529,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     jsonArr.add(skipList?.get(i)?.id)
                 }
             }
+
+            if (jsonArr.size() == 0) {
+                Toast.makeText(this, "Please Select Reason", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            builder.dismiss()
+            Common.showLoader(this)
+            val jsonObject = JsonObject()
+
             jsonObject.addProperty("uuid", uuid)
             jsonObject.add("comment_id", jsonArr)
 

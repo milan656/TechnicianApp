@@ -982,7 +982,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/fourteen_dp"
                                 android:orientation="vertical"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/suggestionsRecycView"
@@ -1072,10 +1072,11 @@
 
                                     <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                         android:id="@+id/tvAddPhoto1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:gravity="center"
                                         android:text="Add Car Photo"
+                                        android:layout_centerInParent="true"
                                         android:textColor="@color/colorPrimary"
                                         android:textSize="@dimen/eighteen_sp"
                                         android:textStyle="bold" />
@@ -1122,9 +1123,10 @@
 
                                     <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                         android:id="@+id/tvAddPhoto2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:gravity="center"
+                                        android:layout_centerInParent="true"
                                         android:text="Add Car Photo"
                                         android:textColor="@color/colorPrimary"
                                         android:textSize="@dimen/eighteen_sp"

@@ -50,6 +50,11 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
     private var selectedTyre = ""
     private var selectedPatternId = -1
 
+    private var llRFView: LinearLayout? = null
+    private var llLRView: LinearLayout? = null
+    private var llRRView: LinearLayout? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_model)
@@ -65,6 +70,10 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getpatternchk", "" + TyreDetailCommonClass.chk3Pattern)
         btnNext = findViewById(R.id.btnNext)
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
+
+        llRRView = findViewById(R.id.llRRView)
+        llRFView = findViewById(R.id.llRFView)
+        llLRView = findViewById(R.id.llLRView)
 
         chkRR = findViewById(R.id.chkRR)
         chkRF = findViewById(R.id.chkRF)
@@ -270,12 +279,32 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                             if (chkRF?.text?.toString().equals("LF")) {
                                 chkRF?.isChecked = true
+                                llRFView?.visibility = View.GONE
                             }
                             if (chkLR?.text?.toString().equals("LF")) {
                                 chkLR?.isChecked = true
+                                llLRView?.visibility = View.GONE
                             }
                             if (chkRR?.text?.toString().equals("LF")) {
                                 chkRR?.isChecked = true
+                                llRRView?.visibility = View.GONE
+                            }
+                        }
+                    } else {
+                        runOnUiThread {
+                            if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId").asString?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("LF")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
@@ -302,14 +331,36 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                             if (chkRF?.text?.toString().equals("LR")) {
                                 chkRF?.isChecked = true
+                                llRFView?.visibility = View.GONE
                             }
                             if (chkLR?.text?.toString().equals("LR")) {
                                 chkLR?.isChecked = true
+                                llLRView?.visibility = View.GONE
                             }
                             if (chkRR?.text?.toString().equals("LR")) {
                                 chkRR?.isChecked = true
+                                llRRView?.visibility = View.GONE
                             }
                         }
+                    } else {
+                        runOnUiThread {
+                            if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId").asString?.equals("")!!) {
+
+                                if (chkRF?.text?.toString().equals("LR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("LR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("LR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
+                            }
+                        }
+
                     }
                 }
             } catch (e: java.lang.Exception) {
@@ -333,12 +384,32 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                             if (chkRF?.text?.toString().equals("RF")) {
                                 chkRF?.isChecked = true
+                                llRFView?.visibility = View.GONE
                             }
                             if (chkLR?.text?.toString().equals("RF")) {
                                 chkLR?.isChecked = true
+                                llLRView?.visibility = View.GONE
                             }
                             if (chkRR?.text?.toString().equals("RF")) {
                                 chkRR?.isChecked = true
+                                llRRView?.visibility = View.GONE
+                            }
+                        }
+                    } else {
+                        runOnUiThread {
+                            if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("RF")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RF")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("RF")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
@@ -364,18 +435,44 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                             if (chkRF?.text?.toString().equals("RR")) {
                                 chkRF?.isChecked = true
+                                llRFView?.visibility = View.GONE
                             }
                             if (chkLR?.text?.toString().equals("RR")) {
                                 chkLR?.isChecked = true
+                                llLRView?.visibility = View.GONE
                             }
                             if (chkRR?.text?.toString().equals("RR")) {
                                 chkRR?.isChecked = true
+                                llRRView?.visibility = View.GONE
+                            }
+                        }
+                    } else {
+                        runOnUiThread {
+                            if (json.get("vehicleSizeId") != null && !json.get("vehicleSizeId")?.equals("")!!) {
+                                if (chkRF?.text?.toString().equals("RR")) {
+                                    chkRF?.isChecked = true
+                                    llRFView?.visibility = View.GONE
+                                }
+                                if (chkLR?.text?.toString().equals("RR")) {
+                                    chkLR?.isChecked = true
+                                    llLRView?.visibility = View.GONE
+                                }
+                                if (chkRR?.text?.toString().equals("RR")) {
+                                    chkRR?.isChecked = true
+                                    llRRView?.visibility = View.GONE
+                                }
                             }
                         }
                     }
                 }
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
+            }
+        }
+
+        runOnUiThread {
+            if (llRFView?.visibility == View.GONE && llLRView?.visibility == View.GONE && llRRView?.visibility == View.GONE) {
+                tvSelectTyre?.visibility = View.GONE
             }
         }
 
@@ -388,7 +485,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 val thread = Thread {
                     if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass().getAllSize().size > 0) {
                         arrList?.clear()
-                        val arrayList = mDb.sizeDaoClass().getAllSize().filter { it.make_id==TyreDetailCommonClass.make_id && it.model_id==TyreDetailCommonClass.model_id } as MutableList<VehicleSizeModelClass>
+                        val arrayList = mDb.sizeDaoClass().getAllSize()
+                            .filter { it.make_id == TyreDetailCommonClass.make_id && it.model_id == TyreDetailCommonClass.model_id } as MutableList<VehicleSizeModelClass>
 
                         arrList?.addAll(arrayList)
 
@@ -412,7 +510,8 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 var thread = Thread {
                     if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass().getAllSize().size > 0) {
                         arrList?.clear()
-                        val arrayList = mDb.sizeDaoClass().getAllSize().filter { it.make_id==TyreDetailCommonClass.make_id && it.model_id==TyreDetailCommonClass.model_id } as MutableList<VehicleSizeModelClass>
+                        val arrayList = mDb.sizeDaoClass().getAllSize()
+                            .filter { it.make_id == TyreDetailCommonClass.make_id && it.model_id == TyreDetailCommonClass.model_id } as MutableList<VehicleSizeModelClass>
 
                         arrList?.addAll(arrayList)
 
