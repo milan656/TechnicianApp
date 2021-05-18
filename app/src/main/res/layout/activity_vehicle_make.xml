@@ -182,7 +182,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:gravity="center">
 
 
                             <LinearLayout
@@ -217,7 +219,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            >
+                            android:layout_gravity="center"
+                            android:gravity="center">
 
                             <LinearLayout
                                 android:id="@+id/llLRView"
@@ -252,7 +255,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            >
+                            android:layout_gravity="center"
+                            android:gravity="center">
 
                             <LinearLayout
                                 android:id="@+id/llRRView"
