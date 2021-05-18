@@ -377,6 +377,10 @@ class Common {
             ImageViewCompat.setImageTintList(this, colorStateList)
         }
 
+        fun ImageView.setTintNull(context: Context) {
+            ImageViewCompat.setImageTintList(this, null)
+        }
+
         fun getErrorModel(jsonObject: JSONObject, modelName: String?): Any? {
             val gson: Gson
             val gsonBuilder = GsonBuilder()

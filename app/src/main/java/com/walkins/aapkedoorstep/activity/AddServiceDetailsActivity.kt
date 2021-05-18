@@ -69,6 +69,7 @@ import org.json.JSONObject
 import java.io.File
 import java.io.InputStream
 import java.lang.reflect.Type
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -2214,7 +2215,24 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         calendar.add(Calendar.DATE, 1)
         calendar.add(Calendar.MONTH, 0)
         calendar.add(Calendar.YEAR, 0)
-        val future: Date = calendar.getTime()
+        var future: Date? = null
+        var setdefault: Date? = null
+
+        setdefault = calendar.getTime()
+        if (selectedDate.equals("")) {
+            future = calendar.getTime()
+        } else {
+//            Wed May 19 12:55:46 GMT+05:30 2021
+            var date_: Date? = null
+            val formatter = SimpleDateFormat("dd MMM yyyy")
+            try {
+                date_ = formatter.parse(selectedDate)
+                Log.e("formated_date ", date_.toString() + "")
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            future = date_
+        }
         Log.e("getfuturedate", "" + future)
         singleBuilder = SingleDateAndTimePickerDialogDueDate.Builder(this)
             .setTimeZone(TimeZone.getDefault())
@@ -2229,7 +2247,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             .displayYears(true)
             .defaultDate(future)
             .displayMonthNumbers(true)
-            .minDateRange(future) //.mustBeOnFuture()
+            .minDateRange(setdefault) //.mustBeOnFuture()
             //.minutesStep(15)
             //.mustBeOnFuture()
             //.defaultDate(defaultDate)

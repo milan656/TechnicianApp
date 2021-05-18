@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.technician.common.Common
 import com.example.technician.common.Common.Companion.getFile
 import com.example.technician.common.Common.Companion.setTint
+import com.example.technician.common.Common.Companion.setTintNull
 import com.example.technician.common.PrefManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
@@ -144,9 +145,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
             getIssueList()
         }
-
-
-        getNotificationCount()
 
     }
 
@@ -268,8 +266,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 if (it != null) {
                     if (it.success) {
                         notiCount = it.data.count
-                        if (it.data.count > 0) {
+                        if (notiCount > 0) {
                             ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
+                            ivNotification?.setColorFilter(null)
                         } else {
                             ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                         }
@@ -422,7 +421,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     fragment = HomeFragment.newInstance("", ""),
                     allowStateLoss = true,
                     containerViewId = R.id.mainContent
-
                 )
 
                 selectedMenu = "home"
@@ -430,19 +428,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivReport?.setTint(this, R.color.text_color1)
                 if (notiCount > 0) {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
+                    ivNotification?.setTintNull(this)
                 } else {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                     ivNotification?.setTint(this, R.color.text_color1)
                 }
                 ivProfile?.setTint(this, R.color.text_color1)
 
-                if (isFromNotification.equals("profile")) {
-                    llProfile?.performClick()
-                } else if (isFromNotification.equals("report")) {
-                    llReport?.performClick()
-                } else if (isFromNotification.equals("notification")) {
-                    llNotification?.performClick()
-                }
+
 
             }
             R.id.llReport, R.id.ivReport -> {
@@ -458,6 +451,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivReport?.setTint(this, R.color.header_title)
                 if (notiCount > 0) {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
+                    ivNotification?.setTintNull(this)
                 } else {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                     ivNotification?.setTint(this, R.color.text_color1)
@@ -496,6 +490,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivReport?.setTint(this, R.color.text_color1)
                 if (notiCount > 0) {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
+                    ivNotification?.setTintNull(this)
                 } else {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                     ivNotification?.setTint(this, R.color.text_color1)
@@ -515,6 +510,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         if (!BackgroundService.isServiceStarted) {
             actionOnService(Actions.START)
         }
+
+        getNotificationCount()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -8,13 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.walkins.aapkedoorstep.common.dateForWebservice_2
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
-import com.bumptech.glide.Glide
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -22,6 +20,7 @@ import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.activity.ServiceListActivity
 import com.walkins.aapkedoorstep.adapter.LeadHistoryAdapter
+import com.walkins.aapkedoorstep.common.dateForWebservice_2
 import com.walkins.aapkedoorstep.common.item.SimpleTextRecyclerItem
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.datepicker.dialog.SingleDateAndTimePickerDialog
@@ -29,12 +28,10 @@ import com.walkins.aapkedoorstep.model.login.DashboardModel
 import com.walkins.aapkedoorstep.model.login.SectionModel
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
-import java.lang.Exception
-import java.lang.StringBuilder
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.thread
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -155,7 +152,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun getDashboardService(displayDate: String) {
-
 
         activity?.let {
             Common.showLoader(it)
@@ -342,8 +338,25 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         calendar.add(Calendar.DATE, 1)
         calendar.add(Calendar.MONTH, 0)
         calendar.add(Calendar.YEAR, 0)
-        val future: Date = calendar.getTime()
-        Log.e("getfuturedate", "" + future)
+        var future: Date? = null
+        var setdefault: Date? = null
+
+        setdefault = calendar.getTime()
+        if (selectedDate.equals("")) {
+            future = calendar.getTime()
+        } else {
+//            Wed May 19 12:55:46 GMT+05:30 2021
+            var date_: Date? = null
+            val formatter = SimpleDateFormat("dd MMM yyyy")
+            try {
+                date_ = formatter.parse(selectedDate)
+                Log.e("formated_date ", date_.toString() + "")
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            future = date_
+        }
+        Log.e("getfuturedate", "" + future+" "+selectedDate)
         singleBuilder = SingleDateAndTimePickerDialog.Builder(context)
             .setTimeZone(TimeZone.getDefault())
             .bottomSheet()
@@ -357,7 +370,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             .displayYears(true)
             .defaultDate(future)
             .displayMonthNumbers(true)
-            .minDateRange(future) //.mustBeOnFuture()
+            .minDateRange(setdefault) //.mustBeOnFuture()
             //.minutesStep(15)
             //.mustBeOnFuture()
             //.defaultDate(defaultDate)

@@ -253,7 +253,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
          })*/
         getServiceList()
 
-        llCompleted?.performClick()
+//        llCompleted?.performClick()
 
         edtSearch?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -644,7 +644,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val jsonArray: JsonArray = JsonArray()
 
         actvehicleMake = view.findViewById(R.id.actvehicleMake)
-        Log.e("getsociety11",""+selectedSocietyName)
+        Log.e("getsociety11", "" + selectedSocietyName)
         actvehicleMake?.setText("" + selectedSocietyName)
 
         activity?.let {
@@ -770,7 +770,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     selectedSociety = makeSearchdata?.get(pos)?.uuid
                     selectedSocietyName = makeSearchdata?.get(pos)?.name
 
-                    Log.e("getsociety",""+selectedSocietyName+" "+makeSearchdata?.get(p2)?.name+" "+makeSearchdata?.get(p2)?.id)
+                    Log.e("getsociety", "" + selectedSocietyName + " " + makeSearchdata?.get(p2)?.name + " " + makeSearchdata?.get(p2)?.id)
 
                 }
             }
@@ -861,7 +861,15 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 dialog?.dismiss()
                 ivFilterImg?.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.ic_report_filtered_icon))
                 val jsonObject = JsonObject()
-                jsonObject.addProperty("building_id", "" + selectedSociety)
+                if (actvehicleMake?.text?.toString().equals("")) {
+                    actvehicleMake?.setText("")
+                    selectedSociety = ""
+                    selectedSocietyName = ""
+                    jsonObject.addProperty("building_id", "")
+                } else {
+                    jsonObject.addProperty("building_id", "" + selectedSociety)
+                }
+
                 jsonObject.add("service", selectedServiceJson)
                 jsonObject.addProperty("status", selectedTab)
                 jsonObject.addProperty("pagesize", pagesize)
@@ -1117,5 +1125,22 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             dialog?.dismiss()
         }
         dialog?.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (selectedTab.equals("complete")) {
+            llCompleted?.performClick()
+        } else {
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("building_id", selectedSocietyName)
+            jsonObject.add("service", selectedServiceJson)
+            jsonObject.addProperty("status", selectedTab)
+            jsonObject.addProperty("pagesize", pagesize)
+            jsonObject.addProperty("page", page)
+            jsonObject.addProperty("q", edtSearch?.text?.toString())
+            getDashboardService(jsonObject, true)
+        }
     }
 }
