@@ -2,6 +2,7 @@ package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
 import android.R.attr
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
@@ -175,6 +176,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private val IMAGE_CAPTURE_CODE = 1011
     var image_uri: Uri? = null
     var year: Int = -1
+    var weekOfYear: Int = -1
 
     companion object {
         var ok_status = "OK"
@@ -190,7 +192,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //        requestPermissionForImage()
         init()
 
-        year = Calendar.getInstance().get(Calendar.YEAR)
+        year = Calendar.getInstance().get(Calendar.YEAR) % 100
+        weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)
         Log.e("getyear", "" + year)
     }
 
@@ -208,6 +211,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //        }
 //    }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
         btnDone = findViewById(R.id.btnDone)
@@ -1473,6 +1477,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //        }
 //    }
 
+    @SuppressLint("InflateParams")
     private fun showBottomSheetdialog(
         array: ArrayList<String>,
         titleStr: String,
@@ -1569,17 +1574,29 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
             R.id.btnDone -> {
 
-
                 if (edtManufaturingDate?.text?.toString().equals("")) {
                     Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
                     return
 
                 }
+                if (edtManufaturingDate?.text?.toString()?.length != 4) {
+                    Toast.makeText(this, "Manufaturing Date Must be 4 Digit.", Toast.LENGTH_SHORT).show()
+                    return
+
+                }
                 if (!edtManufaturingDate?.text?.toString().equals("")) {
-                    Log.e("getslectedtyre", "" + year+" "+edtManufaturingDate?.text?.toString()?.toInt()!!)
-                    if (edtManufaturingDate?.text?.toString()?.toInt()!! > year) {
-                        Toast.makeText(this, "Manufaturing Date must be Less-than equal To current Year.", Toast.LENGTH_SHORT).show()
-                        return
+
+                    if (!edtManufaturingDate?.text?.toString()?.substring(0, 2)?.equals("")!!) {
+                        if (edtManufaturingDate?.text?.toString()?.substring(0, 2)?.toString()?.toInt() != weekOfYear) {
+                            Toast.makeText(this, "Manufaturing Date First 2 Latter must be Week of Year.", Toast.LENGTH_SHORT).show()
+                            return
+                        }
+                    }
+                    if (!edtManufaturingDate?.text?.toString()?.substring(2, 4)?.equals("")!!) {
+                        if (edtManufaturingDate?.text?.toString()?.substring(2, 4)?.toString()?.toInt() != year) {
+                            Toast.makeText(this, "Manufaturing Date Last 2 Latter must be Current Year.", Toast.LENGTH_SHORT).show()
+                            return
+                        }
                     }
 
                 }

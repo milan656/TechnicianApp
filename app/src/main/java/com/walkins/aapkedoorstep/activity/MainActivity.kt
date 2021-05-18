@@ -105,6 +105,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         callApiTogetToken()
 
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+        val weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)
+        Log.e("getyear", "" + year + " " + weekOfYear)
+
 
         /* val thread = Thread {
              if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
@@ -434,7 +438,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     ivNotification?.setTint(this, R.color.text_color1)
                 }
                 ivProfile?.setTint(this, R.color.text_color1)
-
 
 
             }
