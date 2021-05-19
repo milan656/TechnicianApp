@@ -565,7 +565,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     }
                 }
 
-                tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern
+                tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern?.toLowerCase()?.capitalize()
 
                 Common.hideLoader()
             } else {
@@ -618,7 +618,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         Common.slideUp(gridviewRecycModel!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
-        tvSelectedModel?.text = arrList?.get(variable)?.name
+        tvSelectedModel?.text = arrList?.get(variable)?.name?.toLowerCase()?.capitalize()
         selectedPosition = variable
         selectedPos = variable
         selectedId = arrList?.get(variable)?.patternId!!
