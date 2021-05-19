@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -631,9 +628,11 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         dialog?.window?.setLayout(width, height)
-        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
 //        dialog?.setContentView(view)
         dialog?.setView(view)
+        dialog?.getWindow()?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)

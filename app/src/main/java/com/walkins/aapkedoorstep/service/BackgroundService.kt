@@ -123,7 +123,7 @@ class BackgroundService : Service() {
                 builder = Notification.Builder(this, channelId)/*.setContentTitle("NOTIFICATION USING " +
                         "KOTLIN")*/.setContentText("App is running in background").setSmallIcon(R.drawable.ic_app_icon_transparent).setLargeIcon(
                     BitmapFactory.decodeResource(this.resources, R.drawable
-                    .ic_launcher_background)).setContentIntent(pendingIntent)
+                    .ic_launcher_background)).setContentIntent(pendingIntent).setAutoCancel(true)
             }
             val noti=builder.build()
             startForeground(2,noti)
@@ -170,6 +170,7 @@ class BackgroundService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        stopService()
         Log.e("ENDLESS-SERVICE", "The service has been destroyed".toUpperCase())
 //        Toast.makeText(this, "Service destroyed", Toast.LENGTH_SHORT).show()
     }
@@ -283,7 +284,7 @@ class BackgroundService : Service() {
     }
 
 
-    private fun stopService() {
+    public fun stopService() {
         Log.e("ENDLESS-SERVICE", "Stopping the foreground service")
 //        Toast.makeText(this, "Service stopping", Toast.LENGTH_SHORT).show()
         try {

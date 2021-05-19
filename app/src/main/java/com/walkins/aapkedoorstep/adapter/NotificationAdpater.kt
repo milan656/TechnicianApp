@@ -10,14 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter
 import com.example.technician.common.Common
-import com.example.technician.common.Common.Companion.findDifference
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.onClickAdapter
-import com.walkins.aapkedoorstep.model.login.DashboardModel
 import com.walkins.aapkedoorstep.model.login.NotificationModel
-import com.walkins.aapkedoorstep.model.login.notification.Notification
-import java.lang.Exception
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -119,6 +114,11 @@ class NotificationAdpater(
                 }
             }
 
+            if (mToday!=mDateFormat.format(Date(array.get(position).createdAt)).toString()){
+                holder.tvTime?.visibility=View.GONE
+            }else{
+                holder.tvTime?.visibility=View.VISIBLE
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -154,7 +154,7 @@ class NotificationAdpater(
         Log.e("gettimedate", "" + mDataset.get(p1))
         if (mToday == p0?.timestamp?.text) {
             p0.timestamp?.text = "Today"
-            p0.ivRedDot?.visibility = View.VISIBLE
+//            p0.ivRedDot?.visibility = View.VISIBLE
         }
     }
 }

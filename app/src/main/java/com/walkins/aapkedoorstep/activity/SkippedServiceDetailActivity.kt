@@ -224,7 +224,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         return commentList!!
     }
 
-    private fun openSkipServiceDialogue(titleStr: String,stringExtra: String?, s: String) {
+    private fun openSkipServiceDialogue(titleStr: String, stringExtra: String?, s: String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -470,20 +470,24 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         val id = v?.id
         when (id) {
             R.id.ivBack -> {
-                var intent = Intent()
-                intent.putExtra("back", "" + true)
-                setResult(RESULT_OK, intent)
-
-                onBackPressed()
+                if (which.equals("skip_dialogue")) {
+                    var intent = Intent()
+                    intent.putExtra("back", "" + true)
+                    setResult(RESULT_OK, intent)
+                    finish()
+                } else {
+                    onBackPressed()
+                }
             }
             R.id.tvChange -> {
                 if (which.equals("skip_screen") || which.equals("report_screen")) {
 
                     if (getCommentList().size > 0) {
                         Log.e("getreasonid", "" + reasonId)
-                        openSkipServiceDialogue("Change Pending Reason",reasonId, "update")
+                        openSkipServiceDialogue("Change Pending Reason", reasonId, "update")
                     }
                 } else {
+                    Log.e("getreasonid0", "" + reasonId)
                     val intent = Intent()
                     intent.putExtra("reason", "" + tvReason?.text?.toString())
                     intent.putExtra("reasonId", "" + reasonId)
@@ -566,4 +570,14 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
 
     }
 
+    override fun onBackPressed() {
+        if (which.equals("skip_dialogue")) {
+            var intent = Intent()
+            intent.putExtra("back", "" + true)
+            setResult(RESULT_OK, intent)
+            finish()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }

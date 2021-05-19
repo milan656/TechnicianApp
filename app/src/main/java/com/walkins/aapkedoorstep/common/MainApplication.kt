@@ -1,12 +1,15 @@
 package com.example.technician.common
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.walkins.aapkedoorstep.service.BackgroundService
+
 
 class MainApplication : MultiDexApplication() {
 
@@ -63,12 +66,26 @@ class MainApplication : MultiDexApplication() {
 
             override fun onActivityDestroyed(activity: Activity) {
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    Log.e("getaction",""+activity.isDestroyed)
-                }
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//                    Log.e("getaction", "" + activity.isDestroyed)
+//                    if (isMyServiceRunning(BackgroundService::class.java)) {
+//                        (baseContext as BackgroundService).stopForeground(true)
+//                    }
+//
+//                }
 
             }
 
         })
+    }
+
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
     }
 }

@@ -42,7 +42,7 @@
                         android:id="@+id/ivProfileImg"
                         android:layout_width="132dp"
                         android:layout_height="132dp"
-                        android:src="@mipmap/app_icon_logo"
+                        android:src="@mipmap/ic_upload_photo_icon_"
                         app:civ_shadow_radius="@dimen/twenty_dp" />
 
                     <ImageView
@@ -54,7 +54,6 @@
                         android:layout_alignParentBottom="true"
                         android:src="@drawable/ic_camera_icon" />
 
-
                 </RelativeLayout>
 
                 <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
@@ -64,7 +63,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:gravity="center"
-                    android:text="Arun Garewal"
                     android:textColor="@color/header_title"
                     android:textSize="@dimen/twenty_two_sp"
                     android:textStyle="bold" />
@@ -76,7 +74,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:gravity="center"
-                    android:text="+91 9898 9898 98"
                     android:textColor="@color/text_color1"
                     android:textSize="@dimen/sixteen_sp" />
             </LinearLayout>
