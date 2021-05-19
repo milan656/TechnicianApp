@@ -2717,10 +2717,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
+                    if (jsonLF.get(TyreKey.isCompleted)!=null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
 
-                    } else {
-                        count = count + 1
+                        } else {
+                            count = count + 1
+                        }
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -2734,10 +2736,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
+                     if (jsonLF.get(TyreKey.isCompleted)!=null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
 
-                    } else {
-                        count = count + 1
+                        } else {
+                            count = count + 1
+                        }
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -2751,10 +2755,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
+                     if (jsonLF.get(TyreKey.isCompleted)!=null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
 
-                    } else {
-                        count = count + 1
+                        } else {
+                            count = count + 1
+                        }
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -2768,15 +2774,19 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
+                    if (jsonLF.get(TyreKey.isCompleted)!=null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
 
-                    } else {
-                        count = count + 1
+                        } else {
+                            count = count + 1
+                        }
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }
             }
+
+
 
             if (count > 0) {
                 showDialogueTwoForService(
@@ -2796,11 +2806,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
+                    if (jsonLF.get(TyreKey.isCompleted)!=null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
 
-                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
-
-                    } else {
-                        count = count + 1
+                        } else {
+                            count = count + 1
+                        }
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -2814,10 +2825,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+                    if (jsonLF.get(TyreKey.isCompleted)!=null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
 
-                    } else {
-                        count = count + 1
+                        } else {
+                            count = count + 1
+                        }
                     }
 
                 } catch (e: java.lang.Exception) {
@@ -2832,10 +2845,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+                   if (jsonLF.get(TyreKey.isCompleted)!=null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
 
-                    } else {
-                        count = count + 1
+                        } else {
+                            count = count + 1
+                        }
                     }
 
                 } catch (e: java.lang.Exception) {
@@ -2850,10 +2865,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+                    if (jsonLF.get(TyreKey.isCompleted)!=null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
 
-                    } else {
-                        count = count + 1
+                        } else {
+                            count = count + 1
+                        }
                     }
 
                 } catch (e: java.lang.Exception) {
@@ -6071,6 +6088,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         builder.show()
+    }
+
+    private fun enableCompletedService() {
+
     }
 
     private fun removeWheelBalancingServiceFromObject() {
