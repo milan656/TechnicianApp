@@ -233,10 +233,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     suspend fun getStoredObjects(checkUnCheck: String) {
 
-        var LFVehicleURL: String = ""
-        var LRVehicleURL: String = ""
-        var RFVehicleURL: String = ""
-        var RRVehicleURL: String = ""
+        var LFVehicleURL = ""
+        var LRVehicleURL = ""
+        var RFVehicleURL = ""
+        var RRVehicleURL = ""
 
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -2617,12 +2617,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (check == 11) {
             Log.e("getserviceclick", "" + serviceList?.get(variable)?.name + " " + serviceList?.get(variable)?.isSelected)
 
-
             showHideUpdatedPlacement(serviceList?.get(variable)?.name!!, serviceList?.get(variable)?.isSelected!!)
             GlobalScope.launch(Dispatchers.Main) {
                 launch(Dispatchers.Main) {
                     if (!serviceList?.get(variable)?.isSelected!!) {
                         checkServiceUnCheck(variable)
+                    } else {
+                        checkServiceCheck(variable)
                     }
                 }
             }
@@ -2695,6 +2696,183 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
+    private fun checkServiceCheck(variable: Int) {
+        selectedServiceArr?.clear()
+        if (serviceList != null && serviceList?.size!! > 0) {
+            for (i in serviceList?.indices!!) {
+                if (serviceList?.get(i)?.isSelected!!) {
+                    selectedServiceArr?.add(serviceList?.get(i)?.name!!)
+
+                }
+            }
+        }
+
+        if (selectedServiceArr?.contains("Nitrogen Top Up")!! && selectedServiceArr?.contains("Nitrogen Refill")!!) {
+            var count = 0
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
+
+                    } else {
+                        count = count + 1
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
+
+                    } else {
+                        count = count + 1
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
+
+                    } else {
+                        count = count + 1
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
+
+                    } else {
+                        count = count + 1
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            if (count > 0) {
+                showDialogueTwoForService(
+                    "Enable Service", "Are You sure ? You want to enable this service ?\n" + "" +
+                            "You need to add Nitrogen Refill and Nitrogen Top up Details for those completed tyre details.", "", true
+                )
+            }
+        }
+
+        Log.e("getservicecall1", "" + selectedServiceArr?.contains("Wheel Balancing"))
+        if (selectedServiceArr?.contains("Wheel Balancing")!!) {
+            var count = 0
+            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+
+                    } else {
+                        count = count + 1
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+
+                    } else {
+                        count = count + 1
+                    }
+
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+
+                    } else {
+                        count = count + 1
+                    }
+
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+
+                    } else {
+                        count = count + 1
+                    }
+
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+            Log.e("getservicecall1", "" + count)
+            if (count > 0) {
+
+                showDialogueTwoForService(
+                    "Enable Service", "Are You sure ? You want to enable this service ?\n" + "" +
+                            "You need to add Wheel Balancing Details for those completed tyre details.", "wheelBalancing", true
+                )
+            }
+        }
+
+
+    }
+
     suspend fun checkServiceUnCheck(position: Int) {
         selectedServiceArr?.clear()
         if (serviceList != null && serviceList?.size!! > 0) {
@@ -2705,6 +2883,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
         }
+
+        Log.e("getservicecall", "" + selectedServiceArr)
 
         if (!selectedServiceArr?.contains("Nitrogen Top Up")!! && !selectedServiceArr?.contains("Nitrogen Refill")!!) {
             var count = 0
@@ -2770,14 +2950,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
 
             if (count > 0) {
-
-                showDialogueTwoForService("Remove Service", "Are You sure ? You want to remove Nitrogen Refill and Nitrogen Top up Service ?", "")
-
+                showDialogueTwoForService("Remove Service", "Are You sure ? You want to remove Nitrogen Refill and Nitrogen Top up Service ?", "", false)
             }
-
-
-//            getStoredObjects("checkUncheck")
         }
+
+        Log.e("getservicecall1", "" + selectedServiceArr?.contains("Wheel Balancing"))
         if (!selectedServiceArr?.contains("Wheel Balancing")!!) {
             var count = 0
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
@@ -2788,7 +2965,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.wheelBalancing) != null && !jsonLF.get(TyreKey.wheelBalancing).asString.equals("")) {
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
                         count = count + 1
                     }
                 } catch (e: java.lang.Exception) {
@@ -2803,7 +2980,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.wheelBalancing) != null && !jsonLF.get(TyreKey.wheelBalancing).asString.equals("")) {
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
                         count = count + 1
                     }
                 } catch (e: java.lang.Exception) {
@@ -2818,7 +2995,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.wheelBalancing) != null && !jsonLF.get(TyreKey.wheelBalancing).asString.equals("")) {
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
                         count = count + 1
                     }
                 } catch (e: java.lang.Exception) {
@@ -2833,17 +3010,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
 
-                    if (jsonLF.get(TyreKey.wheelBalancing) != null && !jsonLF.get(TyreKey.wheelBalancing).asString.equals("")) {
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
                         count = count + 1
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }
             }
-
+            Log.e("getservicecall1", "" + count)
             if (count > 0) {
 
-                showDialogueTwoForService("Remove Service", "Are You sure ? You want to remove Wheel Balancing Service ?", "wheelBalancing")
+                showDialogueTwoForService("Remove Service", "Are You sure ? You want to remove Wheel Balancing Service ?", "wheelBalancing", false)
 
             }
         }
@@ -5828,7 +6005,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         builder.show()
     }
 
-    fun showDialogueTwoForService(title: String, message: String, service: String) {
+    fun showDialogueTwoForService(title: String, message: String, service: String, iscompleted: Boolean) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -5848,22 +6025,38 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         btn_ok.setOnClickListener {
             builder.dismiss()
 
+            if (iscompleted){
 
-            removeNitrojenServiceFromObject(service)
+                enableCompletedService()
+            }else {
 
+                removeNitrojenServiceFromObject(service, iscompleted)
+            }
         }
         btn_cancel?.setOnClickListener {
             builder.dismiss()
 
-            if (serviceList?.size!! > 0) {
-                for (i in serviceList?.indices!!) {
-                    if (serviceList?.get(i)?.name?.equals("Nitrogen Refill")!! && !serviceList?.get(i)?.isSelected!!) {
+            if (service.equals("")) {
+                if (serviceList?.size!! > 0) {
+                    for (i in serviceList?.indices!!) {
+                        if (serviceList?.get(i)?.name?.equals("Nitrogen Refill")!! && !serviceList?.get(i)?.isSelected!!) {
 
-                        serviceList?.get(i)?.isSelected = true
+                            serviceList?.get(i)?.isSelected = true
+                        }
+                        if (serviceList?.get(i)?.name?.equals("Nitrogen Top Up")!! && !serviceList?.get(i)?.isSelected!!) {
+
+                            serviceList?.get(i)?.isSelected = true
+                        }
                     }
-                    if (serviceList?.get(i)?.name?.equals("Nitrogen Top Up")!! && !serviceList?.get(i)?.isSelected!!) {
+                }
+            } else {
+                if (serviceList?.size!! > 0) {
+                    for (i in serviceList?.indices!!) {
+                        if (serviceList?.get(i)?.name?.equals("Wheel Balancing")!! && !serviceList?.get(i)?.isSelected!!) {
 
-                        serviceList?.get(i)?.isSelected = true
+                            serviceList?.get(i)?.isSelected = true
+                        }
+
                     }
                 }
             }
@@ -5884,7 +6077,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
-    private fun removeNitrojenServiceFromObject(service: String) {
+    private fun removeNitrojenServiceFromObject(service: String,iscompleted: Boolean) {
 //        wheelBalancing
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -5895,9 +6088,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getobjectslf", "" + jsonLF)
 
                 if (service.equals("wheelBalancing")) {
-                    if (jsonLF.get(TyreKey.wheelBalancing) != null && !jsonLF.get(TyreKey.wheelBalancing).asString.equals("")) {
-                        jsonLF.remove(TyreKey.wheelBalancing)
-                        jsonLF.addProperty(TyreKey.wheelBalancing, "")
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+                        jsonLF.remove(TyreKey.weightTyreService)
+                        jsonLF.addProperty(TyreKey.weightTyreService, "")
                     }
                 } else {
                     if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
@@ -5923,9 +6116,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getobjectslf", "" + jsonLF)
 
                 if (service.equals("wheelBalancing")) {
-                    if (jsonLF.get(TyreKey.wheelBalancing) != null && !jsonLF.get(TyreKey.wheelBalancing).asString.equals("")) {
-                        jsonLF.remove(TyreKey.wheelBalancing)
-                        jsonLF.addProperty(TyreKey.wheelBalancing, "")
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+                        jsonLF.remove(TyreKey.weightTyreService)
+                        jsonLF.addProperty(TyreKey.weightTyreService, "")
                     }
 
                 } else {
@@ -5953,9 +6146,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getobjectslf", "" + jsonLF)
 
                 if (service.equals("wheelBalancing")) {
-                    if (jsonLF.get(TyreKey.wheelBalancing) != null && !jsonLF.get(TyreKey.wheelBalancing).asString.equals("")) {
-                        jsonLF.remove(TyreKey.wheelBalancing)
-                        jsonLF.addProperty(TyreKey.wheelBalancing, "")
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+                        jsonLF.remove(TyreKey.weightTyreService)
+                        jsonLF.addProperty(TyreKey.weightTyreService, "")
                     }
 
                 } else {
@@ -5983,9 +6176,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getobjectslf", "" + jsonLF)
 
                 if (service.equals("wheelBalancing")) {
-                    if (jsonLF.get(TyreKey.wheelBalancing) != null && !jsonLF.get(TyreKey.wheelBalancing).asString.equals("")) {
-                        jsonLF.remove(TyreKey.wheelBalancing)
-                        jsonLF.addProperty(TyreKey.wheelBalancing, "")
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+                        jsonLF.remove(TyreKey.weightTyreService)
+                        jsonLF.addProperty(TyreKey.weightTyreService, "")
                     }
 
                 } else {

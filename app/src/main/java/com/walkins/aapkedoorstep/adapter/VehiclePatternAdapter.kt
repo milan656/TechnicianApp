@@ -47,7 +47,7 @@ class VehiclePatternAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: VehiclePatternAdapter.ViewHolder, position: Int) {
-        holder.textView.setText(name?.get(position)?.name)
+        holder.textView.setText(name?.get(position)?.name?.toLowerCase()?.capitalize())
 //        holder.textView.text = "185/65 R15"
 
         if (name!!.get(position).isSelected) {
