@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.walkins.aapkedoorstep.service.BackgroundService
-
 
 class MainApplication : MultiDexApplication() {
 

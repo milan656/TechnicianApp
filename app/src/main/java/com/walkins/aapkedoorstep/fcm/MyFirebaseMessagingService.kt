@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -101,14 +102,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val options = BitmapFactory.Options()
         options.inScaled = false
-        val source: Bitmap? = null
 
         val notificationBuilder =
             NotificationCompat.Builder(this, technician_channel!!)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setSmallIcon(R.drawable.ic_app_icon_transparent)
+            notificationBuilder.setLargeIcon(
+                BitmapFactory.decodeResource(
+                    this.resources, R.drawable
+                        .ic_app_icon_transparent
+                )
+            )
         } else {
             notificationBuilder.setSmallIcon(R.drawable.ic_app_icon_transparent)
+            notificationBuilder.setLargeIcon(
+                BitmapFactory.decodeResource(
+                    this.resources, R.drawable
+                        .ic_app_icon_transparent
+                )
+            )
         }
 
         Log.e("noti", "" + body)
@@ -134,10 +146,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationBuilder
                 .setContentTitle(title)
                 .setContentText(body)
-                .setLargeIcon(source)
+                .setLargeIcon(null)
                 .setStyle(
                     NotificationCompat.BigPictureStyle()
-                        .bigPicture(source).bigLargeIcon(null).setSummaryText(messageBody)
+                        .bigPicture(null).bigLargeIcon(null).setSummaryText(messageBody)
                 ).setStyle(bigText)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -156,6 +168,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             mChannel.lightColor = Color.RED
             mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
             notificationManager.createNotificationChannel(mChannel)
+
             notificationManager.notify(m, notificationBuilder.build())
         } else {
             notificationManager.notify(m, notificationBuilder.build())

@@ -6,11 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.os.SystemClock
 import android.util.Log
+import androidx.core.graphics.drawable.toIcon
 import com.example.technician.common.PrefManager
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.GsonBuilder
@@ -108,25 +111,33 @@ class BackgroundService : Service() {
 //            startForeground(2, notif)
 
             lateinit var notificationChannel: NotificationChannel
-            val notificationManager: NotificationManager=getSystemService(Context.NOTIFICATION_SERVICE) as
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as
                     NotificationManager
             lateinit var builder: Notification.Builder
-             val channelId = "channel_"
-             val description = "Background Notification"
+            val channelId = "channel_"
+            val description = "Background Notification"
             val intent = Intent(this, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                notificationChannel = NotificationChannel(channelId, description, NotificationManager .IMPORTANCE_HIGH)
+                notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
                 notificationChannel.lightColor = Color.BLUE
                 notificationChannel.enableVibration(true)
                 notificationManager.createNotificationChannel(notificationChannel)
                 builder = Notification.Builder(this, channelId)/*.setContentTitle("NOTIFICATION USING " +
-                        "KOTLIN")*/.setContentText("App is running in background").setSmallIcon(R.drawable.ic_app_icon_transparent).setLargeIcon(
-                    BitmapFactory.decodeResource(this.resources, R.drawable
-                    .ic_launcher_background)).setContentIntent(pendingIntent).setAutoCancel(true)
+                        "KOTLIN")*/.setContentText("App is running in background").setSmallIcon(
+                    R.drawable.ic_app_icon_transparent
+                ).setLargeIcon(
+                    BitmapFactory.decodeResource(
+                        this.resources, R.drawable
+                            .ic_app_icon_transparent
+                    )
+                ).setContentIntent(pendingIntent).setAutoCancel(true)
+                val alarmSound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                builder.setSound(alarmSound)
             }
-            val noti=builder.build()
-            startForeground(2,noti)
+            val noti = builder.build()
+            startForeground(2, noti)
+
 //            notificationManager.notify(12345, builder.build())
         } else {
             val notif: Notification = Notification()
@@ -176,19 +187,19 @@ class BackgroundService : Service() {
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
-        val restartServiceIntent = Intent(applicationContext, BackgroundService::class.java).also {
-            it.setPackage(packageName)
-        };
-        val restartServicePendingIntent: PendingIntent =
-            PendingIntent.getService(this, 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-        applicationContext.getSystemService(Context.ALARM_SERVICE);
-        val alarmService: AlarmManager =
-            applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager;
-        alarmService.set(
-            AlarmManager.ELAPSED_REALTIME,
-            SystemClock.elapsedRealtime() + 1000,
-            restartServicePendingIntent
-        );
+//        val restartServiceIntent = Intent(applicationContext, BackgroundService::class.java).also {
+//            it.setPackage(packageName)
+//        };
+//        val restartServicePendingIntent: PendingIntent =
+//            PendingIntent.getService(this, 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+//        applicationContext.getSystemService(Context.ALARM_SERVICE);
+//        val alarmService: AlarmManager =
+//            applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager;
+//        alarmService.set(
+//            AlarmManager.ELAPSED_REALTIME,
+//            SystemClock.elapsedRealtime() + 1000,
+//            restartServicePendingIntent
+//        );
     }
 
     private fun startService() {
