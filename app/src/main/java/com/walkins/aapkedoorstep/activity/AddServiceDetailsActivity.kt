@@ -227,7 +227,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //        requestPermissionForImage()
         init()
 
-        removeDataExceptServiceData()
+//        removeDataExceptServiceData()
 
     }
 
@@ -248,7 +248,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
-        Log.e("getserviceselected",""+selectedServiceArr)
+        Log.e("getserviceselected", "" + selectedServiceArr)
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
         ) {
@@ -335,8 +335,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
                     TyreConfigClass.LFVehicleVisualDetail = true
                 }
-                Log.e("getserviceselectedlf",""+selectedServiceArr)
+                Log.e("getserviceselectedlf_", "" + selectedServiceArr)
                 if (selectedServiceArr?.contains("Wheel Balancing")!!) {
+                    Log.e("getserviceselectedlf_", "" + selectedServiceArr?.contains("Wheel Balancing"))
                     if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
                         TyreConfigClass.LFVehicleVisualDetail = true
                     } else {
@@ -346,6 +347,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if (selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) {
+                    Log.e("getserviceselectedlf_1", "" + selectedServiceArr?.contains("Nitrogen Refill")!! + "--" + selectedServiceArr?.contains("Nitrogen Top Up")!!)
                     if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
                         TyreConfigClass.LFVehicleVisualDetail = true
                     } else {
@@ -356,14 +358,48 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else {
                         TyreConfigClass.LFVehicleVisualDetail = false
                     }
+
                 }
 
-                if (!TyreConfigClass.LFVehicleVisualDetail){
-                    jsonLF.remove(TyreKey.isCompleted)
-                    jsonLF.addProperty(TyreKey.isCompleted, "false")
-                    TyreConfigClass.LFCompleted=false
+                if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
+                    Log.e("getserviceselectedlf_2", "" + selectedServiceArr)
+
+                    var psiIn = ""
+                    var psiOut = ""
+                    var weight = ""
+                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
+                        psiIn = jsonLF.get(TyreKey.psiInTyreService)?.asString!!
+                    }
+                    if (jsonLF.get(TyreKey.psiOutTyreService) != null && !jsonLF.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!) {
+                        psiOut = jsonLF.get(TyreKey.psiOutTyreService)?.asString!!
+                    }
+                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
+                        weight = jsonLF.get(TyreKey.weightTyreService)?.asString!!
+                    }
+
+                    if (!psiIn.equals("") && !psiOut.equals("") && !weight.equals("")) {
+                        TyreConfigClass.LFVehicleVisualDetail = true
+                    } else {
+                        TyreConfigClass.LFVehicleVisualDetail = false
+                    }
                 }
-                Log.e("getserviceselected1",""+TyreConfigClass.LFCompleted)
+                Log.e("getserviceselectedlf_3", "" + TyreConfigClass.LFCompleted + " " + TyreConfigClass.LFVehicleVisualDetail)
+
+                if (TyreConfigClass.LFCompleted) {
+                    if (!TyreConfigClass.LFVehicleVisualDetail) {
+                        jsonLF.remove(TyreKey.isCompleted)
+                        jsonLF.addProperty(TyreKey.isCompleted, "false")
+                        TyreConfigClass.LFCompleted = false
+
+                        ivTyre1?.setImageDrawable(
+                            this@AddServiceDetailsActivity.resources?.getDrawable(
+                                R.drawable.ic_pending_tyre_config
+                            )
+                        )
+                        ivInfoImgLF?.visibility = View.VISIBLE
+                    }
+                }
+                Log.e("getserviceselected1", "" + TyreConfigClass.LFCompleted)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -456,13 +492,43 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.RFVehicleVisualDetail = false
                     }
                 }
-                if (!TyreConfigClass.RFVehicleVisualDetail){
-                    jsonRF.remove(TyreKey.isCompleted)
-                    jsonRF.addProperty(TyreKey.isCompleted, "false")
-                    TyreConfigClass.RFCompleted=false
+
+                if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
+                     var psiIn = ""
+                    var psiOut = ""
+                    var weight = ""
+                    if (jsonRF.get(TyreKey.psiInTyreService) != null && !jsonRF.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
+                        psiIn = jsonRF.get(TyreKey.psiInTyreService)?.asString!!
+                    }
+                    if (jsonRF.get(TyreKey.psiOutTyreService) != null && !jsonRF.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!) {
+                        psiOut = jsonRF.get(TyreKey.psiOutTyreService)?.asString!!
+                    }
+                    if (jsonRF.get(TyreKey.weightTyreService) != null && !jsonRF.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
+                        weight = jsonRF.get(TyreKey.weightTyreService)?.asString!!
+                    }
+
+                    if (!psiIn.equals("") && !psiOut.equals("") && !weight.equals("")) {
+                        TyreConfigClass.RFVehicleVisualDetail = true
+                    } else {
+                        TyreConfigClass.RFVehicleVisualDetail = false
+                    }
+                }
+                if (TyreConfigClass.RFCompleted) {
+                    if (!TyreConfigClass.RFVehicleVisualDetail) {
+                        jsonRF.remove(TyreKey.isCompleted)
+                        jsonRF.addProperty(TyreKey.isCompleted, "false")
+                        TyreConfigClass.RFCompleted = false
+
+                        ivTyre3?.setImageDrawable(
+                            this@AddServiceDetailsActivity.resources?.getDrawable(
+                                R.drawable.ic_pending_tyre_config
+                            )
+                        )
+                        ivInfoImgRF?.visibility = View.VISIBLE
+                    }
                 }
 
-                Log.e("getservicesele",""+TyreConfigClass.RFCompleted)
+                Log.e("getservicesele", "" + TyreConfigClass.RFCompleted)
                 if (jsonRF.get(TyreKey.vehicleMakeURL) != null &&
                     !jsonRF.get(TyreKey.vehicleMakeURL).asString.equals("")
                 ) {
@@ -571,12 +637,42 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
 
-                if (!TyreConfigClass.LRVehicleVisualDetail){
-                    jsonLR.remove(TyreKey.isCompleted)
-                    jsonLR.addProperty(TyreKey.isCompleted, "false")
-                    TyreConfigClass.LRCompleted=false
+                if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
+                     var psiIn = ""
+                    var psiOut = ""
+                    var weight = ""
+                    if (jsonLR.get(TyreKey.psiInTyreService) != null && !jsonLR.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
+                        psiIn = jsonLR.get(TyreKey.psiInTyreService)?.asString!!
+                    }
+                    if (jsonLR.get(TyreKey.psiOutTyreService) != null && !jsonLR.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!) {
+                        psiOut = jsonLR.get(TyreKey.psiOutTyreService)?.asString!!
+                    }
+                    if (jsonLR.get(TyreKey.weightTyreService) != null && !jsonLR.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
+                        weight = jsonLR.get(TyreKey.weightTyreService)?.asString!!
+                    }
+
+                    if (!psiIn.equals("") && !psiOut.equals("") && !weight.equals("")) {
+                        TyreConfigClass.LRVehicleVisualDetail = true
+                    } else {
+                        TyreConfigClass.LRVehicleVisualDetail = false
+                    }
                 }
-                Log.e("getservicesele12",""+TyreConfigClass.LRCompleted)
+
+                if (TyreConfigClass.LRCompleted) {
+                    if (!TyreConfigClass.LRVehicleVisualDetail) {
+                        jsonLR.remove(TyreKey.isCompleted)
+                        jsonLR.addProperty(TyreKey.isCompleted, "false")
+                        TyreConfigClass.LRCompleted = false
+
+                        ivTyre2?.setImageDrawable(
+                            this@AddServiceDetailsActivity.resources?.getDrawable(
+                                R.drawable.ic_pending_tyre_config
+                            )
+                        )
+                        ivInfoImgLR?.visibility = View.VISIBLE
+                    }
+                }
+                Log.e("getservicesele12", "" + TyreConfigClass.LRCompleted)
 
                 if (jsonLR.get(TyreKey.vehicleMakeURL) != null &&
                     !jsonLR.get(TyreKey.vehicleMakeURL).asString.equals("")
@@ -683,12 +779,43 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
 
-                if (!TyreConfigClass.RRVehicleVisualDetail){
-                    jsonRR.remove(TyreKey.isCompleted)
-                    jsonRR.addProperty(TyreKey.isCompleted, "false")
-                    TyreConfigClass.RRCompleted=false
+                if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
+                     var psiIn = ""
+                    var psiOut = ""
+                    var weight = ""
+                    if (jsonRR.get(TyreKey.psiInTyreService) != null && !jsonRR.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
+                        psiIn = jsonRR.get(TyreKey.psiInTyreService)?.asString!!
+                    }
+                    if (jsonRR.get(TyreKey.psiOutTyreService) != null && !jsonRR.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!) {
+                        psiOut = jsonRR.get(TyreKey.psiOutTyreService)?.asString!!
+                    }
+                    if (jsonRR.get(TyreKey.weightTyreService) != null && !jsonRR.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
+                        weight = jsonRR.get(TyreKey.weightTyreService)?.asString!!
+                    }
+
+                    if (!psiIn.equals("") && !psiOut.equals("") && !weight.equals("")) {
+                        TyreConfigClass.RRVehicleVisualDetail = true
+                    } else {
+                        TyreConfigClass.RRVehicleVisualDetail = false
+                    }
                 }
-                Log.e("getservice22sele",""+TyreConfigClass.RRCompleted)
+
+
+                if (TyreConfigClass.RRCompleted) {
+                    if (!TyreConfigClass.RRVehicleVisualDetail) {
+                        jsonRR.remove(TyreKey.isCompleted)
+                        jsonRR.addProperty(TyreKey.isCompleted, "false")
+                        TyreConfigClass.RRCompleted = false
+
+                        ivTyre4?.setImageDrawable(
+                            this@AddServiceDetailsActivity.resources?.getDrawable(
+                                R.drawable.ic_pending_tyre_config
+                            )
+                        )
+                        ivInfoImgRR?.visibility = View.VISIBLE
+                    }
+                }
+                Log.e("getservice22sele", "" + TyreConfigClass.RRCompleted)
                 if (jsonRR.get(TyreKey.vehicleMakeURL) != null &&
                     !jsonRR.get(TyreKey.vehicleMakeURL).asString.equals("")
                 ) {
@@ -714,43 +841,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         Log.e("isCpmpleted1", "" + LRVehicleURL)
         Log.e("isCpmpleted2", "" + RFVehicleURL)
         Log.e("isCpmpleted3", "" + RRVehicleURL)
-
-        if (!TyreConfigClass.LFCompleted) {
-
-            ivTyre1?.setImageDrawable(
-                this@AddServiceDetailsActivity.resources?.getDrawable(
-                    R.drawable.ic_pending_tyre_config
-                )
-            )
-            ivInfoImgLF?.visibility = View.VISIBLE
-        }
-        if (!TyreConfigClass.LRCompleted) {
-
-            ivTyre2?.setImageDrawable(
-                this@AddServiceDetailsActivity.resources?.getDrawable(
-                    R.drawable.ic_pending_tyre_config
-                )
-            )
-            ivInfoImgLR?.visibility = View.VISIBLE
-        }
-        if (!TyreConfigClass.RFCompleted) {
-
-            ivTyre3?.setImageDrawable(
-                this@AddServiceDetailsActivity.resources?.getDrawable(
-                    R.drawable.ic_pending_tyre_config
-                )
-            )
-            ivInfoImgRF?.visibility = View.VISIBLE
-        }
-        if (!TyreConfigClass.RRCompleted) {
-
-            ivTyre4?.setImageDrawable(
-                this@AddServiceDetailsActivity.resources?.getDrawable(
-                    R.drawable.ic_pending_tyre_config
-                )
-            )
-            ivInfoImgRR?.visibility = View.VISIBLE
-        }
 
         if (!LFVehicleURL.equals("")) {
             ivtyreLeftFront?.visibility = View.VISIBLE
@@ -2951,7 +3041,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (count > 0) {
                 showDialogueTwoForService(
                     "Enable Service", "Are You sure ? You want to enable this service ?\n" + "" +
-                            "You need to add Nitrogen Refill and Nitrogen Top up Details for those completed tyre details.", "", true
+                            "You need to add Psi-In and Psi-Out Details for those completed tyre details.", "", true
                 )
             }
         }
@@ -3042,7 +3132,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 showDialogueTwoForService(
                     "Enable Service", "Are You sure ? You want to enable this service ?\n" + "" +
-                            "You need to add Wheel Balancing Details for those completed tyre details.", "wheelBalancing", true
+                            "You need to add Weight Details for those completed tyre details.", "wheelBalancing", true
                 )
             }
         }
@@ -5854,7 +5944,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     override fun onDestroy() {
         super.onDestroy()
-        removeDataExceptServiceData()
+//        removeDataExceptServiceData()
     }
 
     fun removeDataExceptServiceData() {
@@ -6388,11 +6478,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 e.printStackTrace()
             }
         }
-
-    }
-
-    private fun removeWheelBalancingServiceFromObject() {
-
+//        GlobalScope.launch(Dispatchers.Main) {
+//            getStoredObjects(service)
+//        }
     }
 
     private fun removeNitrojenServiceFromObject(service: String, iscompleted: Boolean) {

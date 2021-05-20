@@ -492,16 +492,18 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         Log.e("getSizeVehicleSize", "" + arrList?.size)
                     }
-                }
-                thread.start()
-                if (arrList != null && arrList?.size!! > 0) {
-                    for (i in arrList?.indices!!) {
 
-                        if (selectedId == arrList?.get(i)?.sizeId) {
-                            arrList?.get(i)?.isSelected = true
+                    if (arrList != null && arrList?.size!! > 0) {
+                        for (i in arrList?.indices!!) {
+
+                            if (selectedId == arrList?.get(i)?.sizeId) {
+                                arrList?.get(i)?.isSelected = true
+                            }
                         }
                     }
                 }
+                thread.start()
+
                 Common.hideLoader()
                 tvSelectedModel?.text = TyreDetailCommonClass.vehicleSize
                 adapter = VehicleSizeAdapter(this, arrList, this, selectedId)

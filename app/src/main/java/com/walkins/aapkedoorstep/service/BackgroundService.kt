@@ -80,7 +80,7 @@ class BackgroundService : Service() {
             )
         }
         // by returning this we make sure the service is restarted if the system kills the service
-        return START_NOT_STICKY
+        return START_STICKY
     }
 
     override fun onCreate() {

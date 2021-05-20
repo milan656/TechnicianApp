@@ -314,16 +314,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         ""
                     )
                 ) {
-                    Log.e(
-                        "getobjlf",
-                        "" + json.get("vehiclePatternId")?.asString + " " + selectedId
-                    )
+
                     if (selectedId == json.get("vehiclePatternId")?.asString?.toInt()) {
-                        Log.e(
-                            "getobjlf",
-                            "" + selectedId + " " + json.get("vehiclePatternId")?.asString
-                        )
-                        Log.e("getobjlf", "" + json + " ")
+
                         runOnUiThread {
                             if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString?.equals("")!!) {
                                 if (chkRF?.text?.toString().equals("LF")) {
@@ -550,20 +543,19 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                         val arrayList = mDb.patternDaoClass().getAllPattern().filter { it.brand_id == TyreDetailCommonClass.vehicleMakeId?.toInt() } as MutableList<VehiclePatternModelClass>
 
                         arrList?.addAll(arrayList)
+                    }
 
-                        Log.e("getSizeVehiclePattern", "" + arrList?.size)
+                    if (arrList != null && arrList?.size!! > 0) {
+                        for (i in arrList?.indices!!) {
+                            if (selectedId == arrList?.get(i)?.patternId) {
+                                arrList?.get(i)?.isSelected = true
+                            }
+                        }
                     }
                 }
                 thread.start()
 
-                if (arrList != null && arrList?.size!! > 0) {
-                    for (i in arrList?.indices!!) {
 
-                        if (selectedId == arrList?.get(i)?.patternId) {
-                            arrList?.get(i)?.isSelected = true
-                        }
-                    }
-                }
 
                 tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern?.toLowerCase()?.capitalize()
 

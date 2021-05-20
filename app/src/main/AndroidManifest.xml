@@ -113,7 +113,7 @@ Set color used with incoming notification messages. This is used when no color i
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".StartReceiver"
+            android:name=".service.StartReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
