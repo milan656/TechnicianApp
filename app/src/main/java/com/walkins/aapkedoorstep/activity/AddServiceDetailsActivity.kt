@@ -227,8 +227,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //        requestPermissionForImage()
         init()
 
-//        removeDataExceptServiceData()
-
     }
 
     suspend fun getStoredObjects(checkUnCheck: String) {
@@ -238,15 +236,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         var RFVehicleURL = ""
         var RRVehicleURL = ""
 
-        selectedServiceArr?.clear()
-        if (serviceList != null && serviceList?.size!! > 0) {
-            for (i in serviceList?.indices!!) {
-                if (serviceList?.get(i)?.isSelected!!) {
-                    selectedServiceArr?.add(serviceList?.get(i)?.name!!)
 
-                }
-            }
-        }
+        getSelectedService()
 
         Log.e("getserviceselected", "" + selectedServiceArr)
         if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
@@ -494,7 +485,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
-                     var psiIn = ""
+                    var psiIn = ""
                     var psiOut = ""
                     var weight = ""
                     if (jsonRF.get(TyreKey.psiInTyreService) != null && !jsonRF.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
@@ -638,7 +629,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
-                     var psiIn = ""
+                    var psiIn = ""
                     var psiOut = ""
                     var weight = ""
                     if (jsonLR.get(TyreKey.psiInTyreService) != null && !jsonLR.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
@@ -780,7 +771,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
-                     var psiIn = ""
+                    var psiIn = ""
                     var psiOut = ""
                     var weight = ""
                     if (jsonRR.get(TyreKey.psiInTyreService) != null && !jsonRR.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
@@ -1569,14 +1560,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
                     tvServices?.isAllCaps = false
                     Common.expand(llServiceExpanded!!)
-                    selectedServiceArr?.clear()
-                    if (serviceList != null && serviceList?.size!! > 0) {
-                        for (i in serviceList?.indices!!) {
-                            if (serviceList?.get(i)?.isSelected!!) {
-                                selectedServiceArr?.add(serviceList?.get(i)?.name!!)
-                            }
-                        }
-                    }
+                    getSelectedService()
                     Log.e("calltype11", "" + selectedServiceArr?.contains("Type Rotation"))
 
                     if (selectedServiceArr?.contains("Type Rotation")!!) {
@@ -2949,15 +2933,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
     private fun checkServiceCheck(variable: Int) {
-        selectedServiceArr?.clear()
-        if (serviceList != null && serviceList?.size!! > 0) {
-            for (i in serviceList?.indices!!) {
-                if (serviceList?.get(i)?.isSelected!!) {
-                    selectedServiceArr?.add(serviceList?.get(i)?.name!!)
-
-                }
-            }
-        }
+        getSelectedService()
 
         if (selectedServiceArr?.contains("Nitrogen Top Up")!! && selectedServiceArr?.contains("Nitrogen Refill")!!) {
             var count = 0
@@ -3141,15 +3117,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
     suspend fun checkServiceUnCheck(position: Int) {
-        selectedServiceArr?.clear()
-        if (serviceList != null && serviceList?.size!! > 0) {
-            for (i in serviceList?.indices!!) {
-                if (serviceList?.get(i)?.isSelected!!) {
-                    selectedServiceArr?.add(serviceList?.get(i)?.name!!)
-
-                }
-            }
-        }
+        getSelectedService()
 
         Log.e("getservicecall", "" + selectedServiceArr)
 
@@ -3651,15 +3619,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private fun checkService(): Boolean {
 
-        selectedServiceArr?.clear()
-        if (serviceList != null && serviceList?.size!! > 0) {
-            for (i in serviceList?.indices!!) {
-                if (serviceList?.get(i)?.isSelected!!) {
-                    selectedServiceArr?.add(serviceList?.get(i)?.name!!)
-
-                }
-            }
-        }
+        getSelectedService()
         if (selectedServiceArr?.size!! > 0
         ) {
             return true
@@ -6294,71 +6254,47 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         tv_message.text = message
         btn_ok.setOnClickListener {
             builder.dismiss()
-
             if (iscompleted) {
-
                 enableCompletedService(service)
             } else {
-
                 removeNitrojenServiceFromObject(service, iscompleted)
             }
         }
         btn_cancel?.setOnClickListener {
             builder.dismiss()
 
-            if (!iscompleted) {
-                if (service.equals("")) {
-                    if (serviceList?.size!! > 0) {
-                        for (i in serviceList?.indices!!) {
-                            if (serviceList?.get(i)?.name?.equals("Nitrogen Refill")!! && !serviceList?.get(i)?.isSelected!!) {
+            if (serviceList?.size!! > 0) {
+                for (i in serviceList?.indices!!) {
 
+                    if (service.equals("")) {
+                        if (serviceList?.get(i)?.name?.equals("Nitrogen Refill")!! && !serviceList?.get(i)?.isSelected!!) {
+
+                            if (!iscompleted) {
                                 serviceList?.get(i)?.isSelected = true
-                            }
-                            if (serviceList?.get(i)?.name?.equals("Nitrogen Top Up")!! && !serviceList?.get(i)?.isSelected!!) {
-
-                                serviceList?.get(i)?.isSelected = true
-                            }
-                        }
-                    }
-                } else {
-                    if (serviceList?.size!! > 0) {
-                        for (i in serviceList?.indices!!) {
-                            if (serviceList?.get(i)?.name?.equals("Wheel Balancing")!! && !serviceList?.get(i)?.isSelected!!) {
-
-                                serviceList?.get(i)?.isSelected = true
-                            }
-
-                        }
-                    }
-                }
-
-            } else {
-                if (service.equals("")) {
-                    if (serviceList?.size!! > 0) {
-                        for (i in serviceList?.indices!!) {
-                            if (serviceList?.get(i)?.name?.equals("Nitrogen Refill")!! && serviceList?.get(i)?.isSelected!!) {
-
-                                serviceList?.get(i)?.isSelected = false
-                            }
-                            if (serviceList?.get(i)?.name?.equals("Nitrogen Top Up")!! && serviceList?.get(i)?.isSelected!!) {
-
+                            } else {
                                 serviceList?.get(i)?.isSelected = false
                             }
                         }
-                    }
-                } else {
-                    if (serviceList?.size!! > 0) {
-                        for (i in serviceList?.indices!!) {
-                            if (serviceList?.get(i)?.name?.equals("Wheel Balancing")!! && serviceList?.get(i)?.isSelected!!) {
+                        if (serviceList?.get(i)?.name?.equals("Nitrogen Top Up")!! && !serviceList?.get(i)?.isSelected!!) {
 
+                            if (!iscompleted) {
+                                serviceList?.get(i)?.isSelected = true
+                            } else {
                                 serviceList?.get(i)?.isSelected = false
                             }
+                        }
+                    } else {
+                        if (serviceList?.get(i)?.name?.equals("Wheel Balancing")!! && !serviceList?.get(i)?.isSelected!!) {
 
+                            if (!iscompleted) {
+                                serviceList?.get(i)?.isSelected = true
+                            } else {
+                                serviceList?.get(i)?.isSelected = false
+                            }
                         }
                     }
                 }
             }
-
             serviceAdapter?.notifyDataSetChanged()
         }
         ivClose?.setOnClickListener {
@@ -6609,4 +6545,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
+    fun getSelectedService() {
+        selectedServiceArr?.clear()
+        if (serviceList != null && serviceList?.size!! > 0) {
+            for (i in serviceList?.indices!!) {
+                if (serviceList?.get(i)?.isSelected!!) {
+                    selectedServiceArr?.add(serviceList?.get(i)?.name!!)
+
+                }
+            }
+        }
+    }
 }
