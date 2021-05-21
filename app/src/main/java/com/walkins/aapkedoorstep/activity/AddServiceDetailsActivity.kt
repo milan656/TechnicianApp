@@ -8,6 +8,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -70,6 +71,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat")
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
@@ -299,8 +301,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 ) {
                     TyreConfigClass.LFVehicleSize = true
                 }
-
-
 
                 if ((jsonLF.get(TyreKey.manufaturingDate) != null &&
                             !jsonLF.get(TyreKey.manufaturingDate)?.asString.equals("") &&
@@ -1284,40 +1284,55 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     serviceAdapter?.notifyDataSetChanged()
                 }
 
-                if (jsonService.get(TyreKey.addServiceCarImage_1) != null &&
-                    !jsonService.get(TyreKey.addServiceCarImage_1)?.asString.equals("")
+                if (prefManager?.getValue("image_Car_1") != null &&
+                    !prefManager.getValue("image_Car_1").equals("")
                 ) {
 
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        getFile(this@AddServiceDetailsActivity, TyreConfigClass.car_1_uri)
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
+                    val myBitmap = BitmapFactory.decodeFile(imagePath?.absolutePath)
                     try {
-                        Glide.with(this).load(jsonService.get(TyreKey.addServiceCarImage_1)?.asString).thumbnail(0.33f)
-                            .into(ivPickedImage!!)
+/*                        Glide.with(this).load(imagePath?.absolutePath).thumbnail(0.33f)
+                            .into(ivPickedImage!!)*/
+
+                        ivPickedImage?.setImageBitmap(myBitmap)
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
-                    ivPickedImage?.visibility = View.VISIBLE
                     ivEditImg1?.visibility = View.VISIBLE
                     tvAddPhoto1?.visibility = View.GONE
                     tvCarphoto1?.visibility = View.GONE
-                    TyreConfigClass.CarPhoto_1 = jsonService.get(TyreKey.addServiceCarImage_1)?.asString!!
+                    TyreConfigClass.CarPhoto_1 = prefManager.getValue("image_Car_1")
                     relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+                    ivPickedImage?.visibility = View.VISIBLE
 
                 }
-                if (jsonService.get(TyreKey.addServiceCarImage_2) != null &&
-                    !jsonService.get(TyreKey.addServiceCarImage_2)?.asString.equals("")
+                if (prefManager?.getValue("image_Car_2") != null &&
+                    !prefManager?.getValue("image_Car_2").equals("")
                 ) {
+                    val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        getFile(this@AddServiceDetailsActivity, TyreConfigClass.car_2_uri)
+                    } else {
+                        TODO("VERSION.SDK_INT < KITKAT")
+                    }
+                    val myBitmap = BitmapFactory.decodeFile(imagePath?.absolutePath)
                     try {
-                        Glide.with(this).load(jsonService.get(TyreKey.addServiceCarImage_2)?.asString).thumbnail(0.33f)
-                            .into(ivPickedImage1!!)
+/*                        Glide.with(this).load(imagePath?.absolutePath).thumbnail(0.33f)
+                            .into(ivPickedImage!!)*/
 
+                        ivPickedImage1?.setImageBitmap(myBitmap)
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
-                    ivPickedImage1?.visibility = View.VISIBLE
                     ivEditImg2?.visibility = View.VISIBLE
                     tvAddPhoto2?.visibility = View.GONE
                     tvCarphoto2?.visibility = View.GONE
-                    TyreConfigClass.CarPhoto_2 = jsonService.get(TyreKey.addServiceCarImage_2)?.asString!!
+                    TyreConfigClass.CarPhoto_2 = prefManager?.getValue("image_Car_2")
                     relCarPhotoAdd2?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+                    ivPickedImage1?.visibility = View.VISIBLE
 
                 }
             } catch (e: Exception) {
@@ -2883,6 +2898,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                         val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                         intent.type = "image/*"
+                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                        intent.action = Intent.ACTION_GET_CONTENT
                         startActivityForResult(intent, PICK_IMAGE_REQUEST)
                     } catch (e: Exception) {
 
@@ -3102,6 +3119,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
+        GlobalScope.launch(Dispatchers.Main) {
+            getStoredObjects("")
+        }
 
     }
 
@@ -3247,6 +3267,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 showDialogueTwoForService("Remove Service", "Are You sure ? You want to remove Wheel Balancing Service ?", "wheelBalancing", false)
 
             }
+        }
+
+        GlobalScope.launch(Dispatchers.Main) {
+            getStoredObjects("")
         }
     }
 
@@ -5842,6 +5866,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         try {
                             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            intent.action = Intent.ACTION_GET_CONTENT
                             startActivityForResult(intent, PICK_IMAGE_REQUEST)
                         } catch (e: Exception) {
                             e.printStackTrace()
@@ -6256,14 +6282,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     if (service.equals("")) {
 
-                        if (iscompleted){
+                        if (iscompleted) {
                             if (serviceList?.get(i)?.name?.equals("Nitrogen Refill")!! && serviceList?.get(i)?.isSelected!!) {
                                 serviceList?.get(i)?.isSelected = false
                             }
                             if (serviceList?.get(i)?.name?.equals("Nitrogen Top Up")!! && serviceList?.get(i)?.isSelected!!) {
                                 serviceList?.get(i)?.isSelected = false
                             }
-                        }else{
+                        } else {
                             if (serviceList?.get(i)?.name?.equals("Nitrogen Refill")!! && !serviceList?.get(i)?.isSelected!!) {
                                 serviceList?.get(i)?.isSelected = true
                             }
@@ -6272,12 +6298,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
                         }
                     } else {
-                        if (iscompleted){
+                        if (iscompleted) {
                             if (serviceList?.get(i)?.name?.equals("Wheel Balancing")!! && serviceList?.get(i)?.isSelected!!) {
                                 serviceList?.get(i)?.isSelected = false
                             }
 
-                        }else{
+                        } else {
                             if (serviceList?.get(i)?.name?.equals("Wheel Balancing")!! && !serviceList?.get(i)?.isSelected!!) {
                                 serviceList?.get(i)?.isSelected = true
                             }
@@ -6316,6 +6342,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
             serviceAdapter?.notifyDataSetChanged()
+            GlobalScope.launch(Dispatchers.Main) {
+                getStoredObjects("")
+            }
         }
         ivClose?.setOnClickListener {
             builder.dismiss()
