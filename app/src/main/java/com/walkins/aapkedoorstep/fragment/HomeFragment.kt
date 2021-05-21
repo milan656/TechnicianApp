@@ -275,8 +275,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-
-        val str = strBuilder.toString().replace(",", "" + "\n")
+//        "address": "Pehel Lake View, Beside Auda Garden, Behind Shaligram Lake View",
+        val str = strBuilder.toString().replace(", ", "" + "\n").replace(",",""+"\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {
@@ -333,7 +333,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         } else if (check == 0) {
 
-            var intent = Intent(context, ServiceListActivity::class.java)
+            val intent = Intent(context, ServiceListActivity::class.java)
             Log.e("getdateformat", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
             intent.putExtra("selectedDate", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
             intent.putExtra("selectedDateFormated", historyDataList.get(variable).dateFormated)

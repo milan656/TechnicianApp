@@ -2,9 +2,16 @@ package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +25,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -58,6 +66,16 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
+
+    var title: String? = "Technician Suggestions"
+    var content = "Dear Technician! There are 0 jobs completed out of 3 jobs and jobs are skipped for today. There are 0 jobs completed out of 3 jobs and jobs are skipped for today."
+    var type: String? = ""
+    var action: String? = null
+    var imageURL: String? = null
+    var body: String? = "Dear Technician! There are 0 jobs completed out of 3 jobs and jobs are skipped for today. There are 0 jobs completed out of 3 jobs and jobs are skipped for today."
+    var notification_data: String? = null
+    var technician_channel: String? = "fcm_default_channel"
+
     private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
     private var issueResolveArray: ArrayList<IssueResolveModel>? = ArrayList()
     private var commentModel: CommentListModel? = null
@@ -152,7 +170,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
             getIssueList()
         }
-
     }
 
     private fun refreshToken() {
@@ -397,7 +414,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         tvUsername?.text = getString(R.string.str_hello)
 
     }
-
 
 
     private fun actionOnService(action: Actions) {
