@@ -72,7 +72,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat")
+@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat","SetTextI18n")
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
     private lateinit var prefManager: PrefManager
@@ -1023,6 +1023,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() {
 
         tvTitle = findViewById(R.id.tvTitle)
@@ -1212,7 +1213,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivPhoneCall?.setOnTouchListener(this)
 
         for (i in suggestionArr.indices) {
-            suggestionArray?.add(IssueResolveModel(suggestionArr.get(i) + " " + i, 0, false))
+            suggestionArray?.add(IssueResolveModel(suggestionArr[i] + " " + i, 0, false))
         }
         tyreSuggestionAdapter = TyreSuggestionAdpater(suggestionArray!!, this, this, false, true)
         tyreSuggestionAdapter?.onclick = this
@@ -1253,13 +1254,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         })
 
-        if (prefManager.getServiceList(TyreConfigClass.serviceList) != null && prefManager.getServiceList(TyreConfigClass.serviceList)?.size!! > 0) {
+        if (prefManager.getServiceList(TyreConfigClass.serviceList) != null && prefManager.getServiceList(TyreConfigClass.serviceList).size > 0) {
             serviceList?.clear()
             for (i in prefManager.getServiceList(TyreConfigClass.serviceList).indices) {
                 val model = ServiceModelData(
-                    prefManager.getServiceList(TyreConfigClass.serviceList).get(i).id,
-                    prefManager.getServiceList(TyreConfigClass.serviceList).get(i).name,
-                    prefManager.getServiceList(TyreConfigClass.serviceList).get(i).image, false
+                    prefManager.getServiceList(TyreConfigClass.serviceList)[i].id,
+                    prefManager.getServiceList(TyreConfigClass.serviceList)[i].name,
+                    prefManager.getServiceList(TyreConfigClass.serviceList)[i].image, false
                 )
                 serviceList?.add(model)
             }
@@ -1270,8 +1271,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             commentList?.clear()
             for (i in prefManager.getCommentList(TyreConfigClass.commentList).indices) {
                 val model = CommentListData(
-                    prefManager.getServiceList(TyreConfigClass.commentList).get(i).id,
-                    prefManager.getServiceList(TyreConfigClass.commentList).get(i).name
+                    prefManager.getServiceList(TyreConfigClass.commentList)[i].id,
+                    prefManager.getServiceList(TyreConfigClass.commentList)[i].name
                 )
                 commentList?.add(model)
             }
@@ -1408,7 +1409,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                         for (j in arrlist.indices) {
 
-                            if (serviceList?.get(i)?.name.equals(arrlist.get(j))) {
+                            if (serviceList?.get(i)?.name.equals(arrlist[j])) {
                                 serviceList?.get(i)?.isSelected = true
                                 selectedServiceArr?.add(serviceList?.get(i)?.name!!)
                             }
@@ -1420,6 +1421,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 if (prefManager?.getValue("image_Car_1") != null && !prefManager?.getValue("image_Car_1").equals("")) {
 
+                    Log.e("TAG", "getServiceData: " )
                 } else {
                     if (jsonService.get(TyreKey.addServiceCarImage_1) != null &&
                         !jsonService.get(TyreKey.addServiceCarImage_1).asString.equals("")
@@ -1448,7 +1450,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if (prefManager?.getValue("image_Car_2") != null && !prefManager.getValue("image_Car_2").equals("")) {
-
+                    Log.e("TAG", "getServiceData: " )
                 } else {
                     if (jsonService.get(TyreKey.addServiceCarImage_2) != null &&
                         !jsonService.get(TyreKey.addServiceCarImage_2).asString.equals("")
@@ -2092,7 +2094,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
-        var WaitTime: Long = 0L
+        var WaitTime = 0L
         if (counter == 6) {
             WaitTime = 18200L
         } else if (counter == 5) {
@@ -2277,7 +2279,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
                         val jsonArr = JsonArray()
                         for (i in arrlist.indices) {
-                            jsonArr.add(arrlist.get(i))
+                            jsonArr.add(arrlist[i])
                         }
                         jsonObject.add("front_left_issues_to_be_resolved", jsonArr)
                     }
@@ -2355,7 +2357,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                 val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
                                 val jsonArr = JsonArray()
                                 for (i in arrlist.indices) {
-                                    jsonArr.add(arrlist.get(i))
+                                    jsonArr.add(arrlist[i])
                                 }
                                 jsonObject.add("front_right_issues_to_be_resolved", jsonArr)
                             }
@@ -2437,7 +2439,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                 val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
                                 val jsonArr = JsonArray()
                                 for (i in arrlist.indices) {
-                                    jsonArr.add(arrlist.get(i))
+                                    jsonArr.add(arrlist[i])
                                 }
                                 jsonObject.add("back_left_issues_to_be_resolved", jsonArr)
                             }
@@ -2518,7 +2520,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                 val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
                                 val jsonArr = JsonArray()
                                 for (i in arrlist.indices) {
-                                    jsonArr.add(arrlist.get(i))
+                                    jsonArr.add(arrlist[i])
                                 }
                                 jsonObject.add("back_right_issues_to_be_resolved", jsonArr)
                             }
@@ -2534,7 +2536,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     jsonObject.addProperty("car_photo_2", TyreConfigClass.CarPhoto_2)
                     jsonObject.addProperty("status", "complete")
 
-                    val jsonArrayService: JsonArray = JsonArray()
+                    val jsonArrayService = JsonArray()
 
                     selectedServiceArr?.clear()
                     if (serviceList != null && serviceList?.size!! > 0) {
@@ -2546,7 +2548,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         }
                     }
 
-                    val jsonArraySuggestion: JsonArray = JsonArray()
+                    val jsonArraySuggestion = JsonArray()
 
                     selectedSuggestionArr?.clear()
 
@@ -2740,8 +2742,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         Log.e("getdatee2", "" + selectedDate)
                         selectedDate = ""
                         selectedDateNextServiceDue = ""
-                    } else if (str.equals("Close")) {
-
                     }
                 }
             })
@@ -2939,12 +2939,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getdta", "" + commentList?.get(i)?.name!! + " " + commentList?.get(i)?.id!! + " " + false)
                 }
             } else {
-                if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList)?.size!! > 0) {
+                if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList)?.size > 0) {
                     commentList?.clear()
-                    for (i in prefManager.getCommentList(TyreConfigClass.commentList)?.indices!!) {
+                    for (i in prefManager.getCommentList(TyreConfigClass.commentList)?.indices) {
                         val model = CommentListData(
                             prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.id!!,
-                            prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name!!
+                            prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name
                         )
                         commentList?.add(model)
                     }
@@ -3092,20 +3092,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
         if (check == 0) {
 
-            Log.e("getposition0", "" + suggestionArr.get(variable))
+            Log.e("getposition0", "" + suggestionArr[variable])
         } else if (check == 10) {
 
             if (imagePickerDialog != null && imagePickerDialog?.isShowing!!) {
                 imagePickerDialog?.dismiss()
             }
-            if (Common.commonPhotoChooseArr.get(variable).equals("Gallery")) {
+            if (Common.commonPhotoChooseArr[variable].equals("Gallery")) {
                 val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     checkPermission((this@AddServiceDetailsActivity))
                 } else {
                     try {
                         val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                         intent.type = "image/*"
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                        }
                         intent.action = Intent.ACTION_GET_CONTENT
                         startActivityForResult(intent, PICK_IMAGE_REQUEST)
                     } catch (e: java.lang.Exception) {
@@ -3116,9 +3118,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 if (result == true) {
                     try {
 
-                        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                        val intent = Intent(Intent.ACTION_GET_CONTENT)
                         intent.type = "image/*"
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                        }
                         intent.action = Intent.ACTION_GET_CONTENT
                         startActivityForResult(intent, PICK_IMAGE_REQUEST)
                     } catch (e: Exception) {
@@ -3128,7 +3132,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 }
             }
-            if (Common.commonPhotoChooseArr.get(variable).equals("Camera")) {
+            if (Common.commonPhotoChooseArr[variable].equals("Camera")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_DENIED ||
@@ -3174,6 +3178,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (jsonLF.get(TyreKey.isCompleted) != null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
                         if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
 
+                            Log.e("TAG", "checkServiceCheck: " )
                         } else {
                             count = count + 1
                         }
@@ -3193,6 +3198,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (jsonLF.get(TyreKey.isCompleted) != null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
                         if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
 
+                            Log.e("TAG", "checkServiceCheck: " )
                         } else {
                             count = count + 1
                         }
@@ -4510,7 +4516,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
                 val jsonParser = JsonParser()
-                var jsonrf: JsonObject = JsonObject()
+                var jsonrf = JsonObject()
                 try {
                     jsonrf = jsonParser.parse(lfObject.toString()) as JsonObject
                 } catch (e: Exception) {
@@ -4520,7 +4526,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
 
             } else {
-                var jsonrf: JsonObject = JsonObject()
+                var jsonrf = JsonObject()
                 jsonrf.addProperty(TyreKey.tyreType, "RF")
                 if (TyreDetailCommonClass.chk1Make.equals("RF,true")) {
                     jsonrf.addProperty(
@@ -4581,7 +4587,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             ) {
 
                 val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
-                var lfObject: JSONObject = JSONObject(str)
+                var lfObject = JSONObject(str)
                 Log.e("getObjlr", "" + lfObject.toString())
 
                 if (TyreDetailCommonClass.chk2Make.equals("LR,true")) {
@@ -4640,7 +4646,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
                 val jsonParser = JsonParser()
-                var jsonlr: JsonObject = JsonObject()
+                var jsonlr = JsonObject()
                 try {
                     jsonlr = jsonParser.parse(lfObject.toString()) as JsonObject
                 } catch (e: Exception) {
@@ -4717,7 +4723,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             ) {
 
                 val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
-                var lfObject: JSONObject = JSONObject(str)
+                var lfObject = JSONObject(str)
 
                 Log.e("getObjrr", "" + lfObject.toString())
                 if (TyreDetailCommonClass.chk3Make.equals("RR,true")) {
@@ -4777,7 +4783,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 val jsonParser = JsonParser()
-                var jsonrr: JsonObject = JsonObject()
+                var jsonrr = JsonObject()
                 try {
                     jsonrr = jsonParser.parse(lfObject.toString()) as JsonObject
                 } catch (e: Exception) {
@@ -4854,7 +4860,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             ) {
 
                 val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
-                var lfObject: JSONObject = JSONObject(str)
+                var lfObject = JSONObject(str)
 
                 Log.e("getObjLF", "" + lfObject.toString())
                 if (TyreDetailCommonClass.chk1Make.equals("LF,true")) {
@@ -6087,14 +6093,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
             123 -> {
-                if (grantResults.get(1) != -1) {
+                if (grantResults[1] != -1) {
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
                         try {
-                            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                            val intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
-                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            }
                             intent.action = Intent.ACTION_GET_CONTENT
                             startActivityForResult(intent, PICK_IMAGE_REQUEST)
                         } catch (e: Exception) {
@@ -6105,14 +6113,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
 
             124 -> {
-                if (grantResults.get(1) != -1) {
+                if (grantResults[1] != -1) {
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
                         try {
-                            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+                            val intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
-                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            }
                             intent.action = Intent.ACTION_GET_CONTENT
                             startActivityForResult(intent, PICK_IMAGE_REQUEST)
 
