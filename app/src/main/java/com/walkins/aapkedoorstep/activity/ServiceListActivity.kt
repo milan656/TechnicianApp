@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +21,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.adapter.ServicesListAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
@@ -29,7 +31,8 @@ import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateD
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
-import java.lang.StringBuilder
+import java.lang.reflect.Type
+
 
 @SuppressLint("SetTextI18n")
 class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
@@ -382,7 +385,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             Log.e("checkva", "" + " " + arrayList.get(variable).uuid)
 
             if (serviceStatus.equals(upcomming)) {
-                var intent = Intent(this, AddServiceDetailsActivity::class.java)
+                val intent = Intent(this, AddServiceDetailsActivity::class.java)
                 intent.putExtra("color", arrayList.get(variable).color)
                 intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
                 intent.putExtra("regNumber", arrayList.get(variable).regNumber)
@@ -392,8 +395,11 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("address", "" + fullAddress)
                 intent.putExtra("make_id", "" + arrayList.get(variable).make_id)
                 intent.putExtra("model_id", "" + arrayList.get(variable).model_id)
-                intent.putExtra("serviceList", arrayList)
 
+                val gson = Gson()
+                val serviceList = gson.toJson(arrayList.get(variable))
+
+                intent.putExtra("serviceList", serviceList)
                 startActivity(intent)
 
             } else if (serviceStatus.equals(completed)) {
@@ -456,7 +462,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "" + "\n").replace(",",""+"\n")
+        val str = stringBuilder.toString().replace(", ", "" + "\n").replace(",", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

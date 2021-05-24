@@ -48,106 +48,116 @@
                     <!--                        app:cardElevation="@dimen/four_dp"-->
                     <!--                        app:cardUseCompatPadding="true">-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/common_rounded"
+                        app:cardCornerRadius="@dimen/ten_dp"
+                        app:cardElevation="0dp">
 
                         <LinearLayout
-                            android:id="@+id/llbg"
-                            android:layout_width="5dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/red"
-                            android:orientation="vertical"/>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/sixteen_dp"
-                            android:layout_marginLeft="@dimen/sixteen_dp"
-                            android:layout_marginTop="@dimen/fourteen_dp"
-                            android:layout_marginBottom="@dimen/fourteen_dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:id="@+id/llbg"
+                                android:layout_width="7dp"
                                 android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal">
+                                android:background="@color/red"
+                                android:orientation="vertical" />
 
-                                <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
-                                    android:id="@+id/tvRegNumber"
-                                    android:layout_width="0dp"
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/sixteen_dp"
+                                android:layout_marginLeft="@dimen/sixteen_dp"
+                                android:layout_marginTop="@dimen/fourteen_dp"
+                                android:layout_marginBottom="@dimen/fourteen_dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="start|center|bottom"
-                                    android:text="GJ01RY3771"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/eighteen_sp"
-                                    android:textStyle="bold" />
-
-                                <ImageView
-                                    android:id="@+id/ivCarImage"
-                                    android:layout_width="100dp"
-                                    android:layout_height="30dp"
-                                    android:layout_gravity="center|bottom"
-                                    android:src="@drawable/ic_car_image" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/four_dp"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <com.walkins.aapkedoorstep.custom.NormalTextView
-                                    android:id="@+id/tvMakeModel"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="start|center"
-                                    android:text="Maruti Suzuki Swift Desire"
-                                    android:textColor="@color/text_color1"
-
-                                    android:textSize="@dimen/twelve_sp" />
-
-                                <com.walkins.aapkedoorstep.custom.NormalTextView
-                                    android:id="@+id/tvcolor"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1.8"
                                     android:gravity="center"
-                                    android:text="Red"
-                                    android:textColor="@color/text_color1"
-                                    android:textSize="@dimen/twelve_sp" />
+                                    android:orientation="horizontal">
+
+                                    <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
+                                        android:id="@+id/tvRegNumber"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="start|center|bottom"
+                                        android:text="GJ01RY3771"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/eighteen_sp"
+                                        android:textStyle="bold" />
+
+                                    <ImageView
+                                        android:id="@+id/ivCarImage"
+                                        android:layout_width="100dp"
+                                        android:layout_height="30dp"
+                                        android:layout_gravity="center|bottom"
+                                        android:src="@drawable/ic_car_image" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/four_dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <com.walkins.aapkedoorstep.custom.NormalTextView
+                                        android:id="@+id/tvMakeModel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="start|center"
+                                        android:text="Maruti Suzuki Swift Desire"
+                                        android:textColor="@color/text_color1"
+
+                                        android:textSize="@dimen/twelve_sp" />
+
+                                    <com.walkins.aapkedoorstep.custom.NormalTextView
+                                        android:id="@+id/tvcolor"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1.8"
+                                        android:gravity="center"
+                                        android:text="Red"
+                                        android:textColor="@color/text_color1"
+                                        android:textSize="@dimen/twelve_sp" />
+
+
+                                </LinearLayout>
 
 
                             </LinearLayout>
 
+                            <ImageView
+                                android:id="@+id/ivInfoAddService"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="top"
+                                android:layout_margin="@dimen/twelve_dp"
+                                android:padding="@dimen/five_dp"
+                                android:src="@drawable/info_in_profile"
+                                app:tint="@color/colorPrimary" />
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/ivInfoAddService"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="top"
-                            android:layout_margin="@dimen/twelve_dp"
-                            android:padding="@dimen/five_dp"
-                            android:src="@drawable/info_in_profile"
-                            app:tint="@color/colorPrimary" />
-
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
                     <!--                    </androidx.cardview.widget.CardView>-->
 
 
@@ -159,10 +169,10 @@
                     android:layout_marginStart="@dimen/eighteen_dp"
                     android:layout_marginTop="@dimen/fourteen_dp"
                     android:layout_marginEnd="@dimen/eighteen_dp"
-                    android:visibility="gone"
                     android:background="@drawable/common_rounded"
                     android:elevation="@dimen/twenty_dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <!--                    <androidx.cardview.widget.CardView-->
@@ -251,11 +261,11 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_gravity="center"
                         android:background="@drawable/common_rounded"
                         android:elevation="@dimen/twenty_dp"
-                        android:layout_gravity="center"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -304,7 +314,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/ten_dp"
                                     android:layout_marginEnd="@dimen/ten_dp"
-                                    android:layout_marginBottom="@dimen/fourteen_dp"/>
+                                    android:layout_marginBottom="@dimen/fourteen_dp" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -312,9 +322,9 @@
                                     android:layout_gravity="center"
                                     android:layout_marginStart="@dimen/ten_dp"
                                     android:layout_marginEnd="@dimen/ten_dp"
-                                    android:visibility="gone"
                                     android:gravity="center"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -427,10 +437,10 @@
                                     android:layout_marginStart="@dimen/ten_dp"
                                     android:layout_marginTop="32dp"
                                     android:layout_marginEnd="@dimen/ten_dp"
-                                    android:visibility="gone"
                                     android:layout_marginBottom="32dp"
                                     android:gravity="center"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -845,19 +855,19 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_gravity="center"
                         android:background="@drawable/common_rounded"
                         android:elevation="@dimen/twenty_dp"
-                        android:layout_gravity="center"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/twenty_dp"
-                            android:orientation="vertical"
                             android:layout_gravity="center"
-                            android:gravity="center">
+                            android:layout_margin="@dimen/twenty_dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:id="@+id/cardtyreConfig"
@@ -929,11 +939,11 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_gravity="center"
                         android:background="@drawable/common_rounded"
                         android:elevation="@dimen/twenty_dp"
-                        android:layout_gravity="center"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <LinearLayout
 
@@ -995,12 +1005,12 @@
                                     android:id="@+id/edtMoreSuggestion"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:padding="@dimen/five_dp"
                                     android:layout_marginTop="@dimen/five_dp"
                                     android:background="@drawable/layout_bg_corner"
                                     android:gravity="start|top"
                                     android:inputType="textMultiLine"
-                                    android:minLines="5" />
+                                    android:minLines="5"
+                                    android:padding="@dimen/five_dp" />
 
                                 <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="match_parent"
@@ -1068,9 +1078,9 @@
                                         android:id="@+id/tvAddPhoto1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
                                         android:gravity="center"
                                         android:text="Add Car Photo"
-                                        android:layout_centerInParent="true"
                                         android:textColor="@color/colorPrimary"
                                         android:textSize="@dimen/eighteen_sp"
                                         android:textStyle="bold" />
@@ -1083,7 +1093,6 @@
                                         android:padding="@dimen/ten_dp"
                                         android:scaleType="fitCenter"
                                         android:src="@drawable/ic_camera_icon" />
-
 
 
                                     <ImageView
@@ -1119,8 +1128,8 @@
                                         android:id="@+id/tvAddPhoto2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
                                         android:layout_centerInParent="true"
+                                        android:gravity="center"
                                         android:text="Add Car Photo"
                                         android:textColor="@color/colorPrimary"
                                         android:textSize="@dimen/eighteen_sp"
@@ -1134,7 +1143,6 @@
                                         android:padding="@dimen/ten_dp"
                                         android:scaleType="fitCenter"
                                         android:src="@drawable/ic_camera_icon" />
-
 
 
                                     <ImageView
@@ -1181,12 +1189,12 @@
         <com.walkins.aapkedoorstep.custom.NormalNoDataTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Note : Once all mandatory details are added then Submit button will be enable"
-            android:textSize="@dimen/twelve_sp"
-            android:textColor="@color/gray"
             android:layout_marginStart="@dimen/ten_dp"
             android:layout_marginEnd="@dimen/ten_dp"
-            android:layout_marginBottom="@dimen/ten_dp"/>
+            android:layout_marginBottom="@dimen/ten_dp"
+            android:text="Note : Once all mandatory details are added then Submit button will be enable"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/twelve_sp" />
 
         <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
             android:id="@+id/btnSubmitAndComplete"
@@ -1196,8 +1204,8 @@
             android:layout_marginEnd="@dimen/eight_dp"
             android:layout_marginBottom="@dimen/twelve_dp"
             android:background="@drawable/rounded_blue"
-            android:gravity="center"
             android:clickable="false"
+            android:gravity="center"
             android:padding="@dimen/ten_dp"
             android:text="Submit and Complete"
             android:textAllCaps="false"
@@ -1210,8 +1218,8 @@
         android:id="@+id/lltransparent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/translucent_black_55"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:background="@color/translucent_black_55"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -2,7 +2,8 @@ package com.walkins.aapkedoorstep.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
+import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,17 +11,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.walkins.aapkedoorstep.R
-import com.walkins.aapkedoorstep.common.TyreKey
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 
-@SuppressLint("SimpleDateFormat","SetTextI18n")
+
+@SuppressLint("SimpleDateFormat", "SetTextI18n")
 class ServicesListAdpater(
     var array: MutableList<ServiceListByDateData>,
     var context: Context,
@@ -74,7 +74,9 @@ class ServicesListAdpater(
         holder.tvVehicleNumber.text = array.get(position).regNumber
         holder.tvColorName.text = array.get(position).color
 
+//        holder.lllineView.setBackgroundColor(Color.parseColor(array.get(position).color_code))
         holder.lllineView.setBackgroundColor(Color.parseColor(array.get(position).color_code))
+
         holder.itemView.setOnClickListener {
             Log.e("getposs00", "" + position)
             if (onclick != null) {
@@ -89,7 +91,7 @@ class ServicesListAdpater(
             }
         }
 
-        if (array.get(position).status.equals("completed",ignoreCase = true)) {
+        if (array.get(position).status.equals("completed", ignoreCase = true)) {
             holder.ivServiceTyre.setImageResource(R.mipmap.ic_completed_service)
         } else {
             holder.ivServiceTyre.setImageResource(R.mipmap.ic_service_icon)

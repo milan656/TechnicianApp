@@ -1,6 +1,7 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
+import android.R.attr.data
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -54,6 +55,7 @@ import com.walkins.aapkedoorstep.model.login.IssueResolveModel
 import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
+import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
@@ -72,7 +74,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat","SetTextI18n")
+@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat", "SetTextI18n")
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
     private lateinit var prefManager: PrefManager
@@ -227,6 +229,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //        requestPermissionForImage()
         init()
+
 
     }
 
@@ -890,7 +893,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
 
         if (prefManager?.getValue("image_Car_1") != null &&
-        !prefManager?.getValue("image_Car_1").equals("")) {
+            !prefManager?.getValue("image_Car_1").equals("")
+        ) {
             try {
                 var imageUriDisplay: Uri? = null
                 var imageUri: Uri? = null
@@ -908,7 +912,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 tvAddPhoto1?.visibility = View.GONE
                 tvCarphoto1?.visibility = View.GONE
                 TyreConfigClass.CarPhoto_1 = prefManager.getValue("image_Car_1")
-                Log.e("getimagee00","---"+TyreConfigClass.CarPhoto_1)
+                Log.e("getimagee00", "---" + TyreConfigClass.CarPhoto_1)
                 relCarPhotoAdd1?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 ivPickedImage?.visibility = View.VISIBLE
             } catch (e: java.lang.Exception) {
@@ -918,7 +922,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         }
         if (prefManager?.getValue("image_Car_2") != null &&
-                !prefManager?.getValue("image_Car_2").equals("")) {
+            !prefManager?.getValue("image_Car_2").equals("")
+        ) {
             try {
                 var imageUriDisplay: Uri? = null
                 var imageUri: Uri? = null
@@ -980,7 +985,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         }
         if (prefManager?.getValue("image_RR") != null &&
-                !prefManager?.getValue("image_RR").equals("")) {
+            !prefManager?.getValue("image_RR").equals("")
+        ) {
             try {
                 var imageUri: Uri? = null
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -1144,6 +1150,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     TyreDetailCommonClass.model_id = model_id.toInt()
                 }
             }
+
         }
 
         tvcolor?.text = color
@@ -1254,15 +1261,44 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         })
 
+        val gson = Gson()
+        var customObject: ServiceListByDateData? = null
+        if (intent?.getStringExtra("serviceList") != null) {
+            customObject = gson.fromJson(intent?.getStringExtra("serviceList"), ServiceListByDateData::class.java)
+            Log.d("Location_Count", "" + customObject?.service)
+        }
+
         if (prefManager.getServiceList(TyreConfigClass.serviceList) != null && prefManager.getServiceList(TyreConfigClass.serviceList).size > 0) {
             serviceList?.clear()
             for (i in prefManager.getServiceList(TyreConfigClass.serviceList).indices) {
-                val model = ServiceModelData(
-                    prefManager.getServiceList(TyreConfigClass.serviceList)[i].id,
-                    prefManager.getServiceList(TyreConfigClass.serviceList)[i].name,
-                    prefManager.getServiceList(TyreConfigClass.serviceList)[i].image, false
-                )
-                serviceList?.add(model)
+                var model: ServiceModelData? = null
+
+                if (customObject != null && customObject.service.size > 0) {
+                    model = ServiceModelData(
+                        prefManager.getServiceList(TyreConfigClass.serviceList)[i].id,
+                        prefManager.getServiceList(TyreConfigClass.serviceList)[i].name,
+                        prefManager.getServiceList(TyreConfigClass.serviceList)[i].image, false, true
+                    )
+                    for (j in customObject.service.indices) {
+                        if (prefManager.getServiceList(TyreConfigClass.serviceList)[i].id ==
+                            customObject.service.get(j).id
+                        ) {
+                            model = ServiceModelData(
+                                prefManager.getServiceList(TyreConfigClass.serviceList)[i].id,
+                                prefManager.getServiceList(TyreConfigClass.serviceList)[i].name,
+                                prefManager.getServiceList(TyreConfigClass.serviceList)[i].image, false, false
+                            )
+                        }
+                    }
+
+                } else {
+                    model = ServiceModelData(
+                        prefManager.getServiceList(TyreConfigClass.serviceList)[i].id,
+                        prefManager.getServiceList(TyreConfigClass.serviceList)[i].name,
+                        prefManager.getServiceList(TyreConfigClass.serviceList)[i].image, false, false
+                    )
+                }
+                serviceList?.add(model!!)
             }
             serviceAdapter?.notifyDataSetChanged()
         }
@@ -1421,14 +1457,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 if (prefManager?.getValue("image_Car_1") != null && !prefManager?.getValue("image_Car_1").equals("")) {
 
-                    Log.e("TAG", "getServiceData: " )
+                    Log.e("TAG", "getServiceData: ")
                 } else {
                     if (jsonService.get(TyreKey.addServiceCarImage_1) != null &&
                         !jsonService.get(TyreKey.addServiceCarImage_1).asString.equals("")
                     ) {
 
                         TyreConfigClass.CarPhoto_1 = jsonService.get(TyreKey.addServiceCarImage_1).asString
-                        Log.e("getimagee131"," --"+TyreConfigClass.CarPhoto_1)
+                        Log.e("getimagee131", " --" + TyreConfigClass.CarPhoto_1)
                         try {
                             Glide.with(this@AddServiceDetailsActivity)
                                 .load(TyreConfigClass.CarPhoto_1)
@@ -1450,7 +1486,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if (prefManager?.getValue("image_Car_2") != null && !prefManager.getValue("image_Car_2").equals("")) {
-                    Log.e("TAG", "getServiceData: " )
+                    Log.e("TAG", "getServiceData: ")
                 } else {
                     if (jsonService.get(TyreKey.addServiceCarImage_2) != null &&
                         !jsonService.get(TyreKey.addServiceCarImage_2).asString.equals("")
@@ -1577,13 +1613,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 onBackPressed()
             }
             R.id.ivPickedImage -> {
-                Log.e("getimagee","--"+TyreConfigClass.CarPhoto_1)
+                Log.e("getimagee", "--" + TyreConfigClass.CarPhoto_1)
                 if (!TyreConfigClass.CarPhoto_1.equals("")) {
                     showImage(TyreConfigClass.CarPhoto_1)
                 }
             }
             R.id.ivPickedImage1 -> {
-                Log.e("getimagee2",""+TyreConfigClass.CarPhoto_2)
+                Log.e("getimagee2", "" + TyreConfigClass.CarPhoto_2)
                 if (!TyreConfigClass.CarPhoto_2.equals("")) {
                     showImage(TyreConfigClass.CarPhoto_2)
                 }
@@ -2638,33 +2674,33 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getfinalobject", "" + jsonObject)
                     Log.e("getObjectT__", "" + jsonObject)
 
-                     serviceViewModel?.callApiAddService(
-                         jsonObject,
-                         prefManager.getAccessToken()!!,
-                         this
-                     )
+                    serviceViewModel?.callApiAddService(
+                        jsonObject,
+                        prefManager.getAccessToken()!!,
+                        this
+                    )
 
-                     serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
-                         if (it != null) {
-                             if (it.success) {
+                    serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
+                        if (it != null) {
+                            if (it.success) {
 
-                                 Common.hideLoader()
+                                Common.hideLoader()
 
-                                 showDialogue("Success", "Your Service Added Successfully", true)
+                                showDialogue("Success", "Your Service Added Successfully", true)
 
-                             } else {
-                                 Common.hideLoader()
+                            } else {
+                                Common.hideLoader()
 
-                                 try {
-                                     showShortToast(TyreKey.something_went_wrong, this)
-                                 } catch (e: Exception) {
-                                     e.printStackTrace()
-                                 }
-                             }
-                         } else {
-                             Common.hideLoader()
-                         }
-                     })
+                                try {
+                                    showShortToast(TyreKey.something_went_wrong, this)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        } else {
+                            Common.hideLoader()
+                        }
+                    })
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -3165,7 +3201,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private fun checkServiceCheck(variable: Int) {
         getSelectedService()
 
-        if (selectedServiceArr?.contains("Nitrogen Top Up")!! && selectedServiceArr?.contains("Nitrogen Refill")!!) {
+        if (selectedServiceArr?.contains("Nitrogen Top Up")!! || selectedServiceArr?.contains("Nitrogen Refill")!!) {
             var count = 0
             if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
                 !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
@@ -3178,7 +3214,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (jsonLF.get(TyreKey.isCompleted) != null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
                         if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
 
-                            Log.e("TAG", "checkServiceCheck: " )
+                            Log.e("TAG", "checkServiceCheck: ")
                         } else {
                             count = count + 1
                         }
@@ -3198,7 +3234,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (jsonLF.get(TyreKey.isCompleted) != null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
                         if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService).asString.equals("")) {
 
-                            Log.e("TAG", "checkServiceCheck: " )
+                            Log.e("TAG", "checkServiceCheck: ")
                         } else {
                             count = count + 1
                         }
@@ -3355,6 +3391,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         getSelectedService()
 
         Log.e("getservicecall", "" + selectedServiceArr)
+        Log.e("getservicecall", "" + serviceList?.get(position)?.isDisable+" "+serviceList?.get(position)?.name)
 
         if (!selectedServiceArr?.contains("Nitrogen Top Up")!! && !selectedServiceArr?.contains("Nitrogen Refill")!!) {
             var count = 0
@@ -3987,7 +4024,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             prefManager.setValue("image_1_path", auxFile.path)
                             TyreConfigClass.CarPhoto_1 = Uri.parse(mCurrentPhotoPath).toString()
                             TyreConfigClass.car_1_uri = Uri.parse(mCurrentPhotoPath)
-                            Log.e("getimagee1311","--"+TyreConfigClass.CarPhoto_1)
+                            Log.e("getimagee1311", "--" + TyreConfigClass.CarPhoto_1)
                         } else {
                             prefManager.setValue("image_Car_2", Uri.parse(mCurrentPhotoPath).toString())
                             prefManager.setValue("image_2_path", auxFile.path)
@@ -4048,7 +4085,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             prefManager?.setValue("image_1_path", imagePath?.path)
                             TyreConfigClass.CarPhoto_1 = selectedImage.toString()
                             TyreConfigClass.car_1_uri = selectedImage
-                            Log.e("getimagee13144","---"+TyreConfigClass.CarPhoto_1)
+                            Log.e("getimagee13144", "---" + TyreConfigClass.CarPhoto_1)
                         } else {
                             prefManager.setValue("image_Car_2", selectedImage.toString())
                             prefManager?.setValue("image_2_path", imagePath?.path)
@@ -6214,7 +6251,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 TyreConfigClass.CarPhoto_2 = ""
                 TyreConfigClass.CarPhoto_1 = ""
-                Log.e("getimagee131544","---"+TyreConfigClass.CarPhoto_1)
+                Log.e("getimagee131544", "---" + TyreConfigClass.CarPhoto_1)
 
                 Common.setFalseAllTyreStatus()
 
@@ -6262,7 +6299,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (!type.equals("")) {
                         if (type.equals("car_1")) {
                             TyreConfigClass.CarPhoto_1 = it.data.imageUrl
-                            Log.e("getimagee13155","---"+TyreConfigClass.CarPhoto_1)
+                            Log.e("getimagee13155", "---" + TyreConfigClass.CarPhoto_1)
                             prefManager.removeValue("image_Car_1")
                         }
                         if (type.equals("car_2")) {
@@ -6367,7 +6404,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else {
                         if (selectImage1) {
                             TyreConfigClass.CarPhoto_1 = it.data.imageUrl
-                            Log.e("getimagee13155","---"+TyreConfigClass.CarPhoto_1)
+                            Log.e("getimagee13155", "---" + TyreConfigClass.CarPhoto_1)
                         } else {
                             TyreConfigClass.CarPhoto_2 = it.data.imageUrl
                         }
@@ -6840,9 +6877,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         selectedServiceArr?.clear()
         if (serviceList != null && serviceList?.size!! > 0) {
             for (i in serviceList?.indices!!) {
-                if (serviceList?.get(i)?.isSelected!!) {
+                if (serviceList?.get(i)?.isSelected!! && !serviceList?.get(i)?.isDisable!!) {
                     selectedServiceArr?.add(serviceList?.get(i)?.name!!)
-
                 }
             }
         }

@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.technician.common.Common.Companion.setTint
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
@@ -19,7 +20,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
-@SuppressLint("SimpleDateFormat","SetTextI18n")
+@SuppressLint("SimpleDateFormat", "SetTextI18n")
 class ServiceAdapter(
     var array: ArrayList<ServiceModelData>,
     var context: Context,
@@ -46,6 +47,7 @@ class ServiceAdapter(
         return Viewholder(view)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onBindViewHolder(holder: ServiceAdapter.Viewholder, position: Int) {
         holder.chkNitrogenTopup.setTag(position)
         holder.tvServiceName.text = array.get(position).name.capitalize(Locale.getDefault())
@@ -91,11 +93,19 @@ class ServiceAdapter(
 
         }
 
-        holder.itemView.setOnClickListener {
-
-
+        if (array.get(position).isDisable) {
+            holder.llServiceLayout.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_border_light_gray))
+            holder.llServiceLayout.isClickable = false
+            holder.llServiceLayout.isEnabled = false
+            holder.chkNitrogenTopup.visibility = View.INVISIBLE
+            holder.tvServiceName.setTextColor(context.resources.getColor(R.color.light_gray_text_color))
+        } else {
+            holder.llServiceLayout.setBackgroundDrawable(context.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+            holder.llServiceLayout.isClickable = true
+            holder.llServiceLayout.isEnabled = true
+            holder.chkNitrogenTopup.visibility = View.VISIBLE
+            holder.tvServiceName.setTextColor(context.resources.getColor(R.color.text_color1))
         }
-
 
     }
 

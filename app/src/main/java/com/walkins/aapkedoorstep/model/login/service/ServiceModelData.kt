@@ -13,5 +13,6 @@ data class ServiceModelData(
     @SerializedName("image")
     @Expose
     var image: String,
-    var isSelected: Boolean = false
+    var isSelected: Boolean = false,
+    var isDisable: Boolean = false
 )
