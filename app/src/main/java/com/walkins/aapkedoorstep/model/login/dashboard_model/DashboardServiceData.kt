@@ -19,6 +19,9 @@ data class DashboardServiceData(
     @SerializedName("address")
     @Expose
     var address: String,
+    @SerializedName("area")
+    @Expose
+    var area: String,
     @SerializedName("open_jobs")
     @Expose
     var open_jobs: String,

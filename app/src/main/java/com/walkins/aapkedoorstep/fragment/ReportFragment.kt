@@ -47,8 +47,10 @@ import kotlin.collections.ArrayList
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat","InflateParams",
-    "SetTextI18n")
+@SuppressLint(
+    "UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat", "InflateParams",
+    "SetTextI18n"
+)
 class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var timer: Timer? = null
     private var param1: String? = null
@@ -360,7 +362,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             }
 
                             val dashboardModel = ReportHistoryModel(
-                                it.data.serviceData.get(i).uuid, it.data.serviceData.get(i).address,
+                                it.data.serviceData.get(i).uuid, it.data.serviceData.get(i).address + "," + it.data.serviceData.get(i).area,
                                 it.data.serviceData.get(i).regNumber,
                                 it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model,
                                 it.data.serviceData.get(i).color, it.data.serviceData.get(i).color_code,
@@ -635,7 +637,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //        dialog?.setContentView(view)
         dialog?.setView(view)
         dialog?.getWindow()?.setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
 
         val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
@@ -1098,7 +1101,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "" + "\n").replace(",",""+"\n")
+        val str = stringBuilder.toString().replace(", ", "" + "\n").replace(",", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

@@ -392,6 +392,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("address", "" + fullAddress)
                 intent.putExtra("make_id", "" + arrayList.get(variable).make_id)
                 intent.putExtra("model_id", "" + arrayList.get(variable).model_id)
+                intent.putExtra("serviceList", arrayList)
 
                 startActivity(intent)
 

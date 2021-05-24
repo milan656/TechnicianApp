@@ -39,8 +39,10 @@ import kotlin.collections.ArrayList
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat","InflateParams",
-"SetTextI18n")
+@SuppressLint(
+    "UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat", "InflateParams",
+    "SetTextI18n"
+)
 class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
@@ -204,7 +206,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 val startDate = date.time
                                 Log.e("getdatefromstart", "" + startDate)
                                 dashboardModel = DashboardModel(
-                                    it.data.get(i).building_name, it.data.get(i).address, it.data.get(i).date, it.data.get(i).building_uuid, it.data.get(i).date_formated,
+                                    it.data.get(i).building_name, it.data.get(i).address + "," + it.data.get(i).area, it.data.get(i).date, it.data.get(i).building_uuid, it.data.get(i).date_formated,
                                     it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), it.data.get(i).total_jobs.toInt(), startDate,
                                     startDate
                                 )
@@ -250,7 +252,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
 
-
     private fun showBottomSheetdialogNormal(
         array: ArrayList<String>,
         titleStr: String,
@@ -278,7 +279,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         tvTitleText?.text = titleStr
 //        "address": "Pehel Lake View, Beside Auda Garden, Behind Shaligram Lake View",
-        val str = strBuilder.toString().replace(", ", "" + "\n").replace(",",""+"\n")
+        val str = strBuilder.toString().replace(", ", "" + "\n").replace(",", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {

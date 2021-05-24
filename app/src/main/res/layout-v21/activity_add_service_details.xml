@@ -53,18 +53,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <androidx.cardview.widget.CardView
+                        <LinearLayout
+                            android:id="@+id/llbg"
                             android:layout_width="5dp"
                             android:layout_height="match_parent"
-                            app:cardCornerRadius="@dimen/ten_dp">
-
-                            <LinearLayout
-                                android:id="@+id/llbg"
-                                android:layout_width="5dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/red"
-                                android:orientation="vertical"/>
-                        </androidx.cardview.widget.CardView>
+                            android:background="@color/red"
+                            android:orientation="vertical"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1072,10 +1066,11 @@
 
                                     <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                         android:id="@+id/tvAddPhoto1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:gravity="center"
                                         android:text="Add Car Photo"
+                                        android:layout_centerInParent="true"
                                         android:textColor="@color/colorPrimary"
                                         android:textSize="@dimen/eighteen_sp"
                                         android:textStyle="bold" />
@@ -1122,9 +1117,10 @@
 
                                     <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                         android:id="@+id/tvAddPhoto2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:gravity="center"
+                                        android:layout_centerInParent="true"
                                         android:text="Add Car Photo"
                                         android:textColor="@color/colorPrimary"
                                         android:textSize="@dimen/eighteen_sp"

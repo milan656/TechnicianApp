@@ -18,6 +18,9 @@ data class ReportServiceData(
     @SerializedName("address")
     @Expose
     val address: String,
+    @SerializedName("area")
+    @Expose
+    val area: String,
     @SerializedName("color")
     @Expose
     val color: String,
