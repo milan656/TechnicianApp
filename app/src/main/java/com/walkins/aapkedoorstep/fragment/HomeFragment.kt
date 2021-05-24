@@ -78,7 +78,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
 
-    private var stickyIdsCounter = 0
     private var mAdapter: LeadHistoryAdapter? = null
 
     override fun onCreateView(
