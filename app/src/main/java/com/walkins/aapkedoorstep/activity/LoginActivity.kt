@@ -1,6 +1,7 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -32,6 +33,7 @@ import com.walkins.aapkedoorstep.common.MySMSBroadcastReceiver
 import com.walkins.aapkedoorstep.custom.BoldButton
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 
+@SuppressLint("SetTextI18n")
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginActivityViewModel

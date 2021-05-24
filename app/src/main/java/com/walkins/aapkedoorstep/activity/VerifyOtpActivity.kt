@@ -1,6 +1,7 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -60,6 +61,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun init() {
         tvResend = findViewById(R.id.tvResend)
         btnVerify = findViewById(R.id.btnVerify)
@@ -97,6 +99,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         registerReceiver(smsBroadcastReceiver, intentFilter)
 
         receiver = object : BroadcastReceiver() {
+            @SuppressLint("SetTextI18n")
             override fun onReceive(context: Context, intent: Intent) {
                 if (intent.action.equals("otp", ignoreCase = true)) {
                     val message = intent.getStringExtra("message")
@@ -513,6 +516,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loginFail(message: String, title: String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)

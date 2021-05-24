@@ -74,16 +74,14 @@
                 android:layout_marginTop="@dimen/fourteen_dp"
                 android:layout_marginEnd="@dimen/ten_dp"
                 android:layout_marginBottom="@dimen/fourteen_dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/llVehicleMakeselectedView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible"
-                tools:context=".activity.VehicleMakeApplyTyreActivty">
-
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -182,10 +180,10 @@
                             android:id="@+id/llRFView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
                             android:layout_gravity="center"
-                            android:gravity="center">
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
 
                             <LinearLayout
@@ -219,10 +217,10 @@
                             android:id="@+id/llLRView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
                             android:layout_gravity="center"
-                            android:gravity="center">
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <LinearLayout
 
@@ -256,11 +254,10 @@
                             android:id="@+id/llRRView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
                             android:layout_gravity="center"
+                            android:layout_weight="1"
                             android:gravity="center"
-                            >
+                            android:orientation="vertical">
 
                             <LinearLayout
 
@@ -289,9 +286,6 @@
 
                             </LinearLayout>
                         </LinearLayout>
-
-
-
 
 
                     </LinearLayout>

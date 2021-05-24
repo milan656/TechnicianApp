@@ -1,6 +1,7 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -64,7 +65,7 @@ import java.io.File
 import java.io.InputStream
 import java.util.*
 
-
+@SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     var title: String? = "Technician Suggestions"

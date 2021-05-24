@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -27,6 +28,7 @@ import com.walkins.aapkedoorstep.common.TyreKey
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.viewmodel.WarrantyViewModel
 
+@SuppressLint("SetTextI18n")
 class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private lateinit var prefManager: PrefManager

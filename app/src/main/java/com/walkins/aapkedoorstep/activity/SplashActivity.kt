@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -9,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.technician.common.PrefManager
 import com.walkins.aapkedoorstep.R
 
-
+@SuppressLint("SetTextI18n")
 class SplashActivity : AppCompatActivity() {
 
     private var prefManager: PrefManager? = null

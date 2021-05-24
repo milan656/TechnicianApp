@@ -1,6 +1,7 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -51,7 +52,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@SuppressLint("SetTextI18n")
 class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener,
     View.OnTouchListener {
 

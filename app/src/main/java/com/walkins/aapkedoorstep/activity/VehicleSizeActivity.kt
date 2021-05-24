@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +27,7 @@ import com.walkins.aapkedoorstep.model.login.sizemodel.SizeModel
 import com.walkins.aapkedoorstep.viewmodel.WarrantyViewModel
 import java.lang.Exception
 
+@SuppressLint("SetTextI18n")
 class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private lateinit var prefManager: PrefManager
@@ -63,6 +65,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         mDb = DBClass.getInstance(applicationContext)
         init()
     }
+
 
     private fun init() {
         Log.e("getpatternchk", "" + TyreDetailCommonClass.chk1Pattern)

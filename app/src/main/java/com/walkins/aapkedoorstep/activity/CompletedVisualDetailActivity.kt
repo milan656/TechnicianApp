@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.walkins.aapkedoorstep.common.TyreKey
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import java.lang.Exception
 
+@SuppressLint("SetTextI18n")
 class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private var issueResolvedRecycView: RecyclerView? = null

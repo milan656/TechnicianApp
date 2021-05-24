@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -31,6 +32,7 @@ import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import java.lang.StringBuilder
 
+@SuppressLint("SetTextI18n")
 class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var loginViewModel: LoginActivityViewModel? = null
     private var serviceViewModel: ServiceViewModel? = null

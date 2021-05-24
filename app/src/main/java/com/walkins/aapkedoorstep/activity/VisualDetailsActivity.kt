@@ -64,7 +64,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@SuppressLint("UseCompatLoadingForDrawables","SimpleDateFormat")
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
     private var loginViewModel: LoginActivityViewModel? = null
     private var commonViewModel: CommonViewModel? = null
@@ -204,7 +204,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //        }
 //    }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
         btnDone = findViewById(R.id.btnDone)
@@ -1545,7 +1545,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         try {
                             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
-                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                            }
                             intent.action = Intent.ACTION_GET_CONTENT
                             startActivityForResult(intent, PICK_IMAGE_REQUEST)
                         } catch (e: Exception) {
@@ -1567,7 +1569,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         try {
                             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
-                            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                            }
                             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                             startActivityForResult(intent, PICK_IMAGE_REQUEST)
 
@@ -1582,6 +1586,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
         }
     }
+
 
     @Throws(IOException::class)
     private fun createFile(): File {
@@ -1630,11 +1635,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         val inputStream: InputStream? = imagePath?.inputStream()
 //                            this.contentResolver?.openInputStream(image_uri!!)
                         prefManager.removeValue("image_" + selectedTyre)
-                        prefManager.removeValue("image_" + selectedTyre+""+"_path")
+                        prefManager.removeValue("image_" + selectedTyre + "" + "_path")
                         imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
                         prefManager.setValue("image_" + selectedTyre, image_uri.toString())
-                        prefManager.setValue("image_" + selectedTyre+""+"_path", imagePath?.path)
+                        prefManager.setValue("image_" + selectedTyre + "" + "_path", imagePath?.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = image_uri.toString()
 
                         setUriTyreWise(image_uri!!)
@@ -1672,7 +1677,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     } else {
 
                         prefManager.setValue("image_" + selectedTyre, Uri.parse(mCurrentPhotoPath).toString())
-                        prefManager.setValue("image_" + selectedTyre+""+"_path", auxFile.path)
+                        prefManager.setValue("image_" + selectedTyre + "" + "_path", auxFile.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = Uri.parse(mCurrentPhotoPath).toString()
                         setUriTyreWise(Uri.parse(mCurrentPhotoPath)!!)
                     }
@@ -1722,7 +1727,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
                         prefManager.setValue("image_" + selectedTyre, data?.dataString)
-                        prefManager.setValue("image_" + selectedTyre+""+"_path", imagePath?.path)
+                        prefManager.setValue("image_" + selectedTyre + "" + "_path", imagePath?.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage.toString()
                         setUriTyreWise(selectedImage!!)
                     }
@@ -1901,11 +1906,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 .placeholder(R.drawable.placeholder)
                 .into(imgPoster)
 
-        }catch (e:java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             e.printStackTrace()
 
-            if (prefManager.getValue("image_" + selectedTyre)!=null &&
-                !prefManager.getValue("image_" + selectedTyre).equals("")) {
+            if (prefManager.getValue("image_" + selectedTyre) != null &&
+                !prefManager.getValue("image_" + selectedTyre).equals("")
+            ) {
                 try {
                     Glide.with(this).load(prefManager.getValue("image_" + selectedTyre))
                         .override(1600, 1600)
@@ -1916,16 +1922,16 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 }
             }
 
-            if (selectedTyre.equals("LF") && TyreDetailCommonClass.tyre_Uri_LF!=null){
+            if (selectedTyre.equals("LF") && TyreDetailCommonClass.tyre_Uri_LF != null) {
                 ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_LF)
             }
-            if (selectedTyre.equals("LR") && TyreDetailCommonClass.tyre_Uri_LR!=null){
+            if (selectedTyre.equals("LR") && TyreDetailCommonClass.tyre_Uri_LR != null) {
                 ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_LR)
             }
-            if (selectedTyre.equals("RF") && TyreDetailCommonClass.tyre_Uri_RF!=null){
+            if (selectedTyre.equals("RF") && TyreDetailCommonClass.tyre_Uri_RF != null) {
                 ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_RF)
             }
-            if (selectedTyre.equals("RR") && TyreDetailCommonClass.tyre_Uri_RR!=null){
+            if (selectedTyre.equals("RR") && TyreDetailCommonClass.tyre_Uri_RR != null) {
                 ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_RR)
             }
         }

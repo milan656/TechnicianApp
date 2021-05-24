@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -37,7 +38,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
+@SuppressLint("SetTextI18n")
 class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private lateinit var prefManager: PrefManager
@@ -557,7 +561,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
 
 
-                tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern?.toLowerCase()?.capitalize()
+                tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern?.toLowerCase(Locale.getDefault())?.capitalize(Locale.getDefault())
 
                 Common.hideLoader()
             } else {
@@ -610,7 +614,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         Common.slideUp(gridviewRecycModel!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
-        tvSelectedModel?.text = arrList?.get(variable)?.name?.toLowerCase()?.capitalize()
+        tvSelectedModel?.text = arrList?.get(variable)?.name?.toLowerCase(Locale.getDefault())?.capitalize(Locale.getDefault())
         selectedPosition = variable
         selectedPos = variable
         selectedId = arrList?.get(variable)?.patternId!!
