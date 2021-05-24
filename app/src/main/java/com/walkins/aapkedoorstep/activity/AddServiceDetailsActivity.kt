@@ -8,11 +8,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
-import android.media.MediaPlayer.create
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -68,7 +66,6 @@ import java.io.File
 import java.io.InputStream
 import java.lang.Runnable
 import java.lang.reflect.Type
-import java.net.URI
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -80,6 +77,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     View.OnTouchListener {
     private lateinit var prefManager: PrefManager
     private lateinit var mDb: DBClass
+
     private var loginViewModel: LoginActivityViewModel? = null
     private var commonViewModel: CommonViewModel? = null
 

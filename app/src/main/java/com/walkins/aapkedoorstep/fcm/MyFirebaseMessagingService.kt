@@ -9,24 +9,17 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
-import com.walkins.aapkedoorstep.R
-import com.walkins.aapkedoorstep.activity.HomeEmployeeActivity
-import com.walkins.aapkedoorstep.activity.HomeSubDealerActivity
-import com.walkins.aapkedoorstep.activity.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.gson.Gson
-import org.json.JSONObject
+import com.walkins.aapkedoorstep.R
+import com.walkins.aapkedoorstep.activity.MainActivity
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**

@@ -3,13 +3,12 @@ package com.walkins.aapkedoorstep.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,13 +18,9 @@ import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
-import com.walkins.aapkedoorstep.adapter.LeadHistoryAdapter
 import com.walkins.aapkedoorstep.adapter.NotificationAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
-import com.walkins.aapkedoorstep.model.login.DashboardModel
 import com.walkins.aapkedoorstep.model.login.NotificationModel
-import com.walkins.aapkedoorstep.model.login.notification.Notification
-import com.walkins.aapkedoorstep.model.login.notification.NotificationData
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import java.text.SimpleDateFormat
 

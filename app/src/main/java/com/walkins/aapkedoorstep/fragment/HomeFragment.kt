@@ -51,7 +51,6 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var prefManager: PrefManager? = null
     private var commonViewModel: CommonViewModel? = null
 
-    var gamesRecyclerItems = ArrayList<SimpleTextRecyclerItem>()
     var historyDataList: ArrayList<DashboardModel> = ArrayList<DashboardModel>()
 
     var simpleDateFormat: SimpleDateFormat? = null
