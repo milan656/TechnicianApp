@@ -19,7 +19,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
-@SuppressLint("SimpleDateFormat")
+@SuppressLint("SimpleDateFormat","SetTextI18n")
 class ServiceAdapter(
     var array: ArrayList<ServiceModelData>,
     var context: Context,

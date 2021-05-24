@@ -4,13 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PendingTyreSuggestionAdpater(
     var array: ArrayList<String>,
@@ -26,13 +24,13 @@ class PendingTyreSuggestionAdpater(
         var chkTyreSuggestion: TextView = itemView.findViewById(R.id.chkTyreSuggestion)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PendingTyreSuggestionAdpater.Viewholder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
         var view =
             LayoutInflater.from(context).inflate(R.layout.pending_tyre_suggestions_design, parent, false)
         return Viewholder(view)
     }
 
-    override fun onBindViewHolder(holder: PendingTyreSuggestionAdpater.Viewholder, position: Int) {
+    override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
         holder.chkTyreSuggestion.text = array.get(position).capitalize(Locale.getDefault())
 

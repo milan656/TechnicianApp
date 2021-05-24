@@ -23,7 +23,7 @@ import com.walkins.aapkedoorstep.model.login.ReportHistoryModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-@SuppressLint("SimpleDateFormat")
+@SuppressLint("SimpleDateFormat","SetTextI18n")
 class ReportHistoryAdapter(
     private val mActivity: Context, dataset: List<ReportHistoryModel>,
     onPositionClick: onClickAdapter

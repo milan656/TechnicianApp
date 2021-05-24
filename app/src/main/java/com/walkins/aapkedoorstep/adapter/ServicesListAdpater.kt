@@ -20,7 +20,7 @@ import com.walkins.aapkedoorstep.common.TyreKey
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 
-@SuppressLint("SimpleDateFormat")
+@SuppressLint("SimpleDateFormat","SetTextI18n")
 class ServicesListAdpater(
     var array: MutableList<ServiceListByDateData>,
     var context: Context,
