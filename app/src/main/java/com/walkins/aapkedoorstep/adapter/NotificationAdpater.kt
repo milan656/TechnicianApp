@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.walkins.aapkedoorstep.model.login.NotificationModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("SimpleDateFormat","SetTextI18n")
 class NotificationAdpater(
     var array: ArrayList<NotificationModel>,
     var context: Context,
@@ -65,6 +67,7 @@ class NotificationAdpater(
         return Viewholder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
         holder.itemView.setOnClickListener {

@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.walkins.aapkedoorstep.model.login.ReportHistoryModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("SimpleDateFormat")
 class ReportHistoryAdapter(
     private val mActivity: Context, dataset: List<ReportHistoryModel>,
     onPositionClick: onClickAdapter
@@ -46,6 +48,7 @@ class ReportHistoryAdapter(
         this.onBottomReachedListener = onBottomReachedListener
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         Log.e("getdatee00", "" + mDataset.get(position))

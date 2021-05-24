@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
+@SuppressLint("SimpleDateFormat")
 class ServiceAdapter(
     var array: ArrayList<ServiceModelData>,
     var context: Context,

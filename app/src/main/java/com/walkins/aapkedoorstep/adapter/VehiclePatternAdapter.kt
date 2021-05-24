@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,10 @@ import com.walkins.aapkedoorstep.DB.VehiclePatternModelClass
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternData
+import java.util.*
+import kotlin.collections.ArrayList
 
+@SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
 class VehiclePatternAdapter internal constructor(
     private val mContext: Context,
     private var name: ArrayList<VehiclePatternModelClass>?,
@@ -33,6 +37,7 @@ class VehiclePatternAdapter internal constructor(
     private var size: Int? = null
     private var isClick: Boolean? = false
 
+    @SuppressLint("InflateParams")
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -47,7 +52,7 @@ class VehiclePatternAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: VehiclePatternAdapter.ViewHolder, position: Int) {
-        holder.textView.setText(name?.get(position)?.name?.toLowerCase()?.capitalize())
+        holder.textView.setText(name?.get(position)?.name?.toLowerCase(Locale.getDefault())?.capitalize(Locale.getDefault()))
 //        holder.textView.text = "185/65 R15"
 
         if (name!!.get(position).isSelected) {

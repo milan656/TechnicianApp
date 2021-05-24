@@ -116,7 +116,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
         }
 
-        Log.e("noti", "" + body)
+        Log.e("Noti", "" + body)
         if (imageURL == null || imageURL == "") {
             val bigText =
                 NotificationCompat.BigTextStyle()
@@ -131,7 +131,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setContentIntent(pendingIntent)
                 .setStyle(bigText)
         } else {
-            Log.e("noti", ":::;" + body)
+            Log.e("Noti", ":::;" + body)
             val bigText =
                 NotificationCompat.BigTextStyle()
             bigText.bigText(body)

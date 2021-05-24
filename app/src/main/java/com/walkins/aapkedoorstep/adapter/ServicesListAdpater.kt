@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
@@ -19,6 +20,7 @@ import com.walkins.aapkedoorstep.common.TyreKey
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 
+@SuppressLint("SimpleDateFormat")
 class ServicesListAdpater(
     var array: MutableList<ServiceListByDateData>,
     var context: Context,
@@ -50,6 +52,7 @@ class ServicesListAdpater(
         return Viewholder(view)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
         if (array.get(position).model_image != null && !array.get(position).model_image.equals("")) {

@@ -15,7 +15,7 @@ import com.walkins.aapkedoorstep.model.login.IssueResolveModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
 class TyreSuggestionAdpater(
     var array: ArrayList<IssueResolveModel>,
     var context: Context,

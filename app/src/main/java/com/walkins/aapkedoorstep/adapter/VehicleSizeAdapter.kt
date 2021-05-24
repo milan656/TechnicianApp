@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +20,7 @@ import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.sizemodel.SizeData
 import java.util.logging.Handler
 
-
+@SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
 class VehicleSizeAdapter internal constructor(
     private val mContext: Context,
     private var name: ArrayList<VehicleSizeModelClass>?,
@@ -39,6 +40,7 @@ class VehicleSizeAdapter internal constructor(
     private var size: Int? = null
     private var isClick: Boolean? = false
 
+    @SuppressLint("InflateParams")
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

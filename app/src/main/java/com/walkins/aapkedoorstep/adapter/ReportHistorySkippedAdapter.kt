@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.walkins.aapkedoorstep.model.login.ReportHistoryModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("SimpleDateFormat")
 class ReportHistorySkippedAdapter(
     private val mActivity: Context, dataset: List<ReportHistoryModel>,
     onPositionClick: onClickAdapter

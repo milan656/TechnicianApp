@@ -23,16 +23,6 @@ class AutoSuggestProductAdapter(
         return mListData[position]
     }
 
-    /**
-     * Used to Return the full object directly from adapter.
-     *
-     * @param position
-     * @return
-     */
-    fun getObject(position: Int): String {
-        return mListData[position]
-    }
-
     @NonNull
     override fun getFilter(): Filter {
         return object : Filter() {
