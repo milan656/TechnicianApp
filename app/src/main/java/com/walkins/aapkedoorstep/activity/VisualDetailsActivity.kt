@@ -1630,9 +1630,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         val inputStream: InputStream? = imagePath?.inputStream()
 //                            this.contentResolver?.openInputStream(image_uri!!)
                         prefManager.removeValue("image_" + selectedTyre)
+                        prefManager.removeValue("image_" + selectedTyre+""+"_path")
                         imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
                         prefManager.setValue("image_" + selectedTyre, image_uri.toString())
+                        prefManager.setValue("image_" + selectedTyre+""+"_path", imagePath?.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = image_uri.toString()
 
                         setUriTyreWise(image_uri!!)
@@ -1670,6 +1672,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     } else {
 
                         prefManager.setValue("image_" + selectedTyre, Uri.parse(mCurrentPhotoPath).toString())
+                        prefManager.setValue("image_" + selectedTyre+""+"_path", auxFile.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = Uri.parse(mCurrentPhotoPath).toString()
                         setUriTyreWise(Uri.parse(mCurrentPhotoPath)!!)
                     }
@@ -1719,6 +1722,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
                         prefManager.setValue("image_" + selectedTyre, data?.dataString)
+                        prefManager.setValue("image_" + selectedTyre+""+"_path", imagePath?.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage.toString()
                         setUriTyreWise(selectedImage!!)
                     }
@@ -1910,6 +1914,19 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+            }
+
+            if (selectedTyre.equals("LF") && TyreDetailCommonClass.tyre_Uri_LF!=null){
+                ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_LF)
+            }
+            if (selectedTyre.equals("LR") && TyreDetailCommonClass.tyre_Uri_LR!=null){
+                ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_LR)
+            }
+            if (selectedTyre.equals("RF") && TyreDetailCommonClass.tyre_Uri_RF!=null){
+                ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_RF)
+            }
+            if (selectedTyre.equals("RR") && TyreDetailCommonClass.tyre_Uri_RR!=null){
+                ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_RR)
             }
         }
 

@@ -123,6 +123,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             refreshToken()
         }
 
+//        val intent=Intent(this,AddServiceDetailsActivity::class.java)
+//        startActivity(intent)
+
         callApiTogetToken()
 
         val year = Calendar.getInstance().get(Calendar.YEAR)
