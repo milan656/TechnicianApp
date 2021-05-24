@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.fragment
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -46,6 +47,8 @@ import kotlin.collections.ArrayList
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat","InflateParams",
+    "SetTextI18n")
 class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var timer: Timer? = null
     private var param1: String? = null

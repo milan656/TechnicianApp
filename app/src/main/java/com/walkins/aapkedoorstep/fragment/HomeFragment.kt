@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -38,6 +39,8 @@ import kotlin.collections.ArrayList
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat","InflateParams",
+"SetTextI18n")
 class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
@@ -247,6 +250,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 
     }
+
 
 
     private fun showBottomSheetdialogNormal(

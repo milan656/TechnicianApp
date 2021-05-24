@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -38,6 +39,9 @@ private const val ARG_PARAM2 = "param2"
  * Use the [NotificationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat","InflateParams",
+    "SetTextI18n")
 class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null

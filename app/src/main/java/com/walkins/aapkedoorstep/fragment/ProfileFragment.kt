@@ -1,5 +1,6 @@
 package com.walkins.aapkedoorstep.fragment
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -34,6 +35,7 @@ import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+@SuppressLint("SetTextI18n")
 class ProfileFragment : Fragment(), onClickAdapter {
     var image_uri: Uri? = null
     private var param1: String? = null
