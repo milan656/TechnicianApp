@@ -1176,7 +1176,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         if (!colorCode.equals("")) {
             llbg?.setBackgroundColor(Color.parseColor(colorCode))
         }
-
         try {
             Glide.with(this)
                 .load(carImage)
