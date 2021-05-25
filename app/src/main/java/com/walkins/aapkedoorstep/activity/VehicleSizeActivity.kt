@@ -482,9 +482,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         runOnUiThread {
 
             if (selectedId != -1) {
-                llVehicleMakeselectedView?.visibility = View.VISIBLE
-                btnNext?.visibility = View.VISIBLE
-                gridviewRecycModel?.visibility = View.GONE
+
                 val thread = Thread {
                     if (mDb.sizeDaoClass().getAllSize() != null && mDb.sizeDaoClass().getAllSize().size > 0) {
                         arrList?.clear()
@@ -495,13 +493,29 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
                         Log.e("getSizeVehicleSize", "" + arrList?.size)
                     }
+                    val arrayList = arrList?.filter { selectedId == it.sizeId } as MutableList<VehicleSizeModelClass>
 
-                    if (arrList != null && arrList?.size!! > 0) {
-                        for (i in arrList?.indices!!) {
+                    runOnUiThread {
+                        if (arrayList.size == 0) {
+                            gridviewRecycModel?.layoutManager =
+                                GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
 
-                            if (selectedId == arrList?.get(i)?.sizeId) {
-                                arrList?.get(i)?.isSelected = true
+                            adapter = VehicleSizeAdapter(this, arrList, this, selectedId)
+                            gridviewRecycModel?.adapter = adapter
+                            llVehicleMakeselectedView?.visibility = View.GONE
+                            btnNext?.visibility = View.GONE
+                            gridviewRecycModel?.visibility = View.VISIBLE
+                        } else {
+
+                            if (arrList != null) {
+                                arrList!!
+                                    .asSequence()
+                                    .filter { selectedId == it.sizeId }
+                                    .forEach { it.isSelected = true }
                             }
+                            llVehicleMakeselectedView?.visibility = View.VISIBLE
+                            btnNext?.visibility = View.VISIBLE
+                            gridviewRecycModel?.visibility = View.GONE
                         }
                     }
                 }

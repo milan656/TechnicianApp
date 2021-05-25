@@ -550,15 +550,14 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                     }
 
                     if (arrList != null && arrList?.size!! > 0) {
-                        for (i in arrList?.indices!!) {
-                            if (selectedId == arrList?.get(i)?.patternId) {
-                                arrList?.get(i)?.isSelected = true
-                            }
-                        }
+                        arrList!!
+                            .asSequence()
+                            .filter { selectedId == it.patternId }
+                            .forEach { it.isSelected = true }
+
                     }
                 }
                 thread.start()
-
 
 
                 tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern?.toLowerCase(Locale.getDefault())?.capitalize(Locale.getDefault())
@@ -1164,9 +1163,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         } else {
             TyreDetailCommonClass.chk3PatternVisible = false
         }
-        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk1PatternVisible)
-        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk2PatternVisible)
-        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk3PatternVisible)
+        Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk1PatternVisible)
+        Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk2PatternVisible)
+        Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk3PatternVisible)
 
         Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
         var intent = Intent(this, VehicleSizeActivity::class.java)

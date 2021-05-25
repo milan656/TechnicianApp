@@ -229,6 +229,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //        requestPermissionForImage()
         init()
+        removeAllTyreAndServiceDetails()
     }
 
     suspend fun getStoredObjects(checkUnCheck: String) {
@@ -375,6 +376,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
                 Log.e("getserviceselectedlf_3", "" + TyreConfigClass.LFCompleted + " " + TyreConfigClass.LFVehicleVisualDetail)
 
+                if (TyreConfigClass.LFVehicleVisualDetail && TyreConfigClass.LFVehicleMake &&
+                    TyreConfigClass.LFVehiclePattern && TyreConfigClass.LFVehicleSize){
+                    TyreConfigClass.LFCompleted=true
+                }
+
                 if (TyreConfigClass.LFCompleted) {
                     if (!TyreConfigClass.LFVehicleVisualDetail) {
                         jsonLF.remove(TyreKey.isCompleted)
@@ -387,6 +393,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             )
                         )
                         ivInfoImgLF?.visibility = View.VISIBLE
+                    } else {
+                        ivTyre1?.setImageDrawable(
+                            this@AddServiceDetailsActivity.resources?.getDrawable(
+                                R.drawable.ic_completed_tyre_config
+                            )
+                        )
+                        ivInfoImgLF?.visibility = View.INVISIBLE
                     }
                 }
                 Log.e("getserviceselected1", "" + TyreConfigClass.LFCompleted)
@@ -503,6 +516,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.RFVehicleVisualDetail = false
                     }
                 }
+                if (TyreConfigClass.RFVehicleVisualDetail && TyreConfigClass.RFVehicleMake &&
+                    TyreConfigClass.RFVehiclePattern && TyreConfigClass.RFVehicleSize){
+                    TyreConfigClass.RFCompleted=true
+                }
+
                 if (TyreConfigClass.RFCompleted) {
                     if (!TyreConfigClass.RFVehicleVisualDetail) {
                         jsonRF.remove(TyreKey.isCompleted)
@@ -515,6 +533,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             )
                         )
                         ivInfoImgRF?.visibility = View.VISIBLE
+                    }else{
+                        ivTyre3?.setImageDrawable(
+                            this@AddServiceDetailsActivity.resources?.getDrawable(
+                                R.drawable.ic_completed_tyre_config
+                            )
+                        )
+                        ivInfoImgRF?.visibility = View.INVISIBLE
                     }
                 }
 
@@ -647,7 +672,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.LRVehicleVisualDetail = false
                     }
                 }
-
+ if (TyreConfigClass.LRVehicleVisualDetail && TyreConfigClass.LRVehicleMake &&
+                    TyreConfigClass.LRVehiclePattern && TyreConfigClass.LRVehicleSize){
+                    TyreConfigClass.LRCompleted=true
+                }
                 if (TyreConfigClass.LRCompleted) {
                     if (!TyreConfigClass.LRVehicleVisualDetail) {
                         jsonLR.remove(TyreKey.isCompleted)
@@ -660,6 +688,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             )
                         )
                         ivInfoImgLR?.visibility = View.VISIBLE
+                    }else{
+                        ivTyre2?.setImageDrawable(
+                            this@AddServiceDetailsActivity.resources?.getDrawable(
+                                R.drawable.ic_completed_tyre_config
+                            )
+                        )
+                        ivInfoImgLR?.visibility = View.INVISIBLE
                     }
                 }
                 Log.e("getservicesele12", "" + TyreConfigClass.LRCompleted)
@@ -790,6 +825,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
 
+                 if (TyreConfigClass.RRVehicleVisualDetail && TyreConfigClass.RRVehicleMake &&
+                    TyreConfigClass.RRVehiclePattern && TyreConfigClass.RRVehicleSize){
+                    TyreConfigClass.RRCompleted=true
+                }
+
 
                 if (TyreConfigClass.RRCompleted) {
                     if (!TyreConfigClass.RRVehicleVisualDetail) {
@@ -803,6 +843,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             )
                         )
                         ivInfoImgRR?.visibility = View.VISIBLE
+                    }else{
+                        ivTyre4?.setImageDrawable(
+                            this@AddServiceDetailsActivity.resources?.getDrawable(
+                                R.drawable.ic_completed_tyre_config
+                            )
+                        )
+                        ivInfoImgRR?.visibility = View.INVISIBLE
                     }
                 }
                 Log.e("getservice22sele", "" + TyreConfigClass.RRCompleted)
@@ -1111,22 +1158,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         tvRegNumber = findViewById(R.id.tvRegNumber)
         ivCarImage = findViewById(R.id.ivCarImage)
 
-        radioGroupLF?.setOnCheckedChangeListener(object :RadioGroup.OnCheckedChangeListener{
+        radioGroupLF?.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
                 checkSubmitBtn()
             }
         })
-        radioGroupLR?.setOnCheckedChangeListener(object :RadioGroup.OnCheckedChangeListener{
+        radioGroupLR?.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
                 checkSubmitBtn()
             }
         })
-        radioGroupRF?.setOnCheckedChangeListener(object :RadioGroup.OnCheckedChangeListener{
+        radioGroupRF?.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
                 checkSubmitBtn()
             }
         })
-        radioGroupRR?.setOnCheckedChangeListener(object :RadioGroup.OnCheckedChangeListener{
+        radioGroupRR?.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
                 checkSubmitBtn()
             }
@@ -1434,8 +1481,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
                     val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
                     Log.e("getValues", "" + arrlist)
-                    for (i in suggestionArray!!) {
 
+                    for (i in suggestionArray!!) {
                         for (j in arrlist) {
 
                             if (i.issueName.equals(j)) {
@@ -2824,7 +2871,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        stringBuilder: StringBuilder
+        stringBuilder: StringBuilder,
     ) {
         val nullparent: ViewGroup? = null
         val view = LayoutInflater.from(context)
@@ -2882,9 +2929,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         titleStr: String,
         context: Context?,
         btnBg: String,
-        btnText: String
+        btnText: String,
 
-    ) {
+        ) {
         val nullparent: ViewGroup? = null
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, nullparent, false)
@@ -3749,9 +3796,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         array: ArrayList<String>,
         titleStr: String,
         context: Context?,
-        btnBg: String
+        btnBg: String,
 
-    ) {
+        ) {
         val nullparent: ViewGroup? = null
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, nullparent, false)
@@ -4391,15 +4438,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getValuesss_all--2 size", TyreDetailCommonClass.chk2Size!!)
                     Log.e("getValuesss_all--3 size", TyreDetailCommonClass.chk3Size!!)
 
-                    Log.e("getValuesss_all--1 make", ""+TyreDetailCommonClass.chk1MakeVisible!!)
-                    Log.e("getValuesss_all--2 make", ""+TyreDetailCommonClass.chk2MakeVisible!!)
-                    Log.e("getValuesss_all--3 make", ""+TyreDetailCommonClass.chk3MakeVisible!!)
-                    Log.e("getValuesss_all--1 pat", ""+TyreDetailCommonClass.chk1PatternVisible!!)
-                    Log.e("getValuesss_all--2 pat", ""+TyreDetailCommonClass.chk2PatternVisible!!)
-                    Log.e("getValuesss_all--3 pat", ""+TyreDetailCommonClass.chk3PatternVisible!!)
-                    Log.e("getValuesss_all--1 size", ""+TyreDetailCommonClass.chk1SizeVisible!!)
-                    Log.e("getValuesss_all--2 size", ""+TyreDetailCommonClass.chk2SizeVisible!!)
-                    Log.e("getValuesss_all--3 size", ""+TyreDetailCommonClass.chk3SizeVisible!!)
+                    Log.e("getValuesss_all--1 make", "" + TyreDetailCommonClass.chk1MakeVisible!!)
+                    Log.e("getValuesss_all--2 make", "" + TyreDetailCommonClass.chk2MakeVisible!!)
+                    Log.e("getValuesss_all--3 make", "" + TyreDetailCommonClass.chk3MakeVisible!!)
+                    Log.e("getValuesss_all--1 pat", "" + TyreDetailCommonClass.chk1PatternVisible!!)
+                    Log.e("getValuesss_all--2 pat", "" + TyreDetailCommonClass.chk2PatternVisible!!)
+                    Log.e("getValuesss_all--3 pat", "" + TyreDetailCommonClass.chk3PatternVisible!!)
+                    Log.e("getValuesss_all--1 size", "" + TyreDetailCommonClass.chk1SizeVisible!!)
+                    Log.e("getValuesss_all--2 size", "" + TyreDetailCommonClass.chk2SizeVisible!!)
+                    Log.e("getValuesss_all--3 size", "" + TyreDetailCommonClass.chk3SizeVisible!!)
 
 
                     if (TyreDetailCommonClass.tyre_Uri_LF != null) {
@@ -6378,7 +6425,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
