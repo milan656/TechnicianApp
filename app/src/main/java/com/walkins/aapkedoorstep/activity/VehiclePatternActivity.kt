@@ -1149,6 +1149,25 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         TyreDetailCommonClass.chk2Pattern = chkLR?.text.toString() + "," + chkLR?.isChecked
         TyreDetailCommonClass.chk3Pattern = chkRR?.text.toString() + "," + chkRR?.isChecked
 
+        if (llRFView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk1PatternVisible = true
+        } else {
+            TyreDetailCommonClass.chk1PatternVisible = false
+        }
+        if (llLRView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk2PatternVisible = true
+        } else {
+            TyreDetailCommonClass.chk2PatternVisible = false
+        }
+        if (llRRView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk3PatternVisible = true
+        } else {
+            TyreDetailCommonClass.chk3PatternVisible = false
+        }
+        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk1PatternVisible)
+        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk2PatternVisible)
+        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk3PatternVisible)
+
         Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
         var intent = Intent(this, VehicleSizeActivity::class.java)
         intent.putExtra("selectedId", selectedId)

@@ -6,13 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.technician.common.Common.Companion.setTint
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
@@ -75,21 +71,37 @@ class ServiceAdapter(
 
         holder.llServiceLayout.setOnClickListener {
 
-            holder.chkNitrogenTopup.performClick()
+            /* val pos: Int = holder.chkNitrogenTopup.getTag() as Int
+             try {
+                 array.get(pos).isSelected = !array.get(pos).isSelected
+             } catch (e: IndexOutOfBoundsException) {
+                 e.printStackTrace()
+             }
 
-            if (onclick != null) {
-                onclick?.onPositionClick(position, 11)
+             if (onclick != null) {
+                 onclick?.onPositionClick(position, 11)
+             }*/
+            if (holder.chkNitrogenTopup.isChecked) {
+                holder.chkNitrogenTopup.isChecked = false
+            } else {
+                holder.chkNitrogenTopup.isChecked = true
             }
+            clickOperation(holder, position)
 
         }
 
         holder.chkNitrogenTopup.setOnClickListener {
-            val pos: Int = holder.chkNitrogenTopup.getTag() as Int
-            try {
-                array.get(pos).isSelected = !array.get(pos).isSelected
-            } catch (e: IndexOutOfBoundsException) {
-                e.printStackTrace()
-            }
+            /* val pos: Int = holder.chkNitrogenTopup.getTag() as Int
+             try {
+                 array.get(pos).isSelected = !array.get(pos).isSelected
+             } catch (e: IndexOutOfBoundsException) {
+                 e.printStackTrace()
+             }
+
+             holder.llServiceLayout.performClick()*/
+
+            clickOperation(holder, position)
+
 
         }
 
@@ -112,5 +124,19 @@ class ServiceAdapter(
     override fun getItemCount(): Int {
         return array.size
 
+    }
+
+    fun clickOperation(holder: Viewholder, position: Int) {
+        val pos: Int = holder.chkNitrogenTopup.getTag() as Int
+        try {
+            array.get(pos).isSelected = !array.get(pos).isSelected
+        } catch (e: IndexOutOfBoundsException) {
+            e.printStackTrace()
+        }
+
+
+        if (onclick != null) {
+            onclick?.onPositionClick(position, 11)
+        }
     }
 }

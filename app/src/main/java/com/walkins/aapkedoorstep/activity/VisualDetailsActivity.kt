@@ -64,7 +64,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-@SuppressLint("UseCompatLoadingForDrawables","SimpleDateFormat")
+@SuppressLint("UseCompatLoadingForDrawables", "SimpleDateFormat")
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
     private var loginViewModel: LoginActivityViewModel? = null
     private var commonViewModel: CommonViewModel? = null
@@ -84,9 +84,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var ivSugSideWell: ImageView? = null
     private var ivReqSideWell: ImageView? = null
 
-    private var psiInTyreService: String? = null
-    private var psiOutTyreService: String? = null
-    private var weightTyreService: String? = null
+    private var psiInTyreService: String? = "15"
+    private var psiOutTyreService: String? = "15"
+    private var weightTyreService: String? = "15"
     private var sidewell: String? = ""
     private var shoulder: String? = ""
     private var treadWear: String? = ""
@@ -892,7 +892,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         sliderIn?.position = 0.3f
         sliderIn?.startText = "$min"
         sliderIn?.endText = "$max"
-        sliderIn?.animation?.cancel()
 
     }
 
@@ -906,20 +905,20 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         multiSliderPsiOut?.position = 0.3f
         multiSliderPsiOut?.startText = "$min"
         multiSliderPsiOut?.endText = "$max"
-        multiSliderPsiOut?.animation?.cancel()
+
     }
 
     fun weightSlider() {
         multiSliderWeight = findViewById<FluidSlider>(R.id.multiSliderWeight)
         multiSliderWeight?.positionListener = { pos ->
             multiSliderWeight?.bubbleText = "${min + (total * pos).toInt()}"
-            Log.e("getvaluess", "" + multiSliderWeight?.bubbleText)
+            Log.e("getvaluessweight", "" + multiSliderWeight?.bubbleText+" ${min + (total * pos).toInt()}")
+
             weightTyreService = multiSliderWeight?.bubbleText
         }
         multiSliderWeight?.position = 0.3f
         multiSliderWeight?.startText = "$min"
         multiSliderWeight?.endText = "$max"
-        multiSliderWeight?.animation?.cancel()
 
     }
 
@@ -1233,14 +1232,24 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 if (!edtManufaturingDate?.text?.toString().equals("")) {
 
                     if (!edtManufaturingDate?.text?.toString()?.substring(0, 2)?.equals("")!!) {
-                        if (edtManufaturingDate?.text?.toString()?.substring(0, 2)?.toString()?.toInt() != weekOfYear) {
-                            Toast.makeText(this, "Manufaturing Date First 2 Latter must be Week of Year.", Toast.LENGTH_SHORT).show()
+                        if (edtManufaturingDate?.text?.toString()?.substring(0, 2)?.toInt()!! > 0) {
+                            if (edtManufaturingDate?.text?.toString()?.substring(0, 2)?.toInt()!! > 0 && edtManufaturingDate?.text?.toString()?.substring(0, 2)?.toInt()!! > weekOfYear) {
+                                Toast.makeText(this, "Manufaturing Date First 2 Letter not greater than Week of Year.", Toast.LENGTH_SHORT).show()
+                                return
+                            }
+                        } else {
+                            Toast.makeText(this, "Manufaturing Date First 2 Letter must greater than 0.", Toast.LENGTH_SHORT).show()
                             return
                         }
                     }
                     if (!edtManufaturingDate?.text?.toString()?.substring(2, 4)?.equals("")!!) {
-                        if (edtManufaturingDate?.text?.toString()?.substring(2, 4)?.toString()?.toInt() != year) {
-                            Toast.makeText(this, "Manufaturing Date Last 2 Latter must be Current Year.", Toast.LENGTH_SHORT).show()
+                        if (edtManufaturingDate?.text?.toString()?.substring(2, 4)?.toInt()!! > 0) {
+                            if (edtManufaturingDate?.text?.toString()?.substring(2, 4)?.toInt()!! > 0 && edtManufaturingDate?.text?.toString()?.substring(2, 4)?.toInt()!! > year) {
+                                Toast.makeText(this, "Manufaturing Date Last 2 Latter not greater than Current Year.", Toast.LENGTH_SHORT).show()
+                                return
+                            }
+                        } else {
+                            Toast.makeText(this, "Manufaturing Date Last 2 Latter must greater than 0.", Toast.LENGTH_SHORT).show()
                             return
                         }
                     }

@@ -96,7 +96,8 @@
                                         android:textAllCaps="true"
                                         android:textColor="@color/text_color1"
                                         android:textSize="@dimen/eighteen_sp"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"
+                                        tools:ignore="NestedWeights,TooDeepLayout" />
 
                                     <ImageView
                                         android:id="@+id/ivCarImage"

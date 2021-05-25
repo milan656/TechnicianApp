@@ -347,7 +347,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                             }
 
                         }
-                    }else{
+                    } else {
                         runOnUiThread {
                             if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
                                 if (chkRF?.text?.toString().equals("LF")) {
@@ -402,7 +402,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                                 }
                             }
                         }
-                    }else{
+                    } else {
                         runOnUiThread {
                             if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
                                 if (chkRF?.text?.toString().equals("LR")) {
@@ -459,7 +459,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                                 }
                             }
                         }
-                    }else{
+                    } else {
                         runOnUiThread {
                             if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
                                 if (chkRF?.text?.toString().equals("RF")) {
@@ -513,7 +513,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                                 }
                             }
                         }
-                    }else{
+                    } else {
                         runOnUiThread {
                             if (json.get("vehicleMake") != null && !json.get("vehicleMake")?.asString.equals("")) {
                                 if (chkRF?.text?.toString().equals("RR")) {
@@ -1102,6 +1102,25 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("pendingArr54654", "" + TyreDetailCommonClass.vehicleMakeId)
         Log.e("pendingArr54654", "" + TyreDetailCommonClass.vehicleMakeURL)
         Log.e("getvalueee", "" + selectedTyre + " " + TyreConfigClass.RFVehicleMake)
+
+        if (llRFView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk1MakeVisible = true
+        } else {
+            TyreDetailCommonClass.chk1MakeVisible = false
+        }
+        if (llLRView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk2MakeVisible = true
+        } else {
+            TyreDetailCommonClass.chk2MakeVisible = false
+        }
+        if (llRRView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk3MakeVisible = true
+        } else {
+            TyreDetailCommonClass.chk3MakeVisible = false
+        }
+        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk1MakeVisible)
+        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk2MakeVisible)
+        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk3MakeVisible)
         var intent = Intent(this, VehiclePatternActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)
         if (TyreDetailCommonClass.vehicleMakeId.equals("")) {

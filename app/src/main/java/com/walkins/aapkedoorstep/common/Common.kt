@@ -15,6 +15,8 @@ import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -37,6 +39,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.core.widget.ImageViewCompat
+import androidx.exifinterface.media.ExifInterface
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -1444,6 +1447,16 @@ class Common {
             TyreDetailCommonClass.chk3Pattern = ""
             TyreDetailCommonClass.chk3Size = ""
 
+            TyreDetailCommonClass.chk1MakeVisible = false
+            TyreDetailCommonClass.chk1PatternVisible = false
+            TyreDetailCommonClass.chk1SizeVisible = false
+            TyreDetailCommonClass.chk2MakeVisible = false
+            TyreDetailCommonClass.chk2PatternVisible = false
+            TyreDetailCommonClass.chk2SizeVisible = false
+            TyreDetailCommonClass.chk3MakeVisible = false
+            TyreDetailCommonClass.chk3PatternVisible = false
+            TyreDetailCommonClass.chk3SizeVisible = false
+
 
         }
 
@@ -1476,33 +1489,31 @@ class Common {
         fun isConnectedToInternet(context: Context): Boolean {
             val connectivityManager =
                 context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            if (connectivityManager != null) {
-                val capabilities =
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-                        } else {
-                            TODO("VERSION.SDK_INT < M")
-                        }
+            val capabilities =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                    } else {
+                        TODO("VERSION.SDK_INT < M")
+                    }
+                } else {
+                    TODO("VERSION.SDK_INT < LOLLIPOP")
+                }
+            if (capabilities != null) {
+                if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
                     } else {
                         TODO("VERSION.SDK_INT < LOLLIPOP")
                     }
-                if (capabilities != null) {
-                    if (if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                        } else {
-                            TODO("VERSION.SDK_INT < LOLLIPOP")
-                        }
-                    ) {
-                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-                        return true
-                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-                        return true
-                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-                        return true
-                    }
+                ) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
                 }
             }
             return false
@@ -1530,6 +1541,91 @@ class Common {
                 cursor?.close()
             }
             return null
+        }
+
+        object CompressFile {
+            fun getCompressedImageFile(file: File, mContext: Context?): File? {
+                return try {
+                    val o = BitmapFactory.Options()
+                    o.inJustDecodeBounds = true
+                    if (getFileExt(file.name) == "png" || getFileExt(file.name) == "PNG") {
+                        o.inSampleSize = 6
+                    } else {
+                        o.inSampleSize = 6
+                    }
+                    var inputStream = FileInputStream(file)
+                    BitmapFactory.decodeStream(inputStream, null, o)
+                    inputStream.close()
+
+                    // The new size we want to scale to
+                    val REQUIRED_SIZE = 100
+
+                    // Find the correct scale value. It should be the power of 2.
+                    var scale = 1
+                    while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                        o.outHeight / scale / 2 >= REQUIRED_SIZE
+                    ) {
+                        scale *= 2
+                    }
+                    val o2 = BitmapFactory.Options()
+                    o2.inSampleSize = scale
+                    inputStream = FileInputStream(file)
+                    var selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2)
+                    val ei = ExifInterface(file.absolutePath)
+                    val orientation: Int = ei.getAttributeInt(
+                        ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_UNDEFINED
+                    )
+                    when (orientation) {
+                        ExifInterface.ORIENTATION_ROTATE_90 -> selectedBitmap = rotateImage(selectedBitmap, 90f)
+                        ExifInterface.ORIENTATION_ROTATE_180 -> selectedBitmap = rotateImage(selectedBitmap, 180f)
+                        ExifInterface.ORIENTATION_ROTATE_270 -> selectedBitmap = rotateImage(selectedBitmap, 270f)
+                        ExifInterface.ORIENTATION_NORMAL -> {
+                        }
+                        else -> {
+                        }
+                    }
+                    inputStream.close()
+
+
+                    // here i override the original image file
+                    val folder = File(Environment.getExternalStorageDirectory().toString() + "/FolderName")
+                    var success = true
+                    if (!folder.exists()) {
+                        success = folder.mkdir()
+                    }
+                    if (success) {
+                        val newFile = File(File(folder.absolutePath), file.name)
+                        if (newFile.exists()) {
+                            newFile.delete()
+                        }
+                        val outputStream = FileOutputStream(newFile)
+                        if (getFileExt(file.name) == "png" || getFileExt(file.name) == "PNG") {
+                            selectedBitmap!!.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                        } else {
+                            selectedBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                        }
+                        newFile
+                    } else {
+                        null
+                    }
+                } catch (e: java.lang.Exception) {
+                    null
+                }
+            }
+
+            fun getFileExt(fileName: String): String {
+                return fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length)
+            }
+
+            fun rotateImage(source: Bitmap?, angle: Float): Bitmap {
+                val matrix = Matrix()
+                matrix.postRotate(angle)
+                return Bitmap.createBitmap(
+                    source!!, 0, 0, source!!.width, source!!.height,
+                    matrix, true
+                )
+            }
         }
 
         fun savePatternData(patternModel: PatternModel, mDb: DBClass) {

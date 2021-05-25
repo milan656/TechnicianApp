@@ -33,14 +33,23 @@ class TyreDetailCommonClass {
         var chk1Make: String? = ""
         var chk2Make: String? = ""
         var chk3Make: String? = ""
+        var chk1MakeVisible: Boolean? = false
+        var chk2MakeVisible: Boolean? = false
+        var chk3MakeVisible: Boolean? = false
 
         var chk1Pattern: String? = ""
         var chk2Pattern: String? = ""
         var chk3Pattern: String? = ""
+        var chk1PatternVisible: Boolean? = false
+        var chk2PatternVisible: Boolean? = false
+        var chk3PatternVisible: Boolean? = false
 
         var chk1Size: String? = ""
         var chk2Size: String? = ""
         var chk3Size: String? = ""
+        var chk1SizeVisible: Boolean? = false
+        var chk2SizeVisible: Boolean? = false
+        var chk3SizeVisible: Boolean? = false
 
         var isCompleted = false
 

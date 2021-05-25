@@ -31,6 +31,8 @@ import com.walkins.aapkedoorstep.adapter.DialogueAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -128,10 +130,10 @@ class ProfileFragment : Fragment(), onClickAdapter {
                         var firstName: String? = ""
                         var lastName: String? = ""
                         if (it.data.firstName != null) {
-                            firstName = it.data.firstName
+                            firstName = it.data.firstName.capitalize(Locale.getDefault())
                         }
                         if (it.data.lastName != null) {
-                            lastName = it.data.lastName
+                            lastName = it.data.lastName.capitalize(Locale.getDefault())
                         }
                         tvusername?.text = "" + firstName + " " + lastName
                         try {

@@ -1290,6 +1290,23 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getvalueee22", "" + selectedTyre + " " + TyreConfigClass.RFVehicleSize)
         Log.e("getvalueee22", "" + TyreDetailCommonClass.vehicleSize)
         Log.e("getvalueee22", "" + TyreDetailCommonClass.vehicleSizeId)
+
+        if (llRFView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk1SizeVisible = true
+        } else {
+            TyreDetailCommonClass.chk1SizeVisible = false
+        }
+        if (llLRView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk2SizeVisible = true
+        } else {
+            TyreDetailCommonClass.chk2SizeVisible = false
+        }
+        if (llRRView?.visibility == View.VISIBLE) {
+            TyreDetailCommonClass.chk3SizeVisible = true
+        } else {
+            TyreDetailCommonClass.chk3SizeVisible = false
+        }
+
         val intent = Intent(this, VisualDetailsActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)
         startActivityForResult(intent, 1005)
