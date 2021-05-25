@@ -81,7 +81,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:gravity="start|center|bottom"
+                                android:gravity="start|top"
                                 android:text="GJ01RY3771"
                                 android:textAllCaps="true"
                                 android:textColor="@color/text_color1"
@@ -100,7 +100,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/four_dp"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="horizontal">

@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="start|center|bottom"
+                    android:gravity="start|center"
                     android:text="GJ01RY3771"
                     android:textAllCaps="true"
                     android:textColor="@color/text_color1"

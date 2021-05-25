@@ -69,7 +69,7 @@
 
                     <ImageView
                         android:id="@+id/ivCarimg"
-                        android:layout_width="90dp"
+                        android:layout_width="100dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center|bottom"
                         android:src="@drawable/ic_car_image" />
@@ -80,6 +80,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:layout_marginTop="@dimen/three_dp"
                     android:gravity="center|top"
                     android:orientation="horizontal">
 
