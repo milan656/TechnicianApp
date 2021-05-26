@@ -68,15 +68,6 @@ import java.util.*
 @SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
-    var title: String? = "Technician Suggestions"
-    var content = "Dear Technician! There are 0 jobs completed out of 3 jobs and jobs are skipped for today. There are 0 jobs completed out of 3 jobs and jobs are skipped for today."
-    var type: String? = ""
-    var action: String? = null
-    var imageURL: String? = null
-    var body: String? = "Dear Technician! There are 0 jobs completed out of 3 jobs and jobs are skipped for today. There are 0 jobs completed out of 3 jobs and jobs are skipped for today."
-    var notification_data: String? = null
-    var technician_channel: String? = "fcm_default_channel"
-
     private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
     private var issueResolveArray: ArrayList<IssueResolveModel>? = ArrayList()
     private var commentModel: CommentListModel? = null
@@ -124,9 +115,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             refreshToken()
         }
 
-//        val intent=Intent(this,AddServiceDetailsActivity::class.java)
-//        startActivity(intent)
-
         callApiTogetToken()
 
         val year = Calendar.getInstance().get(Calendar.YEAR)
@@ -134,46 +122,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         Log.e("getyear", "" + year + " " + weekOfYear)
 
 
-        /* val thread = Thread {
-             if (mDb.daoClass().getAllVehicleType() != null && mDb.daoClass()
-                     .getAllVehicleType().size > 0
-             ) {
- //                actionOnService(Actions.START)
-
-             } else {
-
-             }
-
-         }
-         thread.start()*/
-
         llhome?.performClick()
         getNotificationCount()
 
-        if (prefManager?.getServiceList(TyreConfigClass.serviceList) != null &&
-            prefManager?.getServiceList(TyreConfigClass.serviceList)?.size!! > 0
-        ) {
+        getServiceList()
 
-        } else {
+        getCommentList()
 
-            getServiceList()
-        }
-        if (prefManager?.getCommentList(TyreConfigClass.commentList) != null &&
-            prefManager?.getCommentList(TyreConfigClass.commentList)?.size!! > 0
-        ) {
+        getIssueList()
 
-        } else {
-
-            getCommentList()
-        }
-        if (prefManager?.getIssueList(TyreConfigClass.issueList) != null &&
-            prefManager?.getIssueList(TyreConfigClass.issueList)?.size!! > 0
-        ) {
-
-        } else {
-
-            getIssueList()
-        }
     }
 
     private fun refreshToken() {
@@ -294,23 +251,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 if (it != null) {
                     if (it.success) {
                         notiCount = it.data.count
+//                        notiCount = 10
                         if (notiCount > 0) {
                             ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
-                            ivNotification?.setColorFilter(null)
+                            ivNotification?.setTintNull(this)
                         } else {
                             ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                         }
-                        llhome?.performClick()
+//                        llhome?.performClick()
                     } else {
                         if (it.error != null) {
                             if (it.error.get(0).message != null) {
 
                             }
                         }
-                        llhome?.performClick()
+//                        llhome?.performClick()
                     }
                 } else {
-                    llhome?.performClick()
+//                    llhome?.performClick()
                 }
             })
         }
@@ -539,8 +497,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         if (!BackgroundService.isServiceStarted) {
             actionOnService(Actions.START)
         }
-
-//        getNotificationCount()
+        getNotificationCount()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -733,7 +690,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         when (requestCode) {
             PERMISSION_CODE -> {

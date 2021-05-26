@@ -20,15 +20,5 @@
         android:textSize="@dimen/fourteen_sp"
         android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/ivRedDot"
-        android:layout_width="10dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/three_dp"
-        android:layout_marginLeft="@dimen/three_dp"
-        android:background="@color/bg_color"
-        android:gravity="start|center"
-        android:visibility="gone"
-        android:src="@drawable/ic_red_point" />
+
 </LinearLayout>

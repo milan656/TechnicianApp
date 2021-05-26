@@ -176,7 +176,7 @@
                     android:layout_marginEnd="@dimen/eighteen_dp"
                     android:background="@drawable/common_rounded"
                     android:elevation="@dimen/twenty_dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -226,6 +226,7 @@
                                     android:textSize="@dimen/twelve_sp" />
 
                                 <com.walkins.aapkedoorstep.custom.BoldTextView
+                                    android:id="@+id/tvServicePersonName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -285,7 +286,9 @@
                             android:layout_marginBottom="@dimen/twenty_dp"
                             android:layout_marginEnd="@dimen/eighteen_dp"
                             android:gravity="start|center"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="@dimen/twenty_dp"
+                            android:layout_marginRight="@dimen/eighteen_dp">
 
                             <com.walkins.aapkedoorstep.custom.BoldHeavyTextView
                                 android:id="@+id/tvServices"

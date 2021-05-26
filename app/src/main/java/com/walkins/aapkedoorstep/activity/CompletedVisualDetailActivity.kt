@@ -226,17 +226,16 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
             tvBubble?.text = TyreDetailCommonClass.bubble + " - " + reqCondition_message
         }
 
-        tvPsiOut?.text = if (TyreDetailCommonClass.psiInTyreService != null && !TyreDetailCommonClass.psiInTyreService.equals(""))
-            TyreDetailCommonClass.psiInTyreService else "--"
-        tvPsiIn?.text = if (TyreDetailCommonClass.psiOutTyreService != null && !TyreDetailCommonClass.psiOutTyreService.equals(""))
+        tvPsiOut?.text = if (TyreDetailCommonClass.psiOutTyreService != null && !TyreDetailCommonClass.psiOutTyreService.equals(""))
             TyreDetailCommonClass.psiOutTyreService else "--"
+        tvPsiIn?.text = if (TyreDetailCommonClass.psiInTyreService != null && !TyreDetailCommonClass.psiInTyreService.equals(""))
+            TyreDetailCommonClass.psiInTyreService else "--"
         tvWeight?.text = if (TyreDetailCommonClass.weightTyreService != null && !TyreDetailCommonClass.weightTyreService.equals(""))
             TyreDetailCommonClass.weightTyreService else "--"
 
         Log.e("getweight", "" + TyreDetailCommonClass.weightTyreService)
         Log.e("getweight1", "" + TyreDetailCommonClass.psiOutTyreService)
         Log.e("getweight0", "" + TyreDetailCommonClass.psiInTyreService)
-
 
     }
 

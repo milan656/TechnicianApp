@@ -143,6 +143,8 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private var llBackRotation: LinearLayout? = null
     private var llFrontRotation: LinearLayout? = null
 
+    private var tvServicePersonName: TextView? = null
+    private var phoneNumber: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_service_detail)
@@ -154,6 +156,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     private fun init() {
 
         lltyreconfigbg = findViewById(R.id.lltyreconfigbg)
+        tvServicePersonName = findViewById(R.id.tvServicePersonName)
         llRotationLF = findViewById(R.id.llRotationLF)
         llRotationLR = findViewById(R.id.llRotationLR)
         llRotationRF = findViewById(R.id.llRotationRF)
@@ -463,8 +466,19 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         */
 
 
-        Log.e("modelget", "" + serviceDateByIdModel?.data)
         if (serviceDateByIdModel != null && serviceDateByIdModel?.data?.size!! > 0) {
+
+            if (serviceDateByIdModel?.data?.get(0)?.service_user_name != null &&
+                !serviceDateByIdModel?.data?.get(0)?.service_user_name.equals("")
+            ) {
+                tvServicePersonName?.text = serviceDateByIdModel?.data?.get(0)?.service_user_name
+            }
+            if (serviceDateByIdModel?.data?.get(0)?.service_user_mobile != null &&
+                !serviceDateByIdModel?.data?.get(0)?.service_user_mobile.equals("")
+            ) {
+                phoneNumber = serviceDateByIdModel?.data?.get(0)?.service_user_mobile
+            }
+            Log.e("modelget", "" + serviceDateByIdModel?.data)
             if (serviceDateByIdModel?.data?.get(0)?.service != null && serviceDateByIdModel?.data?.get(0)?.service?.size!! > 0) {
                 serviceList?.addAll(serviceDateByIdModel?.data?.get(0)?.service!!)
                 Log.e("modelget", "" + serviceList?.size)
@@ -793,7 +807,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        stringBuilder: StringBuilder
+        stringBuilder: StringBuilder,
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
@@ -813,7 +827,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         val ivClose = view.findViewById<ImageView>(R.id.ivClose)
 
         tvTitleText?.text = titleStr
-        val str = stringBuilder.toString().replace(", ", "" + "\n").replace(",",""+"\n")
+        val str = stringBuilder.toString().replace(", ", "" + "\n").replace(",", "" + "\n")
         tv_message?.text = str
 
         if (str.isNotEmpty()) {
@@ -849,9 +863,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         titleStr: String,
         context: Context?,
         btnBg: String,
-        btnText: String
+        btnText: String,
 
-    ) {
+        ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
         val dialog =
@@ -948,7 +962,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                         1
                     )
                 } else {
-                    val phone = "+91942829730011"
+                    val phone = "+91" + phoneNumber
                     val callIntent = Intent(Intent.ACTION_CALL)
                     callIntent.data = Uri.parse("tel:$phone")
                     startActivity(callIntent)

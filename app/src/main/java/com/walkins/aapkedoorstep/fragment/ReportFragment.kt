@@ -362,7 +362,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             }
 
                             val dashboardModel = ReportHistoryModel(
-                                it.data.serviceData.get(i).uuid, it.data.serviceData.get(i).address + "," + it.data.serviceData.get(i).area,
+                                it.data.serviceData.get(i).uuid, it.data.serviceData.get(i).address /*+ "," + it.data.serviceData.get(i).area*/,
                                 it.data.serviceData.get(i).regNumber,
                                 it.data.serviceData.get(i).make + " " + it.data.serviceData.get(i).model,
                                 it.data.serviceData.get(i).color, it.data.serviceData.get(i).color_code,

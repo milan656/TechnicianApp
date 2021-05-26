@@ -206,7 +206,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 val startDate = date.time
                                 Log.e("getdatefromstart", "" + startDate)
                                 dashboardModel = DashboardModel(
-                                    it.data.get(i).building_name+","+it.data.get(i).area, it.data.get(i).address + "," + it.data.get(i).area, it.data.get(i).date, it.data.get(i).building_uuid, it.data.get(i).date_formated,
+                                    it.data.get(i).building_name+","+it.data.get(i).area, it.data.get(i).address, it.data.get(i).date, it.data.get(i).building_uuid, it.data.get(i).date_formated,
                                     it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), it.data.get(i).total_jobs.toInt(), startDate,
                                     startDate
                                 )

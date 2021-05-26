@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="82dp"
     android:layout_marginTop="@dimen/eight_dp"
     android:baselineAligned="false"
     android:orientation="horizontal">
@@ -131,6 +131,7 @@
         android:background="@drawable/common_rounded"
         android:elevation="@dimen/twenty_dp"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <ImageView

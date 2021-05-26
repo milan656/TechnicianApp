@@ -21,22 +21,41 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.walkins.aapkedoorstep.custom.NormalTextView
-
-                android:id="@+id/tvNotiTitle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp" />
+                android:orientation="horizontal">
 
+                <com.walkins.aapkedoorstep.custom.NormalTextView
+
+                    android:id="@+id/tvNotiTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:text="Notification title "/>
+
+                <ImageView
+                    android:id="@+id/ivRedDot"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/three_dp"
+                    android:layout_marginLeft="@dimen/three_dp"
+                    android:background="@color/bg_color"
+                    android:gravity="start|center"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_red_point" />
+            </LinearLayout>
             <com.walkins.aapkedoorstep.custom.BoldTextView
                 android:id="@+id/tvMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/twelve_dp"
                 android:textColor="@color/text_color1"
-                android:textSize="@dimen/eighteen_sp"
+                android:textSize="@dimen/sixteen_sp"
                 android:textStyle="bold" />
+
 
         </LinearLayout>
 

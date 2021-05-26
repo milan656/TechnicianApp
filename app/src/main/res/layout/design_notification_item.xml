@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/six_dp"
     android:background="@drawable/common_rounded"
-    android:elevation="@dimen/twenty_dp">
+    android:elevation="@dimen/twenty_dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,13 +21,32 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.walkins.aapkedoorstep.custom.NormalTextView
-
-                android:id="@+id/tvNotiTitle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color1"
-                android:textSize="@dimen/fourteen_sp" />
+                android:orientation="horizontal">
+
+                <com.walkins.aapkedoorstep.custom.NormalTextView
+
+                    android:id="@+id/tvNotiTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notification title "
+                    android:textColor="@color/text_color1"
+                    android:textSize="@dimen/fourteen_sp" />
+
+                <ImageView
+                    android:id="@+id/ivRedDot"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/three_dp"
+                    android:layout_marginLeft="@dimen/three_dp"
+                    android:background="@color/bg_color"
+                    android:gravity="start|center"
+                    android:src="@drawable/ic_red_point"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <com.walkins.aapkedoorstep.custom.BoldTextView
                 android:id="@+id/tvMessage"
@@ -35,9 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/twelve_dp"
                 android:textColor="@color/text_color1"
-                android:textSize="@dimen/eighteen_sp"
+                android:textSize="@dimen/sixteen_sp"
                 android:textStyle="bold" />
-
 
         </LinearLayout>
 
@@ -46,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:alpha="0.5"
             android:gravity="bottom|right"
             android:textColor="@color/text_color1"

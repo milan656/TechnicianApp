@@ -23,7 +23,9 @@
                 android:id="@+id/ivVehicleImage"
                 android:layout_width="110dp"
                 android:layout_height="60dp"
-                android:padding="@dimen/six_dp"
+                android:paddingTop="@dimen/six_dp"
+                android:paddingStart="@dimen/six_dp"
+                android:paddingEnd="@dimen/six_dp"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/car" />
 
@@ -35,7 +37,6 @@
                 android:gravity="center"
                 android:textColor="@color/text_color1"
                 android:textSize="@dimen/twelve_sp"
-                android:layout_marginTop="@dimen/four_dp"
                 android:layout_marginBottom="@dimen/sixteen_dp"
                 android:maxLines="2"
                 />

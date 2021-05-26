@@ -4,6 +4,7 @@ data class NotificationModel(
     var addressTitle: String,
     var fullAddress: String,
     var date: String,
+    var isRead: Boolean,
     var building_uuid:String,
     var dateFormated: String,
     var upcomingCount: Int,

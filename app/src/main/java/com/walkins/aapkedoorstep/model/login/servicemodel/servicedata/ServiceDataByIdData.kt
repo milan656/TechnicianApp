@@ -20,6 +20,12 @@ data class ServiceDataByIdData(
     @SerializedName("service_user_id")
     @Expose
     val serviceUserId: String,
+    @SerializedName("service_user_name")
+    @Expose
+    val service_user_name: String,
+    @SerializedName("service_user_mobile")
+    @Expose
+    val service_user_mobile: String,
     @SerializedName("service_activity_history_id")
     @Expose
     val serviceActivityHistoryId: String,

@@ -25,7 +25,8 @@ class ServicesListAdpater(
     var array: MutableList<ServiceListByDateData>,
     var context: Context,
     onPositionClick: onClickAdapter,
-    var servicestatus: String
+    var servicestatus: String,
+    var isAddService: Boolean,
 ) :
     RecyclerView.Adapter<ServicesListAdpater.Viewholder>() {
 
@@ -44,7 +45,7 @@ class ServicesListAdpater(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): Viewholder {
         var view =
             LayoutInflater.from(context)
@@ -96,6 +97,12 @@ class ServicesListAdpater(
             holder.ivServiceTyre.setImageResource(R.mipmap.ic_completed_service)
         } else {
             holder.ivServiceTyre.setImageResource(R.mipmap.ic_service_icon)
+        }
+
+        if (isAddService) {
+            holder.cardAddService.visibility = View.VISIBLE
+        } else {
+            holder.cardAddService.visibility = View.GONE
         }
 
     }

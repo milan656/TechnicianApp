@@ -17,11 +17,11 @@ import com.walkins.aapkedoorstep.model.login.NotificationModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-@SuppressLint("SimpleDateFormat","SetTextI18n")
+@SuppressLint("SimpleDateFormat", "SetTextI18n")
 class NotificationAdpater(
     var array: ArrayList<NotificationModel>,
     var context: Context,
-    onPositionClick: onClickAdapter
+    onPositionClick: onClickAdapter,
 ) :
     RecyclerView.Adapter<NotificationAdpater.Viewholder>(),
     StickyHeaderAdapter<NotificationAdpater.HeaderHolder?> {
@@ -40,6 +40,7 @@ class NotificationAdpater(
         var tvNotiTitle = itemView.findViewById<TextView>(R.id.tvNotiTitle)
         var tvMessage = itemView.findViewById<TextView>(R.id.tvMessage)
         var tvTime = itemView.findViewById<TextView>(R.id.tvTime)
+        var ivRedDot = itemView.findViewById<ImageView>(R.id.ivRedDot)
 
     }
 
@@ -60,7 +61,7 @@ class NotificationAdpater(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): Viewholder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.design_notification_item, parent, false)
@@ -75,6 +76,11 @@ class NotificationAdpater(
             if (onclick != null) {
                 onclick?.onPositionClick(position, 0)
             }
+        }
+        if (!array.get(position).isRead) {
+            holder.ivRedDot?.visibility = View.VISIBLE
+        } else {
+            holder.ivRedDot?.visibility = View.GONE
         }
 
         holder.tvNotiTitle?.text = array.get(position).addressTitle
@@ -117,10 +123,10 @@ class NotificationAdpater(
                 }
             }
 
-            if (mToday!=mDateFormat.format(Date(array.get(position).createdAt)).toString()){
-                holder.tvTime?.visibility=View.GONE
-            }else{
-                holder.tvTime?.visibility=View.VISIBLE
+            if (mToday != mDateFormat.format(Date(array.get(position).createdAt)).toString()) {
+                holder.tvTime?.visibility = View.GONE
+            } else {
+                holder.tvTime?.visibility = View.VISIBLE
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -135,7 +141,7 @@ class NotificationAdpater(
 
     class HeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var timestamp = itemView.findViewById<TextView>(R.id.timestamp)
-        var ivRedDot = itemView.findViewById<ImageView>(R.id.ivRedDot)
+
     }
 
     init {
@@ -152,7 +158,6 @@ class NotificationAdpater(
     override fun onBindHeaderViewHolder(p0: HeaderHolder?, p1: Int) {
         val item: NotificationModel = mDataset[p1]
 
-        p0?.ivRedDot?.visibility = View.GONE
         p0?.timestamp?.text = mDateFormat.format(Date(item.createdAt)).toString()
         Log.e("gettimedate", "" + mDataset.get(p1))
         if (mToday == p0?.timestamp?.text) {

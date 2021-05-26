@@ -22,6 +22,12 @@ data class ServiceListByDateData(
     @SerializedName("reg_number")
     @Expose
     val regNumber: String,
+    @SerializedName("service_user_name")
+    @Expose
+    val service_user_name: String,
+    @SerializedName("service_user_mobile")
+    @Expose
+    val service_user_mobile: String,
     @SerializedName("make")
     @Expose
     val make: String,

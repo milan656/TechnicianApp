@@ -1,6 +1,7 @@
 package com.walkins.aapkedoorstep.fragment
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
@@ -35,7 +37,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat","InflateParams",
+@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat", "InflateParams",
     "SetTextI18n")
 class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     // TODO: Rename and change types of parameters
@@ -44,7 +46,6 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var prefManager: PrefManager? = null
     private var commonViewModel: CommonViewModel? = null
     private var notificationArr: ArrayList<NotificationModel>? = ArrayList()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +62,11 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var tvNoNotiData: TextView? = null
     var activity: MainActivity? = null
     private var notificationAdpater: NotificationAdpater? = null
+    private var notiSwipe:SwipeRefreshLayout?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_notification, container, false)
@@ -78,6 +80,7 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     private fun init(view: View?) {
         notificationRecycView = view?.findViewById(R.id.notificationRecycView)
+        notiSwipe = view?.findViewById(R.id.notiSwipe)
         tvTitle = view?.findViewById(R.id.tvTitle)
         tvNoNotiData = view?.findViewById(R.id.tvNoNotiData)
         ivBack = view?.findViewById(R.id.ivBack)
@@ -99,6 +102,28 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
         tvTitle?.text = "Notification"
 
         getNotificationList()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            notiSwipe?.setColorSchemeColors(
+                resources.getColor(android.R.color.holo_green_dark, null),
+                resources.getColor(android.R.color.holo_red_dark, null),
+                resources.getColor(android.R.color.holo_blue_dark, null),
+                resources.getColor(android.R.color.holo_orange_dark, null)
+            )
+        }
+
+
+        notiSwipe?.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                this@NotificationFragment.onRefresh()
+            }
+
+        })
+    }
+
+    fun onRefresh() {
+        getNotificationList()
+        notiSwipe?.post { notiSwipe?.isRefreshing = false }
     }
 
     private fun getNotificationList() {
@@ -110,11 +135,7 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
-
-//                        notificationArr?.clear()
-//                        notificationArr?.addAll(it.data.notifications)
-
-//                        notificationAdpater?.notifyDataSetChanged()
+                        notificationArr?.clear()
 
                         if (it.data.notifications != null && it.data.notifications.size > 0) {
                             for (i in it.data.notifications.indices) {
@@ -125,13 +146,17 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 val sdf = SimpleDateFormat("yyyy-MM-dd")
                                 val date = sdf.parse(dateString)
 
-                                val startDate = date.time
+                                val startDate: Long = date.time
                                 Log.e("getdatefromstart", "" + startDate)
+//                                dashboardModel = NotificationModel(
+//                                    it.data.notifications.get(i).title, it.data.notifications.get(i).message, it.data.notifications.get(i).createdAt, "",
+//                                    0, 0, 0, 0, startDate,
+//                                    startDate
+//                                )
+
                                 dashboardModel = NotificationModel(
-                                    it.data.notifications.get(i).title, it.data.notifications.get(i).message, it.data.notifications.get(i).createdAt, "", "",
-                                    0, 0, 0, 0, startDate,
-                                    startDate
-                                )
+                                    it.data.notifications.get(i).title, it.data.notifications.get(i).message,
+                                    it.data.notifications.get(i).createdAt, it.data.notifications.get(i).read, "", "", 0, 0, 0, 0, startDate, startDate)
 
                                 notificationArr?.add(dashboardModel)
                             }

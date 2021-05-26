@@ -1,7 +1,7 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
-import android.R.attr.data
+import android.R.attr.bitmap
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -9,6 +9,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -64,8 +65,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
-import java.io.File
-import java.io.InputStream
+import java.io.*
 import java.lang.Runnable
 import java.lang.reflect.Type
 import java.text.ParseException
@@ -77,6 +77,7 @@ import kotlin.collections.ArrayList
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "SimpleDateFormat", "SetTextI18n")
 class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter,
     View.OnTouchListener {
+
     private lateinit var prefManager: PrefManager
     private lateinit var mDb: DBClass
 
@@ -161,7 +162,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var ivInfoImgRR: ImageView? = null
     private var btnSubmitAndComplete: TextView? = null
 
-    private var ivPhoneCall: ImageView? = null
     private var ivDueDate: ImageView? = null
     private var tvNextServiceDueDate: TextView? = null
     private var edtMoreSuggestion: EditText? = null
@@ -215,8 +215,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var uuid: String = ""
     private var colorCode: String = ""
     private var address: String = ""
+    private var service_number: String = ""
+    private var service_name: String = ""
     private var make_id: String = ""
     private var model_id: String = ""
+
+    private var tvServicePersonName:TextView?=null
+    private var ivPhoneCall:ImageView?=null
+    private var phoneNumber:String?=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1076,6 +1082,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private fun init() {
 
         tvTitle = findViewById(R.id.tvTitle)
+        tvServicePersonName = findViewById(R.id.tvServicePersonName)
         ivBack = findViewById(R.id.ivBack)
         ivInfoAddService = findViewById(R.id.ivInfoAddService)
         ivAddServices = findViewById(R.id.ivAddServices)
@@ -1200,6 +1207,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             if (intent.getStringExtra("address") != null) {
                 address = intent.getStringExtra("address")!!
             }
+            if (intent.getStringExtra("service_name") != null) {
+                service_name = intent.getStringExtra("service_name")!!
+            }
+            if (intent.getStringExtra("service_number") != null) {
+                service_number = intent.getStringExtra("service_number")!!
+            }
             if (intent.getStringExtra("make_id") != null) {
                 make_id = intent.getStringExtra("make_id")!!
                 if (!make_id.equals("")) {
@@ -1213,6 +1226,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
 
+        }
+
+        if (!service_name.equals("")){
+            tvServicePersonName?.text=service_name
+        }
+        if (!service_number.equals("")){
+            phoneNumber=service_number
         }
 
         tvcolor?.text = color
@@ -2751,33 +2771,33 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //                    Common.hideLoader()
 
-                     serviceViewModel?.callApiAddService(
-                         jsonObject,
-                         prefManager.getAccessToken()!!,
-                         this
-                     )
+                    serviceViewModel?.callApiAddService(
+                        jsonObject,
+                        prefManager.getAccessToken()!!,
+                        this
+                    )
 
-                     serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
-                         if (it != null) {
-                             if (it.success) {
+                    serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
+                        if (it != null) {
+                            if (it.success) {
 
-                                 Common.hideLoader()
+                                Common.hideLoader()
 
-                                 showDialogue("Success", "Your Service Added Successfully", true)
+                                showDialogue("Success", "Your Service Added Successfully", true)
 
-                             } else {
-                                 Common.hideLoader()
+                            } else {
+                                Common.hideLoader()
 
-                                 try {
-                                     showShortToast(TyreKey.something_went_wrong, this)
-                                 } catch (e: Exception) {
-                                     e.printStackTrace()
-                                 }
-                             }
-                         } else {
-                             Common.hideLoader()
-                         }
-                     })
+                                try {
+                                    showShortToast(TyreKey.something_went_wrong, this)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        } else {
+                            Common.hideLoader()
+                        }
+                    })
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -4263,6 +4283,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //                        var compressFile = Common.saveBitmapToFile(imagePath!!)
 //                        Log.e("getimagesize", "" + imagePath.length() + " -- " + compressFile?.length())
 //                        Log.e("getimagesize", "" + imagePath.isFile + " -- " + compressFile?.isFile)
+
+//                        val os: OutputStream = BufferedOutputStream(FileOutputStream(imagePath!!))
+
+//                        data?..compress(Bitmap.CompressFormat.JPEG, 100, os)
+//                        os.close()
                         imagePath.let { uploadImage(it!!, inputStream!!, "") }
                     } else {
 
@@ -6759,7 +6784,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         builder?.window?.setLayout(width, height)
         builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout, null)
+        val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout_service, null)
 
         val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
         val ivClose = root.findViewById<ImageView>(R.id.ivClose)

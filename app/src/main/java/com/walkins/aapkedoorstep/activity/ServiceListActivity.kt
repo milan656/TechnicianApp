@@ -32,6 +32,8 @@ import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateM
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import java.lang.reflect.Type
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @SuppressLint("SetTextI18n")
@@ -69,6 +71,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private var addressTitle = ""
     private var fullAddress = ""
     private var building_uuid = ""
+    private var isAddServiceEnable = false
 
     companion object {
         var upcomming = "open"
@@ -77,6 +80,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     }
 
     private var serviceStatus = upcomming
+    private var llTabs: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,12 +95,12 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             refreshToken()
         }
 
-
     }
 
     private fun init() {
         serviceRecycView = findViewById(R.id.serviceRecycView)
         serviceListSwipe = findViewById(R.id.serviceListSwipe)
+        llTabs = findViewById(R.id.llTabs)
         relNoData = findViewById(R.id.relNoData)
         llAddressView = findViewById(R.id.llAddressView)
 
@@ -129,7 +133,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             RecyclerView.VERTICAL,
             false
         )
-        adapter = this.let { ServicesListAdpater(arrayList, it, this, serviceStatus) }
+        adapter = this.let { ServicesListAdpater(arrayList, it, this, serviceStatus, isAddServiceEnable) }
         serviceRecycView?.adapter = adapter
         adapter?.onclick = this
 
@@ -152,6 +156,19 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 building_uuid = intent.getStringExtra("building_uuid")!!
             }
         }
+        val mDateFormat = SimpleDateFormat("dd MMMM yy")
+        val mToday = mDateFormat.format(Date())
+        val date = mDateFormat.format(Date(selectedDateFormated)).toString()
+        Log.e("getdatefor", "" + mToday + " " + date)
+
+        isAddServiceEnable = mToday.equals(date)
+
+        if (mToday.equals(date)) {
+            llTabs?.visibility = View.VISIBLE
+        } else {
+            llTabs?.visibility = View.GONE
+        }
+
         tvDate?.text = selectedDateFormated
         tvAddress?.text = addressTitle
 
@@ -214,7 +231,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                         if (serviceStatus.equals(upcomming)) {
 //                            arrayList.filter { it.status.equals(upcomming) }
                             arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this, serviceStatus) }
+                            adapter =
+                                this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this, serviceStatus, isAddServiceEnable) }
 
                             tvUpcoming?.text = "Upcoming - ${arrayList.size}"
                             Log.e("getservicedata", "" + arrayList.size)
@@ -222,13 +240,15 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 //                            arrayList.filter { it.status.equals(completed) }
                             Log.e("getservicedata0", "" + arrayList.size)
                             arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this, serviceStatus) }
+                            adapter =
+                                this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this, serviceStatus, isAddServiceEnable) }
                             tvCompleted?.text = "Completed - ${arrayList.size}"
                         } else if (serviceStatus.equals(skipped)) {
 //                            arrayList.filter { it.status.equals(skipped) }
                             Log.e("getservicedata1", "" + arrayList.size)
                             arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
-                            adapter = this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this, serviceStatus) }
+                            adapter =
+                                this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this, serviceStatus, isAddServiceEnable) }
                             tvSkipped?.text = "Skipped - ${arrayList.size}"
                         }
 
@@ -281,7 +301,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus)
+                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Upcoming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
@@ -312,7 +332,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus)
+                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
 
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Completed service to display"
@@ -345,7 +365,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 arrayList.addAll(serviceListDataModel?.data!!)
 
                 arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus)
+                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
 
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Skipped service to display"
@@ -395,6 +415,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("address", "" + fullAddress)
                 intent.putExtra("make_id", "" + arrayList.get(variable).make_id)
                 intent.putExtra("model_id", "" + arrayList.get(variable).model_id)
+                intent.putExtra("service_name", "" + arrayList.get(variable).service_user_name)
+                intent.putExtra("service_number", "" + arrayList.get(variable).service_user_mobile)
 
                 val gson = Gson()
                 val serviceList = gson.toJson(arrayList.get(variable))
@@ -442,7 +464,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        stringBuilder: StringBuilder
+        stringBuilder: StringBuilder,
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
