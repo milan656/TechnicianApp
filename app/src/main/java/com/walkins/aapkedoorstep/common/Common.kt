@@ -380,7 +380,7 @@ class Common {
             ImageViewCompat.setImageTintList(this, colorStateList)
         }
 
-        fun ImageView.setTintNull(context: Context) {
+        fun ImageView.setTintNull() {
             ImageViewCompat.setImageTintList(this, null)
         }
 

@@ -349,20 +349,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
 //        getIssueList()
 
-        if (prefManager.getIssueList(TyreConfigClass.issueList) != null &&
-            prefManager.getIssueList(TyreConfigClass.issueList)?.size!! > 0
-        ) {
-            issueResolveArray?.clear()
-            for (i in prefManager.getIssueList(TyreConfigClass.issueList)?.indices!!) {
-                issueResolveArray?.add(
-                    IssueResolveModel(
-                        prefManager.getIssueList(TyreConfigClass.issueList)?.get(i)?.issueName!!, prefManager.getIssueList(TyreConfigClass.issueList)?.get(i)?.id!!, false
-                    )
-                )
-            }
-            issueResolveAdapter?.notifyDataSetChanged()
-            getTyreWiseData()
-        }
 
         if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
             !prefManager.getValue(TyreConfigClass.serviceDetailData).equals("")
@@ -425,6 +411,22 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
 
         }
+
+        if (prefManager.getIssueList(TyreConfigClass.issueList) != null &&
+            prefManager.getIssueList(TyreConfigClass.issueList)?.size!! > 0
+        ) {
+            issueResolveArray?.clear()
+            for (i in prefManager.getIssueList(TyreConfigClass.issueList)?.indices!!) {
+                issueResolveArray?.add(
+                    IssueResolveModel(
+                        prefManager.getIssueList(TyreConfigClass.issueList)?.get(i)?.issueName!!, prefManager.getIssueList(TyreConfigClass.issueList)?.get(i)?.id!!, false
+                    )
+                )
+            }
+            issueResolveAdapter?.notifyDataSetChanged()
+            getTyreWiseData()
+        }
+
 
         if (prefManager.getValue("image_" + selectedTyre) != null &&
             !prefManager.getValue("image_" + selectedTyre).equals("")
@@ -565,21 +567,24 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     weightTyreService = json.get(TyreKey.weightTyreService)?.asString!!
                     multiSliderWeight?.bubbleText = weightTyreService
                     multiSliderWeight?.animation?.start()
+
                     Log.e("getvaluess22", "" + multiSliderWeight?.bubbleText)
                 }
                 if (json.get(TyreKey.sidewell) != null) {
-                    if (json.get(TyreKey.sidewell)?.asString!!.equals(ok_status)) {
+                    if (json.get(TyreKey.sidewell)?.asString?.equals(ok_status)!!) {
                         ivOkSideWell?.performClick()
                         sidewell = ok_status
                     }
-                    if (json.get(TyreKey.sidewell)?.asString!!.equals("SUG")) {
+                    if (json.get(TyreKey.sidewell)?.asString?.equals("SUG")!!) {
+                        Log.e("getsideweel",""+json.get(TyreKey.sidewell)?.asString)
                         ivSugSideWell?.performClick()
                         sidewell = "SUG"
                     }
-                    if (json.get(TyreKey.sidewell)?.asString!!.equals("REQ")) {
+                    if (json.get(TyreKey.sidewell)?.asString?.equals("REQ")!!) {
                         ivReqSideWell?.performClick()
                         sidewell = "REQ"
                     }
+                    TyreDetailCommonClass.sidewell=sidewell
                 }
                 if (json.get(TyreKey.shoulder) != null) {
 
@@ -699,6 +704,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                     }
                 }
+                TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
 
                 setData(json)
 
@@ -912,7 +918,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         multiSliderWeight = findViewById<FluidSlider>(R.id.multiSliderWeight)
         multiSliderWeight?.positionListener = { pos ->
             multiSliderWeight?.bubbleText = "${min + (total * pos).toInt()}"
-            Log.e("getvaluessweight", "" + multiSliderWeight?.bubbleText+" ${min + (total * pos).toInt()}")
+            Log.e("getvaluessweight", "" + multiSliderWeight?.bubbleText + " ${min + (total * pos).toInt()}")
 
             weightTyreService = multiSliderWeight?.bubbleText
         }
@@ -1127,9 +1133,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         array: ArrayList<String>,
         titleStr: String,
         context: Context?,
-        btnBg: String
+        btnBg: String,
 
-    ) {
+        ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
         cameraDialog =
@@ -1309,13 +1315,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     return
                 }
 
-                if (TyreDetailCommonClass.visualDetailPhotoUrl!=null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")){
-
-                }else{
-                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
-                        .show()
-                    return
-                }
+//                if (TyreDetailCommonClass.visualDetailPhotoUrl!=null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")){
+//
+//                }else{
+//                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
+//                        .show()
+//                    return
+//                }
 
                 if (selectedTyre.equals("LF")) {
 
@@ -1487,8 +1493,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
             R.id.ivOkbubble, R.id.llOkBubble -> {
                 ivOkbubble?.setImageResource(R.mipmap.ic_condition_ok)
-                ivSugSideWell?.setImageResource(R.mipmap.ic_blank_condition)
-                ivReqSideWell?.setImageResource(R.mipmap.ic_blank_condition)
+                ivSugbubble?.setImageResource(R.mipmap.ic_blank_condition)
+                ivReqbubble?.setImageResource(R.mipmap.ic_blank_condition)
                 bubble = ok_status
             }
             R.id.ivSugbubble, R.id.llSugBubble -> {
@@ -1526,7 +1532,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 

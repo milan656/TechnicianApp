@@ -148,12 +148,6 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                                 val startDate: Long = date.time
                                 Log.e("getdatefromstart", "" + startDate)
-//                                dashboardModel = NotificationModel(
-//                                    it.data.notifications.get(i).title, it.data.notifications.get(i).message, it.data.notifications.get(i).createdAt, "",
-//                                    0, 0, 0, 0, startDate,
-//                                    startDate
-//                                )
-
                                 dashboardModel = NotificationModel(
                                     it.data.notifications.get(i).title, it.data.notifications.get(i).message,
                                     it.data.notifications.get(i).createdAt, it.data.notifications.get(i).read, "", "", 0, 0, 0, 0, startDate, startDate)

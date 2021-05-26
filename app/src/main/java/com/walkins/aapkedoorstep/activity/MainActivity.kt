@@ -241,6 +241,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         })
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun getNotificationCount() {
 
         this.let {
@@ -254,21 +255,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 //                        notiCount = 10
                         if (notiCount > 0) {
                             ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
-                            ivNotification?.setTintNull(this)
+                            ivNotification?.setTintNull()
                         } else {
                             ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                         }
-//                        llhome?.performClick()
                     } else {
                         if (it.error != null) {
                             if (it.error.get(0).message != null) {
 
                             }
                         }
-//                        llhome?.performClick()
                     }
-                } else {
-//                    llhome?.performClick()
                 }
             })
         }
@@ -416,7 +413,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivReport?.setTint(this, R.color.text_color1)
                 if (notiCount > 0) {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
-                    ivNotification?.setTintNull(this)
+                    ivNotification?.setTintNull()
                 } else {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                     ivNotification?.setTint(this, R.color.text_color1)
@@ -438,7 +435,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivReport?.setTint(this, R.color.header_title)
                 if (notiCount > 0) {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
-                    ivNotification?.setTintNull(this)
+                    ivNotification?.setTintNull()
                 } else {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                     ivNotification?.setTint(this, R.color.text_color1)
@@ -477,7 +474,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 ivReport?.setTint(this, R.color.text_color1)
                 if (notiCount > 0) {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_count))
-                    ivNotification?.setTintNull(this)
+                    ivNotification?.setTintNull()
                 } else {
                     ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                     ivNotification?.setTint(this, R.color.text_color1)

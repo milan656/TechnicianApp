@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/sixteen_dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,11 +28,9 @@
                 android:orientation="horizontal">
 
                 <com.walkins.aapkedoorstep.custom.NormalTextView
-
                     android:id="@+id/tvNotiTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Notification title "
                     android:textColor="@color/text_color1"
                     android:textSize="@dimen/fourteen_sp" />
 
@@ -64,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_weight="2.5"
+            android:layout_weight="2.1"
             android:alpha="0.5"
             android:gravity="bottom|right"
             android:textColor="@color/text_color1"
