@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
@@ -20,6 +21,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -74,6 +76,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     var max = 50
     var min = 0
     var total = max - min
+    private var dialogue: Dialog? = null
 
     private lateinit var mDb: DBClass
     private lateinit var prefManager: PrefManager
@@ -576,7 +579,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         sidewell = ok_status
                     }
                     if (json.get(TyreKey.sidewell)?.asString?.equals("SUG")!!) {
-                        Log.e("getsideweel",""+json.get(TyreKey.sidewell)?.asString)
+                        Log.e("getsideweel", "" + json.get(TyreKey.sidewell)?.asString)
                         ivSugSideWell?.performClick()
                         sidewell = "SUG"
                     }
@@ -584,7 +587,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         ivReqSideWell?.performClick()
                         sidewell = "REQ"
                     }
-                    TyreDetailCommonClass.sidewell=sidewell
+                    TyreDetailCommonClass.sidewell = sidewell
                 }
                 if (json.get(TyreKey.shoulder) != null) {
 
@@ -1864,7 +1867,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     }
 
     private fun uploadImage(imagePath: File, inputStream: InputStream, type: String) {
-        Common.showLoader(this)
+        showLoader(this)
 
 //        val requestFile = RequestBody.create(
 //            MediaType.parse("image/*"),
@@ -1883,7 +1886,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         loginViewModel?.uploadImage(part, prefManager.getAccessToken()!!, this, type)
 
         loginViewModel?.getImageUpload()?.observe(this, androidx.lifecycle.Observer {
-            Common.hideLoader()
+            hideLoader()
             if (it != null) {
                 if (it.success) {
                     Log.e("getfile", "" + it.data.imageUrl)
@@ -1983,6 +1986,39 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
         if (selectedTyre.equals("RR")) {
             TyreDetailCommonClass.tyre_Uri_RR = uri
+        }
+    }
+
+    fun showLoader(activity: Context) {
+        try {
+            if (dialogue != null) {
+                if (dialogue?.isShowing!!) {
+                    dialogue?.dismiss()
+                }
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        try {
+            dialogue = Dialog(activity)
+            dialogue?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogue?.setContentView(R.layout.common_loader)
+            dialogue?.setCancelable(false)
+            dialogue?.show()
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun hideLoader() {
+        try {
+            if (dialogue != null && dialogue?.isShowing!!) {
+                dialogue?.dismiss()
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

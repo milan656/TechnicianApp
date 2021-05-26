@@ -5,6 +5,7 @@ import android.R.attr.bitmap
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -80,6 +81,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private lateinit var prefManager: PrefManager
     private lateinit var mDb: DBClass
+    private var dialogue: Dialog? = null
 
     private var loginViewModel: LoginActivityViewModel? = null
     private var commonViewModel: CommonViewModel? = null
@@ -2661,8 +2663,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     selectedServiceArr?.clear()
                     if (serviceList != null && serviceList?.size!! > 0) {
                         for (i in serviceList!!) {
-                            if (i.isSelected!!) {
-                                selectedServiceArr?.add(i.name!!)
+                            if (i.isSelected) {
+                                selectedServiceArr?.add(i.name)
                                 jsonArrayService.add(i.id)
                             }
                         }
@@ -2782,11 +2784,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             if (it.success) {
 
                                 Common.hideLoader()
+                                hideLoader()
 
                                 showDialogue("Success", "Your Service Added Successfully", true)
 
                             } else {
                                 Common.hideLoader()
+                                hideLoader()
 
                                 try {
                                     showShortToast(TyreKey.something_went_wrong, this)
@@ -2796,6 +2800,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
                         } else {
                             Common.hideLoader()
+                            hideLoader()
                         }
                     })
                 } catch (e: Exception) {
@@ -2803,6 +2808,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
             Common.hideLoader()
+            hideLoader()
         }, WaitTime)
 
     }
@@ -6594,7 +6600,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
     private fun uploadImage(imagePath: File, inputStream: InputStream, type: String) {
-        Common.showLoader(this)
+        showLoader(this)
         val part = MultipartBody.Part.createFormData(
             "file", imagePath.name, RequestBody.create(
                 MediaType.parse("image/*"),
@@ -6730,13 +6736,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     storeServiceDetailData()
                     checkSubmitBtn()
                     if (type.equals("")) {
-                        Common.hideLoader()
+                        hideLoader()
                     }
                 } else {
                     Common.hideLoader()
+                    hideLoader()
                 }
             } else {
                 Common.hideLoader()
+                hideLoader()
             }
         })
     }
@@ -7322,6 +7330,39 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     selectedServiceArr?.add(serviceList?.get(i)?.name!!)
                 }
             }
+        }
+    }
+
+    fun showLoader(activity: Context) {
+        try {
+            if (dialogue != null) {
+                if (dialogue?.isShowing!!) {
+                    dialogue?.dismiss()
+                }
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        try {
+            dialogue = Dialog(activity)
+            dialogue?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogue?.setContentView(R.layout.common_loader)
+            dialogue?.setCancelable(false)
+            dialogue?.show()
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun hideLoader() {
+        try {
+            if (dialogue != null && dialogue?.isShowing!!) {
+                dialogue?.dismiss()
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }
