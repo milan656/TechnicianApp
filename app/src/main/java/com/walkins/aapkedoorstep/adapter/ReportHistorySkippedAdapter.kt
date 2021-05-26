@@ -77,7 +77,7 @@ class ReportHistorySkippedAdapter(
         }
 
         holder.tvColor?.text = mDataset.get(position).carColor
-        holder.tvMakemodel?.text = mDataset.get(position).makeModel
+        holder.tvMakemodel?.text = mDataset.get(position).makeModel.capitalize(Locale.getDefault())
         holder.tvRegNumber?.text = mDataset.get(position).regNumber.toString()
 
         try {
@@ -116,7 +116,7 @@ class ReportHistorySkippedAdapter(
     ) {
 
         var tvRegNumber = itemView.findViewById<TextView>(R.id.tvRegNumber)
-        var tvMakemodel = itemView.findViewById<TextView>(R.id.tvMakemodel)
+        var tvMakemodel = itemView.findViewById<TextView>(R.id.tvMakeModel)
         var ivCarImage = itemView.findViewById<ImageView>(R.id.ivCarImage)
         var tvColor = itemView.findViewById<TextView>(R.id.tvColor)
         var ivInfoAddService = itemView.findViewById<ImageView>(R.id.ivInfoAddService)

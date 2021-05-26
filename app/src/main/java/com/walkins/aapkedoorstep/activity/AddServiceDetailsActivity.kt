@@ -229,7 +229,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //        requestPermissionForImage()
         init()
-        removeAllTyreAndServiceDetails()
     }
 
     suspend fun getStoredObjects(checkUnCheck: String) {
@@ -1152,9 +1151,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         relCarPhotoAdd2 = findViewById(R.id.relCarPhotoAdd2)
         relCarPhotoAdd1 = findViewById(R.id.relCarPhotoAdd1)
 
-        tvcolor = findViewById(R.id.tvcolor)
+        tvcolor = findViewById(R.id.tvColor)
         tvMakeModel = findViewById(R.id.tvMakeModel)
-        llbg = findViewById(R.id.llbg)
+        llbg = findViewById(R.id.llColor)
         tvRegNumber = findViewById(R.id.tvRegNumber)
         ivCarImage = findViewById(R.id.ivCarImage)
 
@@ -2750,9 +2749,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getfinalobject", "" + jsonObject)
                     Log.e("getObjectT__", "" + jsonObject)
 
-                    Common.hideLoader()
+//                    Common.hideLoader()
 
-                    /* serviceViewModel?.callApiAddService(
+                     serviceViewModel?.callApiAddService(
                          jsonObject,
                          prefManager.getAccessToken()!!,
                          this
@@ -2778,7 +2777,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                          } else {
                              Common.hideLoader()
                          }
-                     })*/
+                     })
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -4261,9 +4260,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         } else {
                             prefManager.removeValue("image_Car_2")
                         }
-                        var compressFile = Common.Companion.CompressFile.getCompressedImageFile(imagePath!!, this)
-                        Log.e("getimagesize", "" + imagePath.length() + " -- " + compressFile?.length())
-                        imagePath.let { uploadImage(it, inputStream!!, "") }
+//                        var compressFile = Common.saveBitmapToFile(imagePath!!)
+//                        Log.e("getimagesize", "" + imagePath.length() + " -- " + compressFile?.length())
+//                        Log.e("getimagesize", "" + imagePath.isFile + " -- " + compressFile?.isFile)
+                        imagePath.let { uploadImage(it!!, inputStream!!, "") }
                     } else {
 
                         if (selectImage1) {

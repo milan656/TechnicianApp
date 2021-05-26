@@ -15,7 +15,7 @@ data class ServiceListByDateData(
     val color: String,
     @SerializedName("color_code")
     @Expose
-    val color_code: String,
+    var color_code: String,
     @SerializedName("status")
     @Expose
     val status: String,

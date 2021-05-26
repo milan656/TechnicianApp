@@ -34,12 +34,12 @@ class ServicesListAdpater(
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var cardAddService: LinearLayout = itemView.findViewById(R.id.cardAddService)
-        var ivCarimg: ImageView = itemView.findViewById(R.id.ivCarimg)
+        var ivCarimg: ImageView = itemView.findViewById(R.id.ivCarImage)
         var ivServiceTyre: ImageView = itemView.findViewById(R.id.ivServiceTyre)
-        var lllineView: LinearLayout = itemView.findViewById(R.id.lllineView)
-        var tvVehicleNumber: TextView = itemView.findViewById(R.id.tvVehicleNumber)
-        var tvVehicleName: TextView = itemView.findViewById(R.id.tvVehicleName)
-        var tvColorName: TextView = itemView.findViewById(R.id.tvColorName)
+        var lllineView: LinearLayout = itemView.findViewById(R.id.llColor)
+        var tvVehicleNumber: TextView = itemView.findViewById(R.id.tvRegNumber)
+        var tvVehicleName: TextView = itemView.findViewById(R.id.tvMakeModel)
+        var tvColorName: TextView = itemView.findViewById(R.id.tvColor)
     }
 
     override fun onCreateViewHolder(
@@ -75,6 +75,7 @@ class ServicesListAdpater(
         holder.tvColorName.text = array.get(position).color
 
 //        holder.lllineView.setBackgroundColor(Color.parseColor(array.get(position).color_code))
+
         holder.lllineView.setBackgroundColor(Color.parseColor(array.get(position).color_code))
 
         holder.itemView.setOnClickListener {

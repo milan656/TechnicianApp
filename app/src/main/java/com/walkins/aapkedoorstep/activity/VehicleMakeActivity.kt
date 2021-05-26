@@ -59,6 +59,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     private var selectedName: String = ""
     private var selectedImage: String = ""
+    private var tvmakeName:TextView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +76,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         ivBack = findViewById(R.id.ivBack)
 
         ivSelectedCar = findViewById(R.id.ivSelectedCar)
+        tvmakeName = findViewById(R.id.tvmakeName)
         llRRView = findViewById(R.id.llRRView)
         llRFView = findViewById(R.id.llRFView)
         llLRView = findViewById(R.id.llLRView)
@@ -565,6 +567,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
+
+                    tvmakeName?.text=selectedName
                     Common.hideLoader()
 
                 } else {
@@ -633,6 +637,8 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getselected", "" + arrList?.get(selectedPos)?.concat)
         TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat
         selectedName = arrList?.get(selectedPos)?.name!!
+
+        tvmakeName?.text=selectedName
 
         try {
             Glide.with(this)

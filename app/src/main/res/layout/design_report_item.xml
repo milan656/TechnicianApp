@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/six_dp"
@@ -83,9 +84,9 @@
                     android:layout_marginStart="@dimen/five_dp"
                     android:layout_marginEnd="@dimen/five_dp"
                     android:layout_marginRight="@dimen/five_dp"
-                    android:src="@mipmap/ic_tyre_rotation" />
+                    android:src="@mipmap/ic_tyre_rotation"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -102,7 +103,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_car_image"/>
+                android:src="@drawable/ic_car_image"
+                tools:ignore="NestedWeights" />
 
             <com.walkins.aapkedoorstep.custom.NormalTextView
                 android:id="@+id/tvCarColor"

@@ -96,10 +96,10 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         ivBack = findViewById(R.id.ivBack)
         ivInfoAddService = findViewById(R.id.ivInfoAddService)
 
-        tvcolor = findViewById(R.id.tvcolor)
+        tvcolor = findViewById(R.id.tvColor)
         tvCurrentDateTime = findViewById(R.id.tvCurrentDateTime)
         tvMakeModel = findViewById(R.id.tvMakeModel)
-        llbg = findViewById(R.id.llbg)
+        llbg = findViewById(R.id.llColor)
         tvRegNumber = findViewById(R.id.tvRegNumber)
         ivCarImage = findViewById(R.id.ivCarImage)
 

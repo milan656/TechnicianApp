@@ -166,7 +166,7 @@ class Common {
 
         fun findDifference(
             start_date: String?,
-            end_date: String?
+            end_date: String?,
         ): String {
             var difference_In_Time = 0L
             var difference_In_Seconds = 0L
@@ -576,7 +576,7 @@ class Common {
             modelName: String?,
             response: Response<ResponseBody>?,
             i: Int,
-            context: Context?
+            context: Context?,
         ): Any? {
 
             //  val context = MainApplication.applicationContext()
@@ -869,7 +869,7 @@ class Common {
 
         private fun showDialogueForWarning(
             activity: Context,
-            checkStateDataModel: JSONObject
+            checkStateDataModel: JSONObject,
         ) {
             val builder = AlertDialog.Builder(activity).create()
             builder.setCancelable(false)
@@ -1146,7 +1146,7 @@ class Common {
             val a: Animation = object : Animation() {
                 override fun applyTransformation(
                     interpolatedTime: Float,
-                    t: Transformation?
+                    t: Transformation?,
                 ) {
                     v.layoutParams.height =
                         if (interpolatedTime == 1f) RecyclerView.LayoutParams.WRAP_CONTENT else (targtetHeight * interpolatedTime).toInt()
@@ -1167,7 +1167,7 @@ class Common {
             val a: Animation = object : Animation() {
                 protected override fun applyTransformation(
                     interpolatedTime: Float,
-                    t: Transformation?
+                    t: Transformation?,
                 ) {
                     if (interpolatedTime == 1f) {
                         v.visibility = View.GONE
@@ -1521,7 +1521,7 @@ class Common {
 
         fun getDataColumn(
             context: Context, uri: Uri?,
-            selection: String?, selectionArgs: Array<String>?
+            selection: String?, selectionArgs: Array<String>?,
         ): String? {
 
             var cursor: Cursor? = null
@@ -1541,6 +1541,45 @@ class Common {
                 cursor?.close()
             }
             return null
+        }
+
+        fun saveBitmapToFile(file: File): File? {
+             try {
+
+                // BitmapFactory options to downsize the image
+                val o = BitmapFactory.Options()
+                o.inJustDecodeBounds = true
+                o.inSampleSize = 6
+                // factor of downsizing the image
+                var inputStream = FileInputStream(file)
+                //Bitmap selectedBitmap = null;
+                BitmapFactory.decodeStream(inputStream, null, o)
+                inputStream.close()
+
+                // The new size we want to scale to
+                val REQUIRED_SIZE = 75
+
+                // Find the correct scale value. It should be the power of 2.
+                var scale = 1
+                while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE
+                ) {
+                    scale *= 2
+                }
+                val o2 = BitmapFactory.Options()
+                o2.inSampleSize = scale
+                inputStream = FileInputStream(file)
+                val selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2)
+                inputStream.close()
+
+                // here i override the original image file
+                file.createNewFile()
+                val outputStream = FileOutputStream(file)
+                selectedBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                return file
+            } catch (e: java.lang.Exception) {
+                return null
+            }
         }
 
         object CompressFile {
