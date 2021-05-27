@@ -11,6 +11,7 @@
     <include layout="@layout/common_toolbar" />
 
     <LinearLayout
+        android:id="@+id/llTabs"
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:layout_marginStart="@dimen/eighteen_dp"
@@ -99,6 +100,7 @@
     <!--        app:cardCornerRadius="@dimen/ten_dp"-->
     <!--        app:cardElevation="@dimen/two_dp"-->
     <!--        app:cardUseCompatPadding="true">-->
+
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/serviceListSwipe"

@@ -72,6 +72,7 @@ class ServicesListAdpater(
         }
 
         holder.tvVehicleName.text = "" + array.get(position).make + "," + array.get(position).model
+//        holder.tvVehicleName.text = "" + "Mahindra & Mahindra Maruti Mahindra"
         holder.tvVehicleNumber.text = array.get(position).regNumber
         holder.tvColorName.text = array.get(position).color
 
