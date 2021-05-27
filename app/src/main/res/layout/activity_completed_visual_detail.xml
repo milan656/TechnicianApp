@@ -184,8 +184,9 @@
                                         android:text="ZMHGGHGJ"
                                         android:layout_gravity="center"
                                         android:gravity="center"
+                                        android:maxLines="2"
                                         android:textColor="@color/text_color1"
-                                        android:textSize="@dimen/fourteen_sp" />
+                                        android:textSize="13sp" />
                                 </LinearLayout>
 
                                 <ImageView
