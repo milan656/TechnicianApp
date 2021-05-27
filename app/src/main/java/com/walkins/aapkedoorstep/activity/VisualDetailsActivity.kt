@@ -1318,13 +1318,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     return
                 }
 
-//                if (TyreDetailCommonClass.visualDetailPhotoUrl!=null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")){
-//
-//                }else{
-//                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
-//                        .show()
-//                    return
-//                }
+                if (TyreDetailCommonClass.visualDetailPhotoUrl!=null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")){
+
+                }else{
+                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
+                        .show()
+                    return
+                }
 
                 if (selectedTyre.equals("LF")) {
 
