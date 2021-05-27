@@ -4867,7 +4867,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getObjlf0", "" + jsonrf.toString())
                 prefManager.setValue(TyreConfigClass.TyreRFObject, jsonrf.toString())
             }
-
 //                    =================================================================
 
             if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
