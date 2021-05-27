@@ -382,12 +382,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
                 Log.e("getserviceselectedlf_3", "" + TyreConfigClass.LFCompleted + " " + TyreConfigClass.LFVehicleVisualDetail)
 
-                if (TyreConfigClass.LFVehicleVisualDetail && TyreConfigClass.LFVehicleMake &&
-                    TyreConfigClass.LFVehiclePattern && TyreConfigClass.LFVehicleSize
-                ) {
-                    TyreConfigClass.LFCompleted = true
-                }
-                Log.e("getobjectslf2", "" + TyreConfigClass.LFCompleted)
                 if (TyreConfigClass.LFCompleted) {
                     if (!TyreConfigClass.LFVehicleVisualDetail) {
                         jsonLF.remove(TyreKey.isCompleted)
@@ -409,13 +403,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         ivInfoImgLF?.visibility = View.INVISIBLE
                     }
                 }else{
-                    ivTyre1?.setImageDrawable(
-                        this@AddServiceDetailsActivity.resources?.getDrawable(
-                            R.drawable.ic_pending_tyre_config
-                        )
-                    )
-                    ivInfoImgLF?.visibility = View.INVISIBLE
+//                    ivTyre1?.setImageDrawable(
+//                        this@AddServiceDetailsActivity.resources?.getDrawable(
+//                            R.drawable.ic_pending_tyre_config
+//                        )
+//                    )
+//                    ivInfoImgLF?.visibility = View.INVISIBLE
                 }
+                if (TyreConfigClass.LFVehicleVisualDetail && TyreConfigClass.LFVehicleMake &&
+                    TyreConfigClass.LFVehiclePattern && TyreConfigClass.LFVehicleSize
+                ) {
+                    TyreConfigClass.LFCompleted = true
+                }else{
+                    TyreConfigClass.LFCompleted = false
+                }
+                Log.e("getobjectslf2", "" + TyreConfigClass.LFCompleted)
+
                 Log.e("getserviceselected1", "" + TyreConfigClass.LFCompleted)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -530,11 +533,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.RFVehicleVisualDetail = false
                     }
                 }
-                if (TyreConfigClass.RFVehicleVisualDetail && TyreConfigClass.RFVehicleMake &&
-                    TyreConfigClass.RFVehiclePattern && TyreConfigClass.RFVehicleSize
-                ) {
-                    TyreConfigClass.RFCompleted = true
-                }
 
                 if (TyreConfigClass.RFCompleted) {
                     if (!TyreConfigClass.RFVehicleVisualDetail) {
@@ -557,13 +555,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         ivInfoImgRF?.visibility = View.INVISIBLE
                     }
                 }else{
-                    ivTyre3?.setImageDrawable(
-                        this@AddServiceDetailsActivity.resources?.getDrawable(
-                            R.drawable.ic_pending_tyre_config
-                        )
-                    )
-                    ivInfoImgRF?.visibility = View.INVISIBLE
+//                    ivTyre3?.setImageDrawable(
+//                        this@AddServiceDetailsActivity.resources?.getDrawable(
+//                            R.drawable.ic_pending_tyre_config
+//                        )
+//                    )
+//                    ivInfoImgRF?.visibility = View.INVISIBLE
                 }
+
+                if (TyreConfigClass.RFVehicleVisualDetail && TyreConfigClass.RFVehicleMake &&
+                    TyreConfigClass.RFVehiclePattern && TyreConfigClass.RFVehicleSize
+                ) {
+                    TyreConfigClass.RFCompleted = true
+                }else{
+                    TyreConfigClass.RFCompleted = false
+                }
+
 
                 Log.e("getservicesele", "" + TyreConfigClass.RFCompleted)
                 if (jsonRF.get(TyreKey.vehicleMakeURL) != null &&
@@ -694,11 +701,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.LRVehicleVisualDetail = false
                     }
                 }
-                if (TyreConfigClass.LRVehicleVisualDetail && TyreConfigClass.LRVehicleMake &&
-                    TyreConfigClass.LRVehiclePattern && TyreConfigClass.LRVehicleSize
-                ) {
-                    TyreConfigClass.LRCompleted = true
-                }
+
                 if (TyreConfigClass.LRCompleted) {
                     if (!TyreConfigClass.LRVehicleVisualDetail) {
                         jsonLR.remove(TyreKey.isCompleted)
@@ -720,13 +723,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         ivInfoImgLR?.visibility = View.INVISIBLE
                     }
                 }else{
-                    ivTyre2?.setImageDrawable(
-                        this@AddServiceDetailsActivity.resources?.getDrawable(
-                            R.drawable.ic_pending_tyre_config
-                        )
-                    )
-                    ivInfoImgLR?.visibility = View.INVISIBLE
+//                    ivTyre2?.setImageDrawable(
+//                        this@AddServiceDetailsActivity.resources?.getDrawable(
+//                            R.drawable.ic_pending_tyre_config
+//                        )
+//                    )
+//                    ivInfoImgLR?.visibility = View.INVISIBLE
                 }
+
+                if (TyreConfigClass.LRVehicleVisualDetail && TyreConfigClass.LRVehicleMake &&
+                    TyreConfigClass.LRVehiclePattern && TyreConfigClass.LRVehicleSize
+                ) {
+                    TyreConfigClass.LRCompleted = true
+                }else{
+                    TyreConfigClass.LRCompleted = false
+                }
+
                 Log.e("getservicesele12", "" + TyreConfigClass.LRCompleted)
 
                 if (jsonLR.get(TyreKey.vehicleMakeURL) != null &&
@@ -855,12 +867,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
 
-                if (TyreConfigClass.RRVehicleVisualDetail && TyreConfigClass.RRVehicleMake &&
-                    TyreConfigClass.RRVehiclePattern && TyreConfigClass.RRVehicleSize
-                ) {
-                    TyreConfigClass.RRCompleted = true
-                }
-
 
                 if (TyreConfigClass.RRCompleted) {
                     if (!TyreConfigClass.RRVehicleVisualDetail) {
@@ -883,13 +889,22 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         ivInfoImgRR?.visibility = View.INVISIBLE
                     }
                 }else{
-                    ivTyre4?.setImageDrawable(
-                        this@AddServiceDetailsActivity.resources?.getDrawable(
-                            R.drawable.ic_pending_tyre_config
-                        )
-                    )
-                    ivInfoImgRR?.visibility = View.INVISIBLE
+//                    ivTyre4?.setImageDrawable(
+//                        this@AddServiceDetailsActivity.resources?.getDrawable(
+//                            R.drawable.ic_pending_tyre_config
+//                        )
+//                    )
+//                    ivInfoImgRR?.visibility = View.INVISIBLE
                 }
+                if (TyreConfigClass.RRVehicleVisualDetail && TyreConfigClass.RRVehicleMake &&
+                    TyreConfigClass.RRVehiclePattern && TyreConfigClass.RRVehicleSize
+                ) {
+                    TyreConfigClass.RRCompleted = true
+                }else{
+                    TyreConfigClass.RRCompleted = false
+                }
+
+
                 Log.e("getservice22sele", "" + TyreConfigClass.RRCompleted)
                 if (jsonRR.get(TyreKey.vehicleMakeURL) != null &&
                     !jsonRR.get(TyreKey.vehicleMakeURL).asString.equals("")
@@ -930,6 +945,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }else{
+            ivtyreLeftFront?.visibility = View.INVISIBLE
         }
         if (!RFVehicleURL.equals("")) {
             ivTyreRightFront?.visibility = View.VISIBLE
@@ -944,6 +961,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }else{
+            ivTyreRightFront?.visibility = View.INVISIBLE
         }
         if (!LRVehicleURL.equals("")) {
             ivtyreLeftRear?.visibility = View.VISIBLE
@@ -958,6 +977,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }else{
+            ivtyreLeftRear?.visibility = View.INVISIBLE
         }
         if (!RRVehicleURL.equals("")) {
             ivTyreRightRear?.visibility = View.VISIBLE
@@ -972,6 +993,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }else{
+            ivTyreRightRear?.visibility = View.INVISIBLE
         }
 
         if (prefManager?.getValue("image_Car_1") != null &&
@@ -3344,10 +3367,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         if (selectedServiceArr?.contains("Nitrogen Top Up")!! || selectedServiceArr?.contains("Nitrogen Refill")!!) {
             var count = 0
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3364,10 +3387,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3384,10 +3407,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3403,10 +3426,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3434,10 +3457,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         Log.e("getservicecall1", "" + selectedServiceArr?.contains("Wheel Balancing"))
         if (selectedServiceArr?.contains("Wheel Balancing")!!) {
             var count = 0
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3452,30 +3475,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
-                try {
-                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                    Log.e("getobjectslf", "" + jsonLF)
-
-                    if (jsonLF.get(TyreKey.isCompleted) != null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
-                        if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
-
-                        } else {
-                            count = count + 1
-                        }
-                    }
-
-                } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
-                }
-            }
-            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
-            ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3492,10 +3495,30 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
+                try {
+                    val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    Log.e("getobjectslf", "" + jsonLF)
+
+                    if (jsonLF.get(TyreKey.isCompleted) != null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
+                        if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService).asString.equals("")) {
+
+                        } else {
+                            count = count + 1
+                        }
+                    }
+
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
+            ) {
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3536,10 +3559,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         if (!selectedServiceArr?.contains("Nitrogen Top Up")!! && !selectedServiceArr?.contains("Nitrogen Refill")!!) {
             var count = 0
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3551,10 +3574,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3566,10 +3589,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3581,10 +3604,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3605,10 +3628,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         Log.e("getservicecall1", "" + selectedServiceArr?.contains("Wheel Balancing"))
         if (!selectedServiceArr?.contains("Wheel Balancing")!!) {
             var count = 0
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3620,10 +3643,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3635,10 +3658,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -3650,10 +3673,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     e.printStackTrace()
                 }
             }
-            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
             ) {
-                val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
                 try {
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjectslf", "" + jsonLF)
@@ -4367,6 +4390,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                         R.drawable.ic_completed_tyre_config
                                     )
                                 )
+                                Log.e("getobjectslf3","call")
                                 ivtyreLeftFront?.visibility = View.VISIBLE
                                 ivInfoImgLF?.visibility = View.GONE
                                 TyreConfigClass.LFCompleted = true
@@ -4591,21 +4615,29 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (TyreDetailCommonClass.tyreType.equals("LF")) {
                         if (TyreConfigClass.LFCompleted) {
                             json.addProperty(TyreKey.isCompleted, "true")
+                        }else{
+                            json.addProperty(TyreKey.isCompleted, "false")
                         }
                     }
                     if (TyreDetailCommonClass.tyreType.equals("LR")) {
                         if (TyreConfigClass.LRCompleted) {
                             json.addProperty(TyreKey.isCompleted, "true")
+                        }else{
+                            json.addProperty(TyreKey.isCompleted, "false")
                         }
                     }
                     if (TyreDetailCommonClass.tyreType.equals("RF")) {
                         if (TyreConfigClass.RFCompleted) {
                             json.addProperty(TyreKey.isCompleted, "true")
+                        }else{
+                            json.addProperty(TyreKey.isCompleted, "false")
                         }
                     }
                     if (TyreDetailCommonClass.tyreType.equals("RR")) {
                         if (TyreConfigClass.RRCompleted) {
                             json.addProperty(TyreKey.isCompleted, "true")
+                        }else{
+                            json.addProperty(TyreKey.isCompleted, "false")
                         }
                     }
 
@@ -7124,10 +7156,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private fun enableCompletedService(service: String) {
 
-        if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
         ) {
-            val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
             try {
                 val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjectslf", "" + jsonLF)
@@ -7151,10 +7183,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 e.printStackTrace()
             }
         }
-        if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
         ) {
-            val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
             try {
                 val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjectslf", "" + jsonLF)
@@ -7177,13 +7209,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 e.printStackTrace()
             }
         }
-        if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
         ) {
-            val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
             try {
                 val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
-                Log.e("getobjectslf", "" + jsonLF)
+                Log.e("getobjectsrfenable", "" + jsonLF)
 
                 if (jsonLF.get(TyreKey.isCompleted) != null && jsonLF.get(TyreKey.isCompleted)?.asString?.equals("true")!!) {
 
@@ -7203,10 +7235,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 e.printStackTrace()
             }
         }
-        if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
         ) {
-            val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
             try {
                 val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjectslf", "" + jsonLF)
@@ -7236,10 +7268,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private fun removeNitrojenServiceFromObject(service: String, iscompleted: Boolean) {
 //        wheelBalancing
-        if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
         ) {
-            val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
             try {
                 val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjectslf", "" + jsonLF)
@@ -7259,15 +7291,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         jsonLF.addProperty(TyreKey.psiOutTyreService, "")
                     }
                 }
-                prefManager.setValue(TyreConfigClass.TyreLFObject, jsonLF.toString())
+                prefManager.setValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject, jsonLF.toString())
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
         }
-        if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
         ) {
-            val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
             try {
                 val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjectslf", "" + jsonLF)
@@ -7289,15 +7321,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
 
-                prefManager.setValue(TyreConfigClass.TyreLRObject, jsonLF.toString())
+                prefManager.setValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject, jsonLF.toString())
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
         }
-        if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
         ) {
-            val str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
             try {
                 val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjectslf", "" + jsonLF)
@@ -7319,15 +7351,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
 
-                prefManager.setValue(TyreConfigClass.TyreRFObject, jsonLF.toString())
+                prefManager.setValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject, jsonLF.toString())
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
         }
-        if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
         ) {
-            val str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
             try {
                 val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjectslf", "" + jsonLF)
@@ -7348,7 +7380,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         jsonLF.addProperty(TyreKey.psiOutTyreService, "")
                     }
                 }
-                prefManager.setValue(TyreConfigClass.TyreRRObject, jsonLF.toString())
+                prefManager.setValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject, jsonLF.toString())
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
