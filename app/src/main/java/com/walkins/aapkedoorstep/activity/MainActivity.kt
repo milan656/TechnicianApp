@@ -2,10 +2,7 @@ package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -19,6 +16,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -68,6 +66,7 @@ import java.util.*
 @SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
+    private var dialogue: Dialog? = null
     private var serviceList: ArrayList<ServiceModelData>? = ArrayList()
     private var issueResolveArray: ArrayList<IssueResolveModel>? = ArrayList()
     private var commentModel: CommentListModel? = null
@@ -508,14 +507,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
 
-                    var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
+                    try {
+                        var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
 //
-                    if (fragment is ProfileFragment) {
-                        fragment.ivProfileImg?.setImageURI(image_uri)
+                        if (fragment is ProfileFragment) {
+                            fragment.ivProfileImg?.setImageURI(image_uri)
+                        }
+                        imagePath.let { uploadImage(it!!, imagePath?.inputStream()!!) }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(image_uri!!)
-                    imagePath.let { uploadImage(it!!, inputStream!!) }
+
                 }
 
             }
@@ -524,14 +526,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     val auxFile = File(mCurrentPhotoPath)
                     Log.e("getfile00", "" + mCurrentPhotoPath + " " + Uri.parse(mCurrentPhotoPath))
 
-                    var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
+                    try {
+                        var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
 //
-                    if (fragment is ProfileFragment) {
-                        fragment.ivProfileImg?.setImageURI(Uri.parse(mCurrentPhotoPath))
+                        if (fragment is ProfileFragment) {
+                            fragment.ivProfileImg?.setImageURI(Uri.parse(mCurrentPhotoPath))
+                        }
+                        auxFile.let { uploadImage(it, auxFile.inputStream()) }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
-                    auxFile.let { uploadImage(it, inputStream!!) }
+
+
                 }
             }
 
@@ -546,19 +552,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
-
-                    var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
+                    try {
+                        var fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
 //
-                    if (fragment is ProfileFragment) {
-                        fragment.ivProfileImg?.setImageURI(selectedImage)
+                        if (fragment is ProfileFragment) {
+                            fragment.ivProfileImg?.setImageURI(selectedImage)
+                        }
+                        Log.i("imagePath", "++++" + imagePath)
+                        Log.e("getfile0022", "" + selectedImage)
+
+                        imagePath?.let { uploadImage(it, imagePath.inputStream()) }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
 
-                    Log.i("imagePath", "++++" + imagePath)
-                    Log.e("getfile0022", "" + selectedImage)
-
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(selectedImage!!)
-                    imagePath?.let { uploadImage(it, inputStream!!) }
 
                 }
             }
@@ -743,7 +750,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     }
 
     private fun uploadImage(imagePath: File, inputStream: InputStream) {
-        this.let { Common.showLoader(it) }
+        this.let { showLoader(it) }
 
         val part = MultipartBody.Part.createFormData(
             "file", imagePath.name, RequestBody.create(
@@ -761,29 +768,55 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         }
 
         loginViewModel?.getImageUpload()?.observe(this, Observer {
-            Common.hideLoader()
+
             if (it != null) {
                 if (it.success) {
                     Log.e("getfile", "" + it.data.imageUrl)
-                    val fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
+//                    val fragment: Fragment = supportFragmentManager.findFragmentById(R.id.mainContent)!!
 //
-                    if (fragment is ProfileFragment) {
-//                        fragment.ivProfileImg?.setImageURI(image_uri)
-//                        try {
-//                            Glide.with(this@MainActivity)
-//                                .load(it.data.imageUrl)
-//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                                .placeholder(R.drawable.placeholder)
-//                                .into(fragment.ivProfileImg!!)
-//                        } catch (e: Exception) {
-//                            e.printStackTrace()
-//                        }
-                    }
+                    hideLoader()
                     Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
 
+                } else {
+                    hideLoader()
                 }
+            } else {
+                hideLoader()
             }
         })
 
+    }
+
+    fun showLoader(activity: Context) {
+        try {
+            if (dialogue != null) {
+                if (dialogue?.isShowing!!) {
+                    dialogue?.dismiss()
+                }
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        try {
+            dialogue = Dialog(activity)
+            dialogue?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogue?.setContentView(R.layout.common_loader)
+            dialogue?.setCancelable(false)
+            dialogue?.show()
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun hideLoader() {
+        try {
+            if (dialogue != null && dialogue?.isShowing!!) {
+                dialogue?.dismiss()
+            }
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

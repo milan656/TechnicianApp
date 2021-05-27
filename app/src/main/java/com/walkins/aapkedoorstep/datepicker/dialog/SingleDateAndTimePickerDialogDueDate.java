@@ -117,8 +117,9 @@ public class SingleDateAndTimePickerDialogDueDate extends BaseDialog {
         }
         final Button btn_reset = (Button) view.findViewById(R.id.btn_reset);
 
+        btn_reset.setText("Cancel");
 
-        btn_reset.setVisibility(View.GONE);
+//        btn_reset.setVisibility(View.GONE);
 
         if (btn_reset != null) {
             btn_reset.setOnClickListener(new View.OnClickListener() {
@@ -360,7 +361,7 @@ public class SingleDateAndTimePickerDialogDueDate extends BaseDialog {
         }
         if (listener != null && ResetClicked) {
             Log.e("getdatee11", "" + picker.getDate());
-            listener.onDateSelected(picker.getDate(), "Reset");
+            listener.onDateSelected(picker.getDate(), "Cancel");
         }
         if (listener != null && CloseClicked) {
             Log.e("getdatee11", "" + picker.getDate());

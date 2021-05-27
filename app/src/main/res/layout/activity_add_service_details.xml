@@ -994,10 +994,18 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/suggestionsRecycView"
+                                <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/suggestionsRecycView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+
+                                </RelativeLayout>
+
 
                                 <com.walkins.aapkedoorstep.custom.NormalTextView
                                     android:layout_width="match_parent"

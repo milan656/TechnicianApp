@@ -222,9 +222,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var make_id: String = ""
     private var model_id: String = ""
 
-    private var tvServicePersonName:TextView?=null
-    private var ivPhoneCall:ImageView?=null
-    private var phoneNumber:String?=""
+    private var tvServicePersonName: TextView? = null
+    private var ivPhoneCall: ImageView? = null
+    private var phoneNumber: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -384,8 +384,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getserviceselectedlf_3", "" + TyreConfigClass.LFCompleted + " " + TyreConfigClass.LFVehicleVisualDetail)
 
                 if (TyreConfigClass.LFVehicleVisualDetail && TyreConfigClass.LFVehicleMake &&
-                    TyreConfigClass.LFVehiclePattern && TyreConfigClass.LFVehicleSize){
-                    TyreConfigClass.LFCompleted=true
+                    TyreConfigClass.LFVehiclePattern && TyreConfigClass.LFVehicleSize
+                ) {
+                    TyreConfigClass.LFCompleted = true
                 }
 
                 if (TyreConfigClass.LFCompleted) {
@@ -524,8 +525,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
                 if (TyreConfigClass.RFVehicleVisualDetail && TyreConfigClass.RFVehicleMake &&
-                    TyreConfigClass.RFVehiclePattern && TyreConfigClass.RFVehicleSize){
-                    TyreConfigClass.RFCompleted=true
+                    TyreConfigClass.RFVehiclePattern && TyreConfigClass.RFVehicleSize
+                ) {
+                    TyreConfigClass.RFCompleted = true
                 }
 
                 if (TyreConfigClass.RFCompleted) {
@@ -540,7 +542,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             )
                         )
                         ivInfoImgRF?.visibility = View.VISIBLE
-                    }else{
+                    } else {
                         ivTyre3?.setImageDrawable(
                             this@AddServiceDetailsActivity.resources?.getDrawable(
                                 R.drawable.ic_completed_tyre_config
@@ -679,9 +681,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         TyreConfigClass.LRVehicleVisualDetail = false
                     }
                 }
- if (TyreConfigClass.LRVehicleVisualDetail && TyreConfigClass.LRVehicleMake &&
-                    TyreConfigClass.LRVehiclePattern && TyreConfigClass.LRVehicleSize){
-                    TyreConfigClass.LRCompleted=true
+                if (TyreConfigClass.LRVehicleVisualDetail && TyreConfigClass.LRVehicleMake &&
+                    TyreConfigClass.LRVehiclePattern && TyreConfigClass.LRVehicleSize
+                ) {
+                    TyreConfigClass.LRCompleted = true
                 }
                 if (TyreConfigClass.LRCompleted) {
                     if (!TyreConfigClass.LRVehicleVisualDetail) {
@@ -695,7 +698,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             )
                         )
                         ivInfoImgLR?.visibility = View.VISIBLE
-                    }else{
+                    } else {
                         ivTyre2?.setImageDrawable(
                             this@AddServiceDetailsActivity.resources?.getDrawable(
                                 R.drawable.ic_completed_tyre_config
@@ -832,9 +835,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     }
                 }
 
-                 if (TyreConfigClass.RRVehicleVisualDetail && TyreConfigClass.RRVehicleMake &&
-                    TyreConfigClass.RRVehiclePattern && TyreConfigClass.RRVehicleSize){
-                    TyreConfigClass.RRCompleted=true
+                if (TyreConfigClass.RRVehicleVisualDetail && TyreConfigClass.RRVehicleMake &&
+                    TyreConfigClass.RRVehiclePattern && TyreConfigClass.RRVehicleSize
+                ) {
+                    TyreConfigClass.RRCompleted = true
                 }
 
 
@@ -850,7 +854,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             )
                         )
                         ivInfoImgRR?.visibility = View.VISIBLE
-                    }else{
+                    } else {
                         ivTyre4?.setImageDrawable(
                             this@AddServiceDetailsActivity.resources?.getDrawable(
                                 R.drawable.ic_completed_tyre_config
@@ -1230,11 +1234,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         }
 
-        if (!service_name.equals("")){
-            tvServicePersonName?.text=service_name
+        if (!service_name.equals("")) {
+            tvServicePersonName?.text = service_name
         }
-        if (!service_number.equals("")){
-            phoneNumber=service_number
+        if (!service_number.equals("")) {
+            phoneNumber = service_number
         }
 
         tvcolor?.text = color
@@ -2877,10 +2881,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                         selectedDateNextServiceDue = displayDate
 
-                    } else if (str.equals("Reset")) {
-                        Log.e("getdatee2", "" + selectedDate)
-                        selectedDate = ""
-                        selectedDateNextServiceDue = ""
+                    } else if (str.equals("Cancel")) {
+//                        Log.e("getdatee2", "" + selectedDate)
+//                        selectedDate = ""
+//                        selectedDateNextServiceDue = ""
                     }
                 }
             })
@@ -6800,6 +6804,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
         tvTitleText?.text = title
         tv_message.text = message
+        tvTitleText?.gravity = Gravity.CENTER
+        tv_message?.gravity = Gravity.CENTER
         ivClose?.visibility = View.INVISIBLE
         btnYes.setOnClickListener {
             builder.dismiss()
@@ -6836,7 +6842,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val tv_message = root.findViewById<TextView>(R.id.tv_messageTitle)
         val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
         tvTitleText?.text = title
+        tvTitleText?.gravity = Gravity.CENTER
         tv_message.text = message
+        tv_message?.gravity = Gravity.CENTER
         btn_cancel?.text = "No"
         btn_ok?.text = "Yes"
         btn_ok.setOnClickListener {
