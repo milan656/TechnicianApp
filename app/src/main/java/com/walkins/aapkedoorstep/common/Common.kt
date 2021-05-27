@@ -1456,8 +1456,6 @@ class Common {
             TyreDetailCommonClass.chk3MakeVisible = false
             TyreDetailCommonClass.chk3PatternVisible = false
             TyreDetailCommonClass.chk3SizeVisible = false
-
-
         }
 
         fun setFalseAllTyreStatus() {

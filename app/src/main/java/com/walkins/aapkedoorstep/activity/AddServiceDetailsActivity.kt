@@ -949,7 +949,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         }
 
         if (prefManager?.getValue("image_Car_1") != null &&
-            !prefManager?.getValue("image_Car_1").equals("")
+            !prefManager.getValue("image_Car_1").equals("")
         ) {
             try {
                 var imageUriDisplay: Uri? = null

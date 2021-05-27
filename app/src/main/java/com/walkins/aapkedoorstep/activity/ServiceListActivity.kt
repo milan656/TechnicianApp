@@ -407,6 +407,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             if (serviceStatus.equals(upcomming)) {
 
                 Common.setClearAllValues()
+                Common.setFalseAllTyreStatus()
                 val intent = Intent(this, AddServiceDetailsActivity::class.java)
                 intent.putExtra("color", arrayList.get(variable).color)
                 intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
