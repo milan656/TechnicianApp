@@ -174,7 +174,6 @@
                                     android:gravity="center"
                                     android:orientation="vertical">
 
-
                                     <com.walkins.aapkedoorstep.custom.NormalTextView
                                         android:id="@+id/tvSelectedPattern"
                                         android:layout_width="match_parent"

@@ -133,10 +133,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }
 
         if (selectedTyre.equals("LF")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -177,10 +177,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
         if (selectedTyre.equals("LR")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -218,10 +218,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
         if (selectedTyre.equals("RF")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -264,10 +264,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
         if (selectedTyre.equals("RR")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -308,10 +308,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
 //                =======================================================================
 
-        if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+            var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -362,10 +362,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+            var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -417,10 +417,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+            var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -471,10 +471,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+            var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjrr", "" + json.get("vehiclePatternId")?.asString + " ")
@@ -619,10 +619,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         selectedId = arrList?.get(variable)?.patternId!!
 
         if (selectedTyre.equals("LF")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 //                    selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
@@ -660,10 +660,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
         if (selectedTyre.equals("LR")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 //                    selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
@@ -699,10 +699,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
         if (selectedTyre.equals("RF")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 //                    selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
@@ -743,10 +743,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
         if (selectedTyre.equals("RR")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 //                    selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
@@ -785,10 +785,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
 //        ==============================================================
 
-        if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+            var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLFObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -825,10 +825,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+            var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreLRObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -859,10 +859,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+            var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRFObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 if (json.get("vehiclePatternId") != null && !json.get("vehiclePatternId")?.asString.equals(
@@ -892,10 +892,10 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+            var str = prefManager.getValue(TyreConfigClass.uuid+TyreConfigClass.TyreRRObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjrr", "" + json.get("vehiclePatternId")?.asString + " ")
