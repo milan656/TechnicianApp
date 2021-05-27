@@ -416,8 +416,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("make_id", "" + arrayList.get(variable).make_id)
                 intent.putExtra("model_id", "" + arrayList.get(variable).model_id)
                 intent.putExtra("service_name", "" + arrayList.get(variable).service_user_name)
-                intent.putExtra("service_number", "" + arrayList.get(variable).service_user_mobile)
-
+                if (arrayList.get(variable).service_user_mobile!=null) {
+                    intent.putExtra("service_number", "" + arrayList.get(variable).service_user_mobile)
+                }
                 val gson = Gson()
                 val serviceList = gson.toJson(arrayList.get(variable))
 

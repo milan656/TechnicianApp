@@ -962,10 +962,12 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                         1
                     )
                 } else {
-                    val phone = "+91" + phoneNumber
-                    val callIntent = Intent(Intent.ACTION_CALL)
-                    callIntent.data = Uri.parse("tel:$phone")
-                    startActivity(callIntent)
+                    if (phoneNumber!=null && !phoneNumber?.equals("")!!) {
+                        val phone = "+91" + phoneNumber
+                        val callIntent = Intent(Intent.ACTION_CALL)
+                        callIntent.data = Uri.parse("tel:$phone")
+                        startActivity(callIntent)
+                    }
                 }
             }
 
