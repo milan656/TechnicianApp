@@ -536,8 +536,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-
-
                 }
             }
 
