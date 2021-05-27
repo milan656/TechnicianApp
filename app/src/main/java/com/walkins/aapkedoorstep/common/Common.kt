@@ -1030,12 +1030,12 @@ class Common {
             var answer: String = ""
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val current = LocalDateTime.now()
-                val formatter = DateTimeFormatter.ofPattern("HH:mm a, dd MMMM yyyy")
+                val formatter = DateTimeFormatter.ofPattern("hh:mm a, dd MMMM yyyy")
                 answer = current.format(formatter)
                 Log.d("answer", answer)
             } else {
                 var date = Date()
-                val formatter = SimpleDateFormat("HH:mm a, dd MMMM yyyy")
+                val formatter = SimpleDateFormat("hh:mm a, dd MMMM yyyy")
                 answer = formatter.format(date)
                 Log.d("answer", answer)
             }
