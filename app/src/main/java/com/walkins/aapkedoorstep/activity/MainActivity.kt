@@ -10,6 +10,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
@@ -58,6 +59,14 @@ import com.walkins.aapkedoorstep.service.ServiceState
 import com.walkins.aapkedoorstep.service.getServiceState
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -513,9 +522,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     if (fragment is ProfileFragment) {
                         fragment.ivProfileImg?.setImageURI(image_uri)
                     }
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(image_uri!!)
-                    imagePath.let { uploadImage(it!!, inputStream!!) }
+
+                    Log.e("imagesize", "" + imagePath?.length())
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val compressedImageFile = Compressor.compress(this@MainActivity, imagePath!!) {
+                            resolution(50, 50)
+                            quality(80)
+//                            size(1_097_152) // 2 MB
+                        }
+                        Log.i("imagePath", "++++" + imagePath.length())
+                        Log.i("imagePath", "++++" + compressedImageFile.length())
+
+                        runOnUiThread {
+                            uploadImage(compressedImageFile!!, compressedImageFile?.inputStream()!!)
+                        }                    }
+//                    val inputStream: InputStream? =
+//                        this.contentResolver?.openInputStream(image_uri!!)
+
                 }
 
             }
@@ -529,9 +552,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     if (fragment is ProfileFragment) {
                         fragment.ivProfileImg?.setImageURI(Uri.parse(mCurrentPhotoPath))
                     }
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
-                    auxFile.let { uploadImage(it, inputStream!!) }
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val compressedImageFile = Compressor.compress(this@MainActivity, auxFile!!) {
+                            resolution(50, 50)
+                            quality(80)
+//                            size(1_097_152) // 2 MB
+                        }
+                        Log.i("imagePath", "++++" + auxFile.length())
+                        Log.i("imagePath", "++++" + compressedImageFile.length())
+                        runOnUiThread {
+                            uploadImage(compressedImageFile,compressedImageFile.inputStream())
+                        }
+                    }
+//                    val inputStream: InputStream? =
+//                        this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+//                    auxFile.let { uploadImage(it, auxFile.inputStream()) }
                 }
             }
 
@@ -555,10 +590,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
                     Log.i("imagePath", "++++" + imagePath)
                     Log.e("getfile0022", "" + selectedImage)
+                    Log.e("imagesize", "" + imagePath?.length())
+                    var compressedImageFile: File? = null
+                    GlobalScope.launch(Dispatchers.IO) {
+                        compressedImageFile = Compressor.compress(this@MainActivity, imagePath!!) {
+                            resolution(50, 50)
+                            quality(80)
+//                            size(1_097_152) // 2 MB
+                        }
+                        Log.i("imagePath11", "++++" + imagePath.length())
+                        Log.i("imagePath22", "++++" + compressedImageFile?.length())
+                        runOnUiThread {
+                            uploadImage(compressedImageFile!!, compressedImageFile?.inputStream()!!)
+                        }
+                    }
 
-                    val inputStream: InputStream? =
-                        this.contentResolver?.openInputStream(selectedImage!!)
-                    imagePath?.let { uploadImage(it, inputStream!!) }
+
+//                    val inputStream: InputStream? =
+//                        this.contentResolver?.openInputStream(selectedImage!!)
+
 
                 }
             }
