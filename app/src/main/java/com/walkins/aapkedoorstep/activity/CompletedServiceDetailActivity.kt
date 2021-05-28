@@ -487,7 +487,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 Log.e("modelget", "" + serviceList?.size)
                 serviceAdapter?.notifyDataSetChanged()
             }
-
             tvMoreSuggestion?.text = "" + serviceDateByIdModel?.data?.get(0)?.serviceSuggestions
 
             tvMakeModel?.text = "" + serviceDateByIdModel?.data?.get(0)?.make + " " + serviceDateByIdModel?.data?.get(0)?.model
