@@ -405,6 +405,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             Log.e("checkva", "" + " " + arrayList.get(variable).uuid)
 
             if (serviceStatus.equals(upcomming)) {
+
+                Common.setClearAllValues()
+                Common.setFalseAllTyreStatus()
                 val intent = Intent(this, AddServiceDetailsActivity::class.java)
                 intent.putExtra("color", arrayList.get(variable).color)
                 intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
@@ -419,6 +422,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 if (arrayList.get(variable).service_user_mobile!=null) {
                     intent.putExtra("service_number", "" + arrayList.get(variable).service_user_mobile)
                 }
+                intent.putExtra("id", "" + arrayList.get(variable).id)
                 val gson = Gson()
                 val serviceList = gson.toJson(arrayList.get(variable))
 

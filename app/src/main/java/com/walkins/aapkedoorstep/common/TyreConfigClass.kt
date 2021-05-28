@@ -60,6 +60,7 @@ class TyreConfigClass {
         var car_1_uri: Uri? = null
         var car_2_uri: Uri? = null
 
+        var serviceId: String? = ""
 
     }
 }

@@ -23,8 +23,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.R
-import com.walkins.aapkedoorstep.activity.CompletedServiceDetailActivity
-import com.walkins.aapkedoorstep.activity.ServiceListActivity
 import com.walkins.aapkedoorstep.activity.SkippedServiceDetailActivity
 import com.walkins.aapkedoorstep.adapter.*
 import com.walkins.aapkedoorstep.common.OnBottomReachedListener
@@ -34,7 +32,6 @@ import com.walkins.aapkedoorstep.model.login.ReportHistoryModel
 import com.walkins.aapkedoorstep.model.login.building.BuildingListData
 import com.walkins.aapkedoorstep.model.login.makemodel.VehicleModelData
 import com.walkins.aapkedoorstep.model.login.service.ServiceModel
-import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListData
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.MakeModelViewModel

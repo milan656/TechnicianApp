@@ -12,6 +12,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -52,6 +53,12 @@ import com.walkins.aapkedoorstep.common.*
 import com.walkins.aapkedoorstep.model.login.IssueResolveModel
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -353,10 +360,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //        getIssueList()
 
 
-        if (prefManager?.getValue(TyreConfigClass.serviceDetailData) != null &&
-            !prefManager.getValue(TyreConfigClass.serviceDetailData).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.serviceDetailData) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.serviceDetailData).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.serviceDetailData)
+            var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.serviceDetailData)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getservice", "" + json)
@@ -431,18 +438,18 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
 
 
-        if (prefManager.getValue("image_" + selectedTyre) != null &&
-            !prefManager.getValue("image_" + selectedTyre).equals("")
+        if (prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre).equals("")
         ) {
             Log.e("getimages1", "" + prefManager.getValue("image_" + selectedTyre))
 //            ivPickedImage1?.setImageURI(Uri.parse(prefManager.getValue("image_" + selectedTyre)))
 
             try {
-                Glide.with(this).load(prefManager.getValue("image_" + selectedTyre)).thumbnail(0.33f).into(ivPickedImage1!!)
+                Glide.with(this).load(prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre)).thumbnail(0.33f).into(ivPickedImage1!!)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            TyreDetailCommonClass.visualDetailPhotoUrl = prefManager.getValue("image_" + selectedTyre)
+            TyreDetailCommonClass.visualDetailPhotoUrl = prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre)
             ivPickedImage1?.visibility = View.VISIBLE
             ivEditImg2?.visibility = View.VISIBLE
             tvAddPhoto1?.visibility = View.GONE
@@ -486,10 +493,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
     fun getTyreWiseData() {
         if (selectedTyre.equals("LF")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
@@ -501,10 +508,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
         }
         if (selectedTyre.equals("LR")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
@@ -516,10 +523,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
         }
         if (selectedTyre.equals("RF")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     getData(json)
@@ -530,10 +537,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
         }
         if (selectedTyre.equals("RR")) {
-            if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     getData(json)
@@ -1318,16 +1325,15 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     return
                 }
 
-                if (TyreDetailCommonClass.visualDetailPhotoUrl!=null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")){
-
-                }else{
-                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
-                        .show()
-                    return
-                }
+//                if (TyreDetailCommonClass.visualDetailPhotoUrl!=null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")){
+//
+//                }else{
+//                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
+//                        .show()
+//                    return
+//                }
 
                 if (selectedTyre.equals("LF")) {
-
                     TyreConfigClass.LFVehicleVisualDetail = true
                 } else if (selectedTyre.equals("LR")) {
                     TyreConfigClass.LRVehicleVisualDetail = true
@@ -1656,16 +1662,31 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     tvCarphoto1?.visibility = View.GONE
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
-                    Log.e("getimages", "" + prefManager.getValue("image_" + selectedTyre))
+                    Log.e("getimages", "" + prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre))
                     if (Common.isConnectedToInternet(this)) {
                         val inputStream: InputStream? = imagePath?.inputStream()
 //                            this.contentResolver?.openInputStream(image_uri!!)
-                        prefManager.removeValue("image_" + selectedTyre)
-                        prefManager.removeValue("image_" + selectedTyre + "" + "_path")
-                        imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
+                        prefManager.removeValue(TyreConfigClass.serviceId+"image_" + selectedTyre)
+                        prefManager.removeValue(TyreConfigClass.serviceId+"image_" + selectedTyre + "" + "_path")
+                        CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+                            val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, imagePath!!) {
+                                resolution(1280, 720)
+                                quality(80)
+                                format(Bitmap.CompressFormat.JPEG)
+                                size(2) // 2 MB
+//                            size(1_097_152) // 2 MB
+                            }
+                            Log.i("imagePath", "++++" + imagePath.length())
+                            Log.i("imagePath", "++++" + compressedImageFile.length())
+                            runOnUiThread {
+                                uploadImage(compressedImageFile,compressedImageFile.inputStream(),"service-image")
+                            }
+                        }
+
+//                        imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
-                        prefManager.setValue("image_" + selectedTyre, image_uri.toString())
-                        prefManager.setValue("image_" + selectedTyre + "" + "_path", imagePath?.path)
+                        prefManager.setValue(TyreConfigClass.serviceId+"image_" + selectedTyre, image_uri.toString())
+                        prefManager.setValue(TyreConfigClass.serviceId+"image_" + selectedTyre + "" + "_path", imagePath?.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = image_uri.toString()
 
                         setUriTyreWise(image_uri!!)
@@ -1694,16 +1715,31 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                     relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
-                    Log.e("getimages", "" + prefManager.getValue("image_" + selectedTyre))
+                    Log.e("getimages", "" + prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre))
                     if (Common.isConnectedToInternet(this)) {
                         val inputStream: InputStream? = auxFile.inputStream()
 //                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
-                        prefManager.removeValue("image_" + selectedTyre)
-                        auxFile.let { uploadImage(it, inputStream!!, "service-image") }
+                        prefManager.removeValue(TyreConfigClass.serviceId+"image_" + selectedTyre)
+                        CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+                            val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, auxFile!!) {
+                                resolution(1280, 720)
+                                quality(80)
+                                format(Bitmap.CompressFormat.JPEG)
+                                size(2) // 2 MB
+//                            size(1_097_152) // 2 MB
+                            }
+                            Log.i("imagePath", "++++" + auxFile.length())
+                            Log.i("imagePath", "++++" + compressedImageFile.length())
+                            runOnUiThread {
+                                uploadImage(compressedImageFile,compressedImageFile.inputStream(),"service-image")
+                            }
+                        }
+
+//                        auxFile.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
 
-                        prefManager.setValue("image_" + selectedTyre, Uri.parse(mCurrentPhotoPath).toString())
-                        prefManager.setValue("image_" + selectedTyre + "" + "_path", auxFile.path)
+                        prefManager.setValue(TyreConfigClass.serviceId+"image_" + selectedTyre, Uri.parse(mCurrentPhotoPath).toString())
+                        prefManager.setValue(TyreConfigClass.serviceId+"image_" + selectedTyre + "" + "_path", auxFile.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = Uri.parse(mCurrentPhotoPath).toString()
                         setUriTyreWise(Uri.parse(mCurrentPhotoPath)!!)
                     }
@@ -1749,11 +1785,26 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     if (Common.isConnectedToInternet(this)) {
                         val inputStream: InputStream? = imagePath?.inputStream()
 //                            this.contentResolver?.openInputStream(selectedImage!!)
-                        prefManager.removeValue("image_" + selectedTyre)
-                        imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
+                        prefManager.removeValue(TyreConfigClass.serviceId+"image_" + selectedTyre)
+                        CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
+                            val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, imagePath!!) {
+                                resolution(1280, 720)
+                                quality(80)
+                                format(Bitmap.CompressFormat.JPEG)
+                                size(2) // 2 MB
+//                            size(1_097_152) // 2 MB
+                            }
+                            Log.i("imagePath", "++++" + imagePath.length())
+                            Log.i("imagePath", "++++" + compressedImageFile.length())
+                            runOnUiThread {
+                                uploadImage(compressedImageFile,compressedImageFile.inputStream(),"service-image")
+                            }
+                        }
+
+//                        imagePath?.let { uploadImage(it, inputStream!!, "service-image") }
                     } else {
-                        prefManager.setValue("image_" + selectedTyre, data?.dataString)
-                        prefManager.setValue("image_" + selectedTyre + "" + "_path", imagePath?.path)
+                        prefManager.setValue(TyreConfigClass.serviceId+"image_" + selectedTyre, data?.dataString)
+                        prefManager.setValue(TyreConfigClass.serviceId+"image_" + selectedTyre + "" + "_path", imagePath?.path)
                         TyreDetailCommonClass.visualDetailPhotoUrl = selectedImage.toString()
                         setUriTyreWise(selectedImage!!)
                     }
@@ -1935,11 +1986,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
 
-            if (prefManager.getValue("image_" + selectedTyre) != null &&
-                !prefManager.getValue("image_" + selectedTyre).equals("")
+            if (prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre).equals("")
             ) {
                 try {
-                    Glide.with(this).load(prefManager.getValue("image_" + selectedTyre))
+                    Glide.with(this).load(prefManager.getValue(TyreConfigClass.serviceId+"image_" + selectedTyre))
                         .override(1600, 1600)
                         .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.33f)
                         .placeholder(R.drawable.placeholder).into(imgPoster)

@@ -477,6 +477,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 !serviceDateByIdModel?.data?.get(0)?.service_user_mobile.equals("")
             ) {
                 phoneNumber = serviceDateByIdModel?.data?.get(0)?.service_user_mobile
+                ivPhoneCall?.visibility = View.VISIBLE
+            } else {
+                ivPhoneCall?.visibility = View.GONE
             }
             Log.e("modelget", "" + serviceDateByIdModel?.data)
             if (serviceDateByIdModel?.data?.get(0)?.service != null && serviceDateByIdModel?.data?.get(0)?.service?.size!! > 0) {
@@ -962,7 +965,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                         1
                     )
                 } else {
-                    if (phoneNumber!=null && !phoneNumber?.equals("")!!) {
+                    if (!phoneNumber.equals("")) {
                         val phone = "+91" + phoneNumber
                         val callIntent = Intent(Intent.ACTION_CALL)
                         callIntent.data = Uri.parse("tel:$phone")

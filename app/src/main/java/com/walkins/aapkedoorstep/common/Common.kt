@@ -1484,6 +1484,9 @@ class Common {
             TyreConfigClass.RRVehicleSize = false
             TyreConfigClass.RRVehicleVisualDetail = false
             TyreConfigClass.RRCompleted = false
+
+            TyreConfigClass.CarPhoto_1 = ""
+            TyreConfigClass.CarPhoto_2 = ""
         }
 
         fun isConnectedToInternet(context: Context): Boolean {
@@ -1544,7 +1547,7 @@ class Common {
         }
 
         fun saveBitmapToFile(file: File): File? {
-             try {
+            try {
 
                 // BitmapFactory options to downsize the image
                 val o = BitmapFactory.Options()
