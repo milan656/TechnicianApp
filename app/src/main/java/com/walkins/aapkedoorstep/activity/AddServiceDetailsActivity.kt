@@ -1177,6 +1177,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         tvRegNumber = findViewById(R.id.tvRegNumber)
         ivCarImage = findViewById(R.id.ivCarImage)
 
+        radioGroupLF?.clearCheck()
+        radioGroupLR?.clearCheck()
+        radioGroupRF?.clearCheck()
+        radioGroupRR?.clearCheck()
+
         radioGroupLF?.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
                 checkSubmitBtn()
@@ -1974,53 +1979,60 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         jsonObject.add(TyreKey.technicalSuggestionArr, jsonArray)
         jsonObject.add(TyreKey.serviceArr, jsonArrayService)
 
-        try {
-            var selectedText: String? = ""
-            if (radioLF_LR?.isChecked!!) {
-                selectedText = radioLF_LR?.text?.toString() + "LF"
-            } else {
-                selectedText = radioLF_RR?.text?.toString() + "LF"
+        if (radioGroupLF?.checkedRadioButtonId!=-1) {
+            try {
+                var selectedText: String? = ""
+                if (radioLF_LR?.isChecked!!) {
+                    selectedText = radioLF_LR?.text?.toString() + "LF"
+                } else {
+                    selectedText = radioLF_RR?.text?.toString() + "LF"
+                }
+                jsonObject.addProperty(TyreKey.radioGroupLF, selectedText)
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
             }
-            jsonObject.addProperty(TyreKey.radioGroupLF, selectedText)
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
         }
-        try {
-            var selectedText: String? = ""
-            if (radioRF_LR?.isChecked!!) {
-                selectedText = radioRF_LR?.text?.toString() + "RF"
-            } else {
-                selectedText = radioRF_RR?.text?.toString() + "RF"
-            }
+        if (radioGroupRF?.checkedRadioButtonId!=-1) {
+            try {
+                var selectedText: String? = ""
+                if (radioRF_LR?.isChecked!!) {
+                    selectedText = radioRF_LR?.text?.toString() + "RF"
+                } else {
+                    selectedText = radioRF_RR?.text?.toString() + "RF"
+                }
 
-            jsonObject.addProperty(TyreKey.radioGroupRF, selectedText)
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
+                jsonObject.addProperty(TyreKey.radioGroupRF, selectedText)
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
+        }
+        if (radioGroupLR?.checkedRadioButtonId!=-1) {
+            try {
+                var selectedText: String? = ""
+                if (radioLR_RF?.isChecked!!) {
+                    selectedText = radioLR_RF?.text?.toString() + "LR"
+                } else {
+                    selectedText = radioLR_LF?.text?.toString() + "LR"
+                }
+
+                jsonObject.addProperty(TyreKey.radioGroupLR, selectedText)
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
         }
 
-        try {
-            var selectedText: String? = ""
-            if (radioLR_RF?.isChecked!!) {
-                selectedText = radioLR_RF?.text?.toString() + "LR"
-            } else {
-                selectedText = radioLR_LF?.text?.toString() + "LR"
+        if (radioGroupRR?.checkedRadioButtonId!=-1) {
+            try {
+                var selectedText: String? = ""
+                if (radioRR_LF?.isChecked!!) {
+                    selectedText = radioRR_LF?.text?.toString() + "RR"
+                } else {
+                    selectedText = radioRR_RF?.text?.toString() + "RR"
+                }
+                jsonObject.addProperty(TyreKey.radioGroupRR, selectedText)
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
             }
-
-            jsonObject.addProperty(TyreKey.radioGroupLR, selectedText)
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
-        }
-
-        try {
-            var selectedText: String? = ""
-            if (radioRR_LF?.isChecked!!) {
-                selectedText = radioRR_LF?.text?.toString() + "RR"
-            } else {
-                selectedText = radioRR_RF?.text?.toString() + "RR"
-            }
-            jsonObject.addProperty(TyreKey.radioGroupRR, selectedText)
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
         }
 
         prefManager.setValue(TyreConfigClass.serviceId+TyreConfigClass.serviceDetailData, jsonObject.toString())
@@ -2045,9 +2057,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         var counter = 0
 
-        if (prefManager.getValue("image_LF") != null && !prefManager.getValue("image_LF").equals("")) {
+        if (prefManager.getValue(TyreConfigClass.serviceId+"image_LF") != null && !prefManager.getValue(TyreConfigClass.serviceId+"image_LF").equals("")) {
 
-            Log.e("getimagepathlf", "" + prefManager.getValue("image_LF") + " -- " + TyreDetailCommonClass.tyre_Uri_LF)
+            Log.e("getimagepathlf", "" + prefManager.getValue(TyreConfigClass.serviceId+"image_LF") + " -- " + TyreDetailCommonClass.tyre_Uri_LF)
             try {
                 if (TyreDetailCommonClass.tyre_Uri_LF != null) {
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -2080,9 +2092,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 e.printStackTrace()
             }
         }
-        if (prefManager.getValue("image_RF") != null && !prefManager.getValue("image_RF").equals("")) {
+        if (prefManager.getValue(TyreConfigClass.serviceId+"image_RF") != null && !prefManager.getValue(TyreConfigClass.serviceId+"image_RF").equals("")) {
 
-            Log.e("getimagepathrf", "" + prefManager.getValue("image_RF") + " -- " + TyreDetailCommonClass.tyre_Uri_RF)
+            Log.e("getimagepathrf", "" + prefManager.getValue(TyreConfigClass.serviceId+"image_RF") + " -- " + TyreDetailCommonClass.tyre_Uri_RF)
             if (TyreDetailCommonClass.tyre_Uri_RF != null) {
                 try {
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -2114,9 +2126,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
         }
-        if (prefManager.getValue("image_LR") != null && !prefManager.getValue("image_LR").equals("")) {
+        if (prefManager.getValue(TyreConfigClass.serviceId+"image_LR") != null && !prefManager.getValue(TyreConfigClass.serviceId+"image_LR").equals("")) {
 
-            Log.e("getimagepathlr", "" + prefManager.getValue("image_LR") + " -- " + TyreDetailCommonClass.tyre_Uri_LR)
+            Log.e("getimagepathlr", "" + prefManager.getValue(TyreConfigClass.serviceId+"image_LR") + " -- " + TyreDetailCommonClass.tyre_Uri_LR)
             if (TyreDetailCommonClass.tyre_Uri_LR != null) {
                 try {
                     counter = counter + 1
@@ -2149,8 +2161,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
         }
-        if (prefManager.getValue("image_RR") != null && !prefManager.getValue("image_RR").equals("")) {
-            Log.e("getimagepatrr", "" + prefManager.getValue("image_RR") + " -- " + TyreDetailCommonClass.tyre_Uri_RR)
+        if (prefManager.getValue(TyreConfigClass.serviceId+"image_RR") != null && !prefManager.getValue(TyreConfigClass.serviceId+"image_RR").equals("")) {
+            Log.e("getimagepatrr", "" + prefManager.getValue(TyreConfigClass.serviceId+"image_RR") + " -- " + TyreDetailCommonClass.tyre_Uri_RR)
             if (TyreDetailCommonClass.tyre_Uri_RR != null) {
                 try {
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -2158,7 +2170,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
                     }
-                    Log.e("getimagepath2", "" + prefManager.getValue("image_RR"))
+                    Log.e("getimagepath2", "" + prefManager.getValue(TyreConfigClass.serviceId+"image_RR"))
                     counter = counter + 1
 
                     val inputStream = imagePath?.inputStream()
@@ -2185,8 +2197,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
         }
 
-        if (prefManager.getValue("image_Car_1") != null &&
-            !prefManager.getValue("image_Car_1").equals("")
+        if (prefManager.getValue(TyreConfigClass.serviceId+"image_Car_1") != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+"image_Car_1").equals("")
         ) {
             if (TyreConfigClass.car_1_uri != null) {
                 try {
@@ -2223,8 +2235,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
             }
         }
-        if (prefManager.getValue("image_Car_2") != null &&
-            !prefManager.getValue("image_Car_2").equals("")
+        if (prefManager.getValue(TyreConfigClass.serviceId+"image_Car_2") != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId+"image_Car_2").equals("")
         ) {
             if (TyreConfigClass.car_2_uri != null) {
                 try {
@@ -2283,11 +2295,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //        jsonObject.addProperty("date_of_service", Common.getCurrentDateTimeSimpleFormat())
             jsonObject.addProperty("uuid", uuid)
 
-            if (prefManager?.getValue(TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
             ) {
                 try {
-                    val str = prefManager.getValue(TyreConfigClass.TyreLFObject)
+                    val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
                     val jsonLF: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
                     if (jsonLF.get(TyreKey.vehicleMake) != null && !jsonLF.get(TyreKey.vehicleMake)?.asString?.equals(
@@ -2452,11 +2464,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //               front_right_tyre_make
 
-                    if (prefManager?.getValue(TyreConfigClass.TyreRFObject) != null &&
-                        !prefManager.getValue(TyreConfigClass.TyreRFObject).equals("")
+                    if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
                     ) {
                         try {
-                            val str_ = prefManager.getValue(TyreConfigClass.TyreRFObject)
+                            val str_ = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
                             val jsonRF: JsonObject = JsonParser().parse(str_).getAsJsonObject()
 
                             if (jsonRF.get(TyreKey.vehicleMake) != null && !jsonRF.get(TyreKey.vehicleMake)?.asString.equals("")) {
@@ -2534,11 +2546,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //                back_left_tyre_make
 
-                    if (prefManager?.getValue(TyreConfigClass.TyreLRObject) != null &&
-                        !prefManager.getValue(TyreConfigClass.TyreLRObject).equals("")
+                    if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
                     ) {
                         try {
-                            val str = prefManager.getValue(TyreConfigClass.TyreLRObject)
+                            val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
                             val jsonLR: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
                             if (jsonLR.get(TyreKey.vehicleMake) != null && !jsonLR.get(TyreKey.vehicleMake)?.asString.equals("")) {
@@ -2616,11 +2628,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
 //                back_right_tyre_make
 
-                    if (prefManager?.getValue(TyreConfigClass.TyreRRObject) != null &&
-                        !prefManager.getValue(TyreConfigClass.TyreRRObject).equals("")
+                    if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
+                        !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
                     ) {
                         try {
-                            val str_ = prefManager.getValue(TyreConfigClass.TyreRRObject)
+                            val str_ = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
                             val jsonRR: JsonObject = JsonParser().parse(str_).getAsJsonObject()
 
                             if (jsonRR.get(TyreKey.vehicleMake) != null && !jsonRR.get(TyreKey.vehicleMake)?.asString.equals("")) {
@@ -2814,9 +2826,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getfinalobject", "" + jsonObject)
                     Log.e("getObjectT__", "" + jsonObject)
 
-//                    Common.hideLoader()
+                    Common.hideLoader()
+                    hideLoader()
 
-                    serviceViewModel?.callApiAddService(
+                   /* serviceViewModel?.callApiAddService(
                         jsonObject,
                         prefManager.getAccessToken()!!,
                         this
@@ -2845,7 +2858,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             Common.hideLoader()
                             hideLoader()
                         }
-                    })
+                    })*/
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -4690,28 +4703,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         prefManager.setValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject, json.toString())
                     }
 
-                    /* if (TyreConfigClass.CarPhoto_1 != null && !TyreConfigClass.CarPhoto_1.equals(
-                             ""
-                         )
-                     ) {
-                         ivPickedImage?.setImageURI(Uri.parse(TyreConfigClass.CarPhoto_1))
-                     }
-                     if (TyreConfigClass.CarPhoto_2 != null && !TyreConfigClass.CarPhoto_2.equals(
-                             ""
-                         )
-                     ) {
-                         ivPickedImage1?.setImageURI(Uri.parse(TyreConfigClass.CarPhoto_2))
-                     }*/
-
                     getStoredObjects("")
-
                     checkSubmitBtn()
                 }
 
             }
         }
     }
-
 
     private fun checkSubmitBtn() {
 
@@ -4740,7 +4738,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         var count = 0
         var tyreRotation = false
         for (i in serviceList!!) {
-            if (i.isSelected!!) {
+            if (i.isSelected) {
                 count = count + 1
                 if (i.name.equals("Type Rotation", ignoreCase = true)) {
                     tyreRotation = true
