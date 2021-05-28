@@ -2076,7 +2076,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.PNG)
+                            format(Bitmap.CompressFormat.JPEG)
                             size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                         }
@@ -2110,7 +2110,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.PNG)
+                            format(Bitmap.CompressFormat.JPEG)
                             size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                         }
@@ -2145,7 +2145,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.PNG)
+                            format(Bitmap.CompressFormat.JPEG)
                             size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                         }
@@ -2180,7 +2180,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.PNG)
+                            format(Bitmap.CompressFormat.JPEG)
                             size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                         }
@@ -2217,7 +2217,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.PNG)
+                            format(Bitmap.CompressFormat.JPEG)
                             size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                         }
@@ -2254,7 +2254,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.PNG)
+                            format(Bitmap.CompressFormat.JPEG)
                             size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                         }
@@ -2826,10 +2826,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getfinalobject", "" + jsonObject)
                     Log.e("getObjectT__", "" + jsonObject)
 
-                    Common.hideLoader()
-                    hideLoader()
+//                    Common.hideLoader()
+//                    hideLoader()
 
-                   /* serviceViewModel?.callApiAddService(
+                    serviceViewModel?.callApiAddService(
                         jsonObject,
                         prefManager.getAccessToken()!!,
                         this
@@ -2858,7 +2858,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             Common.hideLoader()
                             hideLoader()
                         }
-                    })*/
+                    })
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -4234,7 +4234,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.PNG)
+                                format(Bitmap.CompressFormat.JPEG)
                                 size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                             }
@@ -4302,7 +4302,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, auxFile!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.PNG)
+                                format(Bitmap.CompressFormat.JPEG)
                                 size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                             }
@@ -4386,7 +4386,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.PNG)
+                                format(Bitmap.CompressFormat.JPEG)
                                 size(2) // 2 MB
                             }
                             Log.i("imagePath", "++++" + imagePath?.length())

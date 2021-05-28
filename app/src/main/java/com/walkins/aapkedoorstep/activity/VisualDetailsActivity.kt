@@ -1672,7 +1672,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.PNG)
+                                format(Bitmap.CompressFormat.JPEG)
                                 size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                             }
@@ -1724,7 +1724,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, auxFile!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.PNG)
+                                format(Bitmap.CompressFormat.JPEG)
                                 size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                             }
@@ -1790,7 +1790,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.PNG)
+                                format(Bitmap.CompressFormat.JPEG)
                                 size(2) // 2 MB
 //                            size(1_097_152) // 2 MB
                             }
