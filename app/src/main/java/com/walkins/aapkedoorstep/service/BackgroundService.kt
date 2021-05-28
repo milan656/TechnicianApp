@@ -23,9 +23,11 @@ import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.common.TyreKey
 import com.walkins.aapkedoorstep.model.login.ApiUpdatedTimeModel
+import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.aapkedoorstep.model.login.issue_list.IssueListModel
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternModel
 import com.walkins.aapkedoorstep.model.login.sizemodel.SizeModel
+import com.walkins.aapkedoorstep.networkApi.ServiceApi
 import com.walkins.aapkedoorstep.networkApi.WarrantyApi
 import com.walkins.aapkedoorstep.networkApi.common.CommonApi
 import kotlinx.coroutines.Dispatchers
@@ -224,11 +226,47 @@ class BackgroundService : Service() {
 
                     fetchTime()
 
+                    if (mDb.ServiceListDashbaordDaoClass().getAll()!=null &&
+                        mDb.ServiceListDashbaordDaoClass().getAll().size>0){
+
+                    }else{
+                        getServiceDashboard()
+                    }
+
                 }
                 delay(4 * 60 * 1000) // 5 min delay
             }
             Log.e("ENDLESS-SERVICE", "End of the loop for the service")
         }
+    }
+
+    private fun getServiceDashboard() {
+        val serviceApi = RetrofitCommonClass.createService(ServiceApi::class.java)
+
+        var call: Call<ResponseBody>? = null
+        call = serviceApi.getDashboardService("",
+            prefManager?.getAccessToken()!!
+        )
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    try {
+                        val gson = GsonBuilder().create()
+                        var dashboardModel: DashboardServiceListModel = gson.fromJson(
+                            response.body()?.string(),
+                            DashboardServiceListModel::class.java
+                        )
+                        Log.e("getmodel00::", "" + dashboardModel)
+//                        checkDateTime
+                        saveDashboardService(dashboardModel)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+        })
     }
 
     private fun fetchIssueList() {
@@ -689,5 +727,52 @@ class BackgroundService : Service() {
         return noti
     }
 
+    private fun saveDashboardService(dashboardServiceListModel: DashboardServiceListModel) {
 
+        var thread: Thread = Thread {
+            if (mDb.ServiceListDashbaordDaoClass().getAll().size > 0) {
+                mDb.ServiceListDashbaordDaoClass().deleteAll()
+            }
+
+            if (dashboardServiceListModel.data != null && dashboardServiceListModel.data.size > 0) {
+                for (i in dashboardServiceListModel.data) {
+
+                    var entity = ServiceDashboardModelClass()
+
+                    val dateString = i.date
+                    Log.e("getdatefrom", "" + dateString)
+                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                    val date = sdf.parse(dateString)
+
+                    val startDate = date.time
+
+                    entity.buildingnamearea = i.building_name + ", " + i.area
+                    entity.address = i.address
+                    entity.date = i.date
+                    entity.buildinguuid = i.building_uuid
+                    entity.dateformated = i.date_formated
+                    entity.openjobs = i.open_jobs.toInt()
+                    entity.completedjobs = i.complete_jobs.toInt()
+                    entity.skippedjobs = i.skip_jobs.toInt()
+                    entity.totaljobs = i.total_jobs.toInt()
+                    entity.startdate = startDate
+                    entity.updatedate = startDate
+
+                    val mDateFormat = SimpleDateFormat("dd MMMM yy")
+                    val mToday = mDateFormat.format(Date())
+                    val date_ = mDateFormat.format(Date(entity.dateformated)).toString()
+                    Log.e("getdatefor", "" + mToday + " " + date_)
+
+                    if (mToday.equals(date_)) {
+                        mDb.ServiceListDashbaordDaoClass().save(entity)
+                    }
+                }
+
+            }
+            Log.e("response+++", "++++" + mDb.ServiceListDashbaordDaoClass().getAll().size)
+        }
+
+        thread.start()
+
+    }
 }

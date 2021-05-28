@@ -13,28 +13,34 @@
         android:id="@+id/notiSwipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty_dp"
-        android:layout_marginEnd="@dimen/twenty_dp">
+        >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notificationRecycView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:visibility="visible" />
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/notificationRecycView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_marginEnd="@dimen/twenty_dp"
+                android:visibility="visible" />
 
 
-        <com.walkins.aapkedoorstep.custom.NormalNoDataTextView
-            android:id="@+id/tvNoNotiData"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="there is no any notification here to display"
-            android:textColor="@color/text_color1"
-            android:textSize="@dimen/twelve_sp"
-            android:visibility="gone" />
+            <com.walkins.aapkedoorstep.custom.NormalNoDataTextView
+                android:id="@+id/tvNoNotiData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="there is no any notification here to display"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/twelve_sp"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+        </RelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
 

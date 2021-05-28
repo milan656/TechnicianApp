@@ -2086,7 +2086,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
     private fun uploadImageIfExist() {
 
         var counter = 0
-
+        showLoader(this)
         if (prefManager.getValue(TyreConfigClass.serviceId + "image_LF") != null && !prefManager.getValue(TyreConfigClass.serviceId + "image_LF").equals("")) {
 
             Log.e("getimagepathlf", "" + prefManager.getValue(TyreConfigClass.serviceId + "image_LF") + " -- " + TyreDetailCommonClass.tyre_Uri_LF)
@@ -4253,6 +4253,8 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
 //                    relTyrePhotoAdd?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
 
                     if (Common.isConnectedToInternet(this)) {
+
+                        showLoader(this)
                         val inputStream: InputStream? = imagePath?.inputStream()
 
                         if (selectImage1) {
@@ -4323,6 +4325,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
                     if (Common.isConnectedToInternet(this)) {
                         val inputStream: InputStream? = auxFile.inputStream()
 //                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
+                        showLoader(this)
                         if (selectImage1) {
                             prefManager.removeValue(TyreConfigClass.serviceId + "image_Car_1")
                         } else {
@@ -4396,6 +4399,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
                     }
 
                     if (Common.isConnectedToInternet(this)) {
+                        showLoader(this)
                         val inputStream: InputStream? = imagePath?.inputStream()
 //                            this.contentResolver?.openInputStream(selectedImage!!)
                         if (selectImage1) {
@@ -4415,11 +4419,11 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
                         CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
                             val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
-                                quality(80)
+                                quality(100)
                                 format(Bitmap.CompressFormat.JPEG)
                                 size(2) // 2 MB
                             }
-                            Log.i("imagePath", "++++" + imagePath?.length())
+                            Log.i("imagePath", "++++" + imagePath.length())
                             Log.i("imagePath", "++++" + compressedImageFile.length())
                             runOnUiThread {
                                 uploadImage(compressedImageFile, compressedImageFile.inputStream(), "")
@@ -6716,7 +6720,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
     }
 
     private fun uploadImage(imagePath: File, inputStream: InputStream, type: String) {
-        showLoader(this)
+//        showLoader(this)
         val part = MultipartBody.Part.createFormData(
             "file", imagePath.name, RequestBody.create(
                 MediaType.parse("image/*"),
@@ -6851,8 +6855,13 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
 
                     storeServiceDetailData()
                     checkSubmitBtn()
-                    if (type.equals("")) {
-                        hideLoader()
+                    try {
+                        if (type.equals("")) {
+                            hideLoader()
+                            Common.hideLoader()
+                        }
+                    }catch (e:Exception){
+                        e.printStackTrace()
                     }
                 } else {
                     Common.hideLoader()

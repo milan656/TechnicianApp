@@ -145,6 +145,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
     private var tvServicePersonName: TextView? = null
     private var phoneNumber: String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_service_detail)

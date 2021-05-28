@@ -148,7 +148,7 @@
                         android:layout_marginEnd="@dimen/sixteen_dp"
                         android:layout_marginStart="@dimen/twelve_dp"
                         android:src="@drawable/info_in_profile"
-                        app:tint="@color/header_title"
+                        app:tint="@color/blue_color"
                         android:layout_marginRight="@dimen/sixteen_dp"
                         android:layout_marginLeft="@dimen/twelve_dp" />
 

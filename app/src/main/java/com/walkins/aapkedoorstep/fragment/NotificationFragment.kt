@@ -156,6 +156,7 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             }
                         }
 
+                        Log.e("getnotidata",""+notificationArr?.size)
                         if (notificationArr?.size!! > 0) {
                             tvNoNotiData?.visibility = View.GONE
                         } else {

@@ -117,12 +117,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         Log.e("getaccessToken", "" + prefManager?.getAccessToken())
         init()
 
-        val diff = Common.dateDifference(prefManager?.getAccessTokenExpireDate()!!)
-        if (diff <= 1) {
-            refreshToken()
-        }
 
-        callApiTogetToken()
+        if (Common.isConnectedToInternet(this)) {
+            val diff = Common.dateDifference(prefManager?.getAccessTokenExpireDate()!!)
+            if (diff <= 1) {
+                refreshToken()
+            }
+
+            callApiTogetToken()
+            getServiceList()
+            getCommentList()
+            getIssueList()
+        }
 
         val year = Calendar.getInstance().get(Calendar.YEAR)
         val weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)
@@ -130,13 +136,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
 
         llhome?.performClick()
-        getNotificationCount()
+//        getNotificationCount()
 
-        getServiceList()
-
-        getCommentList()
-
-        getIssueList()
 
     }
 
@@ -501,7 +502,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         if (!BackgroundService.isServiceStarted) {
             actionOnService(Actions.START)
         }
-        getNotificationCount()
+        if (Common.isConnectedToInternet(this)) {
+            getNotificationCount()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

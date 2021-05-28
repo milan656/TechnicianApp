@@ -18,23 +18,31 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
+import com.facebook.internal.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.walkins.aapkedoorstep.DB.DBClass
+import com.walkins.aapkedoorstep.DB.ServiceDashboardModelClass
+import com.walkins.aapkedoorstep.DB.VehicleMakeModelClass
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.activity.ServiceListActivity
 import com.walkins.aapkedoorstep.adapter.LeadHistoryAdapter
 import com.walkins.aapkedoorstep.common.dateForWebservice_2
-import com.walkins.aapkedoorstep.common.item.SimpleTextRecyclerItem
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.aapkedoorstep.model.login.DashboardModel
 import com.walkins.aapkedoorstep.model.login.SectionModel
+import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.coroutines.CoroutineContext
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -44,10 +52,12 @@ private const val ARG_PARAM2 = "param2"
     "SetTextI18n"
 )
 class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
+    private lateinit var mDb: DBClass
     private var param1: String? = null
     private var param2: String? = null
     var calendar = Calendar.getInstance()
     private var ivFilter: ImageView? = null
+    var dashboardServiceListModel: DashboardServiceListModel? = null
     private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
     private var prefManager: PrefManager? = null
@@ -83,12 +93,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         activity = getActivity() as MainActivity?
         commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        mDb = context?.let { DBClass.getInstance(it) }!!
 
         prefManager = context?.let { PrefManager(it) }
         init(view)
@@ -170,15 +181,75 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     fun onRefresh() {
-        getDashboardService(selectedDate!!)
-        getUserInfo()
+        context?.let {
+
+            if (!Common.isConnectedToInternet(it)) {
+                getServiceFromDB()
+            } else {
+                getDashboardService(selectedDate!!)
+                getUserInfo()
+            }
+        }
+
+
         homeSwipeRefresh?.post { homeSwipeRefresh?.isRefreshing = false }
+    }
+
+    private fun getServiceFromDB() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            if (mDb.ServiceListDashbaordDaoClass().getAll() != null &&
+                mDb.ServiceListDashbaordDaoClass().getAll().size > 0
+            ) {
+                historyDataList.clear()
+                for (i in mDb.ServiceListDashbaordDaoClass().getAll()) {
+
+                    var dashboardModel: DashboardModel? = null
+                    val dateString = i.date
+                    Log.e("getdatefrom", "" + dateString)
+                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                    val date = sdf.parse(dateString)
+
+                    val startDate = date.time
+                    Log.e("getdatefromstart", "" + startDate)
+                    dashboardModel = DashboardModel(
+                        i.buildingnamearea!!, i.address!!, i.date!!, i.buildinguuid!!, i.dateformated!!,
+                        i.openjobs!!, i.completedjobs!!, i.skippedjobs, i.totaljobs, startDate,
+                        startDate
+                    )
+
+                    historyDataList.add(dashboardModel)
+                }
+
+                getActivity()?.runOnUiThread {
+                    relNoData?.visibility = View.GONE
+                    homeRecycView?.visibility = View.VISIBLE
+                    mAdapter?.notifyDataSetChanged()
+                }
+
+            } else {
+                getActivity()?.runOnUiThread {
+                    relNoData?.visibility = View.VISIBLE
+                    homeRecycView?.visibility = View.GONE
+                    mAdapter?.notifyDataSetChanged()
+                }
+
+            }
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
-        getDashboardService(selectedDate!!)
-        getUserInfo()
+        context?.let {
+            if (!Common.isConnectedToInternet(it)) {
+                getServiceFromDB()
+            } else {
+                getDashboardService(selectedDate!!)
+                getUserInfo()
+            }
+        }
+
     }
 
     private fun getDashboardService(displayDate: String) {
@@ -195,6 +266,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         historyDataList.clear()
 
                         if (it.data != null && it.data.size > 0) {
+
+                            dashboardServiceListModel = it
                             for (i in it.data.indices) {
 
                                 var dashboardModel: DashboardModel? = null
@@ -206,7 +279,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 val startDate = date.time
                                 Log.e("getdatefromstart", "" + startDate)
                                 dashboardModel = DashboardModel(
-                                    it.data.get(i).building_name+", "+it.data.get(i).area, it.data.get(i).address, it.data.get(i).date, it.data.get(i).building_uuid, it.data.get(i).date_formated,
+                                    it.data.get(i).building_name + ", " + it.data.get(i).area, it.data.get(i).address, it.data.get(i).date, it.data.get(i).building_uuid, it.data.get(i).date_formated,
                                     it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), it.data.get(i).total_jobs.toInt(), startDate,
                                     startDate
                                 )
@@ -215,6 +288,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             }
                             relNoData?.visibility = View.GONE
                             homeRecycView?.visibility = View.VISIBLE
+
                         } else {
                             relNoData?.visibility = View.VISIBLE
 
@@ -258,7 +332,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        strBuilder: StringBuilder
+        strBuilder: StringBuilder,
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
@@ -437,11 +511,25 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         val formatterDisplay = SimpleDateFormat("dd MMMM yyyy")
                         val dateInString = formatterDisplay.parse(selectedDate)
                         val displayDate = formatter.format(dateInString)
-                        getDashboardService(displayDate)
+                        context?.let {
+                            if (!Common.isConnectedToInternet(it)) {
+                                getServiceFromDB()
+                            } else {
+                                getDashboardService(displayDate)
+                            }
+                        }
+//                        getDashboardService(displayDate)
 
                     } else {
                         if (!str.equals("Close")) {
-                            getDashboardService(selectedDate!!)
+                            context?.let {
+                                if (!Common.isConnectedToInternet(it)) {
+                                    getServiceFromDB()
+                                } else {
+                                    getDashboardService(selectedDate!!)
+                                }
+                            }
+//                            getDashboardService(selectedDate!!)
                         }
                     }
                 }
@@ -452,6 +540,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 
     }
+
+
 
 
 }

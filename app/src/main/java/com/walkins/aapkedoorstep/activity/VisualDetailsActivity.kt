@@ -531,23 +531,30 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 }
                 if (json.get(TyreKey.psiInTyreService) != null) {
                     psiInTyreService = json.get(TyreKey.psiInTyreService)?.asString!!
+                    sliderIn?.requestFocus()
                     sliderIn?.bubbleText = psiInTyreService
-                    sliderIn?.animation?.start()
+                    sliderIn?.animate()?.start()
+
                     Log.e("getvaluess0", "" + sliderIn?.bubbleText)
+                    Log.e("method","resume"+" "+sliderIn?.bubbleText)
                 }
                 if (json.get(TyreKey.psiOutTyreService) != null) {
 
                     psiOutTyreService = json.get(TyreKey.psiOutTyreService)?.asString!!
+                    multiSliderPsiOut?.requestFocus()
                     multiSliderPsiOut?.bubbleText = psiOutTyreService
                     multiSliderPsiOut?.animation?.start()
                     Log.e("getvaluess11", "" + multiSliderPsiOut?.bubbleText)
+                    Log.e("method","resume"+" "+multiSliderPsiOut?.bubbleText)
                 }
                 if (json.get(TyreKey.weightTyreService) != null) {
                     weightTyreService = json.get(TyreKey.weightTyreService)?.asString!!
+                    multiSliderWeight?.requestFocus()
                     multiSliderWeight?.bubbleText = weightTyreService
                     multiSliderWeight?.animation?.start()
 
                     Log.e("getvaluess22", "" + multiSliderWeight?.bubbleText)
+                    Log.e("method","resume"+" "+multiSliderWeight?.bubbleText)
                 }
                 if (json.get(TyreKey.sidewell) != null) {
                     if (json.get(TyreKey.sidewell)?.asString?.equals(ok_status)!!) {
@@ -873,6 +880,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             sliderIn?.bubbleText = "${min + (total * pos).toInt()}"
             Log.e("getvaluess", "" + sliderIn?.bubbleText)
             psiInTyreService = sliderIn?.bubbleText
+            Log.e("method","resume1"+" "+psiInTyreService)
         }
         sliderIn?.position = 0.3f
         sliderIn?.startText = "$min"
@@ -886,6 +894,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             multiSliderPsiOut?.bubbleText = "${min + (total * pos).toInt()}"
             Log.e("getvaluess", "" + multiSliderPsiOut?.bubbleText)
             psiOutTyreService = multiSliderPsiOut?.bubbleText
+            Log.e("method","resume1"+" "+psiOutTyreService)
         }
         multiSliderPsiOut?.position = 0.3f
         multiSliderPsiOut?.startText = "$min"
@@ -900,6 +909,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getvaluessweight", "" + multiSliderWeight?.bubbleText + " ${min + (total * pos).toInt()}")
 
             weightTyreService = multiSliderWeight?.bubbleText
+            Log.e("method","resume1"+" "+weightTyreService)
         }
         multiSliderWeight?.position = 0.3f
         multiSliderWeight?.startText = "$min"
@@ -2060,6 +2070,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
     override fun onResume() {
         super.onResume()
+        Log.e("method","resume")
         getTyreWiseData()
     }
 }
