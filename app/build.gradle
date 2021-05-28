@@ -151,5 +151,7 @@ dependencies {
     implementation 'com.brucetoo.pickview:library:1.2.3'
     implementation 'com.trading212:diverse-recycler-adapter:0.9.11'
     implementation 'ca.barrenechea.header-decor:header-decor:0.2.6'
+    implementation 'id.zelory:compressor:3.0.1'
+
 
 }
