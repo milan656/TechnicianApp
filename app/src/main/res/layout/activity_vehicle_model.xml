@@ -79,7 +79,7 @@
                 android:layout_marginTop="@dimen/fourteen_dp"
                 android:layout_marginEnd="@dimen/ten_dp"
                 android:layout_marginBottom="@dimen/fourteen_dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <!--                <com.walkins.aapkedoorstep.custom.NormalNoDataTextView-->
             <!--                    android:id="@+id/tvNoDataFound"-->
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -141,6 +141,7 @@
                                     android:paddingTop="@dimen/three_dp"
                                     android:paddingEnd="@dimen/five_dp"
                                     android:paddingBottom="@dimen/three_dp"
+                                    android:textSize="@dimen/twelve_sp"
                                     android:text="185/65 R15"
                                     android:textColor="@color/text_color" />
 

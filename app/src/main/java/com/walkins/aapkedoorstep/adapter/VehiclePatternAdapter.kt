@@ -52,16 +52,16 @@ class VehiclePatternAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: VehiclePatternAdapter.ViewHolder, position: Int) {
-        holder.textView.setText(name?.get(position)?.name?.toLowerCase(Locale.getDefault())?.capitalize(Locale.getDefault()))
+        holder.textView.setText(name?.get(position)?.name)
 //        holder.textView.text = "185/65 R15"
 
         if (name!!.get(position).isSelected) {
             holder.rlItemView.setBackgroundResource(R.drawable.selected)
-            holder.ivselectedVehicleModel?.visibility = View.VISIBLE
+            holder.ivselectedVehicleModel.visibility = View.VISIBLE
 
         } else {
             holder.rlItemView.setBackgroundResource(R.drawable.unselected)
-            holder.ivselectedVehicleModel?.visibility = View.GONE
+            holder.ivselectedVehicleModel.visibility = View.GONE
         }
 
         holder.rlItemView.setOnClickListener {
@@ -75,35 +75,11 @@ class VehiclePatternAdapter internal constructor(
                 }
 
                 name!!.get(position).isSelected = true;
-                holder.ivselectedVehicleModel?.visibility = View.VISIBLE
+                holder.ivselectedVehicleModel.visibility = View.VISIBLE
             }
             notifyDataSetChanged()
             positionClick.onPositionClick(position, 0)
         }
-
-//        var handler = android.os.Handler()
-//        handler.postDelayed(Runnable {
-//            if (selectedId != -1) {
-//                if (selectedId == name?.get(position)?.patternId) {
-//                    if (name!!.get(position).isSelected) {
-//                        // name!!.get(position).isSelected = false;
-//                    } else {
-//                        for (date in name!!) {
-//                            if (date.isSelected) {
-//                                date.isSelected = false
-//                            }
-//                        }
-//
-//                        name!!.get(position).isSelected = true;
-//                        holder.ivselectedVehicleModel?.visibility = View.VISIBLE
-//                    }
-//                    positionClick.onPositionClick(position, 0)
-//                }
-//            }
-//
-//        }, 700)
-
-
     }
 
     override fun getItemCount(): Int {

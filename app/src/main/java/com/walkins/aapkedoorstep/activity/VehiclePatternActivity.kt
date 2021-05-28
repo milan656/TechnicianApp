@@ -560,7 +560,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 thread.start()
 
 
-                tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern?.toLowerCase(Locale.getDefault())?.capitalize(Locale.getDefault())
+                tvSelectedModel?.text = TyreDetailCommonClass.vehiclePattern
 
                 Common.hideLoader()
             } else {
@@ -613,7 +613,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         Common.slideUp(gridviewRecycModel!!)
         Common.slideDown(llVehicleMakeselectedView!!, btnNext!!)
 
-        tvSelectedModel?.text = arrList?.get(variable)?.name?.toLowerCase(Locale.getDefault())?.capitalize(Locale.getDefault())
+        tvSelectedModel?.text = arrList?.get(variable)?.name
         selectedPosition = variable
         selectedPos = variable
         selectedId = arrList?.get(variable)?.patternId!!
@@ -622,9 +622,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
             if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
                 !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
+                val str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
                 try {
-                    var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
+                    val json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 //                    selectedId = json.get("vehiclePatternId")?.asString?.toInt()!!
                     Log.e("getpatterlf", "" + json + " " + selectedId)
 

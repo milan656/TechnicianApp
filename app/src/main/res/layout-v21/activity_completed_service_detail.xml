@@ -628,7 +628,9 @@
                             android:layout_marginTop="@dimen/twenty_dp"
                             android:layout_marginBottom="@dimen/twenty_dp"
                             android:layout_marginEnd="@dimen/eighteen_dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginLeft="@dimen/twenty_dp"
+                            android:layout_marginRight="@dimen/eighteen_dp">
 
                             <LinearLayout
                                 android:id="@+id/lltyreconfig"
@@ -674,6 +676,7 @@
                                     android:layout_gravity="center"
                                     android:background="@drawable/tyre_config"
                                     android:gravity="center"
+                                    android:visibility="gone"
                                     android:text="Click on any tyre to start adding info "
                                     android:textColor="@color/text_color1"
                                     android:textSize="@dimen/fourteen_sp" />
@@ -1003,7 +1006,9 @@
                             android:layout_marginTop="@dimen/twenty_dp"
                             android:layout_marginBottom="@dimen/twenty_dp"
                             android:layout_marginEnd="@dimen/eighteen_dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginLeft="@dimen/twenty_dp"
+                            android:layout_marginRight="@dimen/eighteen_dp">
 
                             <LinearLayout
                                 android:id="@+id/lltechnical"

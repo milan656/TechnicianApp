@@ -23,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.R
+import com.walkins.aapkedoorstep.activity.CompletedServiceDetailActivity
 import com.walkins.aapkedoorstep.activity.SkippedServiceDetailActivity
 import com.walkins.aapkedoorstep.adapter.*
 import com.walkins.aapkedoorstep.common.OnBottomReachedListener

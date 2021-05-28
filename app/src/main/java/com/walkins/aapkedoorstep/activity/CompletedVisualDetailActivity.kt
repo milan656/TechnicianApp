@@ -122,7 +122,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
 
         tvManufacturingDate?.text = TyreDetailCommonClass.manufaturingDate
         tvSelectedSize?.text = TyreDetailCommonClass.vehicleSize
-        tvSelectedPattern?.text = TyreDetailCommonClass.vehiclePattern?.toLowerCase()?.capitalize()
+        tvSelectedPattern?.text = TyreDetailCommonClass.vehiclePattern
 
         try {
             Glide.with(this@CompletedVisualDetailActivity)
