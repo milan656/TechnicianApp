@@ -404,6 +404,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         actionOnService(Actions.STOP)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onClick(v: View?) {
 
         val i = v?.id
