@@ -5,7 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "vehiclesize")
-class VehicleSizeModelClass {
+class
+VehicleSizeModelClass {
 
     @PrimaryKey(autoGenerate = true)
     var Id: Int = 0

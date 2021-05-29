@@ -23,6 +23,8 @@ import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.walkins.aapkedoorstep.DB.DBClass
+import com.walkins.aapkedoorstep.DB.ServiceListModelClass
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.adapter.ServicesListAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
@@ -31,13 +33,18 @@ import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateD
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 @SuppressLint("SetTextI18n")
 class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
+    private lateinit var mDb: DBClass
     private var loginViewModel: LoginActivityViewModel? = null
     private var serviceViewModel: ServiceViewModel? = null
     private var prefManager: PrefManager? = null
@@ -87,6 +94,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         setContentView(R.layout.activity_service_list)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         prefManager = PrefManager(this)
+        mDb = DBClass.getInstance(this)
         loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
         init()
 
@@ -94,6 +102,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         if (diff <= 1) {
             refreshToken()
         }
+
 
     }
 
@@ -190,13 +199,122 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     }
 
     fun onRefresh() {
-        getServiceListByDate()
-        serviceListSwipe?.post { serviceListSwipe?.isRefreshing = false }
+        if (Common.isConnectedToInternet(this)) {
+            getServiceListByDate()
+            serviceListSwipe?.post { serviceListSwipe?.isRefreshing = false }
+        } else {
+            getDataFromDatabase()
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
-        getServiceListByDate()
+        if (Common.isConnectedToInternet(this)) {
+            getServiceListByDate()
+            serviceListSwipe?.post { serviceListSwipe?.isRefreshing = false }
+        } else {
+            getDataFromDatabase()
+        }
+    }
+
+    fun getDataFromDatabase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.e("getservicedataa", "" + mDb.serviceListDaoClass().getAll().size)
+            Log.e("getservicedataa", "" + mDb.serviceListDaoClass().getAll())
+
+            val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
+            Log.e("getservicedataa", "" + building_uuid)
+
+            for (i in mDb.serviceListDaoClass().getAll()){
+                Log.e("getbuilding",""+i.buildingName+"--"+i.uuid+" -- "+building_uuid)
+            }
+            arrayList.clear()
+
+            for (i in arrayListfinal) {
+                arrayList.add(ServiceListByDateData(
+                    i.serviceId.toInt(), i.uuid!!,if (i.color!=null) i.color!! else "",if (i.color_code!=null) i.color_code!! else "",if (i.status!=null) i.status!! else "",if (i.regNumber!=null) i.regNumber!! else "",
+                    if (i.service_user_name!=null) i.service_user_name!! else "",if (i.service_user_mobile!=null) i.service_user_mobile!! else "",if (i.make!=null) i.make!! else "",if (i.model!=null) i.model!! else "",
+                    i.make_id!!, i.model_id!!,if (i.model_image!=null) i.model_image!! else "",if (i.service!=null) i.service!! else ArrayList(),if (i.image!=null) i.image!! else "",if (i.buildingName!=null)  i.buildingName!! else "",
+                    if (i.address!=null)i.address!! else "",if (i.comment_id!=null && i.comment_id?.size!!>0) i.comment_id!! else ArrayList()
+                ))
+                Log.e("savearr",""+arrayList.size)
+            }
+
+            runOnUiThread {
+                Log.e("savearr1",""+arrayList.size)
+                if (arrayList.size > 0) {
+
+                    val arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+
+                    tvUpcoming?.text = "Upcoming - " + arrayList.size
+                    val arrayskipList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
+
+                    tvSkipped?.text = "Skipped - " + arrayskipList.size
+                    val arrayCompleteList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
+
+                    tvCompleted?.text = "Completed - " + arrayCompleteList.size
+                }
+
+                if (serviceStatus.equals(upcomming)) {
+//                            arrayList.filter { it.status.equals(upcomming) }
+                    val arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+                    adapter =
+                        this.let {
+                            ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>,
+                                this@ServiceListActivity,
+                                this@ServiceListActivity,
+                                serviceStatus,
+                                isAddServiceEnable)
+                        }
+
+                    tvUpcoming?.text = "Upcoming - ${arrayList.size}"
+                    Log.e("getservicedata", "" + arrayList.size)
+                } else if (serviceStatus.equals(completed)) {
+//                            arrayList.filter { it.status.equals(completed) }
+                    Log.e("getservicedata0", "" + arrayList.size)
+                    arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
+                    adapter =
+                        this.let {
+                            ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>,
+                                this@ServiceListActivity,
+                                this@ServiceListActivity,
+                                serviceStatus,
+                                isAddServiceEnable)
+                        }
+                    tvCompleted?.text = "Completed - ${arrayList.size}"
+                } else if (serviceStatus.equals(skipped)) {
+//                            arrayList.filter { it.status.equals(skipped) }
+                    Log.e("getservicedata1", "" + arrayList.size)
+                    arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
+                    adapter =
+                        this@ServiceListActivity.let {
+                            ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>,
+                                it,
+                                this@ServiceListActivity,
+                                serviceStatus,
+                                isAddServiceEnable)
+                        }
+                    tvSkipped?.text = "Skipped - ${arrayList.size}"
+                }
+
+                tvNoServiceData?.visibility = View.GONE
+                if (arrayList.size == 0) {
+                    tvNoServiceData?.text = "There is no any Upcomming service to display"
+                    tvNoServiceData?.visibility = View.VISIBLE
+                    relNoData?.visibility = View.VISIBLE
+                    llAddressView?.visibility = View.GONE
+                    tvNoServiceData?.visibility = View.GONE
+                } else {
+                    llAddressView?.visibility = View.VISIBLE
+                    relNoData?.visibility = View.GONE
+                }
+
+                serviceRecycView?.adapter = adapter
+                adapter?.onclick = this@ServiceListActivity
+            }
+
+        }
     }
 
     private fun getServiceListByDate() {
@@ -419,7 +537,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 intent.putExtra("make_id", "" + arrayList.get(variable).make_id)
                 intent.putExtra("model_id", "" + arrayList.get(variable).model_id)
                 intent.putExtra("service_name", "" + arrayList.get(variable).service_user_name)
-                if (arrayList.get(variable).service_user_mobile!=null) {
+                if (arrayList.get(variable).service_user_mobile != null) {
                     intent.putExtra("service_number", "" + arrayList.get(variable).service_user_mobile)
                 }
                 intent.putExtra("id", "" + arrayList.get(variable).id)

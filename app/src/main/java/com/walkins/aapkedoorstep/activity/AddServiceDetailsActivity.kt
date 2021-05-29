@@ -498,7 +498,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     TyreConfigClass.RFVehicleVisualDetail = true
                     Log.e("rfStatus4", "" + TyreConfigClass.RFVehicleVisualDetail)
                 }
-if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
+                if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
                     val arr = jsonRF.get(TyreKey.issueResolvedArr).asJsonArray
                     if (arr.size() == 0) {
                         TyreConfigClass.RFVehicleVisualDetail = false
@@ -1279,6 +1279,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
 
         }
 
+        Log.e("getserviceid", "" + serviceId)
         if (!serviceId.equals("")) {
             TyreConfigClass.serviceId = serviceId
         }
@@ -1746,7 +1747,11 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
             }
 
             R.id.tvSkipService -> {
-                openSkipServiceDialogue("Provide Pending Reason", "", "")
+                if (Common.isConnectedToInternet(this)) {
+                    openSkipServiceDialogue("Provide Pending Reason", "", "")
+                } else {
+                    Common.showDialogue(this, "Oops!", "You have no internet connection", false)
+                }
             }
 
             R.id.ivInfoImgLR -> {
@@ -6859,7 +6864,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
                             hideLoader()
                             Common.hideLoader()
                         }
-                    }catch (e:Exception){
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 } else {

@@ -417,6 +417,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             intent.putExtra("addressTitle", historyDataList.get(variable).addressTitle)
             intent.putExtra("fullAddress", historyDataList.get(variable).fullAddress)
             intent.putExtra("building_uuid", historyDataList.get(variable).building_uuid)
+//            intent.putExtra("",""+historyDataList.get(variable).)
             startActivity(intent)
         } else {
             Log.e("getsection", "" + sectionModelArrayList.get(variable).sectionLabel)
@@ -540,6 +541,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 
     }
+
 
 
 

@@ -22,10 +22,12 @@ import com.walkins.aapkedoorstep.DB.*
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.common.TyreKey
+import com.walkins.aapkedoorstep.common.dateForWebservice_2
 import com.walkins.aapkedoorstep.model.login.ApiUpdatedTimeModel
 import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.aapkedoorstep.model.login.issue_list.IssueListModel
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternModel
+import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.model.login.sizemodel.SizeModel
 import com.walkins.aapkedoorstep.networkApi.ServiceApi
 import com.walkins.aapkedoorstep.networkApi.WarrantyApi
@@ -258,8 +260,14 @@ class BackgroundService : Service() {
                             DashboardServiceListModel::class.java
                         )
                         Log.e("getmodel00::", "" + dashboardModel)
-//                        checkDateTime
                         saveDashboardService(dashboardModel)
+
+                        if (dashboardModel.data != null && dashboardModel.data.size > 0) {
+                            for (i in dashboardModel.data) {
+                                Log.e("getpassdata", "" + i.building_uuid)
+                                getServiceList(i.building_uuid, i.date)
+                            }
+                        }
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
@@ -268,6 +276,82 @@ class BackgroundService : Service() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
         })
+    }
+
+    private fun getServiceList(buildingUuid: String, date: String) {
+
+        val serviceApi = RetrofitCommonClass.createService(ServiceApi::class.java)
+
+        var call: Call<ResponseBody>? = null
+        call = serviceApi.getServiceByDate(dateForWebService(date), buildingUuid,
+            prefManager?.getAccessToken()!!
+        )
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    try {
+                        val gson = GsonBuilder().create()
+                        var serviceListModel: ServiceListByDateModel = gson.fromJson(
+                            response.body()?.string(),
+                            ServiceListByDateModel::class.java
+                        )
+                        Log.e("getservicelistmodel::", "" + serviceListModel)
+
+                        saveServiceList(serviceListModel)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+        })
+    }
+
+    private fun saveServiceList(serviceListModel: ServiceListByDateModel) {
+        var thread: Thread = Thread {
+            /* if (mDb.serviceListDaoClass().getAll().size > 0) {
+                 mDb.serviceListDaoClass().deleteAll()
+             }*/
+
+            if (serviceListModel.data != null && serviceListModel.data.size > 0) {
+                for (i in serviceListModel.data) {
+
+                    val entity = ServiceListModelClass()
+                    Log.e("getservicelistmodel0::", "" + i.id)
+                    entity.serviceId = i.id.toString()
+                    entity.uuid = i.uuid
+                    entity.color = i.color
+                    entity.color_code = i.color_code
+                    entity.status = i.status
+                    entity.regNumber = i.regNumber
+                    entity.service_user_name = i.service_user_name
+                    entity.service_user_mobile = i.service_user_mobile
+                    entity.make = i.make
+                    entity.model = i.model
+                    entity.make_id = i.make_id
+                    entity.model_id = i.model_id
+                    entity.model_image = i.model_image
+                    if (i.service != null && i.service.size > 0) {
+                        entity.service = i.service
+                    }
+                    entity.image = i.image
+                    entity.buildingName = i.buildingName
+                    entity.address = i.address
+
+                    if (i.comment_id != null && i.comment_id.size > 0) {
+                        entity.comment_id = i.comment_id
+                    }
+
+                    mDb.serviceListDaoClass().save(entity)
+                }
+
+            }
+            Log.e("response+++", "++++" + mDb.serviceListDaoClass().getAll().size)
+        }
+
+        thread.start()
+
     }
 
     private fun fetchIssueList() {
@@ -775,5 +859,13 @@ class BackgroundService : Service() {
 
         thread.start()
 
+    }
+
+    fun dateForWebService(date: String): String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val formatterDisplay = SimpleDateFormat("yyyy-MM-dd")
+        val dateInString = formatterDisplay.parse(date)
+        val displayDate = formatter.format(dateInString)
+        return displayDate
     }
 }

@@ -8,7 +8,8 @@ import androidx.room.*
         (VehiclePatternModelClass::class),
         (IssueListModelClass::class),
         (VehicleSizeModelClass::class),
-        (ServiceDashboardModelClass::class)],
+        (ServiceDashboardModelClass::class),
+        (ServiceListModelClass::class)],
     version = 2,
     exportSchema = false
 )
@@ -20,6 +21,7 @@ abstract class DBClass : RoomDatabase() {
     abstract fun patternDaoClass(): PatternDaoClass
     abstract fun issueListDaoClass(): IssueListDaoClass
     abstract fun ServiceListDashbaordDaoClass(): ServiceListDashbaordDaoClass
+    abstract fun serviceListDaoClass(): ServiceListDaoClass
 
     companion object {
         private var INSTANCE: DBClass? = null
