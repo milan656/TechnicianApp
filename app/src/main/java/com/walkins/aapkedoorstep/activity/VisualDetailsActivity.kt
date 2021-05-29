@@ -529,32 +529,81 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                     edtManufaturingDate?.setText(json.get(TyreKey.manufaturingDate)?.asString!!)
                 }
-                if (json.get(TyreKey.psiInTyreService) != null) {
-                    psiInTyreService = json.get(TyreKey.psiInTyreService)?.asString!!
-                    sliderIn?.requestFocus()
-                    sliderIn?.bubbleText = psiInTyreService
-                    sliderIn?.animate()?.start()
 
-                    Log.e("getvaluess0", "" + sliderIn?.bubbleText)
-                    Log.e("method","resume"+" "+sliderIn?.bubbleText)
-                }
-                if (json.get(TyreKey.psiOutTyreService) != null) {
+                runOnUiThread {
+                    if (json.get(TyreKey.psiInTyreService) != null) {
+                        psiInTyreService = if (json.get(TyreKey.psiInTyreService)?.asString.equals("")) "15" else json.get(TyreKey.psiInTyreService)?.asString
+                        sliderIn?.requestFocus()
+                        sliderIn?.bubbleText = psiInTyreService
+                        sliderIn?.animate()?.start()
 
-                    psiOutTyreService = json.get(TyreKey.psiOutTyreService)?.asString!!
-                    multiSliderPsiOut?.requestFocus()
-                    multiSliderPsiOut?.bubbleText = psiOutTyreService
-                    multiSliderPsiOut?.animation?.start()
-                    Log.e("getvaluess11", "" + multiSliderPsiOut?.bubbleText)
-                    Log.e("method","resume"+" "+multiSliderPsiOut?.bubbleText)
-                }
-                if (json.get(TyreKey.weightTyreService) != null) {
-                    weightTyreService = json.get(TyreKey.weightTyreService)?.asString!!
-                    multiSliderWeight?.requestFocus()
-                    multiSliderWeight?.bubbleText = weightTyreService
-                    multiSliderWeight?.animation?.start()
+                        Log.e("getvaluess0", "" + sliderIn?.bubbleText)
+                        Log.e("method", "resume" + " " + sliderIn?.bubbleText)
+                    }
+                    if (json.get(TyreKey.psiOutTyreService) != null) {
 
-                    Log.e("getvaluess22", "" + multiSliderWeight?.bubbleText)
-                    Log.e("method","resume"+" "+multiSliderWeight?.bubbleText)
+                        psiOutTyreService = if (json.get(TyreKey.psiOutTyreService)?.asString.equals("")) "15" else json.get(TyreKey.psiOutTyreService)?.asString
+                        multiSliderPsiOut?.requestFocus()
+                        multiSliderPsiOut?.bubbleText = psiOutTyreService
+                        multiSliderPsiOut?.animation?.start()
+                        Log.e("getvaluess11", "" + multiSliderPsiOut?.bubbleText)
+                        Log.e("method", "resume" + " " + multiSliderPsiOut?.bubbleText)
+                    }
+                    if (json.get(TyreKey.weightTyreService) != null) {
+                        weightTyreService = if (json.get(TyreKey.weightTyreService)?.asString.equals("")) "15" else json.get(TyreKey.weightTyreService)?.asString
+                        multiSliderWeight?.requestFocus()
+                        multiSliderWeight?.bubbleText = weightTyreService
+                        multiSliderWeight?.animation?.start()
+
+                        Log.e("getvaluess22", "" + multiSliderWeight?.bubbleText)
+                        Log.e("method", "resume" + " " + multiSliderWeight?.bubbleText)
+                    }
+
+                    if (json.get(TyreKey.visualDetailPhotoUrl) != null
+                        && !json.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+                    ) {
+
+                        try {
+                            Glide.with(this@VisualDetailsActivity).load(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                                .into(ivPickedImage1!!)
+                            ivPickedImage1?.visibility = View.VISIBLE
+                            ivEditImg2?.visibility = View.VISIBLE
+                            tvAddPhoto1?.visibility = View.GONE
+                            tvCarphoto1?.visibility = View.GONE
+                            relTyrePhotoAdd?.setBackgroundDrawable(this@VisualDetailsActivity.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                    if (json.get(TyreKey.issueResolvedArr) != null) {
+
+                        var arr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
+                        Log.e("getvalues", "" + arr)
+                        val gson = Gson()
+                        val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                        val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                        Log.e("getvalues", "" + arrlist)
+                        if (issueResolveArray != null && issueResolveArray?.size!! > 0) {
+                            for (i in issueResolveArray?.indices!!) {
+
+                                for (j in arrlist.indices) {
+
+                                    if (issueResolveArray?.get(i)?.issueName.equals(arrlist.get(j))) {
+                                        issueResolveArray?.get(i)?.isSelected = true
+                                        selectedIssueArr?.add(issueResolveArray?.get(i)?.issueName!!)
+                                    }
+                                }
+                                Log.e("getvalues", "" + issueResolveArray?.get(i)?.issueName)
+                                Log.e("getvalues", "" + issueResolveArray?.get(i)?.isSelected)
+                            }
+
+                            issueResolveAdapter?.notifyDataSetChanged()
+
+                        }
+                    }
+                    TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
+
                 }
                 if (json.get(TyreKey.sidewell) != null) {
                     if (json.get(TyreKey.sidewell)?.asString?.equals(ok_status)!!) {
@@ -647,50 +696,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         bubble = "SUG"
                     }
                 }
-                if (json.get(TyreKey.visualDetailPhotoUrl) != null
-                    && !json.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
-                ) {
-
-                    try {
-                        Glide.with(this@VisualDetailsActivity).load(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                            .into(ivPickedImage1!!)
-                        ivPickedImage1?.visibility = View.VISIBLE
-                        ivEditImg2?.visibility = View.VISIBLE
-                        tvAddPhoto1?.visibility = View.GONE
-                        tvCarphoto1?.visibility = View.GONE
-                        relTyrePhotoAdd?.setBackgroundDrawable(this@VisualDetailsActivity.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                if (json.get(TyreKey.issueResolvedArr) != null) {
-
-                    var arr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
-                    Log.e("getvalues", "" + arr)
-                    val gson = Gson()
-                    val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
-                    val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
-                    Log.e("getvalues", "" + arrlist)
-                    if (issueResolveArray != null && issueResolveArray?.size!! > 0) {
-                        for (i in issueResolveArray?.indices!!) {
-
-                            for (j in arrlist.indices) {
-
-                                if (issueResolveArray?.get(i)?.issueName.equals(arrlist.get(j))) {
-                                    issueResolveArray?.get(i)?.isSelected = true
-                                    selectedIssueArr?.add(issueResolveArray?.get(i)?.issueName!!)
-                                }
-                            }
-                            Log.e("getvalues", "" + issueResolveArray?.get(i)?.issueName)
-                            Log.e("getvalues", "" + issueResolveArray?.get(i)?.isSelected)
-                        }
-
-                        issueResolveAdapter?.notifyDataSetChanged()
-
-                    }
-                }
-                TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
 
                 setData(json)
 
@@ -880,7 +885,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             sliderIn?.bubbleText = "${min + (total * pos).toInt()}"
             Log.e("getvaluess", "" + sliderIn?.bubbleText)
             psiInTyreService = sliderIn?.bubbleText
-            Log.e("method","resume1"+" "+psiInTyreService)
+            Log.e("method", "resume1" + " " + psiInTyreService)
         }
         sliderIn?.position = 0.3f
         sliderIn?.startText = "$min"
@@ -894,7 +899,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             multiSliderPsiOut?.bubbleText = "${min + (total * pos).toInt()}"
             Log.e("getvaluess", "" + multiSliderPsiOut?.bubbleText)
             psiOutTyreService = multiSliderPsiOut?.bubbleText
-            Log.e("method","resume1"+" "+psiOutTyreService)
+            Log.e("method", "resume1" + " " + psiOutTyreService)
         }
         multiSliderPsiOut?.position = 0.3f
         multiSliderPsiOut?.startText = "$min"
@@ -909,7 +914,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             Log.e("getvaluessweight", "" + multiSliderWeight?.bubbleText + " ${min + (total * pos).toInt()}")
 
             weightTyreService = multiSliderWeight?.bubbleText
-            Log.e("method","resume1"+" "+weightTyreService)
+            Log.e("method", "resume1" + " " + weightTyreService)
         }
         multiSliderWeight?.position = 0.3f
         multiSliderWeight?.startText = "$min"
@@ -1304,13 +1309,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     return
                 }
 
-                if (TyreDetailCommonClass.visualDetailPhotoUrl != null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
-
-                } else {
-                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
-                        .show()
-                    return
-                }
+//                if (TyreDetailCommonClass.visualDetailPhotoUrl != null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
+//
+//                } else {
+//                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
+//                        .show()
+//                    return
+//                }
 
                 if (selectedTyre.equals("LF")) {
                     TyreConfigClass.LFVehicleVisualDetail = true
@@ -2070,7 +2075,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
     override fun onResume() {
         super.onResume()
-        Log.e("method","resume")
+        Log.e("method", "resume")
         getTyreWiseData()
     }
 }

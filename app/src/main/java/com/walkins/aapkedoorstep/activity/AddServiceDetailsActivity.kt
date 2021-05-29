@@ -3646,7 +3646,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
             }
 
             if (count > 0) {
-                showDialogueTwoForService("Remove Service", "Are you sure want to remove this service?", "", false)
+                showDialogueTwoForService("Remove Service", "Are you sure want to remove Nitrogen service?", "", false)
             }
         }
 
@@ -3716,7 +3716,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
             Log.e("getservicecall1", "" + count)
             if (count > 0) {
 
-                showDialogueTwoForService("Remove Service", "Are you sure want to remove this service?", "wheelBalancing", false)
+                showDialogueTwoForService("Remove Service", "Are you sure want to remove Wheel Balancing service?", "wheelBalancing", false)
 
             }
         }
@@ -3821,7 +3821,7 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
                     e.printStackTrace()
                 }
                 if (count > 0) {
-                    showDialogueTwoForRotation("Remove Service", "Are you sure want to remove this service?", "tyreRotation", false)
+                    showDialogueTwoForRotation("Remove Service", "Are you sure want to remove Type Rotation service?", "tyreRotation", false)
                 }
             }
 
