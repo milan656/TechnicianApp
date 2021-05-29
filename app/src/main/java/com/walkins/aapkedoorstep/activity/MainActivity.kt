@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         init()
 
 
-//        if (Common.isConnectedToInternet(this)) {
+        if (Common.isConnectedToInternet(this)) {
             val diff = Common.dateDifference(prefManager?.getAccessTokenExpireDate()!!)
             if (diff <= 1) {
                 refreshToken()
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             getServiceList()
             getCommentList()
             getIssueList()
-//        }
+        }
 
         val year = Calendar.getInstance().get(Calendar.YEAR)
         val weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)
@@ -435,7 +435,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     fragment = ReportFragment.newInstance("", ""),
                     allowStateLoss = true,
                     containerViewId = R.id.mainContent
-
                 )
 
                 selectedMenu = "report"
@@ -502,9 +501,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         if (!BackgroundService.isServiceStarted) {
             actionOnService(Actions.START)
         }
-//        if (Common.isConnectedToInternet(this)) {
+        if (Common.isConnectedToInternet(this)) {
             getNotificationCount()
-//        }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

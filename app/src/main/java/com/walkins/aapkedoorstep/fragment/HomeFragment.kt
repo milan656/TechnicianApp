@@ -183,12 +183,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     fun onRefresh() {
         context?.let {
 
-//            if (!Common.isConnectedToInternet(it)) {
-//                getServiceFromDB()
-//            } else {
+            if (!Common.isConnectedToInternet(it)) {
+                getServiceFromDB()
+            } else {
                 getDashboardService(selectedDate!!)
                 getUserInfo()
-//            }
+            }
         }
 
 
@@ -242,12 +242,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     override fun onResume() {
         super.onResume()
         context?.let {
-//            if (!Common.isConnectedToInternet(it)) {
-//                getServiceFromDB()
-//            } else {
+            if (!Common.isConnectedToInternet(it)) {
+                getServiceFromDB()
+            } else {
                 getDashboardService(selectedDate!!)
                 getUserInfo()
-//            }
+            }
         }
 
     }
@@ -512,22 +512,22 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         val dateInString = formatterDisplay.parse(selectedDate)
                         val displayDate = formatter.format(dateInString)
                         context?.let {
-//                            if (!Common.isConnectedToInternet(it)) {
-//                                getServiceFromDB()
-//                            } else {
+                            if (!Common.isConnectedToInternet(it)) {
+                                getServiceFromDB()
+                            } else {
                                 getDashboardService(displayDate)
-//                            }
+                            }
                         }
 //                        getDashboardService(displayDate)
 
                     } else {
                         if (!str.equals("Close")) {
                             context?.let {
-//                                if (!Common.isConnectedToInternet(it)) {
-//                                    getServiceFromDB()
-//                                } else {
+                                if (!Common.isConnectedToInternet(it)) {
+                                    getServiceFromDB()
+                                } else {
                                     getDashboardService(selectedDate!!)
-//                                }
+                                }
                             }
 //                            getDashboardService(selectedDate!!)
                         }

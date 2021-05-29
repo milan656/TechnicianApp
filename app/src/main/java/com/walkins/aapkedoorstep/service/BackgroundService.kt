@@ -226,13 +226,13 @@ class BackgroundService : Service() {
 
                     fetchTime()
 
-//                    if (mDb.ServiceListDashbaordDaoClass().getAll() != null &&
-//                        mDb.ServiceListDashbaordDaoClass().getAll().size > 0
-//                    ) {
-//
-//                    } else {
-//                        getServiceDashboard()
-//                    }
+                    if (mDb.ServiceListDashbaordDaoClass().getAll() != null &&
+                        mDb.ServiceListDashbaordDaoClass().getAll().size > 0
+                    ) {
+
+                    } else {
+                        getServiceDashboard()
+                    }
 
                 }
                 delay(4 * 60 * 1000) // 5 min delay
