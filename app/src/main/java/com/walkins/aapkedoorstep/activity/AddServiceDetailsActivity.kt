@@ -3824,7 +3824,6 @@ if (jsonRF.get(TyreKey.issueResolvedArr) != null) {
                     showDialogueTwoForRotation("Remove Service", "Are you sure want to remove Type Rotation service?", "tyreRotation", false)
                 }
             }
-
         }
 
         GlobalScope.launch(Dispatchers.Main) {
