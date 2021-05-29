@@ -429,7 +429,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 }
                 ivProfile?.setTint(this, R.color.text_color1)
 
-
             }
             R.id.llReport, R.id.ivReport -> {
                 replaceFragmenty(
