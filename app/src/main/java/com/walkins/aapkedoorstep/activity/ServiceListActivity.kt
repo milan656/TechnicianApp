@@ -223,11 +223,11 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             Log.e("getservicedataa", "" + mDb.serviceListDaoClass().getAll().size)
             Log.e("getservicedataa", "" + mDb.serviceListDaoClass().getAll())
 
-            val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
+            val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.building_uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
             Log.e("getservicedataa", "" + building_uuid)
 
             for (i in mDb.serviceListDaoClass().getAll()){
-                Log.e("getbuilding",""+i.buildingName+"--"+i.uuid+" -- "+building_uuid)
+                Log.e("getbuilding",""+i.buildingName+"--"+i.building_uuid+" -- "+building_uuid)
             }
             arrayList.clear()
 

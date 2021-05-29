@@ -297,7 +297,7 @@ class BackgroundService : Service() {
                         )
                         Log.e("getservicelistmodel::", "" + serviceListModel)
 
-                        saveServiceList(serviceListModel)
+                        saveServiceList(serviceListModel, buildingUuid)
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
@@ -308,7 +308,7 @@ class BackgroundService : Service() {
         })
     }
 
-    private fun saveServiceList(serviceListModel: ServiceListByDateModel) {
+    private fun saveServiceList(serviceListModel: ServiceListByDateModel, buildingUuid: String) {
         var thread: Thread = Thread {
             /* if (mDb.serviceListDaoClass().getAll().size > 0) {
                  mDb.serviceListDaoClass().deleteAll()
@@ -332,6 +332,7 @@ class BackgroundService : Service() {
                     entity.make_id = i.make_id
                     entity.model_id = i.model_id
                     entity.model_image = i.model_image
+                    entity.building_uuid = buildingUuid
                     if (i.service != null && i.service.size > 0) {
                         entity.service = i.service
                     }

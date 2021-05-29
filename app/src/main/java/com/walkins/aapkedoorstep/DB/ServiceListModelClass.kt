@@ -31,6 +31,7 @@ class ServiceListModelClass {
     var buildingName: String? = ""
     var address: String? = ""
     var comment_id: List<Int>? = ArrayList()
+    var building_uuid:String?=""
 
 
 }
