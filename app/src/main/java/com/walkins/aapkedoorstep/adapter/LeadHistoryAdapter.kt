@@ -83,11 +83,14 @@ class LeadHistoryAdapter(
     }
 
     override fun getHeaderId(position: Int): Long {
-        val item: DashboardModel = mDataset[position]
         var headerId = 0L
         try {
-            headerId = mDateFormat.parse(mDateFormat.format(Date(item.createdAt))).time
+            if (mDataset!=null && mDataset.size>0) {
+                val item: DashboardModel = mDataset[position]
+                headerId = mDateFormat.parse(mDateFormat.format(Date(item.createdAt))).time
+            }
         } catch (ex: Exception) {
+            ex.printStackTrace()
         }
         return headerId
     }

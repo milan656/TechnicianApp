@@ -1519,7 +1519,7 @@ class Common {
                     return true
                 }
             }
-            return false
+            return true
         }
 
         fun getDataColumn(

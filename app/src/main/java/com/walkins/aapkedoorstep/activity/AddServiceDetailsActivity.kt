@@ -4259,6 +4259,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             IMAGE_CAPTURE_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
+
+                    Log.e("getimagee",""+image_uri?.path)
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         getFile(this@AddServiceDetailsActivity, image_uri)
                     } else {
@@ -4338,6 +4340,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK) {
+                    Log.e("getimagee",""+Uri.parse(mCurrentPhotoPath).path)
                     val auxFile = File(mCurrentPhotoPath)
                     Log.e("getFile", "" + mCurrentPhotoPath + " " + Uri.parse(mCurrentPhotoPath))
                     if (selectImage1) {
@@ -4409,6 +4412,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     //To get the File for further usage
                     val selectedImage = data?.data
+                    Log.e("getimagee",""+selectedImage?.path)
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         getFile(this@AddServiceDetailsActivity, selectedImage)
