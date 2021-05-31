@@ -2111,7 +2111,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private fun addServiceApiCall() {
         if (!Common.isConnectedToInternet(this)) {
-            Common.showDialogue(this, "Oops!", "Your Internet is not connected", false)
+            showDialogue("Oops!", "Your Internet is not connected", false)
             return
         }
 
@@ -6753,7 +6753,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         }
                     }
                 }
-
+                finish()
 //                getStoredObjects("")
             }
         }
@@ -6972,15 +6972,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         btnYes.setOnClickListener {
             builder.dismiss()
             try {
-                removeAllTyreAndServiceDetails()
                 if (isBackPressed) {
-                    this.finish()
+                    removeAllTyreAndServiceDetails()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                if (isBackPressed) {
-                    this.finish()
-                }
             }
         }
         builder.setView(root)

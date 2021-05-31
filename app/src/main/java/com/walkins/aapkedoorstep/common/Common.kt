@@ -1488,7 +1488,6 @@ class Common {
             TyreConfigClass.CarPhoto_1 = ""
             TyreConfigClass.CarPhoto_2 = ""
 
-
         }
 
         fun isConnectedToInternet(context: Context): Boolean {
@@ -1521,7 +1520,7 @@ class Common {
                     return true
                 }
             }
-            return true
+            return false
         }
 
         fun getDataColumn(

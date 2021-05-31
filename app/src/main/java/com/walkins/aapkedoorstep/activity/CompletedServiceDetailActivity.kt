@@ -11,10 +11,7 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -40,6 +37,7 @@ import com.walkins.aapkedoorstep.adapter.CompletedServiceAdapter
 import com.walkins.aapkedoorstep.adapter.DialogueAdpater
 import com.walkins.aapkedoorstep.adapter.PendingTyreSuggestionAdpater
 import com.walkins.aapkedoorstep.common.*
+import com.walkins.aapkedoorstep.custom.BoldButton
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceData
@@ -311,8 +309,40 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
 //        tvCurrentDateTime?.text = Common.getCurrentDateTime()
 
-        getServiceDataById()
+        if (Common.isConnectedToInternet(this)) {
+            getServiceDataById()
+        } else {
+            showDialogue("Oops!", "Your Internet is not connected", false)
+        }
 
+    }
+
+    fun showDialogue(title: String, message: String, isBackPressed: Boolean) {
+        val builder = AlertDialog.Builder(this).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        builder?.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout_service, null)
+
+        val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
+        val ivClose = root.findViewById<ImageView>(R.id.ivClose)
+        val tv_message = root.findViewById<TextView>(R.id.tv_message)
+        val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
+        tvTitleText?.text = title
+        tv_message.text = message
+        tvTitleText?.gravity = Gravity.CENTER
+        tv_message?.gravity = Gravity.CENTER
+        ivClose?.visibility = View.INVISIBLE
+        btnYes.setOnClickListener {
+            builder.dismiss()
+
+        }
+        builder.setView(root)
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
     }
 
     private fun getServiceDataById() {
