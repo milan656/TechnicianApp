@@ -264,7 +264,7 @@ class BackgroundService : Service() {
 
                         if (dashboardModel.data != null && dashboardModel.data.size > 0) {
                             for (i in dashboardModel.data) {
-                                Log.e("getpassdata", "" + i.building_uuid)
+                                Log.e("getpassdata11", "" + i.building_uuid)
                                 getServiceList(i.building_uuid, i.date)
                             }
                         }

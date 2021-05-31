@@ -306,7 +306,14 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             if (dashboardServiceListModel?.data != null && dashboardServiceListModel?.data?.size!! > 0) {
                                 for (i in dashboardServiceListModel?.data!!) {
                                     Log.e("getpassdata", "" + i.building_uuid)
-                                    getServiceList(i.building_uuid, i.date)
+                                    val mDateFormat = SimpleDateFormat("dd MMMM yy")
+                                    val mToday = mDateFormat.format(Date())
+                                    val date_ = mDateFormat.format(Date(i.date_formated)).toString()
+                                    Log.e("getdatefor", "" + mToday + " " + date_)
+
+                                    if (mToday.equals(date_)) {
+                                        getServiceList(i.building_uuid, i.date)
+                                    }
                                 }
                             }
 

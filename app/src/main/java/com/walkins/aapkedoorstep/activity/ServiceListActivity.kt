@@ -40,6 +40,7 @@ import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.coroutines.coroutineContext
 
 
 @SuppressLint("SetTextI18n")
@@ -226,23 +227,37 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.building_uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
             Log.e("getservicedataa", "" + building_uuid)
 
-            for (i in mDb.serviceListDaoClass().getAll()){
-                Log.e("getbuilding",""+i.buildingName+"--"+i.building_uuid+" -- "+building_uuid)
+            for (i in arrayListfinal) {
+                Log.e("getbuilding", "" + i.buildingName + "--" + i.building_uuid + " -- " + building_uuid)
             }
             arrayList.clear()
 
             for (i in arrayListfinal) {
                 arrayList.add(ServiceListByDateData(
-                    i.serviceId.toInt(), i.uuid!!,if (i.color!=null) i.color!! else "",if (i.color_code!=null) i.color_code!! else "",if (i.status!=null) i.status!! else "",if (i.regNumber!=null) i.regNumber!! else "",
-                    if (i.service_user_name!=null) i.service_user_name!! else "",if (i.service_user_mobile!=null) i.service_user_mobile!! else "",if (i.make!=null) i.make!! else "",if (i.model!=null) i.model!! else "",
-                    i.make_id!!, i.model_id!!,if (i.model_image!=null) i.model_image!! else "",if (i.service!=null) i.service!! else ArrayList(),if (i.image!=null) i.image!! else "",if (i.buildingName!=null)  i.buildingName!! else "",
-                    if (i.address!=null)i.address!! else "",if (i.comment_id!=null && i.comment_id?.size!!>0) i.comment_id!! else ArrayList()
+                    i.serviceId.toInt(),
+                    i.uuid!!,
+                    if (i.color != null) i.color!! else "",
+                    if (i.color_code != null) i.color_code!! else "",
+                    if (i.status != null) i.status!! else "",
+                    if (i.regNumber != null) i.regNumber!! else "",
+                    if (i.service_user_name != null) i.service_user_name!! else "",
+                    if (i.service_user_mobile != null) i.service_user_mobile!! else "",
+                    if (i.make != null) i.make!! else "",
+                    if (i.model != null) i.model!! else "",
+                    i.make_id!!,
+                    i.model_id!!,
+                    if (i.model_image != null) i.model_image!! else "",
+                    if (i.service != null) i.service!! else ArrayList(),
+                    if (i.image != null) i.image!! else "",
+                    if (i.buildingName != null) i.buildingName!! else "",
+                    if (i.address != null) i.address!! else "",
+                    if (i.comment_id != null && i.comment_id?.size!! > 0) i.comment_id!! else ArrayList()
                 ))
-                Log.e("savearr",""+arrayList.size)
+                Log.e("savearr", "" + arrayList.size)
             }
 
             runOnUiThread {
-                Log.e("savearr1",""+arrayList.size)
+                Log.e("savearr1", "" + arrayList.size)
                 if (arrayList.size > 0) {
 
                     val arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
@@ -398,6 +413,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         })
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onClick(v: View?) {
 
         val id = v?.id
@@ -416,23 +432,77 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvNoServiceData?.visibility = View.GONE
 
                 arrayList.clear()
-                arrayList.addAll(serviceListDataModel?.data!!)
+                if (Common.isConnectedToInternet(this)) {
+                    arrayList.addAll(serviceListDataModel?.data!!)
 
-                arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
-                if (arrayList.size == 0) {
-                    tvNoServiceData?.text = "There is no any Upcoming service to display"
-                    tvNoServiceData?.visibility = View.VISIBLE
-                    llAddressView?.visibility = View.GONE
-                    tvNoServiceData?.visibility = View.GONE
-                    relNoData?.visibility = View.VISIBLE
+                    arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+
+                        adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
+                        if (arrayList.size == 0) {
+                            tvNoServiceData?.text = "There is no any Upcoming service to display"
+                            tvNoServiceData?.visibility = View.VISIBLE
+                            llAddressView?.visibility = View.GONE
+                            tvNoServiceData?.visibility = View.GONE
+                            relNoData?.visibility = View.VISIBLE
+                        } else {
+                            llAddressView?.visibility = View.VISIBLE
+                            relNoData?.visibility = View.GONE
+                        }
+                        tvUpcoming?.text = "Upcoming - ${arrayList.size}"
+                        serviceRecycView?.adapter = adapter
+                        adapter?.onclick = this@ServiceListActivity
+
+
                 } else {
-                    llAddressView?.visibility = View.VISIBLE
-                    relNoData?.visibility = View.GONE
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.building_uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
+                        for (i in arrayListfinal) {
+                            arrayList.add(ServiceListByDateData(
+                                i.serviceId.toInt(),
+                                i.uuid!!,
+                                if (i.color != null) i.color!! else "",
+                                if (i.color_code != null) i.color_code!! else "",
+                                if (i.status != null) i.status!! else "",
+                                if (i.regNumber != null) i.regNumber!! else "",
+                                if (i.service_user_name != null) i.service_user_name!! else "",
+                                if (i.service_user_mobile != null) i.service_user_mobile!! else "",
+                                if (i.make != null) i.make!! else "",
+                                if (i.model != null) i.model!! else "",
+                                i.make_id!!,
+                                i.model_id!!,
+                                if (i.model_image != null) i.model_image!! else "",
+                                if (i.service != null) i.service!! else ArrayList(),
+                                if (i.image != null) i.image!! else "",
+                                if (i.buildingName != null) i.buildingName!! else "",
+                                if (i.address != null) i.address!! else "",
+                                if (i.comment_id != null && i.comment_id?.size!! > 0) i.comment_id!! else ArrayList()
+                            ))
+                            Log.e("savearr66", "" + arrayList.size)
+                        }
+                        arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+
+                        runOnUiThread {
+                            adapter = ServicesListAdpater(arrayList, this@ServiceListActivity, this@ServiceListActivity, serviceStatus, isAddServiceEnable)
+                            if (arrayList.size == 0) {
+                                tvNoServiceData?.text = "There is no any Upcoming service to display"
+                                tvNoServiceData?.visibility = View.VISIBLE
+                                llAddressView?.visibility = View.GONE
+                                tvNoServiceData?.visibility = View.GONE
+                                relNoData?.visibility = View.VISIBLE
+                            } else {
+                                llAddressView?.visibility = View.VISIBLE
+                                relNoData?.visibility = View.GONE
+                            }
+                            tvUpcoming?.text = "Upcoming - ${arrayList.size}"
+                            serviceRecycView?.adapter = adapter
+                            adapter?.onclick = this@ServiceListActivity
+
+                        }
+                    }
                 }
-                tvUpcoming?.text = "Upcoming - ${arrayList.size}"
-                serviceRecycView?.adapter = adapter
-                adapter?.onclick = this
+
+                Log.e("savearr1", "" + arrayList.size)
 
             }
             R.id.llCompleted -> {
@@ -447,25 +517,78 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 tvNoServiceData?.visibility = View.GONE
 
                 arrayList.clear()
-                arrayList.addAll(serviceListDataModel?.data!!)
+                if (Common.isConnectedToInternet(this)) {
+                    arrayList.addAll(serviceListDataModel?.data!!)
 
-                arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
+                    arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
 
-                if (arrayList.size == 0) {
-                    tvNoServiceData?.text = "There is no any Completed service to display"
-                    tvNoServiceData?.visibility = View.VISIBLE
-                    llAddressView?.visibility = View.GONE
-                    relNoData?.visibility = View.VISIBLE
-                    tvNoServiceData?.visibility = View.GONE
+                    Log.e("savearr44", "" + arrayList.size)
+                    adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
+
+                    if (arrayList.size == 0) {
+                        tvNoServiceData?.text = "There is no any Completed service to display"
+                        tvNoServiceData?.visibility = View.VISIBLE
+                        llAddressView?.visibility = View.GONE
+                        relNoData?.visibility = View.VISIBLE
+                        tvNoServiceData?.visibility = View.GONE
+                    } else {
+                        llAddressView?.visibility = View.VISIBLE
+                        relNoData?.visibility = View.GONE
+                    }
+                    tvCompleted?.text = "Completed - ${arrayList.size}"
+                    serviceRecycView?.adapter = adapter
+                    adapter?.onclick = this
+
+
                 } else {
-                    llAddressView?.visibility = View.VISIBLE
-                    relNoData?.visibility = View.GONE
-                }
-                tvCompleted?.text = "Completed - ${arrayList.size}"
-                serviceRecycView?.adapter = adapter
-                adapter?.onclick = this
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.building_uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
+                        for (i in arrayListfinal) {
+                            arrayList.add(ServiceListByDateData(
+                                i.serviceId.toInt(),
+                                i.uuid!!,
+                                if (i.color != null) i.color!! else "",
+                                if (i.color_code != null) i.color_code!! else "",
+                                if (i.status != null) i.status!! else "",
+                                if (i.regNumber != null) i.regNumber!! else "",
+                                if (i.service_user_name != null) i.service_user_name!! else "",
+                                if (i.service_user_mobile != null) i.service_user_mobile!! else "",
+                                if (i.make != null) i.make!! else "",
+                                if (i.model != null) i.model!! else "",
+                                i.make_id!!,
+                                i.model_id!!,
+                                if (i.model_image != null) i.model_image!! else "",
+                                if (i.service != null) i.service!! else ArrayList(),
+                                if (i.image != null) i.image!! else "",
+                                if (i.buildingName != null) i.buildingName!! else "",
+                                if (i.address != null) i.address!! else "",
+                                if (i.comment_id != null && i.comment_id?.size!! > 0) i.comment_id!! else ArrayList()
+                            ))
+                            Log.e("savearr45", "" + arrayList.size)
+                        }
+                        arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
 
+                        runOnUiThread {
+                            Log.e("savearr44", "" + arrayList.size)
+                            adapter = ServicesListAdpater(arrayList, this@ServiceListActivity, this@ServiceListActivity, serviceStatus, isAddServiceEnable)
+
+                            if (arrayList.size == 0) {
+                                tvNoServiceData?.text = "There is no any Completed service to display"
+                                tvNoServiceData?.visibility = View.VISIBLE
+                                llAddressView?.visibility = View.GONE
+                                relNoData?.visibility = View.VISIBLE
+                                tvNoServiceData?.visibility = View.GONE
+                            } else {
+                                llAddressView?.visibility = View.VISIBLE
+                                relNoData?.visibility = View.GONE
+                            }
+                            tvCompleted?.text = "Completed - ${arrayList.size}"
+                            serviceRecycView?.adapter = adapter
+                            adapter?.onclick = this@ServiceListActivity
+
+                        }
+                    }
+                }
 
             }
             R.id.llSkipped -> {
@@ -479,25 +602,80 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 serviceStatus = skipped
                 tvNoServiceData?.visibility = View.GONE
 
+
                 arrayList.clear()
-                arrayList.addAll(serviceListDataModel?.data!!)
+                if (Common.isConnectedToInternet(this)) {
+                    arrayList.addAll(serviceListDataModel?.data!!)
 
-                arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
-                adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
+                    arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
 
-                if (arrayList.size == 0) {
-                    tvNoServiceData?.text = "There is no any Skipped service to display"
-                    tvNoServiceData?.visibility = View.VISIBLE
-                    llAddressView?.visibility = View.GONE
-                    relNoData?.visibility = View.VISIBLE
-                    tvNoServiceData?.visibility = View.GONE
+                    adapter = ServicesListAdpater(arrayList, this@ServiceListActivity, this@ServiceListActivity, serviceStatus, isAddServiceEnable)
+
+                    if (arrayList.size == 0) {
+                        tvNoServiceData?.text = "There is no any Skipped service to display"
+                        tvNoServiceData?.visibility = View.VISIBLE
+                        llAddressView?.visibility = View.GONE
+                        relNoData?.visibility = View.VISIBLE
+                        tvNoServiceData?.visibility = View.GONE
+                    } else {
+                        llAddressView?.visibility = View.VISIBLE
+                        relNoData?.visibility = View.GONE
+                    }
+                    tvSkipped?.text = "Skipped - ${arrayList.size}"
+                    serviceRecycView?.adapter = adapter
+                    adapter?.onclick = this@ServiceListActivity
+
                 } else {
-                    llAddressView?.visibility = View.VISIBLE
-                    relNoData?.visibility = View.GONE
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.building_uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
+                        for (i in arrayListfinal) {
+                            arrayList.add(ServiceListByDateData(
+                                i.serviceId.toInt(),
+                                i.uuid!!,
+                                if (i.color != null) i.color!! else "",
+                                if (i.color_code != null) i.color_code!! else "",
+                                if (i.status != null) i.status!! else "",
+                                if (i.regNumber != null) i.regNumber!! else "",
+                                if (i.service_user_name != null) i.service_user_name!! else "",
+                                if (i.service_user_mobile != null) i.service_user_mobile!! else "",
+                                if (i.make != null) i.make!! else "",
+                                if (i.model != null) i.model!! else "",
+                                i.make_id!!,
+                                i.model_id!!,
+                                if (i.model_image != null) i.model_image!! else "",
+                                if (i.service != null) i.service!! else ArrayList(),
+                                if (i.image != null) i.image!! else "",
+                                if (i.buildingName != null) i.buildingName!! else "",
+                                if (i.address != null) i.address!! else "",
+                                if (i.comment_id != null && i.comment_id?.size!! > 0) i.comment_id!! else ArrayList()
+                            ))
+                            Log.e("savearr00", "" + arrayList.size)
+                        }
+                        arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
+
+                        runOnUiThread {
+
+                            adapter = ServicesListAdpater(arrayList, this@ServiceListActivity, this@ServiceListActivity, serviceStatus, isAddServiceEnable)
+
+                            if (arrayList.size == 0) {
+                                tvNoServiceData?.text = "There is no any Skipped service to display"
+                                tvNoServiceData?.visibility = View.VISIBLE
+                                llAddressView?.visibility = View.GONE
+                                relNoData?.visibility = View.VISIBLE
+                                tvNoServiceData?.visibility = View.GONE
+                            } else {
+                                llAddressView?.visibility = View.VISIBLE
+                                relNoData?.visibility = View.GONE
+                            }
+                            tvSkipped?.text = "Skipped - ${arrayList.size}"
+                            serviceRecycView?.adapter = adapter
+                            adapter?.onclick = this@ServiceListActivity
+                        }
+                    }
                 }
-                tvSkipped?.text = "Skipped - ${arrayList.size}"
-                serviceRecycView?.adapter = adapter
-                adapter?.onclick = this
+
+                Log.e("savearr33", "" + arrayList.size)
+
 
             }
             R.id.ivBack -> {
