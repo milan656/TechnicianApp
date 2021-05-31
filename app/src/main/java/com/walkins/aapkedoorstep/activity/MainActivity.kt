@@ -117,7 +117,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         Log.e("getaccessToken", "" + prefManager?.getAccessToken())
         init()
 
-
         if (Common.isConnectedToInternet(this)) {
             val diff = Common.dateDifference(prefManager?.getAccessTokenExpireDate()!!)
             if (diff <= 1) {
