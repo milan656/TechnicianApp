@@ -225,11 +225,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             Log.e("getservicedataa", "" + mDb.serviceListDaoClass().getAll())
 
             val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.building_uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
-            Log.e("getservicedataa", "" + building_uuid)
+            Log.e("getservicedataa", "" + building_uuid+" -- "+arrayListfinal.size)
 
-            for (i in arrayListfinal) {
-                Log.e("getbuilding", "" + i.buildingName + "--" + i.building_uuid + " -- " + building_uuid)
-            }
             arrayList.clear()
 
             for (i in arrayListfinal) {
@@ -260,20 +257,25 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 Log.e("savearr1", "" + arrayList.size)
                 if (arrayList.size > 0) {
 
-                    val arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+                    val arrayListUpcoming = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
 
-                    tvUpcoming?.text = "Upcoming - " + arrayList.size
+                    tvUpcoming?.text = "Upcoming - " + arrayListUpcoming.size
                     val arrayskipList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
 
                     tvSkipped?.text = "Skipped - " + arrayskipList.size
                     val arrayCompleteList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
 
                     tvCompleted?.text = "Completed - " + arrayCompleteList.size
+
+                    Log.e("getservicestatuslist",""+arrayList)
+                    Log.e("getservicestatuslist",""+arrayskipList)
+                    Log.e("getservicestatuslist",""+arrayCompleteList)
+                    Log.e("getservicestatuslist",""+serviceStatus)
                 }
 
                 if (serviceStatus.equals(upcomming)) {
 //                            arrayList.filter { it.status.equals(upcomming) }
-                    val arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
+                    arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
                     adapter =
                         this.let {
                             ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>,
@@ -314,6 +316,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 }
 
                 tvNoServiceData?.visibility = View.GONE
+                Log.e("getservicesize",""+arrayList.size+" "+serviceStatus)
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Upcomming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE

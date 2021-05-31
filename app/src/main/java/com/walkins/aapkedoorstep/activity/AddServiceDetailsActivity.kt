@@ -343,8 +343,17 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                 if (jsonLF.get(TyreKey.issueResolvedArr) != null) {
                     val arr = jsonLF.get(TyreKey.issueResolvedArr).asJsonArray
+
                     if (arr.size() == 0) {
                         TyreConfigClass.LFVehicleVisualDetail = false
+                    }else{
+                        val list:ArrayList<String>?=ArrayList()
+                        Log.e("getissue",""+arr)
+                        for (i in arr){
+                            list?.add(i.asString)
+                        }
+                        Log.e("getserviceselectedlf_", "" + list)
+                        TyreDetailCommonClass.issueResolvedArr=list
                     }
                 }
 
@@ -502,6 +511,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val arr = jsonRF.get(TyreKey.issueResolvedArr).asJsonArray
                     if (arr.size() == 0) {
                         TyreConfigClass.RFVehicleVisualDetail = false
+                    }else{
+                        val list:ArrayList<String>?=ArrayList()
+                        Log.e("getissue",""+arr)
+                        for (i in arr){
+                            list?.add(i.asString)
+                        }
+                        Log.e("getserviceselectedlf_", "" + list)
+                        TyreDetailCommonClass.issueResolvedArr=list
                     }
                 }
 
@@ -666,6 +683,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val arr = jsonLR.get(TyreKey.issueResolvedArr).asJsonArray
                     if (arr?.size() == 0) {
                         TyreConfigClass.LRVehicleVisualDetail = false
+                    }else{
+                        val list:ArrayList<String>?=ArrayList()
+                        Log.e("getissue",""+arr)
+                        for (i in arr){
+                            list?.add(i.asString)
+                        }
+                        Log.e("getserviceselectedlf_", "" + list)
+                        TyreDetailCommonClass.issueResolvedArr=list
                     }
                 }
 
@@ -827,6 +852,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val arr = jsonRR.get(TyreKey.issueResolvedArr).asJsonArray
                     if (arr.size() == 0) {
                         TyreConfigClass.RRVehicleVisualDetail = false
+                    }else{
+                        val list:ArrayList<String>?=ArrayList()
+                        Log.e("getissue",""+arr)
+                        for (i in arr){
+                            list?.add(i.asString)
+                        }
+                        Log.e("getserviceselectedlf_", "" + list)
+                        TyreDetailCommonClass.issueResolvedArr=list
                     }
                 }
 

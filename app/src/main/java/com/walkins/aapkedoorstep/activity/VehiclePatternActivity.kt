@@ -1310,6 +1310,15 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
                 json.get(TyreKey.isCameraSelectedVisualDetail)?.asString?.toBoolean()!!
         }
         if (json.get(TyreKey.issueResolvedArr) != null) {
+            val list: ArrayList<String>? = ArrayList()
+            if (json.get(TyreKey.issueResolvedArr)?.asJsonArray?.size()!! > 0) {
+
+                for (i in json.get(TyreKey.issueResolvedArr)?.asJsonArray!!) {
+                    list?.add(i?.asString!!)
+                }
+
+            }
+            TyreDetailCommonClass.issueResolvedArr = list
 //            TyreDetailCommonClass.issueResolvedArr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
         }
         /*if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {

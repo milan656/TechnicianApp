@@ -75,6 +75,7 @@ import kotlin.collections.ArrayList
 
 @SuppressLint("UseCompatLoadingForDrawables", "SimpleDateFormat")
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
+
     private var loginViewModel: LoginActivityViewModel? = null
     private var commonViewModel: CommonViewModel? = null
     private var sliderIn: FluidSlider? = null
@@ -585,6 +586,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
                         Log.e("getvalues", "" + arrlist)
                         if (issueResolveArray != null && issueResolveArray?.size!! > 0) {
+                            selectedIssueArr?.clear()
                             for (i in issueResolveArray?.indices!!) {
 
                                 for (j in arrlist.indices) {
@@ -599,7 +601,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             }
 
                             issueResolveAdapter?.notifyDataSetChanged()
-
                         }
                     }
                     TyreDetailCommonClass.issueResolvedArr = selectedIssueArr

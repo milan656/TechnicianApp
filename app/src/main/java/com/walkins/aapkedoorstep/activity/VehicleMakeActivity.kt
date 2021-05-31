@@ -59,7 +59,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
     private var selectedName: String = ""
     private var selectedImage: String = ""
-    private var tvmakeName:TextView?=null
+    private var tvmakeName: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,10 +145,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
 
             if (selectedTyre.equals("LF")) {
-                if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
+                if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject).equals("")
                 ) {
-                    var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
+                    var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
@@ -188,10 +188,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 }
             }
             if (selectedTyre.equals("LR")) {
-                if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
+                if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject).equals("")
                 ) {
-                    var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
+                    var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
@@ -232,10 +232,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 }
             }
             if (selectedTyre.equals("RF")) {
-                if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
+                if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject).equals("")
                 ) {
-                    var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
+                    var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
@@ -277,10 +277,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 }
             }
             if (selectedTyre.equals("RR")) {
-                if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
-                    !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
+                if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject) != null &&
+                    !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject).equals("")
                 ) {
-                    var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
+                    var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject)
                     try {
                         var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                         selectedName = json.get("vehicleMake")?.asString!!
@@ -321,10 +321,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 }
             }
 //=========================================================================================================
-            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     Log.e("getobjjlf", "" + json + " " + selectedName)
@@ -376,10 +376,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 }
             }
 
-            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
@@ -427,10 +427,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 }
             }
 
-            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
@@ -489,10 +489,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 }
             }
 
-            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
@@ -568,7 +568,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                         e.printStackTrace()
                     }
 
-                    tvmakeName?.text=selectedName
+                    tvmakeName?.text = selectedName
                     Common.hideLoader()
 
                 } else {
@@ -638,7 +638,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         TyreDetailCommonClass.vehicleMakeURL = arrList?.get(selectedPos)?.concat
         selectedName = arrList?.get(selectedPos)?.name!!
 
-        tvmakeName?.text=selectedName
+        tvmakeName?.text = selectedName
 
         try {
             Glide.with(this)
@@ -652,10 +652,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
 
 
         if (selectedTyre.equals("LF")) {
-            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     //                    selectedName = json.get("vehicleMake")?.asString!!
@@ -695,10 +695,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
         }
         if (selectedTyre.equals("LR")) {
-            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     //                    selectedName = json.get("vehicleMake")?.asString!!
@@ -741,10 +741,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
         }
         if (selectedTyre.equals("RF")) {
-            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     //                    selectedName = json.get("vehicleMake")?.asString!!
@@ -792,10 +792,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
         }
         if (selectedTyre.equals("RR")) {
-            if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
+            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject) != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject).equals("")
             ) {
-                var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
+                var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject)
                 try {
                     var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                     //                    selectedName = json.get("vehicleMake")?.asString!!
@@ -838,10 +838,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
         }
         //=========================================================================================================
-        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLFObject)
+            var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
                 Log.e("getobjjlf", "" + json + " " + selectedName)
@@ -866,10 +866,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreLRObject)
+            var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
@@ -896,10 +896,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject) != null &&
-            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRFObject)
+            var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
@@ -932,10 +932,10 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
             }
         }
 
-        if (prefManager?.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject) != null &&
-            !prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject).equals("")
+        if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject).equals("")
         ) {
-            var str = prefManager.getValue(TyreConfigClass.serviceId+TyreConfigClass.TyreRRObject)
+            var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject)
             try {
                 var json: JsonObject = JsonParser().parse(str).getAsJsonObject()
 
@@ -1124,9 +1124,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         } else {
             TyreDetailCommonClass.chk3MakeVisible = false
         }
-        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk1MakeVisible)
-        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk2MakeVisible)
-        Log.e("getvisiblemake",""+TyreDetailCommonClass.chk3MakeVisible)
+        Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk1MakeVisible)
+        Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk2MakeVisible)
+        Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk3MakeVisible)
         var intent = Intent(this, VehiclePatternActivity::class.java)
         intent.putExtra("selectedTyre", selectedTyre)
         if (TyreDetailCommonClass.vehicleMakeId.equals("")) {
@@ -1221,7 +1221,15 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
                 json.get(TyreKey.isCameraSelectedVisualDetail)?.asString?.toBoolean()!!
         }
         if (json.get(TyreKey.issueResolvedArr) != null) {
-//            TyreDetailCommonClass.issueResolvedArr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
+            val list: ArrayList<String>? = ArrayList()
+            if (json.get(TyreKey.issueResolvedArr)?.asJsonArray?.size()!! > 0) {
+
+                for (i in json.get(TyreKey.issueResolvedArr)?.asJsonArray!!) {
+                    list?.add(i?.asString!!)
+                }
+
+            }
+            TyreDetailCommonClass.issueResolvedArr = list
         }
         if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
             TyreDetailCommonClass.chk1Make = json.get(TyreKey.chk1Make)?.asString
