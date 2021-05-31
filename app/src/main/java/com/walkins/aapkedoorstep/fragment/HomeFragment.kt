@@ -18,10 +18,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
+import com.example.technician.common.RetrofitCommonClass
 import com.facebook.internal.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.GsonBuilder
 import com.walkins.aapkedoorstep.DB.DBClass
 import com.walkins.aapkedoorstep.DB.ServiceDashboardModelClass
+import com.walkins.aapkedoorstep.DB.ServiceListModelClass
 import com.walkins.aapkedoorstep.DB.VehicleMakeModelClass
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
@@ -33,11 +36,18 @@ import com.walkins.aapkedoorstep.datepicker.dialog.SingleDateAndTimePickerDialog
 import com.walkins.aapkedoorstep.model.login.DashboardModel
 import com.walkins.aapkedoorstep.model.login.SectionModel
 import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
+import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
+import com.walkins.aapkedoorstep.networkApi.ServiceApi
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.IOException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,6 +67,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param2: String? = null
     var calendar = Calendar.getInstance()
     private var ivFilter: ImageView? = null
+    var dashboardModel:DashboardServiceListModel?=null
     var dashboardServiceListModel: DashboardServiceListModel? = null
     private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
@@ -263,6 +274,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     if (it.success) {
 
                         Log.e("getdataa", "" + it.data)
+                        dashboardModel=it
                         historyDataList.clear()
 
                         if (it.data != null && it.data.size > 0) {
@@ -288,6 +300,15 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             }
                             relNoData?.visibility = View.GONE
                             homeRecycView?.visibility = View.VISIBLE
+
+                            saveDashboardService(dashboardServiceListModel!!)
+
+                            if (dashboardServiceListModel?.data != null && dashboardServiceListModel?.data?.size!! > 0) {
+                                for (i in dashboardServiceListModel?.data!!) {
+                                    Log.e("getpassdata", "" + i.building_uuid)
+                                    getServiceList(i.building_uuid, i.date)
+                                }
+                            }
 
                         } else {
                             relNoData?.visibility = View.VISIBLE
@@ -542,8 +563,134 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     }
 
+    private fun saveDashboardService(dashboardServiceListModel: DashboardServiceListModel) {
 
+        var thread: Thread = Thread {
+            if (mDb.ServiceListDashbaordDaoClass().getAll().size > 0) {
+                mDb.ServiceListDashbaordDaoClass().deleteAll()
+            }
+            if (mDb.serviceListDaoClass().getAll().size > 0) {
+                mDb.serviceListDaoClass().deleteAll()
+            }
 
+            if (dashboardServiceListModel.data != null && dashboardServiceListModel.data.size > 0) {
+                for (i in dashboardServiceListModel.data) {
+
+                    var entity = ServiceDashboardModelClass()
+
+                    val dateString = i.date
+                    Log.e("getdatefrom", "" + dateString)
+                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                    val date = sdf.parse(dateString)
+
+                    val startDate = date.time
+
+                    entity.buildingnamearea = i.building_name + ", " + i.area
+                    entity.address = i.address
+                    entity.date = i.date
+                    entity.buildinguuid = i.building_uuid
+                    entity.dateformated = i.date_formated
+                    entity.openjobs = i.open_jobs.toInt()
+                    entity.completedjobs = i.complete_jobs.toInt()
+                    entity.skippedjobs = i.skip_jobs.toInt()
+                    entity.totaljobs = i.total_jobs.toInt()
+                    entity.startdate = startDate
+                    entity.updatedate = startDate
+
+                    val mDateFormat = SimpleDateFormat("dd MMMM yy")
+                    val mToday = mDateFormat.format(Date())
+                    val date_ = mDateFormat.format(Date(entity.dateformated)).toString()
+                    Log.e("getdatefor", "" + mToday + " " + date_)
+
+                    if (mToday.equals(date_)) {
+                        mDb.ServiceListDashbaordDaoClass().save(entity)
+                    }
+                }
+
+            }
+            Log.e("response+++", "++++" + mDb.ServiceListDashbaordDaoClass().getAll().size)
+        }
+
+        thread.start()
+
+    }
+
+    private fun getServiceList(buildingUuid: String, date: String) {
+
+        val serviceApi = RetrofitCommonClass.createService(ServiceApi::class.java)
+
+        var call: Call<ResponseBody>? = null
+        call = serviceApi.getServiceByDate(activity?.dateForWebservice_2(date)!!, buildingUuid,
+            prefManager?.getAccessToken()!!
+        )
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    try {
+                        val gson = GsonBuilder().create()
+                        var serviceListModel: ServiceListByDateModel = gson.fromJson(
+                            response.body()?.string(),
+                            ServiceListByDateModel::class.java
+                        )
+                        Log.e("getservicelistmodel::", "" + serviceListModel)
+
+                        saveServiceList(serviceListModel, buildingUuid)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+        })
+    }
+
+    private fun saveServiceList(serviceListModel: ServiceListByDateModel, buildingUuid: String) {
+        var thread: Thread = Thread {
+            /* if (mDb.serviceListDaoClass().getAll().size > 0) {
+                 mDb.serviceListDaoClass().deleteAll()
+             }*/
+
+            if (serviceListModel.data != null && serviceListModel.data.size > 0) {
+                for (i in serviceListModel.data) {
+
+                    val entity = ServiceListModelClass()
+                    Log.e("getservicelistmodel0::", "" + i.id)
+                    entity.serviceId = i.id.toString()
+                    entity.uuid = i.uuid
+                    entity.color = i.color
+                    entity.color_code = i.color_code
+                    entity.status = i.status
+                    entity.regNumber = i.regNumber
+                    entity.service_user_name = i.service_user_name
+                    entity.service_user_mobile = i.service_user_mobile
+                    entity.make = i.make
+                    entity.model = i.model
+                    entity.make_id = i.make_id
+                    entity.model_id = i.model_id
+                    entity.model_image = i.model_image
+                    entity.building_uuid = buildingUuid
+                    if (i.service != null && i.service.size > 0) {
+                        entity.service = i.service
+                    }
+                    entity.image = i.image
+                    entity.buildingName = i.buildingName
+                    entity.address = i.address
+
+                    if (i.comment_id != null && i.comment_id.size > 0) {
+                        entity.comment_id = i.comment_id
+                    }
+
+                    mDb.serviceListDaoClass().save(entity)
+                }
+
+            }
+            Log.e("response+++", "++++" + mDb.serviceListDaoClass().getAll().size)
+        }
+
+        thread.start()
+
+    }
 
 
 }

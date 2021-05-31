@@ -815,9 +815,12 @@ class BackgroundService : Service() {
 
     private fun saveDashboardService(dashboardServiceListModel: DashboardServiceListModel) {
 
-        var thread: Thread = Thread {
+        val thread: Thread = Thread {
             if (mDb.ServiceListDashbaordDaoClass().getAll().size > 0) {
                 mDb.ServiceListDashbaordDaoClass().deleteAll()
+            }
+            if (mDb.serviceListDaoClass().getAll().size > 0) {
+                mDb.serviceListDaoClass().deleteAll()
             }
 
             if (dashboardServiceListModel.data != null && dashboardServiceListModel.data.size > 0) {

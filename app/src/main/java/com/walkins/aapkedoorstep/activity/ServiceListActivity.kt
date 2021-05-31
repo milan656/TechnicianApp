@@ -305,7 +305,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     relNoData?.visibility = View.VISIBLE
                     llAddressView?.visibility = View.GONE
                     tvNoServiceData?.visibility = View.GONE
+                    llTabs?.visibility=View.GONE
                 } else {
+                    llTabs?.visibility=View.VISIBLE
                     llAddressView?.visibility = View.VISIBLE
                     relNoData?.visibility = View.GONE
                 }
@@ -379,7 +381,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                             relNoData?.visibility = View.VISIBLE
                             llAddressView?.visibility = View.GONE
                             tvNoServiceData?.visibility = View.GONE
+                            llTabs?.visibility=View.GONE
                         } else {
+                            llTabs?.visibility=View.VISIBLE
                             llAddressView?.visibility = View.VISIBLE
                             relNoData?.visibility = View.GONE
                         }
@@ -426,7 +430,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     llAddressView?.visibility = View.GONE
                     tvNoServiceData?.visibility = View.GONE
                     relNoData?.visibility = View.VISIBLE
+                    llTabs?.visibility=View.GONE
                 } else {
+                    llTabs?.visibility=View.VISIBLE
                     llAddressView?.visibility = View.VISIBLE
                     relNoData?.visibility = View.GONE
                 }
@@ -458,7 +464,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     llAddressView?.visibility = View.GONE
                     relNoData?.visibility = View.VISIBLE
                     tvNoServiceData?.visibility = View.GONE
+                    llTabs?.visibility=View.GONE
                 } else {
+                    llTabs?.visibility=View.VISIBLE
                     llAddressView?.visibility = View.VISIBLE
                     relNoData?.visibility = View.GONE
                 }
@@ -491,7 +499,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     llAddressView?.visibility = View.GONE
                     relNoData?.visibility = View.VISIBLE
                     tvNoServiceData?.visibility = View.GONE
+                    llTabs?.visibility=View.GONE
                 } else {
+                    llTabs?.visibility=View.VISIBLE
                     llAddressView?.visibility = View.VISIBLE
                     relNoData?.visibility = View.GONE
                 }
