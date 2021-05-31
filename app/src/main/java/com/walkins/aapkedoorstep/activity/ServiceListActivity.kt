@@ -205,6 +205,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             serviceListSwipe?.post { serviceListSwipe?.isRefreshing = false }
         } else {
             getDataFromDatabase()
+            serviceListSwipe?.post { serviceListSwipe?.isRefreshing = false }
         }
 
     }
@@ -216,6 +217,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             serviceListSwipe?.post { serviceListSwipe?.isRefreshing = false }
         } else {
             getDataFromDatabase()
+
         }
     }
 

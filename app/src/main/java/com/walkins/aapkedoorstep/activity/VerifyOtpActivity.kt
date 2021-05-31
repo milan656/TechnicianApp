@@ -14,10 +14,7 @@ import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -216,11 +213,39 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
                 } else {
                     if (it.error != null && it.error.get(0).message != null) {
-                        loginFail(it.error.get(0).message, "Oops!")
+                        showDialogue("Oops!", it.error.get(0).message)
                     }
                 }
             }
         })
+    }
+
+    fun showDialogue(title: String, message: String) {
+        val builder = AlertDialog.Builder(this).create()
+        builder.setCancelable(false)
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        builder?.window?.setLayout(width, height)
+        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout_service, null)
+
+        val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
+        val ivClose = root.findViewById<ImageView>(R.id.ivClose)
+        val tv_message = root.findViewById<TextView>(R.id.tv_message)
+        val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
+        tvTitleText?.text = title
+        tv_message.text = message
+        tvTitleText?.gravity = Gravity.CENTER
+        tv_message?.gravity = Gravity.CENTER
+        ivClose?.visibility = View.INVISIBLE
+        btnYes.setOnClickListener {
+            builder.dismiss()
+
+        }
+        builder.setView(root)
+        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        builder.show()
     }
 
     fun hasPermissions(context: Context?, vararg permissions: String?): Boolean {
@@ -504,10 +529,9 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
                         }
                     }*/
 
-
                 } else {
                     try {
-                        loginFail(it.error.get(0).message, "Oops!")
+                        showDialogue("Oops!", it.error.get(0).message)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

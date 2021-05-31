@@ -1487,6 +1487,8 @@ class Common {
 
             TyreConfigClass.CarPhoto_1 = ""
             TyreConfigClass.CarPhoto_2 = ""
+
+
         }
 
         fun isConnectedToInternet(context: Context): Boolean {
