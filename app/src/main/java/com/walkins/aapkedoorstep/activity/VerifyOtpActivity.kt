@@ -54,9 +54,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         prefManager = PrefManager(this@VerifyOtpActivity)
         init()
 
-
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private fun init() {

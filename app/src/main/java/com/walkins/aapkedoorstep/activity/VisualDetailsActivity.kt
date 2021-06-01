@@ -1673,8 +1673,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.JPEG)
-                                size(2) // 2 MB
+
+                                size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                             }
                             Log.i("imagePath", "++++" + imagePath.length())
@@ -1725,8 +1725,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, auxFile!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.JPEG)
-                                size(2) // 2 MB
+
+                                size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                             }
                             Log.i("imagePath", "++++" + auxFile.length())
@@ -1791,8 +1791,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.JPEG)
-                                size(2) // 2 MB
+                                size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                             }
                             Log.i("imagePath", "++++" + imagePath.length())

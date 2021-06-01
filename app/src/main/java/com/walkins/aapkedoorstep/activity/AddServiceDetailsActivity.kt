@@ -346,14 +346,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     if (arr.size() == 0) {
                         TyreConfigClass.LFVehicleVisualDetail = false
-                    }else{
-                        val list:ArrayList<String>?=ArrayList()
-                        Log.e("getissue",""+arr)
-                        for (i in arr){
+                    } else {
+                        val list: ArrayList<String>? = ArrayList()
+                        Log.e("getissue", "" + arr)
+                        for (i in arr) {
                             list?.add(i.asString)
                         }
                         Log.e("getserviceselectedlf_", "" + list)
-                        TyreDetailCommonClass.issueResolvedArr=list
+                        TyreDetailCommonClass.issueResolvedArr = list
                     }
                 }
 
@@ -511,14 +511,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val arr = jsonRF.get(TyreKey.issueResolvedArr).asJsonArray
                     if (arr.size() == 0) {
                         TyreConfigClass.RFVehicleVisualDetail = false
-                    }else{
-                        val list:ArrayList<String>?=ArrayList()
-                        Log.e("getissue",""+arr)
-                        for (i in arr){
+                    } else {
+                        val list: ArrayList<String>? = ArrayList()
+                        Log.e("getissue", "" + arr)
+                        for (i in arr) {
                             list?.add(i.asString)
                         }
                         Log.e("getserviceselectedlf_", "" + list)
-                        TyreDetailCommonClass.issueResolvedArr=list
+                        TyreDetailCommonClass.issueResolvedArr = list
                     }
                 }
 
@@ -683,14 +683,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val arr = jsonLR.get(TyreKey.issueResolvedArr).asJsonArray
                     if (arr?.size() == 0) {
                         TyreConfigClass.LRVehicleVisualDetail = false
-                    }else{
-                        val list:ArrayList<String>?=ArrayList()
-                        Log.e("getissue",""+arr)
-                        for (i in arr){
+                    } else {
+                        val list: ArrayList<String>? = ArrayList()
+                        Log.e("getissue", "" + arr)
+                        for (i in arr) {
                             list?.add(i.asString)
                         }
                         Log.e("getserviceselectedlf_", "" + list)
-                        TyreDetailCommonClass.issueResolvedArr=list
+                        TyreDetailCommonClass.issueResolvedArr = list
                     }
                 }
 
@@ -852,14 +852,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     val arr = jsonRR.get(TyreKey.issueResolvedArr).asJsonArray
                     if (arr.size() == 0) {
                         TyreConfigClass.RRVehicleVisualDetail = false
-                    }else{
-                        val list:ArrayList<String>?=ArrayList()
-                        Log.e("getissue",""+arr)
-                        for (i in arr){
+                    } else {
+                        val list: ArrayList<String>? = ArrayList()
+                        Log.e("getissue", "" + arr)
+                        for (i in arr) {
                             list?.add(i.asString)
                         }
                         Log.e("getserviceselectedlf_", "" + list)
-                        TyreDetailCommonClass.issueResolvedArr=list
+                        TyreDetailCommonClass.issueResolvedArr = list
                     }
                 }
 
@@ -1729,13 +1729,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             R.id.ivPickedImage -> {
                 Log.e("getimagee", "--" + TyreConfigClass.CarPhoto_1)
                 if (!TyreConfigClass.CarPhoto_1.equals("")) {
-                    showImage(TyreConfigClass.CarPhoto_1)
+                    showImage(TyreConfigClass.CarPhoto_1, "one")
                 }
             }
             R.id.ivPickedImage1 -> {
                 Log.e("getimagee2", "" + TyreConfigClass.CarPhoto_2)
                 if (!TyreConfigClass.CarPhoto_2.equals("")) {
-                    showImage(TyreConfigClass.CarPhoto_2)
+                    showImage(TyreConfigClass.CarPhoto_2, "two")
                 }
             }
             R.id.relCarPhotoAdd1 -> {
@@ -2144,8 +2144,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.JPEG)
-                            size(2) // 2 MB
+                            size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                         }
                         Log.i("imagePath", "++++" + imagePath.length())
@@ -2178,8 +2177,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.JPEG)
-                            size(2) // 2 MB
+                            size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                         }
                         Log.i("imagePath", "++++" + imagePath.length())
@@ -2213,8 +2211,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.JPEG)
-                            size(2) // 2 MB
+                            size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                         }
                         Log.i("imagePath", "++++" + imagePath.length())
@@ -2248,8 +2245,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.JPEG)
-                            size(2) // 2 MB
+                            size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                         }
                         Log.i("imagePath", "++++" + imagePath.length())
@@ -2285,8 +2281,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.JPEG)
-                            size(2) // 2 MB
+                            size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                         }
                         Log.i("imagePath", "++++" + imagePath.length())
@@ -2322,8 +2317,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                             resolution(1280, 720)
                             quality(80)
-                            format(Bitmap.CompressFormat.JPEG)
-                            size(2) // 2 MB
+                            size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                         }
                         Log.i("imagePath", "++++" + imagePath.length())
@@ -4260,7 +4254,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             IMAGE_CAPTURE_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
 
-                    Log.e("getimagee",""+image_uri?.path)
+                    Log.e("getimagee", "" + image_uri?.path)
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         getFile(this@AddServiceDetailsActivity, image_uri)
                     } else {
@@ -4305,8 +4299,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.JPEG)
-                                size(2) // 2 MB
+                                size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                             }
                             Log.i("imagePath", "++++" + imagePath.length())
@@ -4340,7 +4333,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             }
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    Log.e("getimagee",""+Uri.parse(mCurrentPhotoPath).path)
+                    Log.e("getimagee", "" + Uri.parse(mCurrentPhotoPath).path)
                     val auxFile = File(mCurrentPhotoPath)
                     Log.e("getFile", "" + mCurrentPhotoPath + " " + Uri.parse(mCurrentPhotoPath))
                     if (selectImage1) {
@@ -4375,8 +4368,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, auxFile!!) {
                                 resolution(1280, 720)
                                 quality(80)
-                                format(Bitmap.CompressFormat.JPEG)
-                                size(2) // 2 MB
+                                size(3_097_152) // 3 MB
 //                            size(1_097_152) // 2 MB
                             }
                             Log.i("imagePath", "++++" + auxFile.length())
@@ -4412,7 +4404,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     //To get the File for further usage
                     val selectedImage = data?.data
-                    Log.e("getimagee",""+selectedImage?.path)
+                    Log.e("getimagee", "" + selectedImage?.path)
 
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         getFile(this@AddServiceDetailsActivity, selectedImage)
@@ -4460,9 +4452,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
                             val compressedImageFile = Compressor.compress(this@AddServiceDetailsActivity, imagePath!!) {
                                 resolution(1280, 720)
-                                quality(100)
-                                format(Bitmap.CompressFormat.JPEG)
-                                size(2) // 2 MB
+                                quality(80)
+                                size(3_097_152) // 3 MB
                             }
                             Log.i("imagePath", "++++" + imagePath.length())
                             Log.i("imagePath", "++++" + compressedImageFile.length())
@@ -6916,7 +6907,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     }
 
 
-    private fun showImage(posterUrl: String?) {
+    private fun showImage(posterUrl: String?, which: String) {
         val builder = AlertDialog.Builder(this@AddServiceDetailsActivity).create()
         builder.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -6932,12 +6923,41 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         val imgPoster =
             root.findViewById<ImageView>(R.id.imgPoster)
 
-        Glide.with(this@AddServiceDetailsActivity)
-            .load(posterUrl)
-            .override(1600, 1600)
-            .thumbnail(0.33f)
-            .placeholder(R.drawable.placeholder)
-            .into(imgPoster)
+        if (which.equals("one")) {
+            if (prefManager.getValue(TyreConfigClass.serviceId + "image_1_path") != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + "image_1_path").equals("")
+            ) {
+                imgPoster?.setImageURI(Uri.parse(prefManager.getValue(TyreConfigClass.serviceId + "image_1_path")))
+                imgPoster?.minimumHeight = 1600
+                imgPoster.minimumWidth = 1600
+
+            } else {
+                Glide.with(this@AddServiceDetailsActivity)
+                    .load(posterUrl)
+                    .override(1600, 1600)
+                    .thumbnail(0.33f)
+                    .placeholder(R.drawable.placeholder)
+                    .into(imgPoster)
+
+            }
+        } else {
+            if (prefManager.getValue(TyreConfigClass.serviceId + "image_2_path") != null &&
+                !prefManager.getValue(TyreConfigClass.serviceId + "image_2_path").equals("")
+            ) {
+                imgPoster?.setImageURI(Uri.parse(prefManager.getValue(TyreConfigClass.serviceId + "image_2_path")))
+                imgPoster?.minimumHeight = 1600
+                imgPoster.minimumWidth = 1600
+
+            } else {
+                Glide.with(this@AddServiceDetailsActivity)
+                    .load(posterUrl)
+                    .override(1600, 1600)
+                    .thumbnail(0.33f)
+                    .placeholder(R.drawable.placeholder)
+                    .into(imgPoster)
+
+            }
+        }
 
         tvTitleRemarks?.text = getString(R.string.str_view_car_image)
 
