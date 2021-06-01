@@ -133,10 +133,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         val weekOfYear = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)
         Log.e("getyear", "" + year + " " + weekOfYear)
 
-
         llhome?.performClick()
 //        getNotificationCount()
-
 
     }
 

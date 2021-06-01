@@ -11,9 +11,9 @@ buildscript {
         materialVersion = '1.2.1'
         roomVersion = '2.2.5'
         // testing
-        junitVersion = '4.13.1'
-        espressoVersion = '3.1.0'
-        androidxJunitVersion = '1.1.2'
+//        junitVersion = '4.13.1'
+//        espressoVersion = '3.1.0'
+//        androidxJunitVersion = '1.1.2'
     }
     repositories {
         google()

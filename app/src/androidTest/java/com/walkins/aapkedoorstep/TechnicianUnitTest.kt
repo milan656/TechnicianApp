@@ -1,36 +1,44 @@
 package com.walkins.aapkedoorstep
 
-import android.R
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.*
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.util.TreeIterables
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.ActivityTestRule
+import com.walkins.aapkedoorstep.activity.LoginActivity
+import com.walkins.aapkedoorstep.activity.MainActivity
 import org.hamcrest.Matcher
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import org.junit.Rule
 
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class TechnicianUnitTest {
 
     var invalidNumber: String? = "0900222414"
-    var validNumber: String? = "8469838953"
+    var validNumber: String? = "9080700000"
 
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.walkins.aapkedoorstep", appContext.packageName)
-    }
+    @get: Rule
+    public val mActivityRule: ActivityTestRule<MainActivity> = ActivityTestRule(
+        MainActivity::class.java
+    )
 
     @Test
     fun login() {
+
+        loginOnTechnician()
+
+    }
+
+    private fun loginOnTechnician() {
         Espresso.onView(withId(R.id.btnLoginToDashBoard)).perform(
             ViewActions.closeSoftKeyboard(),
             ViewActions.click()
@@ -55,6 +63,38 @@ class ExampleInstrumentedTest {
             ViewActions.click()
         )
         Thread.sleep(5000)
+
+        verifyOTP()
+    }
+
+    private fun verifyOTP() {
+
+//        click when no OTP entered
+        Espresso.onView(withId(R.id.btnVerify)).perform(
+            ViewActions.closeSoftKeyboard(),
+            ViewActions.click()
+        )
+
+        enterInvalidOTP()
+
+        Espresso.onView(withId(R.id.btnVerify)).perform(
+            ViewActions.closeSoftKeyboard(),
+            ViewActions.click()
+        )
+
+        BaseRobot().doOnView(withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        enterValidOTP()
+
+        Espresso.onView(withId(R.id.btnVerify)).perform(
+            ViewActions.closeSoftKeyboard(),
+            ViewActions.click()
+        )
+
+        NavigateMainDashboard()
+    }
+
+    private fun enterValidOTP() {
         Espresso.onView(withId(R.id.edtOtp1)).perform(
             ViewActions.typeText("1"),
             ViewActions.click()
@@ -71,11 +111,88 @@ class ExampleInstrumentedTest {
             ViewActions.typeText("2"),
             ViewActions.click()
         )
+    }
 
-        Espresso.onView(withId(R.id.btnVerify)).perform(
-            ViewActions.closeSoftKeyboard(),
+    private fun enterInvalidOTP() {
+        Espresso.onView(withId(R.id.edtOtp1)).perform(
+            ViewActions.typeText("1"),
             ViewActions.click()
         )
+        Espresso.onView(withId(R.id.edtOtp2)).perform(
+            ViewActions.typeText("5"),
+            ViewActions.click()
+        )
+        Espresso.onView(withId(R.id.edtOtp3)).perform(
+            ViewActions.typeText("1"),
+            ViewActions.click()
+        )
+        Espresso.onView(withId(R.id.edtOtp4)).perform(
+            ViewActions.typeText("5"),
+            ViewActions.click()
+        )
+    }
+
+    private fun NavigateMainDashboard() {
+
+        BaseRobot().doOnView(withId(R.id.llhome), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        BaseRobot().doOnView(
+            withId(R.id.recyclerView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                ViewActions.click()
+            )
+        )
+        navigateToServiceListScreen()
+    }
+
+    private fun navigateToServiceListScreen() {
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                ViewActions.click()
+            )
+        )
+
+        navigateToAddServiceDetailScreen()
+
+    }
+
+    private fun navigateToAddServiceDetailScreen() {
+
+//        select service message
+        BaseRobot().doOnView(withId(R.id.cardtyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                ViewActions.click()
+            )
+        )
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                1,
+                ViewActions.click()
+            )
+        )
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                2,
+                ViewActions.click()
+            )
+        )
+
+        BaseRobot().doOnView(withId(R.id.cardtyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        BaseRobot().doOnView(withId(R.id.ivTyre1), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+
 
     }
 
@@ -93,7 +210,6 @@ class ExampleInstrumentedTest {
             }
         }
 
-
         fun waitForView(
             viewMatcher: Matcher<View>,
             waitMillis: Int = 15000,
@@ -102,35 +218,26 @@ class ExampleInstrumentedTest {
 
             // Derive the max tries
             val maxTries = waitMillis / waitMillisPerTry.toInt()
-
             var tries = 0
-
             for (i in 0..maxTries)
                 try {
                     // Track the amount of times we've tried
                     tries++
-
                     // Search the root for the view
                     Espresso.onView(ViewMatchers.isRoot()).perform(searchFor(viewMatcher))
-
                     // If we're here, we found our view. Now return it
                     return Espresso.onView(viewMatcher)
-
                 } catch (e: Exception) {
-
                     if (tries == maxTries) {
                         throw e
                     }
                     Thread.sleep(waitMillisPerTry)
                 }
-
             throw Exception("Error finding a view matching $viewMatcher")
         }
 
         fun searchFor(matcher: Matcher<View>): ViewAction {
-
             return object : ViewAction {
-
                 override fun getConstraints(): Matcher<View> {
                     return ViewMatchers.isRoot()
                 }
@@ -140,7 +247,6 @@ class ExampleInstrumentedTest {
                 }
 
                 override fun perform(uiController: UiController, view: View) {
-
                     var tries = 0
                     val childViews: Iterable<View> = TreeIterables.breadthFirstViewTraversal(view)
 
@@ -152,7 +258,6 @@ class ExampleInstrumentedTest {
                             return
                         }
                     }
-
                     throw NoMatchingViewException.Builder()
                         .withRootView(view)
                         .withViewMatcher(matcher)
@@ -161,5 +266,4 @@ class ExampleInstrumentedTest {
             }
         }
     }
-
 }
