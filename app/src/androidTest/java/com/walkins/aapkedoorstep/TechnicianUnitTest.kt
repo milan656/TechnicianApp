@@ -192,8 +192,38 @@ class TechnicianUnitTest {
 
         BaseRobot().doOnView(withId(R.id.ivTyre1), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
+        navigateToVehicleBrandScreenMultipleSelection()
+        navigateToVehicleBrandScreenSingleSelection()
+    }
 
+    private fun navigateToVehicleBrandScreenMultipleSelection() {
+        BaseRobot().doOnView(
+            withId(R.id.gridviewRecycMake_), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                ViewActions.click()
+            )
+        )
 
+        BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.chkRR), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+//        btnNext
+        BaseRobot().doOnView(withId(R.id.btnNext), ViewActions.closeSoftKeyboard(), ViewActions.click())
+    }
+
+    private fun navigateToVehicleBrandScreenSingleSelection() {
+        BaseRobot().doOnView(
+            withId(R.id.gridviewRecycMake_), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                ViewActions.click()
+            )
+        )
+
+//        btnNext
+        BaseRobot().doOnView(withId(R.id.btnNext), ViewActions.closeSoftKeyboard(), ViewActions.click())
     }
 
     open class BaseRobot {
