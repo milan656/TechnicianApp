@@ -29,7 +29,7 @@ class ExampleInstrumentedTest {
         assertEquals("com.walkins.aapkedoorstep", appContext.packageName)
     }
 
-    /*@Test
+    @Test
     fun login() {
         Espresso.onView(withId(R.id.btnLoginToDashBoard)).perform(
             ViewActions.closeSoftKeyboard(),
@@ -77,7 +77,7 @@ class ExampleInstrumentedTest {
             ViewActions.click()
         )
 
-    }*/
+    }
 
     open class BaseRobot {
 

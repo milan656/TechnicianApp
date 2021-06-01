@@ -4461,8 +4461,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                                 uploadImage(compressedImageFile, compressedImageFile.inputStream(), "")
                             }
                         }
-
-//                        imagePath.let { uploadImage(it!!, inputStream!!, "") }
                     } else {
 
                         if (selectImage1) {
