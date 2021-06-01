@@ -442,8 +442,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         if (prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre) != null &&
             !prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre).equals("")
         ) {
-            Log.e("getimages1", "" + prefManager.getValue("image_" + selectedTyre))
+            Log.e("getimages1", "" + prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre))
 //            ivPickedImage1?.setImageURI(Uri.parse(prefManager.getValue("image_" + selectedTyre)))
+
 
             try {
                 Glide.with(this).load(prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre)).thumbnail(0.33f).into(ivPickedImage1!!)
@@ -1973,7 +1974,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         val imgPoster =
             root.findViewById<ImageView>(R.id.imgPoster)
 
-
         try {
             Glide.with(this@VisualDetailsActivity)
                 .load(posterUrl)
@@ -1985,38 +1985,66 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
-
-            if (prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre).equals("")
-            ) {
-                try {
-                    Glide.with(this).load(prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre))
-                        .override(1600, 1600)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.33f)
-                        .placeholder(R.drawable.placeholder).into(imgPoster)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+        }
+       /* if (prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre) != null &&
+            !prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre).equals("")
+        ) {
+            try {
+                Glide.with(this).load(prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre)).thumbnail(0.33f).into(imgPoster)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
 
-            if (selectedTyre.equals("LF") && TyreDetailCommonClass.tyre_Uri_LF != null) {
-                ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_LF)
-            }
-            if (selectedTyre.equals("LR") && TyreDetailCommonClass.tyre_Uri_LR != null) {
-                ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_LR)
-            }
-            if (selectedTyre.equals("RF") && TyreDetailCommonClass.tyre_Uri_RF != null) {
-                ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_RF)
-            }
-            if (selectedTyre.equals("RR") && TyreDetailCommonClass.tyre_Uri_RR != null) {
-                ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_RR)
+        } else {
+            try {
+                Glide.with(this@VisualDetailsActivity)
+                    .load(posterUrl)
+                    .override(1600, 1600)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .thumbnail(0.33f)
+                    .placeholder(R.drawable.placeholder)
+                    .into(imgPoster)
+
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+
+                *//* if (prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre) != null &&
+                     !prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre).equals("")
+                 ) {
+                     try {
+                         var imageUri: Uri? = null
+                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                             imageUri = Uri.parse(prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre));
+                         } else {
+                             imageUri = Uri.fromFile(File(prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre)));
+                         }
+                         TyreDetailCommonClass.tyre_Uri_LF = imageUri
+
+                         imgPoster?.setImageURI(imageUri)
+                         imgPoster?.minimumWidth = 1400
+                         imgPoster?.minimumHeight = 1400
+                     } catch (e: Exception) {
+                         e.printStackTrace()
+                     }
+                 }
+
+                 if (selectedTyre.equals("LF") && TyreDetailCommonClass.tyre_Uri_LF != null) {
+                     ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_LF)
+                 }
+                 if (selectedTyre.equals("LR") && TyreDetailCommonClass.tyre_Uri_LR != null) {
+                     ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_LR)
+                 }
+                 if (selectedTyre.equals("RF") && TyreDetailCommonClass.tyre_Uri_RF != null) {
+                     ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_RF)
+                 }
+                 if (selectedTyre.equals("RR") && TyreDetailCommonClass.tyre_Uri_RR != null) {
+                     ivPickedImage1?.setImageURI(TyreDetailCommonClass.tyre_Uri_RR)
+                 }*//*
             }
         }
-
+*/
         tvTitleRemarks?.text = "View Tyre Image"
-
         val imgClose = root.findViewById<ImageView>(R.id.imgClose)
-
 
         imgClose.setOnClickListener { builder.dismiss() }
         builder.setView(root)
@@ -2076,7 +2104,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     override fun onResume() {
         super.onResume()
         Log.e("method", "resume")
-        getTyreWiseData()
+//        getTyreWiseData()
     }
 }
 
