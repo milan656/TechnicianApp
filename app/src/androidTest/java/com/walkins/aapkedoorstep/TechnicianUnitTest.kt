@@ -12,6 +12,7 @@ import androidx.test.rule.ActivityTestRule
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.blankManufacturingDate
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.inValidManufacturingDate
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.invalidNumber
+import com.walkins.aapkedoorstep.UnitTestVariables.Companion.invalidNumber_2
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.multipleSelection
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.select_1_service
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.select_2_service
@@ -57,6 +58,13 @@ class TechnicianUnitTest {
         )
 
         BaseRobot().doOnView(withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+//        Espresso.onView(withId(R.id.edtLoginEmail)).perform(ViewActions.typeText(invalidNumber_2))
+
+        Espresso.onView(withId(R.id.btnLoginToDashBoard)).perform(
+            ViewActions.closeSoftKeyboard(),
+            ViewActions.click()
+        )
 
         Espresso.onView(withId(R.id.edtLoginEmail)).perform(
             ViewActions.clearText(),
