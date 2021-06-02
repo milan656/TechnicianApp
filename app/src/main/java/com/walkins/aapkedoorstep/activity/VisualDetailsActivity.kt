@@ -1256,7 +1256,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         }
                     }
                 }
-//
                 if (sidewell.equals("")
                 ) {
                     Toast.makeText(this, "Please select side well condition", Toast.LENGTH_SHORT).show()
