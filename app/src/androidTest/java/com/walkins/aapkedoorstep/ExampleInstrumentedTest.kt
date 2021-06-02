@@ -1,33 +1,44 @@
 package com.walkins.aapkedoorstep
 
 import android.R
+import android.content.Context
 import android.view.View
 import androidx.test.espresso.*
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.util.TreeIterables
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
+import com.walkins.aapkedoorstep.activity.MainActivity
 import org.hamcrest.Matcher
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Rule
 
 @RunWith(AndroidJUnit4::class)
+@LargeTest
 class ExampleInstrumentedTest {
 
     var invalidNumber: String? = "0900222414"
     var validNumber: String? = "8469838953"
+    var targetContext: Context?=null
 
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.walkins.aapkedoorstep", appContext.packageName)
-    }
+    @get:Rule
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+
+
+//    @Test
+//    fun useAppContext() {
+//        // Context of the app under test.
+//        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+//        assertEquals("com.walkins.aapkedoorstep", appContext?.packageName)
+//    }
 
     /*@Test
     fun login() {

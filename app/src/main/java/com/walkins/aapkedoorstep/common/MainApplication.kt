@@ -1,15 +1,12 @@
 package com.example.technician.common
 
-import android.app.Activity
-import android.app.ActivityManager
+import android.app.Application
 import android.content.Context
-import android.content.pm.ActivityInfo
-import android.os.Bundle
-import android.util.Log
-import androidx.multidex.MultiDex
-import androidx.multidex.MultiDexApplication
 
-class MainApplication : MultiDexApplication() {
+//import androidx.multidex.MultiDex
+//import androidx.multidex.MultiDexApplication
+
+class MainApplication: Application() {
 
     init {
         instance = this
@@ -17,14 +14,13 @@ class MainApplication : MultiDexApplication() {
 
     companion object {
         private var instance: MainApplication? = null
-
         //        var firebaseCrashlytics: FirebaseCrashlytics? = null
         fun applicationContext(): Context {
             return instance?.applicationContext!!
         }
     }
 
-    override fun onCreate() {
+  /*  override fun onCreate() {
         super.onCreate()
         try {
             MultiDex.install(this);
@@ -75,15 +71,15 @@ class MainApplication : MultiDexApplication() {
             }
 
         })
-    }
+    }*/
 
-    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
-        val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
-        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
-                return true
-            }
-        }
-        return false
-    }
+//    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+//        val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+//        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+//            if (serviceClass.name == service.service.className) {
+//                return true
+//            }
+//        }
+//        return false
+//    }
 }

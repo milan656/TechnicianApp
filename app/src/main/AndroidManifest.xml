@@ -35,7 +35,6 @@
         android:theme="@style/Theme.TechnicianApp">
         <activity android:name=".activity.ReportFilterActivity" />
         <activity android:name=".activity.CompletedVisualDetailActivity" />
-        <activity android:name=".activity.VehicleMakeApplyTyreActivty" />
         <activity android:name=".activity.VehicleSizeActivity" />
         <activity android:name=".activity.SkippedServiceDetailActivity" />
         <activity android:name=".activity.CompletedServiceDetailActivity" />
@@ -69,8 +68,6 @@ Set color used with incoming notification messages. This is used when no color i
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity android:name=".activity.VehicleMakeActivity" />
-        <activity android:name=".activity.HomeSubDealerActivity" />
-        <activity android:name=".activity.HomeEmployeeActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -120,15 +117,15 @@ Set color used with incoming notification messages. This is used when no color i
             </intent-filter>
         </receiver>
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.walkins.aapkedoorstep.android.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
+<!--        <provider-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:authorities="com.walkins.aapkedoorstep.android.fileprovider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+<!--            <meta-data-->
+<!--                android:name="androidx.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/provider_paths" />-->
+<!--        </provider>-->
 
     </application>
 
