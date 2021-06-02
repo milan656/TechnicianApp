@@ -37,6 +37,7 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.core.widget.ImageViewCompat
 import androidx.exifinterface.media.ExifInterface
@@ -1491,35 +1492,43 @@ class Common {
         }
 
         fun isConnectedToInternet(context: Context): Boolean {
-            val connectivityManager =
-                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val capabilities =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-                    } else {
-                        TODO("VERSION.SDK_INT < M")
-                    }
-                } else {
-                    TODO("VERSION.SDK_INT < LOLLIPOP")
-                }
-            if (capabilities != null) {
-                if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                val connectivityManager =
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val capabilities =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                        } else {
+                            TODO("VERSION.SDK_INT < M")
+                        }
                     } else {
                         TODO("VERSION.SDK_INT < LOLLIPOP")
                     }
-                ) {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-                    return true
+                if (capabilities != null) {
+                    if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                        } else {
+                            TODO("VERSION.SDK_INT < LOLLIPOP")
+                        }
+                    ) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                        return true
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                        return true
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                        return true
+                    }
                 }
+            }else{
+                val cm:ConnectivityManager= context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+                return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
             }
+
             return false
         }
 

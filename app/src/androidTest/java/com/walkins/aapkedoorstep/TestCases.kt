@@ -75,24 +75,30 @@ class TestCases {
             ViewActions.click()
         )
 
-        enterInvalidOTP()
+//        enterInvalidOTP()
 
-
-        Espresso.onView(ViewMatchers.withId(R.id.btnVerify)).perform(
-            ViewActions.closeSoftKeyboard(),
-            ViewActions.click()
-        )
-        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
-//
-//        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
-
-        Thread.sleep(1000)
         enterValidOTP()
 
         Espresso.onView(ViewMatchers.withId(R.id.btnVerify)).perform(
             ViewActions.closeSoftKeyboard(),
             ViewActions.click()
         )
+//        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
+//
+//        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+//        Thread.sleep(1000)
+//        Espresso.onView(withId(R.id.scrollVerify)).perform(
+//            ViewActions.closeSoftKeyboard(),
+//            ViewActions.swipeUp()
+//        )
+//
+//        enterValidOTP()
+//
+//        Espresso.onView(ViewMatchers.withId(R.id.btnVerify)).perform(
+//            ViewActions.closeSoftKeyboard(),
+//            ViewActions.click()
+//        )
 
         NavigateMainDashboard()
     }
@@ -111,7 +117,7 @@ class TestCases {
             ViewActions.click()
         )
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp4)).perform(
-            ViewActions.typeText("2"),
+            ViewActions.typeText("2"),ViewActions.closeSoftKeyboard(),
             ViewActions.click()
         )
     }
