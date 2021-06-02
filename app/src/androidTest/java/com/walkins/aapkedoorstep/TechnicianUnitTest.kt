@@ -27,7 +27,7 @@ class TechnicianUnitTest {
     var validNumber: String? = "9080700000"
 
     @get: Rule
-    public val mActivityRule: ActivityTestRule<MainActivity> = ActivityTestRule(
+    val mActivityRule: ActivityTestRule<MainActivity> = ActivityTestRule(
         MainActivity::class.java
     )
 
