@@ -1222,12 +1222,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             R.id.btnDone -> {
 
                 if (edtManufaturingDate?.text?.toString().equals("")) {
-                    Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please enter Manufacturing Date", Toast.LENGTH_SHORT).show()
                     return
 
                 }
                 if (edtManufaturingDate?.text?.toString()?.length != 4) {
-                    Toast.makeText(this, "Manufaturing Date Must be 4 Digit.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Manufacturing Date Must be 4 Digit.", Toast.LENGTH_SHORT).show()
                     return
 
                 }
@@ -1236,22 +1236,22 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     if (!edtManufaturingDate?.text?.toString()?.substring(0, 2)?.equals("")!!) {
                         if (edtManufaturingDate?.text?.toString()?.substring(0, 2)?.toInt()!! > 0) {
                             if (edtManufaturingDate?.text?.toString()?.substring(0, 2)?.toInt()!! > 0 && edtManufaturingDate?.text?.toString()?.substring(0, 2)?.toInt()!! > weekOfYear) {
-                                Toast.makeText(this, "Manufaturing Date First 2 Letter not greater than Week of Year.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Manufacturing Date First 2 Letter not greater than Week of Year.", Toast.LENGTH_SHORT).show()
                                 return
                             }
                         } else {
-                            Toast.makeText(this, "Manufaturing Date First 2 Letter must greater than 0.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Manufacturing Date First 2 Letter must greater than 0.", Toast.LENGTH_SHORT).show()
                             return
                         }
                     }
                     if (!edtManufaturingDate?.text?.toString()?.substring(2, 4)?.equals("")!!) {
                         if (edtManufaturingDate?.text?.toString()?.substring(2, 4)?.toInt()!! > 0) {
                             if (edtManufaturingDate?.text?.toString()?.substring(2, 4)?.toInt()!! > 0 && edtManufaturingDate?.text?.toString()?.substring(2, 4)?.toInt()!! > year) {
-                                Toast.makeText(this, "Manufaturing Date Last 2 Latter not greater than Current Year.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Manufacturing Date Last 2 Letter not greater than Current Year.", Toast.LENGTH_SHORT).show()
                                 return
                             }
                         } else {
-                            Toast.makeText(this, "Manufaturing Date Last 2 Latter must greater than 0.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Manufacturing Date Last 2 Letter must greater than 0.", Toast.LENGTH_SHORT).show()
                             return
                         }
                     }
