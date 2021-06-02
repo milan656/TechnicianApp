@@ -1256,12 +1256,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         }
                     }
                 }
-//        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
 //
-//        } else {
-//            Toast.makeText(this, "Please Select Issue Resolve List", Toast.LENGTH_SHORT).show()
-//            return
-//        }
                 if (sidewell.equals("")
                 ) {
                     Toast.makeText(this, "Please select side well condition", Toast.LENGTH_SHORT).show()
