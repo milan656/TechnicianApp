@@ -1255,7 +1255,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             return
                         }
                     }
-
                 }
 //        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
 //
