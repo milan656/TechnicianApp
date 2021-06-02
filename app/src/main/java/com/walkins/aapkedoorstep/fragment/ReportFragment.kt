@@ -108,7 +108,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_report, container, false)
         prefManager = context?.let { PrefManager(it) }!!
@@ -786,7 +786,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 s: CharSequence?,
                 start: Int,
                 count: Int,
-                after: Int
+                after: Int,
             ) {
 
             }
@@ -816,7 +816,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 s: CharSequence?,
                 start: Int,
                 count: Int,
-                after: Int
+                after: Int,
             ) {
 
             }
@@ -938,6 +938,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun searchMake(toString: String, isDialoguOpen: Boolean) {
+        Log.e("getdislog1", "" + isDialoguOpen + "-- " + societyList?.size + " --" + makeSearchdata?.size)
         if (makeSearchdata != null && makeSearchdata?.size!! > 0 && societyList.size > 0) {
             openReportFilterDialogue(toString)
         } else {
@@ -958,6 +959,10 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 makeDataForSearchApi(makeSearchdata!!, isDialoguOpen)
                             } catch (e: java.lang.Exception) {
                                 e.printStackTrace()
+                            }
+                        } else {
+                            if (isDialoguOpen) {
+                                openReportFilterDialogue(toString)
                             }
                         }
                     }
@@ -982,6 +987,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             e.printStackTrace()
         }
 
+        Log.e("getdislog", "" + isDialoguOpen + "-- " + societyList?.size)
         if (isDialoguOpen) {
             openReportFilterDialogue("Choose Filter")
         }
@@ -1079,7 +1085,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         context: Context?,
         btnBg: String,
         isBtnVisible: Boolean,
-        stringBuilder: StringBuilder
+        stringBuilder: StringBuilder,
     ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
