@@ -19,6 +19,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -47,6 +48,8 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     private var receiver: BroadcastReceiver? = null
     private var otpStr: String? = ""
 
+    private var scrollVerify:NestedScrollView?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_otp)
@@ -58,6 +61,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
     @SuppressLint("ClickableViewAccessibility")
     private fun init() {
+        scrollVerify = findViewById(R.id.scrollVerify)
         tvResend = findViewById(R.id.tvResend)
         btnVerify = findViewById(R.id.btnVerify)
         ivBackIcon = findViewById(R.id.ivBackIcon)

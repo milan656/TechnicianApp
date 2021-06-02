@@ -31,7 +31,6 @@ import org.junit.runner.RunWith
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4::class)
 class TechnicianUnitTest {
 
-
     @get: Rule
     open val mActivityRule: ActivityTestRule<MainActivity> = ActivityTestRule(
         MainActivity::class.java
@@ -39,9 +38,7 @@ class TechnicianUnitTest {
 
     @Test
     open fun login() {
-
         loginOnTechnician()
-
     }
 
     private fun loginOnTechnician() {
@@ -174,9 +171,10 @@ class TechnicianUnitTest {
 
     private fun navigateToAddServiceDetailScreen() {
 
+        skipServiceFlow()
+
 //        select service message
         BaseRobot().doOnView(withId(R.id.cardtyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
-
         BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
         if (select_1_service) {
@@ -226,7 +224,6 @@ class TechnicianUnitTest {
                     ViewActions.click()
                 )
             )
-
         }
         if (select_4_service) {
             BaseRobot().doOnView(
@@ -261,21 +258,64 @@ class TechnicianUnitTest {
 
         BaseRobot().doOnView(withId(R.id.cardtyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
+        tyreLFTyreSelection()
+
+        tyreRFTyreSelection()
+
+        tyreLRTyreSelection()
+
+        tyreRRTyreSelection()
+
+    }
+
+    private fun tyreRRTyreSelection() {
+
         BaseRobot().doOnView(withId(R.id.ivTyre1), ViewActions.closeSoftKeyboard(), ViewActions.click())
-
-//        navigateToVehicleBrandScreenMultipleSelection()
-
-        singleSelection = true
-        multipleSelection = false
 
         navigateToVehicleBrandScreeneSelection()
     }
 
+    private fun tyreLRTyreSelection() {
+        BaseRobot().doOnView(withId(R.id.ivTyre2), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        navigateToVehicleBrandScreeneSelection()
+    }
+
+    private fun tyreRFTyreSelection() {
+        BaseRobot().doOnView(withId(R.id.ivTyre3), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        navigateToVehicleBrandScreeneSelection()
+    }
+
+    private fun tyreLFTyreSelection() {
+        BaseRobot().doOnView(withId(R.id.ivTyre1), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        navigateToVehicleBrandScreeneSelection()
+    }
+
+    private fun skipServiceFlow() {
+        BaseRobot().doOnView(withId(R.id.tvSkipService), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        BaseRobot().doOnView(withId(R.id.btnConfirm), ViewActions.closeSoftKeyboard(), ViewActions.click())
+//        pendingReasonRecycView
+        BaseRobot().doOnView(
+            withId(R.id.pendingReasonRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                2,
+                ViewActions.click()
+            )
+        )
+
+        BaseRobot().doOnView(withId(R.id.ivClose), ViewActions.closeSoftKeyboard(), ViewActions.click())
+//        BaseRobot().doOnView(withId(R.id.btnConfirm), ViewActions.closeSoftKeyboard(), ViewActions.click())
+    }
+
     private fun navigateToVehicleBrandScreeneSelection() {
+        val number = (0..4).random()
         BaseRobot().doOnView(
             withId(R.id.gridviewRecycMake_), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
+                number,
                 ViewActions.click()
             )
         )
@@ -292,10 +332,11 @@ class TechnicianUnitTest {
     }
 
     private fun navigateToVehiclePatternScreen() {
+        val number = (0..4).random()
         BaseRobot().doOnView(
             withId(R.id.gridviewRecycModel), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
+                number,
                 ViewActions.click()
             )
         )
@@ -360,27 +401,23 @@ class TechnicianUnitTest {
         BaseRobot().doOnView(withId(R.id.btnSubmitAndComplete), ViewActions.closeSoftKeyboard(), ViewActions.click())
         BaseRobot().doOnView(withId(R.id.cardtechinicalSuggestion), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
+        val number = (0..4).random()
         BaseRobot().doOnView(
             withId(R.id.suggestionsRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
+                number,
                 ViewActions.click()
             )
         )
+        val number1 = (0..4).random()
         BaseRobot().doOnView(
             withId(R.id.suggestionsRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                1,
+                number1,
                 ViewActions.click()
             )
         )
-        BaseRobot().doOnView(
-            withId(R.id.suggestionsRecycView), ViewActions.closeSoftKeyboard(),
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                2,
-                ViewActions.click()
-            )
-        )
+
 
     }
 
