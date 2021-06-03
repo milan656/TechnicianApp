@@ -441,6 +441,7 @@ class TestCases {
             )
         }
 
+
         if (!UnitTestVariables.singleSelection) {
             BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), ViewActions.click())
             BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), ViewActions.click())
