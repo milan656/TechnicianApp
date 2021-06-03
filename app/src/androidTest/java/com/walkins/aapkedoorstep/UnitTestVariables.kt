@@ -7,14 +7,16 @@ class UnitTestVariables {
         var invalidNumber_2: String? = "9000090000"
         var validNumber: String? = "7878785050"
         var blankManufacturingDate: String? = ""
+        var zeroManufacturingDate: String? = "0000"
         var twoletterManufacturingDate: String? = "20"
-        var inValidManufacturingDate: String? = "2323"
+        var inValidWeekOfYearManufacturingDate: String? = "2321"
+        var inValidYearManufacturingDate: String? = "2123"
         var validManufacturingDate: String? = "2121"
 
-        var singleSelection = false
+        var singleSelection = true
         var multipleSelection = false
 
-        var select_1_service = false
+        var select_1_service = true
         var select_2_service = false
         var select_3_service = false
         var select_4_service = false

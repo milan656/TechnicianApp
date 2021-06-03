@@ -165,6 +165,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var edtManufaturingDate: EditText? = null
     private var tvTyreService: TextView? = null
 
+    private var visualScroll: ScrollView? = null
+
     // image picker code
 //    val REQUEST_IMAGE = 100
 //    val REQUEST_PERMISSION = 200
@@ -221,6 +223,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         btnDone = findViewById(R.id.btnDone)
         ivBack = findViewById(R.id.ivBack)
 
+        visualScroll = findViewById(R.id.visualScroll)
         weightFrame = findViewById(R.id.weightFrame)
         psiOutFrame = findViewById(R.id.psiOutFrame)
         psiInFrame = findViewById(R.id.psiInFrame)
@@ -1262,31 +1265,31 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //            Toast.makeText(this, "Please Select Issue Resolve List", Toast.LENGTH_SHORT).show()
 //            return
 //        }
-                if (sidewell.equals("")
-                ) {
-                    Toast.makeText(this, "Please select side well condition", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (shoulder.equals("")) {
-                    Toast.makeText(this, "Please select shoulder condition", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (treadWear.equals("")) {
-                    Toast.makeText(this, "Please select Tread Wear condition", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (treadDepth.equals("")) {
-                    Toast.makeText(this, "Please select Tread Depth condition", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (rimDamage.equals("")) {
-                    Toast.makeText(this, "Please select Rim Damage condition", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (bubble.equals("")) {
-                    Toast.makeText(this, "Please select Bulge/Bubble condition", Toast.LENGTH_SHORT).show()
-                    return
-                }
+//                if (sidewell.equals("")
+//                ) {
+//                    Toast.makeText(this, "Please select side well condition", Toast.LENGTH_SHORT).show()
+//                    return
+//                }
+//                if (shoulder.equals("")) {
+//                    Toast.makeText(this, "Please select shoulder condition", Toast.LENGTH_SHORT).show()
+//                    return
+//                }
+//                if (treadWear.equals("")) {
+//                    Toast.makeText(this, "Please select Tread Wear condition", Toast.LENGTH_SHORT).show()
+//                    return
+//                }
+//                if (treadDepth.equals("")) {
+//                    Toast.makeText(this, "Please select Tread Depth condition", Toast.LENGTH_SHORT).show()
+//                    return
+//                }
+//                if (rimDamage.equals("")) {
+//                    Toast.makeText(this, "Please select Rim Damage condition", Toast.LENGTH_SHORT).show()
+//                    return
+//                }
+//                if (bubble.equals("")) {
+//                    Toast.makeText(this, "Please select Bulge/Bubble condition", Toast.LENGTH_SHORT).show()
+//                    return
+//                }
 
                 selectedIssueArr?.clear()
 
@@ -1310,13 +1313,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     return
                 }
 
-                if (TyreDetailCommonClass.visualDetailPhotoUrl != null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
-
-                } else {
-                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
-                        .show()
-                    return
-                }
+//                if (TyreDetailCommonClass.visualDetailPhotoUrl != null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
+//
+//                } else {
+//                    Toast.makeText(this, "Please select Tyre Photo", Toast.LENGTH_SHORT)
+//                        .show()
+//                    return
+//                }
 
                 if (selectedTyre.equals("LF")) {
                     TyreConfigClass.LFVehicleVisualDetail = true

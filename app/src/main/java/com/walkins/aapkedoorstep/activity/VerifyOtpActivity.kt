@@ -186,9 +186,9 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s.length != 0 && s.length == 1) {
-                    edtOtp4?.clearFocus()
                     otp?.append(edtOtp4?.text?.toString()?.toInt())
-                    btnVerify?.performClick()
+                    edtOtp4?.clearFocus()
+//                    btnVerify?.performClick()
                     Log.e("getcallbtn", "call")
                 }
 

@@ -10,7 +10,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.util.TreeIterables
 import androidx.test.rule.ActivityTestRule
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.blankManufacturingDate
-import com.walkins.aapkedoorstep.UnitTestVariables.Companion.inValidManufacturingDate
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.invalidNumber
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.invalidNumber_2
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.multipleSelection
@@ -94,6 +93,7 @@ class TechnicianUnitTest {
 
         BaseRobot().doOnView(withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
+
         enterValidOTP()
 
         Espresso.onView(withId(R.id.btnVerify)).perform(
@@ -106,18 +106,22 @@ class TechnicianUnitTest {
 
     private fun enterValidOTP() {
         Espresso.onView(withId(R.id.edtOtp1)).perform(
+            ViewActions.clearText(),
             ViewActions.typeText("1"),
             ViewActions.click()
         )
         Espresso.onView(withId(R.id.edtOtp2)).perform(
+            ViewActions.clearText(),
             ViewActions.typeText("2"),
             ViewActions.click()
         )
         Espresso.onView(withId(R.id.edtOtp3)).perform(
+            ViewActions.clearText(),
             ViewActions.typeText("1"),
             ViewActions.click()
         )
         Espresso.onView(withId(R.id.edtOtp4)).perform(
+            ViewActions.clearText(),
             ViewActions.typeText("2"),
             ViewActions.click()
         )
@@ -378,7 +382,7 @@ class TechnicianUnitTest {
         BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
         Espresso.onView(withId(R.id.edtManufaturingDate)).perform(ViewActions.typeText(twoletterManufacturingDate))
         BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
-        Espresso.onView(withId(R.id.edtManufaturingDate)).perform(ViewActions.typeText(inValidManufacturingDate))
+//        Espresso.onView(withId(R.id.edtManufaturingDate)).perform(ViewActions.typeText(inva))
         BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
         Espresso.onView(withId(R.id.edtManufaturingDate)).perform(ViewActions.typeText(validManufacturingDate))
         BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())

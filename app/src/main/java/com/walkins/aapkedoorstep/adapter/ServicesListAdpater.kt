@@ -41,6 +41,7 @@ class ServicesListAdpater(
         var tvVehicleNumber: TextView = itemView.findViewById(R.id.tvRegNumber)
         var tvVehicleName: TextView = itemView.findViewById(R.id.tvMakeModel)
         var tvColorName: TextView = itemView.findViewById(R.id.tvColor)
+        var maincontent: LinearLayout = itemView.findViewById(R.id.maincontent)
     }
 
     override fun onCreateViewHolder(
@@ -92,6 +93,10 @@ class ServicesListAdpater(
             if (onclick != null) {
                 onclick?.onPositionClick(position, 1)
             }
+        }
+
+        holder.maincontent.setOnClickListener {
+           holder.cardAddService.performClick()
         }
 
         if (array.get(position).status.equals("completed", ignoreCase = true)) {

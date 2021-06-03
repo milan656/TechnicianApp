@@ -75,6 +75,7 @@
                     android:background="#E0E0E0" />
 
                 <ScrollView
+                    android:id="@+id/visualScroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

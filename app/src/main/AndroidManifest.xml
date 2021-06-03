@@ -30,16 +30,17 @@
         android:icon="@mipmap/ic_app_icon"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnicianApp">
         <activity android:name=".activity.ReportFilterActivity" />
         <activity android:name=".activity.CompletedVisualDetailActivity" />
-        <activity android:name=".activity.VehicleMakeApplyTyreActivty" />
         <activity android:name=".activity.VehicleSizeActivity" />
         <activity android:name=".activity.SkippedServiceDetailActivity" />
         <activity android:name=".activity.CompletedServiceDetailActivity" />
-        <activity android:name=".activity.VisualDetailsActivity" />
+        <activity android:name=".activity.VisualDetailsActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activity.AddServiceDetailsActivity" />
         <activity android:name=".activity.ServiceListActivity" />
         <activity
@@ -69,8 +70,6 @@ Set color used with incoming notification messages. This is used when no color i
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity android:name=".activity.VehicleMakeActivity" />
-        <activity android:name=".activity.HomeSubDealerActivity" />
-        <activity android:name=".activity.HomeEmployeeActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
