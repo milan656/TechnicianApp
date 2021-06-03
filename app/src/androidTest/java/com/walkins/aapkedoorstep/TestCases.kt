@@ -180,9 +180,9 @@ class TestCases {
 
     private fun NavigateMainDashboard() {
 
-//        BaseRobot().doOnView(ViewMatchers.withId(R.id.llhome), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.llhome), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
-        Thread.sleep(2500)
+        Thread.sleep(4000)
         BaseRobot().doOnView(
             ViewMatchers.withId(R.id.recyclerView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -190,7 +190,7 @@ class TestCases {
                 ViewActions.click()
             )
         )
-        navigateToServiceListScreen("")
+        navigateToServiceListScreen("2")
     }
 
     private fun navigateReportScreen() {
@@ -213,6 +213,13 @@ class TestCases {
                 ViewMatchers.withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0,
+                    ViewActions.click()
+                )
+            )
+            BaseRobot().doOnView(
+                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText(SingleServiceTyreSelection.select_service)),
                     ViewActions.click()
                 )
             )
@@ -244,23 +251,23 @@ class TestCases {
         BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
         if (UnitTestVariables.select_1_service) {
-            /* BaseRobot().doOnView(
+             BaseRobot().doOnView(
                  withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
                  RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                      1,
                      ViewActions.click()
                  )
-             )*/
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
-                    print("vehicle_make-->" + this.text?.toString())
-                    if (this.isChecked == false) {
-                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                            1, ViewActions.click())
-                    }
-                }
-            )
+             )
+//            BaseRobot().doOnView(
+//                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+//                recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+//                    print("vehicle_make-->" + this.text?.toString())
+//                    if (this.isChecked == false) {
+//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                            1, ViewActions.click())
+//                    }
+//                }
+//            )
 //            BaseRobot().doOnView(
 //                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
 //                recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
@@ -346,7 +353,6 @@ class TestCases {
         }
 
 //        scroll
-
         BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(),
             ViewActions.swipeUp())
         BaseRobot().doOnView(withId(R.id.ivAddTyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
@@ -354,13 +360,46 @@ class TestCases {
 //            ViewActions.swipeUp())
         tyreLFTyreSelection()
 
-        tyreRFTyreSelection()
+        removeWheelBalancingService()
 
-        tyreLRTyreSelection()
-
+//        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeUp())
+//        BaseRobot().doOnView(withId(R.id.ivAddTyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
+//        tyreRFTyreSelection()
+//
+//        tyreLRTyreSelection()
+//
 //        tyreRRTyreSelection()
+//
+//        fillUpAddServicedetail()
 
-        fillUpAddServicedetail()
+    }
+
+    private fun removeWheelBalancingService() {
+//        Remove service Flow
+        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeDown())
+
+        BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                1,
+                ViewActions.click()
+            )
+        )
+
+//        remove cancel
+        BaseRobot().doOnView(withId(R.id.btn_cancel), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                1,
+                ViewActions.click()
+            )
+        )
+
+//        remove ok
+        BaseRobot().doOnView(withId(R.id.btn_ok), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
     }
 
@@ -498,7 +537,11 @@ class TestCases {
             ViewActions.clearText(),
             ViewActions.typeText(UnitTestVariables.validManufacturingDate))
 //        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
-        BaseRobot().doOnView(withId(R.id.ivOkSideWell), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+
+        if (onView(withId(R.id.ivOkSideWell)).isDisplayed()) {
+            BaseRobot().doOnView(withId(R.id.ivOkSideWell), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        }
 
 //        BaseRobot().doOnView(withId(R.id.ivSugShoulder), ViewActions.closeSoftKeyboard(), ViewActions.click())
         BaseRobot().doOnView(withId(R.id.visualScroll), ViewActions.closeSoftKeyboard(),
@@ -517,6 +560,7 @@ class TestCases {
                 ViewActions.click()
             )
         )
+
         BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
 
@@ -570,8 +614,13 @@ class TestCases {
 
         BaseRobot().doOnView(withId(R.id.btn_ok), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
-//        navigateToServiceListScreen("2")
+        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeDown())
+        BaseRobot().doOnView(withId(R.id.ivAddTechnicalSuggestion), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
+        BaseRobot().doOnView(withId(R.id.ivDueDate),ViewActions.closeSoftKeyboard(),ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.btn_confirm),ViewActions.closeSoftKeyboard(),ViewActions.click())
+
+//        navigateToServiceListScreen("2")
     }
 
     open class BaseRobot {
