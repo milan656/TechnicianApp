@@ -42,7 +42,7 @@ class TestCases {
             ViewActions.click()
         )
 
-        TechnicianUnitTest.BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
 //        Espresso.onView(withId(R.id.edtLoginEmail)).perform(ViewActions.typeText(invalidNumber_2))
 
@@ -51,7 +51,7 @@ class TestCases {
             ViewActions.click()
         )
 
-        TechnicianUnitTest.BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
         Espresso.onView(ViewMatchers.withId(R.id.edtLoginEmail)).perform(
             ViewActions.clearText(),
@@ -79,10 +79,10 @@ class TestCases {
 
         enterValidOTP()
 
-        Espresso.onView(ViewMatchers.withId(R.id.btnVerify)).perform(
-            ViewActions.closeSoftKeyboard(),
-            ViewActions.click()
-        )
+//        Espresso.onView(ViewMatchers.withId(R.id.btnVerify)).perform(
+//            ViewActions.closeSoftKeyboard(),
+//            ViewActions.click()
+//        )
 //        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
 //
 //        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
@@ -106,20 +106,22 @@ class TestCases {
     private fun enterValidOTP() {
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp1)).perform(
             ViewActions.typeText("1"),
-            ViewActions.click()
+
         )
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp2)).perform(
             ViewActions.typeText("2"),
-            ViewActions.click()
+
         )
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp3)).perform(
             ViewActions.typeText("1"),
-            ViewActions.click()
+
         )
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp4)).perform(
             ViewActions.typeText("2"),ViewActions.closeSoftKeyboard(),
-            ViewActions.click()
+
         )
+
+        Thread.sleep(1000)
     }
 
     private fun enterInvalidOTP() {
@@ -149,9 +151,9 @@ class TestCases {
 
     private fun NavigateMainDashboard() {
 
-        TechnicianUnitTest.BaseRobot().doOnView(ViewMatchers.withId(R.id.llhome), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.llhome), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
-        TechnicianUnitTest.BaseRobot().doOnView(
+        BaseRobot().doOnView(
             ViewMatchers.withId(R.id.recyclerView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -162,7 +164,7 @@ class TestCases {
     }
 
     private fun navigateToServiceListScreen() {
-        TechnicianUnitTest.BaseRobot().doOnView(
+        BaseRobot().doOnView(
             ViewMatchers.withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
