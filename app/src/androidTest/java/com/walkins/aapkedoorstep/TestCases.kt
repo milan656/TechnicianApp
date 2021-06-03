@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.*
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -242,23 +244,23 @@ class TestCases {
         BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
         if (UnitTestVariables.select_1_service) {
+            /* BaseRobot().doOnView(
+                 withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                     1,
+                     ViewActions.click()
+                 )
+             )*/
             BaseRobot().doOnView(
                 withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    1,
-                    ViewActions.click()
-                )
+                recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                    print("vehicle_make-->" + this.text?.toString())
+                    if (this.isChecked == false) {
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            1, ViewActions.click())
+                    }
+                }
             )
-//            BaseRobot().doOnView(
-//                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-//                recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
-//                    print("vehicle_make-->" + this.text?.toString())
-//                    if (this.isChecked == false) {
-//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                            1, ViewActions.click())
-//                    }
-//                }
-//            )
 //            BaseRobot().doOnView(
 //                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
 //                recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
@@ -405,13 +407,16 @@ class TestCases {
     }
 
     private fun navigateToVehicleBrandScreeneSelection(number: Int) {
-        BaseRobot().doOnView(
-            withId(R.id.gridviewRecycMake_), ViewActions.closeSoftKeyboard(),
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                number,
-                ViewActions.click()
+        if (onView(withId(R.id.gridviewRecycMake_)).isDisplayed()) {
+            //view is displayed logic
+            BaseRobot().doOnView(
+                withId(R.id.gridviewRecycMake_), ViewActions.closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    number,
+                    ViewActions.click()
+                )
             )
-        )
+        }
 
         if (!UnitTestVariables.singleSelection) {
             BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), ViewActions.click())
@@ -425,14 +430,17 @@ class TestCases {
     }
 
     private fun navigateToVehiclePatternScreen() {
-        val number = (0..4).random()
-        BaseRobot().doOnView(
-            withId(R.id.gridviewRecycModel), ViewActions.closeSoftKeyboard(),
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                number,
-                ViewActions.click()
+        if (onView(withId(R.id.gridviewRecycModel)).isDisplayed()) {
+            val number = (0..4).random()
+            BaseRobot().doOnView(
+                withId(R.id.gridviewRecycModel), ViewActions.closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    number,
+                    ViewActions.click()
+                )
             )
-        )
+        }
+
         if (!UnitTestVariables.singleSelection) {
             BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), ViewActions.click())
             BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), ViewActions.click())
@@ -446,13 +454,15 @@ class TestCases {
     }
 
     private fun navigateToVehicleSizeScreen() {
-        BaseRobot().doOnView(
-            withId(R.id.gridviewRecycModel), ViewActions.closeSoftKeyboard(),
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
-                ViewActions.click()
+        if (onView(withId(R.id.gridviewRecycModel)).isDisplayed()) {
+            BaseRobot().doOnView(
+                withId(R.id.gridviewRecycModel), ViewActions.closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    ViewActions.click()
+                )
             )
-        )
+        }
         if (!UnitTestVariables.singleSelection) {
             BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), ViewActions.click())
             BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), ViewActions.click())
@@ -535,9 +545,31 @@ class TestCases {
             )
         )
 
-        BaseRobot().doOnView(withId(R.id.ivBack), ViewActions.closeSoftKeyboard(), ViewActions.click())
+//        BaseRobot().doOnView(withId(R.id.ivBack), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
-        navigateToServiceListScreen("2")
+        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeDown())
+
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                1,
+                ViewActions.click()
+            )
+        )
+
+        BaseRobot().doOnView(withId(R.id.btn_cancel), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                1,
+                ViewActions.click()
+            )
+        )
+
+        BaseRobot().doOnView(withId(R.id.btn_ok), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+//        navigateToServiceListScreen("2")
 
     }
 
@@ -650,5 +682,14 @@ class TestCases {
         })
 
         return text
+    }
+
+    fun ViewInteraction.isDisplayed(): Boolean {
+        try {
+            check(matches(ViewMatchers.isDisplayed()))
+            return true
+        } catch (e: NoMatchingViewException) {
+            return false
+        }
     }
 }

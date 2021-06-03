@@ -5,7 +5,7 @@ class UnitTestVariables {
     companion object{
         var invalidNumber: String? = "0900222414"
         var invalidNumber_2: String? = "9000090000"
-        var validNumber: String? = "7878785050"
+        var validNumber: String? = "8469838955"
         var blankManufacturingDate: String? = ""
         var zeroManufacturingDate: String? = "0000"
         var twoletterManufacturingDate: String? = "20"
@@ -20,5 +20,6 @@ class UnitTestVariables {
         var select_2_service = false
         var select_3_service = false
         var select_4_service = false
+
     }
 }
