@@ -1223,7 +1223,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
             R.id.btnDone -> {
 
-                if (edtManufaturingDate?.text?.toString().equals("")) {
+                /*if (edtManufaturingDate?.text?.toString().equals("")) {
                     Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
                     return
 
@@ -1258,7 +1258,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         }
                     }
 
-                }
+                }*/
 //        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
 //
 //        } else {

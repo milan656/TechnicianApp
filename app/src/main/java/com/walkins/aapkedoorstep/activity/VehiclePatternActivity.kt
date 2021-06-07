@@ -94,7 +94,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
         llVehicleMakeselectedView = findViewById(R.id.llVehicleMakeselectedView)
         tvSelectedModel = findViewById(R.id.tvSelectedModel)
-        ivEditVehicleMake = findViewById(R.id.ivEditVehicleMake)
+        ivEditVehicleMake = findViewById(R.id.ivEditVehicleMakeModel)
         tvSelectTyre = findViewById(R.id.tvSelectTyre)
 //        tvNoDataFound = findViewById(R.id.tvNoDataFound)
 
