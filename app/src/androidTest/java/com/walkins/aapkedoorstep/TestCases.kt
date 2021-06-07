@@ -48,6 +48,8 @@ class TestCases {
         serviceSelection = MultipleServiceMultipleTyreSelection()
 
         print("login_" + "" + preferences?.getBoolean("isLogin", false))
+
+
     }
 
     @get:Rule
@@ -58,15 +60,15 @@ class TestCases {
     @Test
     fun loginFunctionality() {
         print("login_" + "" + preferences?.getBoolean("isLogin", false))
+//        Assert.assertEquals("login_" + true+"-", "login_" + preferences?.getBoolean("isLogin", false))
+
         loginView()
     }
 
     private fun loginView() {
 
         BaseRobot().doOnView(ViewMatchers.withId(R.id.btnLoginToDashBoard), closeSoftKeyboard(), click())
-
         onView(withId(R.id.edtLoginEmail)).perform(ViewActions.typeText(serviceSelection?.invalidNumber))
-
         Espresso.onView(ViewMatchers.withId(R.id.btnLoginToDashBoard)).perform(
             closeSoftKeyboard(),
             click()
@@ -214,8 +216,8 @@ class TestCases {
                 RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                     hasDescendant(withText(serviceSelection?.nitrogen_refill_service)),
                     recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
-                        if (!this.isChecked){
-                            this.isChecked=true
+                        if (!this.isChecked) {
+                            this.isChecked = true
                             ViewActions.click()
                         }
                     }
@@ -223,42 +225,56 @@ class TestCases {
                 )
             )
         }
-//        if (!serviceSelection?.wheel_balancing_service.equals("")) {
-//            BaseRobot().doOnView(
-//                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-//                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-//                    hasDescendant(withText(serviceSelection?.wheel_balancing_service)),
-//                    ViewActions.click()
-//                )
-//            )
-//        }
-//
-//        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(),
-//            ViewActions.swipeUp())
-//
-//        if (!serviceSelection?.nitrogen_topup_service.equals("")) {
-//            BaseRobot().doOnView(
-//                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-//                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-//                    hasDescendant(withText(serviceSelection?.nitrogen_topup_service)),
-//                    ViewActions.click()
-//                )
-//            )
-//        }
-//        if (!serviceSelection?.typeRotation_service.equals("")) {
-//            BaseRobot().doOnView(
-//                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-//                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-//                    hasDescendant(withText(serviceSelection?.typeRotation_service)),
-//                    ViewActions.click()
-//                )
-//            )
-//        }
+        if (!serviceSelection?.wheel_balancing_service.equals("")) {
+            BaseRobot().doOnView(
+                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText(serviceSelection?.wheel_balancing_service)),
+                    recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                        if (!this.isChecked) {
+                            this.isChecked = true
+                            ViewActions.click()
+                        }
+                    }
+                )
+            )
+        }
 
-//        scroll
+        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(),
+            ViewActions.swipeUp())
+
+        if (!serviceSelection?.nitrogen_topup_service.equals("")) {
+            BaseRobot().doOnView(
+                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText(serviceSelection?.nitrogen_topup_service)),
+                    recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                        if (!this.isChecked) {
+                            this.isChecked = true
+                            ViewActions.click()
+                        }
+                    }
+                )
+            )
+        }
+        if (!serviceSelection?.typeRotation_service.equals("")) {
+            BaseRobot().doOnView(
+                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText(serviceSelection?.typeRotation_service)),
+                    recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                        if (!this.isChecked) {
+                            this.isChecked = true
+                            ViewActions.click()
+                        }
+                    }
+                )
+            )
+        }
+        BaseRobot().doOnView(withId(R.id.ivAddTyreConfig), closeSoftKeyboard(), click())
+
         BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
             ViewActions.swipeUp())
-        BaseRobot().doOnView(withId(R.id.ivAddTyreConfig), closeSoftKeyboard(), click())
 //        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(),
 //            ViewActions.swipeUp())
 
@@ -557,14 +573,18 @@ class TestCases {
 //        BaseRobot().doOnView(withId(R.id.ivAddTechnicalSuggestion), ViewActions.closeSoftKeyboard(), click())
 //        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeUp())
 
-        val number1 = (0..4).random()
-        BaseRobot().doOnView(
-            withId(R.id.suggestionsRecycView), closeSoftKeyboard(),
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                4,
-                click()
+        try {
+            val number1 = (0..4).random()
+            BaseRobot().doOnView(
+                withId(R.id.suggestionsRecycView), closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    4,
+                    click()
+                )
             )
-        )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         val suggestion = getText(onView(withId(R.id.edtMoreSuggestion)))
         if (suggestion.equals("")) {
