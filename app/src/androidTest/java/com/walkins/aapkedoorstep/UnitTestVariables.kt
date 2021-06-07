@@ -13,8 +13,7 @@ class UnitTestVariables {
         var inValidYearManufacturingDate: String? = "2123"
         var validManufacturingDate: String? = "2121"
 
-        var singleSelection = true
-        var multipleSelection = false
+        var singleSelection = false
 
         var select_1_service = true
         var select_2_service = false

@@ -1305,13 +1305,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     }
                 }
 
-                if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
-
-                } else {
-                    Toast.makeText(this, "Please select Issue resolve List", Toast.LENGTH_SHORT)
-                        .show()
-                    return
-                }
+//                if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
+//
+//                } else {
+//                    Toast.makeText(this, "Please select Issue resolve List", Toast.LENGTH_SHORT)
+//                        .show()
+//                    return
+//                }
 
 //                if (TyreDetailCommonClass.visualDetailPhotoUrl != null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
 //

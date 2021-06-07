@@ -1,6 +1,6 @@
 package com.walkins.aapkedoorstep
 
-class SingleServiceTyreSelection {
+class MultipleServiceMultipleTyreSelection {
 
     var invalidNumber: String? = "0900222414"
     var invalidNumber_2: String? = "9000090000"
@@ -12,12 +12,12 @@ class SingleServiceTyreSelection {
     var inValidYearManufacturingDate: String? = "2123"
     var validManufacturingDate: String? = "2121"
 
-    var typeRotation_service = "Type Rotation"
-    var nitrogen_topup_service = "" //Nitrogen Top up
-    var nitrogen_refill_service = "" //Nitrogen Refill
-    var wheel_balancing_service = "" //Wheel Balancing
+    var typeRotation_service = "Type Rotation" //Type Rotation
+    var nitrogen_topup_service = "Nitrogen Top Up" //Nitrogen Top up
+    var nitrogen_refill_service = "Nitrogen Refill" //Nitrogen Refill
+    var wheel_balancing_service = "Wheel Balancing" //Wheel Balancing
 
-    var singleTyreSelection = true
+    var singleTyreSelection = false
 
 
 }

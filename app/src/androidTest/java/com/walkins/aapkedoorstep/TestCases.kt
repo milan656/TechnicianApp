@@ -3,13 +3,15 @@ package com.walkins.aapkedoorstep
 import android.content.Context
 import android.content.SharedPreferences
 import android.view.View
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.*
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.clearText
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
@@ -26,21 +28,25 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
 @RunWith(AndroidJUnit4::class)
 class TestCases {
     private val PREFERENCE_NAME = "MyPref"
     private var preferencesEditor: SharedPreferences.Editor? = null
     private var preferences: SharedPreferences? = null
 
+    //    private var serviceSelection: SingleServiceTyreSelection? = null
+    private var serviceSelection: MultipleServiceMultipleTyreSelection? = null
+
     @Before
     fun setSharedPref() {
         val targetContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
         preferences = targetContext.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+//        serviceSelection = SingleServiceTyreSelection()
+        serviceSelection = MultipleServiceMultipleTyreSelection()
 
         print("login_" + "" + preferences?.getBoolean("isLogin", false))
-
-
     }
 
     @get:Rule
@@ -58,31 +64,28 @@ class TestCases {
         loginView()
     }
 
-    private fun mainScreenView() {
-        NavigateMainDashboard()
-    }
-
     private fun loginView() {
 
-        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnLoginToDashBoard), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        Thread.sleep(500)
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnLoginToDashBoard), ViewActions.closeSoftKeyboard(), click())
 
-        Espresso.onView(ViewMatchers.withId(R.id.edtLoginEmail)).perform(ViewActions.typeText(UnitTestVariables.invalidNumber))
+        onView(withId(R.id.edtLoginEmail)).perform(ViewActions.typeText(serviceSelection?.invalidNumber))
 
         Espresso.onView(ViewMatchers.withId(R.id.btnLoginToDashBoard)).perform(
             ViewActions.closeSoftKeyboard(),
-            ViewActions.click()
+            click()
         )
 
-        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), click())
 
-        Espresso.onView(ViewMatchers.withId(R.id.edtLoginEmail)).perform(
+        onView(withId(R.id.edtLoginEmail)).perform(
             ViewActions.clearText(),
-            ViewActions.typeText(UnitTestVariables.validNumber)
+            ViewActions.typeText(serviceSelection?.validNumber)
         )
 
         Espresso.onView(ViewMatchers.withId(R.id.btnLoginToDashBoard)).perform(
             ViewActions.closeSoftKeyboard(),
-            ViewActions.click()
+            click()
         )
 
         verifyOTP()
@@ -91,22 +94,22 @@ class TestCases {
     private fun verifyOTP() {
 
 //        click when no OTP entered
-        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnVerify), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnVerify), ViewActions.closeSoftKeyboard(), click())
 
         enterInvalidOTP()
 
         Espresso.onView(ViewMatchers.withId(R.id.btnVerify)).perform(
             ViewActions.closeSoftKeyboard(),
-            ViewActions.click()
+            click()
         )
 
-        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), click())
 
         enterValidOTP()
 
         Espresso.onView(ViewMatchers.withId(R.id.btnVerify)).perform(
             ViewActions.closeSoftKeyboard(),
-            ViewActions.click()
+            click()
         )
 //        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
 //
@@ -156,19 +159,19 @@ class TestCases {
     private fun enterInvalidOTP() {
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp1)).perform(
             ViewActions.typeText("1"),
-            ViewActions.click()
+            click()
         )
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp2)).perform(
             ViewActions.typeText("5"),
-            ViewActions.click()
+            click()
         )
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp3)).perform(
             ViewActions.typeText("1"),
-            ViewActions.click()
+            click()
         )
         Espresso.onView(ViewMatchers.withId(R.id.edtOtp4)).perform(
             ViewActions.typeText("5"), ViewActions.closeSoftKeyboard(),
-            ViewActions.click()
+            click()
         )
 
         Espresso.onView(withId(R.id.scrollVerify)).perform(
@@ -180,63 +183,48 @@ class TestCases {
 
     private fun NavigateMainDashboard() {
 
-        BaseRobot().doOnView(ViewMatchers.withId(R.id.llhome), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.llhome), ViewActions.closeSoftKeyboard(), click())
 
         Thread.sleep(4000)
         BaseRobot().doOnView(
             ViewMatchers.withId(R.id.recyclerView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
-                ViewActions.click()
+                click()
             )
         )
-        navigateToServiceListScreen("2")
+        navigateToServiceListScreen()
     }
 
     private fun navigateReportScreen() {
-        BaseRobot().doOnView(ViewMatchers.withId(R.id.llReport), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(ViewMatchers.withId(R.id.llReport), ViewActions.closeSoftKeyboard(), click())
 //        reportRecycView
         BaseRobot().doOnView(
             ViewMatchers.withId(R.id.reportRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
-                ViewActions.click()
+                click()
             )
         )
 
     }
 
-    private fun navigateToServiceListScreen(number: String) {
+    private fun navigateToServiceListScreen() {
 
-        if (number.equals("")) {
-            BaseRobot().doOnView(
-                ViewMatchers.withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    0,
-                    ViewActions.click()
-                )
+        BaseRobot().doOnView(
+            ViewMatchers.withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
             )
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                    hasDescendant(withText(SingleServiceTyreSelection.select_service)),
-                    ViewActions.click()
-                )
-            )
-        } else {
-            BaseRobot().doOnView(
-                ViewMatchers.withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    1,
-                    ViewActions.click()
-                )
-            )
-
-            UnitTestVariables.select_1_service = false
-            UnitTestVariables.select_2_service = true
-            UnitTestVariables.select_3_service = false
-            UnitTestVariables.select_4_service = false
-        }
+        )
+//        BaseRobot().doOnView(
+//            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+//            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+//                hasDescendant(withText(serviceSelection?.typeRotation_service)),
+//                ViewActions.click()
+//            )
+//        )
 
         navigateToAddServiceDetailScreen()
 
@@ -247,301 +235,287 @@ class TestCases {
         skipServiceFlow()
 
 //        select service message
-        BaseRobot().doOnView(withId(R.id.cardtyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
-        BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.cardtyreConfig), ViewActions.closeSoftKeyboard(), click())
+        BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), click())
 
-        if (UnitTestVariables.select_1_service) {
-             BaseRobot().doOnView(
-                 withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                     1,
-                     ViewActions.click()
-                 )
-             )
+//        if (!serviceSelection?.nitrogen_refill_service.equals("")) {
 //            BaseRobot().doOnView(
 //                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-//                recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
-//                    print("vehicle_make-->" + this.text?.toString())
-//                    if (this.isChecked == false) {
-//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                            1, ViewActions.click())
-//                    }
-//                }
+//                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+//                    hasDescendant(withText(serviceSelection?.nitrogen_refill_service)),
+//                    ViewActions.click()
+//                )
 //            )
+//        }
+//        if (!serviceSelection?.wheel_balancing_service.equals("")) {
 //            BaseRobot().doOnView(
 //                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-//                recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
-//                    print("vehicle_make-->" + this.text?.toString())
-//                    if (this.isChecked == false) {
-//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                            1, ViewActions.click())
-//                    } else {
-////                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-////                            2, ViewActions.click())
-//                    }
-//                }
+//                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+//                    hasDescendant(withText(serviceSelection?.wheel_balancing_service)),
+//                    ViewActions.click()
+//                )
 //            )
-        }
-        if (UnitTestVariables.select_2_service) {
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    0,
-                    ViewActions.click()
-                )
-            )
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    1,
-                    ViewActions.click()
-                )
-            )
-        }
-        if (UnitTestVariables.select_3_service) {
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    0,
-                    ViewActions.click()
-                )
-            )
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    1,
-                    ViewActions.click()
-                )
-            )
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    2,
-                    ViewActions.click()
-                )
-            )
-        }
-        if (UnitTestVariables.select_4_service) {
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    0,
-                    ViewActions.click()
-                )
-            )
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    1,
-                    ViewActions.click()
-                )
-            )
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    2,
-                    ViewActions.click()
-                )
-            )
-            BaseRobot().doOnView(
-                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    3,
-                    ViewActions.click()
-                )
-            )
-        }
+//        }
+//
+//        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(),
+//            ViewActions.swipeUp())
+//
+//        if (!serviceSelection?.nitrogen_topup_service.equals("")) {
+//            BaseRobot().doOnView(
+//                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+//                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+//                    hasDescendant(withText(serviceSelection?.nitrogen_topup_service)),
+//                    ViewActions.click()
+//                )
+//            )
+//        }
+//        if (!serviceSelection?.typeRotation_service.equals("")) {
+//            BaseRobot().doOnView(
+//                withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
+//                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+//                    hasDescendant(withText(serviceSelection?.typeRotation_service)),
+//                    ViewActions.click()
+//                )
+//            )
+//        }
 
 //        scroll
         BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(),
             ViewActions.swipeUp())
-        BaseRobot().doOnView(withId(R.id.ivAddTyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivAddTyreConfig), ViewActions.closeSoftKeyboard(), click())
 //        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(),
 //            ViewActions.swipeUp())
+
+//        removeWheelBalancingService()
+
         tyreLFTyreSelection()
+        tyreRFTyreSelection()
+        tyreLRTyreSelection()
+        tyreRRTyreSelection()
 
-        removeWheelBalancingService()
-
-//        BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeUp())
-//        BaseRobot().doOnView(withId(R.id.ivAddTyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
-//        tyreRFTyreSelection()
-//
-//        tyreLRTyreSelection()
-//
-//        tyreRRTyreSelection()
+        editFlowPerform()
 //
 //        fillUpAddServicedetail()
 
+    }
+
+    private fun editFlowPerform() {
+
+        tyreLFTyreSelection()
+        tyreRFTyreSelection()
+        tyreLRTyreSelection()
+        tyreRRTyreSelection()
     }
 
     private fun removeWheelBalancingService() {
 //        Remove service Flow
         BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeDown())
 
-        BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), click())
         BaseRobot().doOnView(
             withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
-                ViewActions.click()
+                click()
             )
         )
 
 //        remove cancel
-        BaseRobot().doOnView(withId(R.id.btn_cancel), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.btn_cancel), ViewActions.closeSoftKeyboard(), click())
 
         BaseRobot().doOnView(
             withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
-                ViewActions.click()
+                click()
             )
         )
 
 //        remove ok
-        BaseRobot().doOnView(withId(R.id.btn_ok), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.btn_ok), ViewActions.closeSoftKeyboard(), click())
 
     }
 
     private fun tyreRRTyreSelection() {
 
-        BaseRobot().doOnView(withId(R.id.ivTyre4), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivTyre4), ViewActions.closeSoftKeyboard(), click())
 
         navigateToVehicleBrandScreeneSelection(4)
     }
 
     private fun tyreLRTyreSelection() {
-        BaseRobot().doOnView(withId(R.id.ivTyre2), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivTyre2), ViewActions.closeSoftKeyboard(), click())
 
         navigateToVehicleBrandScreeneSelection(3)
     }
 
     private fun tyreRFTyreSelection() {
-        BaseRobot().doOnView(withId(R.id.ivTyre3), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivTyre3), ViewActions.closeSoftKeyboard(), click())
 
         navigateToVehicleBrandScreeneSelection(2)
     }
 
     private fun tyreLFTyreSelection() {
-        BaseRobot().doOnView(withId(R.id.ivTyre1), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivTyre1), ViewActions.closeSoftKeyboard(), click())
 
         navigateToVehicleBrandScreeneSelection(0)
     }
 
     private fun skipServiceFlow() {
-        BaseRobot().doOnView(withId(R.id.tvSkipService), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.tvSkipService), ViewActions.closeSoftKeyboard(), click())
 
-        BaseRobot().doOnView(withId(R.id.btnConfirm), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.btnConfirm), ViewActions.closeSoftKeyboard(), click())
 //        pendingReasonRecycView
         BaseRobot().doOnView(
             withId(R.id.pendingReasonRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 2,
-                ViewActions.click()
+                click()
             )
         )
 
-        BaseRobot().doOnView(withId(R.id.ivClose), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivClose), ViewActions.closeSoftKeyboard(), click())
 //        BaseRobot().doOnView(withId(R.id.btnConfirm), ViewActions.closeSoftKeyboard(), ViewActions.click())
     }
 
     private fun navigateToVehicleBrandScreeneSelection(number: Int) {
-        if (onView(withId(R.id.gridviewRecycMake_)).isDisplayed()) {
-            //view is displayed logic
+
+
+        try {
+//            onView(withId(R.id.gridviewRecycMake_)).isDisplayed()
             BaseRobot().doOnView(
                 withId(R.id.gridviewRecycMake_), ViewActions.closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     number,
-                    ViewActions.click()
+                    click()
                 )
             )
+            if (!serviceSelection?.singleTyreSelection!!) {
+                BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), click())
+                BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), click())
+                BaseRobot().doOnView(withId(R.id.chkRR), ViewActions.closeSoftKeyboard(), click())
+            }
+            //view is displayed logic
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            //view not displayed logic
         }
 
-        if (!UnitTestVariables.singleSelection) {
-            BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), ViewActions.click())
-            BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), ViewActions.click())
-            BaseRobot().doOnView(withId(R.id.chkRR), ViewActions.closeSoftKeyboard(), ViewActions.click())
-        }
 //        btnNext
-        BaseRobot().doOnView(withId(R.id.btnNext), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+        try {
+            BaseRobot().doOnView(withId(R.id.btnNext), ViewActions.closeSoftKeyboard(), click())
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+        }
+
 
         navigateToVehiclePatternScreen()
     }
 
     private fun navigateToVehiclePatternScreen() {
-        if (onView(withId(R.id.gridviewRecycModel)).isDisplayed()) {
+        try {
             val number = (0..4).random()
+//            onView(withId(R.id.gridviewRecycModel)).isDisplayed()
             BaseRobot().doOnView(
                 withId(R.id.gridviewRecycModel), ViewActions.closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     number,
-                    ViewActions.click()
+                    click()
                 )
             )
-        }
-
-
-        if (!UnitTestVariables.singleSelection) {
-            BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), ViewActions.click())
-            BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), ViewActions.click())
-            BaseRobot().doOnView(withId(R.id.chkRR), ViewActions.closeSoftKeyboard(), ViewActions.click())
+            if (!serviceSelection?.singleTyreSelection!!) {
+                BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), click())
+                BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), click())
+                BaseRobot().doOnView(withId(R.id.chkRR), ViewActions.closeSoftKeyboard(), click())
+            }
+            //view is displayed logic
+        } catch (e: Exception) {
+            e.printStackTrace()
+            //view not displayed logic
         }
 
 //        btnNext
-        BaseRobot().doOnView(withId(R.id.btnNext), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        try {
+            BaseRobot().doOnView(withId(R.id.btnNext), ViewActions.closeSoftKeyboard(), click())
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+        }
+
 
         navigateToVehicleSizeScreen()
     }
 
     private fun navigateToVehicleSizeScreen() {
-        if (onView(withId(R.id.gridviewRecycModel)).isDisplayed()) {
+        try {
+//            onView(withId(R.id.gridviewRecycModel)).isDisplayed()
             BaseRobot().doOnView(
                 withId(R.id.gridviewRecycModel), ViewActions.closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0,
-                    ViewActions.click()
+                    click()
                 )
             )
+            if (!serviceSelection?.singleTyreSelection!!) {
+                BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), click())
+                BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), click())
+                BaseRobot().doOnView(withId(R.id.chkRR), ViewActions.closeSoftKeyboard(), click())
+            }
+            //view is displayed logic
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            //view not displayed logic
         }
-        if (!UnitTestVariables.singleSelection) {
-            BaseRobot().doOnView(withId(R.id.chkRF), ViewActions.closeSoftKeyboard(), ViewActions.click())
-            BaseRobot().doOnView(withId(R.id.chkLR), ViewActions.closeSoftKeyboard(), ViewActions.click())
-            BaseRobot().doOnView(withId(R.id.chkRR), ViewActions.closeSoftKeyboard(), ViewActions.click())
-        }
+
+
 //        btnNext
-        BaseRobot().doOnView(withId(R.id.btnNext), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        try {
+            BaseRobot().doOnView(withId(R.id.btnNext), ViewActions.closeSoftKeyboard(), click())
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+        }
+
 
         navigateToVisualDetailPage()
     }
 
     private fun navigateToVisualDetailPage() {
 //        btnDone
-        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
-        Espresso.onView(withId(R.id.edtManufaturingDate)).perform(ViewActions.typeText(UnitTestVariables.blankManufacturingDate))
-        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
-        Espresso.onView(withId(R.id.edtManufaturingDate)).perform(ViewActions.typeText(UnitTestVariables.zeroManufacturingDate))
-        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
+
+//        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), click())
+
+        try {
+            Espresso.onView(withId(R.id.edtManufaturingDate)).perform(clearText(),ViewActions.typeText(serviceSelection?.blankManufacturingDate))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            //view not displayed logic
+        }
+
+        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), click())
+        Espresso.onView(withId(R.id.edtManufaturingDate)).perform(clearText(),ViewActions.typeText(serviceSelection?.zeroManufacturingDate))
+        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), click())
         Espresso.onView(withId(R.id.edtManufaturingDate)).perform(
             ViewActions.clearText(),
-            ViewActions.typeText(UnitTestVariables.twoletterManufacturingDate))
-        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
+            ViewActions.typeText(serviceSelection?.twoletterManufacturingDate))
+        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), click())
         Espresso.onView(withId(R.id.edtManufaturingDate)).perform(
             ViewActions.clearText(),
-            ViewActions.typeText(UnitTestVariables.inValidWeekOfYearManufacturingDate))
-        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
+            ViewActions.typeText(serviceSelection?.inValidWeekOfYearManufacturingDate))
+        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), click())
         Espresso.onView(withId(R.id.edtManufaturingDate)).perform(
             ViewActions.clearText(),
-            ViewActions.typeText(UnitTestVariables.inValidYearManufacturingDate))
-        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
+            ViewActions.typeText(serviceSelection?.inValidYearManufacturingDate))
+        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), click())
         Espresso.onView(withId(R.id.edtManufaturingDate)).perform(
             ViewActions.clearText(),
-            ViewActions.typeText(UnitTestVariables.validManufacturingDate))
+            ViewActions.typeText(serviceSelection?.validManufacturingDate))
 //        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
 
-        if (onView(withId(R.id.ivOkSideWell)).isDisplayed()) {
-            BaseRobot().doOnView(withId(R.id.ivOkSideWell), ViewActions.closeSoftKeyboard(), ViewActions.click())
-        }
+//        if (onView(withId(R.id.ivOkSideWell)).isDisplayed()) {
+//            BaseRobot().doOnView(withId(R.id.ivOkSideWell), ViewActions.closeSoftKeyboard(), ViewActions.click())
+//        }
 
 //        BaseRobot().doOnView(withId(R.id.ivSugShoulder), ViewActions.closeSoftKeyboard(), ViewActions.click())
         BaseRobot().doOnView(withId(R.id.visualScroll), ViewActions.closeSoftKeyboard(),
@@ -553,15 +527,15 @@ class TestCases {
 //        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
 //        BaseRobot().doOnView(withId(R.id.ivReqbubble), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
-        BaseRobot().doOnView(
-            withId(R.id.issueResolvedRecycView), ViewActions.closeSoftKeyboard(),
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                2,
-                ViewActions.click()
-            )
-        )
+//        BaseRobot().doOnView(
+//            withId(R.id.issueResolvedRecycView), ViewActions.closeSoftKeyboard(),
+//            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                2,
+//                ViewActions.click()
+//            )
+//        )
 
-        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.btnDone), ViewActions.closeSoftKeyboard(), click())
 
 
     }
@@ -570,7 +544,7 @@ class TestCases {
 //        BaseRobot().doOnView(withId(R.id.btnSubmitAndComplete), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
         BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeUp())
-        BaseRobot().doOnView(withId(R.id.ivAddTechnicalSuggestion), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivAddTechnicalSuggestion), ViewActions.closeSoftKeyboard(), click())
         BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeUp())
 
         val number = (0..4).random()
@@ -578,7 +552,7 @@ class TestCases {
             withId(R.id.suggestionsRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 number,
-                ViewActions.click()
+                click()
             )
         )
         val number1 = (0..4).random()
@@ -586,7 +560,7 @@ class TestCases {
             withId(R.id.suggestionsRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 number1,
-                ViewActions.click()
+                click()
             )
         )
 
@@ -598,27 +572,27 @@ class TestCases {
             withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
-                ViewActions.click()
+                click()
             )
         )
 
-        BaseRobot().doOnView(withId(R.id.btn_cancel), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.btn_cancel), ViewActions.closeSoftKeyboard(), click())
 
         BaseRobot().doOnView(
             withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
-                ViewActions.click()
+                click()
             )
         )
 
-        BaseRobot().doOnView(withId(R.id.btn_ok), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.btn_ok), ViewActions.closeSoftKeyboard(), click())
 
         BaseRobot().doOnView(withId(R.id.scroll), ViewActions.closeSoftKeyboard(), ViewActions.swipeDown())
-        BaseRobot().doOnView(withId(R.id.ivAddTechnicalSuggestion), ViewActions.closeSoftKeyboard(), ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivAddTechnicalSuggestion), ViewActions.closeSoftKeyboard(), click())
 
-        BaseRobot().doOnView(withId(R.id.ivDueDate),ViewActions.closeSoftKeyboard(),ViewActions.click())
-        BaseRobot().doOnView(withId(R.id.btn_confirm),ViewActions.closeSoftKeyboard(),ViewActions.click())
+        BaseRobot().doOnView(withId(R.id.ivDueDate), ViewActions.closeSoftKeyboard(), click())
+        BaseRobot().doOnView(withId(R.id.btn_confirm), ViewActions.closeSoftKeyboard(), click())
 
 //        navigateToServiceListScreen("2")
     }

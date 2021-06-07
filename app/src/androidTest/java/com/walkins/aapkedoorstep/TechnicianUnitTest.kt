@@ -12,7 +12,6 @@ import androidx.test.rule.ActivityTestRule
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.blankManufacturingDate
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.invalidNumber
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.invalidNumber_2
-import com.walkins.aapkedoorstep.UnitTestVariables.Companion.multipleSelection
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.select_1_service
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.select_2_service
 import com.walkins.aapkedoorstep.UnitTestVariables.Companion.select_3_service
