@@ -57,16 +57,11 @@ class TestCases {
     @Test
     fun loginFunctionality() {
         print("login_" + "" + preferences?.getBoolean("isLogin", false))
-/*        if (preferences?.getBoolean("isLogin", false) == true) {
-            mainScreenView()
-        } else {
-        }*/
         loginView()
     }
 
     private fun loginView() {
 
-        Thread.sleep(500)
         BaseRobot().doOnView(ViewMatchers.withId(R.id.btnLoginToDashBoard), closeSoftKeyboard(), click())
 
         onView(withId(R.id.edtLoginEmail)).perform(ViewActions.typeText(serviceSelection?.invalidNumber))
@@ -111,33 +106,16 @@ class TestCases {
             closeSoftKeyboard(),
             click()
         )
-//        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
-//
-//        BaseRobot().doOnView(ViewMatchers.withId(R.id.btnOk), ViewActions.closeSoftKeyboard(), ViewActions.click())
-
-//        Thread.sleep(1000)
-//        Espresso.onView(withId(R.id.scrollVerify)).perform(
-//            ViewActions.closeSoftKeyboard(),
-//            ViewActions.swipeUp()
-//        )
-//
-//        enterValidOTP()
-//
-//        Espresso.onView(ViewMatchers.withId(R.id.btnVerify)).perform(
-//            ViewActions.closeSoftKeyboard(),
-//            ViewActions.click()
-//        )
-
         NavigateMainDashboard()
     }
 
     private fun enterValidOTP() {
-        Espresso.onView(ViewMatchers.withId(R.id.edtOtp1)).perform(
+        onView(withId(R.id.edtOtp1)).perform(
             ViewActions.clearText(),
             ViewActions.typeText("1"),
 
             )
-        Espresso.onView(ViewMatchers.withId(R.id.edtOtp2)).perform(
+        onView(withId(R.id.edtOtp2)).perform(
             ViewActions.clearText(),
             ViewActions.typeText("2"),
 
@@ -157,11 +135,11 @@ class TestCases {
     }
 
     private fun enterInvalidOTP() {
-        Espresso.onView(ViewMatchers.withId(R.id.edtOtp1)).perform(
+        onView(withId(R.id.edtOtp1)).perform(
             ViewActions.typeText("1"),
             click()
         )
-        Espresso.onView(ViewMatchers.withId(R.id.edtOtp2)).perform(
+        onView(withId(R.id.edtOtp2)).perform(
             ViewActions.typeText("5"),
             click()
         )
@@ -218,14 +196,6 @@ class TestCases {
                 click()
             )
         )
-//        BaseRobot().doOnView(
-//            withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
-//            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-//                hasDescendant(withText(serviceSelection?.typeRotation_service)),
-//                ViewActions.click()
-//            )
-//        )
-
         navigateToAddServiceDetailScreen()
 
     }
@@ -234,7 +204,6 @@ class TestCases {
 
         skipServiceFlow()
 
-//        select service message
         BaseRobot().doOnView(withId(R.id.cardtyreConfig), closeSoftKeyboard(), click())
         BaseRobot().doOnView(withId(R.id.ivAddServices), closeSoftKeyboard(), click())
 
@@ -339,33 +308,27 @@ class TestCases {
     }
 
     private fun tyreRRTyreSelection() {
-
         BaseRobot().doOnView(withId(R.id.ivTyre4), closeSoftKeyboard(), click())
-
         navigateToVehicleBrandScreeneSelection(4)
     }
 
     private fun tyreLRTyreSelection() {
         BaseRobot().doOnView(withId(R.id.ivTyre2), closeSoftKeyboard(), click())
-
         navigateToVehicleBrandScreeneSelection(3)
     }
 
     private fun tyreRFTyreSelection() {
         BaseRobot().doOnView(withId(R.id.ivTyre3), closeSoftKeyboard(), click())
-
         navigateToVehicleBrandScreeneSelection(2)
     }
 
     private fun tyreLFTyreSelection() {
         BaseRobot().doOnView(withId(R.id.ivTyre1), closeSoftKeyboard(), click())
-
         navigateToVehicleBrandScreeneSelection(0)
     }
 
     private fun skipServiceFlow() {
         BaseRobot().doOnView(withId(R.id.tvSkipService), closeSoftKeyboard(), click())
-
         BaseRobot().doOnView(withId(R.id.btnConfirm), closeSoftKeyboard(), click())
 //        pendingReasonRecycView
         BaseRobot().doOnView(
@@ -382,9 +345,7 @@ class TestCases {
 
     private fun navigateToVehicleBrandScreeneSelection(number: Int) {
 
-
         try {
-//            onView(withId(R.id.gridviewRecycMake_)).isDisplayed()
             BaseRobot().doOnView(
                 withId(R.id.gridviewRecycMake_), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -397,11 +358,8 @@ class TestCases {
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
             }
-            //view is displayed logic
-
         } catch (e: Exception) {
             e.printStackTrace()
-
             try {
                 BaseRobot().doOnView(withId(R.id.ivEditVehicleMake), closeSoftKeyboard(), click())
 
@@ -416,25 +374,19 @@ class TestCases {
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-            //view not displayed logic
         }
-
-//        btnNext
 
         try {
             BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
-
         navigateToVehiclePatternScreen()
     }
 
     private fun navigateToVehiclePatternScreen() {
         try {
             val number = (0..4).random()
-//            onView(withId(R.id.gridviewRecycModel)).isDisplayed()
             BaseRobot().doOnView(
                 withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -447,13 +399,11 @@ class TestCases {
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
             }
-            //view is displayed logic
         } catch (e: Exception) {
             e.printStackTrace()
 
             try {
                 BaseRobot().doOnView(withId(R.id.ivEditVehicleMakeModel), closeSoftKeyboard(), click())
-
                 Thread.sleep(150)
                 BaseRobot().doOnView(
                     withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
@@ -462,20 +412,16 @@ class TestCases {
                         click()
                     )
                 )
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            //view not displayed logic
         }
 
-//        btnNext
         try {
             BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
 
         navigateToVehicleSizeScreen()
     }
@@ -515,14 +461,11 @@ class TestCases {
             }
         }
 
-
-//        btnNext
         try {
             BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
 
         navigateToVisualDetailPage()
     }
