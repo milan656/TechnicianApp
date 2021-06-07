@@ -3,6 +3,7 @@ package com.walkins.aapkedoorstep
 import android.content.Context
 import android.content.SharedPreferences
 import android.view.View
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.recyclerview.widget.RecyclerView
@@ -28,9 +29,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 class TestCases {
+
     private val PREFERENCE_NAME = "MyPref"
     private var preferencesEditor: SharedPreferences.Editor? = null
     private var preferences: SharedPreferences? = null
@@ -120,12 +121,12 @@ class TestCases {
             ViewActions.typeText("2"),
 
             )
-        Espresso.onView(ViewMatchers.withId(R.id.edtOtp3)).perform(
+        onView(withId(R.id.edtOtp3)).perform(
             ViewActions.clearText(),
             ViewActions.typeText("1"),
 
             )
-        Espresso.onView(ViewMatchers.withId(R.id.edtOtp4)).perform(
+        onView(withId(R.id.edtOtp4)).perform(
             ViewActions.clearText(),
             ViewActions.typeText("2"), closeSoftKeyboard(),
 
@@ -143,16 +144,16 @@ class TestCases {
             ViewActions.typeText("5"),
             click()
         )
-        Espresso.onView(ViewMatchers.withId(R.id.edtOtp3)).perform(
+        onView(withId(R.id.edtOtp3)).perform(
             ViewActions.typeText("1"),
             click()
         )
-        Espresso.onView(ViewMatchers.withId(R.id.edtOtp4)).perform(
+        onView(withId(R.id.edtOtp4)).perform(
             ViewActions.typeText("5"), closeSoftKeyboard(),
             click()
         )
 
-        Espresso.onView(withId(R.id.scrollVerify)).perform(
+        onView(withId(R.id.scrollVerify)).perform(
             closeSoftKeyboard(),
             ViewActions.swipeUp()
         )
@@ -212,7 +213,13 @@ class TestCases {
                 withId(R.id.serviceRecycView), ViewActions.closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                     hasDescendant(withText(serviceSelection?.nitrogen_refill_service)),
-                    ViewActions.click()
+                    recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                        if (!this.isChecked){
+                            this.isChecked=true
+                            ViewActions.click()
+                        }
+                    }
+
                 )
             )
         }

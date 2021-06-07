@@ -176,7 +176,6 @@ class TechnicianUnitTest {
 
         skipServiceFlow()
 
-//        select service message
         BaseRobot().doOnView(withId(R.id.cardtyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
         BaseRobot().doOnView(withId(R.id.ivAddServices), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
@@ -262,11 +261,8 @@ class TechnicianUnitTest {
         BaseRobot().doOnView(withId(R.id.cardtyreConfig), ViewActions.closeSoftKeyboard(), ViewActions.click())
 
         tyreLFTyreSelection()
-
         tyreRFTyreSelection()
-
         tyreLRTyreSelection()
-
         tyreRRTyreSelection()
 
     }
