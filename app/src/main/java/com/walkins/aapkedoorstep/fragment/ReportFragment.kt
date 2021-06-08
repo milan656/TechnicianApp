@@ -67,7 +67,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var selectedSocietyName: String? = ""
     private var arrayService: ArrayList<Int>? = ArrayList()
 
-    var historyDataList: ArrayList<ReportHistoryModel> = ArrayList<ReportHistoryModel>()
+    var historyDataList: ArrayList<ReportHistoryModel> = ArrayList()
 
     private lateinit var prefManager: PrefManager
     private lateinit var makeModelViewModel: MakeModelViewModel
@@ -312,11 +312,10 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         serviceModel = it
 
                     } else {
-                        if (it.error != null && it.error?.get(0)?.message != null) {
+                        if (it.error.get(0).message != null) {
                             Toast.makeText(context, "" + it.error.get(0).message, Toast.LENGTH_SHORT).show()
                         }
                     }
-                } else {
                 }
             })
 
@@ -591,8 +590,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 //                startActivityForResult(intent, 100)
             }
             R.id.llCompletedReport -> {
-                llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_red_layout))
-                llSkipped?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
+                llCompleted?.setBackgroundDrawable(this.resources.getDrawable(R.drawable.rounded_red_layout))
+                llSkipped?.setBackgroundDrawable(this.resources.getDrawable(R.drawable.rounded_white_layout))
 
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.white))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.text_color1))
@@ -601,8 +600,8 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 setadapter(skipSelected)
             }
             R.id.llSkippedReport -> {
-                llCompleted?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_white_layout))
-                llSkipped?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_red_layout))
+                llCompleted?.setBackgroundDrawable(this.resources.getDrawable(R.drawable.rounded_white_layout))
+                llSkipped?.setBackgroundDrawable(this.resources.getDrawable(R.drawable.rounded_red_layout))
 
                 tvCompleted?.setTextColor(this.resources.getColor(R.color.text_color1))
                 tvSkipped?.setTextColor(this.resources.getColor(R.color.white))
@@ -644,7 +643,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val btnCancel = view.findViewById<Button>(R.id.btnCancel)
         val serviceRecycView = view.findViewById<RecyclerView>(R.id.serviceRecycView)
         val suggestionArray: ArrayList<IssueResolveModel>? = ArrayList()
-        val jsonArray: JsonArray = JsonArray()
+        val jsonArray = JsonArray()
 
         actvehicleMake = view.findViewById(R.id.actvehicleMake)
         Log.e("getsociety11", "" + selectedSocietyName)
@@ -655,12 +654,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 object : ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, societyList) {
 
                     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                        val v = super.getView(position, convertView, parent)
-
-//                        (v as TextView).textSize = 14f
-//                        v.gravity = Gravity.LEFT
-
-                        return v
+                        return super.getView(position, convertView, parent)
                     }
                 }
 
@@ -689,7 +683,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         suggestionArray.set(
                             i,
                             IssueResolveModel(
-                                suggestionArray?.get(i)?.issueName!!, suggestionArray?.get(i)?.id!!,
+                                suggestionArray.get(i).issueName, suggestionArray.get(i).id,
                                 true
                             )
                         )
@@ -700,7 +694,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         Log.e("selectedarr00", "" + suggestionArray)
         var tyreSuggestionAdapter: TyreSuggestionAdpater? = null
-        tyreSuggestionAdapter = context?.let { TyreSuggestionAdpater(suggestionArray!!, it, this, false, true) }
+        tyreSuggestionAdapter = context?.let { TyreSuggestionAdpater(suggestionArray, it, this, false, true) }
         serviceRecycView?.layoutManager = GridLayoutManager(
             context, 2,
             RecyclerView.VERTICAL,
@@ -915,9 +909,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun searchModel(toString: String) {
-        context?.let { makeModelViewModel?.getVehicleModel(it, selectedMakeId, prefManager.getAccessToken()!!) }
+        context?.let { makeModelViewModel.getVehicleModel(it, selectedMakeId, prefManager.getAccessToken()!!) }
 
-        makeModelViewModel?.getVehicleModelList()?.observe(this, Observer {
+        makeModelViewModel.getVehicleModelList()?.observe(this, Observer {
 
             if (it != null) {
                 if (it.success) {
@@ -928,17 +922,13 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
-                } else {
-
                 }
-            } else {
-
             }
         })
     }
 
     private fun searchMake(toString: String, isDialoguOpen: Boolean) {
-        Log.e("getdislog1", "" + isDialoguOpen + "-- " + societyList?.size + " --" + makeSearchdata?.size)
+        Log.e("getdislog1", "" + isDialoguOpen + "-- " + societyList.size + " --" + makeSearchdata?.size)
         if (makeSearchdata != null && makeSearchdata?.size!! > 0 && societyList.size > 0) {
             openReportFilterDialogue(toString)
         } else {
@@ -987,7 +977,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             e.printStackTrace()
         }
 
-        Log.e("getdislog", "" + isDialoguOpen + "-- " + societyList?.size)
+        Log.e("getdislog", "" + isDialoguOpen + "-- " + societyList.size)
         if (isDialoguOpen) {
             openReportFilterDialogue("Choose Filter")
         }

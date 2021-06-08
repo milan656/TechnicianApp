@@ -128,12 +128,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                         var firstName: String? = ""
                         var lastName: String? = ""
-                        if (it.data.firstName != null) {
-                            firstName = it.data.firstName
-                        }
-                        if (it.data.lastName != null) {
-                            lastName = it.data.lastName
-                        }
+                        firstName = it.data.firstName
+                        lastName = it.data.lastName
                         tvUsername?.text = "Hello, " + firstName + " " + lastName
                     } else {
                         if (it.error != null) {
@@ -163,7 +159,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 //        homeRecycView?.setHasFixedSize(true)
         mAdapter = context?.let { LeadHistoryAdapter(it, historyDataList, this) }
-        var decor = StickyHeaderDecoration(mAdapter)
+        val decor = StickyHeaderDecoration(mAdapter)
 
         // use a linear layout manager
         val layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
@@ -277,7 +273,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         dashboardModel=it
                         historyDataList.clear()
 
-                        if (it.data != null && it.data.size > 0) {
+                        if (it.data.size > 0) {
 
                             dashboardServiceListModel = it
                             for (i in it.data.indices) {

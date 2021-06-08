@@ -165,19 +165,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var edtManufaturingDate: EditText? = null
     private var tvTyreService: TextView? = null
 
-    // image picker code
-//    val REQUEST_IMAGE = 100
-//    val REQUEST_PERMISSION = 200
-//    private var imageFilePath = ""
-//    private var IMAGE_PICK_CODE = 1010;
-//    private var PERMISSION_CODE = 1011;
-
     var mediaPath: String? = null
     val REQUEST_IMAGE_CAPTURE = 1
     val PICK_IMAGE_REQUEST = 100
     private lateinit var mCurrentPhotoPath: String
-    private val PERMISSION_CODE = 1010;
-    private val IMAGE_CAPTURE_CODE = 1011
+    private val PERMISSIONCODE = 1010;
+    private val IMAGECAPTURECODE = 1011
     var image_uri: Uri? = null
     var year: Int = -1
     var weekOfYear: Int = -1
@@ -201,21 +194,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         Log.e("getyear", "" + year)
     }
 
-//    private fun requestPermissionForImage() {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !==
-//            PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                this, arrayOf(
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE
-//                ),
-//                REQUEST_PERMISSION
-//            )
-//        }
-//    }
-
-
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
         btnDone = findViewById(R.id.btnDone)
@@ -232,9 +210,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         relTyrePhotoAdd = findViewById(R.id.relTyrePhotoAdd)
         issueResolvedRecycView = findViewById(R.id.issueResolvedRecycView)
 
-//        for (i in issueResolveArr.indices) {
-//            issueResolveArray?.add(IssueResolveModel(issueResolveArr.get(i) + " " + i, false))
-//        }
         issueResolveAdapter = TyreSuggestionAdpater(issueResolveArray!!, this, this, false, true)
         issueResolvedRecycView?.layoutManager = LinearLayoutManager(
             this,
@@ -361,8 +336,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //        getIssueList()
 
 
-        if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.serviceDetailData) != null &&
-            !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.serviceDetailData).equals("")
+        if (!prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.serviceDetailData).equals("")
         ) {
             var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.serviceDetailData)
             try {
@@ -395,42 +369,20 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                 }
 
-                /*if ((json.get(TyreKey.nitrogenTopup) != null && json.get(TyreKey.nitrogenTopup)?.asString.equals(
-                        "true"
-                    )) ||
-                    (json.get(TyreKey.nitrogenRefil) != null && json.get(TyreKey.nitrogenRefil)?.asString.equals(
-                        "true"
-                    ))
-                ) {
-                    psiOutFrame?.visibility = View.VISIBLE
-                    psiInFrame?.visibility = View.VISIBLE
-                } else {
-                    psiOutFrame?.visibility = View.GONE
-                    psiInFrame?.visibility = View.GONE
-                }
 
-                if (json.get(TyreKey.wheelBalancing) != null && json.get(TyreKey.wheelBalancing)?.asString.equals(
-                        "true"
-                    )
-                ) {
-                    weightFrame?.visibility = View.VISIBLE
-                } else {
-                    weightFrame?.visibility = View.GONE
-                }*/
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
 
         }
 
-        if (prefManager.getIssueList(TyreConfigClass.issueList) != null &&
-            prefManager.getIssueList(TyreConfigClass.issueList)?.size!! > 0
+        if (prefManager.getIssueList(TyreConfigClass.issueList).size > 0
         ) {
             issueResolveArray?.clear()
             for (i in prefManager.getIssueList(TyreConfigClass.issueList).indices) {
                 issueResolveArray?.add(
                     IssueResolveModel(
-                        prefManager.getIssueList(TyreConfigClass.issueList).get(i).issueName, prefManager.getIssueList(TyreConfigClass.issueList)?.get(i)?.id!!, false
+                        prefManager.getIssueList(TyreConfigClass.issueList).get(i).issueName, prefManager.getIssueList(TyreConfigClass.issueList).get(i).id, false
                     )
                 )
             }
@@ -439,8 +391,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
 
 
-        if (prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre) != null &&
-            !prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre).equals("")
+        if (!prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre).equals("")
         ) {
             Log.e("getimages1", "" + prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre))
 //            ivPickedImage1?.setImageURI(Uri.parse(prefManager.getValue("image_" + selectedTyre)))
@@ -464,8 +415,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
     fun getTyreWiseData() {
         if (selectedTyre.equals("LF")) {
-            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject).equals("")
+            if (!prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject).equals("")
             ) {
                 var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject)
                 try {
@@ -479,8 +429,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
         }
         if (selectedTyre.equals("LR")) {
-            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject).equals("")
+            if (!prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject).equals("")
             ) {
                 var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLRObject)
                 try {
@@ -494,8 +443,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
         }
         if (selectedTyre.equals("RF")) {
-            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject).equals("")
+            if (!prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject).equals("")
             ) {
                 var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRFObject)
                 try {
@@ -508,8 +456,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
         }
         if (selectedTyre.equals("RR")) {
-            if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject) != null &&
-                !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject).equals("")
+            if (!prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject).equals("")
             ) {
                 var str = prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreRRObject)
                 try {
@@ -835,45 +782,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             TyreDetailCommonClass.isCameraSelectedVisualDetail =
                 json.get(TyreKey.isCameraSelectedVisualDetail)?.asString?.toBoolean()!!
         }
-        if (json.get(TyreKey.issueResolvedArr) != null) {
-//            TyreDetailCommonClass.issueResolvedArr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
-        }
-        /* if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
-             TyreDetailCommonClass.chk1Make = json.get(TyreKey.chk1Make)?.asString
-         }
-         if (json.get(TyreKey.chk1Pattern) != null && !json.get(TyreKey.chk1Pattern)?.asString.equals(
-                 ""
-             )
-         ) {
-             TyreDetailCommonClass.chk1Pattern = json.get(TyreKey.chk1Pattern)?.asString
-         }
-         if (json.get(TyreKey.chk1Size) != null && !json.get(TyreKey.chk1Size)?.asString.equals("")) {
-             TyreDetailCommonClass.chk1Size = json.get(TyreKey.chk1Size)?.asString
-         }
-         if (json.get(TyreKey.chk2Make) != null && !json.get(TyreKey.chk2Make)?.asString.equals("")) {
-             TyreDetailCommonClass.chk2Make = json.get(TyreKey.chk2Make)?.asString
-         }
-         if (json.get(TyreKey.chk2Pattern) != null && !json.get(TyreKey.chk2Pattern)?.asString.equals(
-                 ""
-             )
-         ) {
-             TyreDetailCommonClass.chk2Pattern = json.get(TyreKey.chk2Pattern)?.asString
-         }
-         if (json.get(TyreKey.chk2Size) != null && !json.get(TyreKey.chk2Size)?.asString.equals("")) {
-             TyreDetailCommonClass.chk2Size = json.get(TyreKey.chk2Size)?.asString
-         }
-         if (json.get(TyreKey.chk3Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
-             TyreDetailCommonClass.chk3Make = json.get(TyreKey.chk3Make)?.asString
-         }
-         if (json.get(TyreKey.chk3Pattern) != null && !json.get(TyreKey.chk3Pattern)?.asString.equals(
-                 ""
-             )
-         ) {
-             TyreDetailCommonClass.chk3Pattern = json.get(TyreKey.chk3Pattern)?.asString
-         }
-         if (json.get(TyreKey.chk3Size) != null && !json.get(TyreKey.chk3Size)?.asString.equals("")) {
-             TyreDetailCommonClass.chk3Size = json.get(TyreKey.chk3Size)?.asString
-         }*/
+
         if (json.get(TyreKey.isCompleted) != null) {
             TyreDetailCommonClass.isCompleted =
                 json.get(TyreKey.isCompleted)?.asString?.toBoolean()!!
@@ -932,7 +841,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             if (cameraDialog != null && cameraDialog?.isShowing!!) {
                 cameraDialog?.dismiss()
             }
-            if (Common.commonPhotoChooseArr.get(variable)?.equals("Gallery")) {
+            if (Common.commonPhotoChooseArr.get(variable).equals("Gallery")) {
                 val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     checkPermission((this@VisualDetailsActivity))
                 } else {
@@ -984,7 +893,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             Manifest.permission.MANAGE_DOCUMENTS
                         )
                         //show popup to request permission
-                        requestPermissions(permission, PERMISSION_CODE)
+                        requestPermissions(permission, PERMISSIONCODE)
                     } else {
                         //permission already granted
                         openCamera()
@@ -1069,23 +978,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
 
     private fun openCamera() {
-//        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (pictureIntent.resolveActivity(packageManager) != null) {
-//            var photoFile: File? = null
-//            photoFile = try {
-//                Common.createImageFile(this)
 //
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//                return
-//            }
-//            imageFilePath = photoFile?.absolutePath!!
-//            val photoUri: Uri =
-//                FileProvider.getUriForFile(this, "$packageName.provider", photoFile!!)
-//            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-//            startActivityForResult(pictureIntent, REQUEST_IMAGE)
-//        }
-
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
@@ -1093,36 +986,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         //camera intent
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+        startActivityForResult(cameraIntent, IMAGECAPTURECODE)
     }
-
-//    private fun createImageFile(): File? {
-//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-//        val imageFileName = "IMG_" + timeStamp + "_"
-//        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-//        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
-//        imageFilePath = image.absolutePath
-//        return image
-//    }
-
-//    private fun openGallery() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-//                PackageManager.PERMISSION_DENIED
-//            ) {
-//                //permission denied
-//                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
-//                //show popup to request runtime permission
-//                requestPermissions(permissions, PERMISSION_CODE);
-//            } else {
-//                //permission already granted
-//                pickImageFromGallery();
-//            }
-//        } else {
-//            //system OS is < Marshmallow
-//            pickImageFromGallery();
-//        }
-//    }
 
     @SuppressLint("InflateParams")
     private fun showBottomSheetdialog(
@@ -1526,13 +1391,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     }
 
 
-//    private fun pickImageFromGallery() {
-//        //Intent to pick image
-//        val intent = Intent(Intent.ACTION_PICK)
-//        intent.type = "image/*"
-//        startActivityForResult(intent, IMAGE_PICK_CODE)
-//    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -1541,7 +1399,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
-            PERMISSION_CODE -> {
+            PERMISSIONCODE -> {
                 if (grantResults.size > 0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED
                 ) {
@@ -1554,7 +1412,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 }
             }
             123 -> {
-                if (grantResults?.get(1) != -1) {
+                if (grantResults.get(1) != -1) {
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
@@ -1589,7 +1447,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
 
             124 -> {
-                if (grantResults?.get(1) != -1) {
+                if (grantResults.get(1) != -1) {
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
@@ -1607,8 +1465,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             e.printStackTrace()
                         }
                     }
-                } else {
-
                 }
             }
         }
@@ -1634,7 +1490,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            IMAGE_CAPTURE_CODE -> {
+            IMAGECAPTURECODE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val imagePath = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         getFile(this@VisualDetailsActivity, image_uri)
@@ -1712,11 +1568,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 
                     Log.e("getimages", "" + prefManager.getValue(TyreConfigClass.serviceId + "image_" + selectedTyre))
                     if (Common.isConnectedToInternet(this)) {
-                        val inputStream: InputStream? = auxFile.inputStream()
+                        val inputStream: InputStream = auxFile.inputStream()
 //                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
                         prefManager.removeValue(TyreConfigClass.serviceId + "image_" + selectedTyre)
                         CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-                            val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, auxFile!!) {
+                            val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, auxFile) {
                                 resolution(1280, 720)
                                 quality(80)
 
@@ -1936,15 +1792,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 if (it.success) {
                     Log.e("getfile", "" + it.data.imageUrl)
                     Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
-//                    try {
-//                        Glide.with(this).load(it.data.imageUrl).into(ivPickedImage1!!)
-//                    } catch (e: Exception) {
-//                        e.printStackTrace()
-//                    }
-//                    ivPickedImage1?.visibility = View.VISIBLE
-//                    ivEditImg2?.visibility = View.VISIBLE
-//                    tvAddPhoto1?.visibility = View.GONE
-//                    tvCarphoto1?.visibility = View.GONE
                     TyreDetailCommonClass.visualDetailPhotoUrl = it.data.imageUrl
                 }
             }

@@ -2,7 +2,6 @@ package com.walkins.aapkedoorstep.activity
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,9 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.adapter.PendingTyreSuggestionAdpater
 import com.walkins.aapkedoorstep.common.TyreDetailCommonClass
-import com.walkins.aapkedoorstep.common.TyreKey
 import com.walkins.aapkedoorstep.common.onClickAdapter
-import java.lang.Exception
 
 @SuppressLint("SetTextI18n")
 class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {

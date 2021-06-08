@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
@@ -18,7 +17,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.PermissionChecker
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,7 +28,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.adapter.CompletedServiceAdapter
@@ -39,12 +36,8 @@ import com.walkins.aapkedoorstep.adapter.PendingTyreSuggestionAdpater
 import com.walkins.aapkedoorstep.common.*
 import com.walkins.aapkedoorstep.custom.BoldButton
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
-import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
-import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceData
-import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdData
 import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
-import java.lang.Exception
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -87,8 +80,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
     private var ivPhoneCall: ImageView? = null
 
-    private var ivInfoImg: ImageView? = null
-    private var title: String = ""
     private var llservicecollapse: LinearLayout? = null
     private var lltyreconfig: LinearLayout? = null
     private var lltechnical: LinearLayout? = null

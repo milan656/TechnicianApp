@@ -45,7 +45,6 @@ import kotlin.collections.ArrayList
 @SuppressLint("SetTextI18n")
 class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
-    private var commentModel: CommentListModel? = null
     var skipList: ArrayList<IssueResolveModel>? = null
     private var commentList: java.util.ArrayList<CommentListData>? = java.util.ArrayList()
     var serviceViewModel: ServiceViewModel? = null
