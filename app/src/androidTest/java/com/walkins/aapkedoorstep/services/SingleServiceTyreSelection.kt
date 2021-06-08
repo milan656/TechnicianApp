@@ -21,12 +21,31 @@ class SingleServiceTyreSelection {
 
     var vehicleWiseStoreData = true
 
-    var sideWell = "Ok"
-    var shoulder = "SUG"
-    var treadWear = "REQ"
-    var treadDepth = "SUG"
-    var rimDamage = "OK"
-    var Bubble = "REQ"
+    var vehicleMakeURL = ""
+    var vehicleMake = ""
+    var vehiclePattern = ""
+    var vehicleSize = ""
+    var suggestionsArrayList = arrayListOf<String>()
+    var issueResolveArrayList = arrayListOf<String>()
+
+    var moreSuggestions = ""
+    var manuFacturingDate = ""
+
+    var serviceList = arrayListOf<String>()
+    var car_1_photo = ""
+    var car_2_photo = ""
+
+    var psi_in = ""
+    var psi_out = ""
+    var weight = ""
+
+    var sidewell = ""
+    var shoulder = ""
+    var treadWear = ""
+    var treadDepth = ""
+    var rimDamage = ""
+    var bubble = ""
+
 
 
 }

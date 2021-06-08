@@ -33,9 +33,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
-class TestCasesForMultipleServiceSingleTyre {
+class TestCasesForAllServiceSingleTyre {
 
     private val PREFERENCE_NAME = "MyPref"
     private var preferencesEditor: SharedPreferences.Editor? = null
@@ -101,7 +100,7 @@ class TestCasesForMultipleServiceSingleTyre {
 
         enterInvalidOTP()
 
-        Espresso.onView(withId(R.id.btnVerify)).perform(
+        onView(withId(R.id.btnVerify)).perform(
             closeSoftKeyboard(),
             click()
         )
@@ -110,7 +109,7 @@ class TestCasesForMultipleServiceSingleTyre {
 
         enterValidOTP()
 
-        Espresso.onView(withId(R.id.btnVerify)).perform(
+        onView(withId(R.id.btnVerify)).perform(
             closeSoftKeyboard(),
             click()
         )
@@ -171,7 +170,7 @@ class TestCasesForMultipleServiceSingleTyre {
 
         BaseRobot().doOnView(withId(R.id.llhome), closeSoftKeyboard(), click())
 
-        Thread.sleep(4000)
+        Thread.sleep(2500)
         BaseRobot().doOnView(
             withId(R.id.recyclerView), closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -227,7 +226,6 @@ class TestCasesForMultipleServiceSingleTyre {
                                 click()
                             }
                         }
-
                     )
                 )
             } catch (e: java.lang.Exception) {
@@ -288,7 +286,6 @@ class TestCasesForMultipleServiceSingleTyre {
                         }
                     )
                 )
-
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -414,6 +411,17 @@ class TestCasesForMultipleServiceSingleTyre {
                     click()
                 )
             )
+            onView(withId(R.id.gridviewRecycMake_))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        number,
+                        recyclerChildAction<TextView>(R.id.tvmakeName) {
+                            print("vehicle_make-->" + this.text?.toString())
+                            serviceSelection?.vehicleMake = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                        }
+                    )
+                )
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
@@ -432,6 +440,18 @@ class TestCasesForMultipleServiceSingleTyre {
                         click()
                     )
                 )
+                onView(withId(R.id.gridviewRecycMake_))
+                    .perform(
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            2,
+                            recyclerChildAction<TextView>(R.id.tvmakeName) {
+                                print("vehicle_make-->" + this.text?.toString())
+                                serviceSelection?.vehicleMake = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                            }
+                        )
+                    )
+
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -455,6 +475,18 @@ class TestCasesForMultipleServiceSingleTyre {
                     click()
                 )
             )
+            onView(withId(R.id.gridviewRecycModel))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        number,
+                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+                            print("vehicle_make-->" + this.text?.toString())
+                            serviceSelection?.vehiclePattern = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                        }
+                    )
+                )
+
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
@@ -473,6 +505,17 @@ class TestCasesForMultipleServiceSingleTyre {
                         click()
                     )
                 )
+                onView(withId(R.id.gridviewRecycModel))
+                    .perform(
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            1,
+                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+                                print("vehicle_make-->" + this.text?.toString())
+                                serviceSelection?.vehiclePattern = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                            }
+                        )
+                    )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -497,6 +540,17 @@ class TestCasesForMultipleServiceSingleTyre {
                     click()
                 )
             )
+            onView(withId(R.id.gridviewRecycModel))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        0,
+                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+                            print("vehicle_make-->" + this.text?.toString())
+                            serviceSelection?.vehicleSize = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                        }
+                    )
+                )
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
@@ -516,7 +570,17 @@ class TestCasesForMultipleServiceSingleTyre {
                         1,
                         click()
                     ))
-
+                onView(withId(R.id.gridviewRecycModel))
+                    .perform(
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            1,
+                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+                                print("vehicle_make-->" + this.text?.toString())
+                                serviceSelection?.vehicleSize = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                            }
+                        )
+                    )
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -634,6 +698,9 @@ class TestCasesForMultipleServiceSingleTyre {
             onView(withId(R.id.edtManufaturingDate)).perform(
                 clearText(),
                 typeText(serviceSelection?.validManufacturingDate))
+
+            val manuDate = onView(withId(R.id.edtManufaturingDate))
+            serviceSelection?.manuFacturingDate = getText(manuDate)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
@@ -651,6 +718,13 @@ class TestCasesForMultipleServiceSingleTyre {
             onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
             onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
 
+            serviceSelection?.sidewell = "OK"
+            serviceSelection?.shoulder = "SUG"
+            serviceSelection?.treadWear = "REQ"
+            serviceSelection?.treadDepth = "SUG"
+            serviceSelection?.rimDamage = "OK"
+            serviceSelection?.bubble = "REQ"
+
             BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
                 swipeUp())
 
@@ -659,13 +733,25 @@ class TestCasesForMultipleServiceSingleTyre {
         }
 
         try {
+            val number = (0..3).random()
             BaseRobot().doOnView(
                 withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    2,
+                    number,
                     click()
                 )
             )
+            onView(withId(R.id.issueResolvedRecycView))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        number,
+                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+                            print("issueResolved-->" + this.text?.toString())
+                            serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
+//                             = this.text.toString()
+                        }
+                    )
+                )
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
@@ -689,6 +775,17 @@ class TestCasesForMultipleServiceSingleTyre {
                     click()
                 )
             )
+            onView(withId(R.id.suggestionsRecycView))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        4,
+                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+                            print("suggestions-->" + this.text?.toString())
+                            serviceSelection?.suggestionsArrayList?.add(this.text?.toString()!!)
+//                             = this.text.toString()
+                        }
+                    )
+                )
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -700,6 +797,8 @@ class TestCasesForMultipleServiceSingleTyre {
             } else {
                 BaseRobot().doOnView(withId(R.id.edtMoreSuggestion), closeSoftKeyboard(), clearText(), typeText("suggestion for this service."))
             }
+            val moreSuggestion = onView(withId(R.id.edtMoreSuggestion))
+            serviceSelection?.moreSuggestions = getText(moreSuggestion)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
