@@ -363,7 +363,6 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         builder.show()
     }
 
-
     @SuppressLint("SimpleDateFormat")
     private fun getServiceDataById() {
 
