@@ -45,5 +45,7 @@ class AllServiceSingleTyreSelection {
     var rimDamage = ""
     var bubble = ""
 
+    var editFlowEnable = true
+
 
 }

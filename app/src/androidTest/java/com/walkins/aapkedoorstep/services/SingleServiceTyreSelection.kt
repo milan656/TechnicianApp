@@ -46,6 +46,7 @@ class SingleServiceTyreSelection {
     var rimDamage = ""
     var bubble = ""
 
+    var pendingFlow = true
 
 
 }
