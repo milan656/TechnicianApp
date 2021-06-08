@@ -401,18 +401,6 @@ class TestCasesForSingleServiceTyrePndingFlow {
 
         if (serviceSelection?.pendingFlow!!) {
             BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
-            BaseRobot().doOnView(withId(R.id.ivInfoImgLF), closeSoftKeyboard(), click())
-            BaseRobot().doOnView(withId(R.id.ivClose), closeSoftKeyboard(), click())
-
-            BaseRobot().doOnView(withId(R.id.ivTyre3), closeSoftKeyboard(), click())
-
-            BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
-            BaseRobot().doOnView(withId(R.id.ivInfoImgRF), closeSoftKeyboard(), click())
-            BaseRobot().doOnView(withId(R.id.ivClose), closeSoftKeyboard(), click())
-
-            BaseRobot().doOnView(withId(R.id.ivTyre2), closeSoftKeyboard(), click())
-
-            BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
             BaseRobot().doOnView(withId(R.id.ivInfoImgLR), closeSoftKeyboard(), click())
             BaseRobot().doOnView(withId(R.id.ivClose), closeSoftKeyboard(), click())
 
@@ -422,9 +410,21 @@ class TestCasesForSingleServiceTyrePndingFlow {
             BaseRobot().doOnView(withId(R.id.ivInfoImgRR), closeSoftKeyboard(), click())
             BaseRobot().doOnView(withId(R.id.ivClose), closeSoftKeyboard(), click())
 
+            BaseRobot().doOnView(withId(R.id.ivTyre1), closeSoftKeyboard(), click())
+
+            BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+            BaseRobot().doOnView(withId(R.id.ivInfoImgLF), closeSoftKeyboard(), click())
+            BaseRobot().doOnView(withId(R.id.ivClose), closeSoftKeyboard(), click())
+
+            BaseRobot().doOnView(withId(R.id.ivTyre3), closeSoftKeyboard(), click())
+
+            BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+            BaseRobot().doOnView(withId(R.id.ivInfoImgRF), closeSoftKeyboard(), click())
+            BaseRobot().doOnView(withId(R.id.ivClose), closeSoftKeyboard(), click())
+
             serviceSelection?.pendingFlow = false
 
-            tyreLFTyreSelection()
+            tyreLRTyreSelection()
         } else {
             try {
                 BaseRobot().doOnView(
@@ -709,12 +709,35 @@ class TestCasesForSingleServiceTyrePndingFlow {
             e.printStackTrace()
         }
 
+//        onView(withId(R.id.relCarPhotoAdd1)).perform(customScrollTo,click());
+//
+//        BaseRobot().doOnView(
+//            withId(R.id.dialogueRecycView), closeSoftKeyboard(),
+//            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                0,
+//                click()
+//            )
+//        )
+//
+//        Thread.sleep(5000)
+//        onView(withId(R.id.relCarPhotoAdd2)).perform(customScrollTo,click());
+//
+//        BaseRobot().doOnView(
+//            withId(R.id.dialogueRecycView), closeSoftKeyboard(),
+//            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                0,
+//                click()
+//            )
+//        )
+//
+//        Thread.sleep(5000)
+
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click());
 
-        tyreLFTyreSelection()
-        tyreRFTyreSelection()
         tyreLRTyreSelection()
         tyreRRTyreSelection()
+        tyreLFTyreSelection()
+        tyreRFTyreSelection()
 
         onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())

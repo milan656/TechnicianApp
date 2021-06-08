@@ -2765,11 +2765,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             }
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
-
                         }
                     }
 
                     jsonObject.addProperty("service_suggestions", edtMoreSuggestion?.text?.toString())
+
+                    selectedDateNextServiceDue = "2021-06-09T00:00:00.000Z"
                     jsonObject.addProperty("next_service_due", selectedDateNextServiceDue)
                     jsonObject.addProperty("car_photo_1", TyreConfigClass.CarPhoto_1)
                     jsonObject.addProperty("car_photo_2", TyreConfigClass.CarPhoto_2)
@@ -2949,7 +2950,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
             val formatter = SimpleDateFormat("dd MMM yyyy")
             try {
                 date_ = formatter.parse(selectedDate)
-                Log.e("formated_date ", date_.toString() + "")
+//                Log.e("formated_date ", dateForWebservice_2(date_.toString()) + "")
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
