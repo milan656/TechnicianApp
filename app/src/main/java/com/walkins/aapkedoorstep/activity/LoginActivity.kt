@@ -3,15 +3,11 @@ package com.walkins.aapkedoorstep.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.telephony.SmsMessage
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -28,10 +24,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.R
-import com.walkins.aapkedoorstep.common.MySMSBroadcastReceiver
 import com.walkins.aapkedoorstep.custom.BoldButton
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 
@@ -40,28 +34,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginActivityViewModel
     private lateinit var prefManager: PrefManager
-    private var lastLocation: Location? = null
-    private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
     private lateinit var edtLoginEmail: EditText
 
     private lateinit var btnLoginToDashBoard: BoldButton
-    var firebaseAnalytics: FirebaseAnalytics? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         init()
-
-        /* MessageReceiver.bindListener(new SmsListener() {
-            @Override
-            public void messageReceived(String messageText) {
-                Log.i("Received_sms", "In Fragment ! " + messageText);
-                if (LoginFragment.this.getContext() != null) {
-                    mLoginVM.otp.set(messageText);
-                }
-            }
-        });*/
 
         smsPermission()
 
@@ -73,25 +54,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
 
-//        try {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                scheduleJob()
-//            } else {
-//
-//            }
-//        } catch (e: java.lang.Exception) {
-//            e.printStackTrace()
-//        }
     }
 
     private fun smsPermission() {
-        val PERMISSIONS = arrayOf(
+        val pERMISSIONS = arrayOf(
             Manifest.permission.RECEIVE_SMS,
             Manifest.permission.READ_SMS,
             Manifest.permission.SEND_SMS
         )
-        if (!hasPermissions(this, *PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, 1)
+        if (!hasPermissions(this, *pERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, pERMISSIONS, 1)
         }
     }
 
@@ -112,31 +84,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                scheduleJob()
-            } else {
 
-            }
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
     }
 
-    /* @TargetApi(Build.VERSION_CODES.N)
-     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-     private fun scheduleJob() {
-
-         if (getDeviceName().toLowerCase().contains("oppo")) {
-             val startServiceIntent = Intent(this, InternetServices::class.java)
-             startService(startServiceIntent)
-         }
-     }*/
 
     private fun init() {
-        // val retrofit = RetrofitCommonClass.getClient(this)
-//        firebaseAnalytics = Firebase.analytics
-
         prefManager = PrefManager(this@LoginActivity)
 
         edtLoginEmail = findViewById<EditText>(R.id.edtLoginEmail)
@@ -156,18 +108,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun login() {
         if (edtLoginEmail.text?.trim()?.length == 0) {
             edtLoginEmail.error = "Please Enter Mobile number"
-            //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
         if (edtLoginEmail.text?.trim()?.length != 10) {
             edtLoginEmail.error = "Please Enter Valid Mobile number"
-            //Common.showShortToast("Please enter userid", this@LoginActivity)
             return
         }
 
         val intent = Intent(this, VerifyOtpActivity::class.java)
         intent.putExtra("number", edtLoginEmail.text?.toString())
-//        intent.putExtra("number", "9978785623")
         startActivity(intent)
 
 
@@ -194,35 +143,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         Common.showLoader(this@LoginActivity)
 
-        /* val context = applicationContext
-         val manager = context.packageManager
 
-         var versionCode: Int = 0
-         var deviceName: String? = Common.getDeviceName()
-         var androidOS = Build.VERSION.RELEASE
-
-         try {
-             val info = manager.getPackageInfo(context.packageName, 0)
-             versionCode = PackageInfoCompat.getLongVersionCode(info).toInt()
-         } catch (e: PackageManager.NameNotFoundException) {
-             e.printStackTrace()
-         }
-
-
-         val fields = Build.VERSION_CODES::class.java.fields
-         for (field in fields) {
-             androidOS = field.name
-         }
-
-         var dealerLogin = "9898987411"
-         var dealerPassword = "jktyre@12345"
-         var technicianLogin = "9978785623"
-         var technicianPassword = "9978785623"*/
-
-//        val intent = Intent(this, VerifyOtpActivity::class.java)
-//        intent.putExtra("number", "9978785623")
-//        intent.putExtra("otp", "" + 1212)
-//        startActivity(intent)
         val jsonObject = JsonObject()
         jsonObject.addProperty("phone_number", edtLoginEmail.text.toString())
         Log.e("getobject", "" + jsonObject)
@@ -245,31 +166,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun loginFail(message: String, title: String) {
-        val builder = AlertDialog.Builder(this).create()
-        builder.setCancelable(false)
-        val width = LinearLayout.LayoutParams.MATCH_PARENT
-        val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        builder?.window?.setLayout(width, height)
-        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
-
-
-        val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout, null)
-
-        val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
-        val tv_message = root.findViewById<TextView>(R.id.tv_message)
-        val tv_dialogTitle = root.findViewById<TextView>(R.id.tvTitleText)
-
-        tv_dialogTitle?.setText(title)
-
-        tv_message.text = message
-        btnYes.setOnClickListener { builder.dismiss() }
-        builder.setView(root)
-
-        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
-        builder.show()
-    }
-
 
     private fun startSMSListener() {
         try {
@@ -289,7 +185,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     fun showDialogue(title: String, message: String) {
         val builder = AlertDialog.Builder(this).create()
         builder.setCancelable(false)
-        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val width = LinearLayout.LayoutParams.MATCH_PARENT//        intent.putExtra("number", "9978785623")
+
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         builder?.window?.setLayout(width, height)
         builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -298,12 +195,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
         val ivClose = root.findViewById<ImageView>(R.id.ivClose)
-        val tv_message = root.findViewById<TextView>(R.id.tv_message)
+        val tvMessage = root.findViewById<TextView>(R.id.tv_message)
         val tvTitleText = root.findViewById<TextView>(R.id.tvTitleText)
         tvTitleText?.text = title
-        tv_message.text = message
+        tvMessage.text = message
         tvTitleText?.gravity = Gravity.CENTER
-        tv_message?.gravity = Gravity.CENTER
+        tvMessage?.gravity = Gravity.CENTER
         ivClose?.visibility = View.INVISIBLE
         btnYes.setOnClickListener {
             builder.dismiss()
