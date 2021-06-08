@@ -255,7 +255,6 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         getSelectedService()
 
-        Log.e("getserviceselected", "" + selectedServiceArr)
         if (prefManager?.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject) != null &&
             !prefManager.getValue(TyreConfigClass.serviceId + TyreConfigClass.TyreLFObject).equals("")
         ) {
