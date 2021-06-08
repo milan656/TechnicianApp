@@ -14,7 +14,6 @@ import androidx.test.espresso.*
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ScrollToAction
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -35,14 +34,14 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class TestCases {
+class TestCasesForAllServiceMultipleTyre {
 
     private val PREFERENCE_NAME = "MyPref"
     private var preferencesEditor: SharedPreferences.Editor? = null
     private var preferences: SharedPreferences? = null
 
     //    private var serviceSelection: SingleServiceTyreSelection? = null
-    private var serviceSelection: TwoServiceTyreSelection? = null
+    private var serviceSelection: MultipleServiceMultipleTyreSelection? = null
 
     @Before
     fun setSharedPref() {
@@ -50,7 +49,7 @@ class TestCases {
 
         preferences = targetContext.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
 //        serviceSelection = SingleServiceTyreSelection()
-        serviceSelection = TwoServiceTyreSelection()
+        serviceSelection = MultipleServiceMultipleTyreSelection()
 
         print("login_" + "" + preferences?.getBoolean("isLogin", false))
 
@@ -74,7 +73,7 @@ class TestCases {
 
         BaseRobot().doOnView(withId(R.id.btnLoginToDashBoard), closeSoftKeyboard(), click())
         onView(withId(R.id.edtLoginEmail)).perform(typeText(serviceSelection?.invalidNumber))
-        Espresso.onView(withId(R.id.btnLoginToDashBoard)).perform(
+        onView(withId(R.id.btnLoginToDashBoard)).perform(
             closeSoftKeyboard(),
             click()
         )
@@ -86,7 +85,7 @@ class TestCases {
             typeText(serviceSelection?.validNumber)
         )
 
-        Espresso.onView(withId(R.id.btnLoginToDashBoard)).perform(
+        onView(withId(R.id.btnLoginToDashBoard)).perform(
             closeSoftKeyboard(),
             click()
         )

@@ -1,6 +1,6 @@
 package com.walkins.aapkedoorstep
 
-class TwoServiceTyreSelection {
+class AllServiceSingleTyreSelection {
 
     var invalidNumber: String? = "0900222414"
     var invalidNumber_2: String? = "9000090000"
