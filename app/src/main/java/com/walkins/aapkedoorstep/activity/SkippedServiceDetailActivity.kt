@@ -88,6 +88,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         init()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun init() {
         tvTitle = findViewById(R.id.tvTitle)
         tvChange = findViewById(R.id.tvChange)
@@ -248,12 +249,12 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
                     skipList?.add(IssueResolveModel(commentList?.get(i)?.name!!, commentList?.get(i)?.id!!, false))
                 }
             } else {
-                if (prefManager.getCommentList(TyreConfigClass.commentList) != null && prefManager.getCommentList(TyreConfigClass.commentList)?.size!! > 0) {
+                if (prefManager.getCommentList(TyreConfigClass.commentList).size > 0) {
                     commentList?.clear()
-                    for (i in prefManager.getCommentList(TyreConfigClass.commentList)?.indices!!) {
+                    for (i in prefManager.getCommentList(TyreConfigClass.commentList).indices) {
                         val model = CommentListData(
-                            prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.id!!,
-                            prefManager.getServiceList(TyreConfigClass.serviceList)?.get(i)?.name!!
+                            prefManager.getServiceList(TyreConfigClass.serviceList).get(i).id,
+                            prefManager.getServiceList(TyreConfigClass.serviceList).get(i).name
                         )
                         commentList?.add(model)
                     }
@@ -363,6 +364,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
     }
 
 
+    @SuppressLint("SimpleDateFormat")
     private fun getServiceDataById() {
 
         Common.showLoader(this)
@@ -423,11 +425,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
                     tvChange?.visibility = View.VISIBLE
                 } else {
                     Common.hideLoader()
-                    if (it.error != null) {
-                        if (it.error?.get(0).message != null) {
-                            showShortToast(it.error?.get(0).message, this)
-                        }
-                    }
+                    showShortToast(it.error?.get(0).message, this)
                 }
             } else {
                 Common.hideLoader()
@@ -510,6 +508,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         }
     }
 
+    @SuppressLint("InflateParams", "UseCompatLoadingForDrawables")
     private fun showBottomSheetdialogNormal(
         array: ArrayList<String>,
         titleStr: String,
@@ -521,7 +520,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
         val dialog =
-            this?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
         dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT

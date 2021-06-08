@@ -345,10 +345,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (arr.size() == 0) {
                         TyreConfigClass.LFVehicleVisualDetail = false
                     } else {
-                        val list: ArrayList<String>? = ArrayList()
+                        val list: ArrayList<String> = ArrayList()
                         Log.e("getissue", "" + arr)
                         for (i in arr) {
-                            list?.add(i.asString)
+                            list.add(i.asString)
                         }
                         Log.e("getserviceselectedlf_", "" + list)
                         TyreDetailCommonClass.issueResolvedArr = list
@@ -359,26 +359,13 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 Log.e("getserviceselectedlf_", "" + selectedServiceArr)
                 if (selectedServiceArr?.contains("Wheel Balancing")!!) {
                     Log.e("getserviceselectedlf_", "" + selectedServiceArr?.contains("Wheel Balancing"))
-                    if (jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.LFVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.LFVehicleVisualDetail = false
-
-                    }
+                    TyreConfigClass.LFVehicleVisualDetail = jsonLF.get(TyreKey.weightTyreService) != null && !jsonLF.get(TyreKey.weightTyreService)?.asString?.equals("")!!
                 }
 
                 if (selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) {
                     Log.e("getserviceselectedlf_1", "" + selectedServiceArr?.contains("Nitrogen Refill")!! + "--" + selectedServiceArr?.contains("Nitrogen Top Up")!!)
-                    if (jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.LFVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.LFVehicleVisualDetail = false
-                    }
-                    if (jsonLF.get(TyreKey.psiOutTyreService) != null && !jsonLF.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.LFVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.LFVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.LFVehicleVisualDetail = jsonLF.get(TyreKey.psiInTyreService) != null && !jsonLF.get(TyreKey.psiInTyreService)?.asString?.equals("")!!
+                    TyreConfigClass.LFVehicleVisualDetail = jsonLF.get(TyreKey.psiOutTyreService) != null && !jsonLF.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!
 
                 }
 
@@ -398,11 +385,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         weight = jsonLF.get(TyreKey.weightTyreService)?.asString!!
                     }
 
-                    if (!psiIn.equals("") && !psiOut.equals("") && !weight.equals("")) {
-                        TyreConfigClass.LFVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.LFVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.LFVehicleVisualDetail = !psiIn.equals("") && !psiOut.equals("") && !weight.equals("")
                 }
                 Log.e("getserviceselectedlf_3", "" + TyreConfigClass.LFCompleted + " " + TyreConfigClass.LFVehicleVisualDetail)
 
@@ -509,7 +492,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (arr.size() == 0) {
                         TyreConfigClass.RFVehicleVisualDetail = false
                     } else {
-                        val list: ArrayList<String>? = ArrayList()
+                        val list: ArrayList<String> = ArrayList()
                         Log.e("getissue", "" + arr)
                         for (i in arr) {
                             list?.add(i.asString)
@@ -520,24 +503,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if (selectedServiceArr?.contains("Wheel Balancing")!!) {
-                    if (jsonRF.get(TyreKey.weightTyreService) != null && !jsonRF.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.RFVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.RFVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.RFVehicleVisualDetail = jsonRF.get(TyreKey.weightTyreService) != null && !jsonRF.get(TyreKey.weightTyreService)?.asString?.equals("")!!
                 }
 
                 if (selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) {
-                    if (jsonRF.get(TyreKey.psiInTyreService) != null && !jsonRF.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.RFVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.RFVehicleVisualDetail = false
-                    }
-                    if (jsonRF.get(TyreKey.psiOutTyreService) != null && !jsonRF.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.RFVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.RFVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.RFVehicleVisualDetail = jsonRF.get(TyreKey.psiInTyreService) != null && !jsonRF.get(TyreKey.psiInTyreService)?.asString?.equals("")!!
+                    TyreConfigClass.RFVehicleVisualDetail = jsonRF.get(TyreKey.psiOutTyreService) != null && !jsonRF.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!
                 }
 
                 if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
@@ -554,11 +525,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         weight = jsonRF.get(TyreKey.weightTyreService)?.asString!!
                     }
 
-                    if (!psiIn.equals("") && !psiOut.equals("") && !weight.equals("")) {
-                        TyreConfigClass.RFVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.RFVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.RFVehicleVisualDetail = !psiIn.equals("") && !psiOut.equals("") && !weight.equals("")
                 }
                 if (TyreConfigClass.RFVehicleVisualDetail && TyreConfigClass.RFVehicleMake &&
                     TyreConfigClass.RFVehiclePattern && TyreConfigClass.RFVehicleSize
@@ -680,7 +647,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (arr?.size() == 0) {
                         TyreConfigClass.LRVehicleVisualDetail = false
                     } else {
-                        val list: ArrayList<String>? = ArrayList()
+                        val list: ArrayList<String>?= ArrayList()
                         Log.e("getissue", "" + arr)
                         for (i in arr) {
                             list?.add(i.asString)
@@ -691,24 +658,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if (selectedServiceArr?.contains("Wheel Balancing")!!) {
-                    if (jsonLR.get(TyreKey.weightTyreService) != null && !jsonLR.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.LRVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.LRVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.LRVehicleVisualDetail = jsonLR.get(TyreKey.weightTyreService) != null && !jsonLR.get(TyreKey.weightTyreService)?.asString?.equals("")!!
                 }
 
                 if (selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) {
-                    if (jsonLR.get(TyreKey.psiInTyreService) != null && !jsonLR.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.LRVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.LRVehicleVisualDetail = false
-                    }
-                    if (jsonLR.get(TyreKey.psiOutTyreService) != null && !jsonLR.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.LRVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.LRVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.LRVehicleVisualDetail = jsonLR.get(TyreKey.psiInTyreService) != null && !jsonLR.get(TyreKey.psiInTyreService)?.asString?.equals("")!!
+                    TyreConfigClass.LRVehicleVisualDetail = jsonLR.get(TyreKey.psiOutTyreService) != null && !jsonLR.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!
                 }
 
                 if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
@@ -725,11 +680,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         weight = jsonLR.get(TyreKey.weightTyreService)?.asString!!
                     }
 
-                    if (!psiIn.equals("") && !psiOut.equals("") && !weight.equals("")) {
-                        TyreConfigClass.LRVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.LRVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.LRVehicleVisualDetail = !psiIn.equals("") && !psiOut.equals("") && !weight.equals("")
                 }
                 if (TyreConfigClass.LRVehicleVisualDetail && TyreConfigClass.LRVehicleMake &&
                     TyreConfigClass.LRVehiclePattern && TyreConfigClass.LRVehicleSize
@@ -848,7 +799,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     if (arr.size() == 0) {
                         TyreConfigClass.RRVehicleVisualDetail = false
                     } else {
-                        val list: ArrayList<String>? = ArrayList()
+                        val list: ArrayList<String> = ArrayList()
                         Log.e("getissue", "" + arr)
                         for (i in arr) {
                             list?.add(i.asString)
@@ -859,24 +810,12 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 }
 
                 if (selectedServiceArr?.contains("Wheel Balancing")!!) {
-                    if (jsonRR.get(TyreKey.weightTyreService) != null && !jsonRR.get(TyreKey.weightTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.RRVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.RRVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.RRVehicleVisualDetail = jsonRR.get(TyreKey.weightTyreService) != null && !jsonRR.get(TyreKey.weightTyreService)?.asString?.equals("")!!
                 }
 
                 if (selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) {
-                    if (jsonRR.get(TyreKey.psiInTyreService) != null && !jsonRR.get(TyreKey.psiInTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.RRVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.RRVehicleVisualDetail = false
-                    }
-                    if (jsonRR.get(TyreKey.psiOutTyreService) != null && !jsonRR.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!) {
-                        TyreConfigClass.RRVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.RRVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.RRVehicleVisualDetail = jsonRR.get(TyreKey.psiInTyreService) != null && !jsonRR.get(TyreKey.psiInTyreService)?.asString?.equals("")!!
+                    TyreConfigClass.RRVehicleVisualDetail = jsonRR.get(TyreKey.psiOutTyreService) != null && !jsonRR.get(TyreKey.psiOutTyreService)?.asString?.equals("")!!
                 }
 
                 if ((selectedServiceArr?.contains("Nitrogen Refill")!! || selectedServiceArr?.contains("Nitrogen Top Up")!!) && (selectedServiceArr?.contains("Wheel Balancing")!!)) {
@@ -893,11 +832,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         weight = jsonRR.get(TyreKey.weightTyreService)?.asString!!
                     }
 
-                    if (!psiIn.equals("") && !psiOut.equals("") && !weight.equals("")) {
-                        TyreConfigClass.RRVehicleVisualDetail = true
-                    } else {
-                        TyreConfigClass.RRVehicleVisualDetail = false
-                    }
+                    TyreConfigClass.RRVehicleVisualDetail = !psiIn.equals("") && !psiOut.equals("") && !weight.equals("")
                 }
 
                 if (TyreConfigClass.RRVehicleVisualDetail && TyreConfigClass.RRVehicleMake &&

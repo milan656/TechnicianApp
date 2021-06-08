@@ -143,6 +143,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         init()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun init() {
 
         lltyreconfigbg = findViewById(R.id.lltyreconfigbg)
@@ -351,11 +352,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     setTyreServiceData("")
                 } else {
                     Common.hideLoader()
-                    if (it.error != null) {
-                        if (it.error?.get(0).message != null) {
-                            showShortToast(it.error?.get(0).message, this)
-                        }
-                    }
+                    showShortToast(it.error.get(0).message, this)
                 }
             } else {
                 Common.hideLoader()
@@ -363,6 +360,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         })
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun setTyreServiceData(tyreType: String) {
 
         /*"id": 4,
@@ -826,6 +824,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     }
 
 
+    @SuppressLint("InflateParams", "UseCompatLoadingForDrawables")
     private fun showBottomSheetdialogNormal(
         array: ArrayList<String>,
         titleStr: String,
@@ -837,7 +836,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
         val dialog =
-            this?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
         dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -878,11 +877,12 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         }
 
         btnSend.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
         }
-        dialog?.show()
+        dialog.show()
     }
 
+    @SuppressLint("InflateParams")
     private fun showBottomSheetdialog(
         array: ArrayList<String>,
         titleStr: String,
@@ -925,7 +925,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         arrayAdapter?.onclick = this
 
         ivClose?.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
         }
         if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
             btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
@@ -939,13 +939,13 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
         btnSend?.text = btnText
         btnSend.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
 
-            if (selectedPending?.equals("pattern")) {
+            if (selectedPending.equals("pattern")) {
 //                selectedPending="pattern"
                 val intent = Intent(this, VehiclePatternActivity::class.java)
                 startActivity(intent)
-            } else if (selectedPending?.equals("visual", ignoreCase = true)) {
+            } else if (selectedPending.equals("visual", ignoreCase = true)) {
 //                selectedPending="visual"
                 val intent = Intent(this, VisualDetailsActivity::class.java)
                 startActivity(intent)
@@ -957,8 +957,9 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        var id = v?.id
+        val id = v?.id
 
         when (id) {
 

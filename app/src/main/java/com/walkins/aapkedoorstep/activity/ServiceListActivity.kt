@@ -107,6 +107,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun init() {
         serviceRecycView = findViewById(R.id.serviceRecycView)
         serviceListSwipe = findViewById(R.id.serviceListSwipe)
@@ -143,7 +144,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             RecyclerView.VERTICAL,
             false
         )
-        adapter = this.let { ServicesListAdpater(arrayList, it, this, serviceStatus, isAddServiceEnable) }
+        adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
         serviceRecycView?.adapter = adapter
         adapter?.onclick = this
 
@@ -279,13 +280,11 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 //                            arrayList.filter { it.status.equals(upcomming) }
                     arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
                     adapter =
-                        this.let {
-                            ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>,
-                                this@ServiceListActivity,
-                                this@ServiceListActivity,
-                                serviceStatus,
-                                isAddServiceEnable)
-                        }
+                        ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>,
+                            this@ServiceListActivity,
+                            this@ServiceListActivity,
+                            serviceStatus,
+                            isAddServiceEnable)
 
                     tvUpcoming?.text = "Upcoming - ${arrayList.size}"
                     Log.e("getservicedata", "" + arrayList.size)
@@ -294,26 +293,22 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                     Log.e("getservicedata0", "" + arrayList.size)
                     arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
                     adapter =
-                        this.let {
-                            ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>,
-                                this@ServiceListActivity,
-                                this@ServiceListActivity,
-                                serviceStatus,
-                                isAddServiceEnable)
-                        }
+                        ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>,
+                            this@ServiceListActivity,
+                            this@ServiceListActivity,
+                            serviceStatus,
+                            isAddServiceEnable)
                     tvCompleted?.text = "Completed - ${arrayList.size}"
                 } else if (serviceStatus.equals(skipped)) {
 //                            arrayList.filter { it.status.equals(skipped) }
                     Log.e("getservicedata1", "" + arrayList.size)
                     arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
                     adapter =
-                        this@ServiceListActivity.let {
-                            ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>,
-                                it,
-                                this@ServiceListActivity,
-                                serviceStatus,
-                                isAddServiceEnable)
-                        }
+                        ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>,
+                            this@ServiceListActivity,
+                            this@ServiceListActivity,
+                            serviceStatus,
+                            isAddServiceEnable)
                     tvSkipped?.text = "Skipped - ${arrayList.size}"
                 }
 
@@ -370,7 +365,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 //                            arrayList.filter { it.status.equals(upcomming) }
                             arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
                             adapter =
-                                this.let { ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, it, this, serviceStatus, isAddServiceEnable) }
+                                ServicesListAdpater(arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>, this, this, serviceStatus, isAddServiceEnable)
 
                             tvUpcoming?.text = "Upcoming - ${arrayList.size}"
                             Log.e("getservicedata", "" + arrayList.size)
@@ -379,14 +374,14 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                             Log.e("getservicedata0", "" + arrayList.size)
                             arrayList = arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>
                             adapter =
-                                this.let { ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, it, this, serviceStatus, isAddServiceEnable) }
+                                ServicesListAdpater(arrayList.filter { it.status.equals(completed) } as MutableList<ServiceListByDateData>, this, this, serviceStatus, isAddServiceEnable)
                             tvCompleted?.text = "Completed - ${arrayList.size}"
                         } else if (serviceStatus.equals(skipped)) {
 //                            arrayList.filter { it.status.equals(skipped) }
                             Log.e("getservicedata1", "" + arrayList.size)
                             arrayList = arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>
                             adapter =
-                                this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this, serviceStatus, isAddServiceEnable) }
+                                ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, this, this, serviceStatus, isAddServiceEnable)
                             tvSkipped?.text = "Skipped - ${arrayList.size}"
                         }
 
@@ -410,9 +405,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 //                        llUpcoming?.performClick()
                     }
                 } else {
-                    if (it.error != null && it.error?.get(0).message != null) {
-                        showShortToast(it.error?.get(0).message, this)
-                    }
+                    showShortToast(it.error?.get(0).message, this)
                 }
             }
         })
@@ -764,6 +757,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         }
     }
 
+    @SuppressLint("InflateParams", "UseCompatLoadingForDrawables")
     private fun showBottomSheetdialogNormal(
         array: MutableList<ServiceListByDateData>,
         titleStr: String,
@@ -775,7 +769,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
         val dialog =
-            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+            BottomSheetDialog(this, R.style.CustomBottomSheetDialogTheme)
 
         dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
