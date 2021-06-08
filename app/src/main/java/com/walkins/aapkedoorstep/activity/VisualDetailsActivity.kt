@@ -1223,7 +1223,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             }
             R.id.btnDone -> {
 
-                /*if (edtManufaturingDate?.text?.toString().equals("")) {
+                if (edtManufaturingDate?.text?.toString().equals("")) {
                     Toast.makeText(this, "Please enter Manufaturing Date", Toast.LENGTH_SHORT).show()
                     return
 
@@ -1258,38 +1258,38 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         }
                     }
 
-                }*/
+                }
 //        if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
 //
 //        } else {
 //            Toast.makeText(this, "Please Select Issue Resolve List", Toast.LENGTH_SHORT).show()
 //            return
 //        }
-//                if (sidewell.equals("")
-//                ) {
-//                    Toast.makeText(this, "Please select side well condition", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
-//                if (shoulder.equals("")) {
-//                    Toast.makeText(this, "Please select shoulder condition", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
-//                if (treadWear.equals("")) {
-//                    Toast.makeText(this, "Please select Tread Wear condition", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
-//                if (treadDepth.equals("")) {
-//                    Toast.makeText(this, "Please select Tread Depth condition", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
-//                if (rimDamage.equals("")) {
-//                    Toast.makeText(this, "Please select Rim Damage condition", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
-//                if (bubble.equals("")) {
-//                    Toast.makeText(this, "Please select Bulge/Bubble condition", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
+                if (sidewell.equals("")
+                ) {
+                    Toast.makeText(this, "Please select side well condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (shoulder.equals("")) {
+                    Toast.makeText(this, "Please select shoulder condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (treadWear.equals("")) {
+                    Toast.makeText(this, "Please select Tread Wear condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (treadDepth.equals("")) {
+                    Toast.makeText(this, "Please select Tread Depth condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (rimDamage.equals("")) {
+                    Toast.makeText(this, "Please select Rim Damage condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (bubble.equals("")) {
+                    Toast.makeText(this, "Please select Bulge/Bubble condition", Toast.LENGTH_SHORT).show()
+                    return
+                }
 
                 selectedIssueArr?.clear()
 
@@ -1305,13 +1305,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     }
                 }
 
-//                if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
-//
-//                } else {
-//                    Toast.makeText(this, "Please select Issue resolve List", Toast.LENGTH_SHORT)
-//                        .show()
-//                    return
-//                }
+                if (selectedIssueArr != null && selectedIssueArr?.size!! > 0) {
+
+                } else {
+                    Toast.makeText(this, "Please select Issue resolve List", Toast.LENGTH_SHORT)
+                        .show()
+                    return
+                }
 
 //                if (TyreDetailCommonClass.visualDetailPhotoUrl != null && !TyreDetailCommonClass.visualDetailPhotoUrl.equals("")) {
 //

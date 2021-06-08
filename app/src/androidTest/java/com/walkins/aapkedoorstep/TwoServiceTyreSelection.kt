@@ -12,12 +12,13 @@ class TwoServiceTyreSelection {
     var inValidYearManufacturingDate: String? = "2123"
     var validManufacturingDate: String? = "2121"
 
-    var typeRotation_service = "Type Rotation"
-    var nitrogen_topup_service = "" //Nitrogen Top up
-    var nitrogen_refill_service = "" //Nitrogen Refill
+    var typeRotation_service = "Type Rotation" //Type Rotation
+    var nitrogen_topup_service = "Nitrogen Top Up" //Nitrogen Top up
+    var nitrogen_refill_service = "Nitrogen Refill" //Nitrogen Refill
     var wheel_balancing_service = "Wheel Balancing" //Wheel Balancing
 
     var singleTyreSelection = true
+    var vehicleWiseStoreData = false
 
 
 }

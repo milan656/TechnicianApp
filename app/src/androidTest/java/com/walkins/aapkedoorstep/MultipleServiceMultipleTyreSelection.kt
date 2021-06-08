@@ -18,6 +18,8 @@ class MultipleServiceMultipleTyreSelection {
     var wheel_balancing_service = "Wheel Balancing" //Wheel Balancing
 
     var singleTyreSelection = false
+    var vehicleWiseStoreData = false
+
 
 
 }

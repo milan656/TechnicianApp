@@ -19,5 +19,14 @@ class SingleServiceTyreSelection {
 
     var singleTyreSelection = true
 
+    var vehicleWiseStoreData = true
+
+    var sideWell = "Ok"
+    var shoulder = "SUG"
+    var treadWear = "REQ"
+    var treadDepth = "SUG"
+    var rimDamage = "OK"
+    var Bubble = "REQ"
+
 
 }
