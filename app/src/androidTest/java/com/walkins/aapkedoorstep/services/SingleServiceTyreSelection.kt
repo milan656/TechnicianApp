@@ -1,4 +1,4 @@
-package com.walkins.aapkedoorstep
+package com.walkins.aapkedoorstep.services
 
 class SingleServiceTyreSelection {
 

@@ -24,6 +24,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.walkins.aapkedoorstep.activity.LoginActivity
+import com.walkins.aapkedoorstep.services.MultipleServiceMultipleTyreSelection
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.anyOf
 import org.hamcrest.Matcher
