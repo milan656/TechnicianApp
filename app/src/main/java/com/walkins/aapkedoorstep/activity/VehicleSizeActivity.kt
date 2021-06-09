@@ -1358,5 +1358,9 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        System.gc()
+    }
 
 }

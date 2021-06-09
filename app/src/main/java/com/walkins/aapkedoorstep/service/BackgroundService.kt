@@ -236,6 +236,8 @@ class BackgroundService : Service() {
                         getServiceDashboard()
                     }
 
+                    stopService()
+
                 }
                 delay(4 * 60 * 1000) // 5 min delay
             }

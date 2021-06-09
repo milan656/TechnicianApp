@@ -21,6 +21,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.walkins.aapkedoorstep.activity.LoginActivity
@@ -34,27 +35,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(AndroidJUnit4ClassRunner::class)
 class TestCasesForAllServiceSingleTyre {
 
-    private val PREFERENCE_NAME = "MyPref"
-    private var preferencesEditor: SharedPreferences.Editor? = null
-    private var preferences: SharedPreferences? = null
-
-    //    private var serviceSelection: SingleServiceTyreSelection? = null
     private var serviceSelection: AllServiceSingleTyreSelection? = null
 
-    @Before
+   @Before
     fun setSharedPref() {
-        val targetContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
-
-        preferences = targetContext.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-//        serviceSelection = SingleServiceTyreSelection()
         serviceSelection = AllServiceSingleTyreSelection()
-
-        print("login_" + "" + preferences?.getBoolean("isLogin", false))
-
-
     }
 
     @get:Rule
@@ -63,8 +51,6 @@ class TestCasesForAllServiceSingleTyre {
     )
     @Test
     fun loginFunctionality() {
-        print("login_" + "" + preferences?.getBoolean("isLogin", false))
-//        Assert.assertEquals("login_" + true+"-", "login_" + preferences?.getBoolean("isLogin", false))
 
         loginView()
 
@@ -282,15 +268,20 @@ class TestCasesForAllServiceSingleTyre {
 //        fillUpAddServicedetail()
 
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
+        tyreLFTyreSelection()
+        Thread.sleep(200)
+        tyreRFTyreSelection()
+        Thread.sleep(200)
+        fillUpAddServicedetail()
 
-        tyreLRTyreSelection()
+        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
         tyreRRTyreSelection()
-//        tyreLFTyreSelection()
-//        tyreRFTyreSelection()
+        Thread.sleep(200)
+        tyreLRTyreSelection()
 
         Thread.sleep(1000)
 
-        submitServiceAndGoToCompletedService()
+//        submitServiceAndGoToCompletedService()
 
         if (serviceSelection?.editFlowEnable!!) {
             editFlowPerform()
@@ -417,17 +408,17 @@ class TestCasesForAllServiceSingleTyre {
                     click()
                 )
             )
-//            onView(withId(R.id.gridviewRecycMake_))
-//                .perform(
-//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                        number,
-//                        recyclerChildAction<TextView>(R.id.tvmakeName) {
-//                            print("vehicle_make-->" + this.text?.toString())
-//                            serviceSelection?.vehicleMake = this.text.toString()
-////                            selects?.selected_vehicleMake = this.text.toString()
-//                        }
-//                    )
-//                )
+            onView(withId(R.id.gridviewRecycMake_))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        number,
+                        recyclerChildAction<TextView>(R.id.tvmakeName) {
+                            print("vehicle_make-->" + this.text?.toString())
+                            serviceSelection?.vehicleMake = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                        }
+                    )
+                )
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
@@ -442,21 +433,21 @@ class TestCasesForAllServiceSingleTyre {
                 BaseRobot().doOnView(
                     withId(R.id.gridviewRecycMake_), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        2,
+                        4,
                         click()
                     )
                 )
-//                onView(withId(R.id.gridviewRecycMake_))
-//                    .perform(
-//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                            2,
-//                            recyclerChildAction<TextView>(R.id.tvmakeName) {
-//                                print("vehicle_make-->" + this.text?.toString())
-//                                serviceSelection?.vehicleMake = this.text.toString()
-////                            selects?.selected_vehicleMake = this.text.toString()
-//                            }
-//                        )
-//                    )
+                onView(withId(R.id.gridviewRecycMake_))
+                    .perform(
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            2,
+                            recyclerChildAction<TextView>(R.id.tvmakeName) {
+                                print("vehicle_make-->" + this.text?.toString())
+                                serviceSelection?.vehicleMake = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                            }
+                        )
+                    )
 
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
@@ -468,6 +459,7 @@ class TestCasesForAllServiceSingleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
+        Thread.sleep(200)
         navigateToVehiclePatternScreen()
     }
 
@@ -481,17 +473,17 @@ class TestCasesForAllServiceSingleTyre {
                     click()
                 )
             )
-//            onView(withId(R.id.gridviewRecycModel))
-//                .perform(
-//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                        number,
-//                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
-//                            print("vehicle_make-->" + this.text?.toString())
-//                            serviceSelection?.vehiclePattern = this.text.toString()
-////                            selects?.selected_vehicleMake = this.text.toString()
-//                        }
-//                    )
-//                )
+            onView(withId(R.id.gridviewRecycModel))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        number,
+                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+                            print("vehicle_make-->" + this.text?.toString())
+                            serviceSelection?.vehiclePattern = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                        }
+                    )
+                )
 
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
@@ -511,17 +503,17 @@ class TestCasesForAllServiceSingleTyre {
                         click()
                     )
                 )
-//                onView(withId(R.id.gridviewRecycModel))
-//                    .perform(
-//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                            1,
-//                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
-//                                print("vehicle_make-->" + this.text?.toString())
-//                                serviceSelection?.vehiclePattern = this.text.toString()
-////                            selects?.selected_vehicleMake = this.text.toString()
-//                            }
-//                        )
-//                    )
+                onView(withId(R.id.gridviewRecycModel))
+                    .perform(
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            1,
+                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+                                print("vehicle_make-->" + this.text?.toString())
+                                serviceSelection?.vehiclePattern = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                            }
+                        )
+                    )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -532,7 +524,7 @@ class TestCasesForAllServiceSingleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
+        Thread.sleep(200)
         navigateToVehicleSizeScreen()
     }
 
@@ -546,17 +538,17 @@ class TestCasesForAllServiceSingleTyre {
                     click()
                 )
             )
-//            onView(withId(R.id.gridviewRecycModel))
-//                .perform(
-//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                        0,
-//                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
-//                            print("vehicle_make-->" + this.text?.toString())
-//                            serviceSelection?.vehicleSize = this.text.toString()
-////                            selects?.selected_vehicleMake = this.text.toString()
-//                        }
-//                    )
-//                )
+            onView(withId(R.id.gridviewRecycModel))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        0,
+                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+                            print("vehicle_make-->" + this.text?.toString())
+                            serviceSelection?.vehicleSize = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                        }
+                    )
+                )
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
@@ -576,17 +568,17 @@ class TestCasesForAllServiceSingleTyre {
                         1,
                         click()
                     ))
-//                onView(withId(R.id.gridviewRecycModel))
-//                    .perform(
-//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                            1,
-//                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
-//                                print("vehicle_make-->" + this.text?.toString())
-//                                serviceSelection?.vehicleSize = this.text.toString()
-////                            selects?.selected_vehicleMake = this.text.toString()
-//                            }
-//                        )
-//                    )
+                onView(withId(R.id.gridviewRecycModel))
+                    .perform(
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            1,
+                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+                                print("vehicle_make-->" + this.text?.toString())
+                                serviceSelection?.vehicleSize = this.text.toString()
+//                            selects?.selected_vehicleMake = this.text.toString()
+                            }
+                        )
+                    )
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -597,7 +589,7 @@ class TestCasesForAllServiceSingleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
+        Thread.sleep(200)
         navigateToVisualDetailPage()
     }
 
@@ -606,32 +598,14 @@ class TestCasesForAllServiceSingleTyre {
         Thread.sleep(1000)
 
         if (!serviceSelection?.editFlowEnable!!) {
-            try {
-                val date = onView(withId(R.id.edtManufaturingDate))
-                if (!getText(date).equals("")) {
-                    try {
-                        onView(withId(R.id.edtManufaturingDate)).perform(clearText(), typeText(serviceSelection?.blankManufacturingDate))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                } else {
-                    try {
-                        onView(withId(R.id.edtManufaturingDate)).perform(typeText(serviceSelection?.blankManufacturingDate))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
 
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
             try {
                 BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
-            try {
+            /*try {
                 val date = onView(withId(R.id.edtManufaturingDate))
                 if (!date.equals("")) {
                     onView(withId(R.id.edtManufaturingDate)).perform(clearText(), typeText(serviceSelection?.zeroManufacturingDate))
@@ -682,7 +656,7 @@ class TestCasesForAllServiceSingleTyre {
                 BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
-            }
+            }*/
             try {
                 val date = onView(withId(R.id.edtManufaturingDate))
                 if (!date.equals("")) {
@@ -726,12 +700,12 @@ class TestCasesForAllServiceSingleTyre {
                 onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
                 onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
 
-//            serviceSelection?.sidewell = "OK"
-//            serviceSelection?.shoulder = "SUG"
-//            serviceSelection?.treadWear = "REQ"
-//            serviceSelection?.treadDepth = "SUG"
-//            serviceSelection?.rimDamage = "OK"
-//            serviceSelection?.bubble = "REQ"
+            serviceSelection?.sidewell = "OK"
+            serviceSelection?.shoulder = "SUG"
+            serviceSelection?.treadWear = "REQ"
+            serviceSelection?.treadDepth = "SUG"
+            serviceSelection?.rimDamage = "OK"
+            serviceSelection?.bubble = "REQ"
 
                 BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
                     swipeUp())
@@ -749,17 +723,17 @@ class TestCasesForAllServiceSingleTyre {
                         click()
                     )
                 )
-//            onView(withId(R.id.issueResolvedRecycView))
-//                .perform(
-//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                        number,
-//                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
-//                            print("issueResolved-->" + this.text?.toString())
-//                            serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
-////                             = this.text.toString()
-//                        }
-//                    )
-//                )
+            onView(withId(R.id.issueResolvedRecycView))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        number,
+                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+                            print("issueResolved-->" + this.text?.toString())
+                            serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
+//                             = this.text.toString()
+                        }
+                    )
+                )
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -776,7 +750,6 @@ class TestCasesForAllServiceSingleTyre {
             }
         }
 
-
     }
 
     private fun fillUpAddServicedetail() {
@@ -791,17 +764,17 @@ class TestCasesForAllServiceSingleTyre {
                     click()
                 )
             )
-//            onView(withId(R.id.suggestionsRecycView))
-//                .perform(
-//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                        4,
-//                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
-//                            print("suggestions-->" + this.text?.toString())
-//                            serviceSelection?.suggestionsArrayList?.add(this.text?.toString()!!)
-////                             = this.text.toString()
-//                        }
-//                    )
-//                )
+            onView(withId(R.id.suggestionsRecycView))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        4,
+                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+                            print("suggestions-->" + this.text?.toString())
+                            serviceSelection?.suggestionsArrayList?.add(this.text?.toString()!!)
+//                             = this.text.toString()
+                        }
+                    )
+                )
         } catch (e: Exception) {
             e.printStackTrace()
         }

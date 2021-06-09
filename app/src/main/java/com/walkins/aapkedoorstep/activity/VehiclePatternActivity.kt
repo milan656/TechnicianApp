@@ -1363,5 +1363,9 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        System.gc()
+    }
 
 }
