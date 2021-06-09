@@ -533,7 +533,7 @@ class TestCasesForSingleServiceAndTyre {
 
     private fun navigateToVisualDetailPage() {
 
-        Thread.sleep(1000)
+        Thread.sleep(6000)
         try {
             val date = onView(withId(R.id.edtManufaturingDate))
             if (!getText(date).equals("")) {
@@ -629,7 +629,6 @@ class TestCasesForSingleServiceAndTyre {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
         try {
             onView(withId(R.id.edtManufaturingDate)).perform(
                 clearText(),
@@ -637,11 +636,7 @@ class TestCasesForSingleServiceAndTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-        try {
-            BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+
 
         try {
             onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
@@ -707,8 +702,11 @@ class TestCasesForSingleServiceAndTyre {
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click());
 
         tyreLFTyreSelection()
+        Thread.sleep(5000)
         tyreRFTyreSelection()
+        Thread.sleep(5000)
         tyreLRTyreSelection()
+        Thread.sleep(5000)
         tyreRRTyreSelection()
 
 //        onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
