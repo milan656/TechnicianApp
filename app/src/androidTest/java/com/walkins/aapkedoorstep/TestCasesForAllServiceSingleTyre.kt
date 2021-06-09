@@ -35,7 +35,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4ClassRunner::class)
+@RunWith(AndroidJUnit4::class)
 class TestCasesForAllServiceSingleTyre {
 
     private var serviceSelection: AllServiceSingleTyreSelection? = null
@@ -152,7 +152,7 @@ class TestCasesForAllServiceSingleTyre {
 
         BaseRobot().doOnView(withId(R.id.llhome), closeSoftKeyboard(), click())
 
-        Thread.sleep(2500)
+        Thread.sleep(2000)
         BaseRobot().doOnView(
             withId(R.id.recyclerView), closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -433,7 +433,7 @@ class TestCasesForAllServiceSingleTyre {
                 BaseRobot().doOnView(
                     withId(R.id.gridviewRecycMake_), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        4,
+                        2,
                         click()
                     )
                 )

@@ -210,7 +210,7 @@ class TestCasesForSingleServiceAndTyre {
 
     private fun navigateToAddServiceDetailScreen() {
 
-        skipServiceFlow()
+//        skipServiceFlow()
 
         onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
@@ -302,9 +302,9 @@ class TestCasesForSingleServiceAndTyre {
 
         fillUpAddServicedetail()
 
-        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
-
-        editFlowPerform()
+//        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
+//
+//        editFlowPerform()
 
 //        if (serviceSelection?.vehicleWiseStoreData!!) {
 //            serviceSelection?.vehicleWiseStoreData = false
@@ -711,15 +711,15 @@ class TestCasesForSingleServiceAndTyre {
         tyreLRTyreSelection()
         tyreRRTyreSelection()
 
-        onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
-        onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
-
-        removeWheelBalancingService()
-
-        BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
-            swipeUp())
-
-        removeNitrogenService()
+//        onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
+//        onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
+//
+//        removeWheelBalancingService()
+//
+//        BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
+//            swipeUp())
+//
+//        removeNitrogenService()
 
 
     }
