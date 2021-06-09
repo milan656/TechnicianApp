@@ -72,7 +72,7 @@ class TestCasesForAllServiceMultipleTyre {
 
     private fun loginView() {
 
-        BaseRobot().doOnView(withId(R.id.btnLoginToDashBoard), closeSoftKeyboard(), click())
+        onView(withId(R.id.btnLoginToDashBoard)).perform(customScrollTo, click())
         onView(withId(R.id.edtLoginEmail)).perform(typeText(serviceSelection?.invalidNumber))
         onView(withId(R.id.btnLoginToDashBoard)).perform(
             closeSoftKeyboard(),
@@ -101,7 +101,7 @@ class TestCasesForAllServiceMultipleTyre {
 
         enterInvalidOTP()
 
-        Espresso.onView(withId(R.id.btnVerify)).perform(
+        onView(withId(R.id.btnVerify)).perform(
             closeSoftKeyboard(),
             click()
         )
@@ -110,7 +110,7 @@ class TestCasesForAllServiceMultipleTyre {
 
         enterValidOTP()
 
-        Espresso.onView(withId(R.id.btnVerify)).perform(
+        onView(withId(R.id.btnVerify)).perform(
             closeSoftKeyboard(),
             click()
         )
@@ -143,10 +143,8 @@ class TestCasesForAllServiceMultipleTyre {
     }
 
     private fun enterInvalidOTP() {
-        onView(withId(R.id.edtOtp1)).perform(
-            typeText("1"),
-            click()
-        )
+
+        onView(withId(R.id.edtOtp1)).perform(typeText("1"),customScrollTo, click())
         onView(withId(R.id.edtOtp2)).perform(
             typeText("5"),
             click()
@@ -182,19 +180,6 @@ class TestCasesForAllServiceMultipleTyre {
         navigateToServiceListScreen()
     }
 
-    private fun navigateReportScreen() {
-        BaseRobot().doOnView(withId(R.id.llReport), closeSoftKeyboard(), click())
-//        reportRecycView
-        BaseRobot().doOnView(
-            withId(R.id.reportRecycView), closeSoftKeyboard(),
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
-                click()
-            )
-        )
-
-    }
-
     private fun navigateToServiceListScreen() {
 
         BaseRobot().doOnView(
@@ -205,14 +190,12 @@ class TestCasesForAllServiceMultipleTyre {
             )
         )
         navigateToAddServiceDetailScreen()
-
     }
 
     private fun navigateToAddServiceDetailScreen() {
 
-        skipServiceFlow()
+//        skipServiceFlow()
 
-        onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
 
         if (!serviceSelection?.nitrogen_refill_service.equals("")) {
@@ -300,11 +283,20 @@ class TestCasesForAllServiceMultipleTyre {
             }
         }
 
-        fillUpAddServicedetail()
+//        fillUpAddServicedetail()
 
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
 
-        editFlowPerform()
+        tyreLRTyreSelection()
+        tyreRRTyreSelection()
+        tyreLFTyreSelection()
+        tyreRFTyreSelection()
+
+        Thread.sleep(1000)
+
+        onView(withId(R.id.btnSubmitAndComplete)).perform(customScrollTo, click())
+
+        BaseRobot().doOnView(withId(R.id.btn_ok), closeSoftKeyboard(), click())
 
 //        if (serviceSelection?.vehicleWiseStoreData!!) {
 //            serviceSelection?.vehicleWiseStoreData = false

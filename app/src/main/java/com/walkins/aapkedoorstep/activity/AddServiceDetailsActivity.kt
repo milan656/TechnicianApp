@@ -1355,7 +1355,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         ivDueDate?.setOnClickListener(this)
         btnSubmitAndComplete?.setOnClickListener(this)
 
-        btnSubmitAndComplete?.isClickable = false
+        btnSubmitAndComplete?.isClickable = true
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_blue))
 
         ivPickedImage?.setOnClickListener(this)
@@ -2889,10 +2889,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Log.e("getfinalobject", "" + jsonObject)
                     Log.e("getObjectT__", "" + jsonObject)
 
-//                    Common.hideLoader()
-//                    hideLoader()
+                    Common.hideLoader()
+                    hideLoader()
 
-                    serviceViewModel?.callApiAddService(
+                    /*serviceViewModel?.callApiAddService(
                         jsonObject,
                         prefManager.getAccessToken()!!,
                         this
@@ -2921,7 +2921,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             Common.hideLoader()
                             hideLoader()
                         }
-                    })
+                    })*/
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -4779,7 +4779,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private fun checkSubmitBtn() {
 
         btnSubmitAndComplete?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.rounded_blue))
-        btnSubmitAndComplete?.isClickable = false
+        btnSubmitAndComplete?.isClickable = true
 
         try {
             if (edtMoreSuggestion?.text?.toString() != null) {
@@ -4791,14 +4791,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
         Log.e("getImagess", "" + TyreConfigClass.moreSuggestions)
 
-        if (selectedDateNextServiceDue != null && !selectedDateNextServiceDue
+       /* if (selectedDateNextServiceDue != null && !selectedDateNextServiceDue
                 .equals("")
         ) {
 
         } else {
 //            Toast.makeText(this, "Please Select Next Due Date", Toast.LENGTH_SHORT).show()
             return
-        }
+        }*/
 
         var count = 0
         var tyreRotation = false
@@ -4850,14 +4850,14 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 //            Toast.makeText(this, "Tyre Not Completed", Toast.LENGTH_SHORT).show()
             return
         }
-        if (TyreConfigClass.CarPhoto_1.equals("")) {
-
-            return
-        }
-        if (TyreConfigClass.CarPhoto_2.equals("")) {
-
-            return
-        }
+//        if (TyreConfigClass.CarPhoto_1.equals("")) {
+//
+//            return
+//        }
+//        if (TyreConfigClass.CarPhoto_2.equals("")) {
+//
+//            return
+//        }
         Log.e("isCpmpleted33", "button is clickable")
 //        Toast.makeText(this, "button is clickable", Toast.LENGTH_SHORT).show()
         btnSubmitAndComplete?.isClickable = true

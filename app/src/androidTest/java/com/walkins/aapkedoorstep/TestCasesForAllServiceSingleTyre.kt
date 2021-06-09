@@ -61,18 +61,17 @@ class TestCasesForAllServiceSingleTyre {
     open val mActivityRule: ActivityTestRule<LoginActivity> = ActivityTestRule(
         LoginActivity::class.java
     )
-
     @Test
     fun loginFunctionality() {
         print("login_" + "" + preferences?.getBoolean("isLogin", false))
 //        Assert.assertEquals("login_" + true+"-", "login_" + preferences?.getBoolean("isLogin", false))
 
         loginView()
+
     }
 
     private fun loginView() {
 
-//        BaseRobot().doOnView(withId(R.id.btnLoginToDashBoard), closeSoftKeyboard(), click())
         onView(withId(R.id.btnLoginToDashBoard)).perform(customScrollTo, click())
         onView(withId(R.id.edtLoginEmail)).perform(typeText(serviceSelection?.invalidNumber))
         onView(withId(R.id.btnLoginToDashBoard)).perform(
@@ -98,24 +97,18 @@ class TestCasesForAllServiceSingleTyre {
     private fun verifyOTP() {
 
 //        click when no OTP entered
-//        BaseRobot().doOnView(withId(R.id.btnVerify), closeSoftKeyboard(), click())
-        onView(withId(R.id.btnVerify)).perform(customScrollTo, click())
+        onView(withId(R.id.scrollVerify)).perform(closeSoftKeyboard(), swipeUp())
+        BaseRobot().doOnView(withId(R.id.btnVerify), closeSoftKeyboard(), click())
+//        onView(withId(R.id.btnVerify)).perform(customScrollTo, click())
 
         enterInvalidOTP()
 
-        onView(withId(R.id.btnVerify)).perform(
-            closeSoftKeyboard(),
-            click()
-        )
-
+        BaseRobot().doOnView(withId(R.id.btnVerify), closeSoftKeyboard(), click())
         BaseRobot().doOnView(withId(R.id.btnOk), closeSoftKeyboard(), click())
 
         enterValidOTP()
 
-        onView(withId(R.id.btnVerify)).perform(
-            closeSoftKeyboard(),
-            click()
-        )
+        onView(withId(R.id.btnVerify)).perform(customScrollTo, click())
         NavigateMainDashboard()
     }
 
@@ -184,19 +177,6 @@ class TestCasesForAllServiceSingleTyre {
         navigateToServiceListScreen()
     }
 
-    private fun navigateReportScreen() {
-        BaseRobot().doOnView(withId(R.id.llReport), closeSoftKeyboard(), click())
-//        reportRecycView
-        BaseRobot().doOnView(
-            withId(R.id.reportRecycView), closeSoftKeyboard(),
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
-                click()
-            )
-        )
-
-    }
-
     private fun navigateToServiceListScreen() {
 
         BaseRobot().doOnView(
@@ -214,7 +194,6 @@ class TestCasesForAllServiceSingleTyre {
 
 //        skipServiceFlow()
 
-        onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
 
         if (!serviceSelection?.nitrogen_refill_service.equals("")) {
@@ -300,9 +279,18 @@ class TestCasesForAllServiceSingleTyre {
             }
         }
 
-        fillUpAddServicedetail()
+//        fillUpAddServicedetail()
 
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
+
+        tyreLRTyreSelection()
+        tyreRRTyreSelection()
+//        tyreLFTyreSelection()
+//        tyreRFTyreSelection()
+
+        Thread.sleep(1000)
+
+        submitServiceAndGoToCompletedService()
 
         if (serviceSelection?.editFlowEnable!!) {
             editFlowPerform()
@@ -312,6 +300,15 @@ class TestCasesForAllServiceSingleTyre {
 //            serviceSelection?.vehicleWiseStoreData = false
 //            AnotherVehicleDetailFillup()
 //        }
+    }
+
+    private fun submitServiceAndGoToCompletedService() {
+        BaseRobot().doOnView(withId(R.id.btnSubmitAndComplete), closeSoftKeyboard(), click())
+        BaseRobot().doOnView(withId(R.id.btn_ok), closeSoftKeyboard(), click())
+
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+
+        BaseRobot().doOnView(withId(R.id.llCompleted), closeSoftKeyboard(), click())
     }
 
     private fun AnotherVehicleDetailFillup() {
@@ -744,7 +741,7 @@ class TestCasesForAllServiceSingleTyre {
             }
 
             try {
-                val number = (0..3).random()
+                val number = (1..3).random()
                 BaseRobot().doOnView(
                     withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -821,25 +818,6 @@ class TestCasesForAllServiceSingleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
-        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click());
-
-        tyreLRTyreSelection()
-        tyreRRTyreSelection()
-        tyreLFTyreSelection()
-        tyreRFTyreSelection()
-
-        onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
-        onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
-
-        removeWheelBalancingService()
-
-        BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
-            swipeUp())
-
-        removeNitrogenService()
-
-
     }
 
     private fun removeNitrogenService() {

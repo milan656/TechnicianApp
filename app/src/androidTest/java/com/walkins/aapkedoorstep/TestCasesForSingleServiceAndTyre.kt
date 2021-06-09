@@ -72,7 +72,7 @@ class TestCasesForSingleServiceAndTyre {
 
     private fun loginView() {
 
-        BaseRobot().doOnView(withId(R.id.btnLoginToDashBoard), closeSoftKeyboard(), click())
+        onView(withId(R.id.btnLoginToDashBoard)).perform(customScrollTo, click())
         onView(withId(R.id.edtLoginEmail)).perform(typeText(serviceSelection?.invalidNumber))
         onView(withId(R.id.btnLoginToDashBoard)).perform(
             closeSoftKeyboard(),
