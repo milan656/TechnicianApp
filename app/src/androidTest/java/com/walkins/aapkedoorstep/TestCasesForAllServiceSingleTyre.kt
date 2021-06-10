@@ -41,17 +41,17 @@ class TestCasesForAllServiceSingleTyre {
     private var serviceSelection: AllServiceSingleTyreSelection? = null
 
     @Before
-    fun setSharedPref() {
+    fun setModelClass() {
         serviceSelection = AllServiceSingleTyreSelection()
     }
 
     @get:Rule
-    open val mActivityRule: ActivityTestRule<LoginActivity> = ActivityTestRule(
+    val mActivityRule: ActivityTestRule<LoginActivity> = ActivityTestRule(
         LoginActivity::class.java
     )
 
     @Test
-    fun loginFunctionality() {
+    fun startTechnicianTestingFlow() {
 
         loginView()
 

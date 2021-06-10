@@ -1,6 +1,5 @@
 package com.walkins.aapkedoorstep
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.view.View
 import android.widget.CheckBox
@@ -21,7 +20,6 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.services.SingleServiceTyreSelection
@@ -32,7 +30,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 
 @RunWith(AndroidJUnit4::class)
 class TestCasesForSingleServiceAndTyre {
@@ -45,28 +42,17 @@ class TestCasesForSingleServiceAndTyre {
     private var serviceSelection: SingleServiceTyreSelection? = null
 
     @Before
-    fun setSharedPref() {
-        val targetContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
-
-        preferences = targetContext.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-//        serviceSelection = SingleServiceTyreSelection()
+    fun setModelClass() {
         serviceSelection = SingleServiceTyreSelection()
-
-        print("login_" + "" + preferences?.getBoolean("isLogin", false))
-
-
     }
 
     @get:Rule
-    open val mActivityRule: ActivityTestRule<LoginActivity> = ActivityTestRule(
+    val mActivityRule: ActivityTestRule<LoginActivity> = ActivityTestRule(
         LoginActivity::class.java
     )
 
     @Test
-    fun loginFunctionality() {
-        print("login_" + "" + preferences?.getBoolean("isLogin", false))
-//        Assert.assertEquals("login_" + true+"-", "login_" + preferences?.getBoolean("isLogin", false))
-
+    fun startTechnicianTestingFlow() {
         loginView()
     }
 
@@ -275,7 +261,6 @@ class TestCasesForSingleServiceAndTyre {
                         }
                     )
                 )
-
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -313,7 +298,6 @@ class TestCasesForSingleServiceAndTyre {
     }
 
     private fun editFlowPerform() {
-
         tyreLFTyreSelection("LF")
         tyreRFTyreSelection("RF")
         tyreLRTyreSelection("LR")
