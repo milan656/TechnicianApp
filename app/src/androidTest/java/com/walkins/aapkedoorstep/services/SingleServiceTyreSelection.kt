@@ -85,6 +85,4 @@ class SingleServiceTyreSelection {
     var bubble_rr = ""
 
     var pendingFlow = true
-
-
 }

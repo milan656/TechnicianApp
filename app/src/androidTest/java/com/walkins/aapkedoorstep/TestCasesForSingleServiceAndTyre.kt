@@ -26,6 +26,7 @@ import com.walkins.aapkedoorstep.services.SingleServiceTyreSelection
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.anyOf
 import org.hamcrest.Matcher
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -1091,5 +1092,21 @@ class TestCasesForSingleServiceAndTyre {
         onView(withId(R.id.ivTyre4)).perform(customScrollTo, click())
 
         BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+
+        onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
+
+        Assert.assertEquals(serviceSelection?.vehiclePattern_lf, getText(onView(withId(R.id.tvSelectedPattern))))
+        Assert.assertEquals(serviceSelection?.vehicleSize_lf, getText(onView(withId(R.id.tvSelectedSize))))
+        Assert.assertEquals(serviceSelection?.manuFacturingDate_lf, getText(onView(withId(R.id.tvManufacturingDate))))
+        if (!serviceSelection?.psi_in.equals("")) {
+            Assert.assertEquals(serviceSelection?.psi_in, getText(onView(withId(R.id.tvPsiIn))))
+        }
+        if (!serviceSelection?.psi_out.equals("")) {
+            Assert.assertEquals(serviceSelection?.psi_out, getText(onView(withId(R.id.tvPsiOut))))
+        }
+        if (!serviceSelection?.weight.equals("")) {
+            Assert.assertEquals(serviceSelection?.weight, getText(onView(withId(R.id.tvWeight))))
+        }
+
     }
 }
