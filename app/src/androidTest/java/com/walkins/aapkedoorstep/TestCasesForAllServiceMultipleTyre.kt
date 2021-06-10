@@ -901,4 +901,40 @@ class TestCasesForAllServiceMultipleTyre {
             ScrollToAction().perform(uiController, view)
         }
     }
+
+    private fun submitServiceAndGoToCompletedService() {
+        BaseRobot().doOnView(withId(R.id.btnSubmitAndComplete), closeSoftKeyboard(), click())
+        BaseRobot().doOnView(withId(R.id.btn_ok), closeSoftKeyboard(), click())
+
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+
+        BaseRobot().doOnView(withId(R.id.llCompleted), closeSoftKeyboard(), click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+        navigateToCompletedServiceDetailScreen()
+    }
+
+    private fun navigateToCompletedServiceDetailScreen() {
+
+        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click());
+
+        onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        onView(withId(R.id.ivTyre2)).perform(customScrollTo, click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        onView(withId(R.id.ivTyre3)).perform(customScrollTo, click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        onView(withId(R.id.ivTyre4)).perform(customScrollTo, click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+    }
 }

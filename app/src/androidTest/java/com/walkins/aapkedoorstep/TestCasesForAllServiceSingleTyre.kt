@@ -40,7 +40,7 @@ class TestCasesForAllServiceSingleTyre {
 
     private var serviceSelection: AllServiceSingleTyreSelection? = null
 
-   @Before
+    @Before
     fun setSharedPref() {
         serviceSelection = AllServiceSingleTyreSelection()
     }
@@ -49,6 +49,7 @@ class TestCasesForAllServiceSingleTyre {
     open val mActivityRule: ActivityTestRule<LoginActivity> = ActivityTestRule(
         LoginActivity::class.java
     )
+
     @Test
     fun loginFunctionality() {
 
@@ -293,14 +294,6 @@ class TestCasesForAllServiceSingleTyre {
 //        }
     }
 
-    private fun submitServiceAndGoToCompletedService() {
-        BaseRobot().doOnView(withId(R.id.btnSubmitAndComplete), closeSoftKeyboard(), click())
-        BaseRobot().doOnView(withId(R.id.btn_ok), closeSoftKeyboard(), click())
-
-        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
-
-        BaseRobot().doOnView(withId(R.id.llCompleted), closeSoftKeyboard(), click())
-    }
 
     private fun AnotherVehicleDetailFillup() {
         BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
@@ -700,12 +693,12 @@ class TestCasesForAllServiceSingleTyre {
                 onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
                 onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
 
-            serviceSelection?.sidewell = "OK"
-            serviceSelection?.shoulder = "SUG"
-            serviceSelection?.treadWear = "REQ"
-            serviceSelection?.treadDepth = "SUG"
-            serviceSelection?.rimDamage = "OK"
-            serviceSelection?.bubble = "REQ"
+                serviceSelection?.sidewell = "OK"
+                serviceSelection?.shoulder = "SUG"
+                serviceSelection?.treadWear = "REQ"
+                serviceSelection?.treadDepth = "SUG"
+                serviceSelection?.rimDamage = "OK"
+                serviceSelection?.bubble = "REQ"
 
                 BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
                     swipeUp())
@@ -723,17 +716,17 @@ class TestCasesForAllServiceSingleTyre {
                         click()
                     )
                 )
-            onView(withId(R.id.issueResolvedRecycView))
-                .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        number,
-                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
-                            print("issueResolved-->" + this.text?.toString())
-                            serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
+                onView(withId(R.id.issueResolvedRecycView))
+                    .perform(
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            number,
+                            recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+                                print("issueResolved-->" + this.text?.toString())
+                                serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
 //                             = this.text.toString()
-                        }
+                            }
+                        )
                     )
-                )
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -977,5 +970,41 @@ class TestCasesForAllServiceSingleTyre {
         override fun perform(uiController: UiController?, view: View?) {
             ScrollToAction().perform(uiController, view)
         }
+    }
+
+    private fun submitServiceAndGoToCompletedService() {
+        BaseRobot().doOnView(withId(R.id.btnSubmitAndComplete), closeSoftKeyboard(), click())
+        BaseRobot().doOnView(withId(R.id.btn_ok), closeSoftKeyboard(), click())
+
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+
+        BaseRobot().doOnView(withId(R.id.llCompleted), closeSoftKeyboard(), click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+        navigateToCompletedServiceDetailScreen()
+    }
+
+    private fun navigateToCompletedServiceDetailScreen() {
+
+        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click());
+
+        onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        onView(withId(R.id.ivTyre2)).perform(customScrollTo, click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        onView(withId(R.id.ivTyre3)).perform(customScrollTo, click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        onView(withId(R.id.ivTyre4)).perform(customScrollTo, click())
+
+        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
     }
 }
