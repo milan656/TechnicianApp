@@ -424,13 +424,13 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
 
         if (prefManager.getIssueList(TyreConfigClass.issueList) != null &&
-            prefManager.getIssueList(TyreConfigClass.issueList)?.size!! > 0
+            prefManager.getIssueList(TyreConfigClass.issueList).size > 0
         ) {
             issueResolveArray?.clear()
             for (i in prefManager.getIssueList(TyreConfigClass.issueList).indices) {
                 issueResolveArray?.add(
                     IssueResolveModel(
-                        prefManager.getIssueList(TyreConfigClass.issueList).get(i).issueName, prefManager.getIssueList(TyreConfigClass.issueList)?.get(i)?.id!!, false
+                        prefManager.getIssueList(TyreConfigClass.issueList).get(i).issueName, prefManager.getIssueList(TyreConfigClass.issueList).get(i).id, false
                     )
                 )
             }
@@ -524,8 +524,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     }
 
     private fun getData(json: JsonObject) {
-        GlobalScope.launch(Dispatchers.Main) {
-            launch(Dispatchers.Main) {
+        GlobalScope.launch(Dispatchers.IO) {
+            launch(Dispatchers.IO) {
                 Log.e("getobje", "" + json)
                 if (json.get(TyreKey.manufaturingDate) != null) {
 
@@ -606,98 +606,100 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                     }
                     TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
 
-                }
-                if (json.get(TyreKey.sidewell) != null) {
-                    if (json.get(TyreKey.sidewell)?.asString?.equals(ok_status)!!) {
-                        ivOkSideWell?.performClick()
-                        sidewell = ok_status
+                    if (json.get(TyreKey.sidewell) != null) {
+                        if (json.get(TyreKey.sidewell)?.asString?.equals(ok_status)!!) {
+                            ivOkSideWell?.performClick()
+                            sidewell = ok_status
+                        }
+                        if (json.get(TyreKey.sidewell)?.asString?.equals("SUG")!!) {
+                            Log.e("getsideweel", "" + json.get(TyreKey.sidewell)?.asString)
+                            ivSugSideWell?.performClick()
+                            sidewell = "SUG"
+                        }
+                        if (json.get(TyreKey.sidewell)?.asString?.equals("REQ")!!) {
+                            ivReqSideWell?.performClick()
+                            sidewell = "REQ"
+                        }
+                        TyreDetailCommonClass.sidewell = sidewell
                     }
-                    if (json.get(TyreKey.sidewell)?.asString?.equals("SUG")!!) {
-                        Log.e("getsideweel", "" + json.get(TyreKey.sidewell)?.asString)
-                        ivSugSideWell?.performClick()
-                        sidewell = "SUG"
-                    }
-                    if (json.get(TyreKey.sidewell)?.asString?.equals("REQ")!!) {
-                        ivReqSideWell?.performClick()
-                        sidewell = "REQ"
-                    }
-                    TyreDetailCommonClass.sidewell = sidewell
-                }
-                if (json.get(TyreKey.shoulder) != null) {
+                    if (json.get(TyreKey.shoulder) != null) {
 
-                    if (json.get(TyreKey.shoulder)?.asString!!.equals(ok_status)) {
-                        ivOkShoulder?.performClick()
-                        shoulder = ok_status
+                        if (json.get(TyreKey.shoulder)?.asString!!.equals(ok_status)) {
+                            ivOkShoulder?.performClick()
+                            shoulder = ok_status
+                        }
+                        if (json.get(TyreKey.shoulder)?.asString!!.equals("SUG")) {
+                            ivSugShoulder?.performClick()
+                            shoulder = "SUG"
+                        }
+                        if (json.get(TyreKey.shoulder)?.asString!!.equals("REQ")) {
+                            ivReqShoulder?.performClick()
+                            shoulder = "REQ"
+                        }
                     }
-                    if (json.get(TyreKey.shoulder)?.asString!!.equals("SUG")) {
-                        ivSugShoulder?.performClick()
-                        shoulder = "SUG"
-                    }
-                    if (json.get(TyreKey.shoulder)?.asString!!.equals("REQ")) {
-                        ivReqShoulder?.performClick()
-                        shoulder = "REQ"
-                    }
-                }
-                if (json.get(TyreKey.treadDepth) != null) {
+                    if (json.get(TyreKey.treadDepth) != null) {
 
-                    if (json.get(TyreKey.treadDepth)?.asString!!.equals("REQ")) {
-                        ivReqTreadDepth?.performClick()
-                        treadDepth = "REQ"
+                        if (json.get(TyreKey.treadDepth)?.asString!!.equals("REQ")) {
+                            ivReqTreadDepth?.performClick()
+                            treadDepth = "REQ"
+                        }
+                        if (json.get(TyreKey.treadDepth)?.asString!!.equals(ok_status)) {
+                            ivOkTreadDepth?.performClick()
+                            treadDepth = ok_status
+                        }
+                        if (json.get(TyreKey.treadDepth)?.asString!!.equals("SUG")) {
+                            ivSugTreadDepth?.performClick()
+                            treadDepth = "SUG"
+                        }
                     }
-                    if (json.get(TyreKey.treadDepth)?.asString!!.equals(ok_status)) {
-                        ivOkTreadDepth?.performClick()
-                        treadDepth = ok_status
-                    }
-                    if (json.get(TyreKey.treadDepth)?.asString!!.equals("SUG")) {
-                        ivSugTreadDepth?.performClick()
-                        treadDepth = "SUG"
-                    }
-                }
-                if (json.get(TyreKey.treadWear) != null) {
+                    if (json.get(TyreKey.treadWear) != null) {
 
-                    if (json.get(TyreKey.treadWear)?.asString!!.equals("REQ")) {
-                        ivReqTreadWear?.performClick()
-                        treadWear = "REQ"
+                        if (json.get(TyreKey.treadWear)?.asString!!.equals("REQ")) {
+                            ivReqTreadWear?.performClick()
+                            treadWear = "REQ"
+                        }
+                        if (json.get(TyreKey.treadWear)?.asString!!.equals(ok_status)) {
+                            ivOkTreadWear?.performClick()
+                            treadWear = ok_status
+                        }
+                        if (json.get(TyreKey.treadWear)?.asString!!.equals("SUG")) {
+                            ivSugTreadWear?.performClick()
+                            treadWear = "SUG"
+                        }
                     }
-                    if (json.get(TyreKey.treadWear)?.asString!!.equals(ok_status)) {
-                        ivOkTreadWear?.performClick()
-                        treadWear = ok_status
-                    }
-                    if (json.get(TyreKey.treadWear)?.asString!!.equals("SUG")) {
-                        ivSugTreadWear?.performClick()
-                        treadWear = "SUG"
-                    }
-                }
-                if (json.get(TyreKey.rimDamage) != null) {
+                    if (json.get(TyreKey.rimDamage) != null) {
 
-                    if (json.get(TyreKey.rimDamage)?.asString!!.equals("REQ")) {
-                        ivReqRimDamage?.performClick()
-                        rimDamage = "REQ"
+                        if (json.get(TyreKey.rimDamage)?.asString!!.equals("REQ")) {
+                            ivReqRimDamage?.performClick()
+                            rimDamage = "REQ"
+                        }
+                        if (json.get(TyreKey.rimDamage)?.asString!!.equals(ok_status)) {
+                            ivOkRimDamage?.performClick()
+                            rimDamage = ok_status
+                        }
+                        if (json.get(TyreKey.rimDamage)?.asString!!.equals("SUG")) {
+                            ivSugRimDamage?.performClick()
+                            rimDamage = "SUG"
+                        }
                     }
-                    if (json.get(TyreKey.rimDamage)?.asString!!.equals(ok_status)) {
-                        ivOkRimDamage?.performClick()
-                        rimDamage = ok_status
-                    }
-                    if (json.get(TyreKey.rimDamage)?.asString!!.equals("SUG")) {
-                        ivSugRimDamage?.performClick()
-                        rimDamage = "SUG"
-                    }
-                }
-                if (json.get(TyreKey.bubble) != null) {
+                    if (json.get(TyreKey.bubble) != null) {
 
-                    if (json.get(TyreKey.bubble)?.asString!!.equals("REQ")) {
-                        ivReqbubble?.performClick()
-                        rimDamage = "REQ"
+                        if (json.get(TyreKey.bubble)?.asString!!.equals("REQ")) {
+                            ivReqbubble?.performClick()
+                            rimDamage = "REQ"
+                        }
+                        if (json.get(TyreKey.bubble)?.asString!!.equals(ok_status)) {
+                            ivOkbubble?.performClick()
+                            bubble = ok_status
+                        }
+                        if (json.get(TyreKey.bubble)?.asString!!.equals("SUG")) {
+                            ivSugbubble?.performClick()
+                            bubble = "SUG"
+                        }
                     }
-                    if (json.get(TyreKey.bubble)?.asString!!.equals(ok_status)) {
-                        ivOkbubble?.performClick()
-                        bubble = ok_status
-                    }
-                    if (json.get(TyreKey.bubble)?.asString!!.equals("SUG")) {
-                        ivSugbubble?.performClick()
-                        bubble = "SUG"
-                    }
+
                 }
+
 
                 setData(json)
 
@@ -835,45 +837,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             TyreDetailCommonClass.isCameraSelectedVisualDetail =
                 json.get(TyreKey.isCameraSelectedVisualDetail)?.asString?.toBoolean()!!
         }
-        if (json.get(TyreKey.issueResolvedArr) != null) {
-//            TyreDetailCommonClass.issueResolvedArr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
-        }
-        /* if (json.get(TyreKey.chk1Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
-             TyreDetailCommonClass.chk1Make = json.get(TyreKey.chk1Make)?.asString
-         }
-         if (json.get(TyreKey.chk1Pattern) != null && !json.get(TyreKey.chk1Pattern)?.asString.equals(
-                 ""
-             )
-         ) {
-             TyreDetailCommonClass.chk1Pattern = json.get(TyreKey.chk1Pattern)?.asString
-         }
-         if (json.get(TyreKey.chk1Size) != null && !json.get(TyreKey.chk1Size)?.asString.equals("")) {
-             TyreDetailCommonClass.chk1Size = json.get(TyreKey.chk1Size)?.asString
-         }
-         if (json.get(TyreKey.chk2Make) != null && !json.get(TyreKey.chk2Make)?.asString.equals("")) {
-             TyreDetailCommonClass.chk2Make = json.get(TyreKey.chk2Make)?.asString
-         }
-         if (json.get(TyreKey.chk2Pattern) != null && !json.get(TyreKey.chk2Pattern)?.asString.equals(
-                 ""
-             )
-         ) {
-             TyreDetailCommonClass.chk2Pattern = json.get(TyreKey.chk2Pattern)?.asString
-         }
-         if (json.get(TyreKey.chk2Size) != null && !json.get(TyreKey.chk2Size)?.asString.equals("")) {
-             TyreDetailCommonClass.chk2Size = json.get(TyreKey.chk2Size)?.asString
-         }
-         if (json.get(TyreKey.chk3Make) != null && !json.get(TyreKey.chk1Make)?.asString.equals("")) {
-             TyreDetailCommonClass.chk3Make = json.get(TyreKey.chk3Make)?.asString
-         }
-         if (json.get(TyreKey.chk3Pattern) != null && !json.get(TyreKey.chk3Pattern)?.asString.equals(
-                 ""
-             )
-         ) {
-             TyreDetailCommonClass.chk3Pattern = json.get(TyreKey.chk3Pattern)?.asString
-         }
-         if (json.get(TyreKey.chk3Size) != null && !json.get(TyreKey.chk3Size)?.asString.equals("")) {
-             TyreDetailCommonClass.chk3Size = json.get(TyreKey.chk3Size)?.asString
-         }*/
         if (json.get(TyreKey.isCompleted) != null) {
             TyreDetailCommonClass.isCompleted =
                 json.get(TyreKey.isCompleted)?.asString?.toBoolean()!!
@@ -932,7 +895,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
             if (cameraDialog != null && cameraDialog?.isShowing!!) {
                 cameraDialog?.dismiss()
             }
-            if (Common.commonPhotoChooseArr.get(variable)?.equals("Gallery")) {
+            if (Common.commonPhotoChooseArr.get(variable).equals("Gallery")) {
                 val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     checkPermission((this@VisualDetailsActivity))
                 } else {
@@ -1518,21 +1481,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         }
     }
 
-    private fun checkValidation(): Boolean {
-        var isValid = true
-
-
-        return isValid
-    }
-
-
-//    private fun pickImageFromGallery() {
-//        //Intent to pick image
-//        val intent = Intent(Intent.ACTION_PICK)
-//        intent.type = "image/*"
-//        startActivityForResult(intent, IMAGE_PICK_CODE)
-//    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -1554,21 +1502,10 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                 }
             }
             123 -> {
-                if (grantResults?.get(1) != -1) {
+                if (grantResults.get(1) != -1) {
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
-                        /*val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        val file: File = createFile()
-
-                        val uri: Uri = FileProvider.getUriForFile(
-                            this,
-                            "com.walkins.aapkedoorstep.android.fileprovider",
-                            file
-                        )
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)*/
-
                         try {
                             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "image/*"
@@ -1580,16 +1517,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
-
-
                     }
-                } else {
-
                 }
             }
 
             124 -> {
-                if (grantResults?.get(1) != -1) {
+                if (grantResults.get(1) != -1) {
                     if (grantResults.size > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     ) {
@@ -1607,8 +1540,6 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
                             e.printStackTrace()
                         }
                     }
-                } else {
-
                 }
             }
         }
@@ -1716,7 +1647,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
 //                            this.contentResolver?.openInputStream(Uri.parse(mCurrentPhotoPath)!!)
                         prefManager.removeValue(TyreConfigClass.serviceId + "image_" + selectedTyre)
                         CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
-                            val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, auxFile!!) {
+                            val compressedImageFile = Compressor.compress(this@VisualDetailsActivity, auxFile) {
                                 resolution(1280, 720)
                                 quality(80)
 
