@@ -295,9 +295,9 @@ class TestCasesForSingleServiceTyrePndingFlow {
 
         fillUpAddServicedetail()
 
-        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
+//        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
 
-        editFlowPerform()
+//        editFlowPerform()
 
 //        if (serviceSelection?.vehicleWiseStoreData!!) {
 //            serviceSelection?.vehicleWiseStoreData = false
@@ -742,14 +742,15 @@ class TestCasesForSingleServiceTyrePndingFlow {
         onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
 
-        removeWheelBalancingService()
+//        removeWheelBalancingService()
+//
+//        BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
+//            swipeUp())
+//
+//        removeNitrogenService()
 
-        BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
-            swipeUp())
 
-        removeNitrogenService()
-
-
+        submitServiceAndGoToCompletedService()
     }
 
     private fun removeNitrogenService() {

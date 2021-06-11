@@ -1257,6 +1257,7 @@ class Common {
                 }
             })
             valueAnimator.start()
+            valueAnimator.removeAllUpdateListeners()
         }
 
 
@@ -1278,6 +1279,7 @@ class Common {
                     }
                 })
                 valueAnimator.start()
+                valueAnimator.removeAllUpdateListeners()
             }
         }
 
@@ -1300,6 +1302,7 @@ class Common {
                     }
                 })
                 valueAnimator.start()
+                valueAnimator.removeAllUpdateListeners()
             }
         }
 

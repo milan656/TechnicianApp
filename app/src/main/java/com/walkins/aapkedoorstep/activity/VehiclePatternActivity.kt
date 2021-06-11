@@ -1168,10 +1168,13 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk3PatternVisible)
 
         Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
-        var intent = Intent(this, VehicleSizeActivity::class.java)
-        intent.putExtra("selectedId", selectedId)
-        intent.putExtra("selectedTyre", selectedTyre)
-        startActivityForResult(intent, 1003)
+        val handler=Handler()
+        handler.postDelayed(Runnable {
+            val intent = Intent(this, VehicleSizeActivity::class.java)
+            intent.putExtra("selectedId", selectedId)
+            intent.putExtra("selectedTyre", selectedTyre)
+            startActivityForResult(intent, 1003)
+        },1000)
     }
 
 
@@ -1181,19 +1184,28 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         when (resultCode) {
             1002 -> {
                 setResult(1002)
-                finish()
+                if (!this.isFinishing) {
+                    this.finish()
+                }
+
             }
             1001 -> {
                 setResult(1002)
-                finish()
+                if (!this.isFinishing) {
+                    this.finish()
+                }
             }
             1003 -> {
                 setResult(1002)
-                finish()
+                if (!this.isFinishing) {
+                    this.finish()
+                }
             }
             1004 -> {
                 setResult(1002)
-                finish()
+                if (!this.isFinishing) {
+                    this.finish()
+                }
             }
         }
     }
@@ -1368,4 +1380,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         System.gc()
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
 }

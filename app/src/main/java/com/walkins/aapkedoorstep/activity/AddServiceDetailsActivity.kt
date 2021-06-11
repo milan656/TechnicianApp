@@ -2770,7 +2770,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     jsonObject.addProperty("service_suggestions", edtMoreSuggestion?.text?.toString())
 
-                    selectedDateNextServiceDue = "2021-06-09T00:00:00.000Z"
+                    selectedDateNextServiceDue = "2021-06-12T00:00:00.000Z"
                     jsonObject.addProperty("next_service_due", selectedDateNextServiceDue)
                     jsonObject.addProperty("car_photo_1", TyreConfigClass.CarPhoto_1)
                     jsonObject.addProperty("car_photo_2", TyreConfigClass.CarPhoto_2)
@@ -2892,7 +2892,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     Common.hideLoader()
                     hideLoader()
 
-                    /*serviceViewModel?.callApiAddService(
+                    serviceViewModel?.callApiAddService(
                         jsonObject,
                         prefManager.getAccessToken()!!,
                         this
@@ -2921,7 +2921,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                             Common.hideLoader()
                             hideLoader()
                         }
-                    })*/
+                    })
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -4043,12 +4043,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     startActivityForResult(intent, 1000)
                 } else {
                     Log.e("pendingglf", "" + pendingArr)
-                    intent = Intent(this, VehicleMakeActivity::class.java)
-                    intent.putExtra("selectedTyre", "LF")
-                    intent.putExtra("title", "Select Tyre Make - LF")
-                    TyreConfigClass.selectedTyreConfigType = "LF"
-                    TyreConfigClass.clickedTyre = "LF"
-                    startActivityForResult(intent, 1000)
+                    val handler=Handler()
+                    handler.postDelayed(kotlinx.coroutines.Runnable {
+                        intent = Intent(this, VehicleMakeActivity::class.java)
+                        intent?.putExtra("selectedTyre", "LF")
+                        intent?.putExtra("title", "Select Tyre Make - LF")
+                        TyreConfigClass.selectedTyreConfigType = "LF"
+                        TyreConfigClass.clickedTyre = "LF"
+                        startActivityForResult(intent, 1000)
+
+                    },1000)
                 }
             }
             R.id.ivTyre3 -> {
@@ -4089,13 +4093,16 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     TyreConfigClass.clickedTyre = "RF"
                     startActivityForResult(intent, 1000)
                 } else {
-                    Log.e("pendingg", "call0")
-                    intent = Intent(this, VehicleMakeActivity::class.java)
-                    intent.putExtra("selectedTyre", "RF")
-                    intent.putExtra("title", "Select Tyre Make - RF")
-                    TyreConfigClass.selectedTyreConfigType = "RF"
-                    TyreConfigClass.clickedTyre = "RF"
-                    startActivityForResult(intent, 1000)
+                    val handler=Handler()
+                    handler.postDelayed(kotlinx.coroutines.Runnable {
+                        Log.e("pendingg", "call0")
+                        intent = Intent(this, VehicleMakeActivity::class.java)
+                        intent?.putExtra("selectedTyre", "RF")
+                        intent?.putExtra("title", "Select Tyre Make - RF")
+                        TyreConfigClass.selectedTyreConfigType = "RF"
+                        TyreConfigClass.clickedTyre = "RF"
+                        startActivityForResult(intent, 1000)
+                    },1000)
                 }
             }
             R.id.ivTyre2 -> {
@@ -4135,12 +4142,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     TyreConfigClass.clickedTyre = "LR"
                     startActivityForResult(intent, 1000)
                 } else {
-                    intent = Intent(this, VehicleMakeActivity::class.java)
-                    intent.putExtra("selectedTyre", "LR")
-                    intent.putExtra("title", "Select Tyre Make - LR")
-                    TyreConfigClass.selectedTyreConfigType = "LR"
-                    TyreConfigClass.clickedTyre = "LR"
-                    startActivityForResult(intent, 1000)
+                    val handler=Handler()
+                    handler.postDelayed(kotlinx.coroutines.Runnable {
+                        intent = Intent(this, VehicleMakeActivity::class.java)
+                        intent?.putExtra("selectedTyre", "LR")
+                        intent?.putExtra("title", "Select Tyre Make - LR")
+                        TyreConfigClass.selectedTyreConfigType = "LR"
+                        TyreConfigClass.clickedTyre = "LR"
+                        startActivityForResult(intent, 1000)
+                    },1000)
                 }
             }
             R.id.ivTyre4 -> {
@@ -4180,12 +4190,15 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                     TyreConfigClass.clickedTyre = "RR"
                     startActivityForResult(intent, 1000)
                 } else {
-                    intent = Intent(this, VehicleMakeActivity::class.java)
-                    intent.putExtra("selectedTyre", "RR")
-                    intent.putExtra("title", "Select Tyre Make - RR")
-                    TyreConfigClass.selectedTyreConfigType = "RR"
-                    TyreConfigClass.clickedTyre = "RR"
-                    startActivityForResult(intent, 1000)
+                    val handler=Handler()
+                    handler.postDelayed(kotlinx.coroutines.Runnable {
+                        intent = Intent(this, VehicleMakeActivity::class.java)
+                        intent?.putExtra("selectedTyre", "RR")
+                        intent?.putExtra("title", "Select Tyre Make - RR")
+                        TyreConfigClass.selectedTyreConfigType = "RR"
+                        TyreConfigClass.clickedTyre = "RR"
+                        startActivityForResult(intent, 1000)
+                    },1000)
                 }
             }
             R.id.ivPhoneCall -> {
@@ -7549,5 +7562,9 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }

@@ -181,6 +181,7 @@ class TestCasesForAllServiceSingleTyre {
 
 //        skipServiceFlow()
 
+        Thread.sleep(2000)
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
 
         if (!serviceSelection?.nitrogen_refill_service.equals("")) {
@@ -282,7 +283,7 @@ class TestCasesForAllServiceSingleTyre {
 
         Thread.sleep(1000)
 
-//        submitServiceAndGoToCompletedService()
+        submitServiceAndGoToCompletedService()
 
         if (serviceSelection?.editFlowEnable!!) {
             editFlowPerform()
@@ -401,17 +402,17 @@ class TestCasesForAllServiceSingleTyre {
                     click()
                 )
             )
-            onView(withId(R.id.gridviewRecycMake_))
-                .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        number,
-                        recyclerChildAction<TextView>(R.id.tvmakeName) {
-                            print("vehicle_make-->" + this.text?.toString())
-                            serviceSelection?.vehicleMake = this.text.toString()
-//                            selects?.selected_vehicleMake = this.text.toString()
-                        }
-                    )
-                )
+//            onView(withId(R.id.gridviewRecycMake_))
+//                .perform(
+//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                        number,
+//                        recyclerChildAction<TextView>(R.id.tvmakeName) {
+//                            print("vehicle_make-->" + this.text?.toString())
+//                            serviceSelection?.vehicleMake = this.text.toString()
+////                            selects?.selected_vehicleMake = this.text.toString()
+//                        }
+//                    )
+//                )
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
@@ -422,25 +423,25 @@ class TestCasesForAllServiceSingleTyre {
             try {
                 BaseRobot().doOnView(withId(R.id.ivEditVehicleMake), closeSoftKeyboard(), click())
 
-                Thread.sleep(150)
+                Thread.sleep(200)
                 BaseRobot().doOnView(
                     withId(R.id.gridviewRecycMake_), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        2,
+                        number,
                         click()
                     )
                 )
-                onView(withId(R.id.gridviewRecycMake_))
-                    .perform(
-                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                            2,
-                            recyclerChildAction<TextView>(R.id.tvmakeName) {
-                                print("vehicle_make-->" + this.text?.toString())
-                                serviceSelection?.vehicleMake = this.text.toString()
-//                            selects?.selected_vehicleMake = this.text.toString()
-                            }
-                        )
-                    )
+//                onView(withId(R.id.gridviewRecycMake_))
+//                    .perform(
+//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                            2,
+//                            recyclerChildAction<TextView>(R.id.tvmakeName) {
+//                                print("vehicle_make-->" + this.text?.toString())
+//                                serviceSelection?.vehicleMake = this.text.toString()
+////                            selects?.selected_vehicleMake = this.text.toString()
+//                            }
+//                        )
+//                    )
 
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
@@ -452,7 +453,7 @@ class TestCasesForAllServiceSingleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-        Thread.sleep(200)
+        Thread.sleep(500)
         navigateToVehiclePatternScreen()
     }
 
@@ -466,17 +467,17 @@ class TestCasesForAllServiceSingleTyre {
                     click()
                 )
             )
-            onView(withId(R.id.gridviewRecycModel))
-                .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        number,
-                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
-                            print("vehicle_make-->" + this.text?.toString())
-                            serviceSelection?.vehiclePattern = this.text.toString()
-//                            selects?.selected_vehicleMake = this.text.toString()
-                        }
-                    )
-                )
+//            onView(withId(R.id.gridviewRecycModel))
+//                .perform(
+//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                        number,
+//                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+//                            print("vehicle_make-->" + this.text?.toString())
+//                            serviceSelection?.vehiclePattern = this.text.toString()
+////                            selects?.selected_vehicleMake = this.text.toString()
+//                        }
+//                    )
+//                )
 
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
@@ -496,17 +497,17 @@ class TestCasesForAllServiceSingleTyre {
                         click()
                     )
                 )
-                onView(withId(R.id.gridviewRecycModel))
-                    .perform(
-                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                            1,
-                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
-                                print("vehicle_make-->" + this.text?.toString())
-                                serviceSelection?.vehiclePattern = this.text.toString()
-//                            selects?.selected_vehicleMake = this.text.toString()
-                            }
-                        )
-                    )
+//                onView(withId(R.id.gridviewRecycModel))
+//                    .perform(
+//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                            1,
+//                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+//                                print("vehicle_make-->" + this.text?.toString())
+//                                serviceSelection?.vehiclePattern = this.text.toString()
+////                            selects?.selected_vehicleMake = this.text.toString()
+//                            }
+//                        )
+//                    )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -517,7 +518,7 @@ class TestCasesForAllServiceSingleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-        Thread.sleep(200)
+        Thread.sleep(500)
         navigateToVehicleSizeScreen()
     }
 
@@ -531,17 +532,17 @@ class TestCasesForAllServiceSingleTyre {
                     click()
                 )
             )
-            onView(withId(R.id.gridviewRecycModel))
-                .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        0,
-                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
-                            print("vehicle_make-->" + this.text?.toString())
-                            serviceSelection?.vehicleSize = this.text.toString()
-//                            selects?.selected_vehicleMake = this.text.toString()
-                        }
-                    )
-                )
+//            onView(withId(R.id.gridviewRecycModel))
+//                .perform(
+//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                        0,
+//                        recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+//                            print("vehicle_make-->" + this.text?.toString())
+//                            serviceSelection?.vehicleSize = this.text.toString()
+////                            selects?.selected_vehicleMake = this.text.toString()
+//                        }
+//                    )
+//                )
             if (!serviceSelection?.singleTyreSelection!!) {
                 BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
                 BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
@@ -561,17 +562,17 @@ class TestCasesForAllServiceSingleTyre {
                         1,
                         click()
                     ))
-                onView(withId(R.id.gridviewRecycModel))
-                    .perform(
-                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                            1,
-                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
-                                print("vehicle_make-->" + this.text?.toString())
-                                serviceSelection?.vehicleSize = this.text.toString()
-//                            selects?.selected_vehicleMake = this.text.toString()
-                            }
-                        )
-                    )
+//                onView(withId(R.id.gridviewRecycModel))
+//                    .perform(
+//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                            1,
+//                            recyclerChildAction<TextView>(R.id.ivVehicleImage) {
+//                                print("vehicle_make-->" + this.text?.toString())
+//                                serviceSelection?.vehicleSize = this.text.toString()
+////                            selects?.selected_vehicleMake = this.text.toString()
+//                            }
+//                        )
+//                    )
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -582,7 +583,7 @@ class TestCasesForAllServiceSingleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-        Thread.sleep(200)
+        Thread.sleep(500)
         navigateToVisualDetailPage()
     }
 
@@ -747,9 +748,10 @@ class TestCasesForAllServiceSingleTyre {
 
     private fun fillUpAddServicedetail() {
         onView(withId(R.id.ivAddTechnicalSuggestion)).perform(customScrollTo, click());
+        onView(withId(R.id.suggestionsRecycView)).perform(customScrollTo, scrollTo());
 
         try {
-            val number1 = (0..4).random()
+            val number1 = (3..4).random()
             BaseRobot().doOnView(
                 withId(R.id.suggestionsRecycView), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -757,6 +759,7 @@ class TestCasesForAllServiceSingleTyre {
                     click()
                 )
             )
+
             onView(withId(R.id.suggestionsRecycView))
                 .perform(
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -976,8 +979,10 @@ class TestCasesForAllServiceSingleTyre {
         BaseRobot().doOnView(withId(R.id.btnSubmitAndComplete), closeSoftKeyboard(), click())
         BaseRobot().doOnView(withId(R.id.btn_ok), closeSoftKeyboard(), click())
 
-        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        Thread.sleep(4000)
+        BaseRobot().doOnView(withId(R.id.btnOk), closeSoftKeyboard(), click())
 
+        Thread.sleep(2000)
         BaseRobot().doOnView(withId(R.id.llCompleted), closeSoftKeyboard(), click())
 
         TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(

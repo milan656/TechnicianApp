@@ -1127,14 +1127,17 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk1MakeVisible)
         Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk2MakeVisible)
         Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk3MakeVisible)
-        var intent = Intent(this, VehiclePatternActivity::class.java)
-        intent.putExtra("selectedTyre", selectedTyre)
-        if (TyreDetailCommonClass.vehicleMakeId.equals("")) {
-            intent.putExtra("selectedMakeId", arrList?.get(selectedPos)?.brand_id)
-        } else {
-            intent.putExtra("selectedMakeId", TyreDetailCommonClass.vehicleMakeId)
-        }
-        startActivityForResult(intent, 1002)
+        val handler=Handler()
+        handler.postDelayed(Runnable {
+            val intent = Intent(this, VehiclePatternActivity::class.java)
+            intent.putExtra("selectedTyre", selectedTyre)
+            if (TyreDetailCommonClass.vehicleMakeId.equals("")) {
+                intent.putExtra("selectedMakeId", arrList?.get(selectedPos)?.brand_id)
+            } else {
+                intent.putExtra("selectedMakeId", TyreDetailCommonClass.vehicleMakeId)
+            }
+            startActivityForResult(intent, 1002)
+        },1000)
 
     }
 
@@ -1144,11 +1147,15 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         when (resultCode) {
             1001 -> {
                 setResult(1000)
-                finish()
+                if (!this.isFinishing) {
+                    finish()
+                }
             }
             1002 -> {
                 setResult(1000)
-                finish()
+                if (!this.isFinishing) {
+                    finish()
+                }
             }
 
         }
@@ -1268,4 +1275,9 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         super.onDestroy()
         System.gc()
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
 }

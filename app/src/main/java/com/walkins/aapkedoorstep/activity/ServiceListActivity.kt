@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -227,7 +228,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             Log.e("getservicedataa", "" + mDb.serviceListDaoClass().getAll())
 
             val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.building_uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
-            Log.e("getservicedataa", "" + building_uuid+" -- "+arrayListfinal.size)
+            Log.e("getservicedataa", "" + building_uuid + " -- " + arrayListfinal.size)
 
             arrayList.clear()
 
@@ -269,10 +270,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                     tvCompleted?.text = "Completed - " + arrayCompleteList.size
 
-                    Log.e("getservicestatuslist",""+arrayList)
-                    Log.e("getservicestatuslist",""+arrayskipList)
-                    Log.e("getservicestatuslist",""+arrayCompleteList)
-                    Log.e("getservicestatuslist",""+serviceStatus)
+                    Log.e("getservicestatuslist", "" + arrayList)
+                    Log.e("getservicestatuslist", "" + arrayskipList)
+                    Log.e("getservicestatuslist", "" + arrayCompleteList)
+                    Log.e("getservicestatuslist", "" + serviceStatus)
                 }
 
                 if (serviceStatus.equals(upcomming)) {
@@ -318,7 +319,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 }
 
                 tvNoServiceData?.visibility = View.GONE
-                Log.e("getservicesize",""+arrayList.size+" "+serviceStatus)
+                Log.e("getservicesize", "" + arrayList.size + " " + serviceStatus)
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Upcomming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
@@ -442,20 +443,20 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                     arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
 
-                        adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
-                        if (arrayList.size == 0) {
-                            tvNoServiceData?.text = "There is no any Upcoming service to display"
-                            tvNoServiceData?.visibility = View.VISIBLE
-                            llAddressView?.visibility = View.GONE
-                            tvNoServiceData?.visibility = View.GONE
-                            relNoData?.visibility = View.VISIBLE
-                        } else {
-                            llAddressView?.visibility = View.VISIBLE
-                            relNoData?.visibility = View.GONE
-                        }
-                        tvUpcoming?.text = "Upcoming - ${arrayList.size}"
-                        serviceRecycView?.adapter = adapter
-                        adapter?.onclick = this@ServiceListActivity
+                    adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
+                    if (arrayList.size == 0) {
+                        tvNoServiceData?.text = "There is no any Upcoming service to display"
+                        tvNoServiceData?.visibility = View.VISIBLE
+                        llAddressView?.visibility = View.GONE
+                        tvNoServiceData?.visibility = View.GONE
+                        relNoData?.visibility = View.VISIBLE
+                    } else {
+                        llAddressView?.visibility = View.VISIBLE
+                        relNoData?.visibility = View.GONE
+                    }
+                    tvUpcoming?.text = "Upcoming - ${arrayList.size}"
+                    serviceRecycView?.adapter = adapter
+                    adapter?.onclick = this@ServiceListActivity
 
 
                 } else {
@@ -707,59 +708,69 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
             if (serviceStatus.equals(upcomming)) {
 
-                Common.setClearAllValues()
-                Common.setFalseAllTyreStatus()
-                val intent = Intent(this, AddServiceDetailsActivity::class.java)
-                intent.putExtra("color", arrayList.get(variable).color)
-                intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
-                intent.putExtra("regNumber", arrayList.get(variable).regNumber)
-                intent.putExtra("carImage", arrayList.get(variable).model_image)
-                intent.putExtra("uuid", arrayList.get(variable).uuid)
-                intent.putExtra("colorcode", arrayList.get(variable).color_code)
-                intent.putExtra("address", "" + fullAddress)
-                intent.putExtra("make_id", "" + arrayList.get(variable).make_id)
-                intent.putExtra("model_id", "" + arrayList.get(variable).model_id)
-                intent.putExtra("service_name", "" + arrayList.get(variable).service_user_name)
-                if (arrayList.get(variable).service_user_mobile != null) {
-                    intent.putExtra("service_number", "" + arrayList.get(variable).service_user_mobile)
-                }
-                intent.putExtra("id", "" + arrayList.get(variable).id)
-                val gson = Gson()
-                val serviceList = gson.toJson(arrayList.get(variable))
+                val handler = Handler()
+                handler.postDelayed(Runnable {
+                    Common.setClearAllValues()
+                    Common.setFalseAllTyreStatus()
+                    val intent = Intent(this, AddServiceDetailsActivity::class.java)
+                    intent.putExtra("color", arrayList.get(variable).color)
+                    intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
+                    intent.putExtra("regNumber", arrayList.get(variable).regNumber)
+                    intent.putExtra("carImage", arrayList.get(variable).model_image)
+                    intent.putExtra("uuid", arrayList.get(variable).uuid)
+                    intent.putExtra("colorcode", arrayList.get(variable).color_code)
+                    intent.putExtra("address", "" + fullAddress)
+                    intent.putExtra("make_id", "" + arrayList.get(variable).make_id)
+                    intent.putExtra("model_id", "" + arrayList.get(variable).model_id)
+                    intent.putExtra("service_name", "" + arrayList.get(variable).service_user_name)
+                    if (arrayList.get(variable).service_user_mobile != null) {
+                        intent.putExtra("service_number", "" + arrayList.get(variable).service_user_mobile)
+                    }
+                    intent.putExtra("id", "" + arrayList.get(variable).id)
+                    val gson = Gson()
+                    val serviceList = gson.toJson(arrayList.get(variable))
 
-                intent.putExtra("serviceList", serviceList)
-                startActivity(intent)
+                    intent.putExtra("serviceList", serviceList)
+                    startActivity(intent)
+
+                }, 1000)
 
             } else if (serviceStatus.equals(completed)) {
-                Log.e("checkva", "" + check)
-                var intent = Intent(this, CompletedServiceDetailActivity::class.java)
-                intent.putExtra("title", "Service Detail")
-                intent.putExtra("color", arrayList.get(variable).color)
-                intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
-                intent.putExtra("regNumber", arrayList.get(variable).regNumber)
-                intent.putExtra("carImage", arrayList.get(variable).model_image)
-                intent.putExtra("uuid", arrayList.get(variable).uuid)
-                intent.putExtra("address", "" + fullAddress)
-                intent.putExtra("colorcode", arrayList.get(variable).color_code)
-                startActivity(intent)
+                val handler = Handler()
+                handler.postDelayed(Runnable {
+                    Log.e("checkva", "" + check)
+                    var intent = Intent(this, CompletedServiceDetailActivity::class.java)
+                    intent.putExtra("title", "Service Detail")
+                    intent.putExtra("color", arrayList.get(variable).color)
+                    intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
+                    intent.putExtra("regNumber", arrayList.get(variable).regNumber)
+                    intent.putExtra("carImage", arrayList.get(variable).model_image)
+                    intent.putExtra("uuid", arrayList.get(variable).uuid)
+                    intent.putExtra("address", "" + fullAddress)
+                    intent.putExtra("colorcode", arrayList.get(variable).color_code)
+                    startActivity(intent)
+                }, 1000)
             } else if (serviceStatus.equals(skipped)) {
-                Log.e("checkva", "" + check)
-                var intent = Intent(this, SkippedServiceDetailActivity::class.java)
-                intent.putExtra("color", arrayList.get(variable).color)
-                intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
-                intent.putExtra("regNumber", arrayList.get(variable).regNumber)
-                intent.putExtra("carImage", arrayList.get(variable).model_image)
-                intent.putExtra("uuid", arrayList.get(variable).uuid)
-                intent.putExtra("address", "" + fullAddress)
-                intent.putExtra("colorcode", arrayList.get(variable).color_code)
-                intent.putExtra("ischange", "false")
-                intent.putExtra("servicelist", "true")
-                intent.putExtra("which", "skip_screen")
+                val handler = Handler()
+                handler.postDelayed(Runnable {
+                    Log.e("checkva", "" + check)
+                    var intent = Intent(this, SkippedServiceDetailActivity::class.java)
+                    intent.putExtra("color", arrayList.get(variable).color)
+                    intent.putExtra("makeModel", arrayList.get(variable).make + " " + arrayList.get(variable).model)
+                    intent.putExtra("regNumber", arrayList.get(variable).regNumber)
+                    intent.putExtra("carImage", arrayList.get(variable).model_image)
+                    intent.putExtra("uuid", arrayList.get(variable).uuid)
+                    intent.putExtra("address", "" + fullAddress)
+                    intent.putExtra("colorcode", arrayList.get(variable).color_code)
+                    intent.putExtra("ischange", "false")
+                    intent.putExtra("servicelist", "true")
+                    intent.putExtra("which", "skip_screen")
 
 //                intent.putExtra("comment_id", arrayList.get(variable).comment_id.get(0))
 
 //                intent.putExtra("formatedDate", arrayList.get(variable).)
-                startActivity(intent)
+                    startActivity(intent)
+                }, 1000)
             }
         }
     }
