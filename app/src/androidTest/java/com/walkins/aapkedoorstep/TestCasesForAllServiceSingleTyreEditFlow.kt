@@ -36,7 +36,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class TestCasesForAllServiceSingleTyre {
+class TestCasesForAllServiceSingleTyreEditFlow {
 
     private var serviceSelection: AllServiceSingleTyreSelection? = null
 
@@ -277,14 +277,16 @@ class TestCasesForAllServiceSingleTyre {
 
         fillUpAddServicedetail()
 
+        serviceSelection?.editFlowEnable = true
+
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
-        tyreRRTyreSelection()
-        Thread.sleep(500)
-        tyreLRTyreSelection()
-
-        Thread.sleep(1000)
-
-        submitServiceAndGoToCompletedService()
+//        tyreRRTyreSelection()
+//        Thread.sleep(500)
+//        tyreLRTyreSelection()
+//
+//        Thread.sleep(1000)
+//
+//        submitServiceAndGoToCompletedService()
 
         if (serviceSelection?.editFlowEnable!!) {
             editFlowPerform()
@@ -311,10 +313,14 @@ class TestCasesForAllServiceSingleTyre {
     }
 
     private fun editFlowPerform() {
+        Thread.sleep(500)
         tyreLFTyreSelection()
+        Thread.sleep(500)
         tyreRFTyreSelection()
-        tyreLRTyreSelection()
-        tyreRRTyreSelection()
+//        tyreLRTyreSelection()
+//        tyreRRTyreSelection()
+
+        Thread.sleep(500)
     }
 
     private fun removeWheelBalancingService() {
@@ -599,7 +605,7 @@ class TestCasesForAllServiceSingleTyre {
                 e.printStackTrace()
             }
 
-            /*try {
+            try {
                 val date = onView(withId(R.id.edtManufaturingDate))
                 if (!date.equals("")) {
                     onView(withId(R.id.edtManufaturingDate)).perform(clearText(), typeText(serviceSelection?.zeroManufacturingDate))
@@ -650,7 +656,7 @@ class TestCasesForAllServiceSingleTyre {
                 BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
-            }*/
+            }
             try {
                 val date = onView(withId(R.id.edtManufaturingDate))
                 if (!date.equals("")) {
@@ -737,6 +743,54 @@ class TestCasesForAllServiceSingleTyre {
                 e.printStackTrace()
             }
         } else {
+
+            Thread.sleep(200)
+
+            try {
+                onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
+                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
+                onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
+                onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
+                onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+
+                serviceSelection?.sidewell = "OK"
+                serviceSelection?.shoulder = "SUG"
+                serviceSelection?.treadWear = "REQ"
+                serviceSelection?.treadDepth = "SUG"
+                serviceSelection?.rimDamage = "OK"
+                serviceSelection?.bubble = "REQ"
+
+                BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
+                    swipeUp())
+
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
+            try {
+                val number = (1..3).random()
+                BaseRobot().doOnView(
+                    withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        number,
+                        click()
+                    )
+                )
+                onView(withId(R.id.issueResolvedRecycView))
+                    .perform(
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            number,
+                            recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+                                print("issueResolved-->" + this.text?.toString())
+                                serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
+//                             = this.text.toString()
+                            }
+                        )
+                    )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
             try {
                 BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: java.lang.Exception) {

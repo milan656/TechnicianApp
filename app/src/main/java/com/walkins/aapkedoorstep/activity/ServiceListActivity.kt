@@ -710,6 +710,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                 val handler = Handler()
                 handler.postDelayed(Runnable {
+                    super.onResume()
                     Common.setClearAllValues()
                     Common.setFalseAllTyreStatus()
                     val intent = Intent(this, AddServiceDetailsActivity::class.java)
