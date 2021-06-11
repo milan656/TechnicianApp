@@ -527,12 +527,12 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         GlobalScope.launch(Dispatchers.IO) {
             launch(Dispatchers.IO) {
                 Log.e("getobje", "" + json)
-                if (json.get(TyreKey.manufaturingDate) != null) {
-
-                    edtManufaturingDate?.setText(json.get(TyreKey.manufaturingDate)?.asString!!)
-                }
 
                 runOnUiThread {
+                    if (json.get(TyreKey.manufaturingDate) != null) {
+
+                        edtManufaturingDate?.setText(json.get(TyreKey.manufaturingDate)?.asString!!)
+                    }
                     if (json.get(TyreKey.psiInTyreService) != null) {
                         psiInTyreService = if (json.get(TyreKey.psiInTyreService)?.asString.equals("")) "15" else json.get(TyreKey.psiInTyreService)?.asString
                         sliderIn?.requestFocus()
