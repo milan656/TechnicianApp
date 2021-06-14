@@ -1,9 +1,5 @@
 package com.walkins.aapkedoorstep
 
-import android.app.Activity
-import android.app.Instrumentation
-import android.content.Intent
-import android.provider.MediaStore
 import android.view.View
 import android.widget.CheckBox
 import android.widget.HorizontalScrollView
@@ -19,8 +15,6 @@ import androidx.test.espresso.action.ScrollToAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.intent.Intents.intending
-import androidx.test.espresso.intent.matcher.IntentMatchers.isInternal
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
@@ -30,7 +24,6 @@ import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.services.AllServiceSingleTyreSelection
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.anyOf
-import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matcher
 import org.junit.Before
 import org.junit.Rule
@@ -368,25 +361,25 @@ class TestCasesForAllServiceSingleTyreEditFlow {
     private fun tyreRRTyreSelection() {
 //        BaseRobot().doOnView(withId(R.id.ivTyre4), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre4)).perform(customScrollTo, click())
-        navigateToVehicleBrandScreeneSelection(4)
+        navigateToVehicleBrandScreeneSelection(4, "RR")
     }
 
     private fun tyreLRTyreSelection() {
 //        BaseRobot().doOnView(withId(R.id.ivTyre2), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre2)).perform(customScrollTo, click())
-        navigateToVehicleBrandScreeneSelection(3)
+        navigateToVehicleBrandScreeneSelection(3, "LR")
     }
 
     private fun tyreRFTyreSelection() {
 //        BaseRobot().doOnView(withId(R.id.ivTyre3), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre3)).perform(customScrollTo, click())
-        navigateToVehicleBrandScreeneSelection(2)
+        navigateToVehicleBrandScreeneSelection(2, "RF")
     }
 
     private fun tyreLFTyreSelection() {
 //        Assert.assertEquals("true","false")
         onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
-        navigateToVehicleBrandScreeneSelection(0)
+        navigateToVehicleBrandScreeneSelection(0,"LF")
     }
 
     private fun skipServiceFlow() {
@@ -405,7 +398,7 @@ class TestCasesForAllServiceSingleTyreEditFlow {
 //        BaseRobot().doOnView(withId(R.id.btnConfirm), ViewActions.closeSoftKeyboard(), ViewActions.click())
     }
 
-    private fun navigateToVehicleBrandScreeneSelection(number: Int) {
+    private fun navigateToVehicleBrandScreeneSelection(number: Int, type: String) {
 
         try {
             BaseRobot().doOnView(
@@ -467,10 +460,10 @@ class TestCasesForAllServiceSingleTyreEditFlow {
             e.printStackTrace()
         }
         Thread.sleep(500)
-        navigateToVehiclePatternScreen()
+        navigateToVehiclePatternScreen(type)
     }
 
-    private fun navigateToVehiclePatternScreen() {
+    private fun navigateToVehiclePatternScreen(type: String) {
         try {
             val number = (0..4).random()
             BaseRobot().doOnView(
@@ -532,10 +525,10 @@ class TestCasesForAllServiceSingleTyreEditFlow {
             e.printStackTrace()
         }
         Thread.sleep(500)
-        navigateToVehicleSizeScreen()
+        navigateToVehicleSizeScreen(type)
     }
 
-    private fun navigateToVehicleSizeScreen() {
+    private fun navigateToVehicleSizeScreen(type: String) {
         try {
 //            onView(withId(R.id.gridviewRecycModel)).isDisplayed()
             BaseRobot().doOnView(
@@ -597,10 +590,10 @@ class TestCasesForAllServiceSingleTyreEditFlow {
             e.printStackTrace()
         }
         Thread.sleep(500)
-        navigateToVisualDetailPage()
+        navigateToVisualDetailPage(type)
     }
 
-    private fun navigateToVisualDetailPage() {
+    private fun navigateToVisualDetailPage(type: String) {
 
         Thread.sleep(1000)
 
@@ -689,7 +682,7 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                     typeText(serviceSelection?.validManufacturingDate))
 
                 val manuDate = onView(withId(R.id.edtManufaturingDate))
-                serviceSelection?.manuFacturingDate = getText(manuDate)
+                serviceSelection?.manuFacturingDate_lf = getText(manuDate)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -725,13 +718,42 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-                serviceSelection?.sidewell = "OK"
-                serviceSelection?.shoulder = "SUG"
-                serviceSelection?.treadWear = "REQ"
-                serviceSelection?.treadDepth = "SUG"
-                serviceSelection?.rimDamage = "OK"
-                serviceSelection?.bubble = "REQ"
+                val sideWell = onView(withId(R.id.ivOkSideWell))
+                val shoulder = onView(withId(R.id.ivSugShoulder))
+                val treadWear = onView(withId(R.id.ivReqTreadWear))
+                val treadDepth = onView(withId(R.id.ivSugTreadDepth))
+                val rimDamage = onView(withId(R.id.ivOkRimDamage))
+                val bubble = onView(withId(R.id.ivReqbubble))
 
+                if (type.equals("LF")) {
+                    serviceSelection?.sidewell_lf = getText(sideWell)
+                    serviceSelection?.shoulder_lf = getText(shoulder)
+                    serviceSelection?.treadDepth_lf = getText(treadDepth)
+                    serviceSelection?.treadWear_lf = getText(treadWear)
+                    serviceSelection?.rimDamage_lf = getText(rimDamage)
+                    serviceSelection?.bubble_lf = getText(bubble)
+                } else if (type.equals("RF")) {
+                    serviceSelection?.sidewell_rf = getText(sideWell)
+                    serviceSelection?.shoulder_rf = getText(shoulder)
+                    serviceSelection?.treadDepth_rf = getText(treadDepth)
+                    serviceSelection?.treadWear_rf = getText(treadWear)
+                    serviceSelection?.rimDamage_rf = getText(rimDamage)
+                    serviceSelection?.bubble_rf = getText(bubble)
+                } else if (type.equals("LR")) {
+                    serviceSelection?.sidewell_lr = getText(sideWell)
+                    serviceSelection?.shoulder_lr = getText(shoulder)
+                    serviceSelection?.treadDepth_lr = getText(treadDepth)
+                    serviceSelection?.treadWear_lr = getText(treadWear)
+                    serviceSelection?.rimDamage_lr = getText(rimDamage)
+                    serviceSelection?.bubble_lr = getText(bubble)
+                } else if (type.equals("RR")) {
+                    serviceSelection?.sidewell_rr = getText(sideWell)
+                    serviceSelection?.shoulder_rr = getText(shoulder)
+                    serviceSelection?.treadDepth_rr = getText(treadDepth)
+                    serviceSelection?.treadWear_rr = getText(treadWear)
+                    serviceSelection?.rimDamage_rr = getText(rimDamage)
+                    serviceSelection?.bubble_rr = getText(bubble)
+                }
                 BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
                     swipeUp())
 
@@ -787,12 +809,42 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                 onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, scrollTo());
                 onView(withId(R.id.ivReqbubble)).perform(customScrollTo, scrollTo());
 
-                serviceSelection?.sidewell = "OK"
-                serviceSelection?.shoulder = "SUG"
-                serviceSelection?.treadWear = "REQ"
-                serviceSelection?.treadDepth = "SUG"
-                serviceSelection?.rimDamage = "OK"
-                serviceSelection?.bubble = "REQ"
+                val sideWell = onView(withId(R.id.ivOkSideWell))
+                val shoulder = onView(withId(R.id.ivSugShoulder))
+                val treadWear = onView(withId(R.id.ivReqTreadWear))
+                val treadDepth = onView(withId(R.id.ivSugTreadDepth))
+                val rimDamage = onView(withId(R.id.ivOkRimDamage))
+                val bubble = onView(withId(R.id.ivReqbubble))
+
+                if (type.equals("LF")) {
+                    serviceSelection?.sidewell_lf = getText(sideWell)
+                    serviceSelection?.shoulder_lf = getText(shoulder)
+                    serviceSelection?.treadDepth_lf = getText(treadDepth)
+                    serviceSelection?.treadWear_lf = getText(treadWear)
+                    serviceSelection?.rimDamage_lf = getText(rimDamage)
+                    serviceSelection?.bubble_lf = getText(bubble)
+                } else if (type.equals("RF")) {
+                    serviceSelection?.sidewell_rf = getText(sideWell)
+                    serviceSelection?.shoulder_rf = getText(shoulder)
+                    serviceSelection?.treadDepth_rf = getText(treadDepth)
+                    serviceSelection?.treadWear_rf = getText(treadWear)
+                    serviceSelection?.rimDamage_rf = getText(rimDamage)
+                    serviceSelection?.bubble_rf = getText(bubble)
+                } else if (type.equals("LR")) {
+                    serviceSelection?.sidewell_lr = getText(sideWell)
+                    serviceSelection?.shoulder_lr = getText(shoulder)
+                    serviceSelection?.treadDepth_lr = getText(treadDepth)
+                    serviceSelection?.treadWear_lr = getText(treadWear)
+                    serviceSelection?.rimDamage_lr = getText(rimDamage)
+                    serviceSelection?.bubble_lr = getText(bubble)
+                } else if (type.equals("RR")) {
+                    serviceSelection?.sidewell_rr = getText(sideWell)
+                    serviceSelection?.shoulder_rr = getText(shoulder)
+                    serviceSelection?.treadDepth_rr = getText(treadDepth)
+                    serviceSelection?.treadWear_rr = getText(treadWear)
+                    serviceSelection?.rimDamage_rr = getText(rimDamage)
+                    serviceSelection?.bubble_rr = getText(bubble)
+                }
 
                 BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
                     swipeUp())

@@ -23,6 +23,7 @@ import androidx.test.espresso.util.TreeIterables
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.ramotion.fluidslider.FluidSlider
 import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.services.MultipleServiceMultipleTyreSelection
 import org.hamcrest.CoreMatchers
@@ -144,7 +145,7 @@ class TestCasesForAllServiceMultipleTyre {
 
     private fun enterInvalidOTP() {
 
-        onView(withId(R.id.edtOtp1)).perform(typeText("1"),customScrollTo, click())
+        onView(withId(R.id.edtOtp1)).perform(typeText("1"), customScrollTo, click())
         onView(withId(R.id.edtOtp2)).perform(
             typeText("5"),
             click()
@@ -349,22 +350,22 @@ class TestCasesForAllServiceMultipleTyre {
 
     private fun tyreRRTyreSelection() {
         BaseRobot().doOnView(withId(R.id.ivTyre4), closeSoftKeyboard(), click())
-        navigateToVehicleBrandScreeneSelection(4)
+        navigateToVehicleBrandScreeneSelection(4, "RR")
     }
 
     private fun tyreLRTyreSelection() {
         BaseRobot().doOnView(withId(R.id.ivTyre2), closeSoftKeyboard(), click())
-        navigateToVehicleBrandScreeneSelection(3)
+        navigateToVehicleBrandScreeneSelection(3, "LR")
     }
 
     private fun tyreRFTyreSelection() {
         BaseRobot().doOnView(withId(R.id.ivTyre3), closeSoftKeyboard(), click())
-        navigateToVehicleBrandScreeneSelection(2)
+        navigateToVehicleBrandScreeneSelection(2, "RF")
     }
 
     private fun tyreLFTyreSelection() {
         onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
-        navigateToVehicleBrandScreeneSelection(0)
+        navigateToVehicleBrandScreeneSelection(0,"LF")
     }
 
     private fun skipServiceFlow() {
@@ -383,45 +384,49 @@ class TestCasesForAllServiceMultipleTyre {
 //        BaseRobot().doOnView(withId(R.id.btnConfirm), ViewActions.closeSoftKeyboard(), ViewActions.click())
     }
 
-    private fun navigateToVehicleBrandScreeneSelection(number: Int) {
+    private fun navigateToVehicleBrandScreeneSelection(number: Int, type: String) {
 
-        try {
-            BaseRobot().doOnView(
-                withId(R.id.gridviewRecycMake_), closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    number,
-                    click()
-                )
-            )
-            if (!serviceSelection?.singleTyreSelection!!) {
-                BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
-                BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
-                BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        val title= onView(withId(R.id.tvTitle))
+        if (getText(title).equals("Select Tyre Make - "+type)){
             try {
-                BaseRobot().doOnView(withId(R.id.ivEditVehicleMake), closeSoftKeyboard(), click())
-
-                Thread.sleep(150)
                 BaseRobot().doOnView(
                     withId(R.id.gridviewRecycMake_), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        2,
+                        number,
                         click()
                     )
                 )
+                if (!serviceSelection?.singleTyreSelection!!) {
+                    BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
+                    BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
+                    BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                try {
+                    BaseRobot().doOnView(withId(R.id.ivEditVehicleMake), closeSoftKeyboard(), click())
+
+                    Thread.sleep(150)
+                    BaseRobot().doOnView(
+                        withId(R.id.gridviewRecycMake_), closeSoftKeyboard(),
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            2,
+                            click()
+                        )
+                    )
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            try {
+                BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
+            navigateToVehiclePatternScreen()
         }
 
-        try {
-            BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
-        navigateToVehiclePatternScreen()
     }
 
     private fun navigateToVehiclePatternScreen() {
@@ -512,26 +517,6 @@ class TestCasesForAllServiceMultipleTyre {
 
     private fun navigateToVisualDetailPage() {
 
-        Thread.sleep(1000)
-        try {
-            val date = onView(withId(R.id.edtManufaturingDate))
-            if (!getText(date).equals("")) {
-                try {
-                    onView(withId(R.id.edtManufaturingDate)).perform(clearText(), typeText(serviceSelection?.blankManufacturingDate))
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            } else {
-                try {
-                    onView(withId(R.id.edtManufaturingDate)).perform(typeText(serviceSelection?.blankManufacturingDate))
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
         try {
             BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
         } catch (e: Exception) {
@@ -549,7 +534,7 @@ class TestCasesForAllServiceMultipleTyre {
             e.printStackTrace()
         }
         try {
-            BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+            TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -568,7 +553,7 @@ class TestCasesForAllServiceMultipleTyre {
         }
 
         try {
-            BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+            TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -586,7 +571,7 @@ class TestCasesForAllServiceMultipleTyre {
             e.printStackTrace()
         }
         try {
-            BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+            TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -604,7 +589,7 @@ class TestCasesForAllServiceMultipleTyre {
             e.printStackTrace()
         }
         try {
-            BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+            TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -613,6 +598,9 @@ class TestCasesForAllServiceMultipleTyre {
             onView(withId(R.id.edtManufaturingDate)).perform(
                 clearText(),
                 typeText(serviceSelection?.validManufacturingDate))
+
+            val manuDate = onView(withId(R.id.edtManufaturingDate))
+//            serviceSelection?.manuFacturingDate_lf = getText(manuDate)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
@@ -622,34 +610,94 @@ class TestCasesForAllServiceMultipleTyre {
             e.printStackTrace()
         }
 
+        onView(withId(R.id.multiSlider1)).perform(setValue(35F))
+        onView(withId(R.id.multiSliderPsiOut)).perform(setValue(40F))
+        onView(withId(R.id.multiSliderWeight)).perform(setValue(39F))
         try {
             onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
             onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
             onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
+
             onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
             onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
             onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
 
-            BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
-                swipeUp())
+            val sideWell = onView(withId(R.id.ivOkSideWell))
+            val shoulder = onView(withId(R.id.ivSugShoulder))
+            val treadWear = onView(withId(R.id.ivReqTreadWear))
+            val treadDepth = onView(withId(R.id.ivSugTreadDepth))
+            val rimDamage = onView(withId(R.id.ivOkRimDamage))
+            val bubble = onView(withId(R.id.ivReqbubble))
+
+//            if (type.equals("LF")) {
+//                serviceSelection?.sidewell_lf = getText(sideWell)
+//                serviceSelection?.shoulder_lf = getText(shoulder)
+//                serviceSelection?.treadDepth_lf = getText(treadDepth)
+//                serviceSelection?.treadWear_lf = getText(treadWear)
+//                serviceSelection?.rimDamage_lf = getText(rimDamage)
+//                serviceSelection?.bubble_lf = getText(bubble)
+//            } else if (type.equals("RF")) {
+//                serviceSelection?.sidewell_rf = getText(sideWell)
+//                serviceSelection?.shoulder_rf = getText(shoulder)
+//                serviceSelection?.treadDepth_rf = getText(treadDepth)
+//                serviceSelection?.treadWear_rf = getText(treadWear)
+//                serviceSelection?.rimDamage_rf = getText(rimDamage)
+//                serviceSelection?.bubble_rf = getText(bubble)
+//            } else if (type.equals("LR")) {
+//                serviceSelection?.sidewell_lr = getText(sideWell)
+//                serviceSelection?.shoulder_lr = getText(shoulder)
+//                serviceSelection?.treadDepth_lr = getText(treadDepth)
+//                serviceSelection?.treadWear_lr = getText(treadWear)
+//                serviceSelection?.rimDamage_lr = getText(rimDamage)
+//                serviceSelection?.bubble_lr = getText(bubble)
+//            } else if (type.equals("RR")) {
+//                serviceSelection?.sidewell_rr = getText(sideWell)
+//                serviceSelection?.shoulder_rr = getText(shoulder)
+//                serviceSelection?.treadDepth_rr = getText(treadDepth)
+//                serviceSelection?.treadWear_rr = getText(treadWear)
+//                serviceSelection?.rimDamage_rr = getText(rimDamage)
+//                serviceSelection?.bubble_rr = getText(bubble)
+//            }
 
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
+        TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
+            swipeUp())
+        Thread.sleep(2000)
         try {
-            BaseRobot().doOnView(
+            val number = (1..3).random()
+            TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(
                 withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    2,
+                    number,
                     click()
                 )
             )
+//            onView(withId(R.id.issueResolvedRecycView))
+//                .perform(
+//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                        number,
+//                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+//                            print("issueResolved-->" + this.text?.toString())
+//                            if (type.equals("LF")) {
+//                                serviceSelection?.issueResolveArrayList_lf?.add(this.text?.toString()!!)
+//                            } else if (type.equals("RF")) {
+//                                serviceSelection?.issueResolveArrayList_rf?.add(this.text?.toString()!!)
+//                            } else if (type.equals("LR")) {
+//                                serviceSelection?.issueResolveArrayList_lr?.add(this.text?.toString()!!)
+//                            } else if (type.equals("RR")) {
+//                                serviceSelection?.issueResolveArrayList_rr?.add(this.text?.toString()!!)
+//                            }
+////                             = this.text.toString()
+//                        }
+//                    )
+//                )
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
         try {
-            BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+            TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
@@ -687,6 +735,8 @@ class TestCasesForAllServiceMultipleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
+        onView(withId(R.id.ivDueDate)).perform(customScrollTo, click())
+        Thread.sleep(1000)
 
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click());
 
@@ -900,11 +950,13 @@ class TestCasesForAllServiceMultipleTyre {
         BaseRobot().doOnView(withId(R.id.btnSubmitAndComplete), closeSoftKeyboard(), click())
         BaseRobot().doOnView(withId(R.id.btn_ok), closeSoftKeyboard(), click())
 
-        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        Thread.sleep(4000)
+        BaseRobot().doOnView(withId(R.id.btnOk), closeSoftKeyboard(), click())
 
+        Thread.sleep(2000)
         BaseRobot().doOnView(withId(R.id.llCompleted), closeSoftKeyboard(), click())
 
-        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(
+        BaseRobot().doOnView(
             withId(R.id.serviceRecycView), closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
@@ -916,19 +968,53 @@ class TestCasesForAllServiceMultipleTyre {
 
     private fun navigateToCompletedServiceDetailScreen() {
 
-        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click());
+        Thread.sleep(2500)
+        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
 
         onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
 
-        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        Thread.sleep(3000)
+
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre2)).perform(customScrollTo, click())
+        Thread.sleep(3000)
 
-        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre3)).perform(customScrollTo, click())
+        Thread.sleep(3000)
 
-        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre4)).perform(customScrollTo, click())
+        Thread.sleep(3000)
 
-        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+
+        Thread.sleep(1000)
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        Thread.sleep(1000)
+
+    }
+
+    fun setValue(value: Float): ViewAction {
+        return object : ViewAction {
+            override fun getDescription(): String {
+                return "Set Slider value to $value"
+            }
+
+            override fun getConstraints(): Matcher<View> {
+                return isAssignableFrom(FluidSlider::class.java)
+            }
+
+            override fun perform(uiController: UiController?, view: View) {
+                val seekBar = view as FluidSlider
+                seekBar.position = value
+                seekBar.positionListener = {
+                    seekBar.bubbleText = value.toString()
+                }
+                seekBar.animate()
+//                seekBar.value = value
+            }
+
+        }
     }
 }
