@@ -24,6 +24,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.google.android.material.slider.Slider
+import com.ramotion.fluidslider.FluidSlider
 import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.services.AllServiceSingleTyreSelection
 import org.hamcrest.CoreMatchers
@@ -597,7 +599,7 @@ class TestCasesForAllServiceSingleTyre {
                 e.printStackTrace()
             }
 
-            /*try {
+            try {
                 val date = onView(withId(R.id.edtManufaturingDate))
                 if (!date.equals("")) {
                     onView(withId(R.id.edtManufaturingDate)).perform(clearText(), typeText(serviceSelection?.zeroManufacturingDate))
@@ -648,7 +650,7 @@ class TestCasesForAllServiceSingleTyre {
                 BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
-            }*/
+            }
             try {
                 val date = onView(withId(R.id.edtManufaturingDate))
                 if (!date.equals("")) {
@@ -684,14 +686,26 @@ class TestCasesForAllServiceSingleTyre {
                 e.printStackTrace()
             }
 
+            onView(withId(R.id.multiSlider1)).perform(setValue(35F))
+            onView(withId(R.id.multiSliderPsiOut)).perform(setValue(40F))
+            onView(withId(R.id.multiSliderWeight)).perform(setValue(39F))
             try {
                 onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
                 onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
                 onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
+                try {
+                    BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
                 onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
                 onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
-
+                try {
+                    BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 serviceSelection?.sidewell = "OK"
                 serviceSelection?.shoulder = "SUG"
                 serviceSelection?.treadWear = "REQ"
@@ -706,6 +720,7 @@ class TestCasesForAllServiceSingleTyre {
                 e.printStackTrace()
             }
 
+            Thread.sleep(2500)
             try {
                 val number = (1..3).random()
                 BaseRobot().doOnView(
@@ -1029,5 +1044,27 @@ class TestCasesForAllServiceSingleTyre {
         Thread.sleep(1000)
         BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         Thread.sleep(1000)
+    }
+
+    fun setValue(value: Float): ViewAction {
+        return object : ViewAction {
+            override fun getDescription(): String {
+                return "Set Slider value to $value"
+            }
+
+            override fun getConstraints(): Matcher<View> {
+                return ViewMatchers.isAssignableFrom(FluidSlider::class.java)
+            }
+
+            override fun perform(uiController: UiController?, view: View) {
+                val seekBar = view as FluidSlider
+                seekBar.positionListener = {
+                    seekBar.bubbleText = value.toString()
+                }
+                seekBar.animate()
+//                seekBar.value = value
+            }
+
+        }
     }
 }
