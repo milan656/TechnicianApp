@@ -85,5 +85,7 @@ class AllServiceSingleTyreSelection {
 
     var editFlowEnable = false
 
+    var anotherTyre=false
+
 
 }

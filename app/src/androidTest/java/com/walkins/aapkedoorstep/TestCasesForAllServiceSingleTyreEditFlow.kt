@@ -20,6 +20,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.ramotion.fluidslider.FluidSlider
 import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.services.AllServiceSingleTyreSelection
 import org.hamcrest.CoreMatchers
@@ -268,10 +269,20 @@ class TestCasesForAllServiceSingleTyreEditFlow {
 //        fillUpAddServicedetail()
 
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
-        tyreLFTyreSelection()
-        Thread.sleep(500)
-        tyreRFTyreSelection()
-        Thread.sleep(500)
+
+        if (serviceSelection?.anotherTyre!!) {
+            tyreLFTyreSelection()
+            Thread.sleep(500)
+            tyreRFTyreSelection()
+            Thread.sleep(500)
+
+        } else {
+            tyreLRTyreSelection()
+            Thread.sleep(500)
+            tyreRRTyreSelection()
+            Thread.sleep(500)
+
+        }
 
         fillUpAddServicedetail()
 
@@ -287,18 +298,212 @@ class TestCasesForAllServiceSingleTyreEditFlow {
         editFlowPerform()
 
         AnotherVehicleDetailFillup()
-//        removeWheelBalancingService()
 
-//        removeNitrogenService()
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
 
-//        if (serviceSelection?.vehicleWiseStoreData!!) {
-//            serviceSelection?.vehicleWiseStoreData = false
-//            AnotherVehicleDetailFillup()
-//        }
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+
+        Thread.sleep(2000)
+        onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
+
+        if (!serviceSelection?.nitrogen_refill_service.equals("")) {
+            try {
+                BaseRobot().doOnView(
+                    withId(R.id.serviceRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(serviceSelection?.nitrogen_refill_service)),
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (!serviceSelection?.wheel_balancing_service.equals("")) {
+            try {
+                BaseRobot().doOnView(
+                    withId(R.id.serviceRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(serviceSelection?.wheel_balancing_service)),
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
+            swipeUp())
+
+        if (!serviceSelection?.nitrogen_topup_service.equals("")) {
+            try {
+                BaseRobot().doOnView(
+                    withId(R.id.serviceRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(serviceSelection?.nitrogen_topup_service)),
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (!serviceSelection?.typeRotation_service.equals("")) {
+            try {
+                BaseRobot().doOnView(
+                    withId(R.id.serviceRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(serviceSelection?.typeRotation_service)),
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
+            try {
+                onView(withId(R.id.radioLF_LR)).perform(customScrollTo, click())
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+//        fillUpAddServicedetail()
+
+        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
+
+        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+
+        BaseRobot().doOnView(
+            withId(R.id.serviceRecycView), closeSoftKeyboard(),
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                1,
+                click()
+            )
+        )
+
+        Thread.sleep(2000)
+        onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
+
+        if (!serviceSelection?.nitrogen_refill_service.equals("")) {
+            try {
+                BaseRobot().doOnView(
+                    withId(R.id.serviceRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(serviceSelection?.nitrogen_refill_service)),
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (!serviceSelection?.wheel_balancing_service.equals("")) {
+            try {
+                BaseRobot().doOnView(
+                    withId(R.id.serviceRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(serviceSelection?.wheel_balancing_service)),
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
+            swipeUp())
+
+        if (!serviceSelection?.nitrogen_topup_service.equals("")) {
+            try {
+                BaseRobot().doOnView(
+                    withId(R.id.serviceRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(serviceSelection?.nitrogen_topup_service)),
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+        if (!serviceSelection?.typeRotation_service.equals("")) {
+            try {
+                BaseRobot().doOnView(
+                    withId(R.id.serviceRecycView), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                        hasDescendant(withText(serviceSelection?.typeRotation_service)),
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
+            try {
+                onView(withId(R.id.radioLF_LR)).perform(customScrollTo, click())
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+//        fillUpAddServicedetail()
+
+        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
+
     }
 
 
     private fun AnotherVehicleDetailFillup() {
+        serviceSelection?.anotherTyre = true
         BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
 
         BaseRobot().doOnView(
@@ -379,7 +584,7 @@ class TestCasesForAllServiceSingleTyreEditFlow {
     private fun tyreLFTyreSelection() {
 //        Assert.assertEquals("true","false")
         onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
-        navigateToVehicleBrandScreeneSelection(0,"LF")
+        navigateToVehicleBrandScreeneSelection(0, "LF")
     }
 
     private fun skipServiceFlow() {
@@ -616,7 +821,7 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                 e.printStackTrace()
             }
             try {
-                BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -635,7 +840,7 @@ class TestCasesForAllServiceSingleTyreEditFlow {
             }
 
             try {
-                BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -653,7 +858,7 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                 e.printStackTrace()
             }
             try {
-                BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -671,53 +876,88 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                 e.printStackTrace()
             }
             try {
-                BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
             try {
+                var date: String? = ""
+                if (type.equals("LF")) {
+                    date = "2121"
+                } else if (type.equals("RF")) {
+                    date = "1111"
+                } else if (type.equals("LR")) {
+                    date = "1520"
+                } else if (type.equals("RR")) {
+                    date = "2020"
+                }
                 onView(withId(R.id.edtManufaturingDate)).perform(
                     clearText(),
-                    typeText(serviceSelection?.validManufacturingDate))
+                    typeText(date))
 
                 val manuDate = onView(withId(R.id.edtManufaturingDate))
-                serviceSelection?.manuFacturingDate_lf = getText(manuDate)
+//            serviceSelection?.manuFacturingDate_lf = getText(manuDate)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
             try {
-                BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                TestCasesForAllServiceMultipleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
+            var position: Float? = 0.toFloat()
+            if (type.equals("LF")) {
+                onView(withId(R.id.multiSlider1)).perform(setValue(35F))
+                onView(withId(R.id.multiSliderPsiOut)).perform(setValue(40F))
+                onView(withId(R.id.multiSliderWeight)).perform(setValue(39F))
+            } else if (type.equals("RF")) {
+
+            } else if (type.equals("LR")) {
+                onView(withId(R.id.multiSlider1)).perform(setValue(35F))
+                onView(withId(R.id.multiSliderPsiOut)).perform(setValue(40F))
+                onView(withId(R.id.multiSliderWeight)).perform(setValue(39F))
+            } else if (type.equals("RR")) {
+
+            }
+
             try {
-                onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
-                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                if (type.equals("LF")) {
+                    onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
 
-                try {
-                    BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                    onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+                } else if (type.equals("RF")) {
+                    onView(withId(R.id.ivSugSideWell)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivOkTreadWear)).perform(customScrollTo, click());
+
+                    onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivSugRimDamage)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+                } else if (type.equals("LR")) {
+                    onView(withId(R.id.ivReqSideWell)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
+
+                    onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+                } else if (type.equals("RR")) {
+                    onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivOkTreadWear)).perform(customScrollTo, click());
+
+                    onView(withId(R.id.ivOkTreadDepth)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivSugRimDamage)).perform(customScrollTo, click());
+                    onView(withId(R.id.ivOkbubble)).perform(customScrollTo, click());
                 }
 
-                onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
-                onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
 
-                try {
-                    BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-                onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
-                onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
-
-                try {
-                    BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
                 val sideWell = onView(withId(R.id.ivOkSideWell))
                 val shoulder = onView(withId(R.id.ivSugShoulder))
                 val treadWear = onView(withId(R.id.ivReqTreadWear))
@@ -725,70 +965,70 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                 val rimDamage = onView(withId(R.id.ivOkRimDamage))
                 val bubble = onView(withId(R.id.ivReqbubble))
 
-                if (type.equals("LF")) {
-                    serviceSelection?.sidewell_lf = getText(sideWell)
-                    serviceSelection?.shoulder_lf = getText(shoulder)
-                    serviceSelection?.treadDepth_lf = getText(treadDepth)
-                    serviceSelection?.treadWear_lf = getText(treadWear)
-                    serviceSelection?.rimDamage_lf = getText(rimDamage)
-                    serviceSelection?.bubble_lf = getText(bubble)
-                } else if (type.equals("RF")) {
-                    serviceSelection?.sidewell_rf = getText(sideWell)
-                    serviceSelection?.shoulder_rf = getText(shoulder)
-                    serviceSelection?.treadDepth_rf = getText(treadDepth)
-                    serviceSelection?.treadWear_rf = getText(treadWear)
-                    serviceSelection?.rimDamage_rf = getText(rimDamage)
-                    serviceSelection?.bubble_rf = getText(bubble)
-                } else if (type.equals("LR")) {
-                    serviceSelection?.sidewell_lr = getText(sideWell)
-                    serviceSelection?.shoulder_lr = getText(shoulder)
-                    serviceSelection?.treadDepth_lr = getText(treadDepth)
-                    serviceSelection?.treadWear_lr = getText(treadWear)
-                    serviceSelection?.rimDamage_lr = getText(rimDamage)
-                    serviceSelection?.bubble_lr = getText(bubble)
-                } else if (type.equals("RR")) {
-                    serviceSelection?.sidewell_rr = getText(sideWell)
-                    serviceSelection?.shoulder_rr = getText(shoulder)
-                    serviceSelection?.treadDepth_rr = getText(treadDepth)
-                    serviceSelection?.treadWear_rr = getText(treadWear)
-                    serviceSelection?.rimDamage_rr = getText(rimDamage)
-                    serviceSelection?.bubble_rr = getText(bubble)
-                }
-                BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
-                    swipeUp())
+//            if (type.equals("LF")) {
+//                serviceSelection?.sidewell_lf = getText(sideWell)
+//                serviceSelection?.shoulder_lf = getText(shoulder)
+//                serviceSelection?.treadDepth_lf = getText(treadDepth)
+//                serviceSelection?.treadWear_lf = getText(treadWear)
+//                serviceSelection?.rimDamage_lf = getText(rimDamage)
+//                serviceSelection?.bubble_lf = getText(bubble)
+//            } else if (type.equals("RF")) {
+//                serviceSelection?.sidewell_rf = getText(sideWell)
+//                serviceSelection?.shoulder_rf = getText(shoulder)
+//                serviceSelection?.treadDepth_rf = getText(treadDepth)
+//                serviceSelection?.treadWear_rf = getText(treadWear)
+//                serviceSelection?.rimDamage_rf = getText(rimDamage)
+//                serviceSelection?.bubble_rf = getText(bubble)
+//            } else if (type.equals("LR")) {
+//                serviceSelection?.sidewell_lr = getText(sideWell)
+//                serviceSelection?.shoulder_lr = getText(shoulder)
+//                serviceSelection?.treadDepth_lr = getText(treadDepth)
+//                serviceSelection?.treadWear_lr = getText(treadWear)
+//                serviceSelection?.rimDamage_lr = getText(rimDamage)
+//                serviceSelection?.bubble_lr = getText(bubble)
+//            } else if (type.equals("RR")) {
+//                serviceSelection?.sidewell_rr = getText(sideWell)
+//                serviceSelection?.shoulder_rr = getText(shoulder)
+//                serviceSelection?.treadDepth_rr = getText(treadDepth)
+//                serviceSelection?.treadWear_rr = getText(treadWear)
+//                serviceSelection?.rimDamage_rr = getText(rimDamage)
+//                serviceSelection?.bubble_rr = getText(bubble)
+//            }
 
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-
-            Thread.sleep(3000)
+            TestCasesForAllServiceMultipleTyre.BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
+                swipeUp())
+            Thread.sleep(2000)
             try {
                 val number = (1..3).random()
-                BaseRobot().doOnView(
+                TestCasesForAllServiceMultipleTyre.BaseRobot().doOnView(
                     withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                         number,
-                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
-                            if (!this.isChecked) {
-                                this.performClick()
-                                click()
-                            }
-                        }
+                        click()
                     )
                 )
-
-
-//                onView(withId(R.id.issueResolvedRecycView))
-//                    .perform(
-//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                            number,
-//                            recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
-//                                print("issueResolved-->" + this.text?.toString())
-//                                serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
-////                             = this.text.toString()
+//            onView(withId(R.id.issueResolvedRecycView))
+//                .perform(
+//                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                        number,
+//                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+//                            print("issueResolved-->" + this.text?.toString())
+//                            if (type.equals("LF")) {
+//                                serviceSelection?.issueResolveArrayList_lf?.add(this.text?.toString()!!)
+//                            } else if (type.equals("RF")) {
+//                                serviceSelection?.issueResolveArrayList_rf?.add(this.text?.toString()!!)
+//                            } else if (type.equals("LR")) {
+//                                serviceSelection?.issueResolveArrayList_lr?.add(this.text?.toString()!!)
+//                            } else if (type.equals("RR")) {
+//                                serviceSelection?.issueResolveArrayList_rr?.add(this.text?.toString()!!)
 //                            }
-//                        )
+////                             = this.text.toString()
+//                        }
 //                    )
+//                )
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -798,92 +1038,9 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                 e.printStackTrace()
             }
         } else {
-
-            Thread.sleep(200)
-
-            try {
-                onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, scrollTo());
-                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, scrollTo());
-                onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, scrollTo());
-                onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, scrollTo());
-                onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, scrollTo());
-                onView(withId(R.id.ivReqbubble)).perform(customScrollTo, scrollTo());
-
-                val sideWell = onView(withId(R.id.ivOkSideWell))
-                val shoulder = onView(withId(R.id.ivSugShoulder))
-                val treadWear = onView(withId(R.id.ivReqTreadWear))
-                val treadDepth = onView(withId(R.id.ivSugTreadDepth))
-                val rimDamage = onView(withId(R.id.ivOkRimDamage))
-                val bubble = onView(withId(R.id.ivReqbubble))
-
-                if (type.equals("LF")) {
-                    serviceSelection?.sidewell_lf = getText(sideWell)
-                    serviceSelection?.shoulder_lf = getText(shoulder)
-                    serviceSelection?.treadDepth_lf = getText(treadDepth)
-                    serviceSelection?.treadWear_lf = getText(treadWear)
-                    serviceSelection?.rimDamage_lf = getText(rimDamage)
-                    serviceSelection?.bubble_lf = getText(bubble)
-                } else if (type.equals("RF")) {
-                    serviceSelection?.sidewell_rf = getText(sideWell)
-                    serviceSelection?.shoulder_rf = getText(shoulder)
-                    serviceSelection?.treadDepth_rf = getText(treadDepth)
-                    serviceSelection?.treadWear_rf = getText(treadWear)
-                    serviceSelection?.rimDamage_rf = getText(rimDamage)
-                    serviceSelection?.bubble_rf = getText(bubble)
-                } else if (type.equals("LR")) {
-                    serviceSelection?.sidewell_lr = getText(sideWell)
-                    serviceSelection?.shoulder_lr = getText(shoulder)
-                    serviceSelection?.treadDepth_lr = getText(treadDepth)
-                    serviceSelection?.treadWear_lr = getText(treadWear)
-                    serviceSelection?.rimDamage_lr = getText(rimDamage)
-                    serviceSelection?.bubble_lr = getText(bubble)
-                } else if (type.equals("RR")) {
-                    serviceSelection?.sidewell_rr = getText(sideWell)
-                    serviceSelection?.shoulder_rr = getText(shoulder)
-                    serviceSelection?.treadDepth_rr = getText(treadDepth)
-                    serviceSelection?.treadWear_rr = getText(treadWear)
-                    serviceSelection?.rimDamage_rr = getText(rimDamage)
-                    serviceSelection?.bubble_rr = getText(bubble)
-                }
-
-                BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
-                    swipeUp())
-
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
-
-            try {
-                val number = (1..3).random()
-                BaseRobot().doOnView(
-                    withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
-                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        number,
-                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
-                            if (!this.isChecked) {
-                                this.performClick()
-                                click()
-                            }
-                        }
-                    )
-                )
-//                onView(withId(R.id.issueResolvedRecycView))
-//                    .perform(
-//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                            number,
-//                            recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
-//                                print("issueResolved-->" + this.text?.toString())
-//                                serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
-////                             = this.text.toString()
-//                            }
-//                        )
-//                    )
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
             try {
                 BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
-            } catch (e: java.lang.Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
@@ -1167,5 +1324,28 @@ class TestCasesForAllServiceSingleTyreEditFlow {
         Thread.sleep(1000)
         BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         Thread.sleep(1000)
+    }
+
+    fun setValue(value: Float): ViewAction {
+        return object : ViewAction {
+            override fun getDescription(): String {
+                return "Set Slider value to $value"
+            }
+
+            override fun getConstraints(): Matcher<View> {
+                return isAssignableFrom(FluidSlider::class.java)
+            }
+
+            override fun perform(uiController: UiController?, view: View) {
+                val seekBar = view as FluidSlider
+                seekBar.position = value
+                seekBar.positionListener = {
+                    seekBar.bubbleText = value.toString()
+                }
+                seekBar.animate()
+//                seekBar.value = value
+            }
+
+        }
     }
 }

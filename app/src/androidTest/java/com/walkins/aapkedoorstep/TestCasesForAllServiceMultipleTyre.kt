@@ -365,7 +365,7 @@ class TestCasesForAllServiceMultipleTyre {
 
     private fun tyreLFTyreSelection() {
         onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
-        navigateToVehicleBrandScreeneSelection(0,"LF")
+        navigateToVehicleBrandScreeneSelection(0, "LF")
     }
 
     private fun skipServiceFlow() {
@@ -386,8 +386,9 @@ class TestCasesForAllServiceMultipleTyre {
 
     private fun navigateToVehicleBrandScreeneSelection(number: Int, type: String) {
 
-        val title= onView(withId(R.id.tvTitle))
-        if (getText(title).equals("Select Tyre Make - "+type)){
+        Thread.sleep(1000)
+        val title = onView(withId(R.id.tvTitle))
+        if (getText(title).equals("Select Tyre Make - " + type)) {
             try {
                 BaseRobot().doOnView(
                     withId(R.id.gridviewRecycMake_), closeSoftKeyboard(),
@@ -424,98 +425,115 @@ class TestCasesForAllServiceMultipleTyre {
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-            navigateToVehiclePatternScreen()
+            navigateToVehiclePatternScreen(type)
+        } else {
+            navigateToVehiclePatternScreen(type)
         }
 
     }
 
-    private fun navigateToVehiclePatternScreen() {
-        try {
-            val number = (0..4).random()
-            BaseRobot().doOnView(
-                withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    number,
-                    click()
-                )
-            )
-            if (!serviceSelection?.singleTyreSelection!!) {
-                BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
-                BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
-                BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+    private fun navigateToVehiclePatternScreen(type: String) {
+        Thread.sleep(1000)
+        val title = onView(withId(R.id.tvTitle))
 
+        if (getText(title).equals("Select Tyre Pattern - " + type)) {
             try {
-                BaseRobot().doOnView(withId(R.id.ivEditVehicleMakeModel), closeSoftKeyboard(), click())
-                Thread.sleep(150)
+                val number = (0..4).random()
                 BaseRobot().doOnView(
                     withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        1,
+                        number,
                         click()
                     )
                 )
+                if (!serviceSelection?.singleTyreSelection!!) {
+                    BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
+                    BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
+                    BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
+
+                try {
+                    BaseRobot().doOnView(withId(R.id.ivEditVehicleMakeModel), closeSoftKeyboard(), click())
+                    Thread.sleep(150)
+                    BaseRobot().doOnView(
+                        withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            1,
+                            click()
+                        )
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-        }
 
-        try {
-            BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
-
-        navigateToVehicleSizeScreen()
-    }
-
-    private fun navigateToVehicleSizeScreen() {
-        try {
-//            onView(withId(R.id.gridviewRecycModel)).isDisplayed()
-            BaseRobot().doOnView(
-                withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    0,
-                    click()
-                )
-            )
-            if (!serviceSelection?.singleTyreSelection!!) {
-                BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
-                BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
-                BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
-            }
-            //view is displayed logic
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-            //view not displayed logic
             try {
-                BaseRobot().doOnView(withId(R.id.ivEditVehicleMakeModel), closeSoftKeyboard(), click())
-
-                Thread.sleep(150)
-                BaseRobot().doOnView(
-                    withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
-                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        1,
-                        click()
-                    ))
-
+                BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
+
+            navigateToVehicleSizeScreen(type)
+        } else {
+            navigateToVehicleSizeScreen(type)
         }
 
-        try {
-            BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
-
-        navigateToVisualDetailPage()
     }
 
-    private fun navigateToVisualDetailPage() {
+    private fun navigateToVehicleSizeScreen(type: String) {
+        Thread.sleep(1000)
+        val title = onView(withId(R.id.tvTitle))
+        if (getText(title).equals("Select Tyre Size - " + type)) {
+            try {
+//            onView(withId(R.id.gridviewRecycModel)).isDisplayed()
+                BaseRobot().doOnView(
+                    withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        0,
+                        click()
+                    )
+                )
+                if (!serviceSelection?.singleTyreSelection!!) {
+                    BaseRobot().doOnView(withId(R.id.chkRF), closeSoftKeyboard(), click())
+                    BaseRobot().doOnView(withId(R.id.chkLR), closeSoftKeyboard(), click())
+                    BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
+                }
+                //view is displayed logic
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                //view not displayed logic
+                try {
+                    BaseRobot().doOnView(withId(R.id.ivEditVehicleMakeModel), closeSoftKeyboard(), click())
+
+                    Thread.sleep(150)
+                    BaseRobot().doOnView(
+                        withId(R.id.gridviewRecycModel), closeSoftKeyboard(),
+                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                            1,
+                            click()
+                        ))
+
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            try {
+                BaseRobot().doOnView(withId(R.id.btnNext), closeSoftKeyboard(), click())
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
+            navigateToVisualDetailPage(type)
+
+        } else {
+            navigateToVisualDetailPage(type)
+        }
+    }
+
+    private fun navigateToVisualDetailPage(type: String) {
 
         try {
             BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
@@ -595,9 +613,19 @@ class TestCasesForAllServiceMultipleTyre {
         }
 
         try {
+            var date: String? = ""
+            if (type.equals("LF")) {
+                date = "2121"
+            } else if (type.equals("RF")) {
+                date = "1111"
+            } else if (type.equals("LR")) {
+                date = "1520"
+            } else if (type.equals("RR")) {
+                date = "2020"
+            }
             onView(withId(R.id.edtManufaturingDate)).perform(
                 clearText(),
-                typeText(serviceSelection?.validManufacturingDate))
+                typeText(date))
 
             val manuDate = onView(withId(R.id.edtManufaturingDate))
 //            serviceSelection?.manuFacturingDate_lf = getText(manuDate)
@@ -610,17 +638,56 @@ class TestCasesForAllServiceMultipleTyre {
             e.printStackTrace()
         }
 
-        onView(withId(R.id.multiSlider1)).perform(setValue(35F))
-        onView(withId(R.id.multiSliderPsiOut)).perform(setValue(40F))
-        onView(withId(R.id.multiSliderWeight)).perform(setValue(39F))
-        try {
-            onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
-            onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
-            onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
+        var position: Float? = 0.toFloat()
+        if (type.equals("LF")) {
+            onView(withId(R.id.multiSlider1)).perform(setValue(35F))
+            onView(withId(R.id.multiSliderPsiOut)).perform(setValue(40F))
+            onView(withId(R.id.multiSliderWeight)).perform(setValue(39F))
+        } else if (type.equals("RF")) {
 
-            onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
-            onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
-            onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+        } else if (type.equals("LR")) {
+            onView(withId(R.id.multiSlider1)).perform(setValue(35F))
+            onView(withId(R.id.multiSliderPsiOut)).perform(setValue(40F))
+            onView(withId(R.id.multiSliderWeight)).perform(setValue(39F))
+        } else if (type.equals("RR")) {
+
+        }
+
+        try {
+            if (type.equals("LF")) {
+                onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
+                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
+
+                onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
+                onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
+                onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+            } else if (type.equals("RF")) {
+                onView(withId(R.id.ivSugSideWell)).perform(customScrollTo, click());
+                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                onView(withId(R.id.ivOkTreadWear)).perform(customScrollTo, click());
+
+                onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
+                onView(withId(R.id.ivSugRimDamage)).perform(customScrollTo, click());
+                onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+            } else if (type.equals("LR")) {
+                onView(withId(R.id.ivReqSideWell)).perform(customScrollTo, click());
+                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
+
+                onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
+                onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
+                onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+            } else if (type.equals("RR")) {
+                onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
+                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+                onView(withId(R.id.ivOkTreadWear)).perform(customScrollTo, click());
+
+                onView(withId(R.id.ivOkTreadDepth)).perform(customScrollTo, click());
+                onView(withId(R.id.ivSugRimDamage)).perform(customScrollTo, click());
+                onView(withId(R.id.ivOkbubble)).perform(customScrollTo, click());
+            }
+
 
             val sideWell = onView(withId(R.id.ivOkSideWell))
             val shoulder = onView(withId(R.id.ivSugShoulder))
@@ -662,12 +729,12 @@ class TestCasesForAllServiceMultipleTyre {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-        TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
+        BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
             swipeUp())
         Thread.sleep(2000)
         try {
             val number = (1..3).random()
-            TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(
+            BaseRobot().doOnView(
                 withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     number,
@@ -697,7 +764,7 @@ class TestCasesForAllServiceMultipleTyre {
             e.printStackTrace()
         }
         try {
-            TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+            BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
@@ -709,7 +776,7 @@ class TestCasesForAllServiceMultipleTyre {
 
         try {
 
-            TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(
+            BaseRobot().doOnView(
                 withId(R.id.suggestionsRecycView), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     4,
