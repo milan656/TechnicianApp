@@ -862,7 +862,7 @@ class TestCasesForSingleServiceAndTyre {
         Thread.sleep(5000)
         tyreRRTyreSelection("RR")
 
-//        submitServiceAndGoToCompletedService()
+        submitServiceAndGoToCompletedService()
 
 //        onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
 //        onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())

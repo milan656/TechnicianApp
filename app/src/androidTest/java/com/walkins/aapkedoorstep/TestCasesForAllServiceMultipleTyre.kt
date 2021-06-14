@@ -703,6 +703,8 @@ class TestCasesForAllServiceMultipleTyre {
         BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
             swipeUp())
 
+        submitServiceAndGoToCompletedService()
+
 //        removeNitrogenService()
 
 
