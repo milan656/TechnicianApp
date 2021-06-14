@@ -46,8 +46,8 @@ class TestCasesForAllServiceSingleTyreEditFlow {
     @Before
     fun setModelClass() {
         serviceSelection = AllServiceSingleTyreSelection()
-        val resultData = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intending(not(isInternal())).respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, resultData))
+//        val resultData = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//        intending(not(isInternal())).respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, resultData))
     }
 
     @get:Rule
@@ -282,8 +282,6 @@ class TestCasesForAllServiceSingleTyreEditFlow {
 
         fillUpAddServicedetail()
 
-        serviceSelection?.editFlowEnable = true
-
         onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
 //        tyreRRTyreSelection()
 //        Thread.sleep(500)
@@ -293,9 +291,12 @@ class TestCasesForAllServiceSingleTyreEditFlow {
 //
 //        submitServiceAndGoToCompletedService()
 
-        if (serviceSelection?.editFlowEnable!!) {
-            editFlowPerform()
-        }
+        editFlowPerform()
+
+        AnotherVehicleDetailFillup()
+//        removeWheelBalancingService()
+
+//        removeNitrogenService()
 
 //        if (serviceSelection?.vehicleWiseStoreData!!) {
 //            serviceSelection?.vehicleWiseStoreData = false
@@ -330,6 +331,7 @@ class TestCasesForAllServiceSingleTyreEditFlow {
 
     private fun removeWheelBalancingService() {
 //        Remove service Flow
+        onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
         if (!serviceSelection?.wheel_balancing_service.equals("")) {
             try {
                 BaseRobot().doOnView(
@@ -737,15 +739,23 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                 e.printStackTrace()
             }
 
+            Thread.sleep(3000)
             try {
                 val number = (1..3).random()
                 BaseRobot().doOnView(
                     withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                         number,
-                        click()
+                        recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
                     )
                 )
+
+
 //                onView(withId(R.id.issueResolvedRecycView))
 //                    .perform(
 //                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -797,7 +807,12 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                     withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
                     RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                         number,
-                        click()
+                        recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                            if (!this.isChecked) {
+                                this.performClick()
+                                click()
+                            }
+                        }
                     )
                 )
 //                onView(withId(R.id.issueResolvedRecycView))
@@ -828,12 +843,17 @@ class TestCasesForAllServiceSingleTyreEditFlow {
         onView(withId(R.id.suggestionsRecycView)).perform(customScrollTo, scrollTo());
 
         try {
-            val number1 = (3..4).random()
+
             BaseRobot().doOnView(
                 withId(R.id.suggestionsRecycView), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     4,
-                    click()
+                    recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                        if (!this.isChecked) {
+                            this.performClick()
+                            click()
+                        }
+                    }
                 )
             )
 

@@ -92,29 +92,28 @@ public class MySMSBroadcastReceiver extends BroadcastReceiver {
         try {
 
             if (bundle != null) {
-
                 final Object[] pdusObj = (Object[]) bundle.get("pdus");
 
-                for (int i = 0; i < pdusObj.length; i++) {
+                if (pdusObj != null && pdusObj.length > 0) {
+                    for (int i = 0; i < pdusObj.length; i++) {
 
-                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
-                    String phoneNumber = currentMessage.getDisplayOriginatingAddress();
+                        SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
+                        String phoneNumber = currentMessage.getDisplayOriginatingAddress();
 
-                    String senderNum = phoneNumber;
-                    String message = currentMessage.getDisplayMessageBody().replaceAll("\\D", "");
+                        String senderNum = phoneNumber;
+                        String message = currentMessage.getDisplayMessageBody().replaceAll("\\D", "");
 
-                    //message = message.substring(0, message.length()-1);
-                    Log.i("SmsReceiver", "senderNum: " + senderNum + "; message: " + message);
+                        //message = message.substring(0, message.length()-1);
+                        Log.i("SmsReceiver", "senderNum: " + senderNum + "; message: " + message);
 
-                    Intent myIntent = new Intent("otp");
-                    myIntent.putExtra("message", message);
-                    myIntent.putExtra("number", senderNum);
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(myIntent);
+                        Intent myIntent = new Intent("otp");
+                        myIntent.putExtra("message", message);
+                        myIntent.putExtra("number", senderNum);
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(myIntent);
+                        // Show Alert
 
-
-                    // Show Alert
-
-                } // end for loop
+                    } // end for loop
+                }
             } // bundle is null
 
         } catch (Exception e) {

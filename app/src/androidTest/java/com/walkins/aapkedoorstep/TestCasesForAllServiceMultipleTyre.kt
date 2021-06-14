@@ -195,7 +195,7 @@ class TestCasesForAllServiceMultipleTyre {
     private fun navigateToAddServiceDetailScreen() {
 
 //        skipServiceFlow()
-
+        Thread.sleep(2500)
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
 
         if (!serviceSelection?.nitrogen_refill_service.equals("")) {

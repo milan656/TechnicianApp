@@ -187,6 +187,7 @@ class TestCasesForSingleServiceAndTyre {
 
 //        skipServiceFlow()
 
+        Thread.sleep(2500)
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
 
         if (!serviceSelection?.nitrogen_refill_service.equals("")) {
@@ -857,7 +858,7 @@ class TestCasesForSingleServiceAndTyre {
         Thread.sleep(5000)
         tyreRRTyreSelection("RR")
 
-        submitServiceAndGoToCompletedService()
+//        submitServiceAndGoToCompletedService()
 
 //        onView(withId(R.id.cardtyreConfig)).perform(customScrollTo, click())
 //        onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())

@@ -284,9 +284,9 @@ class TestCasesForAllServiceSingleTyre {
 
         submitServiceAndGoToCompletedService()
 
-        if (serviceSelection?.editFlowEnable!!) {
-            editFlowPerform()
-        }
+//        if (serviceSelection?.editFlowEnable!!) {
+//            editFlowPerform()
+//        }
 
 //        if (serviceSelection?.vehicleWiseStoreData!!) {
 //            serviceSelection?.vehicleWiseStoreData = false
@@ -787,18 +787,16 @@ class TestCasesForAllServiceSingleTyre {
         }
 
 //        image upload flow
-//        try {
-//            BaseRobot().doOnView(withId(R.id.relCarPhotoAdd1), closeSoftKeyboard(), click())
-//            BaseRobot().doOnView(
-//                withId(R.id.dialogueRecycView), closeSoftKeyboard(),
-//                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                    0,
-//                    click()
-//                )
+
+//        onView(withId(R.id.relCarPhotoAdd1)).perform(customScrollTo, click())
+//        BaseRobot().doOnView(
+//            withId(R.id.dialogueRecycView), closeSoftKeyboard(),
+//            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                0,
+//                click()
 //            )
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
+//        )
+
     }
 
 
@@ -998,7 +996,7 @@ class TestCasesForAllServiceSingleTyre {
         Thread.sleep(2000)
         BaseRobot().doOnView(withId(R.id.llCompleted), closeSoftKeyboard(), click())
 
-        TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(
+        BaseRobot().doOnView(
             withId(R.id.serviceRecycView), closeSoftKeyboard(),
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,

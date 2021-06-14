@@ -2770,7 +2770,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
                     jsonObject.addProperty("service_suggestions", edtMoreSuggestion?.text?.toString())
 
-                    selectedDateNextServiceDue = "2021-06-12T00:00:00.000Z"
+                    selectedDateNextServiceDue = "2021-06-15T00:00:00.000Z"
                     jsonObject.addProperty("next_service_due", selectedDateNextServiceDue)
                     jsonObject.addProperty("car_photo_1", TyreConfigClass.CarPhoto_1)
                     jsonObject.addProperty("car_photo_2", TyreConfigClass.CarPhoto_2)
