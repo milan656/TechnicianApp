@@ -34,6 +34,10 @@ import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.MySMSBroadcastReceiver
 import com.walkins.aapkedoorstep.custom.BoldButton
 import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @SuppressLint("SetTextI18n")
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -52,7 +56,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_login)
 
         init()
-
         /* MessageReceiver.bindListener(new SmsListener() {
             @Override
             public void messageReceived(String messageText) {
@@ -237,7 +240,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(intent)
                 } else {
                     if (it.error != null && it.error.get(0).message != null) {
-                        showDialogue("Oops!",it.error.get(0).message)
+                        showDialogue("Oops!", it.error.get(0).message)
                     }
                 }
             }

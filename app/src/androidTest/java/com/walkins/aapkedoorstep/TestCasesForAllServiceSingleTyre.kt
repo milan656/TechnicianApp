@@ -179,8 +179,6 @@ class TestCasesForAllServiceSingleTyre {
 
     private fun navigateToAddServiceDetailScreen() {
 
-//        skipServiceFlow()
-
         Thread.sleep(2000)
         onView(withId(R.id.ivAddServices)).perform(customScrollTo, click())
 
@@ -785,6 +783,21 @@ class TestCasesForAllServiceSingleTyre {
             val moreSuggestion = onView(withId(R.id.edtMoreSuggestion))
             serviceSelection?.moreSuggestions = getText(moreSuggestion)
         } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+
+//        image upload flow
+        try {
+            BaseRobot().doOnView(withId(R.id.relCarPhotoAdd1), closeSoftKeyboard(), click())
+            BaseRobot().doOnView(
+                withId(R.id.dialogueRecycView), closeSoftKeyboard(),
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    click()
+                )
+            )
+
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }

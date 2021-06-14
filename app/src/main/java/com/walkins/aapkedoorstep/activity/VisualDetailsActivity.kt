@@ -471,186 +471,177 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     }
 
     private fun getData(json: JsonObject) {
-        GlobalScope.launch(Dispatchers.IO) {
-            launch(Dispatchers.IO) {
-                Log.e("getobje", "" + json)
+        CoroutineScope(Dispatchers.Main).launch {
+            Log.e("getobje", "" + json)
+            if (json.get(TyreKey.manufaturingDate) != null) {
 
-
-                runOnUiThread {
-                    if (json.get(TyreKey.manufaturingDate) != null) {
-
-                        edtManufaturingDate?.setText(json.get(TyreKey.manufaturingDate)?.asString!!)
-                    }
-                    if (json.get(TyreKey.psiInTyreService) != null) {
-                        psiInTyreService = if (json.get(TyreKey.psiInTyreService)?.asString.equals("")) "15" else json.get(TyreKey.psiInTyreService)?.asString
-                        sliderIn?.requestFocus()
-                        sliderIn?.bubbleText = psiInTyreService
-                        sliderIn?.animate()?.start()
-
-                        Log.e("getvaluess0", "" + sliderIn?.bubbleText)
-                        Log.e("method", "resume" + " " + sliderIn?.bubbleText)
-                    }
-                    if (json.get(TyreKey.psiOutTyreService) != null) {
-
-                        psiOutTyreService = if (json.get(TyreKey.psiOutTyreService)?.asString.equals("")) "15" else json.get(TyreKey.psiOutTyreService)?.asString
-                        multiSliderPsiOut?.requestFocus()
-                        multiSliderPsiOut?.bubbleText = psiOutTyreService
-                        multiSliderPsiOut?.animation?.start()
-                        Log.e("getvaluess11", "" + multiSliderPsiOut?.bubbleText)
-                        Log.e("method", "resume" + " " + multiSliderPsiOut?.bubbleText)
-                    }
-                    if (json.get(TyreKey.weightTyreService) != null) {
-                        weightTyreService = if (json.get(TyreKey.weightTyreService)?.asString.equals("")) "15" else json.get(TyreKey.weightTyreService)?.asString
-                        multiSliderWeight?.requestFocus()
-                        multiSliderWeight?.bubbleText = weightTyreService
-                        multiSliderWeight?.animation?.start()
-
-                        Log.e("getvaluess22", "" + multiSliderWeight?.bubbleText)
-                        Log.e("method", "resume" + " " + multiSliderWeight?.bubbleText)
-                    }
-
-                    if (json.get(TyreKey.visualDetailPhotoUrl) != null
-                        && !json.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
-                    ) {
-
-                        try {
-                            Glide.with(this@VisualDetailsActivity).load(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
-                                .into(ivPickedImage1!!)
-                            ivPickedImage1?.visibility = View.VISIBLE
-                            ivEditImg2?.visibility = View.VISIBLE
-                            tvAddPhoto1?.visibility = View.GONE
-                            tvCarphoto1?.visibility = View.GONE
-                            relTyrePhotoAdd?.setBackgroundDrawable(this@VisualDetailsActivity.resources?.getDrawable(R.drawable.layout_bg_secondary_))
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-
-                    if (json.get(TyreKey.issueResolvedArr) != null) {
-
-                        var arr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
-                        Log.e("getvalues", "" + arr)
-                        val gson = Gson()
-                        val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
-                        val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
-                        Log.e("getvalues", "" + arrlist)
-                        if (issueResolveArray != null && issueResolveArray?.size!! > 0) {
-                            selectedIssueArr?.clear()
-                            for (i in issueResolveArray?.indices!!) {
-
-                                for (j in arrlist.indices) {
-
-                                    if (issueResolveArray?.get(i)?.issueName.equals(arrlist.get(j))) {
-                                        issueResolveArray?.get(i)?.isSelected = true
-                                        selectedIssueArr?.add(issueResolveArray?.get(i)?.issueName!!)
-                                    }
-                                }
-                                Log.e("getvalues", "" + issueResolveArray?.get(i)?.issueName)
-                                Log.e("getvalues", "" + issueResolveArray?.get(i)?.isSelected)
-                            }
-
-                            issueResolveAdapter?.notifyDataSetChanged()
-                        }
-                    }
-                    TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
-
-                    if (json.get(TyreKey.sidewell) != null) {
-                        if (json.get(TyreKey.sidewell)?.asString?.equals(ok_status)!!) {
-                            ivOkSideWell?.performClick()
-                            sidewell = ok_status
-                        }
-                        if (json.get(TyreKey.sidewell)?.asString?.equals("SUG")!!) {
-                            Log.e("getsideweel", "" + json.get(TyreKey.sidewell)?.asString)
-                            ivSugSideWell?.performClick()
-                            sidewell = "SUG"
-                        }
-                        if (json.get(TyreKey.sidewell)?.asString?.equals("REQ")!!) {
-                            ivReqSideWell?.performClick()
-                            sidewell = "REQ"
-                        }
-                        TyreDetailCommonClass.sidewell = sidewell
-                    }
-                    if (json.get(TyreKey.shoulder) != null) {
-
-                        if (json.get(TyreKey.shoulder)?.asString!!.equals(ok_status)) {
-                            ivOkShoulder?.performClick()
-                            shoulder = ok_status
-                        }
-                        if (json.get(TyreKey.shoulder)?.asString!!.equals("SUG")) {
-                            ivSugShoulder?.performClick()
-                            shoulder = "SUG"
-                        }
-                        if (json.get(TyreKey.shoulder)?.asString!!.equals("REQ")) {
-                            ivReqShoulder?.performClick()
-                            shoulder = "REQ"
-                        }
-                    }
-                    if (json.get(TyreKey.treadDepth) != null) {
-
-                        if (json.get(TyreKey.treadDepth)?.asString!!.equals("REQ")) {
-                            ivReqTreadDepth?.performClick()
-                            treadDepth = "REQ"
-                        }
-                        if (json.get(TyreKey.treadDepth)?.asString!!.equals(ok_status)) {
-                            ivOkTreadDepth?.performClick()
-                            treadDepth = ok_status
-                        }
-                        if (json.get(TyreKey.treadDepth)?.asString!!.equals("SUG")) {
-                            ivSugTreadDepth?.performClick()
-                            treadDepth = "SUG"
-                        }
-                    }
-                    if (json.get(TyreKey.treadWear) != null) {
-
-                        if (json.get(TyreKey.treadWear)?.asString!!.equals("REQ")) {
-                            ivReqTreadWear?.performClick()
-                            treadWear = "REQ"
-                        }
-                        if (json.get(TyreKey.treadWear)?.asString!!.equals(ok_status)) {
-                            ivOkTreadWear?.performClick()
-                            treadWear = ok_status
-                        }
-                        if (json.get(TyreKey.treadWear)?.asString!!.equals("SUG")) {
-                            ivSugTreadWear?.performClick()
-                            treadWear = "SUG"
-                        }
-                    }
-                    if (json.get(TyreKey.rimDamage) != null) {
-
-                        if (json.get(TyreKey.rimDamage)?.asString!!.equals("REQ")) {
-                            ivReqRimDamage?.performClick()
-                            rimDamage = "REQ"
-                        }
-                        if (json.get(TyreKey.rimDamage)?.asString!!.equals(ok_status)) {
-                            ivOkRimDamage?.performClick()
-                            rimDamage = ok_status
-                        }
-                        if (json.get(TyreKey.rimDamage)?.asString!!.equals("SUG")) {
-                            ivSugRimDamage?.performClick()
-                            rimDamage = "SUG"
-                        }
-                    }
-                    if (json.get(TyreKey.bubble) != null) {
-
-                        if (json.get(TyreKey.bubble)?.asString!!.equals("REQ")) {
-                            ivReqbubble?.performClick()
-                            rimDamage = "REQ"
-                        }
-                        if (json.get(TyreKey.bubble)?.asString!!.equals(ok_status)) {
-                            ivOkbubble?.performClick()
-                            bubble = ok_status
-                        }
-                        if (json.get(TyreKey.bubble)?.asString!!.equals("SUG")) {
-                            ivSugbubble?.performClick()
-                            bubble = "SUG"
-                        }
-                    }
-                }
-
-
-                setData(json)
-
+                edtManufaturingDate?.setText(json.get(TyreKey.manufaturingDate)?.asString!!)
             }
+            if (json.get(TyreKey.psiInTyreService) != null) {
+                psiInTyreService = if (json.get(TyreKey.psiInTyreService)?.asString.equals("")) "15" else json.get(TyreKey.psiInTyreService)?.asString
+                sliderIn?.requestFocus()
+                sliderIn?.bubbleText = psiInTyreService
+                sliderIn?.animate()?.start()
+
+                Log.e("getvaluess0", "" + sliderIn?.bubbleText)
+                Log.e("method", "resume" + " " + sliderIn?.bubbleText)
+            }
+            if (json.get(TyreKey.psiOutTyreService) != null) {
+
+                psiOutTyreService = if (json.get(TyreKey.psiOutTyreService)?.asString.equals("")) "15" else json.get(TyreKey.psiOutTyreService)?.asString
+                multiSliderPsiOut?.requestFocus()
+                multiSliderPsiOut?.bubbleText = psiOutTyreService
+                multiSliderPsiOut?.animation?.start()
+                Log.e("getvaluess11", "" + multiSliderPsiOut?.bubbleText)
+                Log.e("method", "resume" + " " + multiSliderPsiOut?.bubbleText)
+            }
+            if (json.get(TyreKey.weightTyreService) != null) {
+                weightTyreService = if (json.get(TyreKey.weightTyreService)?.asString.equals("")) "15" else json.get(TyreKey.weightTyreService)?.asString
+                multiSliderWeight?.requestFocus()
+                multiSliderWeight?.bubbleText = weightTyreService
+                multiSliderWeight?.animation?.start()
+
+                Log.e("getvaluess22", "" + multiSliderWeight?.bubbleText)
+                Log.e("method", "resume" + " " + multiSliderWeight?.bubbleText)
+            }
+
+            if (json.get(TyreKey.visualDetailPhotoUrl) != null
+                && !json.get(TyreKey.visualDetailPhotoUrl)?.asString.equals("")
+            ) {
+
+                try {
+                    Glide.with(this@VisualDetailsActivity).load(json.get(TyreKey.visualDetailPhotoUrl)?.asString)
+                        .into(ivPickedImage1!!)
+                    ivPickedImage1?.visibility = View.VISIBLE
+                    ivEditImg2?.visibility = View.VISIBLE
+                    tvAddPhoto1?.visibility = View.GONE
+                    tvCarphoto1?.visibility = View.GONE
+                    relTyrePhotoAdd?.setBackgroundDrawable(this@VisualDetailsActivity.resources?.getDrawable(R.drawable.layout_bg_secondary_))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            if (json.get(TyreKey.issueResolvedArr) != null) {
+
+                var arr = json.get(TyreKey.issueResolvedArr)?.asJsonArray
+                Log.e("getvalues", "" + arr)
+                val gson = Gson()
+                val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+                val arrlist: ArrayList<String> = gson.fromJson(arr?.toString(), type)
+                Log.e("getvalues", "" + arrlist)
+                if (issueResolveArray != null && issueResolveArray?.size!! > 0) {
+                    selectedIssueArr?.clear()
+                    for (i in issueResolveArray?.indices!!) {
+
+                        for (j in arrlist.indices) {
+
+                            if (issueResolveArray?.get(i)?.issueName.equals(arrlist.get(j))) {
+                                issueResolveArray?.get(i)?.isSelected = true
+                                selectedIssueArr?.add(issueResolveArray?.get(i)?.issueName!!)
+                            }
+                        }
+                        Log.e("getvalues", "" + issueResolveArray?.get(i)?.issueName)
+                        Log.e("getvalues", "" + issueResolveArray?.get(i)?.isSelected)
+                    }
+
+                    issueResolveAdapter?.notifyDataSetChanged()
+                }
+            }
+            TyreDetailCommonClass.issueResolvedArr = selectedIssueArr
+
+            if (json.get(TyreKey.sidewell) != null) {
+                if (json.get(TyreKey.sidewell)?.asString?.equals(ok_status)!!) {
+                    ivOkSideWell?.performClick()
+                    sidewell = ok_status
+                }
+                if (json.get(TyreKey.sidewell)?.asString?.equals("SUG")!!) {
+                    Log.e("getsideweel", "" + json.get(TyreKey.sidewell)?.asString)
+                    ivSugSideWell?.performClick()
+                    sidewell = "SUG"
+                }
+                if (json.get(TyreKey.sidewell)?.asString?.equals("REQ")!!) {
+                    ivReqSideWell?.performClick()
+                    sidewell = "REQ"
+                }
+                TyreDetailCommonClass.sidewell = sidewell
+            }
+            if (json.get(TyreKey.shoulder) != null) {
+
+                if (json.get(TyreKey.shoulder)?.asString!!.equals(ok_status)) {
+                    ivOkShoulder?.performClick()
+                    shoulder = ok_status
+                }
+                if (json.get(TyreKey.shoulder)?.asString!!.equals("SUG")) {
+                    ivSugShoulder?.performClick()
+                    shoulder = "SUG"
+                }
+                if (json.get(TyreKey.shoulder)?.asString!!.equals("REQ")) {
+                    ivReqShoulder?.performClick()
+                    shoulder = "REQ"
+                }
+            }
+            if (json.get(TyreKey.treadDepth) != null) {
+
+                if (json.get(TyreKey.treadDepth)?.asString!!.equals("REQ")) {
+                    ivReqTreadDepth?.performClick()
+                    treadDepth = "REQ"
+                }
+                if (json.get(TyreKey.treadDepth)?.asString!!.equals(ok_status)) {
+                    ivOkTreadDepth?.performClick()
+                    treadDepth = ok_status
+                }
+                if (json.get(TyreKey.treadDepth)?.asString!!.equals("SUG")) {
+                    ivSugTreadDepth?.performClick()
+                    treadDepth = "SUG"
+                }
+            }
+            if (json.get(TyreKey.treadWear) != null) {
+
+                if (json.get(TyreKey.treadWear)?.asString!!.equals("REQ")) {
+                    ivReqTreadWear?.performClick()
+                    treadWear = "REQ"
+                }
+                if (json.get(TyreKey.treadWear)?.asString!!.equals(ok_status)) {
+                    ivOkTreadWear?.performClick()
+                    treadWear = ok_status
+                }
+                if (json.get(TyreKey.treadWear)?.asString!!.equals("SUG")) {
+                    ivSugTreadWear?.performClick()
+                    treadWear = "SUG"
+                }
+            }
+            if (json.get(TyreKey.rimDamage) != null) {
+
+                if (json.get(TyreKey.rimDamage)?.asString!!.equals("REQ")) {
+                    ivReqRimDamage?.performClick()
+                    rimDamage = "REQ"
+                }
+                if (json.get(TyreKey.rimDamage)?.asString!!.equals(ok_status)) {
+                    ivOkRimDamage?.performClick()
+                    rimDamage = ok_status
+                }
+                if (json.get(TyreKey.rimDamage)?.asString!!.equals("SUG")) {
+                    ivSugRimDamage?.performClick()
+                    rimDamage = "SUG"
+                }
+            }
+            if (json.get(TyreKey.bubble) != null) {
+
+                if (json.get(TyreKey.bubble)?.asString!!.equals("REQ")) {
+                    ivReqbubble?.performClick()
+                    rimDamage = "REQ"
+                }
+                if (json.get(TyreKey.bubble)?.asString!!.equals(ok_status)) {
+                    ivOkbubble?.performClick()
+                    bubble = ok_status
+                }
+                if (json.get(TyreKey.bubble)?.asString!!.equals("SUG")) {
+                    ivSugbubble?.performClick()
+                    bubble = "SUG"
+                }
+            }
+            setData(json)
         }
 
     }
@@ -1947,6 +1938,7 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         Log.e("method", "resume")
 //        getTyreWiseData()
     }
+
     override fun onDestroy() {
         super.onDestroy()
         System.gc()

@@ -1,7 +1,9 @@
 package com.walkins.aapkedoorstep
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.app.Activity
+import android.app.Instrumentation
+import android.content.Intent
+import android.provider.MediaStore
 import android.view.View
 import android.widget.CheckBox
 import android.widget.HorizontalScrollView
@@ -17,23 +19,24 @@ import androidx.test.espresso.action.ScrollToAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.intent.Intents.intending
+import androidx.test.espresso.intent.matcher.IntentMatchers.isInternal
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.services.AllServiceSingleTyreSelection
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.anyOf
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matcher
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 
 @RunWith(AndroidJUnit4::class)
 class TestCasesForAllServiceSingleTyreEditFlow {
@@ -43,6 +46,8 @@ class TestCasesForAllServiceSingleTyreEditFlow {
     @Before
     fun setModelClass() {
         serviceSelection = AllServiceSingleTyreSelection()
+        val resultData = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intending(not(isInternal())).respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, resultData))
     }
 
     @get:Rule
@@ -695,11 +700,29 @@ class TestCasesForAllServiceSingleTyreEditFlow {
             try {
                 onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
                 onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
+
+                try {
+                    BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
                 onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
                 onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
+
+                try {
+                    BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
                 onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
 
+                try {
+                    BaseRobot().doOnView(withId(R.id.btnDone), closeSoftKeyboard(), click())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 serviceSelection?.sidewell = "OK"
                 serviceSelection?.shoulder = "SUG"
                 serviceSelection?.treadWear = "REQ"
@@ -723,17 +746,17 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                         click()
                     )
                 )
-                onView(withId(R.id.issueResolvedRecycView))
-                    .perform(
-                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                            number,
-                            recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
-                                print("issueResolved-->" + this.text?.toString())
-                                serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
-//                             = this.text.toString()
-                            }
-                        )
-                    )
+//                onView(withId(R.id.issueResolvedRecycView))
+//                    .perform(
+//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                            number,
+//                            recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+//                                print("issueResolved-->" + this.text?.toString())
+//                                serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
+////                             = this.text.toString()
+//                            }
+//                        )
+//                    )
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -747,12 +770,12 @@ class TestCasesForAllServiceSingleTyreEditFlow {
             Thread.sleep(200)
 
             try {
-                onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, click());
-                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, click());
-                onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, click());
-                onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, click());
-                onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, click());
-                onView(withId(R.id.ivReqbubble)).perform(customScrollTo, click());
+                onView(withId(R.id.ivOkSideWell)).perform(customScrollTo, scrollTo());
+                onView(withId(R.id.ivSugShoulder)).perform(customScrollTo, scrollTo());
+                onView(withId(R.id.ivReqTreadWear)).perform(customScrollTo, scrollTo());
+                onView(withId(R.id.ivSugTreadDepth)).perform(customScrollTo, scrollTo());
+                onView(withId(R.id.ivOkRimDamage)).perform(customScrollTo, scrollTo());
+                onView(withId(R.id.ivReqbubble)).perform(customScrollTo, scrollTo());
 
                 serviceSelection?.sidewell = "OK"
                 serviceSelection?.shoulder = "SUG"
@@ -777,17 +800,17 @@ class TestCasesForAllServiceSingleTyreEditFlow {
                         click()
                     )
                 )
-                onView(withId(R.id.issueResolvedRecycView))
-                    .perform(
-                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                            number,
-                            recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
-                                print("issueResolved-->" + this.text?.toString())
-                                serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
-//                             = this.text.toString()
-                            }
-                        )
-                    )
+//                onView(withId(R.id.issueResolvedRecycView))
+//                    .perform(
+//                        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                            number,
+//                            recyclerChildAction<CheckBox>(R.id.chkTyreSuggestion) {
+//                                print("issueResolved-->" + this.text?.toString())
+//                                serviceSelection?.issueResolveArrayList?.add(this.text?.toString()!!)
+////                             = this.text.toString()
+//                            }
+//                        )
+//                    )
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }

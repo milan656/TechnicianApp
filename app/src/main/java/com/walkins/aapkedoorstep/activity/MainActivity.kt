@@ -61,6 +61,7 @@ import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
 import id.zelory.compressor.constraint.size
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -134,6 +135,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         Log.e("getyear", "" + year + " " + weekOfYear)
 
         llhome?.performClick()
+
 //        getNotificationCount()
 
     }
