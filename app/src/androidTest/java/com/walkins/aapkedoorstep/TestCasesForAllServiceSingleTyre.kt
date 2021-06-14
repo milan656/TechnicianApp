@@ -787,19 +787,19 @@ class TestCasesForAllServiceSingleTyre {
         }
 
 //        image upload flow
-        try {
-            BaseRobot().doOnView(withId(R.id.relCarPhotoAdd1), closeSoftKeyboard(), click())
-            BaseRobot().doOnView(
-                withId(R.id.dialogueRecycView), closeSoftKeyboard(),
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    0,
-                    click()
-                )
-            )
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+//        try {
+//            BaseRobot().doOnView(withId(R.id.relCarPhotoAdd1), closeSoftKeyboard(), click())
+//            BaseRobot().doOnView(
+//                withId(R.id.dialogueRecycView), closeSoftKeyboard(),
+//                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+//                    0,
+//                    click()
+//                )
+//            )
+//
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
     }
 
     private fun removeNitrogenService() {
