@@ -283,20 +283,7 @@ class TestCasesForAllServiceMultipleTyre {
             }
         }
 
-//        fillUpAddServicedetail()
-
-        onView(withId(R.id.ivAddTyreConfig)).perform(customScrollTo, click())
-
-        tyreLRTyreSelection()
-        tyreRRTyreSelection()
-        tyreLFTyreSelection()
-        tyreRFTyreSelection()
-
-        Thread.sleep(1000)
-
-        onView(withId(R.id.btnSubmitAndComplete)).perform(customScrollTo, click())
-
-        BaseRobot().doOnView(withId(R.id.btn_ok), closeSoftKeyboard(), click())
+        fillUpAddServicedetail()
 
 //        if (serviceSelection?.vehicleWiseStoreData!!) {
 //            serviceSelection?.vehicleWiseStoreData = false
@@ -673,12 +660,17 @@ class TestCasesForAllServiceMultipleTyre {
         onView(withId(R.id.ivAddTechnicalSuggestion)).perform(customScrollTo, click());
 
         try {
-            val number1 = (0..4).random()
-            BaseRobot().doOnView(
+
+            TestCasesForSingleServiceAndTyre.BaseRobot().doOnView(
                 withId(R.id.suggestionsRecycView), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     4,
-                    click()
+                    recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                        if (!this.isChecked) {
+                            this.performClick()
+                            click()
+                        }
+                    }
                 )
             )
         } catch (e: Exception) {
@@ -711,7 +703,7 @@ class TestCasesForAllServiceMultipleTyre {
         BaseRobot().doOnView(withId(R.id.scroll), closeSoftKeyboard(),
             swipeUp())
 
-        removeNitrogenService()
+//        removeNitrogenService()
 
 
     }

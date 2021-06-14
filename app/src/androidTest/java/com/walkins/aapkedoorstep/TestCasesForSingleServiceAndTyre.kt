@@ -781,13 +781,13 @@ class TestCasesForSingleServiceAndTyre {
                 serviceSelection?.bubble_rr = getText(bubble)
             }
 
-            BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
-                swipeUp())
+
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
+        BaseRobot().doOnView(withId(R.id.visualScroll), closeSoftKeyboard(),
+            swipeUp())
         try {
             BaseRobot().doOnView(
                 withId(R.id.issueResolvedRecycView), closeSoftKeyboard(),
@@ -812,12 +812,16 @@ class TestCasesForSingleServiceAndTyre {
         onView(withId(R.id.ivAddTechnicalSuggestion)).perform(customScrollTo, click());
 
         try {
-            val number1 = (0..4).random()
             BaseRobot().doOnView(
                 withId(R.id.suggestionsRecycView), closeSoftKeyboard(),
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     4,
-                    click()
+                    recyclerChildAction<CheckBox>(R.id.chkNitrogenTopup) {
+                        if (!this.isChecked) {
+                            this.performClick()
+                            click()
+                        }
+                    }
                 )
             )
             onView(withId(R.id.suggestionsRecycView))

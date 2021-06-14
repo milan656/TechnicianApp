@@ -282,7 +282,7 @@ class TestCasesForAllServiceSingleTyre {
 
         Thread.sleep(1000)
 
-        submitServiceAndGoToCompletedService()
+//        submitServiceAndGoToCompletedService()
 
 //        if (serviceSelection?.editFlowEnable!!) {
 //            editFlowPerform()
