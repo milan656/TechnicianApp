@@ -1129,7 +1129,7 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         Log.e("getvisiblemake", "" + TyreDetailCommonClass.chk3MakeVisible)
         val handler=Handler()
         handler.postDelayed(Runnable {
-            super.onResume()
+//            super.onResume()
             val intent = Intent(this, VehiclePatternActivity::class.java)
             intent.putExtra("selectedTyre", selectedTyre)
             if (TyreDetailCommonClass.vehicleMakeId.equals("")) {

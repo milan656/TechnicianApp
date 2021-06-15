@@ -1170,7 +1170,7 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         Log.e("getvalueee11", "" + selectedTyre + " " + TyreConfigClass.RFVehiclePattern)
         val handler=Handler()
         handler.postDelayed(Runnable {
-            super.onResume()
+//            super.onResume()
             val intent = Intent(this, VehicleSizeActivity::class.java)
             intent.putExtra("selectedId", selectedId)
             intent.putExtra("selectedTyre", selectedTyre)

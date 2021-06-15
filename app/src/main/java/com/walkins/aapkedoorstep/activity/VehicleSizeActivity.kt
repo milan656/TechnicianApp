@@ -1331,7 +1331,7 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         }
         val handler = Handler()
         handler.postDelayed(Runnable {
-            super.onResume()
+//            super.onResume()
             val intent = Intent(this, VisualDetailsActivity::class.java)
             intent.putExtra("selectedTyre", selectedTyre)
             startActivityForResult(intent, 1005)
