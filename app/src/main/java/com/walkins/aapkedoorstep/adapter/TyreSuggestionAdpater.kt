@@ -45,7 +45,7 @@ class TyreSuggestionAdpater(
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
 
-        holder.chkTyreSuggestion.text = array.get(position).issueName.capitalize(Locale.getDefault())
+        holder.chkTyreSuggestion.text = array.get(position).issueName.capitalize()
 
         holder.chkTyreSuggestion.setTag(position)
 

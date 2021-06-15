@@ -20,15 +20,32 @@ class MultipleServiceMultipleTyreSelection {
     var singleTyreSelection = false
     var vehicleWiseStoreData = false
 
-    var vehicleMakeURL = ""
-    var vehicleMake = ""
-    var vehiclePattern = ""
-    var vehicleSize = ""
-    var suggestionsArrayList = arrayListOf<String>()
-    var issueResolveArrayList = arrayListOf<String>()
+    var vehicleMake_lf = ""
+    var vehiclePattern_lf = ""
+    var vehicleSize_lf = ""
+    var issueResolveArrayList_lf = arrayListOf<String>()
+
+    var vehicleMake_lr = ""
+    var vehiclePattern_lr = ""
+    var vehicleSize_lr = ""
+    var issueResolveArrayList_lr = arrayListOf<String>()
+
+    var vehicleMake_rf = ""
+    var vehiclePattern_rf = ""
+    var vehicleSize_rf = ""
+    var issueResolveArrayList_rf = arrayListOf<String>()
+
+    var vehicleMake_rr = ""
+    var vehiclePattern_rr = ""
+    var vehicleSize_rr = ""
+    var issueResolveArrayList_rr = arrayListOf<String>()
 
     var moreSuggestions = ""
-    var manuFacturingDate = ""
+    var suggestionsArrayList = arrayListOf<String>()
+    var manuFacturingDate_lf = ""
+    var manuFacturingDate_lr = ""
+    var manuFacturingDate_rf = ""
+    var manuFacturingDate_rr = ""
 
     var serviceList = arrayListOf<String>()
     var car_1_photo = ""
@@ -38,12 +55,32 @@ class MultipleServiceMultipleTyreSelection {
     var psi_out = ""
     var weight = ""
 
-    var sidewell = ""
-    var shoulder = ""
-    var treadWear = ""
-    var treadDepth = ""
-    var rimDamage = ""
-    var bubble = ""
+    var sidewell_lf = ""
+    var shoulder_lf = ""
+    var treadWear_lf = ""
+    var treadDepth_lf = ""
+    var rimDamage_lf = ""
+    var bubble_lf = ""
 
+    var sidewell_lr = ""
+    var shoulder_lr = ""
+    var treadWear_lr = ""
+    var treadDepth_lr = ""
+    var rimDamage_lr = ""
+    var bubble_lr = ""
+
+    var sidewell_rf = ""
+    var shoulder_rf = ""
+    var treadWear_rf = ""
+    var treadDepth_rf = ""
+    var rimDamage_rf = ""
+    var bubble_rf = ""
+
+    var sidewell_rr = ""
+    var shoulder_rr = ""
+    var treadWear_rr = ""
+    var treadDepth_rr = ""
+    var rimDamage_rr = ""
+    var bubble_rr = ""
 
 }

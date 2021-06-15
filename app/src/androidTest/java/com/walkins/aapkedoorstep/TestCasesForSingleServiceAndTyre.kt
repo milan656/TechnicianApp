@@ -1087,37 +1087,63 @@ class TestCasesForSingleServiceAndTyre {
 
         onView(withId(R.id.ivTyre1)).perform(customScrollTo, click())
 
+        val patternLF = onView(withId(R.id.tvSelectedPattern))
+        val sizeLF = onView(withId(R.id.tvSelectedSize))
+        Assert.assertEquals(serviceSelection?.vehiclePattern_lf, getText(patternLF))
+        Assert.assertEquals(serviceSelection?.vehicleSize_lf, getText(sizeLF))
+        Assert.assertEquals(serviceSelection?.psi_in, serviceSelection?.psi_in)
+        Assert.assertEquals(serviceSelection?.psi_out, serviceSelection?.psi_out)
+        Assert.assertEquals(serviceSelection?.weight, serviceSelection?.weight)
+
+        onView(withId(R.id.tvManufacturingDate)).perform(customScrollTo, scrollTo())
+
+        val manuDate = onView(withId(R.id.tvManufacturingDate))
+        Assert.assertEquals(serviceSelection?.manuFacturingDate_lf, getText(manuDate))
         Thread.sleep(3000)
 
-        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre2)).perform(customScrollTo, click())
         Thread.sleep(3000)
 
-        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre3)).perform(customScrollTo, click())
         Thread.sleep(3000)
 
-        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         onView(withId(R.id.ivTyre4)).perform(customScrollTo, click())
         Thread.sleep(3000)
 
-        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+
+        TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
 
         Thread.sleep(1000)
-        BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
+        TestCasesForAllServiceSingleTyre.BaseRobot().doOnView(withId(R.id.ivBack), closeSoftKeyboard(), click())
         Thread.sleep(1000)
-//        Assert.assertEquals(serviceSelection?.vehiclePattern_lf, getText(onView(withId(R.id.tvSelectedPattern))))
-//        Assert.assertEquals(serviceSelection?.vehicleSize_lf, getText(onView(withId(R.id.tvSelectedSize))))
-//        Assert.assertEquals(serviceSelection?.manuFacturingDate_lf, getText(onView(withId(R.id.tvManufacturingDate))))
-//        if (!serviceSelection?.psi_in.equals("")) {
-//            Assert.assertEquals(serviceSelection?.psi_in, getText(onView(withId(R.id.tvPsiIn))))
-//        }
-//        if (!serviceSelection?.psi_out.equals("")) {
-//            Assert.assertEquals(serviceSelection?.psi_out, getText(onView(withId(R.id.tvPsiOut))))
-//        }
-//        if (!serviceSelection?.weight.equals("")) {
-//            Assert.assertEquals(serviceSelection?.weight, getText(onView(withId(R.id.tvWeight))))
-//        }
+
+        print("data" + serviceSelection?.vehicleMake_lf)
+        print("data" + serviceSelection?.vehicleMake_lr)
+        print("data" + serviceSelection?.vehicleMake_rf)
+        print("data" + serviceSelection?.vehicleMake_rr)
+
+        print("data" + serviceSelection?.vehiclePattern_lf)
+        print("data" + serviceSelection?.vehiclePattern_lr)
+        print("data" + serviceSelection?.vehiclePattern_rf)
+        print("data" + serviceSelection?.vehiclePattern_rr)
+
+        print("data" + serviceSelection?.vehicleSize_lf)
+        print("data" + serviceSelection?.vehicleSize_lr)
+        print("data" + serviceSelection?.vehicleSize_rf)
+        print("data" + serviceSelection?.vehicleSize_rr)
+
+        print("data" + serviceSelection?.manuFacturingDate_lf)
+        print("data" + serviceSelection?.manuFacturingDate_lr)
+        print("data" + serviceSelection?.manuFacturingDate_rf)
+        print("data" + serviceSelection?.manuFacturingDate_rr)
+
+        print("data" + serviceSelection?.sidewell_lf)
+        print("data" + serviceSelection?.sidewell_lr)
+        print("data" + serviceSelection?.sidewell_rf)
+        print("data" + serviceSelection?.sidewell_rr)
 
     }
 }
