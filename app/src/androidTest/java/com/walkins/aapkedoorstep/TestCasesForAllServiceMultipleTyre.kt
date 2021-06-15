@@ -959,12 +959,8 @@ class TestCasesForAllServiceMultipleTyre {
             withId(R.id.scroll), closeSoftKeyboard(),
             swipeUp()
         )
-
         submitServiceAndGoToCompletedService()
-
 //        removeNitrogenService()
-
-
     }
 
     private fun removeNitrogenService() {
