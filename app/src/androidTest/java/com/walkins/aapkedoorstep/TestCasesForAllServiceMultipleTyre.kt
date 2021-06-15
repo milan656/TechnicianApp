@@ -893,7 +893,6 @@ class TestCasesForAllServiceMultipleTyre {
                             } else if (type.equals("RR")) {
                                 serviceSelection?.issueResolveArrayList_rr?.add(this.text?.toString()!!)
                             }
-//                             = this.text.toString()
                         }
                     )
                 )
