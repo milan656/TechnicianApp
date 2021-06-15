@@ -663,7 +663,7 @@ class TestCasesForSingleServiceTyrePndingFlow {
                     BaseRobot().doOnView(withId(R.id.chkRR), closeSoftKeyboard(), click())
                 }
                 //view is displayed logic
-            } catch (e: java.lang.Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
                 //view not displayed logic
                 try {
