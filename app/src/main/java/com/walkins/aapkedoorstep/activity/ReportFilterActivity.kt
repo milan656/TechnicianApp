@@ -1,20 +1,19 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.technician.common.PrefManager
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.adapter.AutoSuggestProductAdapter
 import com.walkins.aapkedoorstep.model.login.building.BuildingListData
-import com.walkins.aapkedoorstep.model.login.makemodel.VehicleMakeData
 import com.walkins.aapkedoorstep.model.login.makemodel.VehicleModelData
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.MakeModelViewModel
@@ -27,7 +26,6 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     private val listClicked = ArrayList<String>()
     private val listClickedModel = ArrayList<String>()
     private var adapter: AutoSuggestProductAdapter? = null
-    private var commonViewModel: CommonViewModel? = null
 
     private lateinit var prefManager: PrefManager
     private lateinit var makeModelViewModel: MakeModelViewModel
@@ -44,19 +42,19 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report_filter)
-        prefManager = this.let { PrefManager(it) }
+        prefManager = PrefManager(this)
         makeModelViewModel = ViewModelProviders.of(this).get(MakeModelViewModel::class.java)
         init()
     }
 
     private fun init() {
-        ivBack = findViewById(R.id.ivBack)
-        btnConfirm = findViewById<Button>(R.id.btnConfirm)
-        btnCancel = findViewById<Button>(R.id.btnCancel)
+        ivBack = this.findViewById(R.id.ivBack)
+        btnConfirm = this.findViewById(R.id.btnConfirm)
+        btnCancel = this.findViewById(R.id.btnCancel)
 
-        actvehicleMake = findViewById(R.id.actvehicleMake)
-        actvehicleModel = findViewById(R.id.actvehicleModel)
-        actvehicleSociety = findViewById(R.id.actvehicleSociety)
+        actvehicleMake = this.findViewById(R.id.actvehicleMake)
+        actvehicleModel = this.findViewById(R.id.actvehicleModel)
+        actvehicleSociety = this.findViewById(R.id.actvehicleSociety)
 
 
         actvehicleMake!!.addTextChangedListener(object : TextWatcher {
@@ -78,8 +76,6 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
                 if (s?.toString()?.length!! > 0) {
 
                     searchMake(actvehicleMake?.text.toString())
-                } else {
-
                 }
             }
 
@@ -113,8 +109,6 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
                 if (s?.toString()?.length!! > 0) {
 
                     searchModel(actvehicleModel?.text.toString())
-                } else {
-
                 }
             }
 
@@ -145,8 +139,6 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
                 if (s?.toString()?.length!! > 0) {
 
                     searchSociety(actvehicleSociety?.text.toString())
-                } else {
-
                 }
             }
 
@@ -186,11 +178,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
-                } else {
-
                 }
-            } else {
-
             }
         })
     }
@@ -210,11 +198,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
-                } else {
-
                 }
-            } else {
-
             }
         })
     }
@@ -229,7 +213,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
         try {
             for ((index, value) in makeSearchdata.withIndex()) {
                 val string =
-                    makeSearchdata.get(index).name/* + " --> " + makeSearchdata.get(index).id*/
+                    makeSearchdata[index].name/* + " --> " + makeSearchdata.get(index).id*/
                 listClicked.add(string)
             }
         } catch (e: Exception) {
@@ -238,7 +222,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
         Log.e("listClicked", "" + listClicked)
         if (listClicked.size > 0) {
             adapter =
-                this?.let {
+                this.let {
                     AutoSuggestProductAdapter(
                         it,
                         android.R.layout.simple_list_item_1,
@@ -248,10 +232,10 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
             actvehicleMake?.threshold = 1
             actvehicleMake?.setAdapter<ArrayAdapter<String>>(adapter)
         } else {
-            var noValueList: ArrayList<String> = ArrayList()
+            val noValueList: ArrayList<String> = ArrayList()
             noValueList.add("No any dealer found")
             adapter =
-                this?.let {
+                this.let {
                     AutoSuggestProductAdapter(
                         it,
                         android.R.layout.simple_list_item_1,
@@ -269,7 +253,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
         try {
             for ((index, value) in modelSearchData.withIndex()) {
                 val string =
-                    modelSearchData.get(index).name /*+ " --> " + modelSearchData.get(index).id*/
+                    modelSearchData[index].name /*+ " --> " + modelSearchData.get(index).id*/
                 listClickedModel.add(string)
             }
         } catch (e: Exception) {
@@ -278,7 +262,7 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
         Log.e("listClickedModel", "" + listClickedModel)
         if (listClickedModel.size > 0) {
             adapter =
-                this?.let {
+                this.let {
                     AutoSuggestProductAdapter(
                         it,
                         android.R.layout.simple_list_item_1,
@@ -288,10 +272,10 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
             actvehicleModel?.threshold = 1
             actvehicleModel?.setAdapter<ArrayAdapter<String>>(adapter)
         } else {
-            var noValueList: ArrayList<String> = ArrayList()
+            val noValueList: ArrayList<String> = ArrayList()
             noValueList.add("No any dealer found")
             adapter =
-                this?.let {
+                this.let {
                     AutoSuggestProductAdapter(
                         it,
                         android.R.layout.simple_list_item_1,
@@ -304,13 +288,13 @@ class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        var id = v?.id
+        val id = v?.id
         when (id) {
             R.id.ivBack -> {
                 onBackPressed()
             }
             R.id.btnCancel -> {
-                var intent = Intent()
+                val intent = Intent()
                 intent.putExtra("action", "reset")
                 setResult(100, intent)
                 finish()

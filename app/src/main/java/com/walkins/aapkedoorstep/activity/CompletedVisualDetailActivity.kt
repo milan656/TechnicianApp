@@ -286,7 +286,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.MATCH_PARENT
         builder.window?.setLayout(width, height)
-        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        builder.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         val root = LayoutInflater.from(this@CompletedVisualDetailActivity)
             .inflate(R.layout.dialogue_image, null)

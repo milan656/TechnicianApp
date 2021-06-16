@@ -87,8 +87,6 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
     private var ivPhoneCall: ImageView? = null
 
-    private var ivInfoImg: ImageView? = null
-    private var title: String = ""
     private var llservicecollapse: LinearLayout? = null
     private var lltyreconfig: LinearLayout? = null
     private var lltechnical: LinearLayout? = null
@@ -152,6 +150,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         init()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun init() {
 
         lltyreconfigbg = findViewById(R.id.lltyreconfigbg)
@@ -323,7 +322,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         builder?.window?.setLayout(width, height)
-        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+        builder.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout_service, null)
 
@@ -360,10 +359,8 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     setTyreServiceData("")
                 } else {
                     Common.hideLoader()
-                    if (it.error != null) {
-                        if (it.error?.get(0).message != null) {
-                            showShortToast(it.error?.get(0).message, this)
-                        }
+                    if (it.error?.get(0).message != null) {
+                        showShortToast(it.error?.get(0).message, this)
                     }
                 }
             } else {
@@ -372,6 +369,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         })
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun setTyreServiceData(tyreType: String) {
 
         /*"id": 4,
@@ -579,7 +577,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                     val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     val output = SimpleDateFormat("hh:mm aa, dd MMMM yyyy")
 
-                    var formatDate = Common.addHour(serviceDateByIdModel?.data?.get(0)?.actualServiceDate, 5, 30)
+                    val formatDate = Common.addHour(serviceDateByIdModel?.data?.get(0)?.actualServiceDate, 5, 30)
 
                     var d: Date? = null
                     try {
@@ -696,11 +694,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
 
         if (check == 0) {
 
-            if (pendingArr.get(variable).equals("Tyre Pattern")) {
+            if (pendingArr[variable].equals("Tyre Pattern",ignoreCase = true)) {
                 selectedPending = "pattern"
 //                val intent = Intent(this, VehiclePatternActivity::class.java)
 //                startActivity(intent)
-            } else if (pendingArr.get(variable).equals("Visual Detail - LF", ignoreCase = true)) {
+            } else if (pendingArr[variable].equals("Visual Detail - LF", ignoreCase = true)) {
                 selectedPending = "visual"
 //                val intent = Intent(this, VisualDetailsActivity::class.java)
 //                startActivity(intent)
@@ -710,8 +708,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     }
 
     override fun onClick(v: View?) {
-        val id = v?.id
-        when (id) {
+        when (v?.id) {
             R.id.ivBack -> {
                 onBackPressed()
             }
@@ -719,14 +716,14 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
                 if (llServiceExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llServiceExpanded!!)
 //                    Common.collapse(llUpdatedPlacement!!)
-                    tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvServices?.typeface = Typeface.DEFAULT_BOLD
                     tvServices?.isAllCaps = false
                     ivAddServices?.setImageResource(R.mipmap.ic_add_icon)
 //                    llservicebg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
 //                    llservicebg?.setBackgroundDrawable(null)
                     ivAddServices?.setImageResource(R.mipmap.ic_minus_icon)
-                    tvServices?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvServices?.typeface = Typeface.DEFAULT_BOLD
                     tvServices?.isAllCaps = false
                     Common.expand(llServiceExpanded!!)
 
@@ -748,14 +745,14 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             R.id.ivAddTyreConfig -> {
                 if (llTyreConfigExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llTyreConfigExpanded!!)
-                    tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTyreConfig?.typeface = Typeface.DEFAULT_BOLD
                     tvTyreConfig?.isAllCaps = false
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_add_icon)
 //                    lltyreconfigbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
 //                    lltyreconfigbg?.setBackgroundDrawable(null)
                     ivAddTyreConfig?.setImageResource(R.mipmap.ic_minus_icon)
-                    tvTyreConfig?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTyreConfig?.typeface = Typeface.DEFAULT_BOLD
                     tvTyreConfig?.isAllCaps = false
                     Common.expand(llTyreConfigExpanded!!)
                     if (llServiceExpanded?.visibility == View.VISIBLE) {
@@ -777,14 +774,14 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
             R.id.ivAddTechnicalSuggestion -> {
                 if (llTechnicalSuggestionExpanded?.visibility == View.VISIBLE) {
                     Common.collapse(llTechnicalSuggestionExpanded!!)
-                    tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTechnicalSuggetion?.typeface = Typeface.DEFAULT_BOLD
                     tvTechnicalSuggetion?.isAllCaps = false
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_add_icon)
 //                    lltechnicalbg?.setBackgroundDrawable(this.resources?.getDrawable(R.drawable.layout_bg_secondary_))
                 } else {
 //                    lltechnicalbg?.setBackgroundDrawable(null)
                     ivAddTechnicalSuggestion?.setImageResource(R.mipmap.ic_minus_icon)
-                    tvTechnicalSuggetion?.setTypeface(Typeface.DEFAULT_BOLD)
+                    tvTechnicalSuggetion?.typeface = Typeface.DEFAULT_BOLD
                     tvTechnicalSuggetion?.isAllCaps = false
 
                     Common.expand(llTechnicalSuggestionExpanded!!)
@@ -835,6 +832,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
     }
 
 
+    @SuppressLint("InflateParams", "UseCompatLoadingForDrawables")
     private fun showBottomSheetdialogNormal(
         array: ArrayList<String>,
         titleStr: String,
@@ -846,13 +844,13 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         val view = LayoutInflater.from(context)
             .inflate(R.layout.common_dialogue_layout, null)
         val dialog =
-            this?.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
+            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
 
         dialog.setCancelable(false)
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         dialog.window?.setLayout(width, height)
-        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btnOk)
@@ -887,87 +885,13 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         }
 
         btnSend.setOnClickListener {
-            dialog?.dismiss()
+            dialog.dismiss()
         }
-        dialog?.show()
-    }
-
-    private fun showBottomSheetdialog(
-        array: ArrayList<String>,
-        titleStr: String,
-        context: Context?,
-        btnBg: String,
-        btnText: String,
-
-        ) {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.dialogue_profile_edit_req, null)
-        val dialog =
-            this.let { BottomSheetDialog(it, R.style.CustomBottomSheetDialogTheme) }
-
-        dialog.setCancelable(false)
-        val width = LinearLayout.LayoutParams.MATCH_PARENT
-        val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        dialog.window?.setLayout(width, height)
-        dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(view)
-
-        val btnSend = view.findViewById<Button>(R.id.btn_send)
-        val tvTitleText = view.findViewById<TextView>(R.id.tvTitleText)
-        val dialogueRecycView = view.findViewById<RecyclerView>(R.id.dialogueRecycView)
-        val ivClose = view.findViewById<ImageView>(R.id.ivClose)
-
-        tvTitleText.text = titleStr
-        var arrayAdapter = context?.let { DialogueAdpater(array, it, this) }
-        dialogueRecycView?.layoutManager = LinearLayoutManager(
-            context,
-            RecyclerView.VERTICAL,
-            false
-        )
-        dialogueRecycView.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        dialogueRecycView.adapter = arrayAdapter
-        arrayAdapter?.onclick = this
-
-        ivClose?.setOnClickListener {
-            dialog?.dismiss()
-        }
-        if (btnBg.equals(Common.btn_filled, ignoreCase = true)) {
-            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_yellow))
-            btnSend.setTextColor(context?.resources?.getColor(R.color.white)!!)
-            btnSend?.text = "Submit"
-        } else {
-            btnSend.setBackgroundDrawable(context?.resources?.getDrawable(R.drawable.round_corner_button_white))
-            btnSend.setTextColor(context?.resources?.getColor(R.color.header_title)!!)
-            btnSend?.text = "Cancel"
-        }
-
-        btnSend?.text = btnText
-        btnSend.setOnClickListener {
-            dialog?.dismiss()
-
-            if (selectedPending?.equals("pattern")) {
-//                selectedPending="pattern"
-                val intent = Intent(this, VehiclePatternActivity::class.java)
-                startActivity(intent)
-            } else if (selectedPending?.equals("visual", ignoreCase = true)) {
-//                selectedPending="visual"
-                val intent = Intent(this, VisualDetailsActivity::class.java)
-                startActivity(intent)
-            }
-
-        }
-
         dialog.show()
-
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        var id = v?.id
+        val id = v?.id
 
         when (id) {
 
@@ -1014,130 +938,135 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         Common.setClearAllValues()
         TyreDetailCommonClass.tyreType = tyreType
 
-        if (tyreType.equals("LF")) {
-            TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreMake
-            TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.frontLeftTyrePattern
-            TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreSize
-            TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image
-            TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.frontLeftManufacturingDate
-            TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.frontLeftTyrePsiIn
-            TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.frontLeftTyrePsiOut
-            TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreWeight
-            TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreSideWall
-            TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreShoulder
-            TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreTreadWear
-            TyreDetailCommonClass.treadDepth = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreTreadDepth
-            TyreDetailCommonClass.bubble = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreBuldgeBubble
-            TyreDetailCommonClass.rimDamage = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreRimDemage
-            TyreDetailCommonClass.visualDetailPhotoUrl = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreWheelImage
+        when {
+            tyreType.equals("LF") -> {
+                TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreMake
+                TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.frontLeftTyrePattern
+                TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreSize
+                TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.front_left_tyre_make_image
+                TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.frontLeftManufacturingDate
+                TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.frontLeftTyrePsiIn
+                TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.frontLeftTyrePsiOut
+                TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreWeight
+                TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreSideWall
+                TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreShoulder
+                TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreTreadWear
+                TyreDetailCommonClass.treadDepth = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreTreadDepth
+                TyreDetailCommonClass.bubble = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreBuldgeBubble
+                TyreDetailCommonClass.rimDamage = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreRimDemage
+                TyreDetailCommonClass.visualDetailPhotoUrl = serviceDateByIdModel?.data?.get(0)?.frontLeftTyreWheelImage
 
-            TyreDetailCommonClass.isCompleted = true
+                TyreDetailCommonClass.isCompleted = true
 
-            val issueResolvedArr: ArrayList<String>? = ArrayList()
-            if (serviceDateByIdModel?.data?.get(0)?.frontLeftIssuesToBeResolved?.size!! > 0) {
-                for (i in serviceDateByIdModel?.data?.get(0)?.frontLeftIssuesToBeResolved?.indices!!) {
-                    issueResolvedArr?.add(serviceDateByIdModel?.data?.get(0)?.frontLeftIssuesToBeResolved?.get(i)!!)
+                val issueResolvedArr: ArrayList<String>? = ArrayList()
+                if (serviceDateByIdModel?.data?.get(0)?.frontLeftIssuesToBeResolved?.size!! > 0) {
+                    for (i in serviceDateByIdModel?.data?.get(0)?.frontLeftIssuesToBeResolved?.indices!!) {
+                        issueResolvedArr?.add(serviceDateByIdModel?.data?.get(0)?.frontLeftIssuesToBeResolved?.get(i)!!)
+                    }
                 }
+
+                TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
+                var intent = Intent(this, CompletedVisualDetailActivity::class.java)
+                intent.putExtra("title", "Detail - LF")
+                startActivity(intent)
             }
+            tyreType.equals("LR") -> {
+                TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.backLeftTyreMake
+                TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.backLeftTyrePattern
+                TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.backLeftTyreSize
+                TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image
+                TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.backLeftManufacturingDate
+                TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.backLeftTyrePsiIn
+                TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.backLeftTyrePsiOut
+                TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.backLeftTyreWeight
+                TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.backLeftTyreSideWall
+                TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.backLeftTyreShoulder
+                TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.backLeftTyreTreadWear
+                TyreDetailCommonClass.treadDepth = serviceDateByIdModel?.data?.get(0)?.backLeftTyreTreadDepth
+                TyreDetailCommonClass.bubble = serviceDateByIdModel?.data?.get(0)?.backLeftTyreBuldgeBubble
+                TyreDetailCommonClass.rimDamage = serviceDateByIdModel?.data?.get(0)?.backLeftTyreRimDemage
+                TyreDetailCommonClass.visualDetailPhotoUrl = serviceDateByIdModel?.data?.get(0)?.backLeftTyreWheelImage
 
-            TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
-            var intent = Intent(this, CompletedVisualDetailActivity::class.java)
-            intent.putExtra("title", "Detail - LF")
-            startActivity(intent)
-        } else if (tyreType.equals("LR")) {
-            TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.backLeftTyreMake
-            TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.backLeftTyrePattern
-            TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.backLeftTyreSize
-            TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.back_left_tyre_make_image
-            TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.backLeftManufacturingDate
-            TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.backLeftTyrePsiIn
-            TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.backLeftTyrePsiOut
-            TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.backLeftTyreWeight
-            TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.backLeftTyreSideWall
-            TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.backLeftTyreShoulder
-            TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.backLeftTyreTreadWear
-            TyreDetailCommonClass.treadDepth = serviceDateByIdModel?.data?.get(0)?.backLeftTyreTreadDepth
-            TyreDetailCommonClass.bubble = serviceDateByIdModel?.data?.get(0)?.backLeftTyreBuldgeBubble
-            TyreDetailCommonClass.rimDamage = serviceDateByIdModel?.data?.get(0)?.backLeftTyreRimDemage
-            TyreDetailCommonClass.visualDetailPhotoUrl = serviceDateByIdModel?.data?.get(0)?.backLeftTyreWheelImage
+                TyreDetailCommonClass.isCompleted = true
 
-            TyreDetailCommonClass.isCompleted = true
-
-            val issueResolvedArr: ArrayList<String>? = ArrayList()
-            if (serviceDateByIdModel?.data?.get(0)?.backLeftIssuesToBeResolved?.size!! > 0) {
-                for (i in serviceDateByIdModel?.data?.get(0)?.backLeftIssuesToBeResolved?.indices!!) {
-                    issueResolvedArr?.add(serviceDateByIdModel?.data?.get(0)?.backLeftIssuesToBeResolved?.get(i)!!)
+                val issueResolvedArr: ArrayList<String>? = ArrayList()
+                if (serviceDateByIdModel?.data?.get(0)?.backLeftIssuesToBeResolved?.size!! > 0) {
+                    for (i in serviceDateByIdModel?.data?.get(0)?.backLeftIssuesToBeResolved?.indices!!) {
+                        issueResolvedArr?.add(serviceDateByIdModel?.data?.get(0)?.backLeftIssuesToBeResolved?.get(i)!!)
+                    }
                 }
+
+                TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
+
+                val intent = Intent(this, CompletedVisualDetailActivity::class.java)
+                intent.putExtra("title", "Detail - LR")
+                startActivity(intent)
+
             }
+            tyreType.equals("RF") -> {
+                TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.frontRightTyreMake
+                TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePattern
+                TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.frontRightTyreSize
+                TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.front_right_tyre_make_image
+                TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.frontRightManufacturingDate
+                TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePsiIn
+                TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePsiOut
+                TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.front_right_tyre_weight
+                TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.frontRightTyreSideWall
+                TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.frontRightTyreShoulder
+                TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.frontRightTyreTreadWear
+                TyreDetailCommonClass.treadDepth = serviceDateByIdModel?.data?.get(0)?.frontRightTyreTreadDepth
+                TyreDetailCommonClass.bubble = serviceDateByIdModel?.data?.get(0)?.frontRightTyreBuldgeBubble
+                TyreDetailCommonClass.rimDamage = serviceDateByIdModel?.data?.get(0)?.frontRightTyreRimDemage
+                TyreDetailCommonClass.visualDetailPhotoUrl = serviceDateByIdModel?.data?.get(0)?.frontRightTyreWheelImage
 
-            TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
+                TyreDetailCommonClass.isCompleted = true
 
-            val intent = Intent(this, CompletedVisualDetailActivity::class.java)
-            intent.putExtra("title", "Detail - LR")
-            startActivity(intent)
-
-        } else if (tyreType.equals("RF")) {
-            TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.frontRightTyreMake
-            TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePattern
-            TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.frontRightTyreSize
-            TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.front_right_tyre_make_image
-            TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.frontRightManufacturingDate
-            TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePsiIn
-            TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.frontRightTyrePsiOut
-            TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.front_right_tyre_weight
-            TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.frontRightTyreSideWall
-            TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.frontRightTyreShoulder
-            TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.frontRightTyreTreadWear
-            TyreDetailCommonClass.treadDepth = serviceDateByIdModel?.data?.get(0)?.frontRightTyreTreadDepth
-            TyreDetailCommonClass.bubble = serviceDateByIdModel?.data?.get(0)?.frontRightTyreBuldgeBubble
-            TyreDetailCommonClass.rimDamage = serviceDateByIdModel?.data?.get(0)?.frontRightTyreRimDemage
-            TyreDetailCommonClass.visualDetailPhotoUrl = serviceDateByIdModel?.data?.get(0)?.frontRightTyreWheelImage
-
-            TyreDetailCommonClass.isCompleted = true
-
-            val issueResolvedArr: ArrayList<String>? = ArrayList()
-            if (serviceDateByIdModel?.data?.get(0)?.frontRightIssuesToBeResolved?.size!! > 0) {
-                for (i in serviceDateByIdModel?.data?.get(0)?.frontRightIssuesToBeResolved?.indices!!) {
-                    issueResolvedArr?.add(serviceDateByIdModel?.data?.get(0)?.frontRightIssuesToBeResolved?.get(i)!!)
+                val issueResolvedArr: ArrayList<String>? = ArrayList()
+                if (serviceDateByIdModel?.data?.get(0)?.frontRightIssuesToBeResolved?.size!! > 0) {
+                    for (i in serviceDateByIdModel?.data?.get(0)?.frontRightIssuesToBeResolved?.indices!!) {
+                        issueResolvedArr?.add(serviceDateByIdModel?.data?.get(0)?.frontRightIssuesToBeResolved?.get(i)!!)
+                    }
                 }
+
+                TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
+                val intent = Intent(this, CompletedVisualDetailActivity::class.java)
+                intent.putExtra("title", "Detail - RF")
+                startActivity(intent)
+
             }
+            tyreType.equals("RR") -> {
+                TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.backRightTyreMake
+                TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.backRightTyrePattern
+                TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.backRightTyreSize
+                TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.back_right_tyre_make_image
+                TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.backRightManufacturingDate
+                TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.backRightTyrePsiIn
+                TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.backRightTyrePsiOut
+                TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.backRightTyreWeight
+                TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.backRightTyreSideWall
+                TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.backRightTyreShoulder
+                TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.backRightTyreTreadWear
+                TyreDetailCommonClass.treadDepth = serviceDateByIdModel?.data?.get(0)?.backRightTyreTreadDepth
+                TyreDetailCommonClass.bubble = serviceDateByIdModel?.data?.get(0)?.backRightTyreBuldgeBubble
+                TyreDetailCommonClass.rimDamage = serviceDateByIdModel?.data?.get(0)?.backRightTyreRimDemage
+                TyreDetailCommonClass.visualDetailPhotoUrl = serviceDateByIdModel?.data?.get(0)?.backRightTyreWheelImage
 
-            TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
-            val intent = Intent(this, CompletedVisualDetailActivity::class.java)
-            intent.putExtra("title", "Detail - RF")
-            startActivity(intent)
+                TyreDetailCommonClass.isCompleted = true
 
-        } else if (tyreType.equals("RR")) {
-            TyreDetailCommonClass.vehicleMake = serviceDateByIdModel?.data?.get(0)?.backRightTyreMake
-            TyreDetailCommonClass.vehiclePattern = serviceDateByIdModel?.data?.get(0)?.backRightTyrePattern
-            TyreDetailCommonClass.vehicleSize = serviceDateByIdModel?.data?.get(0)?.backRightTyreSize
-            TyreDetailCommonClass.vehicleMakeURL = serviceDateByIdModel?.data?.get(0)?.back_right_tyre_make_image
-            TyreDetailCommonClass.manufaturingDate = serviceDateByIdModel?.data?.get(0)?.backRightManufacturingDate
-            TyreDetailCommonClass.psiInTyreService = serviceDateByIdModel?.data?.get(0)?.backRightTyrePsiIn
-            TyreDetailCommonClass.psiOutTyreService = serviceDateByIdModel?.data?.get(0)?.backRightTyrePsiOut
-            TyreDetailCommonClass.weightTyreService = serviceDateByIdModel?.data?.get(0)?.backRightTyreWeight
-            TyreDetailCommonClass.sidewell = serviceDateByIdModel?.data?.get(0)?.backRightTyreSideWall
-            TyreDetailCommonClass.shoulder = serviceDateByIdModel?.data?.get(0)?.backRightTyreShoulder
-            TyreDetailCommonClass.treadWear = serviceDateByIdModel?.data?.get(0)?.backRightTyreTreadWear
-            TyreDetailCommonClass.treadDepth = serviceDateByIdModel?.data?.get(0)?.backRightTyreTreadDepth
-            TyreDetailCommonClass.bubble = serviceDateByIdModel?.data?.get(0)?.backRightTyreBuldgeBubble
-            TyreDetailCommonClass.rimDamage = serviceDateByIdModel?.data?.get(0)?.backRightTyreRimDemage
-            TyreDetailCommonClass.visualDetailPhotoUrl = serviceDateByIdModel?.data?.get(0)?.backRightTyreWheelImage
-
-            TyreDetailCommonClass.isCompleted = true
-
-            val issueResolvedArr: ArrayList<String>? = ArrayList()
-            if (serviceDateByIdModel?.data?.get(0)?.backRightIssuesToBeResolved?.size!! > 0) {
-                for (i in serviceDateByIdModel?.data?.get(0)?.backRightIssuesToBeResolved?.indices!!) {
-                    issueResolvedArr?.add(serviceDateByIdModel?.data?.get(0)?.backRightIssuesToBeResolved?.get(i)!!)
+                val issueResolvedArr: ArrayList<String>? = ArrayList()
+                if (serviceDateByIdModel?.data?.get(0)?.backRightIssuesToBeResolved?.size!! > 0) {
+                    for (i in serviceDateByIdModel?.data?.get(0)?.backRightIssuesToBeResolved?.indices!!) {
+                        issueResolvedArr?.add(serviceDateByIdModel?.data?.get(0)?.backRightIssuesToBeResolved?.get(i)!!)
+                    }
                 }
+
+                TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
+
+                val intent = Intent(this, CompletedVisualDetailActivity::class.java)
+                intent.putExtra("title", "Detail - RR")
+                startActivity(intent)
             }
-
-            TyreDetailCommonClass.issueResolvedArr = issueResolvedArr
-
-            val intent = Intent(this, CompletedVisualDetailActivity::class.java)
-            intent.putExtra("title", "Detail - RR")
-            startActivity(intent)
         }
     }
 
@@ -1147,7 +1076,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.MATCH_PARENT
         builder.window?.setLayout(width, height)
-        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        builder.window?.setBackgroundDrawableResource(android.R.color.transparent);
 
         val root = LayoutInflater.from(this@CompletedServiceDetailActivity)
             .inflate(R.layout.dialogue_image, null)

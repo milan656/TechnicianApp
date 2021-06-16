@@ -107,6 +107,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun init() {
         serviceRecycView = findViewById(R.id.serviceRecycView)
         serviceListSwipe = findViewById(R.id.serviceListSwipe)
@@ -227,7 +228,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             Log.e("getservicedataa", "" + mDb.serviceListDaoClass().getAll())
 
             val arrayListfinal = mDb.serviceListDaoClass().getAll().filter { it.building_uuid.equals(building_uuid) } as MutableList<ServiceListModelClass>
-            Log.e("getservicedataa", "" + building_uuid+" -- "+arrayListfinal.size)
+            Log.e("getservicedataa", "" + building_uuid + " -- " + arrayListfinal.size)
 
             arrayList.clear()
 
@@ -269,10 +270,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                     tvCompleted?.text = "Completed - " + arrayCompleteList.size
 
-                    Log.e("getservicestatuslist",""+arrayList)
-                    Log.e("getservicestatuslist",""+arrayskipList)
-                    Log.e("getservicestatuslist",""+arrayCompleteList)
-                    Log.e("getservicestatuslist",""+serviceStatus)
+                    Log.e("getservicestatuslist", "" + arrayList)
+                    Log.e("getservicestatuslist", "" + arrayskipList)
+                    Log.e("getservicestatuslist", "" + arrayCompleteList)
+                    Log.e("getservicestatuslist", "" + serviceStatus)
                 }
 
                 if (serviceStatus.equals(upcomming)) {
@@ -318,7 +319,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                 }
 
                 tvNoServiceData?.visibility = View.GONE
-                Log.e("getservicesize",""+arrayList.size+" "+serviceStatus)
+                Log.e("getservicesize", "" + arrayList.size + " " + serviceStatus)
                 if (arrayList.size == 0) {
                     tvNoServiceData?.text = "There is no any Upcomming service to display"
                     tvNoServiceData?.visibility = View.VISIBLE
@@ -410,8 +411,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 //                        llUpcoming?.performClick()
                     }
                 } else {
-                    if (it.error != null && it.error?.get(0).message != null) {
-                        showShortToast(it.error?.get(0).message, this)
+                    try {
+                        showShortToast(it.error.get(0).message, this)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
             }
@@ -442,20 +445,20 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
                     arrayList = arrayList.filter { it.status.equals(upcomming) } as MutableList<ServiceListByDateData>
 
-                        adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
-                        if (arrayList.size == 0) {
-                            tvNoServiceData?.text = "There is no any Upcoming service to display"
-                            tvNoServiceData?.visibility = View.VISIBLE
-                            llAddressView?.visibility = View.GONE
-                            tvNoServiceData?.visibility = View.GONE
-                            relNoData?.visibility = View.VISIBLE
-                        } else {
-                            llAddressView?.visibility = View.VISIBLE
-                            relNoData?.visibility = View.GONE
-                        }
-                        tvUpcoming?.text = "Upcoming - ${arrayList.size}"
-                        serviceRecycView?.adapter = adapter
-                        adapter?.onclick = this@ServiceListActivity
+                    adapter = ServicesListAdpater(arrayList, this, this, serviceStatus, isAddServiceEnable)
+                    if (arrayList.size == 0) {
+                        tvNoServiceData?.text = "There is no any Upcoming service to display"
+                        tvNoServiceData?.visibility = View.VISIBLE
+                        llAddressView?.visibility = View.GONE
+                        tvNoServiceData?.visibility = View.GONE
+                        relNoData?.visibility = View.VISIBLE
+                    } else {
+                        llAddressView?.visibility = View.VISIBLE
+                        relNoData?.visibility = View.GONE
+                    }
+                    tvUpcoming?.text = "Upcoming - ${arrayList.size}"
+                    serviceRecycView?.adapter = adapter
+                    adapter?.onclick = this@ServiceListActivity
 
 
                 } else {
@@ -764,6 +767,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         }
     }
 
+    @SuppressLint("InflateParams", "UseCompatLoadingForDrawables")
     private fun showBottomSheetdialogNormal(
         array: MutableList<ServiceListByDateData>,
         titleStr: String,
