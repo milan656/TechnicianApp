@@ -265,9 +265,7 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
     }
 
     override fun onClick(v: View?) {
-        val id = v?.id
-        when (id) {
-
+        when (v?.id) {
 
             R.id.ivBack -> {
                 onBackPressed()
@@ -295,7 +293,6 @@ class CompletedVisualDetailActivity : AppCompatActivity(), onClickAdapter, View.
             root.findViewById<TextView>(R.id.tvTitleRemarks)
         val imgPoster =
             root.findViewById<ImageView>(R.id.imgPoster)
-
 
         Glide.with(this@CompletedVisualDetailActivity)
             .load(posterUrl)
