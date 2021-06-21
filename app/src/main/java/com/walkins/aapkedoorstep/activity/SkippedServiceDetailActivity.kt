@@ -210,7 +210,6 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         }
 
         tvChange?.visibility = View.VISIBLE
-
     }
 
     private fun getCommentList(): ArrayList<CommentListData> {
