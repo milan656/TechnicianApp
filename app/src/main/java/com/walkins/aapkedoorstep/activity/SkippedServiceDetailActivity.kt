@@ -85,6 +85,8 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         prefManager = PrefManager(this)
         init()
+
+
     }
 
     @SuppressLint("SimpleDateFormat")
