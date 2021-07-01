@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,8 +39,10 @@ import com.walkins.aapkedoorstep.model.login.SectionModel
 import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.networkApi.ServiceApi
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -72,6 +75,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
     private var prefManager: PrefManager? = null
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
 
     var historyDataList: ArrayList<DashboardModel> = ArrayList<DashboardModel>()
@@ -109,7 +114,10 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         activity = getActivity() as MainActivity?
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
         mDb = context?.let { DBClass.getInstance(it) }!!
 
         prefManager = context?.let { PrefManager(it) }
@@ -122,7 +130,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private fun getUserInfo() {
         activity?.let {
             commonViewModel?.callApiGetUserInfo(prefManager?.getAccessToken()!!, it)
-            commonViewModel?.getUserInfo()?.observe(it, androidx.lifecycle.Observer {
+            commonViewModel?.userInfo?.observe(it, {
                 if (it != null) {
                     if (it.success) {
 

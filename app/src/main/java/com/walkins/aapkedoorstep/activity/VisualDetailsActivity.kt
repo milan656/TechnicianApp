@@ -49,8 +49,10 @@ import com.walkins.aapkedoorstep.adapter.DialogueAdpater
 import com.walkins.aapkedoorstep.adapter.TyreSuggestionAdpater
 import com.walkins.aapkedoorstep.common.*
 import com.walkins.aapkedoorstep.model.login.IssueResolveModel
+import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.repository.LoginRepository
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import id.zelory.compressor.Compressor
@@ -78,6 +80,8 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
     private var loginViewModel: LoginActivityViewModel? = null
     private lateinit var loginRepo: LoginRepository
     private lateinit var loginViewModelFactory: LoginViewModelFactory
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
     private var sliderIn: FluidSlider? = null
     private var multiSliderPsiOut: FluidSlider? = null
@@ -191,7 +195,11 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         setContentView(R.layout.activity_visual_details)
         mDb = DBClass.getInstance(this)
         prefManager = PrefManager(this)
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
         loginRepo = LoginRepository()
         loginViewModelFactory = LoginViewModelFactory(loginRepo)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)

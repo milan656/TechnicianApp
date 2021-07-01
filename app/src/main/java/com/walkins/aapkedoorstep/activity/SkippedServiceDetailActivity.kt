@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,8 +36,10 @@ import com.walkins.aapkedoorstep.custom.BoldButton
 import com.walkins.aapkedoorstep.model.login.IssueResolveModel
 import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdModel
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,7 +54,10 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
     private var tvChange: TextView? = null
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
+
     private lateinit var prefManager: PrefManager
     private var color: String = ""
     private var colorCode: String = ""
@@ -81,7 +87,10 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_detail)
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         prefManager = PrefManager(this)
         init()
@@ -372,7 +381,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
         val jsonObject = JsonObject()
         jsonObject.addProperty("id", uuid)
         commonViewModel?.callApiGetServiceById(jsonObject, prefManager.getAccessToken()!!, this)
-        commonViewModel?.getServiceById()?.observe(this, {
+        commonViewModel?.serviceByIdModel?.observe(this, {
             if (it != null) {
                 if (it.success) {
 
@@ -441,7 +450,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
     private fun getCommentList(comment: String) {
         Common.showLoader(this)
         commonViewModel?.callApiGetComments(prefManager.getAccessToken()!!, this)
-        commonViewModel?.getCommentList()?.observe(this, {
+        commonViewModel?.commentListModel?.observe(this, {
             if (it != null) {
                 if (it.success) {
 

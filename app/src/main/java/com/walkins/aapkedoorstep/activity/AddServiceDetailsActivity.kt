@@ -57,8 +57,10 @@ import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
+import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.repository.LoginRepository
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
@@ -91,6 +93,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var loginViewModel: LoginActivityViewModel? = null
     private lateinit var loginRepo: LoginRepository
     private lateinit var loginViewModelFactory: LoginViewModelFactory
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
 
     var pendingArr: ArrayList<String>? = null
@@ -245,7 +249,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         loginViewModelFactory = LoginViewModelFactory(loginRepo)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
 
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
 
 //        requestPermissionForImage()
         init()

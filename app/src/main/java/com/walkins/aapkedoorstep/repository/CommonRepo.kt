@@ -6,6 +6,7 @@ import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.JsonObject
 import com.jkadvantage.model.notification.saveToken.SaveTokenModel
+import com.walkins.aapkedoorstep.common.RetrofitBuilder
 import com.walkins.aapkedoorstep.model.login.UserInfoModel
 import com.walkins.aapkedoorstep.model.login.building.BuildingListModel
 import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
@@ -21,6 +22,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 import java.io.IOException
 
 class CommonRepo {
@@ -42,137 +44,143 @@ class CommonRepo {
         return commonRepo as CommonRepo
     }
 
-    fun getListOfIssue(
-        context: Context,
-        accessToken: String
+    suspend fun getListOfIssue(context: Context, accessToken: String): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).getListOfIssue(accessToken)
 
-    ): MutableLiveData<IssueListModel> {
-        var otpData = MutableLiveData<IssueListModel>()
-        commonApi.getListOfIssue(accessToken)
-            .enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) = if (response.isSuccessful) {
-                    otpData.value = Common.getModelreturn(
-                        "IssueListModel",
-                        response,
-                        0,
-                        context
-                    ) as IssueListModel?
-                } else {
-                    try {
-                        otpData.value = Common.getModelreturn(
-                            "IssueListModel",
-                            response,
-                            1,
-                            context
-                        ) as IssueListModel?
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+    /* fun getListOfIssue(
+         context: Context,
+         accessToken: String
 
-                }
+     ): MutableLiveData<IssueListModel> {
+         var otpData = MutableLiveData<IssueListModel>()
+         commonApi.getListOfIssue(accessToken)
+             .enqueue(object : Callback<ResponseBody> {
+                 override fun onResponse(
+                     call: Call<ResponseBody>,
+                     response: Response<ResponseBody>
+                 ) = if (response.isSuccessful) {
+                     otpData.value = Common.getModelreturn(
+                         "IssueListModel",
+                         response,
+                         0,
+                         context
+                     ) as IssueListModel?
+                 } else {
+                     try {
+                         otpData.value = Common.getModelreturn(
+                             "IssueListModel",
+                             response,
+                             1,
+                             context
+                         ) as IssueListModel?
+                     } catch (e: IOException) {
+                         e.printStackTrace()
+                     } catch (e: Exception) {
+                         e.printStackTrace()
+                     }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                }
-            })
-        return otpData
-    }
+                 }
 
-    fun getService(
-        context: Context,
-        accessToken: String
+                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                 }
+             })
+         return otpData
+     }*/
 
-    ): MutableLiveData<ServiceModel> {
-        var otpData = MutableLiveData<ServiceModel>()
-        commonApi.getgetService(accessToken)
-            .enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) = if (response.isSuccessful) {
-                    otpData.value = Common.getModelreturn(
-                        "ServiceModel",
-                        response,
-                        0,
-                        context
-                    ) as ServiceModel?
-                } else {
-                    try {
-                        otpData.value = Common.getModelreturn(
-                            "ServiceModel",
-                            response,
-                            1,
-                            context
-                        ) as ServiceModel?
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+    suspend fun getService(context: Context, accessToken: String): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).getgetService(accessToken)
 
-                }
+    /* fun getService(
+         context: Context,
+         accessToken: String
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                }
-            })
-        return otpData
-    }
+     ): MutableLiveData<ServiceModel> {
+         var otpData = MutableLiveData<ServiceModel>()
+         commonApi.getgetService(accessToken)
+             .enqueue(object : Callback<ResponseBody> {
+                 override fun onResponse(
+                     call: Call<ResponseBody>,
+                     response: Response<ResponseBody>
+                 ) = if (response.isSuccessful) {
+                     otpData.value = Common.getModelreturn(
+                         "ServiceModel",
+                         response,
+                         0,
+                         context
+                     ) as ServiceModel?
+                 } else {
+                     try {
+                         otpData.value = Common.getModelreturn(
+                             "ServiceModel",
+                             response,
+                             1,
+                             context
+                         ) as ServiceModel?
+                     } catch (e: IOException) {
+                         e.printStackTrace()
+                     } catch (e: Exception) {
+                         e.printStackTrace()
+                     }
 
-    fun getCommentList(
-        context: Context,
-        accessToken: String
+                 }
 
-    ): MutableLiveData<CommentListModel> {
-        var otpData = MutableLiveData<CommentListModel>()
-        commonApi.getCommentList(accessToken)
-            .enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) = if (response.isSuccessful) {
-                    otpData.value = Common.getModelreturn(
-                        "CommentListModel",
-                        response,
-                        0,
-                        context
-                    ) as CommentListModel?
-                } else {
-                    try {
-                        otpData.value = Common.getModelreturn(
-                            "CommentListModel",
-                            response,
-                            1,
-                            context
-                        ) as CommentListModel?
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                 }
+             })
+         return otpData
+     }*/
 
-                }
+    suspend fun getCommentList(context: Context, accessToken: String): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).getCommentList(accessToken)
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                }
-            })
-        return otpData
-    }
+    /* fun getCommentList(
+         context: Context,
+         accessToken: String
+
+     ): MutableLiveData<CommentListModel> {
+         var otpData = MutableLiveData<CommentListModel>()
+         commonApi.getCommentList(accessToken)
+             .enqueue(object : Callback<ResponseBody> {
+                 override fun onResponse(
+                     call: Call<ResponseBody>,
+                     response: Response<ResponseBody>
+                 ) = if (response.isSuccessful) {
+                     otpData.value = Common.getModelreturn(
+                         "CommentListModel",
+                         response,
+                         0,
+                         context
+                     ) as CommentListModel?
+                 } else {
+                     try {
+                         otpData.value = Common.getModelreturn(
+                             "CommentListModel",
+                             response,
+                             1,
+                             context
+                         ) as CommentListModel?
+                     } catch (e: IOException) {
+                         e.printStackTrace()
+                     } catch (e: Exception) {
+                         e.printStackTrace()
+                     }
+
+                 }
+
+                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                 }
+             })
+         return otpData
+     }*/
 
     fun getNotificationList(
         context: Context,
-        accessToken: String
+        accessToken: String,
 
-    ): MutableLiveData<NotificationModel> {
+        ): MutableLiveData<NotificationModel> {
         val otpData = MutableLiveData<NotificationModel>()
         commonApi.getNotificationList(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                    response: Response<ResponseBody>,
                 ) = if (response.isSuccessful) {
                     otpData.value = Common.getModelreturn(
                         "NotificationModel",
@@ -201,17 +209,20 @@ class CommonRepo {
             })
         return otpData
     }
- fun getNotificationCount(
-        context: Context,
-        accessToken: String
 
-    ): MutableLiveData<NotificationCountModel> {
+    suspend fun getNotificationCount(context: Context, accessToken: String): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).getNotificationCount(accessToken)
+
+    /*fun getNotificationCount(
+        context: Context,
+        accessToken: String,
+
+        ): MutableLiveData<NotificationCountModel> {
         var otpData = MutableLiveData<NotificationCountModel>()
         commonApi.getNotificationCount(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                    response: Response<ResponseBody>,
                 ) = if (response.isSuccessful) {
                     otpData.value = Common.getModelreturn(
                         "NotificationCountModel",
@@ -239,18 +250,18 @@ class CommonRepo {
                 }
             })
         return otpData
-    }
+    }*/
 
     fun getBuildingList(
         context: Context,
-        accessToken: String
+        accessToken: String,
     ): MutableLiveData<BuildingListModel> {
         var otpData = MutableLiveData<BuildingListModel>()
         commonApi.getBuildingList(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                    response: Response<ResponseBody>,
                 ) = if (response.isSuccessful) {
                     otpData.value = Common.getModelreturn(
                         "BuildingListModel",
@@ -279,17 +290,22 @@ class CommonRepo {
         return otpData
     }
 
-    fun getUserInfo(
+    suspend fun getUserInfo(
         context: Context,
-        accessToken: String
+        accessToken: String,
+    ): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).getUserInfo(accessToken)
 
-    ): MutableLiveData<UserInfoModel> {
+/*    fun getUserInfo(
+        context: Context,
+        accessToken: String,
+
+        ): MutableLiveData<UserInfoModel> {
         var otpData = MutableLiveData<UserInfoModel>()
         commonApi.getUserInfo(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                    response: Response<ResponseBody>,
                 ) = if (response.isSuccessful) {
                     otpData.value = Common.getModelreturn(
                         "UserInfoModel",
@@ -317,19 +333,19 @@ class CommonRepo {
                 }
             })
         return otpData
-    }
+    }*/
 
     fun callApiLogoutFromAll(
         context: Context,
-        accessToken: String
+        accessToken: String,
 
-    ): MutableLiveData<UserInfoModel> {
+        ): MutableLiveData<UserInfoModel> {
         var otpData = MutableLiveData<UserInfoModel>()
         commonApi.callLogoutFromAll(accessToken)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                    response: Response<ResponseBody>,
                 ) = if (response.isSuccessful) {
                     otpData.value = Common.getModelreturn(
                         "UserInfoModel",
@@ -359,15 +375,20 @@ class CommonRepo {
         return otpData
     }
 
-    fun saveTokenToDatabase(
+    suspend fun saveTokenToDatabase(
         jsonObject: JsonObject,
-        access_token: String, context: Context
+        access_token: String, context: Context,
+    ): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).callApiSaveToken(jsonObject, access_token)
+
+    /*fun saveTokenToDatabase(
+        jsonObject: JsonObject,
+        access_token: String, context: Context,
     ): MutableLiveData<SaveTokenModel> {
         var recoveryData = MutableLiveData<SaveTokenModel>()
         commonApi.callApiSaveToken(jsonObject, access_token).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                response: Response<ResponseBody>,
             ) = if (response.isSuccessful) {
                 recoveryData.value = Common?.getModelreturn("SaveTokenModel", response, 0, context) as SaveTokenModel?
 
@@ -383,50 +404,56 @@ class CommonRepo {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                recoveryData.value = null
             }
         })
         return recoveryData
-    }
+    }*/
 
-    fun getServiceById(
+    suspend fun getServiceById(
         jsonObject: JsonObject,
         context: Context,
-        accessToken: String
+        accessToken: String,
 
-    ): MutableLiveData<ServiceDataByIdModel> {
-        var otpData = MutableLiveData<ServiceDataByIdModel>()
-        commonApi.getgetServiceById(jsonObject, accessToken)
-            .enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) = if (response.isSuccessful) {
-                    otpData.value = Common.getModelreturn(
-                        "ServiceDataByIdModel",
-                        response,
-                        0,
-                        context
-                    ) as ServiceDataByIdModel?
-                } else {
-                    try {
-                        otpData.value = Common.getModelreturn(
-                            "ServiceDataByIdModel",
-                            response,
-                            1,
-                            context
-                        ) as ServiceDataByIdModel?
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+        ): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).getgetServiceById(jsonObject, accessToken)
 
-                }
+    /* fun getServiceById(
+         jsonObject: JsonObject,
+         context: Context,
+         accessToken: String,
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                }
-            })
-        return otpData
-    }
+         ): MutableLiveData<ServiceDataByIdModel> {
+         var otpData = MutableLiveData<ServiceDataByIdModel>()
+         commonApi.getgetServiceById(jsonObject, accessToken)
+             .enqueue(object : Callback<ResponseBody> {
+                 override fun onResponse(
+                     call: Call<ResponseBody>,
+                     response: Response<ResponseBody>,
+                 ) = if (response.isSuccessful) {
+                     otpData.value = Common.getModelreturn(
+                         "ServiceDataByIdModel",
+                         response,
+                         0,
+                         context
+                     ) as ServiceDataByIdModel?
+                 } else {
+                     try {
+                         otpData.value = Common.getModelreturn(
+                             "ServiceDataByIdModel",
+                             response,
+                             1,
+                             context
+                         ) as ServiceDataByIdModel?
+                     } catch (e: IOException) {
+                         e.printStackTrace()
+                     } catch (e: Exception) {
+                         e.printStackTrace()
+                     }
+
+                 }
+
+                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                 }
+             })
+         return otpData
+     }*/
 }

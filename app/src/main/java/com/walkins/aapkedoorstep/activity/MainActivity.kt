@@ -47,12 +47,14 @@ import com.walkins.aapkedoorstep.model.login.IssueResolveModel
 import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
+import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.repository.LoginRepository
 import com.walkins.aapkedoorstep.service.Actions
 import com.walkins.aapkedoorstep.service.BackgroundService
 import com.walkins.aapkedoorstep.service.ServiceState
 import com.walkins.aapkedoorstep.service.getServiceState
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import id.zelory.compressor.Compressor
@@ -76,6 +78,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private var issueResolveArray: ArrayList<IssueResolveModel>? = ArrayList()
     private var commentModel: CommentListModel? = null
     private var commentList: ArrayList<CommentListData>? = ArrayList()
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
     private var ivHome: ImageView? = null
     private var ivNotification: ImageView? = null
@@ -111,7 +115,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         setContentView(R.layout.activity_main)
         prefManager = PrefManager(this)
         mDb = DBClass.getInstance(this)
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
         loginRepo = LoginRepository()
         loginViewModelFactory = LoginViewModelFactory(loginRepo)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
@@ -170,7 +178,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private fun getIssueList() {
         commonViewModel?.callApiListOfIssue(prefManager?.getAccessToken()!!, this)
-        commonViewModel?.getListOfIssue()?.observe(this, androidx.lifecycle.Observer {
+        commonViewModel?.issueListModel?.observe(this, {
             if (it != null) {
                 if (it.success) {
 
@@ -198,7 +206,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private fun getCommentList() {
         commonViewModel?.callApiGetComments(prefManager?.getAccessToken()!!, this)
-        commonViewModel?.getCommentList()?.observe(this, androidx.lifecycle.Observer {
+        commonViewModel?.commentListModel?.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 if (it.success) {
 
@@ -226,7 +234,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private fun getServiceList() {
 
         commonViewModel?.callApiGetService(prefManager?.getAccessToken()!!, this)
-        commonViewModel?.getService()?.observe(this, androidx.lifecycle.Observer {
+        commonViewModel?.serviceModel?.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 if (it.success) {
 
@@ -255,7 +263,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         this.let {
             Common.showLoader(this)
             commonViewModel?.callApiGetNotificationCount(prefManager?.getAccessToken()!!, it)
-            commonViewModel?.getNotiCount()?.observe(it, Observer {
+            commonViewModel?.notificationCountModel?.observe(it, Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
@@ -310,7 +318,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
         this.let {
             commonViewModel?.callApiToSaveToken(jsonObject, prefManager?.getAccessToken()!!, it)
-            commonViewModel?.getSaveToken()?.observe(it, Observer {
+            commonViewModel?.saveToken?.observe(it, Observer {
                 if (it != null) {
                     if (it.success) {
 

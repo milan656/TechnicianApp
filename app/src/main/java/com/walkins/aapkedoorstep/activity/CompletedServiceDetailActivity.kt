@@ -1,11 +1,11 @@
 package com.walkins.aapkedoorstep.activity
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
@@ -18,10 +18,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.PermissionChecker
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,21 +29,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.adapter.CompletedServiceAdapter
-import com.walkins.aapkedoorstep.adapter.DialogueAdpater
 import com.walkins.aapkedoorstep.adapter.PendingTyreSuggestionAdpater
 import com.walkins.aapkedoorstep.common.*
 import com.walkins.aapkedoorstep.custom.BoldButton
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
-import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
-import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceData
-import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdData
 import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdModel
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
-import java.lang.Exception
+import com.walkins.aapkedoorstep.repository.CommonRepo
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,7 +49,10 @@ import kotlin.collections.ArrayList
 class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener,
     View.OnTouchListener {
 
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
+
     private lateinit var prefManager: PrefManager
     private var pendingSuggestionsRecycView: RecyclerView? = null
     private var suggestionArr = arrayListOf<String>()
@@ -146,7 +144,11 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed_service_detail)
         prefManager = PrefManager(this)
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
         init()
     }
 
@@ -351,7 +353,7 @@ class CompletedServiceDetailActivity : AppCompatActivity(), onClickAdapter, View
         val jsonObject = JsonObject()
         jsonObject.addProperty("id", uuid)
         commonViewModel?.callApiGetServiceById(jsonObject, prefManager.getAccessToken()!!, this)
-        commonViewModel?.getServiceById()?.observe(this, Observer {
+        commonViewModel?.serviceByIdModel?.observe(this, Observer {
             Log.e("modelget", "" + it.data)
             if (it != null) {
                 if (it.success) {

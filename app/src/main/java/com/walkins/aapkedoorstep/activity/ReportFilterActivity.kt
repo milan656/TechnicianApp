@@ -15,7 +15,6 @@ import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.adapter.AutoSuggestProductAdapter
 import com.walkins.aapkedoorstep.model.login.building.BuildingListData
 import com.walkins.aapkedoorstep.model.login.makemodel.VehicleModelData
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.MakeModelViewModel
 
 class ReportFilterActivity : AppCompatActivity(), View.OnClickListener {

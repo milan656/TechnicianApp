@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,9 @@ import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.adapter.NotificationAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.NotificationModel
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.repository.CommonRepo
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,6 +47,8 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param1: String? = null
     private var param2: String? = null
     private var prefManager: PrefManager? = null
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
     private var notificationArr: ArrayList<NotificationModel>? = ArrayList()
 
@@ -71,7 +76,10 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_notification, container, false)
         activity = getActivity() as MainActivity?
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
 
         prefManager = context?.let { PrefManager(it) }
         init(view)
@@ -130,8 +138,8 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         activity?.let {
             Common.showLoader(it)
-            commonViewModel?.callApiGetNotificationList(prefManager?.getAccessToken()!!, it)
-            commonViewModel?.getNotiList()?.observe(it, Observer {
+            commonViewModel?.callapi(prefManager?.getAccessToken()!!, it)
+            commonViewModel?.notificationCountModel?.observe(it, Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
