@@ -164,7 +164,7 @@ class LoginRepository {
                 response: Response<OtpModel>
             ) {
                 if (response.isSuccessful) {
-                    loginData.value = response?.body()
+                    loginData.value = response.body()
                 } else {
                     try {
                         val responce = response.errorBody()?.string()
