@@ -73,7 +73,6 @@ class LoginRepository {
                             Common.getErrorModel(jsonObjectError, "UserModel") as UserModel
                         //recoveryData.setValue(recoveryPasswordModel)
 
-
                         loginData.value = userModel
 
                     } catch (e: IOException) {
