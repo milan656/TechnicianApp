@@ -136,7 +136,6 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
         commonRepo = CommonRepo().getInstance()
         userInfo = commonRepo?.callApiLogoutFromAll(context, accessToken)
 
-
     }
 
     fun callApiToSaveToken(jsonObject: JsonObject, accessToken: String, context: Context) {
