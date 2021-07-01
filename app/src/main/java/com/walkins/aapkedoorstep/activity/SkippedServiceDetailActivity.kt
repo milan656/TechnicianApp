@@ -37,9 +37,9 @@ import com.walkins.aapkedoorstep.model.login.IssueResolveModel
 import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.aapkedoorstep.repository.CommonRepo
-import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*

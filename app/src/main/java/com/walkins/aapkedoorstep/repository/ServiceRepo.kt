@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.JsonObject
+import com.walkins.aapkedoorstep.common.RetrofitBuilder
 import com.walkins.aapkedoorstep.model.login.ReportServiceModel
 import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
@@ -37,6 +38,12 @@ class ServiceRepo {
         return serviceRepo as ServiceRepo
     }
 
+    suspend fun addService(
+        jsonObject: JsonObject,
+        access_token: String, context: Context,
+    ): Response<ResponseBody> = RetrofitBuilder.createService(ServiceApi::class.java).addService(jsonObject, access_token)
+
+/*
     fun addService(
         jsonObject: JsonObject,
         access_token: String, context: Context
@@ -79,18 +86,19 @@ class ServiceRepo {
         })
         return servicedata
     }
+*/
 
     fun UpdateService(
         jsonObject: JsonObject,
-        access_token: String, context: Context
+        access_token: String, context: Context,
     ): MutableLiveData<AddServiceModel> {
         var servicedata = MutableLiveData<AddServiceModel>()
 
-        var addEdit: Call<ResponseBody>?=serviceApi.updateService(jsonObject, access_token)
+        var addEdit: Call<ResponseBody>? = serviceApi.updateService(jsonObject, access_token)
 
         addEdit?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<ResponseBody>, response: Response<ResponseBody>
+                call: Call<ResponseBody>, response: Response<ResponseBody>,
             ) = if (response.isSuccessful) {
                 servicedata.value = Common?.getModelreturn(
                     "AddServiceModel",
@@ -125,15 +133,15 @@ class ServiceRepo {
 
     fun getDashboardService(
         date: String,
-        access_token: String, context: Context
+        access_token: String, context: Context,
     ): MutableLiveData<DashboardServiceListModel> {
         val servicedata = MutableLiveData<DashboardServiceListModel>()
 
-        val addEdit: Call<ResponseBody>?=serviceApi.getDashboardService(date, access_token)
+        val addEdit: Call<ResponseBody>? = serviceApi.getDashboardService(date, access_token)
 
         addEdit?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<ResponseBody>, response: Response<ResponseBody>
+                call: Call<ResponseBody>, response: Response<ResponseBody>,
             ) = if (response.isSuccessful) {
                 servicedata.value = Common.getModelreturn(
                     "DashboardServiceListModel",
@@ -168,16 +176,16 @@ class ServiceRepo {
 
     fun getServiceByDate(
         date: String,
-        building_id:String,
-        access_token: String, context: Context
+        building_id: String,
+        access_token: String, context: Context,
     ): MutableLiveData<ServiceListByDateModel> {
         val servicedata = MutableLiveData<ServiceListByDateModel>()
 
-        val addEdit: Call<ResponseBody>?=serviceApi.getServiceByDate(date,building_id, access_token)
+        val addEdit: Call<ResponseBody>? = serviceApi.getServiceByDate(date, building_id, access_token)
 
         addEdit?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<ResponseBody>, response: Response<ResponseBody>
+                call: Call<ResponseBody>, response: Response<ResponseBody>,
             ) = if (response.isSuccessful) {
                 servicedata.value = Common.getModelreturn(
                     "ServiceListByDateModel",
@@ -209,17 +217,18 @@ class ServiceRepo {
         })
         return servicedata
     }
- fun callApiReportService(
+
+    fun callApiReportService(
         jsonObject: JsonObject,
-        access_token: String, context: Context
+        access_token: String, context: Context,
     ): MutableLiveData<ReportServiceModel> {
         val servicedata = MutableLiveData<ReportServiceModel>()
 
-        val addEdit: Call<ResponseBody>?=serviceApi.getReportService(jsonObject, access_token)
+        val addEdit: Call<ResponseBody>? = serviceApi.getReportService(jsonObject, access_token)
 
         addEdit?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<ResponseBody>, response: Response<ResponseBody>
+                call: Call<ResponseBody>, response: Response<ResponseBody>,
             ) = if (response.isSuccessful) {
                 servicedata.value = Common.getModelreturn(
                     "ReportServiceModel",

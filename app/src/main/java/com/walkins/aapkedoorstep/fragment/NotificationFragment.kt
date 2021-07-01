@@ -67,7 +67,7 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var tvNoNotiData: TextView? = null
     var activity: MainActivity? = null
     private var notificationAdpater: NotificationAdpater? = null
-    private var notiSwipe:SwipeRefreshLayout?=null
+    private var notiSwipe: SwipeRefreshLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -138,8 +138,8 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         activity?.let {
             Common.showLoader(it)
-            commonViewModel?.callapi(prefManager?.getAccessToken()!!, it)
-            commonViewModel?.notificationCountModel?.observe(it, Observer {
+            commonViewModel?.callApiGetNotificationList(prefManager?.getAccessToken()!!, it)
+            commonViewModel?.notificationModel?.observe(it, Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
@@ -164,7 +164,7 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             }
                         }
 
-                        Log.e("getnotidata",""+notificationArr?.size)
+                        Log.e("getnotidata", "" + notificationArr?.size)
                         if (notificationArr?.size!! > 0) {
                             tvNoNotiData?.visibility = View.GONE
                         } else {

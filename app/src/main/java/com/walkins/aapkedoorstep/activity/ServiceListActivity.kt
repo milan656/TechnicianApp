@@ -32,9 +32,9 @@ import com.walkins.aapkedoorstep.common.showShortToast
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.repository.LoginRepository
-import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

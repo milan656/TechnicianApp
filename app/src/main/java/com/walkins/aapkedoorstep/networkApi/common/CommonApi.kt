@@ -18,7 +18,7 @@ interface CommonApi {
     suspend fun getCommentList(@Header("Authorization") authorizationToke: String): Response<ResponseBody>
 
     @GET("v1/notification/get-notification")
-    fun getNotificationList(@Header("Authorization") authorizationToke: String): Call<ResponseBody>
+    suspend fun getNotificationList(@Header("Authorization") authorizationToke: String): Response<ResponseBody>
 
     @GET("v1/notification/get-unread-notification-count")
     suspend fun getNotificationCount(@Header("Authorization") authorizationToke: String): Response<ResponseBody>

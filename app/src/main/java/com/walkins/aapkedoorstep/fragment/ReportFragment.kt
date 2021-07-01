@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,9 +35,11 @@ import com.walkins.aapkedoorstep.model.login.building.BuildingListData
 import com.walkins.aapkedoorstep.model.login.makemodel.VehicleModelData
 import com.walkins.aapkedoorstep.model.login.service.ServiceModel
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListData
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.viewmodel.MakeModelViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -61,7 +64,10 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private val listClickedModel = ArrayList<String>()
     private var adapter: AutoSuggestProductAdapter? = null
     private var serviceViewModel: ServiceViewModel? = null
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
+
     private var serviceModel: ServiceModel? = null
     private var selectedSociety: String? = ""
     private var selectedSocietyName: String? = ""
@@ -114,7 +120,10 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         prefManager = context?.let { PrefManager(it) }!!
         makeModelViewModel = ViewModelProviders.of(this).get(MakeModelViewModel::class.java)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
         init(view)
         return view
     }
@@ -305,7 +314,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         activity?.let {
             commonViewModel?.callApiGetService(prefManager.getAccessToken()!!, it)
-            commonViewModel?.getService()?.observe(it, androidx.lifecycle.Observer {
+            commonViewModel?.serviceModel?.observe(it, androidx.lifecycle.Observer {
                 if (it != null) {
                     if (it.success) {
 

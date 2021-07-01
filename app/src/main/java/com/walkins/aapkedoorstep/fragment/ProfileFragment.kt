@@ -30,8 +30,10 @@ import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.adapter.DialogueAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
+import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.repository.LoginRepository
-import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
+import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import java.util.*
@@ -62,6 +64,8 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private var tvMobilenumber: TextView? = null
     private var tvLogout: TextView? = null
 
+    private lateinit var commonRepo: CommonRepo
+    private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +86,10 @@ class ProfileFragment : Fragment(), onClickAdapter {
         loginRepo = LoginRepository()
         loginViewModelFactory = LoginViewModelFactory(loginRepo)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
-        commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
+        commonRepo = CommonRepo()
+        commonViewModelFactory = CommonViewModelFactory(commonRepo)
+        commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
         prefManager = context?.let { PrefManager(it) }
         mainAct = activity as MainActivity?
         init(view)
@@ -127,7 +134,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
         mainAct?.let {
             Common.showLoader(it)
             commonViewModel?.callApiGetUserInfo(prefManager?.getAccessToken()!!, it)
-            commonViewModel?.getUserInfo()?.observe(it, Observer {
+            commonViewModel?.userInfo?.observe(it, Observer {
                 if (it != null) {
                     if (it.success) {
 
@@ -297,7 +304,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
         activity?.let {
             Common.showLoader(it)
             commonViewModel?.callApiLogoutFromAll(prefManager?.getAccessToken()!!, it)
-            commonViewModel?.getUserInfo()?.observe(it, Observer {
+            commonViewModel?.userInfo?.observe(it, Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
@@ -335,7 +342,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
         activity?.let {
             commonViewModel?.callApiToSaveToken(jsonObject, prefManager?.getAccessToken()!!, it)
-            commonViewModel?.getSaveToken()?.observe(it, Observer {
+            commonViewModel?.saveToken?.observe(it, Observer {
                 if (it != null) {
                     if (it.success) {
 

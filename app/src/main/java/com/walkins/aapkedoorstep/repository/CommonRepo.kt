@@ -170,7 +170,12 @@ class CommonRepo {
          return otpData
      }*/
 
-    fun getNotificationList(
+    suspend fun getNotificationList(
+        context: Context,
+        accessToken: String,
+    ): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).getNotificationList(accessToken)
+
+    /*fun getNotificationList(
         context: Context,
         accessToken: String,
 
@@ -208,7 +213,7 @@ class CommonRepo {
                 }
             })
         return otpData
-    }
+    }*/
 
     suspend fun getNotificationCount(context: Context, accessToken: String): Response<ResponseBody> = RetrofitBuilder.createService(CommonApi::class.java).getNotificationCount(accessToken)
 

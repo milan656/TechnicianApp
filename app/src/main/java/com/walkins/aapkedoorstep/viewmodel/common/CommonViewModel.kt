@@ -28,6 +28,7 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
     var issueListModel: MutableLiveData<IssueListModel>? = MutableLiveData()
     var serviceModel: MutableLiveData<ServiceModel>? = MutableLiveData()
     var commentListModel: MutableLiveData<CommentListModel>? = MutableLiveData()
+    var notificationModel: MutableLiveData<NotificationModel>? = MutableLiveData()
     var notificationCountModel: MutableLiveData<NotificationCountModel>? = MutableLiveData()
     var serviceByIdModel: MutableLiveData<ServiceDataByIdModel>? = MutableLiveData()
     var userInfo: MutableLiveData<UserInfoModel>? = MutableLiveData()
@@ -78,6 +79,22 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
                     commentListModel?.value = Common.getModelReturn_("CommentListModel", res, 0, context) as CommentListModel?
                 } else {
                     commentListModel?.value = Common.getModelReturn_("CommentListModel", res, 1, context) as CommentListModel?
+                }
+            }
+        }
+    }
+
+    fun callApiGetNotificationList(
+        accessToken: String,
+        context: Context
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = commonRepo.getNotificationList(context, accessToken)
+            withContext(Dispatchers.Main) {
+                if (res.isSuccessful) {
+                    notificationModel?.value = Common.getModelReturn_("NotificationModel", res, 0, context) as NotificationModel?
+                } else {
+                    notificationModel?.value = Common.getModelReturn_("NotificationModel", res, 1, context) as NotificationModel?
                 }
             }
         }

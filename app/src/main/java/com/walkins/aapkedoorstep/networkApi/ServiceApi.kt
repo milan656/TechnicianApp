@@ -3,15 +3,16 @@ package com.walkins.aapkedoorstep.networkApi
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ServiceApi {
 
     @POST("v1/user/add-service-detail")
-    fun addService(
+    suspend fun addService(
         @Body jsonObject: JsonObject,
         @Header("Authorization") authorization: String
-    ): Call<ResponseBody>
+    ): Response<ResponseBody>
 
     @POST("v1/user/update-skip-service")
     fun updateService(
