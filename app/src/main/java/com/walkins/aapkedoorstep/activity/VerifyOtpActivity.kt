@@ -17,9 +17,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.pm.PackageInfoCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
@@ -81,14 +79,10 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
 
-        tvResend?.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-
-                callSendOTPApi()
-                return false
-            }
-
-        })
+        tvResend?.setOnTouchListener { v, event ->
+            callSendOTPApi()
+            false
+        }
 
 //        tvResend?.text = Html.fromHtml("Didn't receive OTP?")
         startSMSListener()
@@ -127,7 +121,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
             override fun afterTextChanged(s: Editable?) {
 
-                if (s != null && s.length != 0 && s.length == 1) {
+                if (s != null && s.isNotEmpty() && s.length == 1) {
 
                     edtOtp2?.requestFocus()
                     otp?.append(edtOtp1?.text?.toString()?.toInt())
@@ -147,7 +141,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.length != 0 && s.length == 1) {
+                if (s != null && s.isNotEmpty() && s.length == 1) {
                     edtOtp3?.requestFocus()
                     otp?.append(edtOtp2?.text?.toString()?.toInt())
                     Log.e("getcallbtn", "call525")
@@ -166,7 +160,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.length != 0 && s.length == 1) {
+                if (s != null && s.isNotEmpty() && s.length == 1) {
                     edtOtp4?.requestFocus()
                     otp?.append(edtOtp3?.text?.toString()?.toInt())
                     Log.e("getcallbtn", "call00")
@@ -186,7 +180,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.length != 0 && s.length == 1) {
+                if (s != null && s.isNotEmpty() && s.length == 1) {
                     edtOtp4?.clearFocus()
                     otp?.append(edtOtp4?.text?.toString()?.toInt())
                     btnVerify?.performClick()
@@ -205,18 +199,18 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         Log.e("getobject", "" + jsonObject)
 
         loginViewModel.initTwo(this, jsonObject)
-        loginViewModel.otpModel?.observe(this, Observer {
+        loginViewModel.otpModel?.observe(this, {
             Common.hideLoader()
             if (it != null) {
                 if (it.success) {
 
-                    if (it.message != null && !it.message.equals("")) {
+                    if (it.message != null && it.message != "") {
                         Toast.makeText(this, "" + it.message, Toast.LENGTH_SHORT).show()
                     }
 
                 } else {
-                    if (it.error != null && it.error.get(0).message != null) {
-                        showDialogue("Oops!", it.error.get(0).message)
+                    if (it.error != null && it.error[0].message != null) {
+                        showDialogue("Oops!", it.error[0].message)
                     }
                 }
             }
@@ -229,7 +223,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         builder?.window?.setLayout(width, height)
-        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+        builder.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout_service, null)
 
@@ -251,21 +245,6 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         builder.show()
     }
 
-    fun hasPermissions(context: Context?, vararg permissions: String?): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (permission in permissions) {
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        permission!!
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-
     private fun startSMSListener() {
         try {
             val client = SmsRetriever.getClient(this)
@@ -282,8 +261,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onClick(v: View?) {
-        val i = v?.id
-        when (i) {
+        when (v?.id) {
             R.id.btnVerify -> {
                 if (edtOtp1?.text?.toString()?.length == 1 &&
                     edtOtp2?.text?.toString()?.length == 1 &&
@@ -328,7 +306,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         val manager = context.packageManager
 
         var versionCode: Int = 0
-        var deviceName: String? = Common.getDeviceName()
+        val deviceName: String? = Common.getDeviceName()
         var androidOS = Build.VERSION.RELEASE
 
         try {
@@ -371,8 +349,8 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
         Log.e("getotp", "" + OTP)
         loginViewModel.init(this,
-            intent?.getStringExtra("number")?.trim({ it <= ' ' })!!,
-            OTP.trim({ it <= ' ' }),
+            intent?.getStringExtra("number")?.trim { it <= ' ' }!!,
+            OTP.trim { it <= ' ' },
             "password",
             "Basic ZG9vcnN0ZXA6MTIz", versionCode, deviceName, androidOS, null
         )
@@ -385,7 +363,7 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
             //  Common.hideLoader()
             if (it != null) {
-                if (it.accessToken != null && !it.accessToken.equals("")) {
+                if (it.accessToken != null && it.accessToken != "") {
                     prefManager.setAccessToken("Bearer " + it.accessToken)
                     prefManager.setRefreshToken(it.refreshToken)
                     prefManager.setToken(it.token)
@@ -536,39 +514,13 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
 
                 } else {
                     try {
-                        showDialogue("Oops!", it.error.get(0).message)
+                        showDialogue("Oops!", it.error[0].message)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
             }
         })
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun loginFail(message: String, title: String) {
-        val builder = AlertDialog.Builder(this).create()
-        builder.setCancelable(false)
-        val width = LinearLayout.LayoutParams.MATCH_PARENT
-        val height = LinearLayout.LayoutParams.WRAP_CONTENT
-        builder?.window?.setLayout(width, height)
-        builder.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
-
-
-        val root = LayoutInflater.from(this).inflate(R.layout.common_dialogue_layout, null)
-
-        val btnYes = root.findViewById<BoldButton>(R.id.btnOk)
-        val tv_message = root.findViewById<TextView>(R.id.tv_message)
-        val tv_dialogTitle = root.findViewById<TextView>(R.id.tvTitleText)
-
-        tv_dialogTitle?.setText("Oops!")
-
-        tv_message.text = message
-        btnYes.setOnClickListener { builder.dismiss() }
-        builder.setView(root)
-
-        builder.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
-        builder.show()
     }
 
     override fun onResume() {
