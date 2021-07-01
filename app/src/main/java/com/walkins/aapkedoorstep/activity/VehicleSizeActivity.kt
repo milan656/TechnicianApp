@@ -2,13 +2,11 @@ package com.walkins.aapkedoorstep.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.lifecycle.ViewModelProviders
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
@@ -16,23 +14,20 @@ import com.example.technician.common.PrefManager
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.walkins.aapkedoorstep.DB.DBClass
-import com.walkins.aapkedoorstep.DB.VehiclePatternModelClass
 import com.walkins.aapkedoorstep.DB.VehicleSizeModelClass
 import com.walkins.aapkedoorstep.R
-import com.walkins.aapkedoorstep.adapter.VehiclePatternAdapter
 import com.walkins.aapkedoorstep.adapter.VehicleSizeAdapter
-import com.walkins.aapkedoorstep.common.*
-import com.walkins.aapkedoorstep.model.login.sizemodel.SizeData
+import com.walkins.aapkedoorstep.common.TyreConfigClass
+import com.walkins.aapkedoorstep.common.TyreDetailCommonClass
+import com.walkins.aapkedoorstep.common.TyreKey
+import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.model.login.sizemodel.SizeModel
-import com.walkins.aapkedoorstep.viewmodel.WarrantyViewModel
-import java.lang.Exception
 
 @SuppressLint("SetTextI18n")
 class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private lateinit var prefManager: PrefManager
     private var sizeModel: SizeModel? = null
-    private lateinit var warrantyViewModel: WarrantyViewModel
     private var adapter: VehicleSizeAdapter? = null
     private var gridviewRecycModel: RecyclerView? = null
     private var ivBack: ImageView? = null
@@ -61,7 +56,6 @@ class VehicleSizeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_model)
         prefManager = PrefManager(this)
-        warrantyViewModel = ViewModelProviders.of(this).get(WarrantyViewModel::class.java)
         mDb = DBClass.getInstance(applicationContext)
         init()
     }

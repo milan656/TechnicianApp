@@ -1,7 +1,6 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
-import android.R.attr.bitmap
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -10,7 +9,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -29,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -58,11 +57,12 @@ import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
+import com.walkins.aapkedoorstep.repository.LoginRepository
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
-import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
 import id.zelory.compressor.constraint.size
@@ -89,6 +89,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     private var dialogue: Dialog? = null
 
     private var loginViewModel: LoginActivityViewModel? = null
+    private lateinit var loginRepo: LoginRepository
+    private lateinit var loginViewModelFactory: LoginViewModelFactory
     private var commonViewModel: CommonViewModel? = null
 
     var pendingArr: ArrayList<String>? = null
@@ -239,7 +241,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         mDb = DBClass.getInstance(this)
         prefManager = PrefManager(this)
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
-        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        loginRepo = LoginRepository()
+        loginViewModelFactory = LoginViewModelFactory(loginRepo)
+        loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
+
         commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
 
 //        requestPermissionForImage()
@@ -6757,6 +6762,8 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
 
     private fun uploadImage(imagePath: File, inputStream: InputStream, type: String) {
 //        showLoader(this)
+
+
         val part = MultipartBody.Part.createFormData(
             "file", imagePath.name, RequestBody.create(
                 MediaType.parse("image/*"),

@@ -1,6 +1,5 @@
 package com.walkins.aapkedoorstep.activity
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.BroadcastReceiver
@@ -11,7 +10,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
@@ -20,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.technician.common.Common
@@ -29,11 +28,15 @@ import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.common.MySMSBroadcastReceiver
 import com.walkins.aapkedoorstep.custom.BoldButton
-import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import com.walkins.aapkedoorstep.repository.LoginRepository
+import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 
 class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     MySMSBroadcastReceiver.OTPReceiveListener {
     private lateinit var loginViewModel: LoginActivityViewModel
+    private lateinit var loginRepo: LoginRepository
+    private lateinit var loginViewModelFactory: LoginViewModelFactory
     private lateinit var prefManager: PrefManager
     private var tvResend: TextView? = null
     private var ivBackIcon: ImageView? = null
@@ -50,7 +53,9 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_otp)
-        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        loginRepo = LoginRepository()
+        loginViewModelFactory = LoginViewModelFactory(loginRepo)
+        loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
         prefManager = PrefManager(this@VerifyOtpActivity)
         init()
 
@@ -199,8 +204,8 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         jsonObject.addProperty("phone_number", intent?.getStringExtra("number"))
         Log.e("getobject", "" + jsonObject)
 
-        loginViewModel.initTwo(jsonObject)
-        loginViewModel.sendOtp()?.observe(this, Observer {
+        loginViewModel.initTwo(this, jsonObject)
+        loginViewModel.otpModel?.observe(this, Observer {
             Common.hideLoader()
             if (it != null) {
                 if (it.success) {
@@ -361,20 +366,22 @@ class VerifyOtpActivity : AppCompatActivity(), View.OnClickListener,
         var technicianLogin = "9978785623"
         var technicianPassword = "1212"
 
-        var OTP =
+        val OTP =
             edtOtp1?.text?.toString() + edtOtp2?.text?.toString() + edtOtp3?.text?.toString() + edtOtp4?.text?.toString()
 
         Log.e("getotp", "" + OTP)
-        loginViewModel.init(
+        loginViewModel.init(this,
             intent?.getStringExtra("number")?.trim({ it <= ' ' })!!,
             OTP.trim({ it <= ' ' }),
             "password",
             "Basic ZG9vcnN0ZXA6MTIz", versionCode, deviceName, androidOS, null
         )
 
-        loginViewModel.getLoginData()?.observe(this@VerifyOtpActivity, Observer {
+        loginViewModel.userModelData?.observe(this@VerifyOtpActivity, {
 
             Common.hideLoader()
+
+            Log.e("getlogindata",""+it.accessToken)
 
             //  Common.hideLoader()
             if (it != null) {

@@ -1,7 +1,6 @@
 package com.walkins.aapkedoorstep.activity
 
 import android.Manifest
-import android.R.attr
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
@@ -12,7 +11,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -29,8 +27,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,10 +49,11 @@ import com.walkins.aapkedoorstep.adapter.DialogueAdpater
 import com.walkins.aapkedoorstep.adapter.TyreSuggestionAdpater
 import com.walkins.aapkedoorstep.common.*
 import com.walkins.aapkedoorstep.model.login.IssueResolveModel
+import com.walkins.aapkedoorstep.repository.LoginRepository
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
-import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
 import id.zelory.compressor.constraint.size
@@ -77,6 +76,8 @@ import kotlin.collections.ArrayList
 class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private var loginViewModel: LoginActivityViewModel? = null
+    private lateinit var loginRepo: LoginRepository
+    private lateinit var loginViewModelFactory: LoginViewModelFactory
     private var commonViewModel: CommonViewModel? = null
     private var sliderIn: FluidSlider? = null
     private var multiSliderPsiOut: FluidSlider? = null
@@ -192,7 +193,9 @@ class VisualDetailsActivity : AppCompatActivity(), onClickAdapter, View.OnClickL
         mDb = DBClass.getInstance(this)
         prefManager = PrefManager(this)
         commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
-        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        loginRepo = LoginRepository()
+        loginViewModelFactory = LoginViewModelFactory(loginRepo)
+        loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
 //        requestPermissionForImage()
         init()
 

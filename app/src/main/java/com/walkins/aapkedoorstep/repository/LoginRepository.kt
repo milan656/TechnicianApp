@@ -9,6 +9,7 @@ import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.networkApi.login.LoginApi
 import com.jkadvantagandbadsha.model.login.UserModel
 import com.jkadvantage.model.customerIntraction.uploadimage.UploadImageModel
+import com.walkins.aapkedoorstep.common.RetrofitBuilder
 import com.walkins.aapkedoorstep.model.login.makemodel.VehicleModel
 import com.walkins.aapkedoorstep.model.login.otp.OtpModel
 import com.walkins.aapkedoorstep.model.login.servicemodel.AddServiceModel
@@ -41,60 +42,72 @@ class LoginRepository {
         return loginDataRespotitory as LoginRepository
     }
 
-
-    fun loginUser(
+    suspend fun loginUser(
         userId: String,
         password: String,
         grantType: String,
         authorizationToke: String,
         versionCode: Int,
         deviceName: String?,
-        androidOS: String
-    ): MutableLiveData<UserModel> {
-        val loginData = MutableLiveData<UserModel>()
-        loginApi.loginUser(
-            userId,
-            password,
-            grantType,
-            authorizationToke
-        ).enqueue(object : Callback<UserModel> {
-            override fun onResponse(
-                call: Call<UserModel>,
-                response: Response<UserModel>
-            ) {
-                if (response.isSuccessful) {
-                    loginData.value = response?.body()
-                } else {
-                    try {
-                        val responce = response.errorBody()?.string()
-                        val jsonObjectError = JSONObject(responce)
+        androidOS: String,
+    ): Response<ResponseBody> = RetrofitBuilder.createService(LoginApi::class.java).loginUser(userId,
+        password,
+        grantType,
+        authorizationToke)
 
-                        val userModel: UserModel =
-                            Common.getErrorModel(jsonObjectError, "UserModel") as UserModel
-                        //recoveryData.setValue(recoveryPasswordModel)
+    /* fun loginUser(
+         userId: String,
+         password: String,
+         grantType: String,
+         authorizationToke: String,
+         versionCode: Int,
+         deviceName: String?,
+         androidOS: String,
+     ): MutableLiveData<UserModel> {
+         val loginData = MutableLiveData<UserModel>()
+         loginApi.loginUser(
+             userId,
+             password,
+             grantType,
+             authorizationToke
+         ).enqueue(object : Callback<UserModel> {
+             override fun onResponse(
+                 call: Call<UserModel>,
+                 response: Response<UserModel>,
+             ) {
+                 if (response.isSuccessful) {
+                     loginData.value = response?.body()
+                 } else {
+                     try {
+                         val responce = response.errorBody()?.string()
+                         val jsonObjectError = JSONObject(responce)
 
-                        loginData.value = userModel
+                         val userModel: UserModel =
+                             Common.getErrorModel(jsonObjectError, "UserModel") as UserModel
+                         //recoveryData.setValue(recoveryPasswordModel)
 
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                         loginData.value = userModel
 
-                }
-            }
+                     } catch (e: IOException) {
+                         e.printStackTrace()
+                     } catch (e: Exception) {
+                         e.printStackTrace()
+                     }
 
-            override fun onFailure(call: Call<UserModel>, t: Throwable) {
+                 }
+             }
 
-                t?.printStackTrace()
-            }
-        })
-        return loginData
-    }
+             override fun onFailure(call: Call<UserModel>, t: Throwable) {
 
+                 t?.printStackTrace()
+             }
+         })
+         return loginData
+     }
+ */
     fun callApiSendOtp(
         jsonObject: JsonObject,
-        context: Context
+        context: Context,
     ): MutableLiveData<OtpModel> {
         var servicedata = MutableLiveData<OtpModel>()
 
@@ -102,7 +115,7 @@ class LoginRepository {
 
         addEdit?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<ResponseBody>, response: Response<ResponseBody>
+                call: Call<ResponseBody>, response: Response<ResponseBody>,
             ) = if (response.isSuccessful) {
                 servicedata.value = Common?.getModelreturn(
                     "OtpModel",
@@ -135,8 +148,10 @@ class LoginRepository {
         return servicedata
     }
 
-    fun loginUserTwo(
-        jsonObject: JsonObject/*,
+    suspend fun loginUserTwo(jsonObject: JsonObject): Response<ResponseBody> = RetrofitBuilder.createService(LoginApi::class.java).loginUserTwo(jsonObject)
+
+    /*fun loginUserTwo(
+        jsonObject: JsonObject*//*,
 
         userId: String,
         password: String,
@@ -144,19 +159,19 @@ class LoginRepository {
         authorizationToke: String,
         versionCode: Int,
         deviceName: String?,
-        androidOS: String*/
+        androidOS: String*//*
     ): MutableLiveData<OtpModel> {
         val loginData = MutableLiveData<OtpModel>()
         loginApi.loginUserTwo(
             jsonObject,
 
-            /* userId,
+            *//* userId,
              password,
              grantType,
              authorizationToke,
              versionCode,
              deviceName,
-             androidOS*/
+             androidOS*//*
         ).enqueue(object : Callback<OtpModel> {
             override fun onResponse(
                 call: Call<OtpModel>,
@@ -186,12 +201,12 @@ class LoginRepository {
             }
         })
         return loginData
-    }
+    }*/
 
     fun refreshToken(
         authorizationToke: String,
         grantType: String,
-        refreshToken: String?
+        refreshToken: String?,
     ): MutableLiveData<UserModel> {
         val loginData = MutableLiveData<UserModel>()
         loginApi.refreshToken(
@@ -201,7 +216,7 @@ class LoginRepository {
         ).enqueue(object : Callback<UserModel> {
             override fun onResponse(
                 call: Call<UserModel>,
-                response: Response<UserModel>
+                response: Response<UserModel>,
             ) {
                 if (response.isSuccessful) {
                     loginData.value = response?.body()
@@ -235,14 +250,14 @@ class LoginRepository {
         jsonObject: MultipartBody.Part,
         type: String,
 //        contentType: String,
-        authorizationToke: String, context: Context
+        authorizationToke: String, context: Context,
     ): MutableLiveData<UploadImageModel> {
         val loginData = MutableLiveData<UploadImageModel>()
-        loginApi.uploadFile(jsonObject, authorizationToke,  type)
+        loginApi.uploadFile(jsonObject, authorizationToke, type)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
+                    response: Response<ResponseBody>,
                 ) {
                     if (response.isSuccessful) {
                         loginData.value = Common.getModelreturn(

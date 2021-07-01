@@ -7,9 +7,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,11 +21,11 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.technician.common.Common
@@ -50,17 +47,17 @@ import com.walkins.aapkedoorstep.model.login.IssueResolveModel
 import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.comment.CommentListModel
 import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
+import com.walkins.aapkedoorstep.repository.LoginRepository
 import com.walkins.aapkedoorstep.service.Actions
 import com.walkins.aapkedoorstep.service.BackgroundService
 import com.walkins.aapkedoorstep.service.ServiceState
 import com.walkins.aapkedoorstep.service.getServiceState
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
-import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
-import id.zelory.compressor.constraint.size
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -93,6 +90,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
 
     private var prefManager: PrefManager? = null
     private var loginViewModel: LoginActivityViewModel? = null
+    private lateinit var loginRepo: LoginRepository
+    private lateinit var loginViewModelFactory: LoginViewModelFactory
     private var selectedMenu: String? = null
     public var lltransparent: LinearLayout? = null
     public var homeSwipeRefresh: SwipeRefreshLayout? = null
@@ -113,7 +112,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
         prefManager = PrefManager(this)
         mDb = DBClass.getInstance(this)
         commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
-        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        loginRepo = LoginRepository()
+        loginViewModelFactory = LoginViewModelFactory(loginRepo)
+        loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
         Log.e("getaccessToken", "" + prefManager?.getAccessToken())
         init()
 
@@ -145,7 +146,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             "Basic ZG9vcnN0ZXA6MTIz", "refresh_token", prefManager?.getRefreshToken()
         )
 
-        loginViewModel?.getLoginData()?.observe(this, Observer {
+        loginViewModel?.userModelData?.observe(this, Observer {
             if (it != null) {
                 if (it.success) {
                     if (it.accessToken != null && !it.accessToken.equals("")) {

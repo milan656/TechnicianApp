@@ -13,6 +13,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,8 +30,10 @@ import com.walkins.aapkedoorstep.activity.LoginActivity
 import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.adapter.DialogueAdpater
 import com.walkins.aapkedoorstep.common.onClickAdapter
+import com.walkins.aapkedoorstep.repository.LoginRepository
 import com.walkins.aapkedoorstep.viewmodel.CommonViewModel
-import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -47,6 +50,8 @@ class ProfileFragment : Fragment(), onClickAdapter {
     private var ivBack: ImageView? = null
     private var tvTitle: TextView? = null
     private var loginViewModel: LoginActivityViewModel? = null
+    private lateinit var loginRepo: LoginRepository
+    private lateinit var loginViewModelFactory: LoginViewModelFactory
     private var prefManager: PrefManager? = null
 
     var ivProfileImg: ImageView? = null
@@ -74,7 +79,9 @@ class ProfileFragment : Fragment(), onClickAdapter {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        loginRepo = LoginRepository()
+        loginViewModelFactory = LoginViewModelFactory(loginRepo)
+        loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
         commonViewModel = ViewModelProviders.of(this).get(CommonViewModel::class.java)
         prefManager = context?.let { PrefManager(it) }
         mainAct = activity as MainActivity?

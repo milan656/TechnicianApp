@@ -20,6 +20,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
@@ -27,12 +28,16 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.custom.BoldButton
-import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import com.walkins.aapkedoorstep.repository.LoginRepository
+import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 
 @SuppressLint("SetTextI18n")
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginActivityViewModel
+    private lateinit var loginRepo: LoginRepository
+    private lateinit var loginViewModelFactory: LoginViewModelFactory
     private lateinit var prefManager: PrefManager
     private lateinit var edtLoginEmail: EditText
 
@@ -52,7 +57,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             e.printStackTrace()
         }
 
-        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        loginRepo = LoginRepository()
+        loginViewModelFactory = LoginViewModelFactory(loginRepo)
+        loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
 
     }
 
@@ -148,8 +155,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         jsonObject.addProperty("phone_number", edtLoginEmail.text.toString())
         Log.e("getobject", "" + jsonObject)
 
-        loginViewModel.initTwo(jsonObject)
-        loginViewModel.sendOtp()?.observe(this, Observer {
+        loginViewModel.initTwo(this, jsonObject)
+        loginViewModel.otpModel?.observe(this, {
+            Log.e("getloginres",""+it.success)
             Common.hideLoader()
             if (it != null) {
                 if (it.success) {
@@ -158,13 +166,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(intent)
                 } else {
                     if (it.error != null && it.error.get(0).message != null) {
-                        showDialogue("Oops!",it.error.get(0).message)
+                        showDialogue("Oops!", it.error.get(0).message)
                     }
                 }
             }
         })
     }
-
 
 
     private fun startSMSListener() {

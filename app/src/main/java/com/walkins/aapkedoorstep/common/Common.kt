@@ -572,6 +572,621 @@ class Common {
             }
         }
 
+       suspend fun getModelReturn_(
+            modelName: String?,
+            response: Response<ResponseBody>,
+            i: Int,
+            context: Context?,
+        ): Any? {
+            val gson: Gson
+            val gsonBuilder = GsonBuilder()
+            gson = gsonBuilder.create()
+
+            try {
+                var json: String? = null
+                if (i == 0) {
+                    json = response.body()!!.string()
+                } else {
+                    json = response.errorBody()!!.string()
+                }
+
+                val jsonObject = JSONObject(json)
+
+                if (jsonObject.has("success")) {
+                    if (jsonObject.getBoolean("success")) {
+
+                        if (jsonObject.has("warningOrUpdate")) {
+                            val jsonObjectForce = jsonObject.getJSONObject("warningOrUpdate")
+                            showDialogueForWarning(context!!, jsonObjectForce)
+                        }
+
+                        when (modelName) {
+                            "UserModel" -> {
+                                val userModel =
+                                    gson.fromJson(jsonObject.toString(), UserModel::class.java)
+                                return userModel
+                            }
+                            "VehicleBrandModel" -> {
+                                val VehicleBrandModel =
+                                    gson.fromJson(jsonObject.toString(), VehicleBrandModel::class.java)
+                                return VehicleBrandModel
+                            }
+                            "PatternModel" -> {
+                                val PatternModel =
+                                    gson.fromJson(jsonObject.toString(), PatternModel::class.java)
+                                return PatternModel
+                            }
+                            "SizeModel" -> {
+                                val SizeModel =
+                                    gson.fromJson(jsonObject.toString(), SizeModel::class.java)
+                                return SizeModel
+                            }
+                            "VehicleMakeModel" -> {
+                                val VehicleMakeModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        VehicleMakeModel::class.java
+                                    )
+                                return VehicleMakeModel
+                            }
+                            "VehicleModel" -> {
+                                val VehicleModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        VehicleModel::class.java
+                                    )
+                                return VehicleModel
+                            }
+                            "UploadImageModel" -> {
+                                val UploadImageModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        UploadImageModel::class.java
+                                    )
+                                return UploadImageModel
+                            }
+                            "AddServiceModel" -> {
+                                val AddServiceModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        AddServiceModel::class.java
+                                    )
+                                return AddServiceModel
+                            }
+                            "IssueListModel" -> {
+                                val IssueListModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        IssueListModel::class.java
+                                    )
+                                return IssueListModel
+                            }
+                            "OtpModel" -> {
+                                val OtpModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        OtpModel::class.java
+                                    )
+                                return OtpModel
+                            }
+                            "ServiceModel" -> {
+                                val ServiceModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ServiceModel::class.java
+                                    )
+                                return ServiceModel
+                            }
+                            "DashboardServiceListModel" -> {
+                                val DashboardServiceListModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        DashboardServiceListModel::class.java
+                                    )
+                                return DashboardServiceListModel
+                            }
+
+                            "ServiceListByDateModel" -> {
+                                val ServiceListByDateModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ServiceListByDateModel::class.java
+                                    )
+                                return ServiceListByDateModel
+                            }
+
+                            "ServiceDataByIdModel" -> {
+                                val ServiceDataByIdModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ServiceDataByIdModel::class.java
+                                    )
+                                return ServiceDataByIdModel
+                            }
+                            "CommentListModel" -> {
+                                val CommentListModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        CommentListModel::class.java
+                                    )
+                                return CommentListModel
+                            }
+                            "UserInfoModel" -> {
+                                val UserInfoModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        UserInfoModel::class.java
+                                    )
+                                return UserInfoModel
+                            }
+                            "BuildingListModel" -> {
+                                val BuildingListModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        BuildingListModel::class.java
+                                    )
+                                return BuildingListModel
+                            }
+                            "ReportServiceModel" -> {
+                                val ReportServiceModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ReportServiceModel::class.java
+                                    )
+                                return ReportServiceModel
+                            }
+                            "SaveTokenModel" -> {
+                                val SaveTokenModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        SaveTokenModel::class.java
+                                    )
+                                return SaveTokenModel
+                            }
+                            "NotificationModel" -> {
+                                val NotificationModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        NotificationModel::class.java
+                                    )
+                                return NotificationModel
+                            }
+                            "NotificationCountModel" -> {
+                                val NotificationCountModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        NotificationCountModel::class.java
+                                    )
+                                return NotificationCountModel
+                            }
+                            "ApiUpdatedTimeModel" -> {
+                                val ApiUpdatedTimeModel =
+                                    gson.fromJson(
+                                        jsonObject.toString(),
+                                        ApiUpdatedTimeModel::class.java
+                                    )
+                                return ApiUpdatedTimeModel
+                            }
+
+                            else -> {
+                                return null
+                            }
+
+                        }
+                    } else {
+
+                        try {
+                            if (!isCalling!!) {
+
+                                if (!jsonObject.has("error")) {
+                                    return null
+                                }
+                                isCalling = true
+
+                                val jsonArray: JSONArray = jsonObject.getJSONArray("error")
+
+                                try {
+                                    val jsonObjectError: JSONObject = jsonArray.getJSONObject(0)
+                                    if (jsonObjectError.getInt("statusCode") == 400
+                                    ) {
+//                                        Log.e("getcloseApp", "call close")
+                                        val prefManager = PrefManager(context!!)
+                                        prefManager.clearAll()
+                                        val intent = Intent(context, LoginActivity::class.java)
+                                        intent.flags =
+                                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        context.startActivity(intent)
+
+                                    } else {
+                                        isCalling = false
+                                        return getErrorModel_(jsonObject, modelName)
+
+                                    }
+
+                                } catch (e: java.lang.Exception) {
+                                    e.printStackTrace()
+                                }
+
+
+                            } else {
+                                return null
+                            }
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                        }
+
+                    }
+                } else {
+                    when (modelName) {
+                        "UserModel" -> {
+                            val userModel =
+                                gson.fromJson(jsonObject.toString(), UserModel::class.java)
+                            return userModel
+                        }
+                        "VehicleBrandModel" -> {
+                            val VehicleBrandModel =
+                                gson.fromJson(jsonObject.toString(), VehicleBrandModel::class.java)
+                            return VehicleBrandModel
+                        }
+                        "PatternModel" -> {
+                            val PatternModel =
+                                gson.fromJson(jsonObject.toString(), PatternModel::class.java)
+                            return PatternModel
+                        }
+                        "SizeModel" -> {
+                            val SizeModel =
+                                gson.fromJson(jsonObject.toString(), SizeModel::class.java)
+                            return SizeModel
+                        }
+                        "VehicleMakeModel" -> {
+                            val VehicleMakeModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    VehicleMakeModel::class.java
+                                )
+                            return VehicleMakeModel
+                        }
+                        "VehicleModel" -> {
+                            val VehicleModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    VehicleModel::class.java
+                                )
+                            return VehicleModel
+                        }
+                        "UploadImageModel" -> {
+                            val UploadImageModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    UploadImageModel::class.java
+                                )
+                            return UploadImageModel
+                        }
+                        "AddServiceModel" -> {
+                            val AddServiceModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    AddServiceModel::class.java
+                                )
+                            return AddServiceModel
+                        }
+                        "IssueListModel" -> {
+                            val IssueListModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    IssueListModel::class.java
+                                )
+                            return IssueListModel
+                        }
+                        "OtpModel" -> {
+                            val OtpModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    OtpModel::class.java
+                                )
+                            return OtpModel
+                        }
+                        "ServiceModel" -> {
+                            val ServiceModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    ServiceModel::class.java
+                                )
+                            return ServiceModel
+                        }
+                        "DashboardServiceListModel" -> {
+                            val DashboardServiceListModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    DashboardServiceListModel::class.java
+                                )
+                            return DashboardServiceListModel
+                        }
+
+                        "ServiceListByDateModel" -> {
+                            val ServiceListByDateModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    ServiceListByDateModel::class.java
+                                )
+                            return ServiceListByDateModel
+                        }
+
+                        "ServiceDataByIdModel" -> {
+                            val ServiceDataByIdModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    ServiceDataByIdModel::class.java
+                                )
+                            return ServiceDataByIdModel
+                        }
+                        "CommentListModel" -> {
+                            val CommentListModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    CommentListModel::class.java
+                                )
+                            return CommentListModel
+                        }
+                        "UserInfoModel" -> {
+                            val UserInfoModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    UserInfoModel::class.java
+                                )
+                            return UserInfoModel
+                        }
+                        "BuildingListModel" -> {
+                            val BuildingListModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    BuildingListModel::class.java
+                                )
+                            return BuildingListModel
+                        }
+                        "ReportServiceModel" -> {
+                            val ReportServiceModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    ReportServiceModel::class.java
+                                )
+                            return ReportServiceModel
+                        }
+                        "SaveTokenModel" -> {
+                            val SaveTokenModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    SaveTokenModel::class.java
+                                )
+                            return SaveTokenModel
+                        }
+                        "NotificationModel" -> {
+                            val NotificationModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    NotificationModel::class.java
+                                )
+                            return NotificationModel
+                        }
+                        "NotificationCountModel" -> {
+                            val NotificationCountModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    NotificationCountModel::class.java
+                                )
+                            return NotificationCountModel
+                        }
+                        "ApiUpdatedTimeModel" -> {
+                            val ApiUpdatedTimeModel =
+                                gson.fromJson(
+                                    jsonObject.toString(),
+                                    ApiUpdatedTimeModel::class.java
+                                )
+                            return ApiUpdatedTimeModel
+                        }
+
+
+                        else -> {
+                            return null
+                        }
+
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                return null
+            }
+            return null
+
+        }
+
+        fun getErrorModel_(jsonObject: JSONObject, modelName: String?): Any? {
+            val gson: Gson
+            val gsonBuilder = GsonBuilder()
+            gson = gsonBuilder.create()
+
+            try {
+                when (modelName) {
+                    "UserModel" -> {
+                        val userModel =
+                            gson.fromJson(jsonObject.toString(), UserModel::class.java)
+                        return userModel
+                    }
+                    "VehicleBrandModel" -> {
+                        val VehicleBrandModel =
+                            gson.fromJson(jsonObject.toString(), VehicleBrandModel::class.java)
+                        return VehicleBrandModel
+                    }
+                    "PatternModel" -> {
+                        val PatternModel =
+                            gson.fromJson(jsonObject.toString(), PatternModel::class.java)
+                        return PatternModel
+                    }
+                    "SizeModel" -> {
+                        val SizeModel =
+                            gson.fromJson(jsonObject.toString(), SizeModel::class.java)
+                        return SizeModel
+                    }
+                    "VehicleMakeModel" -> {
+                        val VehicleMakeModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                VehicleMakeModel::class.java
+                            )
+                        return VehicleMakeModel
+                    }
+                    "VehicleModel" -> {
+                        val VehicleModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                VehicleModel::class.java
+                            )
+                        return VehicleModel
+                    }
+                    "UploadImageModel" -> {
+                        val UploadImageModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                UploadImageModel::class.java
+                            )
+                        return UploadImageModel
+                    }
+                    "AddServiceModel" -> {
+                        val AddServiceModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                AddServiceModel::class.java
+                            )
+                        return AddServiceModel
+                    }
+                    "IssueListModel" -> {
+                        val IssueListModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                IssueListModel::class.java
+                            )
+                        return IssueListModel
+                    }
+                    "OtpModel" -> {
+                        val OtpModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                OtpModel::class.java
+                            )
+                        return OtpModel
+                    }
+                    "ServiceModel" -> {
+                        val ServiceModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ServiceModel::class.java
+                            )
+                        return ServiceModel
+                    }
+                    "DashboardServiceListModel" -> {
+                        val DashboardServiceListModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                DashboardServiceListModel::class.java
+                            )
+                        return DashboardServiceListModel
+                    }
+
+                    "ServiceListByDateModel" -> {
+                        val ServiceListByDateModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ServiceListByDateModel::class.java
+                            )
+                        return ServiceListByDateModel
+                    }
+
+                    "ServiceDataByIdModel" -> {
+                        val ServiceDataByIdModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ServiceDataByIdModel::class.java
+                            )
+                        return ServiceDataByIdModel
+                    }
+                    "CommentListModel" -> {
+                        val CommentListModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                CommentListModel::class.java
+                            )
+                        return CommentListModel
+                    }
+                    "UserInfoModel" -> {
+                        val UserInfoModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                UserInfoModel::class.java
+                            )
+                        return UserInfoModel
+                    }
+                    "BuildingListModel" -> {
+                        val BuildingListModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                BuildingListModel::class.java
+                            )
+                        return BuildingListModel
+                    }
+                    "ReportServiceModel" -> {
+                        val ReportServiceModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ReportServiceModel::class.java
+                            )
+                        return ReportServiceModel
+                    }
+                    "SaveTokenModel" -> {
+                        val SaveTokenModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                SaveTokenModel::class.java
+                            )
+                        return SaveTokenModel
+                    }
+                    "NotificationModel" -> {
+                        val NotificationModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                NotificationModel::class.java
+                            )
+                        return NotificationModel
+                    }
+                    "NotificationCountModel" -> {
+                        val NotificationCountModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                NotificationCountModel::class.java
+                            )
+                        return NotificationCountModel
+                    }
+                    "ApiUpdatedTimeModel" -> {
+                        val ApiUpdatedTimeModel =
+                            gson.fromJson(
+                                jsonObject.toString(),
+                                ApiUpdatedTimeModel::class.java
+                            )
+                        return ApiUpdatedTimeModel
+                    }
+
+
+                    else -> {
+                        return null
+                    }
+
+                }
+            } catch (e: java.lang.Exception) {
+
+                e.printStackTrace()
+                return null
+            }
+        }
+
         fun getModelreturn(
             modelName: String?,
             response: Response<ResponseBody>?,
@@ -585,10 +1200,9 @@ class Common {
             val gsonBuilder = GsonBuilder()
             gson = gsonBuilder.create()
 
-            return try {
+            try {
 
                 var resp: String? = null
-
                 if (i == 0) {
                     resp = response?.body()?.string()
                 } else {
@@ -605,7 +1219,7 @@ class Common {
                             showDialogueForWarning(context!!, jsonObjectForce)
                         }
 
-                        return when (modelName) {
+                       return when (modelName) {
 
 
                             "UserModel" -> {
@@ -807,22 +1421,27 @@ class Common {
                                 }
                                 isCalling = true
                                 val jsonArray: JSONArray = jsonObject.getJSONArray("error")
-                                val jsonObjectError: JSONObject = jsonArray.getJSONObject(0)
-                                if (jsonObjectError.has("statusCode") && jsonObjectError.getInt(
-                                        "statusCode"
-                                    ) == 401
-                                ) {
-                                    val prefManager = PrefManager(context!!)
-                                    prefManager.clearAll()
-                                    val intent = Intent(context, LoginActivity::class.java)
-                                    intent.flags =
-                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    context.startActivity(intent)
 
-                                } else {
-                                    isCalling = false
-                                    return getErrorModel(jsonObject, modelName)
+                                try {
+                                    val jsonObjectError: JSONObject = jsonArray.getJSONObject(0)
+                                    if (jsonObjectError.getInt(
+                                            "statusCode"
+                                        ) == 400
+                                    ) {
+                                        val prefManager = PrefManager(context!!)
+                                        prefManager.clearAll()
+                                        val intent = Intent(context, LoginActivity::class.java)
+                                        intent.flags =
+                                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        context.startActivity(intent)
 
+                                    } else {
+                                        isCalling = false
+                                        return getErrorModel(jsonObject, modelName)
+
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
                                 }
 
 
@@ -841,6 +1460,7 @@ class Common {
                 e.printStackTrace()
                 return null
             }
+            return null
         }
 
         fun createImageFile(context: Context): File? {

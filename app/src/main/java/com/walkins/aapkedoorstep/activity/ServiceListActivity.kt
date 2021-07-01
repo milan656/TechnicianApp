@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,6 @@ import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.walkins.aapkedoorstep.DB.DBClass
 import com.walkins.aapkedoorstep.DB.ServiceListModelClass
 import com.walkins.aapkedoorstep.R
@@ -31,22 +31,24 @@ import com.walkins.aapkedoorstep.common.onClickAdapter
 import com.walkins.aapkedoorstep.common.showShortToast
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
-import com.walkins.aapkedoorstep.viewmodel.LoginActivityViewModel
+import com.walkins.aapkedoorstep.repository.LoginRepository
 import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
+import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.coroutines.coroutineContext
 
 
 @SuppressLint("SetTextI18n")
 class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
     private lateinit var mDb: DBClass
     private var loginViewModel: LoginActivityViewModel? = null
+    private lateinit var loginRepo: LoginRepository
+    private lateinit var loginViewModelFactory: LoginViewModelFactory
     private var serviceViewModel: ServiceViewModel? = null
     private var prefManager: PrefManager? = null
     private var llSkipped: LinearLayout? = null
@@ -96,7 +98,9 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
         serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         prefManager = PrefManager(this)
         mDb = DBClass.getInstance(this)
-        loginViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel::class.java)
+        loginRepo = LoginRepository()
+        loginViewModelFactory = LoginViewModelFactory(loginRepo)
+        loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
         init()
 
         val diff = Common.dateDifference(prefManager?.getAccessTokenExpireDate()!!)
@@ -830,7 +834,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
             "Basic ZG9vcnN0ZXA6MTIz", "refresh_token", prefManager?.getRefreshToken()
         )
 
-        loginViewModel?.getLoginData()?.observe(this, Observer {
+        loginViewModel?.userModelData?.observe(this, Observer {
             if (it != null) {
                 if (it.success) {
                     if (it.accessToken != null && !it.accessToken.equals("")) {

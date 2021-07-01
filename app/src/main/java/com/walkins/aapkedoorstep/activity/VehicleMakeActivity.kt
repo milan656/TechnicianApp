@@ -26,14 +26,12 @@ import com.walkins.aapkedoorstep.common.TyreConfigClass
 import com.walkins.aapkedoorstep.common.TyreDetailCommonClass
 import com.walkins.aapkedoorstep.common.TyreKey
 import com.walkins.aapkedoorstep.common.onClickAdapter
-import com.walkins.aapkedoorstep.viewmodel.WarrantyViewModel
 
 @SuppressLint("SetTextI18n")
 class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickListener {
 
     private lateinit var prefManager: PrefManager
     private var vehicleBrandModel: VehicleBrandModel? = null
-    private lateinit var warrantyViewModel: WarrantyViewModel
     private var adapter: VehicleMakeAdapterNew? = null
     private var gridviewRecycMake_: RecyclerView? = null
     private var ivBack: ImageView? = null
@@ -65,7 +63,6 @@ class VehicleMakeActivity : AppCompatActivity(), onClickAdapter, View.OnClickLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_make)
         prefManager = PrefManager(this)
-        warrantyViewModel = ViewModelProviders.of(this).get(WarrantyViewModel::class.java)
         mDb = DBClass.getInstance(applicationContext)
         init()
     }

@@ -2,42 +2,26 @@ package com.walkins.aapkedoorstep.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.lifecycle.ViewModelProviders
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
-import com.example.technician.common.RetrofitCommonClass
-import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.jkadvantage.model.vehicleBrandModel.VehicleBrandModel
 import com.walkins.aapkedoorstep.DB.DBClass
-import com.walkins.aapkedoorstep.DB.VehicleMakeModelClass
 import com.walkins.aapkedoorstep.DB.VehiclePatternModelClass
 import com.walkins.aapkedoorstep.R
-import com.walkins.aapkedoorstep.adapter.VehicleMakeAdapterNew
 import com.walkins.aapkedoorstep.adapter.VehiclePatternAdapter
 import com.walkins.aapkedoorstep.common.*
-import com.walkins.aapkedoorstep.model.login.patternmodel.PatternData
 import com.walkins.aapkedoorstep.model.login.patternmodel.PatternModel
-import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
-import com.walkins.aapkedoorstep.networkApi.WarrantyApi
-import com.walkins.aapkedoorstep.viewmodel.WarrantyViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -46,7 +30,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
 
     private lateinit var prefManager: PrefManager
     private var patternModel: PatternModel? = null
-    private lateinit var warrantyViewModel: WarrantyViewModel
     private var adapter: VehiclePatternAdapter? = null
     private var gridviewRecycModel: RecyclerView? = null
     private var ivBack: ImageView? = null
@@ -75,7 +58,6 @@ class VehiclePatternActivity : AppCompatActivity(), onClickAdapter, View.OnClick
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_model)
         prefManager = PrefManager(this)
-        warrantyViewModel = ViewModelProviders.of(this).get(WarrantyViewModel::class.java)
         mDb = DBClass.getInstance(applicationContext)
         init()
     }
