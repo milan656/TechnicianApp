@@ -21,10 +21,10 @@ import kotlinx.coroutines.withContext
 
 class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
 
-    private var addServiceModel: MutableLiveData<AddServiceModel>? = MutableLiveData()
-    private var dashboardServiceListModel: MutableLiveData<DashboardServiceListModel>? = null
-    private var serviceListByDateModel: MutableLiveData<ServiceListByDateModel>? = null
-    private var reportHistoryModel: MutableLiveData<ReportServiceModel>? = null
+    var addServiceModel: MutableLiveData<AddServiceModel>? = MutableLiveData()
+    var dashboardServiceListModel: MutableLiveData<DashboardServiceListModel>? = null
+    var serviceListByDateModel: MutableLiveData<ServiceListByDateModel>? = null
+    var reportHistoryModel: MutableLiveData<ReportServiceModel>? = null
 
     fun callApiAddService(
         jsonObject: JsonObject,
@@ -52,16 +52,22 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
         access_token: String,
         context: Context,
     ) {
-        addServiceModel = serviceRepo?.UpdateService(
-            jsonObject,
-            access_token,
-            context
-        )
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = serviceRepo.UpdateService(
+                jsonObject,
+                access_token,
+                context
+            )
+            withContext(Dispatchers.Main) {
+                if (res.isSuccessful) {
+                    addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 0, context) as AddServiceModel?
+                } else {
+                    addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 1, context) as AddServiceModel?
+                }
+            }
+        }
     }
 
-    fun getAddService(): LiveData<AddServiceModel>? {
-        return addServiceModel
-    }
 
     fun callApiDashboardService(
         date: String,
@@ -85,16 +91,21 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
         access_token: String,
         context: Context,
     ) {
-        serviceListByDateModel = serviceRepo?.getServiceByDate(
-            date,
-            building_id,
-            access_token,
-            context
-        )
-    }
-
-    fun getServiceByDate(): LiveData<ServiceListByDateModel>? {
-        return serviceListByDateModel
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = serviceRepo.getServiceByDate(
+                date,
+                building_id,
+                access_token,
+                context
+            )
+            withContext(Dispatchers.Main) {
+                if (res.isSuccessful) {
+                    serviceListByDateModel?.value = Common.getModelReturn_("ServiceListByDateModel", res, 0, context) as ServiceListByDateModel?
+                } else {
+                    serviceListByDateModel?.value = Common.getModelReturn_("ServiceListByDateModel", res, 1, context) as ServiceListByDateModel?
+                }
+            }
+        }
     }
 
     fun callApiReportList(
@@ -102,7 +113,7 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
         access_token: String,
         context: Context,
     ) {
-        reportHistoryModel = serviceRepo?.callApiReportService(jsonObject,
+        reportHistoryModel = serviceRepo.callApiReportService(jsonObject,
             access_token,
             context
         )

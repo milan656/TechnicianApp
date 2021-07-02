@@ -59,11 +59,13 @@ import com.walkins.aapkedoorstep.model.login.service.ServiceModelData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.repository.LoginRepository
+import com.walkins.aapkedoorstep.repository.ServiceRepo
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
-import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModelFactory
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
@@ -102,7 +104,10 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
     var skipList: ArrayList<IssueResolveModel>? = null
 
     var imagePickerDialog: BottomSheetDialog? = null
-    var serviceViewModel: ServiceViewModel? = null
+    private var serviceViewModel: ServiceViewModel? = null
+    private lateinit var serviceRepo: ServiceRepo
+    private lateinit var serviceViewModelFactory: ServiceViewModelFactory
+
     private var ivInfoAddService: ImageView? = null
     private var ivAddServices: ImageView? = null
     private var ivAddTyreConfig: ImageView? = null
@@ -244,7 +249,11 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
         setContentView(R.layout.activity_add_service_details)
         mDb = DBClass.getInstance(this)
         prefManager = PrefManager(this)
-        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+
+        serviceRepo = ServiceRepo()
+        serviceViewModelFactory = ServiceViewModelFactory(serviceRepo)
+        serviceViewModel = ViewModelProvider(this, serviceViewModelFactory).get(ServiceViewModel::class.java)
+
         loginRepo = LoginRepository()
         loginViewModelFactory = LoginViewModelFactory(loginRepo)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginActivityViewModel::class.java)
@@ -2908,7 +2917,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                         this
                     )
 
-                    serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
+                    serviceViewModel?.addServiceModel?.observe(this, androidx.lifecycle.Observer {
                         if (it != null) {
                             if (it.success) {
 

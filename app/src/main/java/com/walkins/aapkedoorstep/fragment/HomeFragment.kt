@@ -40,9 +40,11 @@ import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceLis
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.networkApi.ServiceApi
 import com.walkins.aapkedoorstep.repository.CommonRepo
-import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
+import com.walkins.aapkedoorstep.repository.ServiceRepo
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -74,6 +76,9 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     var dashboardServiceListModel: DashboardServiceListModel? = null
     private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
+    private lateinit var serviceRepo: ServiceRepo
+    private lateinit var serviceViewModelFactory: ServiceViewModelFactory
+
     private var prefManager: PrefManager? = null
     private lateinit var commonRepo: CommonRepo
     private lateinit var commonViewModelFactory: CommonViewModelFactory
@@ -112,11 +117,15 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+
         activity = getActivity() as MainActivity?
         commonRepo = CommonRepo()
         commonViewModelFactory = CommonViewModelFactory(commonRepo)
         commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
+
+        serviceRepo = ServiceRepo()
+        serviceViewModelFactory = ServiceViewModelFactory(serviceRepo)
+        serviceViewModel = ViewModelProvider(this, serviceViewModelFactory).get(ServiceViewModel::class.java)
 
         mDb = context?.let { DBClass.getInstance(it) }!!
 
@@ -632,7 +641,18 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     private fun getServiceList(buildingUuid: String, date: String) {
 
-        val serviceApi = RetrofitCommonClass.createService(ServiceApi::class.java)
+        getActivity()?.let {
+            serviceViewModel?.callApiServiceByDate(activity?.dateForWebservice_2(date)!!, buildingUuid,
+                prefManager?.getAccessToken()!!,it
+            )
+        }
+
+        serviceViewModel?.serviceListByDateModel?.observe(this, {
+            if (it.success){
+                saveServiceList(it, buildingUuid)
+            }
+        })
+        /*val serviceApi = RetrofitCommonClass.createService(ServiceApi::class.java)
 
         var call: Call<ResponseBody>? = null
         call = serviceApi.getServiceByDate(activity?.dateForWebservice_2(date)!!, buildingUuid,
@@ -657,7 +677,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
-        })
+        })*/
     }
 
     private fun saveServiceList(serviceListModel: ServiceListByDateModel, buildingUuid: String) {

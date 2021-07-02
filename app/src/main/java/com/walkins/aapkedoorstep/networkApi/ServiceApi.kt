@@ -15,10 +15,10 @@ interface ServiceApi {
     ): Response<ResponseBody>
 
     @POST("v1/user/update-skip-service")
-    fun updateService(
+    suspend fun updateService(
         @Body jsonObject: JsonObject,
         @Header("Authorization") authorization: String
-    ): Call<ResponseBody>
+    ): Response<ResponseBody>
 
     @GET("v1/user/get-service-count-by-date")
     fun getDashboardService(
@@ -27,10 +27,10 @@ interface ServiceApi {
     ): Call<ResponseBody>
 
     @GET("v1/user/get-service-by-date")
-    fun getServiceByDate(
+    suspend fun getServiceByDate(
         @Query("date") date: String,@Query("building_id") building_id:String,
         @Header("Authorization") authorization: String
-    ): Call<ResponseBody>
+    ): Response<ResponseBody>
 
     @POST("v1/user/get-technician-report-detail")
     fun getReportService(

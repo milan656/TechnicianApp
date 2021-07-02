@@ -36,10 +36,12 @@ import com.walkins.aapkedoorstep.model.login.makemodel.VehicleModelData
 import com.walkins.aapkedoorstep.model.login.service.ServiceModel
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListData
 import com.walkins.aapkedoorstep.repository.CommonRepo
+import com.walkins.aapkedoorstep.repository.ServiceRepo
 import com.walkins.aapkedoorstep.viewmodel.MakeModelViewModel
-import com.walkins.aapkedoorstep.viewmodel.ServiceViewModel
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -64,6 +66,9 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private val listClickedModel = ArrayList<String>()
     private var adapter: AutoSuggestProductAdapter? = null
     private var serviceViewModel: ServiceViewModel? = null
+    private lateinit var serviceRepo: ServiceRepo
+    private lateinit var serviceViewModelFactory: ServiceViewModelFactory
+
     private lateinit var commonRepo: CommonRepo
     private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
@@ -119,7 +124,11 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_report, container, false)
         prefManager = context?.let { PrefManager(it) }!!
         makeModelViewModel = ViewModelProviders.of(this).get(MakeModelViewModel::class.java)
-        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+
+        serviceRepo = ServiceRepo()
+        serviceViewModelFactory = ServiceViewModelFactory(serviceRepo)
+        serviceViewModel = ViewModelProvider(this, serviceViewModelFactory).get(ServiceViewModel::class.java)
+
         commonRepo = CommonRepo()
         commonViewModelFactory = CommonViewModelFactory(commonRepo)
         commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)

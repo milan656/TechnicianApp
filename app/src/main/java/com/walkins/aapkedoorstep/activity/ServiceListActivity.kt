@@ -32,9 +32,11 @@ import com.walkins.aapkedoorstep.common.showShortToast
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateData
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.repository.LoginRepository
+import com.walkins.aapkedoorstep.repository.ServiceRepo
 import com.walkins.aapkedoorstep.viewmodel.login.LoginActivityViewModel
 import com.walkins.aapkedoorstep.viewmodel.login.LoginViewModelFactory
 import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,6 +52,8 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private lateinit var loginRepo: LoginRepository
     private lateinit var loginViewModelFactory: LoginViewModelFactory
     private var serviceViewModel: ServiceViewModel? = null
+    private lateinit var serviceRepo: ServiceRepo
+    private lateinit var serviceViewModelFactory: ServiceViewModelFactory
     private var prefManager: PrefManager? = null
     private var llSkipped: LinearLayout? = null
     private var llCompleted: LinearLayout? = null
@@ -95,7 +99,11 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_list)
-        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+
+        serviceRepo = ServiceRepo()
+        serviceViewModelFactory = ServiceViewModelFactory(serviceRepo)
+        serviceViewModel = ViewModelProvider(this, serviceViewModelFactory).get(ServiceViewModel::class.java)
+
         prefManager = PrefManager(this)
         mDb = DBClass.getInstance(this)
         loginRepo = LoginRepository()
@@ -346,11 +354,10 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
 
         Common.showLoader(this)
         serviceViewModel?.callApiServiceByDate(selectedDate, building_uuid, prefManager?.getAccessToken()!!, this)
-        serviceViewModel?.getServiceByDate()?.observe(this, Observer {
+        serviceViewModel?.serviceListByDateModel?.observe(this, {
             Common.hideLoader()
             if (it != null) {
                 if (it.success) {
-
                     serviceListDataModel = it
 
                     if (it.data != null) {
@@ -394,8 +401,6 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
                                 this.let { ServicesListAdpater(arrayList.filter { it.status.equals(skipped) } as MutableList<ServiceListByDateData>, it, this, serviceStatus, isAddServiceEnable) }
                             tvSkipped?.text = "Skipped - ${arrayList.size}"
                         }
-
-
 
                         tvNoServiceData?.visibility = View.GONE
                         if (arrayList.size == 0) {

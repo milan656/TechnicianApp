@@ -37,9 +37,11 @@ import com.walkins.aapkedoorstep.model.login.IssueResolveModel
 import com.walkins.aapkedoorstep.model.login.comment.CommentListData
 import com.walkins.aapkedoorstep.model.login.servicemodel.servicedata.ServiceDataByIdModel
 import com.walkins.aapkedoorstep.repository.CommonRepo
+import com.walkins.aapkedoorstep.repository.ServiceRepo
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModelFactory
 import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModel
+import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModelFactory
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,6 +52,8 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
     private var skipList: ArrayList<IssueResolveModel>? = null
     private var commentList: ArrayList<CommentListData>? = ArrayList()
     private var serviceViewModel: ServiceViewModel? = null
+    private lateinit var serviceRepo: ServiceRepo
+    private lateinit var serviceViewModelFactory: ServiceViewModelFactory
     private var serviceDateByIdModel: ServiceDataByIdModel? = null
     private var tvChange: TextView? = null
     private var ivBack: ImageView? = null
@@ -87,11 +91,15 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_detail)
+
         commonRepo = CommonRepo()
         commonViewModelFactory = CommonViewModelFactory(commonRepo)
         commonViewModel = ViewModelProvider(this, commonViewModelFactory).get(CommonViewModel::class.java)
 
-        serviceViewModel = ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+        serviceRepo = ServiceRepo()
+        serviceViewModelFactory = ServiceViewModelFactory(serviceRepo)
+        serviceViewModel = ViewModelProvider(this, serviceViewModelFactory).get(ServiceViewModel::class.java)
+
         prefManager = PrefManager(this)
         init()
 
@@ -337,7 +345,7 @@ class SkippedServiceDetailActivity : AppCompatActivity(), View.OnClickListener, 
                 )
             }
 
-            serviceViewModel?.getAddService()?.observe(this, {
+            serviceViewModel?.addServiceModel?.observe(this, {
                 if (it != null) {
                     if (it.success) {
                         Common.hideLoader()

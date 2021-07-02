@@ -88,7 +88,12 @@ class ServiceRepo {
     }
 */
 
-    fun UpdateService(
+    suspend fun UpdateService(
+        jsonObject: JsonObject,
+        access_token: String, context: Context,
+    ):Response<ResponseBody>  = RetrofitBuilder.createService(ServiceApi::class.java).updateService(jsonObject, access_token)
+
+    /*fun UpdateService(
         jsonObject: JsonObject,
         access_token: String, context: Context,
     ): MutableLiveData<AddServiceModel> {
@@ -129,7 +134,7 @@ class ServiceRepo {
             }
         })
         return servicedata
-    }
+    }*/
 
     fun getDashboardService(
         date: String,
@@ -174,7 +179,13 @@ class ServiceRepo {
         return servicedata
     }
 
-    fun getServiceByDate(
+    suspend fun getServiceByDate(
+        date: String,
+        building_id: String,
+        access_token: String, context: Context,
+    ):Response<ResponseBody> = RetrofitBuilder.createService(ServiceApi::class.java).getServiceByDate(date, building_id, access_token)
+
+    /*fun getServiceByDate(
         date: String,
         building_id: String,
         access_token: String, context: Context,
@@ -216,7 +227,7 @@ class ServiceRepo {
             }
         })
         return servicedata
-    }
+    }*/
 
     fun callApiReportService(
         jsonObject: JsonObject,
