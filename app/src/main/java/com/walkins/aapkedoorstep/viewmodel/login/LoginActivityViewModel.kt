@@ -46,9 +46,17 @@ class LoginActivityViewModel(private val loginRepository: LoginRepository) : Vie
                 androidOS)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    userModelData?.value = Common.getModelReturn_("UserModel", res, 0, context) as UserModel?
+                    try {
+                        userModelData?.value = Common.getModelReturn_("UserModel", res, 0, context) as UserModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    userModelData?.value = Common.getModelReturn_("UserModel", res, 1, context) as UserModel?
+                    try {
+                        userModelData?.value = Common.getModelReturn_("UserModel", res, 1, context) as UserModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -62,9 +70,17 @@ class LoginActivityViewModel(private val loginRepository: LoginRepository) : Vie
             val res = loginRepository.loginUserTwo(jsonObject)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    otpModel?.value = Common.getModelReturn_("OtpModel", res, 0, context) as OtpModel?
+                    try {
+                        otpModel?.value = Common.getModelReturn_("OtpModel", res, 0, context) as OtpModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    otpModel?.value = Common.getModelReturn_("OtpModel", res, 1, context) as OtpModel?
+                    try {
+                        otpModel?.value = Common.getModelReturn_("OtpModel", res, 1, context) as OtpModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }

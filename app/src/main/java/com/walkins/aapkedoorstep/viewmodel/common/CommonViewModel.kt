@@ -43,9 +43,19 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
                 accessToken)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    issueListModel?.value = Common.getModelReturn_("IssueListModel", res, 0, context) as IssueListModel?
+                    try {
+                        issueListModel?.value = Common.getModelReturn_("IssueListModel", res, 0, context) as IssueListModel?
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+
                 } else {
-                    issueListModel?.value = Common.getModelReturn_("IssueListModel", res, 1, context) as IssueListModel?
+
+                    try {
+                        issueListModel?.value = Common.getModelReturn_("IssueListModel", res, 1, context) as IssueListModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -60,9 +70,17 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
             val res = commonRepo.getService(context, accessToken)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    serviceModel?.value = Common.getModelReturn_("ServiceModel", res, 0, context) as ServiceModel?
+                    try {
+                        serviceModel?.value = Common.getModelReturn_("ServiceModel", res, 0, context) as ServiceModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    serviceModel?.value = Common.getModelReturn_("ServiceModel", res, 1, context) as ServiceModel?
+                    try {
+                        serviceModel?.value = Common.getModelReturn_("ServiceModel", res, 1, context) as ServiceModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -76,9 +94,17 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
             val res = commonRepo.getCommentList(context, accessToken)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    commentListModel?.value = Common.getModelReturn_("CommentListModel", res, 0, context) as CommentListModel?
+                    try {
+                        commentListModel?.value = Common.getModelReturn_("CommentListModel", res, 0, context) as CommentListModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    commentListModel?.value = Common.getModelReturn_("CommentListModel", res, 1, context) as CommentListModel?
+                    try {
+                        commentListModel?.value = Common.getModelReturn_("CommentListModel", res, 1, context) as CommentListModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -92,9 +118,17 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
             val res = commonRepo.getNotificationList(context, accessToken)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    notificationModel?.value = Common.getModelReturn_("NotificationModel", res, 0, context) as NotificationModel?
+                    try {
+                        notificationModel?.value = Common.getModelReturn_("NotificationModel", res, 0, context) as NotificationModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    notificationModel?.value = Common.getModelReturn_("NotificationModel", res, 1, context) as NotificationModel?
+                    try {
+                        notificationModel?.value = Common.getModelReturn_("NotificationModel", res, 1, context) as NotificationModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -108,9 +142,17 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
             val res = commonRepo.getNotificationCount(context, accessToken)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    notificationCountModel?.value = Common.getModelReturn_("NotificationCountModel", res, 0, context) as NotificationCountModel?
+                    try {
+                        notificationCountModel?.value = Common.getModelReturn_("NotificationCountModel", res, 0, context) as NotificationCountModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    notificationCountModel?.value = Common.getModelReturn_("NotificationCountModel", res, 1, context) as NotificationCountModel?
+                    try {
+                        notificationCountModel?.value = Common.getModelReturn_("NotificationCountModel", res, 1, context) as NotificationCountModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -125,9 +167,17 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
             val res = commonRepo.getServiceById(jsonObject, context, accessToken)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    serviceByIdModel?.value = Common.getModelReturn_("ServiceDataByIdModel", res, 0, context) as ServiceDataByIdModel?
+                    try {
+                        serviceByIdModel?.value = Common.getModelReturn_("ServiceDataByIdModel", res, 0, context) as ServiceDataByIdModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    serviceByIdModel?.value = Common.getModelReturn_("ServiceDataByIdModel", res, 1, context) as ServiceDataByIdModel?
+                    try {
+                        serviceByIdModel?.value = Common.getModelReturn_("ServiceDataByIdModel", res, 1, context) as ServiceDataByIdModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -141,9 +191,17 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
             val res = commonRepo.getUserInfo(context, accessToken)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    userInfo?.value = Common.getModelReturn_("UserInfoModel", res, 0, context) as UserInfoModel?
+                    try {
+                        userInfo?.value = Common.getModelReturn_("UserInfoModel", res, 0, context) as UserInfoModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    userInfo?.value = Common.getModelReturn_("UserInfoModel", res, 1, context) as UserInfoModel?
+                    try {
+                        userInfo?.value = Common.getModelReturn_("UserInfoModel", res, 1, context) as UserInfoModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -151,7 +209,7 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
 
     fun callApiLogoutFromAll(accessToken: String, context: Context) {
         commonRepo = CommonRepo().getInstance()
-        userInfo = commonRepo?.callApiLogoutFromAll(context, accessToken)
+        userInfo = commonRepo.callApiLogoutFromAll(context, accessToken)
 
     }
 
@@ -161,9 +219,17 @@ class CommonViewModel(private var commonRepo: CommonRepo) : ViewModel() {
             val res =commonRepo.saveTokenToDatabase(jsonObject, accessToken, context)
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    saveToken?.value = Common.getModelReturn_("SaveTokenModel", res, 0, context) as SaveTokenModel?
+                    try {
+                        saveToken?.value = Common.getModelReturn_("SaveTokenModel", res, 0, context) as SaveTokenModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    saveToken?.value = Common.getModelReturn_("SaveTokenModel", res, 1, context) as SaveTokenModel?
+                    try {
+                        saveToken?.value = Common.getModelReturn_("SaveTokenModel", res, 1, context) as SaveTokenModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }

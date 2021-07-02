@@ -39,9 +39,17 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
             )
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 0, context) as AddServiceModel?
+                    try {
+                        addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 0, context) as AddServiceModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 1, context) as AddServiceModel?
+                    try {
+                        addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 1, context) as AddServiceModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -60,9 +68,17 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
             )
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 0, context) as AddServiceModel?
+                    try {
+                        addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 0, context) as AddServiceModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 1, context) as AddServiceModel?
+                    try {
+                        addServiceModel?.value = Common.getModelReturn_("AddServiceModel", res, 1, context) as AddServiceModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -120,9 +136,17 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
             )
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    serviceListByDateModel?.value = Common.getModelReturn_("ServiceListByDateModel", res, 0, context) as ServiceListByDateModel?
+                    try {
+                        serviceListByDateModel?.value = Common.getModelReturn_("ServiceListByDateModel", res, 0, context) as ServiceListByDateModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    serviceListByDateModel?.value = Common.getModelReturn_("ServiceListByDateModel", res, 1, context) as ServiceListByDateModel?
+                    try {
+                        serviceListByDateModel?.value = Common.getModelReturn_("ServiceListByDateModel", res, 1, context) as ServiceListByDateModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -145,9 +169,17 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
             )
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
-                    reportHistoryModel?.value = Common.getModelReturn_("ReportServiceModel", res, 0, context) as ReportServiceModel?
+                    try {
+                        reportHistoryModel?.value = Common.getModelReturn_("ReportServiceModel", res, 0, context) as ReportServiceModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
-                    reportHistoryModel?.value = Common.getModelReturn_("ReportServiceModel", res, 1, context) as ReportServiceModel?
+                    try {
+                        reportHistoryModel?.value = Common.getModelReturn_("ReportServiceModel", res, 1, context) as ReportServiceModel?
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
