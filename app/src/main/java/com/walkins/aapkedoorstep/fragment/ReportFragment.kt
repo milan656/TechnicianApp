@@ -349,11 +349,12 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             Common.showLoader(it)
 
             serviceViewModel?.callApiReportList(jsonObject_, prefManager.getAccessToken()!!, it)
-            serviceViewModel?.getReportservice()?.observe(it, androidx.lifecycle.Observer {
+            serviceViewModel?.getReportservice()?.observe(it, {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
 
+                        Log.e("TAG", "getDashboardService: " + it.data)
                         if (b) {
                             historyDataList.clear()
                         }
@@ -465,6 +466,7 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             reportRecycView?.visibility = View.GONE
                         }
                     } else {
+                        Log.e("TAG", "getDashboardService: " + it.success)
                         reportRecycView?.visibility = View.GONE
                     }
                 } else {

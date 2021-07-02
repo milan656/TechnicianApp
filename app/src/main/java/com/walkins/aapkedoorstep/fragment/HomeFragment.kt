@@ -287,10 +287,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         activity?.let {
             Common.showLoader(it)
             serviceViewModel?.callApiDashboardService(displayDate, prefManager?.getAccessToken()!!, it)
-            serviceViewModel?.getDashboardService()?.observe(it, androidx.lifecycle.Observer {
+            serviceViewModel?.dashboardServiceListModel?.observe(it, androidx.lifecycle.Observer {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
+
+                        Log.e("TAG", "getDashboardService: " + it.data)
 
                         Log.e("getdataa", "" + it.data)
                         dashboardModel = it
@@ -349,6 +351,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         mAdapter?.notifyDataSetChanged()
 
                     } else {
+                        Log.e("TAG", "getDashboardService: " + it.success)
                         relNoData?.visibility = View.VISIBLE
                         homeRecycView?.visibility = View.GONE
                         if (selectedDate.equals("")) {

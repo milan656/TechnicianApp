@@ -136,6 +136,7 @@ class ServiceRepo {
         return servicedata
     }*/
 
+
     fun getDashboardService(
         date: String,
         access_token: String, context: Context,
@@ -230,7 +231,12 @@ class ServiceRepo {
         return servicedata
     }
 
-    fun callApiReportService(
+    suspend fun callApiReportService(
+        jsonObject: JsonObject,
+        access_token: String, context: Context,
+    ):Response<ResponseBody> = RetrofitBuilder.createService(ServiceApi::class.java).getReportService(jsonObject, access_token)
+
+/*    fun callApiReportService(
         jsonObject: JsonObject,
         access_token: String, context: Context,
     ): MutableLiveData<ReportServiceModel> {
@@ -271,6 +277,6 @@ class ServiceRepo {
             }
         })
         return servicedata
-    }
+    }*/
 
 }

@@ -22,9 +22,9 @@ import kotlinx.coroutines.withContext
 class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
 
     var addServiceModel: MutableLiveData<AddServiceModel>? = MutableLiveData()
-    var dashboardServiceListModel: MutableLiveData<DashboardServiceListModel>? = null
-    var serviceListByDateModel: MutableLiveData<ServiceListByDateModel>? = null
-    var reportHistoryModel: MutableLiveData<ReportServiceModel>? = null
+    var dashboardServiceListModel: MutableLiveData<DashboardServiceListModel>? = MutableLiveData()
+    var serviceListByDateModel: MutableLiveData<ServiceListByDateModel>? = MutableLiveData()
+    var reportHistoryModel: MutableLiveData<ReportServiceModel>? = MutableLiveData()
 
     fun callApiAddService(
         jsonObject: JsonObject,
@@ -74,11 +74,13 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
         access_token: String,
         context: Context,
     ) {
-        dashboardServiceListModel = serviceRepo?.getDashboardService(
+        dashboardServiceListModel = serviceRepo.getDashboardService(
             date,
             access_token,
             context
         )
+
+
     }
 
     fun getDashboardService(): LiveData<DashboardServiceListModel>? {
@@ -131,10 +133,24 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
         access_token: String,
         context: Context,
     ) {
-        reportHistoryModel = serviceRepo.callApiReportService(jsonObject,
+        /*reportHistoryModel = serviceRepo.callApiReportService(jsonObject,
             access_token,
             context
-        )
+        )*/
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = serviceRepo.callApiReportService(jsonObject,
+                access_token,
+                context
+            )
+            withContext(Dispatchers.Main) {
+                if (res.isSuccessful) {
+                    reportHistoryModel?.value = Common.getModelReturn_("ReportServiceModel", res, 0, context) as ReportServiceModel?
+                } else {
+                    reportHistoryModel?.value = Common.getModelReturn_("ReportServiceModel", res, 1, context) as ReportServiceModel?
+                }
+            }
+        }
     }
 
     fun getReportservice(): LiveData<ReportServiceModel>? {

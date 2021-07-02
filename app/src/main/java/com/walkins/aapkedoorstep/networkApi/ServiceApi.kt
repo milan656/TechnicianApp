@@ -39,9 +39,9 @@ interface ServiceApi {
     ): Response<ResponseBody>
 
     @POST("v1/user/get-technician-report-detail")
-    fun getReportService(
+    suspend fun getReportService(
         @Body jsonObject: JsonObject,
         @Header("Authorization") authorization: String
-    ): Call<ResponseBody>
+    ): Response<ResponseBody>
 
 }
