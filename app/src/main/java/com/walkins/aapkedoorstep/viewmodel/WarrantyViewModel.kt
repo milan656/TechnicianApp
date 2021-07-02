@@ -45,7 +45,6 @@ class WarrantyViewModel : ViewModel() {
         warrantyRepository = WarrantyRepository().getInstance()
         sizeModel =
             warrantyRepository!!.getVehicleSize(accessToken, context)
-
     }
 
     fun getVehicleSize(): LiveData<SizeModel>? {
