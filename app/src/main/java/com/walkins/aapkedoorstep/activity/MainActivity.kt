@@ -182,6 +182,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             if (it != null) {
                 if (it.success) {
 
+                    Log.e("TAG", "getIssueList: " + it.data)
                     issueResolveArray?.clear()
                     if (it.data != null && it.data.size > 0) {
                         for (i in it.data.indices) {
@@ -196,6 +197,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     prefManager?.saveIssueList(TyreConfigClass.issueList, issueResolveArray!!)
                     Common.hideLoader()
                 } else {
+                    Log.e("TAG", "getIssueListError: " + it.error[0].statusCode)
                     Common.hideLoader()
                 }
             } else {
@@ -210,6 +212,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             if (it != null) {
                 if (it.success) {
 
+                    Log.e("TAG", "getCommentList: " + it.data)
                     commentModel = it
                     commentList?.clear()
                     commentList?.addAll(it.data)
@@ -217,6 +220,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     Common.hideLoader()
 
                 } else {
+                    Log.e("TAG", "getCommentList: " + it.error[0])
                     Common.hideLoader()
                     try {
                         showShortToast(it.error.get(0).message, this)
@@ -238,6 +242,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
             if (it != null) {
                 if (it.success) {
 
+                    Log.e("TAG", "getServiceList: " + it.data)
                     if (it.data.size > 0) {
                         serviceList?.clear()
                         serviceList?.addAll(it.data)
@@ -246,6 +251,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                     }
 
                 } else {
+                    Log.e("TAG", "getServiceListError: " + it.success)
                     try {
                         showShortToast(it.error.get(0).message, this)
                     } catch (e: Exception) {
@@ -267,6 +273,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
+                        Log.e("TAG", "getNotificationCount: " + it.data)
                         notiCount = it.data.count
 //                        notiCount = 10
                         if (notiCount > 0) {
@@ -276,6 +283,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, onClickAdapter {
                             ivNotification?.setImageDrawable(this.resources.getDrawable(R.drawable.ic_notification_icon))
                         }
                     } else {
+                        Log.e("TAG", "getNotificationCount: " + it.error)
                         if (it.error != null) {
                             if (it.error.get(0).message != null) {
 

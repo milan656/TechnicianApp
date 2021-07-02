@@ -355,7 +355,7 @@ class BackgroundService : Service() {
 
     }
 
-    private fun fetchIssueList() {
+   /* private fun fetchIssueList() {
         val commonApi = RetrofitCommonClass.createService(CommonApi::class.java)
 
         var call: Call<ResponseBody>? = null
@@ -384,7 +384,7 @@ class BackgroundService : Service() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
         })
-    }
+    }*/
 
     private fun fetchSize() {
         val warrantyApi = RetrofitCommonClass.createService(WarrantyApi::class.java)

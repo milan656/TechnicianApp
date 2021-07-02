@@ -326,10 +326,12 @@ class ReportFragment : Fragment(), onClickAdapter, View.OnClickListener {
             commonViewModel?.serviceModel?.observe(it, androidx.lifecycle.Observer {
                 if (it != null) {
                     if (it.success) {
+                        Log.e("TAG", "getServiceList: " + it.data)
 
                         serviceModel = it
 
                     } else {
+                        Log.e("TAG", "getServiceList: " + it.error[0].statusCode)
                         if (it.error != null && it.error?.get(0)?.message != null) {
                             Toast.makeText(context, "" + it.error.get(0).message, Toast.LENGTH_SHORT).show()
                         }

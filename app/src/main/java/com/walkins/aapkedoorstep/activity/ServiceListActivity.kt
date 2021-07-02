@@ -353,7 +353,7 @@ class ServiceListActivity : AppCompatActivity(), View.OnClickListener, onClickAd
     private fun getServiceListByDate() {
 
         Common.showLoader(this)
-        serviceViewModel?.callApiServiceByDate(selectedDate, building_uuid, prefManager?.getAccessToken()!!, this)
+        serviceViewModel?.callApiServiceByDate_(selectedDate, building_uuid, prefManager?.getAccessToken()!!, this)
         serviceViewModel?.serviceListByDateModel?.observe(this, {
             Common.hideLoader()
             if (it != null) {

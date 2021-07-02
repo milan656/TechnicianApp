@@ -3304,7 +3304,7 @@ class AddServiceDetailsActivity : AppCompatActivity(), View.OnClickListener, onC
                 )
             }
 
-            serviceViewModel?.getAddService()?.observe(this, androidx.lifecycle.Observer {
+            serviceViewModel?.addServiceModel?.observe(this, androidx.lifecycle.Observer {
                 if (it != null) {
                     if (it.success) {
                         Common.hideLoader()

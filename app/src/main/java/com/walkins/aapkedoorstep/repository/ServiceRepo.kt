@@ -179,13 +179,14 @@ class ServiceRepo {
         return servicedata
     }
 
-    suspend fun getServiceByDate(
+
+    suspend fun getServiceByDate_(
         date: String,
         building_id: String,
         access_token: String, context: Context,
-    ):Response<ResponseBody> = RetrofitBuilder.createService(ServiceApi::class.java).getServiceByDate(date, building_id, access_token)
+    ):Response<ResponseBody> = RetrofitBuilder.createService(ServiceApi::class.java).getServiceByDate_(date, building_id, access_token)
 
-    /*fun getServiceByDate(
+    fun getServiceByDate(
         date: String,
         building_id: String,
         access_token: String, context: Context,
@@ -227,7 +228,7 @@ class ServiceRepo {
             }
         })
         return servicedata
-    }*/
+    }
 
     fun callApiReportService(
         jsonObject: JsonObject,

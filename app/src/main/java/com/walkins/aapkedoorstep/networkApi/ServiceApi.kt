@@ -27,7 +27,13 @@ interface ServiceApi {
     ): Call<ResponseBody>
 
     @GET("v1/user/get-service-by-date")
-    suspend fun getServiceByDate(
+    fun getServiceByDate(
+        @Query("date") date: String,@Query("building_id") building_id:String,
+        @Header("Authorization") authorization: String
+    ): Call<ResponseBody>
+
+    @GET("v1/user/get-service-by-date")
+    suspend fun getServiceByDate_(
         @Query("date") date: String,@Query("building_id") building_id:String,
         @Header("Authorization") authorization: String
     ): Response<ResponseBody>

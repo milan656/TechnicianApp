@@ -72,7 +72,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param2: String? = null
     var calendar = Calendar.getInstance()
     private var ivFilter: ImageView? = null
-    var dashboardModel:DashboardServiceListModel?=null
+    var dashboardModel: DashboardServiceListModel? = null
     var dashboardServiceListModel: DashboardServiceListModel? = null
     private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
@@ -143,6 +143,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 if (it != null) {
                     if (it.success) {
 
+                        Log.e("TAG", "getUserInfo: " + it.data)
                         var firstName: String? = ""
                         var lastName: String? = ""
                         if (it.data.firstName != null) {
@@ -153,6 +154,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         }
                         tvUsername?.text = "Hello, " + firstName + " " + lastName
                     } else {
+                        Log.e("TAG", "getUserInfo: " + it.error)
                         if (it.error != null) {
                             if (it.error?.get(0).message != null) {
                                 Toast.makeText(context, "" + it.error.get(0).message, Toast.LENGTH_SHORT).show()
@@ -291,7 +293,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     if (it.success) {
 
                         Log.e("getdataa", "" + it.data)
-                        dashboardModel=it
+                        dashboardModel = it
                         historyDataList.clear()
 
                         if (it.data != null && it.data.size > 0) {
@@ -642,13 +644,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private fun getServiceList(buildingUuid: String, date: String) {
 
         getActivity()?.let {
-            serviceViewModel?.callApiServiceByDate(activity?.dateForWebservice_2(date)!!, buildingUuid,
-                prefManager?.getAccessToken()!!,it
+            serviceViewModel?.callApiServiceByDate_(activity?.dateForWebservice_2(date)!!, buildingUuid,
+                prefManager?.getAccessToken()!!, it
             )
         }
 
         serviceViewModel?.serviceListByDateModel?.observe(this, {
-            if (it.success){
+            if (it.success) {
                 saveServiceList(it, buildingUuid)
             }
         })

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +79,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
@@ -138,6 +139,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
                 if (it != null) {
                     if (it.success) {
 
+                        Log.e("TAG", "getUserInfo: " + it.data)
                         if (it.data.mobile != null) {
                             tvMobilenumber?.text = it.data.mobile
                         }
@@ -164,6 +166,7 @@ class ProfileFragment : Fragment(), onClickAdapter {
 
                         Common.hideLoader()
                     } else {
+                        Log.e("TAG", "getUserInfo: " + it.error)
                         Common.hideLoader()
                         if (it.error != null) {
                             if (it.error?.get(0).message != null) {
@@ -194,9 +197,9 @@ class ProfileFragment : Fragment(), onClickAdapter {
         array: ArrayList<String>,
         titleStr: String,
         context: Context?,
-        btnBg: String
+        btnBg: String,
 
-    ) {
+        ) {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.dialogue_profile_edit_req, null)
         imageDialog =

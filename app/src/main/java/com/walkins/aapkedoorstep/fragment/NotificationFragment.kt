@@ -143,6 +143,7 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
+                        Log.e("TAG", "getNotificationList: "+it.data )
                         notificationArr?.clear()
 
                         if (it.data.notifications != null && it.data.notifications.size > 0) {
@@ -173,6 +174,7 @@ class NotificationFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
                         notificationAdpater?.notifyDataSetChanged()
                     } else {
+                        Log.e("TAG", "getNotificationList: "+it.error[0].statusCode )
                         if (it.error != null) {
                             if (it.error.get(0).message != null) {
 
