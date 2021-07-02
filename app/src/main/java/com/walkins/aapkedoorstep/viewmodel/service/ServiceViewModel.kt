@@ -115,8 +115,6 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
             access_token,
             context
         )
-
-
     }
 
     fun callApiServiceByDate_(
@@ -125,8 +123,6 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
         access_token: String,
         context: Context,
     ) {
-
-
         viewModelScope.launch(Dispatchers.IO) {
             val res = serviceRepo.getServiceByDate_(
                 date,
