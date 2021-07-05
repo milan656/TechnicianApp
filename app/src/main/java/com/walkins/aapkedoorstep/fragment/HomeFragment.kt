@@ -12,21 +12,16 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration
 import com.example.technician.common.Common
 import com.example.technician.common.PrefManager
-import com.example.technician.common.RetrofitCommonClass
-import com.facebook.internal.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.gson.GsonBuilder
 import com.walkins.aapkedoorstep.DB.DBClass
 import com.walkins.aapkedoorstep.DB.ServiceDashboardModelClass
 import com.walkins.aapkedoorstep.DB.ServiceListModelClass
-import com.walkins.aapkedoorstep.DB.VehicleMakeModelClass
 import com.walkins.aapkedoorstep.R
 import com.walkins.aapkedoorstep.activity.MainActivity
 import com.walkins.aapkedoorstep.activity.ServiceListActivity
@@ -38,7 +33,6 @@ import com.walkins.aapkedoorstep.model.login.DashboardModel
 import com.walkins.aapkedoorstep.model.login.SectionModel
 import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
-import com.walkins.aapkedoorstep.networkApi.ServiceApi
 import com.walkins.aapkedoorstep.repository.CommonRepo
 import com.walkins.aapkedoorstep.repository.ServiceRepo
 import com.walkins.aapkedoorstep.viewmodel.common.CommonViewModel
@@ -48,16 +42,10 @@ import com.walkins.aapkedoorstep.viewmodel.service.ServiceViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.coroutines.CoroutineContext
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -72,8 +60,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private var param2: String? = null
     var calendar = Calendar.getInstance()
     private var ivFilter: ImageView? = null
-    var dashboardModel: DashboardServiceListModel? = null
-    var dashboardServiceListModel: DashboardServiceListModel? = null
+    private var dashboardModel: DashboardServiceListModel? = null
+    private var dashboardServiceListModel: DashboardServiceListModel? = null
     private var selectedDate: String? = ""
     private var serviceViewModel: ServiceViewModel? = null
     private lateinit var serviceRepo: ServiceRepo
@@ -84,11 +72,11 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     private lateinit var commonViewModelFactory: CommonViewModelFactory
     private var commonViewModel: CommonViewModel? = null
 
-    var historyDataList: ArrayList<DashboardModel> = ArrayList<DashboardModel>()
+    private var historyDataList: ArrayList<DashboardModel> = ArrayList()
 
     var simpleDateFormat: SimpleDateFormat? = null
-    var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
-    var sectionModelArrayList: ArrayList<SectionModel> = ArrayList()
+    private var singleBuilder: SingleDateAndTimePickerDialog.Builder? = null
+    private var sectionModelArrayList: ArrayList<SectionModel> = ArrayList()
 
     private var arrayList = arrayListOf("Gallery", "Camera")
 
@@ -137,7 +125,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun getUserInfo() {
-        activity?.let {
+        activity?.let { it ->
             commonViewModel?.callApiGetUserInfo(prefManager?.getAccessToken()!!, it)
             commonViewModel?.userInfo?.observe(it, {
                 if (it != null) {
@@ -152,12 +140,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         if (it.data.lastName != null) {
                             lastName = it.data.lastName
                         }
-                        tvUsername?.text = "Hello, " + firstName + " " + lastName
+                        tvUsername?.text = "Hello, $firstName $lastName"
                     } else {
                         Log.e("TAG", "getUserInfo: " + it.error)
                         if (it.error != null) {
-                            if (it.error?.get(0).message != null) {
-                                Toast.makeText(context, "" + it.error.get(0).message, Toast.LENGTH_SHORT).show()
+                            if (it.error.get(0).message != null) {
+                                Toast.makeText(context, "" + it.error[0].message, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -182,12 +170,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
 //        homeRecycView?.setHasFixedSize(true)
         mAdapter = context?.let { LeadHistoryAdapter(it, historyDataList, this) }
-        var decor = StickyHeaderDecoration(mAdapter)
+        val decor = StickyHeaderDecoration(mAdapter)
 
         // use a linear layout manager
         val layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
-        homeRecycView?.setLayoutManager(layoutManager)
-        homeRecycView?.setAdapter(mAdapter)
+        homeRecycView?.layoutManager = layoutManager
+        homeRecycView?.adapter = mAdapter
         homeRecycView?.addItemDecoration(decor)
         mAdapter?.onclick = this
 
@@ -201,12 +189,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
 
 
-        homeSwipeRefresh?.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
-            override fun onRefresh() {
-                this@HomeFragment.onRefresh()
-            }
-
-        })
+        homeSwipeRefresh?.setOnRefreshListener { this@HomeFragment.onRefresh() }
 
     }
 
@@ -229,7 +212,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
         CoroutineScope(Dispatchers.IO).launch {
             if (mDb.ServiceListDashbaordDaoClass().getAll() != null &&
-                mDb.ServiceListDashbaordDaoClass().getAll().size > 0
+                mDb.ServiceListDashbaordDaoClass().getAll().isNotEmpty()
             ) {
                 historyDataList.clear()
                 for (i in mDb.ServiceListDashbaordDaoClass().getAll()) {
@@ -284,10 +267,10 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     private fun getDashboardService(displayDate: String) {
 
-        activity?.let {
+        activity?.let { it ->
             Common.showLoader(it)
             serviceViewModel?.callApiDashboardService(displayDate, prefManager?.getAccessToken()!!, it)
-            serviceViewModel?.dashboardServiceListModel?.observe(it, androidx.lifecycle.Observer {
+            serviceViewModel?.dashboardServiceListModel?.observe(it, {
                 Common.hideLoader()
                 if (it != null) {
                     if (it.success) {
@@ -298,13 +281,13 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         dashboardModel = it
                         historyDataList.clear()
 
-                        if (it.data != null && it.data.size > 0) {
+                        if (it.data != null && it.data.isNotEmpty()) {
 
                             dashboardServiceListModel = it
                             for (i in it.data.indices) {
 
                                 var dashboardModel: DashboardModel? = null
-                                val dateString = it.data.get(i).date
+                                val dateString = it.data[i].date
                                 Log.e("getdatefrom", "" + dateString)
                                 val sdf = SimpleDateFormat("yyyy-MM-dd")
                                 val date = sdf.parse(dateString)
@@ -312,8 +295,8 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                 val startDate = date.time
                                 Log.e("getdatefromstart", "" + startDate)
                                 dashboardModel = DashboardModel(
-                                    it.data.get(i).building_name + ", " + it.data.get(i).area, it.data.get(i).address, it.data.get(i).date, it.data.get(i).building_uuid, it.data.get(i).date_formated,
-                                    it.data.get(i).open_jobs.toInt(), it.data.get(i).complete_jobs.toInt(), it.data.get(i).skip_jobs.toInt(), it.data.get(i).total_jobs.toInt(), startDate,
+                                    it.data[i].building_name + ", " + it.data[i].area, it.data[i].address, it.data[i].date, it.data[i].building_uuid, it.data[i].date_formated,
+                                    it.data[i].open_jobs.toInt(), it.data[i].complete_jobs.toInt(), it.data[i].skip_jobs.toInt(), it.data[i].total_jobs.toInt(), startDate,
                                     startDate
                                 )
 
@@ -330,7 +313,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                                     val mDateFormat = SimpleDateFormat("dd MMMM yy")
                                     val mToday = mDateFormat.format(Date())
                                     val date_ = mDateFormat.format(Date(i.date_formated)).toString()
-                                    Log.e("getdatefor", "" + mToday + " " + date_)
+                                    Log.e("getdatefor", "$mToday $date_")
 
                                     if (mToday.equals(date_)) {
                                         getServiceList(i.building_uuid, i.date)
@@ -345,7 +328,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                             if (selectedDate.equals("")) {
                                 tvNoData?.text = "Currently you do not have any services"
                             } else {
-                                tvNoData?.text = "There are no service on " + selectedDate
+                                tvNoData?.text = "There are no service on $selectedDate"
                             }
                         }
                         mAdapter?.notifyDataSetChanged()
@@ -357,7 +340,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                         if (selectedDate.equals("")) {
                             tvNoData?.text = "Currently you do not have any services"
                         } else {
-                            tvNoData?.text = "There are no service on " + selectedDate
+                            tvNoData?.text = "There are no service on $selectedDate"
                         }
                     }
                 } else {
@@ -366,7 +349,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     if (selectedDate.equals("")) {
                         tvNoData?.text = "Currently you do not have any services"
                     } else {
-                        tvNoData?.text = "There are no service on " + selectedDate
+                        tvNoData?.text = "There are no service on $selectedDate"
                     }
                 }
             })
@@ -393,7 +376,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         val width = LinearLayout.LayoutParams.MATCH_PARENT
         val height = LinearLayout.LayoutParams.WRAP_CONTENT
         dialog?.window?.setLayout(width, height)
-        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog?.setContentView(view)
 
         val btnSend = view.findViewById<Button>(R.id.btnOk)
@@ -455,30 +438,29 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                 "Address Detail",
                 context,
                 Common.btn_filled,
-                false, Common.getStringBuilder(historyDataList.get(variable).fullAddress)
+                false, Common.getStringBuilder(historyDataList[variable].fullAddress)
             )
 
         } else if (check == 0) {
 
             val intent = Intent(context, ServiceListActivity::class.java)
-            Log.e("getdateformat", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
-            intent.putExtra("selectedDate", "" + activity?.dateForWebservice_2(historyDataList.get(variable).date))
-            intent.putExtra("selectedDateFormated", historyDataList.get(variable).dateFormated)
-            intent.putExtra("addressTitle", historyDataList.get(variable).addressTitle)
-            intent.putExtra("fullAddress", historyDataList.get(variable).fullAddress)
-            intent.putExtra("building_uuid", historyDataList.get(variable).building_uuid)
+            Log.e("getdateformat", "" + activity?.dateForWebservice_2(historyDataList[variable].date))
+            intent.putExtra("selectedDate", "" + activity?.dateForWebservice_2(historyDataList[variable].date))
+            intent.putExtra("selectedDateFormated", historyDataList[variable].dateFormated)
+            intent.putExtra("addressTitle", historyDataList[variable].addressTitle)
+            intent.putExtra("fullAddress", historyDataList[variable].fullAddress)
+            intent.putExtra("building_uuid", historyDataList[variable].building_uuid)
 //            intent.putExtra("",""+historyDataList.get(variable).)
             startActivity(intent)
         } else {
-            Log.e("getsection", "" + sectionModelArrayList.get(variable).sectionLabel)
+            Log.e("getsection", "" + sectionModelArrayList[variable].sectionLabel)
             Log.e("getsection", "" + check)
         }
 //        Log.e("getclickpos", arrayList.get(variable))
     }
 
     override fun onClick(v: View?) {
-        val i = v?.id
-        when (i) {
+        when (v?.id) {
             R.id.ivFilter -> {
                 openDatePicker()
 
@@ -486,7 +468,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         }
     }
 
-    fun openDatePicker() {
+    private fun openDatePicker() {
 
         val calendar = Calendar.getInstance()
 
@@ -496,9 +478,9 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
         var future: Date? = null
         var setdefault: Date? = null
 
-        setdefault = calendar.getTime()
+        setdefault = calendar.time
         if (selectedDate.equals("")) {
-            future = calendar.getTime()
+            future = calendar.time
         } else {
 //            Wed May 19 12:55:46 GMT+05:30 2021
             var date_: Date? = null
@@ -511,7 +493,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             }
             future = date_
         }
-        Log.e("getfuturedate", "" + future + " " + selectedDate)
+        Log.e("getfuturedate", "$future $selectedDate")
         singleBuilder = SingleDateAndTimePickerDialog.Builder(context)
             .setTimeZone(TimeZone.getDefault())
             .bottomSheet()
@@ -533,58 +515,56 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
             // .maxDateRange(maxDate)
 
             .title("Simple")
-            .listener(object : SingleDateAndTimePickerDialog.Listener {
-                override fun onDateSelected(date: Date?, str: String) {
-                    activity?.lltransparent?.visibility = View.GONE
-                    if (str.equals("")) {
-                        simpleDateFormat = SimpleDateFormat("dd MMMM yyyy")
-                        Log.e("getdatee", "" + simpleDateFormat?.format(date))
-                        selectedDate = simpleDateFormat?.format(date)
-                        Log.e("getdatee00", "" + selectedDate)
-                        ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
-                    } else if (str.equals("Reset")) {
-                        Log.e("getdatee2", "" + selectedDate)
+            .listener { date, str ->
+                activity?.lltransparent?.visibility = View.GONE
+                if (str == "") {
+                    simpleDateFormat = SimpleDateFormat("dd MMMM yyyy")
+                    Log.e("getdatee", "" + simpleDateFormat?.format(date))
+                    selectedDate = simpleDateFormat?.format(date)
+                    Log.e("getdatee00", "" + selectedDate)
+                    ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
+                } else if (str == "Reset") {
+                    Log.e("getdatee2", "" + selectedDate)
+                    ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_calender_icon))
+                    selectedDate = ""
+                } else if (str == "Close") {
+                    Log.e("getdatee1", "" + selectedDate)
+                    if (selectedDate == null || selectedDate.equals("null") || selectedDate.equals(
+                            ""
+                        )
+                    ) {
                         ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_calender_icon))
-                        selectedDate = ""
-                    } else if (str.equals("Close")) {
-                        Log.e("getdatee1", "" + selectedDate)
-                        if (selectedDate == null || selectedDate.equals("null") || selectedDate.equals(
-                                ""
-                            )
-                        ) {
-                            ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_calender_icon))
+                    } else {
+                        ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
+                    }
+                }
+                if (!selectedDate.equals("") && str != "Close") {
+                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                    val formatterDisplay = SimpleDateFormat("dd MMMM yyyy")
+                    val dateInString = formatterDisplay.parse(selectedDate)
+                    val displayDate = formatter.format(dateInString)
+                    context?.let {
+                        if (!Common.isConnectedToInternet(it)) {
+                            getServiceFromDB()
                         } else {
-                            ivFilter?.setImageDrawable(context?.resources?.getDrawable(R.drawable.ic_applied_calender))
+                            getDashboardService(displayDate)
                         }
                     }
-                    if (!selectedDate.equals("") && !str.equals("Close")) {
-                        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                        val formatterDisplay = SimpleDateFormat("dd MMMM yyyy")
-                        val dateInString = formatterDisplay.parse(selectedDate)
-                        val displayDate = formatter.format(dateInString)
+                    //                        getDashboardService(displayDate)
+
+                } else {
+                    if (str != "Close") {
                         context?.let {
                             if (!Common.isConnectedToInternet(it)) {
                                 getServiceFromDB()
                             } else {
-                                getDashboardService(displayDate)
+                                getDashboardService(selectedDate!!)
                             }
                         }
-//                        getDashboardService(displayDate)
-
-                    } else {
-                        if (!str.equals("Close")) {
-                            context?.let {
-                                if (!Common.isConnectedToInternet(it)) {
-                                    getServiceFromDB()
-                                } else {
-                                    getDashboardService(selectedDate!!)
-                                }
-                            }
-//                            getDashboardService(selectedDate!!)
-                        }
+                        //                            getDashboardService(selectedDate!!)
                     }
                 }
-            })
+            }
 
         activity?.lltransparent?.visibility = View.VISIBLE
         singleBuilder?.display()
@@ -594,18 +574,18 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
 
     private fun saveDashboardService(dashboardServiceListModel: DashboardServiceListModel) {
 
-        var thread: Thread = Thread {
-            if (mDb.ServiceListDashbaordDaoClass().getAll().size > 0) {
+        val thread: Thread = Thread {
+            if (mDb.ServiceListDashbaordDaoClass().getAll().isNotEmpty()) {
                 mDb.ServiceListDashbaordDaoClass().deleteAll()
             }
-            if (mDb.serviceListDaoClass().getAll().size > 0) {
+            if (mDb.serviceListDaoClass().getAll().isNotEmpty()) {
                 mDb.serviceListDaoClass().deleteAll()
             }
 
-            if (dashboardServiceListModel.data != null && dashboardServiceListModel.data.size > 0) {
+            if (dashboardServiceListModel.data != null && dashboardServiceListModel.data.isNotEmpty()) {
                 for (i in dashboardServiceListModel.data) {
 
-                    var entity = ServiceDashboardModelClass()
+                    val entity = ServiceDashboardModelClass()
 
                     val dateString = i.date
                     Log.e("getdatefrom", "" + dateString)
@@ -629,7 +609,7 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     val mDateFormat = SimpleDateFormat("dd MMMM yy")
                     val mToday = mDateFormat.format(Date())
                     val date_ = mDateFormat.format(Date(entity.dateformated)).toString()
-                    Log.e("getdatefor", "" + mToday + " " + date_)
+                    Log.e("getdatefor", "$mToday $date_")
 
                     if (mToday.equals(date_)) {
                         mDb.ServiceListDashbaordDaoClass().save(entity)
@@ -686,12 +666,12 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
     }
 
     private fun saveServiceList(serviceListModel: ServiceListByDateModel, buildingUuid: String) {
-        var thread: Thread = Thread {
+        val thread: Thread = Thread {
             /* if (mDb.serviceListDaoClass().getAll().size > 0) {
                  mDb.serviceListDaoClass().deleteAll()
              }*/
 
-            if (serviceListModel.data != null && serviceListModel.data.size > 0) {
+            if (serviceListModel.data != null && serviceListModel.data.isNotEmpty()) {
                 for (i in serviceListModel.data) {
 
                     val entity = ServiceListModelClass()
@@ -710,14 +690,14 @@ class HomeFragment : Fragment(), onClickAdapter, View.OnClickListener {
                     entity.model_id = i.model_id
                     entity.model_image = i.model_image
                     entity.building_uuid = buildingUuid
-                    if (i.service != null && i.service.size > 0) {
+                    if (i.service != null && i.service.isNotEmpty()) {
                         entity.service = i.service
                     }
                     entity.image = i.image
                     entity.buildingName = i.buildingName
                     entity.address = i.address
 
-                    if (i.comment_id != null && i.comment_id.size > 0) {
+                    if (i.comment_id != null && i.comment_id.isNotEmpty()) {
                         entity.comment_id = i.comment_id
                     }
 

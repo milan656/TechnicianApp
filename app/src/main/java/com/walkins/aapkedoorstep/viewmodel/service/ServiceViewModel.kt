@@ -21,7 +21,7 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
     var addServiceModel: MutableLiveData<AddServiceModel>? = MutableLiveData()
     var dashboardServiceListModel: MutableLiveData<DashboardServiceListModel>? = MutableLiveData()
     var serviceListByDateModel: MutableLiveData<ServiceListByDateModel>? = MutableLiveData()
-    var reportHistoryModel: MutableLiveData<ReportServiceModel>? = MutableLiveData()
+    private var reportHistoryModel: MutableLiveData<ReportServiceModel>? = MutableLiveData()
 
     fun callApiAddService(
         jsonObject: JsonObject,
@@ -93,24 +93,6 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
         )
 
 
-    }
-
-    fun getDashboardService(): LiveData<DashboardServiceListModel>? {
-        return dashboardServiceListModel
-    }
-
-    fun callApiServiceByDate(
-        date: String,
-        building_id: String,
-        access_token: String,
-        context: Context,
-    ) {
-        serviceRepo.getServiceByDate(
-            date,
-            building_id,
-            access_token,
-            context
-        )
     }
 
     fun callApiServiceByDate_(
