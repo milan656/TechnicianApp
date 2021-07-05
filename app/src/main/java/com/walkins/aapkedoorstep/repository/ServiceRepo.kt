@@ -7,25 +7,22 @@ import com.example.technician.common.Common
 import com.example.technician.common.RetrofitCommonClass
 import com.google.gson.JsonObject
 import com.walkins.aapkedoorstep.common.RetrofitBuilder
-import com.walkins.aapkedoorstep.model.login.ReportServiceModel
 import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
-import com.walkins.aapkedoorstep.model.login.servicemodel.AddServiceModel
 import com.walkins.aapkedoorstep.networkApi.ServiceApi
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import java.util.*
 
 class ServiceRepo {
 
     var serviceRepo: ServiceRepo? = null
 
-    lateinit var serviceApi: ServiceApi
+    var serviceApi: ServiceApi
 
-    constructor() {
+    init {
         serviceApi = RetrofitCommonClass.createService(ServiceApi::class.java)
     }
 
@@ -40,7 +37,7 @@ class ServiceRepo {
 
     suspend fun addService(
         jsonObject: JsonObject,
-        access_token: String, context: Context,
+        access_token: String,
     ): Response<ResponseBody> = RetrofitBuilder.createService(ServiceApi::class.java).addService(jsonObject, access_token)
 
 /*

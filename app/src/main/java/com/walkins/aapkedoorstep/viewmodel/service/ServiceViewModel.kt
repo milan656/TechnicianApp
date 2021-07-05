@@ -7,13 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.technician.common.Common
 import com.google.gson.JsonObject
-import com.walkins.aapkedoorstep.model.login.ReportHistoryModel
 import com.walkins.aapkedoorstep.model.login.ReportServiceModel
 import com.walkins.aapkedoorstep.model.login.dashboard_model.DashboardServiceListModel
-import com.walkins.aapkedoorstep.model.login.notification.NotificationModel
 import com.walkins.aapkedoorstep.model.login.servicelistmodel.ServiceListByDateModel
 import com.walkins.aapkedoorstep.model.login.servicemodel.AddServiceModel
-import com.walkins.aapkedoorstep.repository.LoginRepository
 import com.walkins.aapkedoorstep.repository.ServiceRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,8 +31,7 @@ class ServiceViewModel(private val serviceRepo: ServiceRepo) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val res = serviceRepo.addService(
                 jsonObject,
-                access_token,
-                context
+                access_token
             )
             withContext(Dispatchers.Main) {
                 if (res.isSuccessful) {
