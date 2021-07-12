@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.walkins.aapkedoorstep">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -35,7 +35,6 @@
         android:theme="@style/Theme.TechnicianApp">
         <activity android:name=".activity.ReportFilterActivity" />
         <activity android:name=".activity.CompletedVisualDetailActivity" />
-        <activity android:name=".activity.VehicleMakeApplyTyreActivty" />
         <activity android:name=".activity.VehicleSizeActivity" />
         <activity android:name=".activity.SkippedServiceDetailActivity" />
         <activity android:name=".activity.CompletedServiceDetailActivity" />
