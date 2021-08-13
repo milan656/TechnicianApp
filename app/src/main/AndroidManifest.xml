@@ -68,8 +68,6 @@ Set color used with incoming notification messages. This is used when no color i
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity android:name=".activity.VehicleMakeActivity" />
-        <activity android:name=".activity.HomeSubDealerActivity" />
-        <activity android:name=".activity.HomeEmployeeActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
